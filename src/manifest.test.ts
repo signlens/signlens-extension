@@ -6,6 +6,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
 import { firefoxManifest, type Manifest } from '../scripts/firefox-manifest.ts';
+import { LOOPBACK } from './endpoint.ts';
 
 const manifest = JSON.parse(readFileSync(new URL('../extension/manifest.json', import.meta.url), 'utf8')) as Manifest & {
     manifest_version: number;
@@ -25,6 +26,11 @@ test('the manifest is Manifest V3 for Chrome, with nothing Chrome would warn abo
     assert.ok(!manifest.content_security_policy.extension_pages.includes('wasm-unsafe-eval'));
     for (const size of ['16', '32', '48', '128']) assert.equal(manifest.icons[size], `icons/icon-${size}.png`);
     assert.ok(manifest.host_permissions.includes('https://*/*'));
+    // Plain http goes where the worker may reach it without CORS, and nowhere else.
+    assert.deepEqual(
+        manifest.host_permissions.filter((p) => p.startsWith('http://')),
+        LOOPBACK.map((host) => `http://${host}/*`),
+    );
     assert.deepEqual(manifest.permissions, ['storage']);
     // The page scripts are classic scripts that import nothing, both at
     // document_start; the relay is listed first, though what keeps the

@@ -3,45 +3,9 @@
 // sections) is rendered effects first; its full text stays one click away,
 // and is all there is for a message.
 
-import type { Address, Amount, Bound, Effect, Field, Finding, Section, Trust, Value } from './types.ts';
-
-/** One row of an answer: a transaction explained, or a message, or a failure. */
-export interface Row {
-    verdict?: 'ok' | 'warning' | 'blocked' | null;
-    error?: string | null;
-    text?: string;
-    summary?: string;
-    findings?: Finding[];
-    effects?: Effect[];
-    sections?: Section[];
-    tables?: string;
-    /** The chain the page named, when not mainnet: its word, read and simulated against the RPC in the settings all the same. */
-    chain?: string;
-    simulation?: string;
-    hints?: string[];
-    capture?: string;
-    capturedAt?: number;
-    site?: string;
-    digest?: string | null;
-    transaction?: string;
-}
-
-/** An answer as the worker keeps it: rows, or one failure or message. */
-export interface Entry {
-    results?: Row[];
-    error?: string;
-    text?: string;
-}
-
-/** An answer as the popup and the window keep it: the answer, and where it came from. */
-export interface HistoryEntry extends Entry {
-    time: number;
-    origin?: string;
-    method?: string;
-    mode: 'passthrough' | 'watch';
-    upstream: string;
-    decision?: 'continue' | 'reject';
-}
+import type { ExplainedRow, Row } from './model.ts';
+import { short } from './text.ts';
+import type { Address, Amount, Bound, Effect, Field, Section, Trust, Value } from './types.ts';
 
 export function element<K extends keyof HTMLElementTagNameMap>(tag: K, className?: string, text?: string): HTMLElementTagNameMap[K] {
     const node = document.createElement(tag);
@@ -69,14 +33,14 @@ const MARKER: Record<Trust, string> = { Fact: '', Verified: ' (verified)', Claim
 /** What a trust marker means, for a reader who opens it. */
 const MARKER_HELP: Partial<Record<Trust, string>> = {
     Verified:
-        'This name comes from SignLens itself: its reviewed descriptors, its token list, or your own keys. The site could not have supplied it.',
+        'This name comes from SignLens or from you: its reviewed descriptors, its verified token list, the accounts your wallet connected with, or your address book. The site could not have supplied it.',
     Claimed:
-        'This came from the site or from the RPC the extension asked, not from the transaction itself. Signlens could not check it, so do not rely on it.',
+        'This came from the site or from the RPC the extension asked, not from the transaction itself. SignLens could not check it, so do not rely on it.',
 };
 
 /** What the marker on a whole section of claims means. */
 const CLAIMS_HELP =
-    'Everything in this section came from the RPC the extension asked, not from the transaction itself. Signlens could not check it, so treat it as a hint, not a fact.';
+    'Everything in this section came from the RPC the extension asked, not from the transaction itself. SignLens could not check it, so treat it as a hint, not a fact.';
 
 /**
  * What the engine's fixed labels mean, for a reader who opens one. Keyed by
@@ -127,12 +91,17 @@ function button(className: string, text?: string): HTMLButtonElement {
     return node;
 }
 
+/** How many help notes this page has made, for their ids. */
+let notes = 0;
+
 /**
  * A term the reader can open: a button whose help appears as a note under
  * the value it sits in (`host`, or the nearest field, item or paragraph)
- * and goes away the same way.
+ * and goes away the same way. The button names the note it controls, and
+ * while it is open is described by it, so a screen reader on the button
+ * reads the help.
  */
-export function term(text: string, help: string, host?: HTMLElement): HTMLButtonElement {
+function term(text: string, help: string, host?: HTMLElement): HTMLButtonElement {
     const node = button('term', text);
     node.setAttribute('aria-expanded', 'false');
     let note: HTMLElement | null = null;
@@ -140,13 +109,17 @@ export function term(text: string, help: string, host?: HTMLElement): HTMLButton
         // A term in a disclosure's head is its own control, not the head's.
         event.stopPropagation();
         if (note) {
-            note.remove();
-            note = null;
+            note.hidden = !note.hidden;
         } else {
+            notes += 1;
             note = element('div', 'help-note', help);
+            note.id = `help-${notes}`;
+            node.setAttribute('aria-controls', note.id);
             (host ?? node.closest('dd, li, p') ?? node.parentElement)?.append(note);
         }
-        node.setAttribute('aria-expanded', String(note !== null));
+        node.setAttribute('aria-expanded', String(!note.hidden));
+        if (note.hidden) node.removeAttribute('aria-describedby');
+        else node.setAttribute('aria-describedby', note.id);
     });
     return node;
 }
@@ -156,16 +129,10 @@ export function term(text: string, help: string, host?: HTMLElement): HTMLButton
  * one. `help` replaces the marker's usual text and `host` is where the
  * help opens; otherwise it opens under the nearest value.
  */
-export function mark<T extends HTMLElement>(node: T, trust: Trust, help?: string, host?: HTMLElement): T {
+function mark<T extends HTMLElement>(node: T, trust: Trust, help?: string, host?: HTMLElement): T {
     const marker = MARKER[trust];
     if (marker) node.append(' ', term(marker.trim(), help ?? MARKER_HELP[trust] ?? '', host));
     return node;
-}
-
-/** An address shortened as the engine shortens it: four characters each end. */
-function short(text: string): string {
-    if (text.length <= 12 || /[^0-9A-Za-z]/.test(text)) return text;
-    return `${text.slice(0, 4)}…${text.slice(-4)}`;
 }
 
 /** Digits grouped by thousands. */
@@ -194,7 +161,7 @@ export function quantity(amount: Amount): string {
 const PREFIX: Record<Bound, string> = { Exact: '', AtLeast: '≥ ', AtMost: '≤ ', Unlimited: 'UNLIMITED ', Unknown: 'unknown amount of ' };
 
 /** An amount as the engine's text writes it, as a node: the trust marker in it is a term. */
-export function amountNode(amount: Amount): HTMLSpanElement {
+function amountNode(amount: Amount): HTMLSpanElement {
     const node = element('span', 'amount');
     const prefix = PREFIX[amount.bound];
     const asset = amount.asset;
@@ -212,7 +179,7 @@ export function amountNode(amount: Amount): HTMLSpanElement {
 }
 
 /** An address as a node: its label in bold and its short form when it has one. The signer's own is green, and its label says so in words ("Your wallet"). */
-export function addressNode(address: Address): HTMLSpanElement {
+function addressNode(address: Address): HTMLSpanElement {
     const node = element('span', `address${address.is_self ? ' self' : ''}`);
     node.title = address.text;
     if (address.label) {
@@ -230,7 +197,7 @@ function unrecognized(what: string, type: string): string {
 }
 
 /** A field's value as a node. */
-export function valueNode(value: Value): HTMLElement {
+function valueNode(value: Value): HTMLElement {
     switch (value.type) {
         case 'Text':
         case 'Integer':
@@ -290,7 +257,7 @@ function append<T extends HTMLElement>(node: T, ...parts: (string | Node)[]): T 
 }
 
 /** One effect as a sentence, in the second person where the signer is the one it happens to. */
-export function effectNode(effect: Effect): HTMLLIElement {
+function effectNode(effect: Effect): HTMLLIElement {
     const li = element('li', `effect ${effect.type.toLowerCase()}`);
     switch (effect.type) {
         case 'Transfer': {
@@ -362,7 +329,7 @@ export function effectNode(effect: Effect): HTMLLIElement {
  * `aside` makes beside it (given the row, to open help in); a click on the
  * row's bare space toggles too. `onFlip` hears the new state.
  */
-export function disclosure(
+function disclosure(
     className: string,
     label: string | Node,
     body: HTMLElement,
@@ -397,7 +364,7 @@ function sectionIndex(section: Section): number | null {
 }
 
 /** A section as a disclosure: its title, its subtitle, and its fields as a definition list. */
-export function sectionNode(section: Section, open: boolean, nested: HTMLElement[]): HTMLDivElement {
+function sectionNode(section: Section, open: boolean, nested: HTMLElement[]): HTMLDivElement {
     const label = element('span', 'section-head');
     const index = sectionIndex(section);
     const title = section.kind.type === 'Nested' && index !== null ? `Step ${index + 1}: ${section.title}` : section.title;
@@ -425,10 +392,10 @@ function fieldNodes(field: Field, inClaims: boolean): [HTMLElement, HTMLElement]
 }
 
 /** The sections of an explanation: the instructions, each with its steps, then the rest under one disclosure. */
-function sectionsNode(row: Row & { sections: Section[] }): DocumentFragment {
+function sectionsNode(row: ExplainedRow): DocumentFragment {
     // A section of claims (the simulated outcome) is shown by the lines on
     // the simulation instead, where a reader looks for it.
-    const flagged = new Set((row.findings ?? []).map((f) => f.instruction).filter((i): i is number => i !== null));
+    const flagged = new Set(row.findings.map((f) => f.instruction).filter((i): i is number => i !== null));
     const steps = new Map<number, Section[]>();
     const instructions: Section[] = [];
     const rest: Section[] = [];
@@ -449,8 +416,11 @@ function sectionsNode(row: Row & { sections: Section[] }): DocumentFragment {
     for (const section of instructions) {
         const index = sectionIndex(section) ?? -1;
         const children = (steps.get(index) ?? []).map((step) => sectionNode(step, !step.collapsed, []));
+        steps.delete(index);
         fragment.append(sectionNode(section, !section.collapsed || flagged.has(index), children));
     }
+    // A step whose instruction the explanation does not have is still shown, after the instructions: never left out.
+    for (const stray of steps.values()) for (const step of stray) fragment.append(sectionNode(step, !step.collapsed, []));
     if (rest.length) {
         const body = element('div');
         for (const section of rest) body.append(sectionNode(section, !section.collapsed, []));
@@ -464,37 +434,51 @@ function sectionsNode(row: Row & { sections: Section[] }): DocumentFragment {
  * reader opened it last time: the summary and the effects say what the
  * transaction does, and this is the proof for whoever wants to check.
  */
-function instructionsNode(row: Row & { sections: Section[] }, open: boolean): HTMLDivElement {
+function instructionsNode(row: ExplainedRow, options: RenderOptions): HTMLDivElement {
     const count = row.sections.filter((s) => s.kind.type === 'Instruction').length;
     const title = count === 0 ? 'Details' : count === 1 ? 'Instruction and details' : `Instructions (${count}) and details`;
     const body = element('div');
     body.append(sectionsNode(row));
-    const remember = (shown: boolean) => {
-        if (typeof chrome === 'undefined' || !chrome.storage?.local) return;
-        chrome.storage.local.set({ showInstructions: shown }).catch(() => {});
-    };
-    return disclosure('instructions', title, body, open, remember);
+    return disclosure('instructions', title, body, Boolean(options.showInstructions), options.onShowInstructions);
 }
 
-export interface RenderOptions {
+interface RenderOptions {
     showInstructions?: boolean;
+    /** Hears the reader open or close the instructions, to remember for next time. */
+    onShowInstructions?: (shown: boolean) => void;
     /** The level of the row's own headings, under the page's: the window has none between its title and the row. */
     heading?: 'h2' | 'h3';
+    /** When the transaction was captured, and from which site: what a saved file is named by. */
+    capturedAt?: number;
+    site?: string;
 }
 
 /**
- * The body of one row: the summary, the findings, what it does, then the
- * instructions and the details behind a toggle (open when
- * `options.showInstructions`), then the text.
+ * The body of one row: for a transaction explained, the summary, the
+ * findings, what it does, then the instructions and the details behind a
+ * toggle (open when `options.showInstructions`), the notes on what was
+ * read, and the full text; for anything else, what there is to say.
  */
 export function renderRow(row: Row, options: RenderOptions = {}): HTMLDivElement {
     const body = element('div', 'explanation');
-    if (row.error) {
-        body.append(element('pre', '', row.error));
-        return body;
+    switch (row.kind) {
+        case 'failed':
+            body.append(element('pre', '', row.error));
+            return body;
+        case 'message':
+            body.append(element('pre', '', row.text));
+            return body;
+        case 'consent':
+            body.append(element('p', '', 'Asked to see the watched address '), element('code', 'watched', row.address));
+            return body;
+        case 'explained':
+            return explainedNode(body, row, options);
     }
-    if (row.summary) body.append(element('p', 'summary-line', row.summary));
-    if (row.findings?.length) {
+}
+
+function explainedNode(body: HTMLDivElement, row: ExplainedRow, options: RenderOptions): HTMLDivElement {
+    body.append(element('p', 'summary-line', row.summary));
+    if (row.findings.length) {
         const list = element('ul', 'findings');
         for (const finding of row.findings) {
             // An informational finding is a note, not a warning, and reads as one.
@@ -504,40 +488,35 @@ export function renderRow(row: Row, options: RenderOptions = {}): HTMLDivElement
         }
         body.append(list);
     }
-    const structured = Array.isArray(row.sections) && Array.isArray(row.effects);
-    if (structured && row.effects?.length) {
+    if (row.effects.length) {
         body.append(element(options.heading ?? 'h3', 'effects-title', 'What this does'));
         const list = element('ul', 'effects');
         for (const effect of row.effects) list.append(effectNode(effect));
         body.append(list);
     }
-    if (structured && row.sections) body.append(instructionsNode({ ...row, sections: row.sections }, Boolean(options.showInstructions)));
+    body.append(instructionsNode(row, options));
     if (row.chain) {
         body.append(
             element('p', 'tables', `Chain: the page says ${row.chain}; read and simulated on the RPC in the settings all the same`),
         );
     }
-    if (row.tables && row.tables !== 'none') body.append(element('p', 'tables', `Lookup tables: ${row.tables}`));
-    if (row.simulation && row.simulation !== 'off') body.append(element('p', 'tables', `Simulation: ${row.simulation}`));
-    if (row.hints?.length) {
+    if (row.tables !== 'none') body.append(element('p', 'tables', `Lookup tables: ${row.tables}`));
+    if (row.simulation !== 'off') body.append(element('p', 'tables', `Simulation: ${row.simulation}`));
+    if (row.hints.length) {
         body.append(element('p', 'tables', `Unlisted tokens named from the RPC and the token list, unverified: ${row.hints.join(', ')}`));
     }
     // What the simulation found, under the line that says it ran.
-    for (const section of structured && row.sections ? row.sections.filter((s) => s.kind.type === 'Claims') : []) {
+    for (const section of row.sections.filter((s) => s.kind.type === 'Claims')) {
         body.append(sectionNode(section, !section.collapsed, []));
     }
-    const text = element('pre', '', row.text ?? '');
-    if (structured) {
-        const holder = element('div');
-        holder.append(text);
-        body.append(disclosure('full-text', 'Full text, as the engine prints it', holder, false));
-    } else {
-        body.append(text);
-    }
+    const holder = element('div');
+    holder.append(element('pre', '', row.text));
+    body.append(disclosure('full-text', 'Full text, as the engine prints it', holder, false));
+    // A row slimmed to fit the history has no bytes left to save.
     if (row.capture) {
         const save = element('a', 'save', 'Save the transaction');
-        const stamp = new Date(row.capturedAt ?? Date.now()).toISOString().replace(/[-:]/g, '').replace(/\..*/, '');
-        save.download = `${stamp}-${(row.site ?? 'capture').replace(/[^a-zA-Z0-9.-]/g, '_')}.b64`;
+        const stamp = new Date(options.capturedAt ?? Date.now()).toISOString().replace(/[-:]/g, '').replace(/\..*/, '');
+        save.download = `${stamp}-${(options.site ?? 'capture').replace(/[^a-zA-Z0-9.-]/g, '_')}.b64`;
         save.href = `data:text/plain;charset=utf-8,${encodeURIComponent(row.capture)}`;
         save.title = 'The transaction with its lookup tables, as the SignLens engine reads it';
         body.append(save);

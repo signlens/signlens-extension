@@ -3,8 +3,24 @@
 // What a dapp asks it to sign goes to the extension, which explains it and
 // shows the explanation; then the request is refused (watch mode) or, once
 // the user agrees, handed to a real wallet (pass-through mode). A classic
-// script in the page's main world: no imports, and nothing of the page's
-// is trusted.
+// script in the page's main world: no imports.
+//
+// It shares that world with the page, which may replace any built-in,
+// before a call or during one. Against that it holds two things:
+// - The bytes. What is explained and what the wallet is handed are the
+//   same copies, made when the dapp asked (`snapshot`) through built-ins
+//   taken before any page script ran (below): nothing the page does after
+//   the call changes the bytes between the explanation and the wallet.
+// - The port. The channel to the extension is a MessagePort kept in this
+//   closure and offered to the content script once, before any page
+//   listener exists (`offer`). It is used only through the built-ins taken
+//   at start-up, and no page code runs while its message event is the
+//   current one (`port.onmessage`), so `window.event` does not reach it.
+// It does not hold the rest: a page that replaces what this script uses
+// at run time (Map, Promise, setTimeout, the array methods) can tamper
+// with the answers to its own requests, and so skip the window. That
+// gains it nothing it could not get by asking the real wallet directly,
+// which asks the user all the same.
 
 (() => {
     const NAME = 'SignLens';
@@ -13,11 +29,8 @@
     // A request that waits for the user's decision in the SignLens window;
     // past this it is refused, not passed on.
     const DECISION_TIMEOUT_MS = 10 * 60_000;
-    // Taken before any page script runs. A page that replaces the originals
-    // later cannot reach the port through them, keep a request from the
-    // extension, or change the bytes between their explanation and the
-    // wallet: the port, the copies of the bytes and their encoding are only
-    // ever touched through these.
+    // Taken before any page script runs: the port, the copies of the bytes
+    // and their encoding are only ever touched through these.
     const post = MessagePort.prototype.postMessage;
     const apply = Reflect.apply;
     const defineProperty = Reflect.defineProperty;
@@ -27,6 +40,7 @@
     const ByteArray = Uint8Array;
     const fromCharCode = String.fromCharCode;
     const encodeBase64 = btoa;
+    const schedule = setTimeout;
     // These getters read internal slots, so they answer for a real typed
     // array or message event only, whatever an object claims to be.
     const TYPED_ARRAY = Object.getPrototypeOf(Uint8Array.prototype) as object;
@@ -95,15 +109,8 @@
     // One MessageChannel: this side keeps one port in its closure and
     // offers the other to the content script in a single window message,
     // which that script consumes before any page listener runs. From then
-    // on nothing on the window is listened to, and the port is used only
-    // through what was taken at start-up, so a page cannot reach it to
-    // forge an answer or a setting.
-    //
-    // Code in the page's own world cannot be fully protected from the page:
-    // one that rewrites built-ins such as Promise can make this wallet skip
-    // the window, which gains it nothing it could not get by asking the
-    // real wallet directly. What it cannot do is have SignLens explain one
-    // transaction and pass on another; see `snapshot`.
+    // on nothing on the window is listened to. What this holds, and what
+    // not, is in the header.
 
     interface Waiting {
         resolve: (value: unknown) => void;
@@ -114,29 +121,31 @@
     interface PortMessage {
         id?: number;
         type?: string;
-        config?: PageConfig;
+        config?: unknown;
         result?: unknown;
         error?: string;
     }
 
-    /** What the extension tells every page: never the watched address, which a site gets only once allowed (`askToWatch`). */
-    interface PageConfig {
-        mode: 'watch' | 'passthrough';
-        upstream: string;
-    }
-
-    /** What `show` makes of the extension's answer: a line for the dapp, and whether the request goes on. */
-    interface Shown {
-        summary: string;
-        passOn: boolean;
-    }
+    /**
+     * What `askExtension` makes of the extension's answer: whether the request goes
+     * on, and if not, who stopped it: the user ('rejected', with where the
+     * explanation is or why there is none), or SignLens ('refused', with
+     * why). One line for the dapp, without a prefix: `finish` adds it.
+     */
+    type Shown = { passOn: true } | { passOn: false; by: 'user' | 'signlens'; why: string };
 
     /** `object[key]` when it is the object's own: a page cannot answer for a missing key through the prototypes it can change. */
     function own(object: unknown, key: string): unknown {
         return typeof object === 'object' && object !== null && hasOwn(object, key) ? (object as Record<string, unknown>)[key] : undefined;
     }
 
-    /** Sets `key` of `object` as its own property, past any setter a page put on a prototype. */
+    /**
+     * Sets `key` of `object` as its own property, past any setter a page put
+     * on a prototype. The descriptor has no prototype of its own: one
+     * inheriting from Object.prototype would also read a `get` or `set` the
+     * page put there, and defineProperty refuses a value with an accessor,
+     * so the page could make every request fail.
+     */
     function put(object: object, key: PropertyKey, value: unknown): void {
         const descriptor = create(null) as PropertyDescriptor;
         descriptor.value = value;
@@ -156,9 +165,20 @@
     const channel = new MessageChannel();
     const port = channel.port1;
 
+    // While this listener runs, `window.event` is the port's message event,
+    // and its target this port; so is it in the microtasks run as the
+    // listener returns. Whatever an answer settles runs the page's code (a
+    // dapp's change listener, its code after an `await`), so the listener
+    // only takes the data, through what was captured, and an answer is
+    // handled in a task of its own, where there is no event to read.
     port.onmessage = (event: MessageEvent<PortMessage>) => {
         if (messageData === undefined) return;
         const data: unknown = apply(messageData, event, []);
+        schedule(() => receive(data), 0);
+    };
+
+    /** An answer or a notice from the extension. */
+    function receive(data: unknown): void {
         const type = own(data, 'type');
         if (type === 'connected') {
             announceWallets();
@@ -166,7 +186,8 @@
         }
         if (type === 'config-changed') {
             const next = own(data, 'config');
-            if (next) applyConfig(next as PageConfig);
+            const read = readConfig(next);
+            if (read) applyConfig(read);
             void recheck();
             return;
         }
@@ -179,7 +200,7 @@
         const error = own(data, 'error');
         if (error === undefined) waiting.resolve(own(data, 'result'));
         else waiting.reject(new Error(String(error)));
-    };
+    }
 
     /**
      * Offers the other port to the content script. Both scripts run at
@@ -209,7 +230,7 @@
                     new Error(
                         type === 'config'
                             ? 'the extension did not answer; reload the page'
-                            : `no decision in SignLens within ${DECISION_TIMEOUT_MS / 60_000} minutes`,
+                            : `no decision within ${DECISION_TIMEOUT_MS / 60_000} minutes`,
                     ),
                 );
             }, timeout);
@@ -222,7 +243,8 @@
 
     // ---- State ----
 
-    let config: PageConfig = { mode: 'passthrough', upstream: '' };
+    // What the extension tells every page: never the watched address, which a site gets only once allowed (`askToWatch`).
+    let config: SignLensPage.Config = { mode: 'passthrough', upstream: '' };
     let accounts: readonly WalletAccount[] = Object.freeze([]);
     // null until connected; then the mode, and for pass-through the wallet behind it.
     let session: { mode: 'watch' } | { mode: 'passthrough'; upstream: Wallet; stopWatching: (() => void) | undefined } | null = null;
@@ -257,7 +279,14 @@
         setAccounts([]);
     }
 
-    function applyConfig(next: PageConfig): void {
+    /** The settings the extension answered with, or `null` for anything else (it answers `null` when it cannot read them). */
+    function readConfig(value: unknown): SignLensPage.Config | null {
+        const mode = own(value, 'mode');
+        const upstream = own(value, 'upstream');
+        return (mode === 'passthrough' || mode === 'watch') && typeof upstream === 'string' ? { mode, upstream } : null;
+    }
+
+    function applyConfig(next: SignLensPage.Config): void {
         config = next;
         // The dapp connected to a different kind of wallet; make it reconnect.
         if (session && session.mode !== config.mode) endSession();
@@ -334,7 +363,7 @@
      * array, a getter that answers differently the second time, replacing a
      * built-in) changes the bytes between the explanation and the wallet.
      */
-    function snapshot(inputs: SignInput[], bytes: 'transaction' | 'message'): SignInput[] {
+    function snapshot(inputs: SignInput[], field: 'transaction' | 'message'): SignInput[] {
         const copies: SignInput[] = [];
         for (let i = 0; i < inputs.length; i += 1) {
             const input: unknown = inputs[i];
@@ -343,10 +372,10 @@
             // An ordinary object, as a wallet expects one (it may call its
             // methods), with every field its own, as no prototype can fake.
             const copy: SignInput = {};
-            put(copy, bytes, copyBytes(given[bytes], bytes));
+            put(copy, field, copyBytes(given[field], field));
             const account = given.account;
             if (account !== undefined) put(copy, 'account', account);
-            if (bytes === 'transaction') {
+            if (field === 'transaction') {
                 const chain = given.chain;
                 const options = given.options;
                 if (chain !== undefined) put(copy, 'chain', chain);
@@ -370,43 +399,55 @@
     /**
      * Sends what was asked to the extension, which explains it, shows the
      * explanation and waits for the user's decision when the window is on.
-     * Returns a line for the dapp and whether to pass the request on: on the
-     * user's "continue", or when the extension says it did not ask (the
-     * window off, and nothing SignLens would refuse).
+     * The request goes on only on a decision to continue: the user's, or,
+     * with the window off, the extension's word that nothing stopped it.
      * Anything else (no answer, a reload, the clock, an answer without a
      * decision) is a refusal: the request is never passed on unexplained.
      * The answer never says what the explanation found, since that depends
      * on the user's address book; it stays in the extension.
      */
-    async function show(type: 'explain' | 'message', method: string, payload: Record<string, unknown>): Promise<Shown> {
+    async function askExtension(type: 'explain' | 'message', method: string, payload: Record<string, unknown>): Promise<Shown> {
         let answer: unknown;
         try {
             answer = await request(type, { method, ...payload });
         } catch (error) {
             const reason = error instanceof Error ? error.message : String(error);
             console.warn(`[${NAME}] ${method}: refused, ${reason}`);
-            return { summary: `SignLens did not answer (${reason}), so the request was refused.`, passOn: false };
+            return { passOn: false, by: 'signlens', why: reason };
         }
         const decision = own(answer, 'decision');
-        const passOn = decision === 'continue' || (own(answer, 'gate') === false && decision === undefined);
+        const refused = own(answer, 'refused');
         const error = own(answer, 'error');
-        if (typeof error === 'string') {
-            console.warn(`[${NAME}] ${method}: ${error}`);
-            return { summary: `SignLens could not explain it: ${error}`, passOn };
-        }
-        if (!passOn && decision !== 'reject') return { summary: 'SignLens got no decision, so the request was refused.', passOn };
-        return { summary: `The ${type === 'message' ? 'message' : 'explanation'} is in the SignLens popup.`, passOn };
+        if (typeof error === 'string') console.warn(`[${NAME}] ${method}: ${error}`);
+        if (decision === 'continue') return { passOn: true };
+        if (decision !== 'reject') return { passOn: false, by: 'signlens', why: 'no decision came back' };
+        if (typeof refused === 'string') return { passOn: false, by: 'signlens', why: refused };
+        const why =
+            typeof error === 'string'
+                ? `SignLens could not explain it: ${error}`
+                : `The ${type === 'message' ? 'message' : 'explanation'} is in the SignLens popup.`;
+        return { passOn: false, by: 'user', why };
     }
 
-    /** Hands the copies to the real wallet, or refuses them. */
-    function finish(method: string, name: string, copies: SignInput[], { summary, passOn }: Shown): Promise<unknown> {
-        if (session?.mode !== 'passthrough') throw new Error(`${NAME} holds no keys: nothing was signed. ${summary}`);
-        if (!passOn) throw new Error(`${NAME}: rejected in SignLens. ${summary}`);
+    /** Hands the copies to the real wallet, or refuses them, saying once who refused and why. */
+    function finish(method: string, name: string, copies: SignInput[], shown: Shown): Promise<unknown> {
+        if (session?.mode !== 'passthrough') {
+            const why = shown.passOn ? '' : shown.by === 'signlens' ? ` Refused by SignLens (${shown.why}).` : ` ${shown.why}`;
+            throw new Error(`${NAME} holds no keys: nothing was signed.${why}`);
+        }
+        if (!shown.passOn) {
+            throw new Error(shown.by === 'signlens' ? `${NAME}: refused (${shown.why}).` : `${NAME}: rejected in SignLens. ${shown.why}`);
+        }
         const upstream = session.upstream;
         const feature = upstream.features[method];
         const sign = feature?.[name];
         if (typeof sign !== 'function') throw new Error(`${NAME}: ${upstream.name} does not support ${method}`);
         return apply(sign, feature, copies) as Promise<unknown>;
+    }
+
+    /** The wallet a request goes to on Continue, by the name it registered with, for the window to say so. */
+    function handedTo(): { wallet?: string } {
+        return session?.mode === 'passthrough' && typeof session.upstream.name === 'string' ? { wallet: session.upstream.name } : {};
     }
 
     function transactionFeature(method: string, name: string): SignFunction {
@@ -420,7 +461,7 @@
                 append(transactions, toBase64(copy.transaction as Uint8Array));
                 append(chains, typeof copy.chain === 'string' ? copy.chain : null);
             }
-            const shown = await show('explain', method, { accounts: addresses(accounts), transactions, chains });
+            const shown = await askExtension('explain', method, { accounts: addresses(accounts), transactions, chains, ...handedTo() });
             return finish(method, name, copies, shown);
         };
     }
@@ -428,13 +469,12 @@
     const signMessage: SignFunction = async (...inputs) => {
         if (!session) throw new Error(`${NAME}: not connected; connect first`);
         const copies = snapshot(inputs, 'message');
-        let shown: Shown = { summary: '', passOn: false };
+        let shown: Shown = { passOn: false, by: 'signlens', why: 'nothing to sign' };
         for (let i = 0; i < copies.length; i += 1) {
             const copy = copies[i] as SignInput;
-            const address = copy.account?.address;
-            shown = await show('message', SIGN_MESSAGE, {
-                ...(typeof address === 'string' ? { account: address } : {}),
+            shown = await askExtension('message', SIGN_MESSAGE, {
                 message: toBase64(copy.message as Uint8Array),
+                ...handedTo(),
             });
             if (!shown.passOn) break;
         }
@@ -444,7 +484,9 @@
     // ---- The wallet ----
 
     async function connect(input?: unknown): Promise<{ accounts: readonly WalletAccount[] }> {
-        applyConfig((await request('config')) as PageConfig);
+        const settings = readConfig(await request('config'));
+        if (!settings) throw new Error(`${NAME}: the extension did not answer with its settings; reload the page`);
+        applyConfig(settings);
         if (config.mode === 'passthrough') {
             const upstream = upstreamWallet();
             const granted = await (upstream.features[CONNECT] as ConnectFeature).connect(input);
@@ -568,7 +610,10 @@
 
     // Have the settings by the time a dapp connects.
     request('config').then(
-        (next) => applyConfig(next as PageConfig),
+        (next) => {
+            const read = readConfig(next);
+            if (read) applyConfig(read);
+        },
         () => {},
     );
 })();

@@ -1,12 +1,14 @@
 // Who may see the watched address, against a fake `chrome`: a site sees it
 // only once the user allows it, the answer is kept for that site and that
-// address, a silent connect never asks, and a refusal remembers nothing.
+// address, a silent connect never asks, and a refusal allows nothing. Each
+// time the user is asked, the popup's requests keep what was answered.
 
 import assert from 'node:assert/strict';
 import { beforeEach, test } from 'node:test';
 import { type FakeChrome, installFakeChrome, until } from './chrome.fake.ts';
 import * as gate from './gate.ts';
 import type { ConnectReply } from './messages.ts';
+import type { HistoryEntry } from './model.ts';
 import { DEFAULTS, type Settings } from './settings.ts';
 import { approvals, approve, connectWatch, revoke } from './sites.ts';
 
@@ -59,6 +61,17 @@ test('the approvals are kept per site and per address, and taken back the same w
     );
 });
 
+test('approvals and revocations at the same moment are written in turn: none undoes another', async () => {
+    await Promise.all([approve(DAPP, A, 1), approve('https://other.example', A, 2), approve(DAPP, B, 3), revoke(DAPP, A)]);
+    assert.deepEqual(
+        (await approvals()).map((a) => [a.origin, a.address]),
+        [
+            ['https://other.example', A],
+            [DAPP, B],
+        ],
+    );
+});
+
 test('a site the user allows sees the address, and is not asked again', BOUNDED, async () => {
     const asking = connectWatch({ origin: DAPP }, tab, WATCHING);
     const { id, request } = await consentWindow();
@@ -74,7 +87,7 @@ test('a site the user allows sees the address, and is not asked again', BOUNDED,
     assert.equal(fake.windows.size, 0);
 });
 
-test('denying, or closing the window, refuses and remembers nothing', BOUNDED, async () => {
+test('denying, or closing the window, refuses and allows nothing', BOUNDED, async () => {
     const denied = connectWatch({ origin: DAPP }, tab, WATCHING);
     gate.decide((await consentWindow()).id, 'reject');
     assert.deepEqual(await denied, { approved: false, error: 'the connection was refused in SignLens' });
@@ -82,6 +95,52 @@ test('denying, or closing the window, refuses and remembers nothing', BOUNDED, a
     fake.closeWindow((await consentWindow()).windowId);
     assert.deepEqual(await closed, { approved: false, error: 'the connection was refused in SignLens' });
     assert.deepEqual(await approvals(), []);
+});
+
+test('each time the user is asked, the requests keep the answer; a connect not asked about is not kept', BOUNDED, async () => {
+    const allowing = connectWatch({ origin: DAPP }, tab, WATCHING);
+    gate.decide((await consentWindow()).id, 'continue');
+    await allowing;
+    const denying = connectWatch({ origin: 'https://other.example' }, tab, WATCHING);
+    gate.decide((await consentWindow()).id, 'reject');
+    await denying;
+    fake.failNextWindow();
+    await connectWatch({ origin: 'https://third.example' }, tab, WATCHING);
+    // Allowed before: answered without asking, and not kept again.
+    await connectWatch({ origin: DAPP }, tab, WATCHING);
+    await connectWatch({ origin: 'https://other.example', silent: true }, tab, WATCHING);
+    const { history = [] } = fake.session as { history?: HistoryEntry[] };
+    assert.deepEqual(
+        history.map(({ origin, method, mode, decision, refused, rows }) => ({ origin, method, mode, decision, refused, rows })),
+        [
+            {
+                origin: 'https://third.example',
+                method: 'standard:connect',
+                mode: 'watch',
+                decision: 'reject',
+                refused: 'the SignLens window could not open: no display',
+                rows: [{ kind: 'consent', address: A }],
+            },
+            {
+                origin: 'https://other.example',
+                method: 'standard:connect',
+                mode: 'watch',
+                decision: 'reject',
+                refused: undefined,
+                rows: [{ kind: 'consent', address: A }],
+            },
+            {
+                origin: DAPP,
+                method: 'standard:connect',
+                mode: 'watch',
+                decision: 'continue',
+                refused: undefined,
+                rows: [{ kind: 'consent', address: A }],
+            },
+        ],
+    );
+    // Not a request to sign: the badge is left as it was.
+    assert.equal(fake.badge, '');
 });
 
 test('a silent connect never opens a window, and says nothing of why', async () => {
@@ -104,7 +163,7 @@ test('allowing one address is not allowing another, nor another site', BOUNDED, 
 test('outside watch mode, without an address, or while the tab asks something else, nothing is shown', async () => {
     assert.deepEqual(await connectWatch({ origin: DAPP }, tab, { ...WATCHING, mode: 'passthrough' }), {
         approved: false,
-        error: 'SignLens is not in watch mode',
+        error: 'SignLens is not set to watch-only',
     });
     const none = await connectWatch({ origin: DAPP }, tab, { ...WATCHING, address: 'EPjF' });
     assert.equal(none.approved, false);
@@ -112,7 +171,7 @@ test('outside watch mode, without an address, or while the tab asks something el
     const busy = gate.begin(tab);
     assert.ok(busy);
     const reply = await connectWatch({ origin: DAPP }, tab, WATCHING);
-    gate.end(tab);
+    gate.end(tab, busy);
     assert.match(reply.approved ? '' : (reply.error ?? ''), /still busy/);
     assert.equal(fake.windows.size, 0);
 });

@@ -14,6 +14,8 @@ test('a site sees the watched address only once allowed, and is not asked again'
     await expect(ask.locator('#where .host')).toContainText('localhost');
     await expect(ask.locator('#where')).toContainText('wants to see the address SignLens watches');
     await expect(ask.locator('#address')).toHaveText(WATCHED);
+    await expect(ask.getByRole('heading', { level: 1 })).toHaveText('Connect watch-only');
+    await expect(ask.locator('.aside')).toContainText('Deny refuses this time only: the site asks again the next time it connects.');
     // Denying is where the focus is: Enter cannot allow.
     await expect(ask.getByRole('button', { name: 'Deny' })).toBeFocused();
     await ask.getByRole('button', { name: 'Allow' }).click();
@@ -26,7 +28,13 @@ test('a site sees the watched address only once allowed, and is not asked again'
     expect(context.pages().filter((page) => !page.isClosed() && page.url().includes('connect.html'))).toEqual([]);
 });
 
-test('denying, or closing the window, refuses the connect and remembers nothing', async ({ configure, context, dapp, worker }) => {
+test('denying, or closing the window, refuses the connect, allows nothing, and the requests say so', async ({
+    configure,
+    context,
+    dapp,
+    popup,
+    worker,
+}) => {
     await configure({ mode: 'watch', address: WATCHED, gate: false }, { allowed: false });
     const connect = () => dapp.evaluate((wallet: string) => window.connect(wallet).catch((error: Error) => error.message), WALLET);
 
@@ -39,6 +47,18 @@ test('denying, or closing the window, refuses the connect and remembers nothing'
     expect(await connecting).toContain('the connection was refused in SignLens');
     expect(await worker.evaluate(() => chrome.storage.local.get('watchSites'))).toEqual({ watchSites: [] });
     expect(await dapp.evaluate((wallet: string) => window.accountsOf(wallet), WALLET)).toEqual([]);
+
+    // Both are in the requests: which site asked, and that it was denied.
+    await popup.reload();
+    await popup.getByRole('tab', { name: /^Requests/ }).click();
+    const rows = popup.locator('#history > li');
+    await expect(rows).toHaveCount(2);
+    for (const row of await rows.all()) {
+        await expect(row.locator('.verdict')).toHaveText('connect');
+        await expect(row.locator('.decision')).toHaveText('denied');
+        await expect(row.locator('.where')).toHaveText(/^localhost:\d+ · connect$/);
+        await expect(row.locator('.lead')).toHaveText(`Asked to see the watched address ${WATCHED}`);
+    }
 });
 
 test('a silent connect never opens a window: it gets the address only where allowed before', async ({ configure, context, dapp }) => {

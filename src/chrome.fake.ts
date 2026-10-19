@@ -1,7 +1,8 @@
 // A stand-in for the few `chrome` APIs the worker's modules use, so their
-// tests run in Node: storage in memory, the badge, and windows that open,
-// close as the user closes them, and fail to open on request. A `.fake.ts`
-// file is never built into the extension (tsconfig.build.json).
+// tests run in Node: storage in memory, the badge, a call that keeps the
+// worker up, and windows that open, close as the user closes them, and
+// fail to open on request. A `.fake.ts` file is never built into the
+// extension (tsconfig.build.json).
 
 type Items = Record<string, unknown>;
 
@@ -14,6 +15,8 @@ export interface FakeChrome {
     readonly windows: Map<number, string>;
     /** How many windows were ever opened. */
     opened: number;
+    /** How many times the worker made a call to stay up (`alive.ts`). */
+    pings: number;
     /** Makes the next window fail to open. */
     failNextWindow(): void;
     /** Closes window `id` as the user would. */
@@ -56,13 +59,21 @@ export function installFakeChrome(): FakeChrome {
         badge: '',
         windows,
         opened: 0,
+        pings: 0,
         failNextWindow: () => {
             failing = true;
         },
         closeWindow: close,
     };
     (globalThis as { chrome?: unknown }).chrome = {
-        runtime: { id: 'fake', getURL: (path: string) => `chrome-extension://fake/${path.replace(/^\//, '')}` },
+        runtime: {
+            id: 'fake',
+            getURL: (path: string) => `chrome-extension://fake/${path.replace(/^\//, '')}`,
+            getPlatformInfo: async () => {
+                fake.pings += 1;
+                return { os: 'linux', arch: 'x86-64' };
+            },
+        },
         storage: { session: area(session), local: area({}) },
         action: {
             setBadgeBackgroundColor: async () => {},

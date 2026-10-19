@@ -171,10 +171,10 @@ test('the window puts the verdict and what the transaction does first, with the 
     await expect(total).toHaveAttribute('aria-expanded', 'true');
     await expect(more.locator('dl.fields dd .help-note')).toHaveText(/What the network charges/);
     await total.click();
-    await expect(more.locator('.help-note')).toHaveCount(0);
+    await expect(more.locator('.help-note')).toBeHidden();
     const verified = effects.first().locator('.term', { hasText: '(verified)' }).first();
     await verified.press('Enter');
-    await expect(effects.first().locator('.help-note')).toHaveText(/comes from SignLens itself/);
+    await expect(effects.first().locator('.help-note')).toHaveText(/^This name comes from SignLens or from you/);
     const full = gate.locator('.disclosure.full-text');
     await expect(full.locator('pre')).toBeHidden();
     await full.getByRole('button', { name: 'Full text, as the engine prints it', exact: true }).press('Enter');
@@ -236,4 +236,13 @@ test('long instruction data folds to two lines until asked for', async ({ config
     await expect(more).toHaveAttribute('aria-expanded', 'true');
     await gate.getByRole('button', { name: 'Reject' }).click();
     await signing.catch(() => {});
+});
+
+test('a window whose request is gone says so, with no verdict band and only a way to close it', async ({ context, extensionId }) => {
+    const stale = await context.newPage();
+    await stale.goto(`chrome-extension://${extensionId}/confirm.html?id=gone`);
+    await expect(stale.locator('#note')).toHaveText('This request is no longer pending.');
+    await expect(stale.locator('#band')).toBeHidden();
+    await expect(stale.getByRole('button', { name: 'Continue' })).toBeHidden();
+    await expect(stale.getByRole('button', { name: 'Close' })).toBeVisible();
 });

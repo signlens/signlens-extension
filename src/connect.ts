@@ -3,53 +3,35 @@
 // opened it. Deny has the focus, Escape denies, and closing the window
 // denies too.
 
+import type { Decision } from './model.ts';
 import { originNode } from './render.ts';
-import type { ConnectRequest } from './sites.ts';
+import { getPending } from './store.ts';
+import { withoutScheme } from './text.ts';
+import { byId, noLongerPending, requestId, sendDecision } from './windows.ts';
 
-const id = new URLSearchParams(window.location.search).get('id') ?? '';
-
-function byId<T extends HTMLElement>(name: string): T {
-    return document.getElementById(name) as T;
-}
-
-/** Says the window has nothing left to answer, and offers only to close it. */
-function noLongerPending(): void {
-    byId('note').textContent = 'This request is no longer pending.';
-    byId('allow').hidden = true;
-    const deny = byId<HTMLButtonElement>('deny');
-    deny.textContent = 'Close';
-    deny.focus();
-}
+const NO_LONGER_PENDING = 'This request is no longer pending.';
 
 /** Sends the answer to the worker; an Allow no request waits for any more says so rather than close as if it counted. */
-function decide(decision: 'continue' | 'reject'): void {
-    chrome.runtime.sendMessage({ type: 'decision', id, decision }).then(
-        (taken: unknown) => {
-            if (taken === true || decision === 'reject') window.close();
-            else noLongerPending();
-        },
-        () => window.close(),
-    );
+function decide(decision: Decision): void {
+    sendDecision(decision, () => noLongerPending(NO_LONGER_PENDING, byId('allow'), byId('deny')));
 }
 
 async function start(): Promise<void> {
-    const stored = (await chrome.storage.session.get(`pending:${id}`)) as Record<string, ConnectRequest | undefined>;
-    const request = stored[`pending:${id}`];
+    const request = await getPending('connect.html', requestId);
     byId('deny').addEventListener('click', () => decide('reject'));
     document.addEventListener('keydown', (event) => {
         if (event.key === 'Escape') decide('reject');
     });
     if (!request) {
-        noLongerPending();
+        noLongerPending(NO_LONGER_PENDING, byId('allow'), byId('deny'));
         return;
     }
     byId('where').replaceChildren(originNode(request.origin, ' wants to see the address SignLens watches'));
+    document.title = `${withoutScheme(request.origin)} asks to see the watched address · SignLens`;
     byId('address').textContent = request.address;
     byId('allow').addEventListener('click', () => decide('continue'));
     // Denying is the safe default: it has the focus, so Enter cannot allow.
     byId('deny').focus();
-    // The worker that waits for the answer idles out otherwise.
-    setInterval(() => chrome.runtime.sendMessage({ type: 'ping' }).catch(() => {}), 20_000);
 }
 
 void start();

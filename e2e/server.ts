@@ -7,7 +7,8 @@
 // call (its method, path and body), so the suite needs no API; a call
 // nothing was recorded for fails its test. With `SIGNLENS_API_URL` set,
 // the calls go to that API instead and each answer is held against its
-// recording: one that differs, or was never recorded, fails its test. With
+// recording: one that departs from it, or was never recorded, is drift,
+// which e2e/drift.ts reports (see `departure` for what counts). With
 // `SIGNLENS_RECORD=1` as well, each answer is kept instead
 // (`npm run test:e2e:record`). Feedback is never sent anywhere: it is a
 // write, answered here as the API would. Nothing else touches the network.
@@ -15,14 +16,13 @@
 import { createHash } from 'node:crypto';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { createServer } from 'node:http';
-import { base58Decode, base58Encode, tableLookups } from '../src/solana.ts';
+import { base58Decode, LOOKUP_TABLE_PROGRAM, messageAccounts, tableLookups } from '../src/solana.ts';
 
 const DAPP = readFileSync(new URL('dapp.html', import.meta.url));
 const FIXTURES = new URL('fixtures/', import.meta.url);
 export const RECORDINGS = new URL('api/', FIXTURES);
 const LIVE = process.env.SIGNLENS_API_URL?.replace(/\/+$/, '');
 const RECORD = process.env.SIGNLENS_RECORD === '1';
-const LOOKUP_TABLE_PROGRAM = 'AddressLookupTab1e1111111111111111111111111';
 
 /** A fixture file's bytes and the addresses its lookup tables load; `path` is its name under e2e/fixtures, with or without `.b64`. */
 export interface Fixture {
@@ -58,15 +58,62 @@ function recordingOf(method: string, path: string, body: unknown): URL {
     return new URL(`${method.toLowerCase()}${path.replace(/[^A-Za-z0-9]+/g, '-')}-${hash}.json`, RECORDINGS);
 }
 
-/** Whether an answer of `status` and `text` is the one `kept`, JSON compared as JSON. */
-function sameAnswer(kept: Recording, status: number, text: string): boolean {
-    if (kept.response.status !== status) return false;
-    if (kept.response.text !== undefined) return kept.response.text === text;
-    try {
-        return canonical(text ? JSON.parse(text) : null) === canonical(kept.response.body);
-    } catch {
-        return false;
+/**
+ * What of an answer may change with the API's data without the recordings
+ * going stale: its version, and when, from what and how much the packs and
+ * the token snapshot were built. The tests read none of it as recorded.
+ */
+const VOLATILE = new Set([
+    'engine',
+    'descriptorPack.createdAt',
+    'descriptorPack.source',
+    'descriptorPack.programs',
+    'tokenSnapshot.createdAt',
+    'tokenSnapshot.source',
+    'tokenSnapshot.tokens',
+]);
+
+/**
+ * Where `live` departs from the recorded `kept`, as a path, or `null`
+ * where it holds: every value recorded is there, the same, at the same
+ * place, and every list as long. A field the API added holds, as does a
+ * VOLATILE one.
+ */
+function departure(kept: unknown, live: unknown, path = ''): string | null {
+    if (VOLATILE.has(path)) return null;
+    const here = path || 'the answer';
+    if (Array.isArray(kept)) {
+        if (!Array.isArray(live) || live.length !== kept.length) return here;
+        for (const [i, item] of kept.entries()) {
+            const at = departure(item, live[i], `${path}[${i}]`);
+            if (at) return at;
+        }
+        return null;
     }
+    if (kept !== null && typeof kept === 'object') {
+        if (live === null || typeof live !== 'object' || Array.isArray(live)) return here;
+        for (const [key, item] of Object.entries(kept)) {
+            const value = Object.hasOwn(live, key) ? (live as Record<string, unknown>)[key] : undefined;
+            const at = departure(item, value, path ? `${path}.${key}` : key);
+            if (at) return at;
+        }
+        return null;
+    }
+    return kept === live ? null : here;
+}
+
+/** How an answer of `status` and `text` departs from the recorded `kept`, or `null` when it holds. */
+function drift(kept: Recording, status: number, text: string): string | null {
+    if (kept.response.status !== status) return `answered HTTP ${status}, recorded ${kept.response.status}`;
+    if (kept.response.text !== undefined) return kept.response.text === text ? null : 'answered another text than recorded';
+    let live: unknown;
+    try {
+        live = text ? JSON.parse(text) : null;
+    } catch {
+        return 'answered with something that is not JSON';
+    }
+    const at = departure(kept.response.body, live);
+    return at && `answered otherwise than recorded at ${at}`;
 }
 
 /** An error document from the relay itself, in the API's shape. */
@@ -123,13 +170,9 @@ export function fixture(path: string): Fixture {
 
 /** The fee payer of a serialized transaction, base58. */
 export function feePayer(bytes: Uint8Array): string {
-    let i = 0;
-    const signatures = bytes[i++] ?? 0;
-    i += 64 * signatures;
-    if ((bytes[i] ?? 0) & 0x80) i += 1;
-    i += 3;
-    i += 1;
-    return base58Encode(bytes.subarray(i, i + 32));
+    const [payer] = messageAccounts(bytes);
+    if (!payer?.signer) throw new Error('the transaction has no fee payer');
+    return payer.address;
 }
 
 /**
@@ -191,7 +234,7 @@ export interface TestServer {
     apiCalls: ApiCall[];
     /** The API calls nothing was recorded for, when replaying: the test's fixture fails on any. */
     apiMissed: string[];
-    /** The API calls the live API answered otherwise than recorded, or that were never recorded: the test's fixture fails on any. */
+    /** The API calls the live API answered otherwise than recorded, or that were never recorded: reported by e2e/drift.ts. */
     apiDrifted: string[];
     know(fixture: Fixture): void;
     knowMint(mint: string, symbol: string, decimals: number): void;
@@ -199,7 +242,9 @@ export interface TestServer {
     tokenAccount(address: string, owner: string, mint: string, before: number | bigint, after: number | bigint): void;
     failSimulation(error: unknown, logs?: string[]): void;
     refuse(method: string, status: number, body: string): void;
+    stopRefusing(): void;
     refuseApi(status: number, body?: string): void;
+    delayApi(ms: number): void;
     answerApi(...documents: unknown[]): void;
     expireBlockhash(): void;
     close(): Promise<void>;
@@ -220,11 +265,12 @@ export async function startTestServer(): Promise<TestServer> {
     } = { before: new Map(), after: new Map(), failure: null, logs: [], units: 4200, blockhashExpired: false, refused: null };
     const calls: RpcCall[] = [];
     // Answers the relay gives instead of the API's, in turn, the last repeated.
-    const api: { calls: ApiCall[]; missed: string[]; drifted: string[]; answers: { status: number; body: string }[] } = {
+    const api: { calls: ApiCall[]; missed: string[]; drifted: string[]; answers: { status: number; body: string }[]; delay: number } = {
         calls: [],
         missed: [],
         drifted: [],
         answers: [],
+        delay: 0,
     };
     const rpcAccount = (entry: StoredAccount | undefined) =>
         entry
@@ -247,8 +293,10 @@ export async function startTestServer(): Promise<TestServer> {
                 const sent: unknown = body ? JSON.parse(body) : null;
                 api.calls.push({ method: request.method, path, body: sent });
                 const reply = (status: number, text: string) => {
-                    response.writeHead(status, { 'content-type': 'application/json' });
-                    response.end(text);
+                    setTimeout(() => {
+                        response.writeHead(status, { 'content-type': 'application/json' });
+                        response.end(text);
+                    }, api.delay);
                 };
                 const answer = api.answers.length > 1 ? api.answers.shift() : api.answers[0];
                 if (answer) return reply(answer.status, answer.body);
@@ -285,10 +333,10 @@ export async function startTestServer(): Promise<TestServer> {
                 }
                 if (!RECORD) {
                     // Live: the answer held against its recording, so the recordings are known to hold.
-                    if (!existsSync(file)) api.drifted.push(`${method} ${path}: nothing recorded (${name})`);
-                    else if (!sameAnswer(JSON.parse(readFileSync(file, 'utf8')) as Recording, status, text)) {
-                        api.drifted.push(`${method} ${path}: answered otherwise than recorded (${name})`);
-                    }
+                    const departed = existsSync(file)
+                        ? drift(JSON.parse(readFileSync(file, 'utf8')) as Recording, status, text)
+                        : 'nothing recorded';
+                    if (departed) api.drifted.push(`${method} ${path}: ${departed} (${name})`);
                 }
                 if (RECORD) {
                     let answered: Recording['response'];
@@ -313,6 +361,11 @@ export async function startTestServer(): Promise<TestServer> {
         if (request.method === 'GET' && pathname === '/tokens') {
             const query = new URL(request.url ?? '/', 'http://localhost').searchParams.get('query') ?? '';
             calls.push({ method: 'tokens', query });
+            if (state.refused?.method === 'tokens') {
+                response.writeHead(state.refused.status, { 'content-type': 'text/plain' });
+                response.end(state.refused.body);
+                return;
+            }
             const list = query.split(',').flatMap((mint) => {
                 const known = mints.get(mint);
                 return known ? [{ id: mint, symbol: known.symbol, decimals: known.decimals, name: known.symbol }] : [];
@@ -418,9 +471,13 @@ export async function startTestServer(): Promise<TestServer> {
             state.failure = error;
             state.logs = logs;
         },
-        /** Makes the RPC answer `method` with an HTTP refusal instead of JSON. */
+        /** Makes the RPC answer `method` (or the token list, as `tokens`) with an HTTP refusal instead of JSON. */
         refuse(method: string, status: number, body: string) {
             state.refused = { method, status, body };
+        },
+        /** Answers again what `refuse` made it refuse. */
+        stopRefusing() {
+            state.refused = null;
         },
         /** Makes the RPC refuse the signed blockhash unless the simulation replaces it. */
         expireBlockhash() {
@@ -439,6 +496,10 @@ export async function startTestServer(): Promise<TestServer> {
             body = '{"schema":"signlens-api/1","error":{"code":"busy","message":"every worker is busy; try again"}}',
         ) {
             api.answers = [{ status, body }];
+        },
+        /** Makes the relay answer every API call `ms` later, as a slow API would. */
+        delayApi(ms: number) {
+            api.delay = ms;
         },
         /** Makes the relay answer the API calls with these documents in turn, the last for every call after, as the API would with HTTP 200. */
         answerApi(...documents: unknown[]) {

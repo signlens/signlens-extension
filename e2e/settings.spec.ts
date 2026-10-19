@@ -41,10 +41,11 @@ test('a half-typed address is flagged and not saved', async ({ popup, worker }) 
 test('an address in plain http to another machine is flagged and not saved, and the default is not stored', async ({ popup, worker }) => {
     await popup.getByLabel('SignLens API').fill('http://api.example.com');
     await popup.getByLabel('SignLens API').press('Tab');
-    await expect(popup.locator('#apiUrl-hint')).toHaveText(/Not saved: plain http is for this machine only/);
+    // One word for it, typed now or kept from before: the address is not used.
+    await expect(popup.locator('#apiUrl-hint')).toHaveText(/^Not used: plain http is for this machine only/);
     // The field says it is wrong, and why, to whoever cannot see the red line under it.
     await expect(popup.getByLabel('SignLens API')).toHaveAttribute('aria-invalid', 'true');
-    await expect(popup.getByLabel('SignLens API')).toHaveAccessibleDescription(/Not saved: plain http is for this machine only/);
+    await expect(popup.getByLabel('SignLens API')).toHaveAccessibleDescription(/Not used: plain http is for this machine only/);
     await popup.getByLabel('RPC for lookup tables').fill('https://rpc.example.com');
     await popup.getByLabel('RPC for lookup tables').press('Tab');
     await expect(popup.getByLabel('RPC for lookup tables')).toHaveAttribute('aria-invalid', 'false');
@@ -97,11 +98,11 @@ test('the pass-through wallet is picked from the wallets the page has', async ({
     await expect(select).toHaveValue('Solflare');
     await expect(select.locator('option', { hasText: 'Solflare' })).toHaveText('Solflare (not on this page)');
 
-    // Over a tab with no content script (here: the popup's own) the hint
-    // says to reload it, and the choice stays.
+    // Over a page SignLens does not run on (here: the popup's own) the hint
+    // says so, and the choice stays.
     await popup.bringToFront();
     await popup.reload();
-    await expect(popup.locator('#upstream-hint')).toHaveText(/SignLens is not running in this tab yet/);
+    await expect(popup.locator('#upstream-hint')).toHaveText(/^SignLens does not run on this page/);
     await expect(select).toHaveValue('Solflare');
 });
 

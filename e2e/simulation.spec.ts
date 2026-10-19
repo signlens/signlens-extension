@@ -73,14 +73,16 @@ test('a simulation within the effects is shown as a claim and agrees quietly', a
     // The marker in the head is its own control, beside the toggle and not in it: it opens its help there, not the section.
     await expect(head.locator('.toggle .term')).toHaveCount(0);
     await head.locator('.term').click();
-    await expect(head.locator('.help-note')).toHaveText(/Everything in this section came from the RPC/);
+    await expect(head.locator('.help-note')).toHaveText(
+        'Everything in this section came from the RPC the extension asked, not from the transaction itself. SignLens could not check it, so treat it as a hint, not a fact.',
+    );
     await expect(outcome.locator('dl.fields')).toBeVisible();
     await head.locator('.term').press('Enter');
-    await expect(head.locator('.help-note')).toHaveCount(0);
+    await expect(head.locator('.help-note')).toBeHidden();
     await expect(outcome.locator('dl.fields')).toBeVisible();
     await expect(outcome.locator('.claimed')).toHaveCount(0);
     await outcome.locator('dt .term', { hasText: 'Compute units' }).click();
-    await expect(outcome.locator('.help-note')).toHaveText(/paid per unit/);
+    await expect(outcome.locator('dl.fields .help-note')).toHaveText(/paid per unit/);
 });
 
 test('an RPC that refuses the simulation is named with its answer', async ({ configure, dapp, popup, server }) => {

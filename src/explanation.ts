@@ -55,6 +55,9 @@ function fail(path: string, problem: string): never {
 
 /** A value as an error message quotes it: short, whatever it is. */
 function quote(value: unknown): string {
+    // A list or an object by its kind only: writing out one nested deep enough overflows the stack.
+    if (Array.isArray(value)) return 'a list';
+    if (typeof value === 'object' && value !== null) return 'an object';
     const text = JSON.stringify(value) ?? String(value);
     return text.length > 40 ? `${text.slice(0, 40)}…` : text;
 }

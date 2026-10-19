@@ -6,26 +6,15 @@
 // the place of `explainRemotely`; the feedback and the status are the
 // server's, and go with it.
 
+import { refusedEndpoint } from './endpoint.ts';
 import { DocumentError, EXPLANATION_SCHEMA, parseExplanation } from './explanation.ts';
-import { endpointProblem } from './settings.ts';
 import { toBase64 } from './solana.ts';
 import { describe } from './text.ts';
-import {
-    type EngineAnswer,
-    type EngineRequest,
-    type ErrorDocument,
-    type Explanation,
-    type Feedback,
-    isError,
-    type PacksDocument,
-    type Verdict,
-} from './types.ts';
+import { type EngineAnswer, type EngineRequest, type ErrorDocument, type Feedback, isError, type PacksDocument } from './types.ts';
 
 const TIMEOUT_MS = 20_000;
 /** The longest answer read, in characters: an explanation is tens of kilobytes. */
 const MAX_DOCUMENT = 2_000_000;
-
-export type RowVerdict = 'ok' | 'warning' | 'blocked';
 
 export interface ApiStatus {
     engine: string;
@@ -37,12 +26,6 @@ export interface ApiStatus {
 /** `apiUrl` without a trailing slash. */
 function root(apiUrl: string): string {
     return apiUrl.trim().replace(/\/+$/, '');
-}
-
-/** Why the API at `base` is not to be asked, or `null`: see `endpointProblem`. */
-function refused(base: string): string | null {
-    const problem = endpointProblem(base);
-    return problem && `the API address in the settings is not usable: ${problem}`;
 }
 
 /** An error document in the engine's own shape, so callers read one kind. */
@@ -63,9 +46,9 @@ function passedOn(document: ErrorDocument): ErrorDocument {
  * error document, which the wallet shows as "could not explain", never as
  * "nothing wrong".
  */
-export async function explainRemotely(apiUrl: string, bytes: Uint8Array, request: EngineRequest = {}): Promise<EngineAnswer> {
+export async function explainRemotely(apiUrl: string, bytes: Uint8Array, request: EngineRequest): Promise<EngineAnswer> {
     const base = root(apiUrl);
-    const problem = refused(base);
+    const problem = refusedEndpoint(base, 'API');
     if (problem) return errorDocument('api', problem);
     let response: Response;
     try {
@@ -92,7 +75,7 @@ export async function explainRemotely(apiUrl: string, bytes: Uint8Array, request
         return errorDocument('api', `the SignLens API answered HTTP ${response.status} without a document`);
     }
     if (typeof document !== 'object' || document === null) return notAnExplanation;
-    if (isError(document as EngineAnswer)) return passedOn(document as ErrorDocument);
+    if (isError(document)) return passedOn(document);
     if (!response.ok || (document as { schema?: unknown }).schema !== EXPLANATION_SCHEMA) return notAnExplanation;
     try {
         return parseExplanation(document);
@@ -105,7 +88,7 @@ export async function explainRemotely(apiUrl: string, bytes: Uint8Array, request
 /** What the API is: its engine version and packs, from `GET /v1/packs`, or `{error}`. */
 export async function apiStatus(apiUrl: string): Promise<ApiStatus | { error: string }> {
     const base = root(apiUrl);
-    const problem = refused(base);
+    const problem = refusedEndpoint(base, 'API');
     if (problem) return { error: problem };
     try {
         const response = await fetch(`${base}/v1/packs`, { signal: AbortSignal.timeout(5_000) });
@@ -129,7 +112,7 @@ export async function apiStatus(apiUrl: string): Promise<ApiStatus | { error: st
  */
 export async function sendFeedback(apiUrl: string, feedback: Feedback): Promise<boolean> {
     const base = root(apiUrl);
-    if (refused(base)) return false;
+    if (refusedEndpoint(base, 'API')) return false;
     try {
         const response = await fetch(`${base}/v1/feedback`, {
             method: 'POST',
@@ -141,11 +124,4 @@ export async function sendFeedback(apiUrl: string, feedback: Feedback): Promise<
     } catch {
         return false;
     }
-}
-
-const ROW_VERDICTS: Readonly<Record<Verdict, RowVerdict>> = { Ok: 'ok', Warn: 'warning', Block: 'blocked' };
-
-/** The verdict a popup row shows for an explanation. */
-export function rowVerdict(explanation: Explanation): RowVerdict {
-    return ROW_VERDICTS[explanation.verdict];
 }

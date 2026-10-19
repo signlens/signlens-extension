@@ -1,15 +1,17 @@
 // Names for tokens the engine's snapshot does not list: decimals from the
 // mint accounts over the RPC, symbols from a token list. Both are claims
 // the host makes, and the engine marks them so; a failure leaves the token
-// unnamed. What was learned is kept for the worker's life.
+// unnamed. What was learned is kept for the worker's life, for the
+// endpoints that answered; a lookup that failed is asked again next time.
 
+import { refusedEndpoint } from './endpoint.ts';
 import type { Settings } from './settings.ts';
 import { fromBase64, isAddress, multipleAccounts, TOKEN_PROGRAMS } from './solana.ts';
 import type { Amount, Effect, Explanation, TokenHint } from './types.ts';
 
 /** Where a mint account keeps its decimals. */
 const MINT_DECIMALS_OFFSET = 44;
-/** Hints learned in this worker's life, by mint; `null` for a mint nothing named. */
+/** Hints learned in this worker's life, by RPC, token list and mint; `null` for a mint both answered for without naming it. */
 const hintCache = new Map<string, TokenHint | null>();
 
 /** The amounts an effect moves, a proposed one's included. */
@@ -58,6 +60,8 @@ async function mintDecimals(rpc: string, mints: string[]): Promise<Map<string, n
 
 /** Symbols from the token list: an array of `{id, symbol, decimals}`, kept to the mints asked for, in printable ASCII. */
 async function tokenSymbols(tokenApiUrl: string, mints: string[]): Promise<Map<string, { symbol: string; decimals: unknown }>> {
+    const refused = refusedEndpoint(tokenApiUrl, 'token list');
+    if (refused) throw new Error(refused);
     const url = new URL(tokenApiUrl);
     url.searchParams.set('query', mints.join(','));
     const response = await fetch(url, { signal: AbortSignal.timeout(10_000) });
@@ -77,22 +81,29 @@ async function tokenSymbols(tokenApiUrl: string, mints: string[]): Promise<Map<s
 
 /** Hints for `mints`, as far as the RPC and the token list name them. Failures leave tokens unnamed. */
 export async function tokenHints(mints: string[], config: Pick<Settings, 'rpcUrl' | 'tokenApiUrl'>): Promise<TokenHint[]> {
-    const wanted = mints.filter((mint) => !hintCache.has(mint));
+    const key = (mint: string) => `${config.rpcUrl} ${config.tokenApiUrl} ${mint}`;
+    const wanted = mints.filter((mint) => !hintCache.has(key(mint)));
     if (wanted.length > 0) {
+        let failed = false;
         const [decimals, symbols] = await Promise.all([
-            mintDecimals(config.rpcUrl, wanted).catch(() => new Map<string, number>()),
-            tokenSymbols(config.tokenApiUrl, wanted).catch(() => new Map<string, { symbol: string; decimals: unknown }>()),
+            mintDecimals(config.rpcUrl, wanted).catch(() => {
+                failed = true;
+                return new Map<string, number>();
+            }),
+            tokenSymbols(config.tokenApiUrl, wanted).catch(() => {
+                failed = true;
+                return new Map<string, { symbol: string; decimals: unknown }>();
+            }),
         ]);
         for (const mint of wanted) {
             const named = symbols.get(mint);
             const d = decimals.get(mint) ?? named?.decimals;
-            hintCache.set(
-                mint,
+            const hint =
                 named && typeof d === 'number' && Number.isInteger(d) && d >= 0 && d <= 20
                     ? { mint, symbol: named.symbol, decimals: d }
-                    : null,
-            );
+                    : null;
+            if (hint || !failed) hintCache.set(key(mint), hint);
         }
     }
-    return mints.map((mint) => hintCache.get(mint)).filter((hint): hint is TokenHint => hint !== null && hint !== undefined);
+    return mints.map((mint) => hintCache.get(key(mint))).filter((hint): hint is TokenHint => hint !== null && hint !== undefined);
 }

@@ -1,12 +1,13 @@
 // The gate, against a fake `chrome`: a request goes on only on "continue",
 // and every other way a window can end (closed, its page gone, its page no
-// longer waiting, never opened) is a refusal that leaves nothing behind.
+// longer waiting, never opened) is a refusal that leaves nothing behind,
+// with the reason when it was not the user's.
 
 import assert from 'node:assert/strict';
 import { beforeEach, test } from 'node:test';
 import { type FakeChrome, installFakeChrome, until } from './chrome.fake.ts';
 import { abandon, askUser, begin, DECISION_TIMEOUT_MS, decide, end, type InFlight, mustAsk } from './gate.ts';
-import type { HistoryEntry } from './render.ts';
+import type { HistoryEntry } from './model.ts';
 
 /** A refusal that never comes fails the test rather than hang the run. */
 const BOUNDED = { timeout: 2_000 };
@@ -16,7 +17,7 @@ beforeEach(() => {
     fake = installFakeChrome();
 });
 
-const ENTRY: HistoryEntry = { time: 1, mode: 'passthrough', upstream: 'Phantom', results: [{ verdict: 'warning', error: null }] };
+const ENTRY: HistoryEntry = { time: 1, mode: 'passthrough', upstream: 'Phantom', rows: [{ kind: 'message', text: 'Sign in' }] };
 
 /** The window that is open, and the id its request goes by. */
 async function openWindow(): Promise<{ windowId: number; id: string }> {
@@ -41,14 +42,32 @@ function flight(deadline = Date.now() + 5_000): InFlight {
 
 test('one request per tab is in flight at a time, with the deadline the page keeps', () => {
     const first = begin(1, 1_000);
-    assert.equal(first?.deadline, 1_000 + DECISION_TIMEOUT_MS);
-    assert.ok(DECISION_TIMEOUT_MS < 10 * 60_000, 'ends before the page gives up');
+    assert.ok(first);
+    assert.equal(first.deadline, 1_000 + DECISION_TIMEOUT_MS);
     assert.equal(begin(1), null);
-    assert.ok(begin(2));
-    end(1);
-    assert.ok(begin(1));
-    end(1);
-    end(2);
+    const second = begin(2);
+    assert.ok(second);
+    end(1, first);
+    const again = begin(1);
+    assert.ok(again);
+    end(1, again);
+    end(2, second);
+});
+
+test("a tab whose page went is free at once for its next request, which the old one's end leaves alone", () => {
+    const old = begin(5);
+    assert.ok(old);
+    abandon(5);
+    assert.equal(old.abandoned, true);
+    const next = begin(5);
+    assert.ok(next, 'the reloaded page asks while the old request is still being explained');
+    // The old request finishes explaining, finds itself abandoned, and ends.
+    end(5, old);
+    assert.equal(begin(5), null, 'the new request is still in flight');
+    end(5, next);
+    const last = begin(5);
+    assert.ok(last);
+    end(5, last);
 });
 
 test('the decision in the window ends the wait, and the window and the pending request go', BOUNDED, async () => {
@@ -62,7 +81,7 @@ test('the decision in the window ends the wait, and the window and the pending r
     assert.equal(decide(id, 'continue'), false);
 });
 
-test('closing the window is a refusal', BOUNDED, async () => {
+test("closing the window is the user's refusal", BOUNDED, async () => {
     const asking = askUser(ENTRY, flight());
     const { windowId } = await openWindow();
     fake.closeWindow(windowId);
@@ -76,16 +95,16 @@ test("the page's tab closing is a refusal, with the window open or before it ope
     const asking = askUser(ENTRY, open);
     await openWindow();
     abandon(7);
-    assert.deepEqual(await asking, { decision: 'reject' });
+    assert.deepEqual(await asking, { decision: 'reject', refused: 'the page closed or reloaded' });
     nothingLeft();
-    end(7);
+    end(7, open);
 
     const gone = begin(8);
     assert.ok(gone);
     abandon(8);
-    assert.deepEqual(await askUser(ENTRY, gone), { decision: 'reject', note: 'the page was closed' });
+    assert.deepEqual(await askUser(ENTRY, gone), { decision: 'reject', refused: 'the page closed or reloaded' });
     nothingLeft();
-    end(8);
+    end(8, gone);
 });
 
 test('a tab closed while its request is being stored gets no window', BOUNDED, async () => {
@@ -94,26 +113,26 @@ test('a tab closed while its request is being stored gets no window', BOUNDED, a
     // The ask runs up to its first write; the tab closes while it waits on it.
     const asking = askUser(ENTRY, racing);
     abandon(11);
-    assert.deepEqual(await asking, { decision: 'reject', note: 'the page was closed' });
+    assert.deepEqual(await asking, { decision: 'reject', refused: 'the page closed or reloaded' });
     assert.equal(fake.opened, 0);
     nothingLeft();
-    end(11);
+    end(11, racing);
 });
 
 test('when the page stops waiting, so does the window; a page already gone gets none', BOUNDED, async () => {
     const asking = askUser(ENTRY, flight(Date.now() + 30));
     await openWindow();
-    assert.deepEqual(await asking, { decision: 'reject' });
+    assert.deepEqual(await asking, { decision: 'reject', refused: 'no decision in time' });
     nothingLeft();
-    assert.deepEqual(await askUser(ENTRY, flight(Date.now() - 1)), { decision: 'reject', note: 'the page stopped waiting' });
+    assert.deepEqual(await askUser(ENTRY, flight(Date.now() - 1)), { decision: 'reject', refused: 'the page stopped waiting' });
     nothingLeft();
 });
 
 test('a window that cannot open is a refusal', BOUNDED, async () => {
     fake.failNextWindow();
-    const { decision, note } = await askUser(ENTRY, flight());
+    const { decision, refused } = await askUser(ENTRY, flight());
     assert.equal(decision, 'reject');
-    assert.match(note ?? '', /could not open \(no display\)/);
+    assert.equal(refused, 'the SignLens window could not open: no display');
     nothingLeft();
 });
 

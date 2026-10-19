@@ -3,7 +3,7 @@
 // what the user chose and nothing more.
 
 import { expect, liveGate, test } from './extension.ts';
-import { explanation, fixture } from './server.ts';
+import { explanation, fixture, recorded } from './server.ts';
 
 const WALLET = 'SignLens';
 
@@ -51,7 +51,9 @@ test('with the window off, a request the API could not explain still waits for t
     // same, and says why; going on is still the user's to choose.
     const gate = await liveGate(context);
     await expect(gate.locator('#band')).toHaveClass(/error/);
-    await expect(gate.locator('#note')).toContainText('The window is off in the settings, but opens for what SignLens would refuse');
+    await expect(gate.locator('#note')).toHaveText(
+        '“Show the explanation and ask first” is off, but SignLens still asks before passing on what it would refuse. Continuing hands this unchanged to Fake Wallet, which asks for its own approval.',
+    );
     await gate.getByRole('button', { name: /Continue anyway/ }).click();
     expect((await signing).signed).toBe(1);
     await popup.reload();
@@ -104,6 +106,23 @@ test('the feedback strip sends the rating, and the transaction only when asked',
         rating: 'wrong',
         transaction: transfer.base64,
     });
+});
+
+test('an explanation SignLens called OK has no transaction to offer for coverage', async ({ configure, context, dapp, server }) => {
+    const transfer = fixture('legacy_durable_nonce_token_transfer');
+    await configure({ lookupTokens: false, simulate: false, mode: 'passthrough', upstream: 'Fake Wallet' });
+    // The recorded explanation, called OK: a digest, so a strip to rate it in.
+    server.answerApi({ ...(recorded('legacy_durable_nonce_token_transfer') as object), verdict: 'Ok' });
+    const signing = dapp.evaluate(({ wallet, base64 }: { wallet: string; base64: string }) => window.sign(wallet, base64), {
+        wallet: WALLET,
+        base64: transfer.base64,
+    });
+    const gate = await liveGate(context);
+    await expect(gate.locator('#band')).toHaveClass(/\bok\b/);
+    await expect(gate.locator('#feedback')).toBeVisible();
+    await expect(gate.locator('#feedback-cover')).toBeHidden();
+    await gate.getByRole('button', { name: 'Reject' }).click();
+    await signing.catch(() => {});
 });
 
 test('a clear rating is sent at once', async ({ configure, context, dapp, server }) => {

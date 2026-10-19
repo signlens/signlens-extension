@@ -96,6 +96,21 @@ test('a v0 transaction names its lookup tables, and the tables resolve the addre
     assert.throws(() => loadedAddresses(lookups, new Map()), /was not found/);
 });
 
+test('a v1 transaction has no lookup tables, and its accounts are the ones the engine reads', () => {
+    // As crates/signlens-solana-tx/tests/mainnet_fixtures.rs has it: header
+    // 1, 0, 15; after it a config mask, the lifetime and the instruction
+    // count, then 52 accounts.
+    const { bytes } = fixture('v1_mainnet_orca_bot');
+    assert.deepEqual(tableLookups(bytes), []);
+    const accounts = messageAccounts(bytes);
+    assert.equal(accounts.length, 52);
+    assert.deepEqual(accounts[0], { address: 'AXmnRBrNtYYyyo82cLBBhnWJ7o1iqNLZbuEVpDB3V666', writable: true, signer: true });
+    assert.equal(accounts.at(-1)?.address, 'HVi6VyyLvTtFTA8f8atavxVjUKi8WjmnydfKgoZKzt7H');
+    assert.equal(accounts.filter((a) => a.signer).length, 1);
+    assert.equal(accounts.filter((a) => a.writable).length, 52 - 15);
+    assert.throws(() => messageAccounts(bytes.subarray(0, 40)), /truncated/);
+});
+
 test('truncated and empty transactions are errors, not guesses', () => {
     assert.throws(() => tableLookups(new Uint8Array()), /empty/);
     assert.throws(() => messageAccounts(new Uint8Array()), /empty/);

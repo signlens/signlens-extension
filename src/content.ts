@@ -18,8 +18,12 @@
 
     let port: MessagePort | null = null;
 
-    /** The requests that may wait on the user, in a window. */
-    const WAITING = new Set(['connect', 'explain', 'message']);
+    // What a page may ask, and which of it may wait on the user, in a
+    // window, over a port of its own named REQUEST_PORT: as messages.ts has
+    // them (protocol.test.ts holds the two to each other).
+    const REQUESTS: readonly SignLensPage.Request[] = ['config', 'connect', 'explain', 'message', 'wallets', 'connect-failed'];
+    const WAITING: readonly SignLensPage.Request[] = ['connect', 'explain', 'message'];
+    const REQUEST_PORT = 'request';
 
     /**
      * Sends a request that may wait on the user over a port of its own. The
@@ -28,9 +32,9 @@
      * refuses the request and closes its window rather than hold the tab.
      * A dapp changing its route keeps the page, and the port.
      */
-    function ask(message: { type: string; payload: unknown }): Promise<unknown> {
+    function sendOverPort(message: { type: string; payload: unknown }): Promise<unknown> {
         return new Promise((resolve, reject) => {
-            const worker = chrome.runtime.connect({ name: 'request' });
+            const worker = chrome.runtime.connect({ name: REQUEST_PORT });
             worker.onMessage.addListener((answer: unknown) => {
                 resolve(answer);
                 worker.disconnect();
@@ -40,21 +44,23 @@
         });
     }
 
+    function isRequest(type: unknown): type is SignLensPage.Request {
+        return (REQUESTS as readonly unknown[]).includes(type);
+    }
+
     async function handle(type: string | undefined, payload: unknown): Promise<unknown> {
+        if (!isRequest(type)) throw new Error(`unknown request '${String(type)}'`);
         try {
-            if (type === 'config') return await chrome.runtime.sendMessage({ type: 'config' });
-            if (type === 'connect' || type === 'explain' || type === 'message' || type === 'wallets' || type === 'connect-failed') {
-                // The origin is stated here, by the extension, not by the page.
-                const given = typeof payload === 'object' && payload !== null ? (payload as Record<string, unknown>) : {};
-                const message = { type, payload: { ...given, origin: window.location.origin } };
-                return await (WAITING.has(type) ? ask(message) : chrome.runtime.sendMessage(message));
-            }
+            if (type === 'config') return await chrome.runtime.sendMessage({ type });
+            // The origin is stated here, by the extension, not by the page.
+            const given = typeof payload === 'object' && payload !== null ? (payload as Record<string, unknown>) : {};
+            const message = { type, payload: { ...given, origin: window.location.origin } };
+            return await (WAITING.includes(type) ? sendOverPort(message) : chrome.runtime.sendMessage(message));
         } catch (error) {
             const text = error instanceof Error ? error.message : String(error);
             if (/context invalidated/i.test(text)) throw new Error('the extension was reloaded; reload this page');
             throw error;
         }
-        throw new Error(`unknown request '${String(type)}'`);
     }
 
     function connect(given: MessagePort): void {

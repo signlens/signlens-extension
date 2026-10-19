@@ -2,10 +2,10 @@
 // the window; the content script asks the worker for the part the page
 // needs.
 
+import type { Mode } from './model.ts';
 import { base58Decode as decodeAddress } from './solana.ts';
+import { local } from './store.ts';
 import type { Contact } from './types.ts';
-
-export type Mode = 'passthrough' | 'watch';
 
 export interface Settings {
     /** 'passthrough': explain every request, then hand it to the wallet you sign with. 'watch': connect as `address`, explain, and refuse. */
@@ -16,7 +16,7 @@ export interface Settings {
     /** The SignLens API that computes the explanations (beta). Later the engine runs inside the extension and this goes. */
     apiUrl: string;
     rpcUrl: string;
-    /** Show the explanation and wait for a decision before refusing a request or passing it on. Off, a request SignLens would refuse (blocked, or not explained) still waits for one (`gate.mustAsk`). */
+    /** "Show the explanation and ask first": wait for a decision before refusing a request or passing it on. Off, in pass-through mode, a request SignLens would refuse (blocked, or an error) still waits for one; in watch mode none does (`gate.mustAsk`). */
     gate: boolean;
     /** The address book, one `Name = address` per line. */
     contacts: string;
@@ -46,32 +46,13 @@ export const DEFAULTS: Readonly<Settings> = Object.freeze({
 /** The endpoints a user can point the extension at. */
 export const ENDPOINTS = ['apiUrl', 'rpcUrl', 'tokenApiUrl'] as const;
 
-const LOOPBACK = new Set(['localhost', '127.0.0.1', '[::1]']);
-
-/**
- * Why `url` cannot be an endpoint, or `null` when it can: https, or plain
- * http to this machine only. The API is sent the transaction and the
- * address book and the RPC the transaction, so not in the clear.
- */
-export function endpointProblem(url: string): string | null {
-    let parsed: URL;
-    try {
-        parsed = new URL(url);
-    } catch {
-        return 'not a URL';
-    }
-    if (parsed.protocol === 'https:') return null;
-    if (parsed.protocol !== 'http:') return 'not an http(s) URL';
-    return LOOPBACK.has(parsed.hostname) ? null : 'plain http is for this machine only (localhost, 127.0.0.1); use https';
-}
-
 /** The settings as stored, with the defaults where nothing is stored. */
 export async function settings(): Promise<Settings> {
-    return (await chrome.storage.local.get(DEFAULTS)) as Settings;
+    return { ...DEFAULTS, ...(await local.get(...(Object.keys(DEFAULTS) as (keyof Settings)[]))) };
 }
 
 /** The 32 bytes `text` is the base58 of, as a plain array (it travels to the page as JSON), or `null`. */
-export function base58Decode(text: unknown): number[] | null {
+export function addressBytes(text: unknown): number[] | null {
     const bytes = decodeAddress(text);
     return bytes ? Array.from(bytes) : null;
 }
@@ -89,7 +70,7 @@ export function parseContacts(text: string): { contacts: Contact[]; bad: number[
         const match = /^(.+?)\s*=\s*([1-9A-HJ-NP-Za-km-z]+)$/.exec(trimmed);
         const name = match?.[1]?.trim();
         const address = match?.[2];
-        if (!match || !name || !address || !base58Decode(address)) {
+        if (!match || !name || !address || !addressBytes(address)) {
             bad.push(i + 1);
             return;
         }
@@ -103,18 +84,13 @@ export function parseContacts(text: string): { contacts: Contact[]; bad: number[
  * `config` message. Never the watched address: every page asks for this,
  * and a site sees that address only once the user allows it (sites.ts).
  */
-export interface PageConfig {
-    mode: Mode;
-    upstream: string;
-}
-
-export function pageConfig(config: Settings): PageConfig {
+export function pageConfig(config: Settings): SignLensPage.Config {
     return { mode: config.mode, upstream: config.upstream };
 }
 
 /** The address watch mode connects as, with its key as a plain array, or `null` while no valid one is set. */
 export function watched(config: Pick<Settings, 'address'>): { address: string; publicKey: number[] } | null {
     const address = config.address.trim();
-    const publicKey = base58Decode(address);
+    const publicKey = addressBytes(address);
     return publicKey ? { address, publicKey } : null;
 }

@@ -114,12 +114,13 @@ function zip(entries: { name: string; data: Uint8Array }[]): Uint8Array {
 }
 
 // What belongs in the package: the static files, and one script per source
-// that is not a test or a test's fake. Anything else in extension/ is a
+// that is not a test, a test's fake or a declaration (which compiles to
+// nothing). Anything else in extension/ is a
 // leftover of an old build and refuses the package rather than ship.
 const SOURCES = join(ROOT, 'src');
 const expected = new Set([
     ...files(SOURCES)
-        .filter((name) => name.endsWith('.ts') && !name.endsWith('.test.ts') && !name.endsWith('.fake.ts'))
+        .filter((name) => name.endsWith('.ts') && !name.endsWith('.test.ts') && !name.endsWith('.fake.ts') && !name.endsWith('.d.ts'))
         .map((name) => name.replace(/\.ts$/, '.js')),
     'manifest.json',
     'popup.html',

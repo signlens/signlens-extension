@@ -12,10 +12,23 @@
             const wallets = new Map();
             const app = {
                 register(...found) {
-                    for (const wallet of found) wallets.set(wallet.name, wallet);
+                    for (const wallet of found) {
+                        wallets.set(wallet.name, wallet);
+                        if (wallet.name === 'SignLens') wallet.features['standard:events'].on('change', () => noteEvent('change'));
+                    }
                     return () => {};
                 },
             };
+
+            // What `window.event` was each time an answer from SignLens ran
+            // this page's code. Were it SignLens's own message event, its
+            // target would be the port to the extension, which a page must
+            // never get hold of.
+            window.eventsSeen = [];
+            function noteEvent(where) {
+                const event = window.event;
+                window.eventsSeen.push(`${where}: ${event ? Object.prototype.toString.call(event.target) : 'none'}`);
+            }
             window.addEventListener('wallet-standard:register-wallet', (event) => event.detail(app));
             window.dispatchEvent(new CustomEvent('wallet-standard:app-ready', { detail: app }));
 
@@ -86,6 +99,7 @@
             /** Connects to the wallet; returns the first account's address. */
             window.connect = async (name) => {
                 const { accounts } = await wallets.get(name).features['standard:connect'].connect();
+                noteEvent('connect');
                 return accounts[0].address;
             };
 
@@ -110,8 +124,10 @@
                         account,
                         chain,
                     });
+                    noteEvent('sign');
                     return { account: account.address, signed: outputs.length };
                 } catch (error) {
+                    noteEvent('sign');
                     return { account: account.address, error: error.message };
                 }
             };

@@ -3,6 +3,8 @@
     --ground: #ffffff;
     --raised: #f3f4f6;
     --line: #d6d9df;
+    /* The edge of a text field, which an empty field is known by: 3:1 on the ground and on raised (WCAG 1.4.11). */
+    --field-line: #868d9a;
     --text: #14213d;
     --muted: #5b6475;
     /* Links and focus rings: amber dark enough to read as small text on the ground (5.4:1) and on raised (4.9:1). */
@@ -20,6 +22,7 @@
         --ground: #14181f;
         --raised: #1e242e;
         --line: #343c4a;
+        --field-line: #6b7486;
         --text: #e8eaee;
         --muted: #9aa3b2;
         --accent: #fca311;
@@ -58,11 +61,21 @@ h1 span {
 }
 
 h2 {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
     margin: 16px 0 6px;
     font-size: 13px;
+}
+
+/* A list's heading, and what acts on the whole list beside it. */
+.list-head {
+    display: flex;
+    gap: 8px;
+    align-items: baseline;
+    justify-content: space-between;
+    margin: 0 0 6px;
+}
+
+.list-head h2 {
+    margin: 0;
 }
 
 .status {
@@ -90,10 +103,14 @@ legend {
     color: var(--muted);
 }
 
-label {
-    display: block;
+/* A field: its label, the control, and the lines that describe it, which are not part of its name. */
+.field {
     margin-bottom: 10px;
     color: var(--muted);
+}
+
+.field > label {
+    display: block;
 }
 
 label.choice {
@@ -117,7 +134,7 @@ input[type='text'] {
     width: 100%;
     margin-top: 3px;
     padding: 6px 8px;
-    border: 1px solid var(--line);
+    border: 1px solid var(--field-line);
     border-radius: 6px;
     background: var(--raised);
     color: var(--text);
@@ -145,8 +162,11 @@ small {
     color: var(--blocked);
 }
 
+/* Hidden is hidden, whatever display a class or a tag gives the element
+   (label.choice, .band): those rules are more specific than this one. */
 [hidden] {
-    display: none;
+    /* biome-ignore lint/complexity/noImportantStyles: the attribute must win over every display rule */
+    display: none !important;
 }
 
 #empty {
@@ -160,25 +180,36 @@ ol {
     list-style: none;
 }
 
-li {
+/* A request in the history is a card. Nothing clips it: a focus ring
+   inside would be cut off, so its head rounds its own corners. */
+.request {
     margin-bottom: 8px;
     border: 1px solid var(--line);
     border-radius: 6px;
-    overflow: hidden;
 }
 
 summary {
     display: block;
     padding: 6px 8px;
+    border-radius: 5px;
     background: var(--raised);
     cursor: pointer;
 }
 
+details[open] > summary {
+    border-radius: 5px 5px 0 0;
+}
+
+summary:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: -2px;
+}
+
+/* The whole host, wrapped if need be: its end is what tells a lookalike apart. */
 summary .where {
     flex: 1;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    min-width: 0;
+    overflow-wrap: anywhere;
 }
 
 summary time {
@@ -235,8 +266,6 @@ pre {
 
 .findings li {
     margin: 0 0 3px;
-    padding: 0;
-    border: 0;
 }
 
 .severity {
@@ -272,9 +301,20 @@ code {
         monospace;
 }
 
+/* Each transaction of several: its number, then its verdict. */
 .row-head {
+    display: flex;
+    gap: 8px;
+    align-items: baseline;
+    margin: 12px 0 8px;
     padding: 6px 8px;
+    border-radius: 6px;
     background: var(--raised);
+    font-size: 13px;
+}
+
+#rows > li:first-child > .row-head {
+    margin-top: 0;
 }
 
 #note {
@@ -327,6 +367,16 @@ small.note {
     color: var(--muted);
 }
 
+/* The settings the browser would not keep, said once at the top. Empty, it takes no room, but stays in the page, so what it says is announced. */
+.save-status {
+    margin: 0 0 8px;
+    color: var(--blocked);
+}
+
+.save-status:empty {
+    margin: 0;
+}
+
 button.small {
     padding: 2px 8px;
     font-size: 11px;
@@ -337,6 +387,18 @@ a.save {
     margin: 6px 0 2px;
     color: var(--accent);
     font-size: 12px;
+}
+
+a:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+    border-radius: 2px;
+}
+
+/* Kept in the Tab order, and focus on it, once it has done its part. */
+button[aria-disabled='true'] {
+    opacity: 0.6;
+    cursor: default;
 }
 
 #permissions {
@@ -364,8 +426,6 @@ a.save {
 
 .effects li {
     margin: 0 0 4px;
-    padding: 0;
-    border: 0;
 }
 
 .amount {
@@ -424,9 +484,10 @@ a.save {
     color: var(--muted);
 }
 
+/* A label takes at most two fifths of the width and wraps beyond, so a long one leaves its value room. */
 dl.fields {
     display: grid;
-    grid-template-columns: max-content 1fr;
+    grid-template-columns: fit-content(40%) minmax(0, 1fr);
     gap: 3px 10px;
     margin: 0;
     padding: 6px 8px;
@@ -436,10 +497,25 @@ dl.fields dt {
     color: var(--muted);
 }
 
+dl.fields dt {
+    overflow-wrap: anywhere;
+}
+
 dl.fields dd {
     margin: 0;
     overflow-wrap: anywhere;
     font-variant-numeric: tabular-nums;
+}
+
+/* Too narrow for a label beside its value: the value goes under it. */
+@media (max-width: 400px) {
+    dl.fields {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    dl.fields dd {
+        margin-bottom: 4px;
+    }
 }
 
 /* A term opens its help: a dotted underline says so, the note sits under the value. */
@@ -499,14 +575,17 @@ code.bytes {
     gap: 8px;
     align-items: baseline;
     margin: 0 0 4px;
-    border: 0;
-    border-radius: 0;
-    overflow: visible;
 }
 
 #sites .site {
     flex: 1;
     overflow-wrap: anywhere;
+}
+
+/* A site allowed for an address watched before, not the one in the settings. */
+.other-address {
+    color: var(--muted);
+    font-size: 11px;
 }
 
 /* The confirmation window: header and footer fixed, the explanation between. */
@@ -528,10 +607,13 @@ body.confirm main {
     padding: 10px 16px;
 }
 
-/* One row: the note on the left, the buttons on the right. */
+/* One row, the note on the left and the buttons on the right, when they
+   fit; the buttons go under the note when the window is narrow, and a
+   long wallet name wraps inside its button. */
 body.confirm footer {
     display: flex;
-    gap: 12px;
+    flex-wrap: wrap;
+    gap: 8px 12px;
     align-items: center;
     padding: 8px 16px;
     border-top: 1px solid var(--line);
@@ -539,18 +621,28 @@ body.confirm footer {
 }
 
 body.confirm footer #note {
-    flex: 1;
+    flex: 1 1 14em;
     margin: 0;
     font-size: 12px;
     line-height: 1.35;
+    overflow-wrap: anywhere;
 }
 
 body.confirm footer #buttons {
-    flex: none;
+    flex: 0 1 auto;
+    flex-wrap: wrap;
+    min-width: 0;
+    margin-left: auto;
+}
+
+#buttons button {
+    max-width: 100%;
+    overflow-wrap: anywhere;
 }
 
 body.confirm .status {
     margin: 2px 0 8px;
+    overflow-wrap: anywhere;
 }
 
 .scheme {
@@ -590,17 +682,17 @@ body.confirm .status {
     flex: none;
 }
 
-body.confirm #rows > li {
-    border: 0;
-    border-radius: 0;
-    margin: 0;
+#band-summary {
+    min-width: 0;
+    overflow-wrap: anywhere;
 }
 
 body.confirm .explanation {
     padding: 0;
 }
 
-body.confirm .summary-line {
+/* One transaction's summary is in the band already. */
+.single .summary-line {
     display: none;
 }
 
@@ -657,7 +749,6 @@ body.consent .aside {
 }
 
 .count {
-    margin-left: 6px;
     padding: 1px 6px;
     border-radius: 9px;
     background: var(--fill);
@@ -665,7 +756,8 @@ body.consent .aside {
     font-size: 10px;
 }
 
-.view > h2 {
+.view > h2,
+.view > .list-head {
     margin-top: 0;
 }
 
@@ -675,13 +767,34 @@ body.consent .aside {
     align-items: baseline;
 }
 
+/* A request opens like the window's disclosures: the arrow is for the eye; the summary already says it opens. */
+.request summary > .row-line::before {
+    content: '▸' / '';
+    flex: none;
+    color: var(--muted);
+}
+
+.request details[open] > summary > .row-line::before {
+    content: '▾' / '';
+}
+
+/* A site's asking to see the watched address: no verdict, an answer. */
+.verdict.connect {
+    color: var(--muted);
+}
+
 summary .lead {
     margin-top: 2px;
     color: var(--text);
     font-weight: 600;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    overflow-wrap: anywhere;
+}
+
+/* Why SignLens refused a request the user was not the one to refuse. */
+summary .refused {
+    margin-top: 2px;
+    color: var(--muted);
+    font-size: 12px;
 }
 
 /* The row's head already carries the summary line. */

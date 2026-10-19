@@ -5,8 +5,9 @@
 import assert from 'node:assert/strict';
 import { beforeEach, test } from 'node:test';
 import { type FakeChrome, installFakeChrome } from './chrome.fake.ts';
-import { clearHistory, HISTORY_LENGTH, latest, markSeen, remember, showBadge } from './history.ts';
-import type { HistoryEntry } from './render.ts';
+import { clearHistory, HISTORY_BYTES, HISTORY_LENGTH, latest, markSeen, remember, showBadge } from './history.ts';
+import type { HistoryEntry } from './model.ts';
+import { inTurn } from './store.ts';
 
 let fake: FakeChrome;
 beforeEach(() => {
@@ -14,7 +15,7 @@ beforeEach(() => {
 });
 
 function entry(time: number): HistoryEntry {
-    return { time, mode: 'passthrough', upstream: '', results: [{ verdict: 'ok', error: null }] };
+    return { time, mode: 'passthrough', upstream: '', rows: [{ kind: 'message', text: `request ${time}` }] };
 }
 
 test('answers that arrive together are all kept and counted, and the badge shows the worst', async () => {
@@ -43,4 +44,59 @@ test('"seen" clears the badge even right after an answer, and the next answer st
     assert.equal(fake.session.unseen, 0);
     await showBadge('ok');
     assert.equal(fake.badge, 'OK');
+});
+
+/** An answer of one explained transaction whose full text is `size` characters. */
+function large(time: number, size: number): HistoryEntry {
+    return {
+        time,
+        mode: 'passthrough',
+        upstream: '',
+        rows: [
+            {
+                kind: 'explained',
+                verdict: 'ok',
+                summary: 'Send 1 SOL',
+                findings: [],
+                effects: [],
+                sections: [],
+                text: 'x'.repeat(size),
+                tables: 'none',
+                simulation: 'off',
+                hints: [],
+                capture: 'AQ==',
+                digest: null,
+                transaction: 'AQ==',
+            },
+        ],
+    };
+}
+
+const bytes = (value: unknown) => new TextEncoder().encode(JSON.stringify(value)).length;
+
+test('the history keeps within its share of session storage: the oldest go first, and one too large on its own is slimmed', async () => {
+    for (let i = 0; i < 9; i += 1) await remember(large(i, 1_000_000));
+    let kept = fake.session.history as HistoryEntry[];
+    assert.ok(bytes(kept) <= HISTORY_BYTES);
+    assert.equal(kept.length, 5);
+    assert.deepEqual(
+        kept.map((e) => e.time),
+        [8, 7, 6, 5, 4],
+    );
+    await remember(large(100, HISTORY_BYTES + 1));
+    kept = fake.session.history as HistoryEntry[];
+    assert.equal(kept.length, 1);
+    const row = kept[0]?.rows[0];
+    assert.equal(row?.kind === 'explained' && row.text, 'The full text was too long to keep in the history.');
+    assert.equal(row?.kind === 'explained' && row.summary, 'Send 1 SOL');
+});
+
+test("a write that fails is its caller's to handle, and the writes queued after it still run in turn", async () => {
+    const failing = inTurn(async () => {
+        throw new Error('quota exceeded');
+    });
+    const after = remember(entry(1));
+    await assert.rejects(failing, /quota exceeded/);
+    await after;
+    assert.equal((fake.session.history as HistoryEntry[]).length, 1);
 });

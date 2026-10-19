@@ -3,7 +3,7 @@
 // when the user asked for them to be sent.
 
 import { sendFeedback } from './api.ts';
-import { type FeedbackPayload, MAX_TRANSACTION_BASE64, MAX_TRANSACTIONS } from './messages.ts';
+import { type FeedbackPayload, MAX_COMMENT, MAX_TRANSACTION_BASE64, MAX_TRANSACTIONS } from './messages.ts';
 import { withoutControls } from './text.ts';
 import type { Feedback, Rating } from './types.ts';
 
@@ -13,7 +13,7 @@ const RATINGS: readonly Rating[] = ['clear', 'unclear', 'wrong'];
 export function feedbackRecords(payload: FeedbackPayload): Feedback[] {
     const rating = RATINGS.find((known) => known === payload.rating);
     if (!rating) return [];
-    const comment = withoutControls(payload.comment).slice(0, 2000);
+    const comment = withoutControls(payload.comment).slice(0, MAX_COMMENT);
     return (Array.isArray(payload.records) ? payload.records : [])
         .slice(0, MAX_TRANSACTIONS)
         .filter(

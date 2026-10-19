@@ -5,7 +5,7 @@
 // stays out of the page's reach.
 
 import assert from 'node:assert/strict';
-import { after, before, test } from 'node:test';
+import { after, before, beforeEach, test } from 'node:test';
 import { until } from './chrome.fake.ts';
 
 const SIGN = 'solana:signTransaction';
@@ -13,7 +13,7 @@ const SIGN = 'solana:signTransaction';
 /** A request the wallet sent the extension, and how to answer it. */
 interface Asked {
     type: string;
-    payload: { transactions?: string[]; message?: string };
+    payload: { transactions?: string[]; message?: string; wallet?: string };
     reply(result: unknown): void;
 }
 
@@ -67,6 +67,8 @@ const signFeature = {
         return inputs.map((input) => ({ signedTransaction: input.transaction }));
     },
 };
+/** The messages the real wallet was handed, as hex. */
+const signedMessages: string[] = [];
 const upstream = {
     version: '1.0.0',
     name: 'Real Wallet',
@@ -76,6 +78,13 @@ const upstream = {
     features: {
         'standard:connect': { version: '1.0.0', connect: async () => ({ accounts: [account] }) },
         [SIGN]: signFeature,
+        'solana:signMessage': {
+            version: '1.0.0',
+            async signMessage(...inputs: { message: Uint8Array }[]) {
+                for (const input of inputs) signedMessages.push(Buffer.from(input.message).toString('hex'));
+                return inputs.map((input) => ({ signedMessage: input.message, signature: new Uint8Array(64) }));
+            },
+        },
     },
 };
 
@@ -105,10 +114,18 @@ function sign(...inputs: unknown[]): Promise<{ ok?: unknown; error?: string }> {
     );
 }
 
+/** Starts a request to sign a message, as `sign` does a transaction. */
+function signMessage(...inputs: unknown[]): Promise<{ ok?: unknown; error?: string }> {
+    return call('solana:signMessage', 'signMessage', ...inputs).then(
+        (ok) => ({ ok }),
+        (error: Error) => ({ error: error.message }),
+    );
+}
+
 const hex = (base64: string) => Buffer.from(base64, 'base64').toString('hex');
 const BENIGN = () => new Uint8Array([1, 1, 1, 1]);
 const EVIL = () => new Uint8Array([6, 6, 6, 6]);
-const CONTINUE = { gate: true, decision: 'continue' };
+const CONTINUE = { decision: 'continue' };
 
 before(async () => {
     // A classic script, not a module: imported for what it does when it runs.
@@ -141,149 +158,203 @@ before(async () => {
 
 after(() => port.close());
 
+// Each test starts where the first does, whatever ran before it: nothing
+// asked or signed yet, and a pass-through session connected to the real
+// wallet.
+beforeEach(async () => {
+    asked.length = 0;
+    waiting = undefined;
+    signed.length = 0;
+    signedMessages.length = 0;
+    if (pageConfig.mode !== 'passthrough') {
+        settingsChange('passthrough');
+        await until(() => accountsNow().length === 0);
+    }
+    if (accountsNow()[0] !== account.address) await connect();
+});
+
+type Field = 'transaction' | 'message';
+
 /**
- * Each way a page could try to have one transaction explained and another
- * signed: `tamper` runs before the call, `meanwhile` while the window is
- * open, and `restore` puts back what `tamper` replaced.
+ * Each way a page could try to have one transaction or message explained
+ * and another signed: `tamper` runs before the call, `meanwhile` while the
+ * window is open, and `restore` puts back what `tamper` replaced.
  */
-const attacks: {
+function attacks(field: Field): {
     name: string;
     input: () => unknown;
     tamper?: () => void;
     meanwhile?: (input: unknown) => void;
     restore?: () => void;
-}[] = [
-    {
-        name: 'writing into its array while the window is open',
-        input: () => ({ account, transaction: BENIGN() }),
-        meanwhile: (input) => (input as { transaction: Uint8Array }).transaction.set(EVIL()),
-    },
-    (() => {
-        let reads = 0;
-        return {
-            name: 'a getter that answers differently the second time',
-            input: () => ({
-                account,
-                get transaction() {
-                    reads += 1;
-                    return reads === 1 ? BENIGN() : EVIL();
-                },
-            }),
-        };
-    })(),
-    (() => {
-        const original = globalThis.btoa;
-        return {
-            name: 'replacing btoa',
-            input: () => ({ account, transaction: EVIL() }),
-            tamper: () => {
-                globalThis.btoa = () => original('\x01\x01\x01\x01');
-            },
-            restore: () => {
-                globalThis.btoa = original;
-            },
-        };
-    })(),
-    (() => {
-        const original = Function.prototype.call;
-        return {
-            name: 'replacing Function.prototype.call',
-            input: () => ({ account, transaction: EVIL() }),
-            tamper: () => {
-                // biome-ignore lint/suspicious/noExplicitAny: the page's own patch, typed as loosely as it is
-                Function.prototype.call = function (this: any, self: unknown, ...args: unknown[]) {
-                    const first = args[0] as { type?: string; payload?: object } | undefined;
-                    if (first?.type === 'explain') args[0] = { ...first, payload: { ...first.payload, transactions: ['AQEBAQ=='] } };
-                    return Reflect.apply(this, self, args);
-                };
-            },
-            restore: () => {
-                Function.prototype.call = original;
-            },
-        };
-    })(),
-    (() => {
-        const original = Array.prototype.map;
-        return {
-            name: 'replacing Array.prototype.map',
-            input: () => ({ account, transaction: EVIL() }),
-            tamper: () => {
-                Array.prototype.map = (() => ['AQEBAQ==']) as unknown as typeof original;
-            },
-            restore: () => {
-                Array.prototype.map = original;
-            },
-        };
-    })(),
-    (() => {
-        const typedArray = Object.getPrototypeOf(Uint8Array.prototype) as object;
-        const original = Object.getOwnPropertyDescriptor(typedArray, 'length') as PropertyDescriptor;
-        return {
-            name: 'a typed-array length that leaves bytes out',
-            input: () => ({ account, transaction: new Uint8Array([1, 1, 1, 1, 6, 6]) }),
-            tamper: () => {
-                Object.defineProperty(typedArray, 'length', { ...original, get: () => 4 });
-            },
-            restore: () => {
-                Object.defineProperty(typedArray, 'length', original);
-            },
-        };
-    })(),
-    (() => {
-        let reads = 0;
-        return {
-            name: 'a setter on Object.prototype that swallows the copy, and a getter that answers differently the second time',
-            input: () => ({ account, transaction: BENIGN() }),
-            tamper: () => {
-                Object.defineProperty(Object.prototype, 'transaction', {
-                    configurable: true,
-                    set() {},
-                    get: () => {
+}[] {
+    return [
+        {
+            name: 'writing into its array while the window is open',
+            input: () => ({ account, [field]: BENIGN() }),
+            meanwhile: (input) => (input as Record<Field, Uint8Array>)[field].set(EVIL()),
+        },
+        (() => {
+            let reads = 0;
+            return {
+                name: 'a getter that answers differently the second time',
+                input: () => ({
+                    account,
+                    get [field]() {
                         reads += 1;
                         return reads === 1 ? BENIGN() : EVIL();
                     },
-                });
+                }),
+            };
+        })(),
+        (() => {
+            const original = globalThis.btoa;
+            return {
+                name: 'replacing btoa',
+                input: () => ({ account, [field]: EVIL() }),
+                tamper: () => {
+                    globalThis.btoa = () => original('\x01\x01\x01\x01');
+                },
+                restore: () => {
+                    globalThis.btoa = original;
+                },
+            };
+        })(),
+        (() => {
+            const original = Function.prototype.call;
+            return {
+                name: 'replacing Function.prototype.call',
+                input: () => ({ account, [field]: EVIL() }),
+                tamper: () => {
+                    // biome-ignore lint/suspicious/noExplicitAny: the page's own patch, typed as loosely as it is
+                    Function.prototype.call = function (this: any, self: unknown, ...args: unknown[]) {
+                        const first = args[0] as { type?: string; payload?: object } | undefined;
+                        if (first?.type === 'explain') args[0] = { ...first, payload: { ...first.payload, transactions: ['AQEBAQ=='] } };
+                        if (first?.type === 'message') args[0] = { ...first, payload: { ...first.payload, message: 'AQEBAQ==' } };
+                        return Reflect.apply(this, self, args);
+                    };
+                },
+                restore: () => {
+                    Function.prototype.call = original;
+                },
+            };
+        })(),
+        (() => {
+            const original = Array.prototype.map;
+            return {
+                name: 'replacing Array.prototype.map',
+                input: () => ({ account, [field]: EVIL() }),
+                tamper: () => {
+                    Array.prototype.map = (() => ['AQEBAQ==']) as unknown as typeof original;
+                },
+                restore: () => {
+                    Array.prototype.map = original;
+                },
+            };
+        })(),
+        (() => {
+            const typedArray = Object.getPrototypeOf(Uint8Array.prototype) as object;
+            const original = Object.getOwnPropertyDescriptor(typedArray, 'length') as PropertyDescriptor;
+            return {
+                name: 'a typed-array length that leaves bytes out',
+                input: () => ({ account, [field]: new Uint8Array([1, 1, 1, 1, 6, 6]) }),
+                tamper: () => {
+                    Object.defineProperty(typedArray, 'length', { ...original, get: () => 4 });
+                },
+                restore: () => {
+                    Object.defineProperty(typedArray, 'length', original);
+                },
+            };
+        })(),
+        (() => {
+            let reads = 0;
+            return {
+                name: 'a setter on Object.prototype that swallows the copy, and a getter that answers differently the second time',
+                input: () => ({ account, [field]: BENIGN() }),
+                tamper: () => {
+                    Object.defineProperty(Object.prototype, field, {
+                        configurable: true,
+                        set() {},
+                        get: () => {
+                            reads += 1;
+                            return reads === 1 ? BENIGN() : EVIL();
+                        },
+                    });
+                },
+                restore: () => {
+                    delete (Object.prototype as Record<string, unknown>)[field];
+                },
+            };
+        })(),
+        {
+            name: 'a get on Object.prototype, which a descriptor inheriting it would carry',
+            input: () => ({ account, [field]: EVIL() }),
+            tamper: () => {
+                Object.defineProperty(Object.prototype, 'get', { configurable: true, value: () => BENIGN() });
             },
             restore: () => {
-                delete (Object.prototype as Record<string, unknown>).transaction;
+                delete (Object.prototype as Record<string, unknown>).get;
             },
-        };
-    })(),
-    {
-        name: 'a setter on the array prototype that swallows the copy',
-        input: () => ({ account, transaction: EVIL() }),
-        tamper: () => {
-            Object.defineProperty(Array.prototype, '0', { configurable: true, set() {}, get: () => ({ transaction: BENIGN() }) });
         },
-        restore: () => {
-            delete (Array.prototype as unknown as Record<string, unknown>)['0'];
+        {
+            name: 'a setter on the array prototype that swallows the copy',
+            input: () => ({ account, [field]: EVIL() }),
+            tamper: () => {
+                Object.defineProperty(Array.prototype, '0', { configurable: true, set() {}, get: () => ({ [field]: BENIGN() }) });
+            },
+            restore: () => {
+                delete (Array.prototype as unknown as Record<string, unknown>)['0'];
+            },
         },
-    },
-];
-
-for (const attack of attacks) {
-    test(`the bytes passed on are the bytes explained, despite ${attack.name}`, async () => {
-        signed.length = 0;
-        const input = attack.input();
-        attack.tamper?.();
-        let signing: Promise<{ ok?: unknown; error?: string }>;
-        try {
-            signing = sign(input);
-        } finally {
-            attack.restore?.();
-        }
-        const request = await nextRequest();
-        attack.meanwhile?.(input);
-        request.reply(CONTINUE);
-        const outcome = await signing;
-        assert.equal(outcome.error, undefined);
-        assert.deepEqual(
-            signed.map((s) => s.bytes),
-            (request.payload.transactions ?? []).map(hex),
-        );
-        assert.equal(signed.length, 1);
-    });
+    ];
 }
+
+for (const field of ['transaction', 'message'] as const) {
+    for (const attack of attacks(field)) {
+        test(`the ${field} passed on is the one explained, despite ${attack.name}`, async () => {
+            signed.length = 0;
+            signedMessages.length = 0;
+            const input = attack.input();
+            attack.tamper?.();
+            let signing: Promise<{ ok?: unknown; error?: string }>;
+            try {
+                signing = field === 'transaction' ? sign(input) : signMessage(input);
+            } finally {
+                attack.restore?.();
+            }
+            const request = await nextRequest();
+            attack.meanwhile?.(input);
+            request.reply(CONTINUE);
+            const outcome = await signing;
+            assert.equal(outcome.error, undefined);
+            const explained = field === 'transaction' ? (request.payload.transactions ?? []) : [request.payload.message ?? ''];
+            const passedOn = field === 'transaction' ? signed.map((s) => s.bytes) : signedMessages;
+            assert.deepEqual(passedOn, explained.map(hex));
+            assert.equal(passedOn.length, 1);
+        });
+    }
+}
+
+test('a message refused is not signed, nor any of the same request: the wallet signs them together', async () => {
+    const one = signMessage({ account, message: BENIGN() });
+    (await nextRequest()).reply({ decision: 'reject' });
+    assert.equal((await one).error, 'SignLens: rejected in SignLens. The message is in the SignLens popup.');
+    // The first goes on, the second is refused: neither is signed.
+    const two = signMessage({ account, message: BENIGN() }, { account, message: EVIL() });
+    (await nextRequest()).reply(CONTINUE);
+    (await nextRequest()).reply({ decision: 'reject', refused: 'no decision in time' });
+    assert.equal((await two).error, 'SignLens: refused (no decision in time).');
+    assert.deepEqual(signedMessages, []);
+});
+
+test('once a message is refused, the ones after it in the request are not asked about', async () => {
+    const asking = signMessage({ account, message: BENIGN() }, { account, message: EVIL() });
+    (await nextRequest()).reply({ decision: 'reject' });
+    // Whichever comes first: the refusal, or the second message asked about.
+    const next = await Promise.race([asking.then(() => 'refused'), nextRequest().then(() => 'asked again')]);
+    assert.equal(next, 'refused');
+    assert.match((await asking).error ?? '', /rejected in SignLens/);
+    assert.deepEqual(signedMessages, []);
+});
 
 test('the real wallet is handed ordinary objects, which it may call methods on', async () => {
     signed.length = 0;
@@ -291,6 +362,19 @@ test('the real wallet is handed ordinary objects, which it may call methods on',
     (await nextRequest()).reply(CONTINUE);
     assert.equal((await signing).error, undefined);
     assert.equal(signed[0]?.plain, true);
+});
+
+test('the extension is told which wallet a request goes to, by the name it registered with', async () => {
+    const signing = sign({ account, transaction: BENIGN() });
+    const transaction = await nextRequest();
+    assert.equal(transaction.payload.wallet, 'Real Wallet');
+    transaction.reply(CONTINUE);
+    await signing;
+    const asking = signMessage({ account, message: BENIGN() });
+    const message = await nextRequest();
+    assert.equal(message.payload.wallet, 'Real Wallet');
+    message.reply(CONTINUE);
+    await asking;
 });
 
 test('the real wallet is called as a method of its feature', async () => {
@@ -301,25 +385,32 @@ test('the real wallet is called as a method of its feature', async () => {
     assert.equal(signed[0]?.self, signFeature);
 });
 
-test('only a decision to continue, or the window off, passes a request on', async () => {
-    const answers: [unknown, boolean][] = [
-        [undefined, false],
-        [{}, false],
-        [{ gate: true }, false],
-        [{ gate: true, decision: 'reject' }, false],
-        [{ gate: true, decision: 'maybe' }, false],
-        [{ gate: false, decision: 'reject' }, false],
-        [{ gate: false, error: 'the API is down' }, true],
-        [{ gate: false }, true],
-        [CONTINUE, true],
+test('only a decision to continue passes a request on, and the dapp is told who refused it and why, once', async () => {
+    const answers: [unknown, string | null][] = [
+        [CONTINUE, null],
+        [{ decision: 'reject' }, 'SignLens: rejected in SignLens. The explanation is in the SignLens popup.'],
+        [
+            { decision: 'reject', error: 'the API is down' },
+            'SignLens: rejected in SignLens. SignLens could not explain it: the API is down',
+        ],
+        [
+            { decision: 'reject', refused: 'the SignLens window could not open: no display' },
+            'SignLens: refused (the SignLens window could not open: no display).',
+        ],
+        // Anything else is no decision: refused, whatever else it says.
+        [undefined, 'SignLens: refused (no decision came back).'],
+        [{}, 'SignLens: refused (no decision came back).'],
+        [{ decision: 'maybe' }, 'SignLens: refused (no decision came back).'],
+        [{ gate: false }, 'SignLens: refused (no decision came back).'],
+        [{ error: 'the API is down' }, 'SignLens: refused (no decision came back).'],
     ];
-    for (const [answer, passed] of answers) {
+    for (const [answer, refusal] of answers) {
         signed.length = 0;
         const signing = sign({ account, transaction: BENIGN() });
         (await nextRequest()).reply(answer);
         const outcome = await signing;
-        assert.equal(signed.length, passed ? 1 : 0, JSON.stringify(answer));
-        if (!passed) assert.match(outcome.error ?? '', /rejected in SignLens/, JSON.stringify(answer));
+        assert.equal(signed.length, refusal === null ? 1 : 0, JSON.stringify(answer));
+        assert.equal(outcome.error, refusal ?? undefined, JSON.stringify(answer));
     }
 });
 
@@ -328,7 +419,7 @@ test('what the page puts on Object.prototype is not taken for a decision', async
     Object.defineProperty(Object.prototype, 'decision', { configurable: true, get: () => 'continue' });
     try {
         const signing = sign({ account, transaction: BENIGN() });
-        (await nextRequest()).reply({ gate: true });
+        (await nextRequest()).reply({});
         assert.match((await signing).error ?? '', /no decision/);
         assert.equal(signed.length, 0);
     } finally {
@@ -445,6 +536,8 @@ test('in watch mode the page has the address only from a connect the user allowe
 });
 
 test('a watch session follows a new address the site may see, and ends when the mode changes', async () => {
+    settingsChange('watch');
+    await until(() => accountsNow().length === 0);
     const allowed = connect();
     (await nextRequest()).reply({ approved: true, ...WATCHED });
     await allowed;
@@ -454,6 +547,4 @@ test('a watch session follows a new address the site may see, and ends when the 
     await until(() => accountsNow()[0] === other.address);
     settingsChange('passthrough');
     await until(() => accountsNow().length === 0);
-    // Back to a pass-through session for whatever runs after.
-    await connect();
 });

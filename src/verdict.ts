@@ -1,11 +1,10 @@
 // What a row's verdict is called, and which is worst: the one ranking the
-// toolbar badge and the window's band both go by. No DOM, so the worker,
-// the pages and the tests share it.
+// toolbar badge and the window's band both go by, and the one line each
+// row is summed up in. No DOM, so the worker, the pages and the tests
+// share it.
 
-import type { Entry, Row } from './render.ts';
-
-/** What a row shows: the engine's verdict, an error, or a message, which has no verdict. */
-export type VerdictWord = 'ok' | 'warning' | 'blocked' | 'error' | 'message';
+import type { Row, TransactionVerdict, VerdictWord } from './model.ts';
+import type { Explanation, Verdict } from './types.ts';
 
 /**
  * From least to most serious. Blocked ranks above error: both stop the
@@ -14,6 +13,14 @@ export type VerdictWord = 'ok' | 'warning' | 'blocked' | 'error' | 'message';
  */
 const ORDER: readonly VerdictWord[] = ['message', 'ok', 'warning', 'error', 'blocked'];
 
+/** The engine's verdicts in the window's words. */
+const WORDS: Readonly<Record<Verdict, TransactionVerdict>> = { Ok: 'ok', Warn: 'warning', Block: 'blocked' };
+
+/** The window's word for the engine's verdict on `explanation`. */
+export function verdictOf(explanation: Explanation): TransactionVerdict {
+    return WORDS[explanation.verdict];
+}
+
 /** The worse of two verdicts. */
 export function worse(a: VerdictWord, b: VerdictWord): VerdictWord {
     return ORDER.indexOf(b) > ORDER.indexOf(a) ? b : a;
@@ -21,15 +28,32 @@ export function worse(a: VerdictWord, b: VerdictWord): VerdictWord {
 
 /** The verdict word a row shows. */
 export function rowVerdictWord(row: Row): VerdictWord {
-    return row.error ? 'error' : (row.verdict ?? 'message');
-}
-
-/** The rows of an answer: one per transaction, or one for a message or a failure. */
-export function rows(entry: Entry): Row[] {
-    return entry.results ?? [{ error: entry.error ?? null, ...(entry.text !== undefined ? { text: entry.text } : {}) }];
+    switch (row.kind) {
+        case 'explained':
+            return row.verdict;
+        case 'failed':
+            return 'error';
+        case 'message':
+        case 'consent':
+            return 'message';
+    }
 }
 
 /** The worst verdict among rows: what the band and the badge show. */
-export function worstVerdict(list: Row[]): VerdictWord {
+export function worstVerdict(list: readonly Row[]): VerdictWord {
     return list.map(rowVerdictWord).reduce(worse, 'message');
+}
+
+/** A row in one line: what the band and a history row lead with. */
+export function summaryOf(row: Row): string {
+    switch (row.kind) {
+        case 'explained':
+            return row.summary;
+        case 'failed':
+            return row.error;
+        case 'message':
+            return 'A message, shown as it is';
+        case 'consent':
+            return `Asked to see the watched address ${row.address}`;
+    }
 }

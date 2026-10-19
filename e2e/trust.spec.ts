@@ -51,6 +51,36 @@ test('a page cannot forge a decision or a setting over the window', async ({ con
     expect(await dapp.evaluate(() => window.fakeCalls)).toEqual([]);
 });
 
+test('no answer from SignLens runs page code inside its port message, so window.event never shows the page the port', async ({
+    configure,
+    context,
+    dapp,
+    server,
+}) => {
+    const transfer = fixture('legacy_durable_nonce_token_transfer');
+    await configure({ lookupTokens: false, simulate: false, mode: 'passthrough', upstream: 'Fake Wallet' });
+    server.refuseApi(503);
+    // A connect and a request passed on, each settled by an answer over the port.
+    const signing = dapp.evaluate(({ wallet, base64 }: { wallet: string; base64: string }) => window.sign(wallet, base64), {
+        wallet: WALLET,
+        base64: transfer.base64,
+    });
+    const gate = await liveGate(context);
+    await gate.getByRole('button', { name: /Continue anyway/ }).click();
+    expect((await signing).signed).toBe(1);
+    // A settings change ends the session from the port's message; a watch connect is answered over it.
+    await configure({ mode: 'watch', address: RECIPIENT });
+    await expect.poll(() => dapp.evaluate(() => window.eventsSeen.length)).toBe(3);
+    expect(await dapp.evaluate((wallet) => window.connect(wallet), WALLET)).toBe(RECIPIENT);
+    expect(await dapp.evaluate(() => window.eventsSeen)).toEqual([
+        'change: none',
+        'sign: none',
+        'change: none',
+        'change: none',
+        'connect: none',
+    ]);
+});
+
 test('the page learns neither the verdict nor the explanation, since both depend on the address book', async ({
     configure,
     context,
@@ -128,7 +158,7 @@ test('a second request while the first is open is refused, not stacked behind it
     const first = sign();
     const gate = await liveGate(context);
     const second = await sign();
-    expect(second.error).toContain('still busy');
+    expect(second.error).toBe('SignLens: refused (still busy with an earlier request from this page).');
     expect(context.pages().filter((page) => !page.isClosed() && page.url().includes('confirm.html'))).toHaveLength(1);
     expect(server.apiCalls.filter((call) => call.path === '/v1/explain')).toHaveLength(1);
     await gate.getByRole('button', { name: 'Reject' }).click();
@@ -147,7 +177,9 @@ test('closing the page refuses its request and closes the window', async ({ conf
     await dapp.close();
     await expect.poll(() => gate.isClosed()).toBe(true);
     await popup.reload();
-    await expect(popup.locator('#history li').first().locator('.decision')).toHaveText('rejected');
+    const refused = popup.locator('#history li').first();
+    await expect(refused.locator('.decision')).toHaveText('refused');
+    await expect(refused.locator('.refused')).toHaveText('Refused by SignLens: the page closed or reloaded');
 });
 
 test('a page that reloads has its request refused and its window closed, and may ask again at once', async ({
@@ -175,9 +207,40 @@ test('a page that reloads has its request refused and its window closed, and may
     const second = await liveGate(context);
     await second.getByRole('button', { name: 'Reject' }).click();
     expect((await again).error).toContain('rejected in SignLens');
-    // The first request is kept as refused, not as passed on.
+    // The first request is kept as refused by SignLens, and why; the second as the user's rejection.
     await popup.reload();
-    await expect(popup.locator('#history > li').nth(1).locator('.decision')).toHaveText('rejected');
+    await expect(popup.locator('#history > li').nth(0).locator('.decision')).toHaveText('rejected');
+    const refused = popup.locator('#history > li').nth(1);
+    await expect(refused.locator('.decision')).toHaveText('refused');
+    await expect(refused.locator('.refused')).toHaveText('Refused by SignLens: the page closed or reloaded');
+});
+
+test('a page that reloads while its request is still being explained may ask again at once', async ({
+    configure,
+    context,
+    dapp,
+    server,
+}) => {
+    const transfer = fixture('legacy_durable_nonce_token_transfer');
+    await configure({ lookupTokens: false, simulate: false, mode: 'passthrough', upstream: 'Fake Wallet' });
+    server.refuseApi(503);
+    server.delayApi(4_000);
+    const sign = () =>
+        dapp.evaluate(({ wallet, base64 }: { wallet: string; base64: string }) => window.sign(wallet, base64), {
+            wallet: WALLET,
+            base64: transfer.base64,
+        });
+    sign().catch(() => {});
+    await expect.poll(() => server.apiCalls.length).toBe(1);
+    await dapp.reload();
+    await expect.poll(() => dapp.evaluate(() => window.walletNames())).toContain(WALLET);
+    // The first request is still with the API; the tab is not held for it.
+    const again = sign();
+    const gate = await liveGate(context);
+    await gate.getByRole('button', { name: 'Reject' }).click();
+    expect((await again).error).toContain('rejected in SignLens');
+    // Only the second one got a window.
+    expect(server.apiCalls.filter((call) => call.path === '/v1/explain')).toHaveLength(2);
 });
 
 test('a dapp changing its route while the window is open keeps its request', async ({ configure, context, dapp, server }) => {

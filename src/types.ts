@@ -143,8 +143,11 @@ export interface ErrorDocument {
 /** What the engine answers: an explanation, or an error document. */
 export type EngineAnswer = Explanation | ErrorDocument;
 
-export function isError(answer: EngineAnswer): answer is ErrorDocument {
-    return 'error' in answer && typeof answer.error === 'object' && answer.error !== null && typeof answer.error.message === 'string';
+/** Whether `answer`, whatever it is, is an error document: an `error` object with a message. */
+export function isError(answer: unknown): answer is ErrorDocument {
+    if (typeof answer !== 'object' || answer === null || !('error' in answer)) return false;
+    const error: unknown = answer.error;
+    return typeof error === 'object' && error !== null && 'message' in error && typeof error.message === 'string';
 }
 
 /** A contact as the engine takes it. */

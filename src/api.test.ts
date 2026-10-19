@@ -5,7 +5,7 @@
 import assert from 'node:assert/strict';
 import { createServer } from 'node:http';
 import { test } from 'node:test';
-import { apiStatus, explainRemotely, rowVerdict, sendFeedback } from './api.ts';
+import { apiStatus, explainRemotely, sendFeedback } from './api.ts';
 import type { Explanation } from './types.ts';
 
 const EXPLANATION: Explanation = {
@@ -87,7 +87,7 @@ test('the request carries the transaction as base64 beside the engine request, a
             path: '/v1/explain',
             body: { transaction: 'AQID', ownKeys: ['A'], loadedWritable: [], render: true },
         });
-        assert.equal(rowVerdict(document), 'ok');
+        assert.ok(!('error' in document) && document.verdict === 'Ok');
     } finally {
         await api.close();
     }
@@ -115,6 +115,15 @@ test("the engine's error document is passed through, and anything else is an err
         assert.match(document.error.message, /HTTP 503 without a document/);
     } finally {
         await busy.close();
+    }
+    // An explanation that comes with a failure status is not taken for one.
+    const failing = await stub({ explain: { status: 500, body: EXPLANATION } });
+    try {
+        const document = await explainRemotely(failing.url, new Uint8Array([1]), {});
+        assert.ok('error' in document);
+        assert.match(document.error.message, /HTTP 500 with something that is not an explanation/);
+    } finally {
+        await failing.close();
     }
     const wrong = await stub({ explain: { status: 200, body: { schema: 'something-else/1' } } });
     try {

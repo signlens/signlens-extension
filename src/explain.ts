@@ -4,23 +4,25 @@
 // popup; a message to sign, shown as it is. Needs `fetch` and nothing of
 // the browser's, so it runs in Node under test as it does in the worker.
 
-import { explainRemotely, rowVerdict } from './api.ts';
+import { explainRemotely } from './api.ts';
 import { tokenHints, unknownMints } from './hints.ts';
 import {
     type ExplainPayload,
+    MAX_MESSAGE_BASE64,
     MAX_MESSAGE_BYTES,
     MAX_TRANSACTION_BASE64,
     MAX_TRANSACTION_BYTES,
     MAX_TRANSACTIONS,
     type MessagePayload,
 } from './messages.ts';
-import type { Entry, Row } from './render.ts';
+import { type Entry, failure, type Row } from './model.ts';
 import type { Settings } from './settings.ts';
 import { type SimulationResult, simulate } from './simulation.ts';
 import { fromBase64, isAddress, type LoadedAddresses } from './solana.ts';
 import { resolveTables } from './tables.ts';
 import { printable, withoutControls } from './text.ts';
 import { type Contact, type EngineAnswer, type EngineRequest, isError, type TokenHint } from './types.ts';
+import { verdictOf } from './verdict.ts';
 
 /** Where a request came from, for the capture. */
 interface Meta {
@@ -65,10 +67,19 @@ function transactionsOf(payload: ExplainPayload): string[] | string {
     return transactions;
 }
 
-/** Explains the transactions of an `explain` request through the API, one row each. */
-export async function explainTransactions(payload: ExplainPayload, config: Settings, contacts: Contact[]): Promise<Entry> {
+/**
+ * Explains the transactions of an `explain` request through the API, one
+ * row each. Once `gone` says the page went away, the rest is not asked
+ * about: no one is left to show it to.
+ */
+export async function explainTransactions(
+    payload: ExplainPayload,
+    config: Settings,
+    contacts: Contact[],
+    gone: () => boolean = () => false,
+): Promise<Entry> {
     const transactions = transactionsOf(payload);
-    if (typeof transactions === 'string') return { error: transactions };
+    if (typeof transactions === 'string') return failure(transactions);
     const accounts = (Array.isArray(payload.accounts) ? payload.accounts : []).filter((a): a is string => isAddress(a)).slice(0, 16);
     const meta: Meta = {
         origin: printable(payload.origin, 200) || 'unknown',
@@ -78,6 +89,7 @@ export async function explainTransactions(payload: ExplainPayload, config: Setti
     const chains = Array.isArray(payload.chains) ? payload.chains : [];
     const results: Row[] = [];
     for (const [i, transaction] of transactions.entries()) {
+        if (gone()) return failure('not explained: the page closed or reloaded');
         const bytes = fromBase64(transaction);
         // The chain is the page's word, so it switches nothing off: a page
         // that called a mainnet drain "devnet" would otherwise keep the
@@ -120,17 +132,16 @@ export async function explainTransactions(payload: ExplainPayload, config: Setti
         results.push(
             isError(document)
                 ? {
-                      verdict: null,
-                      text: '',
+                      kind: 'failed',
                       error: withoutControls(document.error.message) || 'the SignLens API answered an error without a message',
                       tables: note,
                       ...(claimed ? { chain: claimed } : {}),
                       capture,
                   }
                 : {
-                      verdict: rowVerdict(document),
+                      kind: 'explained',
+                      verdict: verdictOf(document),
                       text: withoutControls(document.text),
-                      error: null,
                       tables: note,
                       ...(claimed ? { chain: claimed } : {}),
                       simulation: simulationNote,
@@ -146,25 +157,27 @@ export async function explainTransactions(payload: ExplainPayload, config: Setti
                   },
         );
     }
-    return { results };
+    return { rows: results };
 }
 
 /** A signed message, shown as it is: SignLens does not explain off-chain messages yet. */
 export function showMessage(payload: MessagePayload): Entry {
-    if (typeof payload.message !== 'string') return { error: 'message is required' };
-    const tooLong = { error: `the message is longer than ${MAX_MESSAGE_BYTES} bytes` };
+    if (typeof payload.message !== 'string') return failure('message is required');
+    const tooLong = failure(`the message is longer than ${MAX_MESSAGE_BYTES} bytes`);
     // Bounded before it is decoded, then exactly.
-    if (payload.message.length > Math.ceil(MAX_MESSAGE_BYTES / 3) * 4) return tooLong;
+    if (payload.message.length > MAX_MESSAGE_BASE64) return tooLong;
     let bytes: Uint8Array;
     try {
         bytes = fromBase64(payload.message);
     } catch {
-        return { error: 'the message is not base64' };
+        return failure('the message is not base64');
     }
     if (bytes.length > MAX_MESSAGE_BYTES) return tooLong;
+    let text: string;
     try {
-        return { text: withoutControls(new TextDecoder('utf-8', { fatal: true }).decode(bytes)) };
+        text = withoutControls(new TextDecoder('utf-8', { fatal: true }).decode(bytes));
     } catch {
-        return { text: `(${bytes.length} bytes, not text) ${[...bytes].map((b) => b.toString(16).padStart(2, '0')).join('')}` };
+        text = `(${bytes.length} bytes, not text) ${[...bytes].map((b) => b.toString(16).padStart(2, '0')).join('')}`;
     }
+    return { rows: [{ kind: 'message', text }] };
 }

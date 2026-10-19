@@ -5,7 +5,7 @@
 import { fetchLookupTables, type LoadedAddresses, loadedAddresses, tableLookups } from './solana.ts';
 import { describe } from './text.ts';
 
-/** Lookup tables read in this worker's life, by address, with when; a table can change, so not for long. */
+/** Lookup tables read in this worker's life, by RPC and address, with when; a table can change, so not for long. */
 const tableCache = new Map<string, { at: number; data: Uint8Array }>();
 const TABLE_CACHE_MS = 5 * 60_000;
 
@@ -15,14 +15,14 @@ async function lookupTables(rpc: string, addresses: string[]): Promise<Map<strin
     const tables = new Map<string, Uint8Array>();
     const missing: string[] = [];
     for (const address of addresses) {
-        const cached = tableCache.get(address);
+        const cached = tableCache.get(`${rpc} ${address}`);
         if (cached && now - cached.at < TABLE_CACHE_MS) tables.set(address, cached.data);
         else missing.push(address);
     }
     if (missing.length > 0) {
         const fetched = await fetchLookupTables(rpc, missing);
         for (const [address, data] of fetched) {
-            tableCache.set(address, { at: now, data });
+            tableCache.set(`${rpc} ${address}`, { at: now, data });
             tables.set(address, data);
         }
     }

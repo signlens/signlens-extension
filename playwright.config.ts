@@ -13,6 +13,8 @@ export default defineConfig({
     timeout: 60_000,
     expect: { timeout: 10_000 },
     reporter: process.env.CI ? [['list'], ['github']] : 'list',
+    // Says, at the end, which recordings a live API no longer matches.
+    globalSetup: './e2e/drift.ts',
     use: {
         trace: 'retain-on-failure',
     },

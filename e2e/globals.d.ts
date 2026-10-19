@@ -12,4 +12,6 @@ interface Window {
     fakeCalls: { method: string; count: number }[];
     /** The transactions the fake wallet was handed, base64. */
     fakeSigned: string[];
+    /** Where the page's code ran on an answer from SignLens, and what `window.event` was there. */
+    eventsSeen: string[];
 }

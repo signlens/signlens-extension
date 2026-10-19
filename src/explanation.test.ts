@@ -178,4 +178,16 @@ test('what the window would choke on is refused: huge decimals, non-numbers, dep
         /more than 500/,
     );
     assert.match(refusal(document({ summary: 'x'.repeat(2_001) })).message, /longer than 2000/);
+    // A value nested past anything JSON.stringify can write out is named by its kind, not quoted.
+    let tower: unknown = 'x';
+    for (let i = 0; i < 10_000; i += 1) tower = [tower];
+    assert.equal(refusal(document({ verdict: tower })).message, 'explanation.verdict a list is not a verdict this version knows');
+    assert.equal(refusal(document({ verdict: { Ok: true } })).message, 'explanation.verdict an object is not a verdict this version knows');
+    // A proposed effect proposes another, and so on, as deep as a list.
+    let proposed: object = { type: 'Unheard', value: null };
+    for (let i = 0; i < 12; i += 1) proposed = { type: 'Proposed', value: { by: SELF, effect: proposed } };
+    assert.match(refusal(document({ effects: [proposed] })).message, /effects\[0\](\.value\.effect)+ is nested too deep/);
+    // The full text has a bound of its own, far above a line's.
+    assert.equal(parseExplanation(document({ text: 'x'.repeat(1_000_000) })).text?.length, 1_000_000);
+    assert.match(refusal(document({ text: 'x'.repeat(1_000_001) })).message, /text is longer than 1000000 characters/);
 });

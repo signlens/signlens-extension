@@ -6,7 +6,7 @@
   "license": "Apache-2.0",
   "type": "module",
   "engines": {
-    "node": ">=24"
+    "node": ">=24.16"
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
@@ -14,7 +14,7 @@
     "package": "npm run build && node scripts/package.ts",
     "check": "biome check --error-on-warnings . && tsc -p tsconfig.json",
     "format": "biome format --write .",
-    "test": "node --test \"src/**/*.test.ts\"",
+    "test": "node --test --test-randomize --test-timeout=30000 --test-force-exit \"src/**/*.test.ts\"",
     "pretest:e2e": "npm run build",
     "test:e2e": "playwright test",
     "pretest:e2e:record": "npm run build",
@@ -25,6 +25,7 @@
     "@playwright/test": "^1.64.1",
     "@types/chrome": "^0.3.5",
     "@types/node": "^24.19.2",
+    "axe-core": "^4.14.0",
     "typescript": "^7.0.2"
   }
 }

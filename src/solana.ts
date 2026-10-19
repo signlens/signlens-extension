@@ -4,6 +4,7 @@
 // token account holds. Everything else is the engine's job; the worker is
 // on the untrusted, online side and only gathers hints.
 
+import { refusedEndpoint } from './endpoint.ts';
 import { withoutControls } from './text.ts';
 
 const ALPHABET = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
@@ -164,10 +165,16 @@ export function messageAccounts(transaction: Uint8Array): MessageAccount[] {
     if (transaction.length === 0) throw new Error('transaction is empty');
     const reader = new Reader(transaction);
     let header: [number, number, number];
+    let count: number;
     if (transaction[0] === 0x81) {
-        // v1: the message first, no signature count in front of the header.
+        // v1 (SIMD-0385): the message first, the signatures after it. The
+        // header is followed by the config mask (4 bytes), the lifetime
+        // (32) and the instruction count (1), then the account count in
+        // one byte.
         reader.u8();
         header = [reader.u8(), reader.u8(), reader.u8()];
+        reader.take(4 + 32 + 1);
+        count = reader.u8();
     } else {
         reader.take(reader.compactU16() * 64);
         const first = reader.u8();
@@ -177,9 +184,9 @@ export function messageAccounts(transaction: Uint8Array): MessageAccount[] {
         } else {
             header = [first, reader.u8(), reader.u8()];
         }
+        count = reader.compactU16();
     }
     const [signed, readonlySigned, readonlyUnsigned] = header;
-    const count = reader.compactU16();
     const accounts: MessageAccount[] = [];
     for (let i = 0; i < count; i += 1) {
         const address = base58Encode(reader.take(32));
@@ -214,8 +221,8 @@ export function loadedAddresses(lookups: TableLookup[], tables: Map<string, Uint
  * at `url`, as a map from address to account data. Accounts that do not
  * exist or are not owned by the lookup table program are left out.
  */
-export async function fetchLookupTables(url: string, addresses: string[], fetchFn: typeof fetch = fetch): Promise<Map<string, Uint8Array>> {
-    const accounts = await multipleAccounts(url, addresses, fetchFn);
+export async function fetchLookupTables(url: string, addresses: string[]): Promise<Map<string, Uint8Array>> {
+    const accounts = await multipleAccounts(url, addresses);
     const tables = new Map<string, Uint8Array>();
     accounts.forEach((account, i) => {
         const address = addresses[i];
@@ -225,7 +232,7 @@ export async function fetchLookupTables(url: string, addresses: string[], fetchF
 }
 
 /** How many accounts one `getMultipleAccounts` asks for: public endpoints block longer lists. */
-export const ACCOUNTS_PER_CALL = 10;
+const ACCOUNTS_PER_CALL = 10;
 
 /**
  * The accounts at `addresses` over the RPC, in order, `null` where there
@@ -233,7 +240,7 @@ export const ACCOUNTS_PER_CALL = 10;
  * as publicnode refuse a longer list outright (HTTP 403, "Request
  * blocked"). The data is base64 at the confirmed commitment.
  */
-export async function multipleAccounts(url: string, addresses: string[], fetchFn: typeof fetch = fetch): Promise<(RpcAccount | null)[]> {
+export async function multipleAccounts(url: string, addresses: string[]): Promise<(RpcAccount | null)[]> {
     const accounts: (RpcAccount | null)[] = [];
     for (let at = 0; at < addresses.length; at += ACCOUNTS_PER_CALL) {
         const batch = addresses.slice(at, at + ACCOUNTS_PER_CALL);
@@ -241,7 +248,7 @@ export async function multipleAccounts(url: string, addresses: string[], fetchFn
             url,
             'getMultipleAccounts',
             [batch, { encoding: 'base64', commitment: 'confirmed' }],
-            { timeoutMs: 10_000, fetchFn },
+            10_000,
         );
         accounts.push(...result.value);
     }
@@ -249,13 +256,10 @@ export async function multipleAccounts(url: string, addresses: string[], fetchFn
 }
 
 /** One JSON-RPC call to the RPC at `url`: its result, or an error naming what went wrong. */
-export async function rpcCall<T>(
-    url: string,
-    method: string,
-    params: unknown[],
-    { timeoutMs = 15_000, fetchFn = fetch }: { timeoutMs?: number; fetchFn?: typeof fetch } = {},
-): Promise<T> {
-    const response = await fetchFn(url, {
+export async function rpcCall<T>(url: string, method: string, params: unknown[], timeoutMs = 15_000): Promise<T> {
+    const refused = refusedEndpoint(url, 'RPC');
+    if (refused) throw new Error(refused);
+    const response = await fetch(url, {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({ jsonrpc: '2.0', id: 1, method, params }),

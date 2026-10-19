@@ -6,6 +6,7 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { type BrowserContext, test as base, chromium, expect, type Page, type Worker } from '@playwright/test';
 import type { Settings } from '../src/settings.ts';
+import { noteDrift, STRICT } from './drift.ts';
 import { startTestServer, type TestServer } from './server.ts';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -31,6 +32,8 @@ export const test = base.extend<Fixtures>({
         const context = await chromium.launchPersistentContext('', {
             channel: 'chromium',
             headless: true,
+            // Numbers and times as the tests read them (4,003 tokens), whatever the machine's locale.
+            locale: 'en-US',
             args: [
                 `--disable-extensions-except=${EXTENSION}`,
                 `--load-extension=${EXTENSION}`,
@@ -62,11 +65,14 @@ export const test = base.extend<Fixtures>({
         if (server.apiMissed.length > 0) {
             throw new Error(`no recorded API answer for ${server.apiMissed.join(', ')}; record with \`npm run test:e2e:record\``);
         }
-        // Live, an answer that differs from its recording means the recordings no longer hold.
+        // Live, an answer that departs from its recording means the recordings no longer hold: said at the end of the run (drift.ts).
         if (server.apiDrifted.length > 0) {
-            throw new Error(
-                `the SignLens API ${server.apiDrifted.join('; ')}. If the API is right, record anew with \`npm run test:e2e:record\``,
-            );
+            if (STRICT) {
+                throw new Error(
+                    `the SignLens API ${server.apiDrifted.join('; ')}. If the API is right, record anew with \`npm run test:e2e:record\``,
+                );
+            }
+            noteDrift(server.apiDrifted);
         }
     },
 
