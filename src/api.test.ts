@@ -1,0 +1,157 @@
+// The API client as the worker drives it, in Node against a local stub:
+// the request it sends, and every way a bad answer becomes an error
+// document rather than an explanation.
+
+import assert from 'node:assert/strict';
+import { createServer } from 'node:http';
+import { test } from 'node:test';
+import { apiStatus, explainRemotely, rowVerdict, sendFeedback } from './api.ts';
+import type { Explanation } from './types.ts';
+
+const EXPLANATION: Explanation = {
+    schema: 'signlens-explanation/1',
+    chain: 'solana',
+    verdict: 'Ok',
+    summary: 'Send 1 SOL',
+    findings: [],
+    effects: [],
+    sections: [],
+    raw: { format: 'solana legacy', payload: '', digest: 'ab'.repeat(32) },
+};
+
+interface Answer {
+    status: number;
+    body?: unknown;
+    raw?: string;
+}
+
+interface Call {
+    method: string | undefined;
+    path: string | undefined;
+    body: unknown;
+}
+
+/** A stub API: answers `/v1/explain` with `explain`, `/v1/packs` with `packs`, `/v1/feedback` with 204; records calls. */
+async function stub({
+    explain = { status: 200, body: EXPLANATION },
+    packs = {
+        status: 200,
+        body: {
+            schema: 'signlens-ffi/1',
+            engine: '0.1.0',
+            descriptorPack: { programs: 44, createdAt: 1, source: 's' },
+            tokenSnapshot: { tokens: 4003, createdAt: 1, source: 's' },
+        },
+    },
+}: {
+    explain?: Answer;
+    packs?: Answer;
+} = {}) {
+    const calls: Call[] = [];
+    const server = createServer((request, response) => {
+        let body = '';
+        request.setEncoding('utf8').on('data', (chunk: string) => {
+            body += chunk;
+        });
+        request.on('end', () => {
+            calls.push({ method: request.method, path: request.url, body: body ? JSON.parse(body) : null });
+            const answer: Answer =
+                request.url === '/v1/explain'
+                    ? explain
+                    : request.url === '/v1/packs'
+                      ? packs
+                      : request.url === '/v1/feedback'
+                        ? { status: 204 }
+                        : { status: 404, body: {} };
+            response.writeHead(answer.status, { 'content-type': 'application/json' });
+            response.end(answer.raw ?? (answer.body === undefined ? '' : JSON.stringify(answer.body)));
+        });
+    });
+    await new Promise<void>((resolve) => server.listen(0, '127.0.0.1', resolve));
+    const address = server.address();
+    const port = typeof address === 'object' && address ? address.port : 0;
+    return { url: `http://127.0.0.1:${port}`, calls, close: () => new Promise<void>((resolve) => server.close(() => resolve())) };
+}
+
+test('the request carries the transaction as base64 beside the engine request, and the document comes back as is', async () => {
+    const api = await stub();
+    try {
+        const document = await explainRemotely(`${api.url}/`, new Uint8Array([1, 2, 3]), {
+            ownKeys: ['A'],
+            loadedWritable: [],
+            render: true,
+        });
+        assert.deepEqual(document, EXPLANATION);
+        assert.deepEqual(api.calls[0], {
+            method: 'POST',
+            path: '/v1/explain',
+            body: { transaction: 'AQID', ownKeys: ['A'], loadedWritable: [], render: true },
+        });
+        assert.equal(rowVerdict(document), 'ok');
+    } finally {
+        await api.close();
+    }
+});
+
+test("the engine's error document is passed through, and anything else is an error document too", async () => {
+    const engineError = await stub({
+        explain: { status: 400, body: { schema: 'signlens-ffi/1', error: { code: 'transaction', message: 'not a transaction' } } },
+    });
+    try {
+        const document = await explainRemotely(engineError.url, new Uint8Array([1]), {});
+        assert.ok('error' in document);
+        assert.equal(document.error.code, 'transaction');
+        assert.equal(rowVerdict(document), null);
+    } finally {
+        await engineError.close();
+    }
+    const busy = await stub({ explain: { status: 503, raw: 'Service Unavailable' } });
+    try {
+        const document = await explainRemotely(busy.url, new Uint8Array([1]), {});
+        assert.ok('error' in document);
+        assert.equal(document.error.code, 'api');
+        assert.match(document.error.message, /HTTP 503 without a document/);
+    } finally {
+        await busy.close();
+    }
+    const wrong = await stub({ explain: { status: 200, body: { schema: 'something-else/1' } } });
+    try {
+        const document = await explainRemotely(wrong.url, new Uint8Array([1]), {});
+        assert.ok('error' in document);
+        assert.match(document.error.message, /not an explanation/);
+    } finally {
+        await wrong.close();
+    }
+    const nowhere = await explainRemotely('http://127.0.0.1:1', new Uint8Array([1]), {});
+    assert.ok('error' in nowhere);
+    assert.match(nowhere.error.message, /did not answer/);
+    const bad = await explainRemotely('ftp://x', new Uint8Array([1]), {});
+    assert.ok('error' in bad);
+    assert.match(bad.error.message, /not an http\(s\) URL/);
+});
+
+test('the status names the engine and the packs, or why not', async () => {
+    const api = await stub();
+    try {
+        assert.deepEqual(await apiStatus(api.url), { engine: '0.1.0', programs: 44, tokens: 4003, packsAt: 1 });
+    } finally {
+        await api.close();
+    }
+    const away = await apiStatus('http://127.0.0.1:1');
+    assert.ok('error' in away);
+    assert.match(away.error, /did not answer/);
+});
+
+test('feedback is one post per record and true only on 204', async () => {
+    const api = await stub();
+    try {
+        assert.equal(
+            await sendFeedback(api.url, { messageHash: 'ab'.repeat(32), rating: 'wrong', comment: 'says sell', transaction: 'AQID' }),
+            true,
+        );
+        assert.deepEqual(api.calls[0]?.body, { messageHash: 'ab'.repeat(32), rating: 'wrong', comment: 'says sell', transaction: 'AQID' });
+    } finally {
+        await api.close();
+    }
+    assert.equal(await sendFeedback('http://127.0.0.1:1', { messageHash: 'ab'.repeat(32), rating: 'clear' }), false);
+});

@@ -1,0 +1,91 @@
+// The settings and their defaults, shared by the worker, the popup and
+// the window; the content script asks the worker for the part the page
+// needs.
+
+import { base58Decode as decodeAddress } from './solana.ts';
+import type { Contact } from './types.ts';
+
+export type Mode = 'passthrough' | 'watch';
+
+export interface Settings {
+    /** 'passthrough': explain every request, then hand it to the wallet you sign with. 'watch': connect as `address`, explain, and refuse. */
+    mode: Mode;
+    address: string;
+    /** Name of the wallet to pass requests to; empty for the first one found. */
+    upstream: string;
+    /** The SignLens API that computes the explanations (beta). Later the engine runs inside the extension and this goes. */
+    apiUrl: string;
+    rpcUrl: string;
+    /** Show the explanation and wait for a decision before refusing a request or passing it on. */
+    gate: boolean;
+    /** The address book, one `Name = address` per line. */
+    contacts: string;
+    /** Look up tokens the snapshot does not list: decimals from the RPC's mint accounts, symbols from the token list, passed to the engine as claims. */
+    lookupTokens: boolean;
+    tokenApiUrl: string;
+    /** Simulate the transaction over the RPC and hold the balance changes against the explanation, as a claim. */
+    simulate: boolean;
+    /** Show the instructions and the details under the effects rather than behind one toggle: the reader's last choice, not a setting. */
+    showInstructions: boolean;
+}
+
+export const DEFAULTS: Readonly<Settings> = Object.freeze({
+    mode: 'passthrough',
+    address: '',
+    upstream: '',
+    apiUrl: 'https://api.signlens.dev',
+    rpcUrl: 'https://solana-rpc.publicnode.com',
+    gate: true,
+    contacts: '',
+    lookupTokens: true,
+    tokenApiUrl: 'https://lite-api.jup.ag/tokens/v2/search',
+    simulate: true,
+    showInstructions: false,
+});
+
+/** The settings as stored, with the defaults where nothing is stored. */
+export async function settings(): Promise<Settings> {
+    return (await chrome.storage.local.get(DEFAULTS)) as Settings;
+}
+
+/** The 32 bytes `text` is the base58 of, as a plain array (it travels to the page as JSON), or `null`. */
+export function base58Decode(text: unknown): number[] | null {
+    const bytes = decodeAddress(text);
+    return bytes ? Array.from(bytes) : null;
+}
+
+/**
+ * The address book as the engine takes it: the valid `Name = address`
+ * lines of `text`, and the line numbers of the others.
+ */
+export function parseContacts(text: string): { contacts: Contact[]; bad: number[] } {
+    const contacts: Contact[] = [];
+    const bad: number[] = [];
+    text.split('\n').forEach((line, i) => {
+        const trimmed = line.trim();
+        if (trimmed === '') return;
+        const match = /^(.+?)\s*=\s*([1-9A-HJ-NP-Za-km-z]+)$/.exec(trimmed);
+        const name = match?.[1]?.trim();
+        const address = match?.[2];
+        if (!match || !name || !address || !base58Decode(address)) {
+            bad.push(i + 1);
+            return;
+        }
+        contacts.push({ name, address });
+    });
+    return { contacts, bad };
+}
+
+/** The settings the wallet in the page needs, as the worker answers a `config` message. */
+export interface PageConfig {
+    mode: Mode;
+    address: string;
+    publicKey: number[] | null;
+    upstream: string;
+}
+
+export function pageConfig(config: Settings): PageConfig {
+    const address = config.address.trim();
+    const publicKey = base58Decode(address);
+    return { mode: config.mode, address: publicKey ? address : '', publicKey, upstream: config.upstream };
+}

@@ -1,0 +1,31 @@
+# A tag `v*` builds the store package reproducibly and attaches it, with
+# its SHA-256, to a GitHub release. Anyone can rebuild the tag with
+# `npm ci && npm run package` and compare the hash.
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  package:
+    name: Package and release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 24
+      - run: npm ci
+      - run: npm run check
+      - run: npm test
+      - run: npm run package
+      - uses: softprops/action-gh-release@3bb12739c298aeb8a4eeaf626c5b8d85266b0e65 # v2
+        with:
+          files: |
+            dist/*.zip
+            dist/*.sha256
+          generate_release_notes: true

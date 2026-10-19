@@ -1,0 +1,13 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "rootDir": "src",
+    "outDir": "extension",
+    "types": ["chrome"],
+    "removeComments": false,
+    "newLine": "lf"
+  },
+  "include": ["src"],
+  "exclude": ["src/**/*.test.ts"]
+}

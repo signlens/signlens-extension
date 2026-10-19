@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Test dapp</title>
+    </head>
+    <body>
+        <h1>A dapp for the tests</h1>
+        <script>
+            // The app side of Wallet Standard, as a dapp does it: collect the
+            // wallets that announce themselves, and ask the one named.
+            const wallets = new Map();
+            const app = {
+                register(...found) {
+                    for (const wallet of found) wallets.set(wallet.name, wallet);
+                    return () => {};
+                },
+            };
+            window.addEventListener('wallet-standard:register-wallet', (event) => event.detail(app));
+            window.dispatchEvent(new CustomEvent('wallet-standard:app-ready', { detail: app }));
+
+            window.walletNames = () => [...wallets.keys()];
+
+            // A wallet to pass requests to: records what it is asked and
+            // "signs" by returning the bytes unchanged.
+            window.fakeCalls = [];
+            const fakeAccount = Object.freeze({
+                address: 'FakeWa11et1111111111111111111111111111111111',
+                publicKey: new Uint8Array(32),
+                chains: ['solana:mainnet'],
+                features: ['solana:signTransaction', 'solana:signMessage'],
+            });
+            const fake = {
+                version: '1.0.0',
+                name: 'Fake Wallet',
+                icon: 'data:image/svg+xml;base64,PHN2Zy8+',
+                chains: ['solana:mainnet'],
+                accounts: [fakeAccount],
+                features: {
+                    'standard:connect': { version: '1.0.0', connect: async () => ({ accounts: [fakeAccount] }) },
+                    'standard:events': { version: '1.0.0', on: () => () => {} },
+                    'solana:signTransaction': {
+                        version: '1.0.0',
+                        supportedTransactionVersions: ['legacy', 0],
+                        signTransaction: async (...inputs) => {
+                            window.fakeCalls.push({ method: 'signTransaction', count: inputs.length });
+                            return inputs.map((input) => ({ signedTransaction: input.transaction }));
+                        },
+                    },
+                    'solana:signMessage': {
+                        version: '1.0.0',
+                        signMessage: async (...inputs) => {
+                            window.fakeCalls.push({ method: 'signMessage', count: inputs.length });
+                            return inputs.map((input) => ({ signedMessage: input.message, signature: new Uint8Array(64) }));
+                        },
+                    },
+                },
+            };
+            window.dispatchEvent(
+                new CustomEvent('wallet-standard:register-wallet', { detail: (api) => api.register(fake) }),
+            );
+            // In case SignLens announced itself first and is listening as an app.
+            window.addEventListener('wallet-standard:app-ready', (event) => event.detail.register(fake));
+
+            function fromBase64(text) {
+                const binary = atob(text);
+                const bytes = new Uint8Array(binary.length);
+                for (let i = 0; i < binary.length; i += 1) bytes[i] = binary.charCodeAt(i);
+                return bytes;
+            }
+
+            /** Connects to the wallet; returns the first account's address. */
+            window.connect = async (name) => {
+                const { accounts } = await wallets.get(name).features['standard:connect'].connect();
+                return accounts[0].address;
+            };
+
+            /** Connects to the wallet and asks it to sign; returns what it answered. */
+            window.sign = async (name, base64, method = 'solana:signTransaction') => {
+                const wallet = wallets.get(name);
+                const { accounts } = await wallet.features['standard:connect'].connect();
+                const account = accounts[0];
+                const feature = wallet.features[method];
+                try {
+                    const outputs = await feature[method.split(':')[1]]({
+                        transaction: fromBase64(base64),
+                        account,
+                        chain: 'solana:mainnet',
+                    });
+                    return { account: account.address, signed: outputs.length };
+                } catch (error) {
+                    return { account: account.address, error: error.message };
+                }
+            };
+
+            window.signMessage = async (name, text) => {
+                const wallet = wallets.get(name);
+                const { accounts } = await wallet.features['standard:connect'].connect();
+                try {
+                    await wallet.features['solana:signMessage'].signMessage({
+                        account: accounts[0],
+                        message: new TextEncoder().encode(text),
+                    });
+                    return { signed: true };
+                } catch (error) {
+                    return { error: error.message };
+                }
+            };
+        </script>
+    </body>
+</html>

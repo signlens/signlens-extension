@@ -1,0 +1,28 @@
+{
+  "name": "signlens-extension",
+  "version": "0.1.0",
+  "private": true,
+  "description": "SignLens for the browser: a Wallet Standard wallet without keys that explains every signing request and hands it unchanged to your own wallet",
+  "license": "Apache-2.0",
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "build:firefox": "npm run build && node scripts/build-firefox.ts",
+    "package": "npm run build && node scripts/package.ts",
+    "check": "biome check . && tsc -p tsconfig.json",
+    "format": "biome format --write .",
+    "test": "node --test \"src/**/*.test.ts\"",
+    "pretest:e2e": "npm run build",
+    "test:e2e": "playwright test"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.5.15",
+    "@playwright/test": "^1.64.1",
+    "@types/chrome": "^0.3.5",
+    "@types/node": "^24.19.2",
+    "typescript": "^7.0.2"
+  }
+}

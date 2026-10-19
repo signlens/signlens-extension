@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>SignLens</title>
+        <link rel="stylesheet" href="popup.css" />
+    </head>
+    <body class="confirm">
+        <header>
+            <h1 id="title">SignLens</h1>
+            <p class="status"><span id="where"></span> <code id="what" class="method"></code></p>
+            <p id="band" class="band"><span id="band-verdict" class="verdict"></span><span id="band-summary"></span></p>
+        </header>
+
+        <main>
+            <ol id="rows"></ol>
+            <section id="feedback" class="feedback" hidden>
+                <p class="feedback-ask">Was this explanation clear?</p>
+                <div class="feedback-buttons">
+                    <button type="button" class="small" data-rating="clear">Clear</button>
+                    <button type="button" class="small" data-rating="unclear">Unclear</button>
+                    <button type="button" class="small" data-rating="wrong">Wrong</button>
+                </div>
+                <label id="feedback-cover" class="choice" hidden>
+                    <input type="checkbox" name="cover" />
+                    <span>Send this transaction to SignLens so it gets covered</span>
+                </label>
+                <textarea id="feedback-comment" rows="2" maxlength="2000" placeholder="What was unclear or wrong? (optional)" hidden></textarea>
+                <p id="feedback-note" class="note"></p>
+            </section>
+        </main>
+
+        <footer>
+            <p id="note"></p>
+            <div id="buttons">
+                <button id="reject" type="button">Reject</button>
+                <button id="continue" type="button" class="primary">Continue</button>
+            </div>
+        </footer>
+
+        <script type="module" src="confirm.js"></script>
+    </body>
+</html>

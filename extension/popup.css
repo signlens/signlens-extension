@@ -1,0 +1,709 @@
+:root {
+    color-scheme: light dark;
+    --ground: #ffffff;
+    --raised: #f3f4f6;
+    --line: #d6d9df;
+    --text: #14213d;
+    --muted: #5b6475;
+    --accent: #b86e00;
+    /* The filled control: amber dark enough for white text (5.4:1). */
+    --fill: #9a5c00;
+    --on-fill: #ffffff;
+    --ok: #1a7f4b;
+    --warning: #a15c00;
+    --blocked: #b3261e;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --ground: #14181f;
+        --raised: #1e242e;
+        --line: #343c4a;
+        --text: #e8eaee;
+        --muted: #9aa3b2;
+        --accent: #fca311;
+        /* Dark text on the bright amber (11:1); white would not read. */
+        --fill: #fca311;
+        --on-fill: #14181f;
+        --ok: #5fd39a;
+        --warning: #fcb94a;
+        --blocked: #ff8a80;
+    }
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    width: 480px;
+    margin: 0;
+    padding: 14px 16px 16px;
+    background: var(--ground);
+    color: var(--text);
+    font: 13px/1.45 system-ui, sans-serif;
+}
+
+h1 {
+    margin: 0;
+    font-size: 16px;
+}
+
+h1 span {
+    color: var(--muted);
+    font-weight: 400;
+}
+
+h2 {
+    margin: 16px 0 6px;
+    font-size: 13px;
+}
+
+.status {
+    margin: 4px 0 12px;
+    color: var(--muted);
+}
+
+.status.up {
+    color: var(--ok);
+}
+
+.status.down {
+    color: var(--blocked);
+}
+
+fieldset {
+    margin: 0 0 10px;
+    padding: 8px 10px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+}
+
+legend {
+    padding: 0 4px;
+    color: var(--muted);
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    color: var(--muted);
+}
+
+label.choice {
+    display: flex;
+    gap: 8px;
+    align-items: baseline;
+    margin: 2px 0;
+    color: var(--text);
+}
+
+label.choice strong {
+    font-weight: 600;
+}
+
+textarea,
+select,
+input[type='text'] {
+    display: block;
+    width: 100%;
+    margin-top: 3px;
+    padding: 6px 8px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: var(--raised);
+    color: var(--text);
+    font: 12px ui-monospace, monospace;
+}
+
+textarea:focus-visible,
+select:focus-visible,
+input[type='text']:focus-visible,
+input[type='checkbox']:focus-visible,
+input[type='radio']:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+}
+
+small {
+    display: block;
+    min-height: 1.45em;
+    color: var(--blocked);
+}
+
+[hidden] {
+    display: none;
+}
+
+#empty {
+    margin: 0;
+    color: var(--muted);
+}
+
+ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+li {
+    margin-bottom: 8px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+summary {
+    display: flex;
+    gap: 8px;
+    align-items: baseline;
+    padding: 6px 8px;
+    background: var(--raised);
+    cursor: pointer;
+}
+
+summary .where {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+summary time {
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+}
+
+.verdict {
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 0.03em;
+}
+
+.verdict.ok {
+    color: var(--ok);
+}
+
+.verdict.warning {
+    color: var(--warning);
+}
+
+.verdict.blocked,
+.verdict.error {
+    color: var(--blocked);
+}
+
+pre {
+    max-height: 260px;
+    margin: 0;
+    padding: 8px;
+    overflow: auto;
+    font: 11px/1.45 ui-monospace, monospace;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.explanation {
+    padding: 8px;
+}
+
+.explanation .summary-line {
+    margin: 0 0 6px;
+    font-weight: 600;
+}
+
+.findings {
+    margin: 0 0 6px;
+    padding: 0;
+    list-style: none;
+}
+
+.findings li {
+    margin: 0 0 3px;
+    padding: 0;
+    border: 0;
+}
+
+.severity {
+    display: inline-block;
+    min-width: 5.5em;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.severity.critical,
+.severity.high {
+    color: var(--blocked);
+}
+
+.severity.warning {
+    color: var(--warning);
+}
+
+.severity.info {
+    color: var(--muted);
+}
+
+.tables {
+    margin: 0 0 6px;
+    color: var(--muted);
+}
+
+code {
+    font: 12px ui-monospace, monospace;
+}
+
+textarea {
+    resize: vertical;
+}
+
+/* The confirmation window. */
+body.confirm {
+    width: auto;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+body.confirm ol {
+    flex: 1;
+    overflow: auto;
+}
+
+body.confirm pre {
+    max-height: none;
+}
+
+.row-head {
+    padding: 6px 8px;
+    background: var(--raised);
+}
+
+#note {
+    margin: 10px 0 8px;
+    color: var(--muted);
+}
+
+#buttons {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+}
+
+button {
+    padding: 8px 14px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: var(--raised);
+    color: var(--text);
+    font: inherit;
+    cursor: pointer;
+}
+
+button.primary {
+    border-color: var(--fill);
+    background: var(--fill);
+    color: var(--on-fill);
+    font-weight: 600;
+}
+
+button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+}
+
+small.note {
+    color: var(--muted);
+}
+
+h2 {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+}
+
+button.small {
+    padding: 2px 8px;
+    font-size: 11px;
+}
+
+a.save {
+    display: inline-block;
+    margin: 6px 0 2px;
+    color: var(--accent);
+    font-size: 12px;
+}
+
+#permissions {
+    margin: 0 0 12px;
+    padding: 8px 10px;
+    border: 1px solid var(--warning);
+    border-radius: 6px;
+    color: var(--text);
+}
+
+/* The explanation, effects first. */
+.explanation h3 {
+    margin: 10px 0 4px;
+    font-size: 12px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.effects {
+    margin: 0 0 6px;
+    padding: 0 0 0 18px;
+}
+
+.effects li {
+    margin: 0 0 4px;
+    padding: 0;
+    border: 0;
+}
+
+.amount {
+    font-variant-numeric: tabular-nums;
+}
+
+.effects .amount {
+    font-weight: 600;
+}
+
+.address {
+    overflow-wrap: anywhere;
+}
+
+/* Keys and hex in monospace; words in the text face. */
+.address .key,
+code.bytes {
+    font-family: ui-monospace, monospace;
+    font-size: 11.5px;
+}
+
+summary time,
+dl.fields dd {
+    font-variant-numeric: tabular-nums;
+}
+
+.address.self b {
+    color: var(--ok);
+}
+
+.disclosure {
+    margin: 0 0 6px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+}
+
+.disclosure > .toggle {
+    padding: 5px 8px;
+    background: var(--raised);
+    cursor: pointer;
+}
+
+.disclosure > .toggle::before {
+    content: '▸ ';
+    color: var(--muted);
+}
+
+.disclosure > .toggle[aria-expanded='true']::before {
+    content: '▾ ';
+}
+
+.disclosure > .toggle:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: -2px;
+}
+
+.disclosure .disclosure {
+    margin: 6px 8px;
+}
+
+.section-title {
+    font-weight: 600;
+}
+
+.section-subtitle {
+    color: var(--muted);
+}
+
+dl.fields {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 3px 10px;
+    margin: 0;
+    padding: 6px 8px;
+}
+
+dl.fields dt {
+    color: var(--muted);
+}
+
+dl.fields dd {
+    margin: 0;
+    overflow-wrap: anywhere;
+}
+
+/* A term opens its help: a dotted underline says so, the note sits under the value. */
+.term {
+    text-decoration: underline dotted;
+    text-underline-offset: 2px;
+    cursor: help;
+}
+
+.term:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+    border-radius: 2px;
+}
+
+.help-note {
+    margin: 3px 0 4px;
+    padding-left: 8px;
+    border-left: 2px solid var(--line);
+    color: var(--muted);
+    font-weight: 400;
+    font-variant-numeric: normal;
+}
+
+dl.fields ul.list {
+    margin: 0;
+    padding-left: 16px;
+}
+
+code.bytes {
+    font-size: 11px;
+    overflow-wrap: anywhere;
+}
+
+.claimed {
+    color: var(--muted);
+}
+
+.full-text pre {
+    border-top: 1px solid var(--line);
+}
+
+/* The confirmation window: header and footer fixed, the explanation between. */
+body.confirm {
+    width: auto;
+    height: 100vh;
+    padding: 0;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+}
+
+body.confirm header {
+    padding: 12px 16px 0;
+    border-bottom: 1px solid var(--line);
+}
+
+body.confirm main {
+    overflow: auto;
+    padding: 10px 16px;
+}
+
+/* One row: the note on the left, the buttons on the right. */
+body.confirm footer {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    padding: 8px 16px;
+    border-top: 1px solid var(--line);
+    background: var(--ground);
+}
+
+body.confirm footer #note {
+    flex: 1;
+    margin: 0;
+    font-size: 12px;
+    line-height: 1.35;
+}
+
+body.confirm footer #buttons {
+    flex: none;
+}
+
+body.confirm .status {
+    margin: 2px 0 8px;
+}
+
+.scheme {
+    color: var(--muted);
+}
+
+.host {
+    color: var(--text);
+    font-size: 14px;
+}
+
+.band {
+    display: flex;
+    gap: 10px;
+    align-items: baseline;
+    margin: 0 -16px;
+    padding: 8px 16px;
+    border-top: 3px solid var(--muted);
+    background: var(--raised);
+    font-weight: 600;
+}
+
+.band.ok {
+    border-top-color: var(--ok);
+}
+
+.band.warning {
+    border-top-color: var(--warning);
+}
+
+.band.blocked,
+.band.error {
+    border-top-color: var(--blocked);
+}
+
+.band .verdict {
+    flex: none;
+}
+
+body.confirm #rows > li {
+    border: 0;
+    border-radius: 0;
+    margin: 0;
+}
+
+body.confirm .explanation {
+    padding: 0;
+}
+
+body.confirm .summary-line {
+    display: none;
+}
+
+body.confirm pre {
+    max-height: none;
+}
+
+#note {
+    margin: 0 0 8px;
+    color: var(--muted);
+}
+
+/* The request's method, after the origin in the header. */
+.method {
+    color: var(--muted);
+    font-size: 11px;
+}
+
+/* The popup's two views. */
+.tabs {
+    display: flex;
+    gap: 4px;
+    margin: 0 0 12px;
+    border-bottom: 1px solid var(--line);
+}
+
+.tab {
+    padding: 6px 12px;
+    border: 0;
+    border-bottom: 2px solid transparent;
+    border-radius: 0;
+    background: none;
+    color: var(--muted);
+    font-weight: 600;
+}
+
+.tab[aria-selected='true'] {
+    color: var(--text);
+    border-bottom-color: var(--accent);
+}
+
+.tab:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: -2px;
+}
+
+.count {
+    margin-left: 6px;
+    padding: 1px 6px;
+    border-radius: 9px;
+    background: var(--fill);
+    color: var(--on-fill);
+    font-size: 10px;
+}
+
+.view > h2 {
+    margin-top: 0;
+}
+
+summary {
+    display: block;
+}
+
+.row-line {
+    display: flex;
+    gap: 8px;
+    align-items: baseline;
+}
+
+summary .lead {
+    margin-top: 2px;
+    color: var(--text);
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* The row's head already carries the summary line. */
+#history .summary-line {
+    display: none;
+}
+
+/* Informational findings read as notes, under the warnings. */
+.findings li.info {
+    color: var(--muted);
+}
+
+.decision {
+    color: var(--muted);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.muted {
+    color: var(--muted);
+    font-weight: 400;
+}
+
+/* Long hex folds to two lines until asked for. */
+code.bytes.clamped {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.more-bytes {
+    display: inline-block;
+    margin-top: 2px;
+    color: var(--accent);
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.more-bytes:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+}
+
+/* The feedback strip under the explanation in the gate. */
+.feedback { margin: 12px 0 0; padding: 10px 12px; border-top: 1px solid #e3e6ea; }
+.feedback-ask { margin: 0 0 6px; font-weight: 600; }
+.feedback-buttons { display: flex; gap: 6px; margin-bottom: 6px; }
+.feedback textarea { width: 100%; box-sizing: border-box; margin: 6px 0; }
+.feedback .note { margin: 4px 0 0; color: #5b6475; }
