@@ -1,8 +1,8 @@
-// The parts of the renderer that need no DOM: quantities and verdicts.
+// The parts of the renderer that need no DOM: quantities, and the help for a label.
 
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { quantity, rows, worstVerdict } from './render.ts';
+import { helpFor, quantity } from './render.ts';
 import type { Amount } from './types.ts';
 
 function amount(units: string, decimals: number | null): Amount {
@@ -19,11 +19,10 @@ test('a quantity is scaled by its decimals, grouped by thousands, and signed', (
     assert.equal(quantity(amount('not a number', 2)), 'not a number raw units');
 });
 
-test('the worst verdict wins, and a failed answer is one row', () => {
-    assert.equal(worstVerdict([{ verdict: 'ok' }, { verdict: 'warning' }]), 'warning');
-    assert.equal(worstVerdict([{ verdict: 'ok' }, { error: 'x' }, { verdict: 'blocked' }]), 'blocked');
-    assert.equal(worstVerdict([{ verdict: 'ok' }, { error: 'x' }]), 'error');
-    assert.equal(worstVerdict([]), 'message');
-    assert.deepEqual(rows({ error: 'down' }), [{ error: 'down' }]);
-    assert.deepEqual(rows({ text: 'hello' }), [{ error: null, text: 'hello' }]);
+test('a label gets the help written for it, and no other, whatever the engine calls it', () => {
+    assert.match(helpFor('Fee payer') ?? '', /pays the fee/);
+    assert.match(helpFor('Create token account if missing: Mint') ?? '', /identifies the token/);
+    for (const label of ['constructor', 'toString', '__proto__', 'Create token account if missing: hasOwnProperty']) {
+        assert.equal(helpFor(label), undefined, label);
+    }
 });

@@ -10,6 +10,9 @@ test('settings survive closing the popup', async ({ popup, worker }) => {
     await popup.getByLabel('Address to connect as').fill(ADDRESS);
     await popup.getByLabel('RPC for lookup tables').fill('http://127.0.0.1:1/rpc');
     await popup.getByLabel('SignLens API').fill('http://127.0.0.1:2');
+    // An address is saved once its field is left, not at each key.
+    await popup.getByLabel('SignLens API').press('Tab');
+    await expect.poll(() => worker.evaluate(() => chrome.storage.local.get('apiUrl'))).toEqual({ apiUrl: 'http://127.0.0.1:2' });
 
     await popup.reload();
     await expect(popup.getByLabel('Address to connect as')).toHaveValue(ADDRESS);
@@ -33,6 +36,40 @@ test('a half-typed address is flagged and not saved', async ({ popup, worker }) 
     await expect(popup.locator('#address-hint')).toHaveText(/Not a Solana address/);
     const stored = await worker.evaluate(() => chrome.storage.local.get('address'));
     expect(stored.address ?? '').toBe('');
+});
+
+test('an address in plain http to another machine is flagged and not saved, and the default is not stored', async ({ popup, worker }) => {
+    await popup.getByLabel('SignLens API').fill('http://api.example.com');
+    await popup.getByLabel('SignLens API').press('Tab');
+    await expect(popup.locator('#apiUrl-hint')).toHaveText(/Not saved: plain http is for this machine only/);
+    // The field says it is wrong, and why, to whoever cannot see the red line under it.
+    await expect(popup.getByLabel('SignLens API')).toHaveAttribute('aria-invalid', 'true');
+    await expect(popup.getByLabel('SignLens API')).toHaveAccessibleDescription(/Not saved: plain http is for this machine only/);
+    await popup.getByLabel('RPC for lookup tables').fill('https://rpc.example.com');
+    await popup.getByLabel('RPC for lookup tables').press('Tab');
+    await expect(popup.getByLabel('RPC for lookup tables')).toHaveAttribute('aria-invalid', 'false');
+    await expect.poll(() => worker.evaluate(() => chrome.storage.local.get('rpcUrl'))).toEqual({ rpcUrl: 'https://rpc.example.com' });
+    expect(await worker.evaluate(() => chrome.storage.local.get('apiUrl'))).toEqual({});
+
+    // Set back to the default, the address is removed, so a later default reaches it.
+    await popup.getByLabel('RPC for lookup tables').fill('https://solana-rpc.publicnode.com');
+    await popup.getByLabel('RPC for lookup tables').press('Tab');
+    await expect.poll(() => worker.evaluate(() => chrome.storage.local.get('rpcUrl'))).toEqual({});
+});
+
+test('an address pasted is kept even when the popup closes at once, with no field left', async ({ popup, worker }) => {
+    await popup.getByLabel('SignLens API').fill('https://api.example.com');
+    await popup.close();
+    await expect.poll(() => worker.evaluate(() => chrome.storage.local.get('apiUrl'))).toEqual({ apiUrl: 'https://api.example.com' });
+});
+
+test('an address kept from before that is no longer taken is flagged when the popup opens', async ({ configure, popup }) => {
+    // Plain http to a LAN host was taken before; now only this machine may be plain http.
+    await configure({ apiUrl: 'http://192.168.1.10:8787' });
+    await popup.reload();
+    await expect(popup.locator('#apiUrl-hint')).toHaveText(/^Not used: plain http is for this machine only/);
+    await expect(popup.getByLabel('SignLens API')).toHaveAttribute('aria-invalid', 'true');
+    await expect(popup.getByLabel('RPC for lookup tables')).toHaveAttribute('aria-invalid', 'false');
 });
 
 test('connecting in watch mode needs an address', async ({ configure, dapp }) => {

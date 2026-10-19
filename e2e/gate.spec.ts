@@ -91,7 +91,7 @@ test('a message goes through the gate too', async ({ configure, context, dapp })
     expect(await dapp.evaluate(() => window.fakeCalls)).toEqual([{ method: 'signMessage', count: 1 }]);
 });
 
-test('with the gate off the request is passed on at once', async ({ configure, dapp }) => {
+test('with the window off, a request SignLens would not refuse is passed on at once', async ({ configure, dapp }) => {
     const transfer = fixture('legacy_durable_nonce_token_transfer');
     await configure({ gate: false, lookupTokens: false, simulate: false, mode: 'passthrough', upstream: 'Fake Wallet' });
     const answer = await dapp.evaluate(({ wallet, base64 }: { wallet: string; base64: string }) => window.sign(wallet, base64), {
@@ -99,6 +99,25 @@ test('with the gate off the request is passed on at once', async ({ configure, d
         base64: transfer.base64,
     });
     expect(answer.signed).toBe(1);
+});
+
+test('with the window off, a request SignLens would block still waits for the user', async ({ configure, context, dapp, server }) => {
+    // The stub RPC has none of the swap's lookup tables: unresolved, it is blocked.
+    const swap = fixture('swap__both_mints_named.b64');
+    await configure({
+        gate: false,
+        lookupTokens: false,
+        simulate: false,
+        mode: 'passthrough',
+        upstream: 'Fake Wallet',
+        rpcUrl: server.rpc,
+    });
+    const { signing, gate } = await askToSign(context, dapp, swap.base64);
+    await expect(gate.locator('#band')).toHaveClass(/blocked/);
+    await expect(gate.getByRole('button', { name: /Continue anyway/ })).not.toHaveClass(/primary/);
+    await gate.getByRole('button', { name: 'Reject' }).click();
+    expect((await signing).error).toContain('rejected in SignLens');
+    expect(await dapp.evaluate(() => window.fakeCalls)).toEqual([]);
 });
 
 test('the window puts the verdict and what the transaction does first, with the full text one click away', async ({
@@ -126,9 +145,11 @@ test('the window puts the verdict and what the transaction does first, with the 
     // The instructions and the details behind one toggle, closed until the
     // reader opens it, which is remembered.
     const all = gate.locator('.disclosure.instructions');
-    await expect(all.locator(':scope > .toggle')).toHaveText('Instruction and details');
+    const toggle = all.getByRole('button', { name: 'Instruction and details', exact: true });
+    await expect(toggle).toHaveAttribute('aria-expanded', 'false');
     await expect(all.locator(':scope > .disclosure-body')).toBeHidden();
-    await all.locator(':scope > .toggle').click();
+    await toggle.click();
+    await expect(toggle).toHaveAttribute('aria-expanded', 'true');
     await expect(all.locator(':scope > .disclosure-body')).toBeVisible();
     expect(await worker.evaluate(() => chrome.storage.local.get('showInstructions'))).toEqual({ showInstructions: true });
 
@@ -138,9 +159,8 @@ test('the window puts the verdict and what the transaction does first, with the 
     await expect(instruction.locator('dl.fields')).toBeVisible();
     await expect(instruction.locator('dl.fields')).toContainText('Authorized by');
     const more = gate.locator('.disclosure.more');
-    await expect(more.locator(':scope > .toggle')).toContainText('Details: also, signers, fee, validity');
     await expect(more.locator(':scope > .disclosure-body')).toBeHidden();
-    await more.locator(':scope > .toggle').click();
+    await more.getByRole('button', { name: 'Details: also, signers, fee, validity', exact: true }).click();
     await expect(more.locator(':scope > .disclosure-body')).toBeVisible();
     await expect(more.locator('.section-title')).toContainText(['Also', 'Signers', 'Fee', 'Validity']);
 
@@ -157,7 +177,7 @@ test('the window puts the verdict and what the transaction does first, with the 
     await expect(effects.first().locator('.help-note')).toHaveText(/comes from SignLens itself/);
     const full = gate.locator('.disclosure.full-text');
     await expect(full.locator('pre')).toBeHidden();
-    await full.locator(':scope > .toggle').press('Enter');
+    await full.getByRole('button', { name: 'Full text, as the engine prints it', exact: true }).press('Enter');
     await expect(full.locator('pre')).toBeVisible();
     await expect(full.locator('pre')).toContainText('== Transfer tokens | Token program (verified)');
 
@@ -176,7 +196,7 @@ test('a label the descriptor explains opens its help in the gate', async ({ conf
 
     const { signing, gate } = await askToSign(context, dapp, buy.base64);
     const all = gate.locator('.disclosure.instructions');
-    await expect(all.locator(':scope > .toggle')).toHaveText('Instruction and details');
+    await expect(all.getByRole('button', { name: 'Instruction and details', exact: true })).toHaveAttribute('aria-expanded', 'true');
     await expect(all.locator(':scope > .disclosure-body')).toBeVisible();
     const instruction = gate.locator('.disclosure.section').first();
     await expect(instruction.locator('.section-title')).toHaveText('Buy');
@@ -207,10 +227,13 @@ test('long instruction data folds to two lines until asked for', async ({ config
     await expect(bytes).toHaveClass(/clamped/);
     await expect(bytes).toContainText('0xf8c69e91e17587c8');
     const more = gate.locator('.more-bytes').first();
-    await expect(more).toHaveText(/^show all \d+ bytes$/);
-    await more.click();
+    await expect(more).toHaveRole('button');
+    await expect(more).toHaveAccessibleName(/^show all \d+ bytes$/);
+    await expect(more).toHaveAttribute('aria-expanded', 'false');
+    await more.press('Enter');
     await expect(bytes).not.toHaveClass(/clamped/);
     await expect(more).toHaveText('show less');
+    await expect(more).toHaveAttribute('aria-expanded', 'true');
     await gate.getByRole('button', { name: 'Reject' }).click();
     await signing.catch(() => {});
 });

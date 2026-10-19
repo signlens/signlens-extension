@@ -1,0 +1,4 @@
+# The package is built from what is checked out and its hash compared
+# across machines, so text is LF everywhere, Windows checkouts included.
+* text=auto eol=lf
+*.png binary

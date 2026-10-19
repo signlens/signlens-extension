@@ -1,5 +1,6 @@
-// What a page can and cannot do to the wallet in it: forge nothing, and
-// never get a request through on silence.
+// What a page can and cannot do to the wallet in it: forge nothing, have
+// no other bytes signed than were explained, learn nothing of the user's
+// address book, and never get a request through on silence.
 
 import { expect, liveGate, test } from './extension.ts';
 import { fixture } from './server.ts';
@@ -50,7 +51,11 @@ test('a page cannot forge a decision or a setting over the window', async ({ con
     expect(await dapp.evaluate(() => window.fakeCalls)).toEqual([]);
 });
 
-test('the page learns the verdict, not the explanation or who the user calls whom', async ({ configure, context, dapp }) => {
+test('the page learns neither the verdict nor the explanation, since both depend on the address book', async ({
+    configure,
+    context,
+    dapp,
+}) => {
     const transfer = fixture('legacy_durable_nonce_token_transfer');
     await configure({
         lookupTokens: false,
@@ -66,11 +71,127 @@ test('the page learns the verdict, not the explanation or who the user calls who
         base64: transfer.base64,
     });
     const gate = await liveGate(context);
+    await expect(gate.locator('.verdict').first()).toHaveText('warning');
     await expect(gate.locator('#rows')).toContainText('To: Bob (DV3B…L7Qp)');
     await gate.getByRole('button', { name: 'Reject' }).click();
-    expect((await signing).error).toContain('rejected in SignLens');
-    expect(logged.some((line) => line.includes('SignLens') && line.includes('warning'))).toBe(true);
-    expect(logged.join('\n')).not.toMatch(/Bob|USDC|DV3B/);
+    const answer = await signing;
+    expect(answer.error).toContain('rejected in SignLens');
+    expect(`${answer.error}\n${logged.join('\n')}`).not.toMatch(/warning|Bob|USDC|DV3B/);
+});
+
+for (const trick of ['mutate', 'getter'] as const) {
+    test(`the wallet is handed the bytes SignLens explained, whatever the page does after asking (${trick})`, async ({
+        configure,
+        context,
+        dapp,
+        server,
+    }) => {
+        const transfer = fixture('legacy_durable_nonce_token_transfer');
+        await configure({ lookupTokens: false, simulate: false, mode: 'passthrough', upstream: 'Fake Wallet' });
+        // No explanation is needed to see which bytes go where.
+        server.refuseApi(503);
+        const signing = dapp.evaluate(
+            ({ wallet, base64, trick }: { wallet: string; base64: string; trick: 'mutate' | 'getter' }) =>
+                window.signTricky(wallet, base64, trick),
+            { wallet: WALLET, base64: transfer.base64, trick },
+        );
+        const gate = await liveGate(context);
+        await gate.getByRole('button', { name: /Continue anyway/ }).click();
+        expect(await signing).toEqual({ signed: true });
+        const explained = server.apiCalls.find((call) => call.path === '/v1/explain')?.body as { transaction: string };
+        expect(explained.transaction).toBe(transfer.base64);
+        expect(await dapp.evaluate(() => window.fakeSigned)).toEqual([transfer.base64]);
+    });
+}
+
+test('a page that never connected cannot open the window or reach the API', async ({ configure, context, dapp, server }) => {
+    const transfer = fixture('legacy_durable_nonce_token_transfer');
+    await configure({ lookupTokens: false, simulate: false, mode: 'passthrough', upstream: 'Fake Wallet' });
+    const answer = await dapp.evaluate(({ wallet, base64 }: { wallet: string; base64: string }) => window.signUnconnected(wallet, base64), {
+        wallet: WALLET,
+        base64: transfer.base64,
+    });
+    expect(answer.error).toContain('connect first');
+    expect(context.pages().filter((page) => page.url().includes('confirm.html'))).toEqual([]);
+    expect(server.apiCalls).toEqual([]);
+});
+
+test('a second request while the first is open is refused, not stacked behind it', async ({ configure, context, dapp, server }) => {
+    const transfer = fixture('legacy_durable_nonce_token_transfer');
+    await configure({ lookupTokens: false, simulate: false, mode: 'passthrough', upstream: 'Fake Wallet' });
+    server.refuseApi(503);
+    const sign = () =>
+        dapp.evaluate(({ wallet, base64 }: { wallet: string; base64: string }) => window.sign(wallet, base64), {
+            wallet: WALLET,
+            base64: transfer.base64,
+        });
+    const first = sign();
+    const gate = await liveGate(context);
+    const second = await sign();
+    expect(second.error).toContain('still busy');
+    expect(context.pages().filter((page) => !page.isClosed() && page.url().includes('confirm.html'))).toHaveLength(1);
+    expect(server.apiCalls.filter((call) => call.path === '/v1/explain')).toHaveLength(1);
+    await gate.getByRole('button', { name: 'Reject' }).click();
+    expect((await first).error).toContain('rejected in SignLens');
+});
+
+test('closing the page refuses its request and closes the window', async ({ configure, context, dapp, popup, server }) => {
+    const transfer = fixture('legacy_durable_nonce_token_transfer');
+    await configure({ lookupTokens: false, simulate: false, mode: 'passthrough', upstream: 'Fake Wallet' });
+    server.refuseApi(503);
+    dapp.evaluate(({ wallet, base64 }: { wallet: string; base64: string }) => window.sign(wallet, base64), {
+        wallet: WALLET,
+        base64: transfer.base64,
+    }).catch(() => {});
+    const gate = await liveGate(context);
+    await dapp.close();
+    await expect.poll(() => gate.isClosed()).toBe(true);
+    await popup.reload();
+    await expect(popup.locator('#history li').first().locator('.decision')).toHaveText('rejected');
+});
+
+test('a page that reloads has its request refused and its window closed, and may ask again at once', async ({
+    configure,
+    context,
+    dapp,
+    popup,
+    server,
+}) => {
+    const transfer = fixture('legacy_durable_nonce_token_transfer');
+    await configure({ lookupTokens: false, simulate: false, mode: 'passthrough', upstream: 'Fake Wallet' });
+    server.refuseApi(503);
+    const sign = () =>
+        dapp.evaluate(({ wallet, base64 }: { wallet: string; base64: string }) => window.sign(wallet, base64), {
+            wallet: WALLET,
+            base64: transfer.base64,
+        });
+    sign().catch(() => {});
+    const first = await liveGate(context);
+    await dapp.reload();
+    await expect.poll(() => first.isClosed()).toBe(true);
+    // The tab is not held: the reloaded page's request gets a window of its own.
+    await expect.poll(() => dapp.evaluate(() => window.walletNames())).toContain(WALLET);
+    const again = sign();
+    const second = await liveGate(context);
+    await second.getByRole('button', { name: 'Reject' }).click();
+    expect((await again).error).toContain('rejected in SignLens');
+    // The first request is kept as refused, not as passed on.
+    await popup.reload();
+    await expect(popup.locator('#history > li').nth(1).locator('.decision')).toHaveText('rejected');
+});
+
+test('a dapp changing its route while the window is open keeps its request', async ({ configure, context, dapp, server }) => {
+    const transfer = fixture('legacy_durable_nonce_token_transfer');
+    await configure({ lookupTokens: false, simulate: false, mode: 'passthrough', upstream: 'Fake Wallet' });
+    server.refuseApi(503);
+    const signing = dapp.evaluate(({ wallet, base64 }: { wallet: string; base64: string }) => window.sign(wallet, base64), {
+        wallet: WALLET,
+        base64: transfer.base64,
+    });
+    const gate = await liveGate(context);
+    await dapp.evaluate(() => history.pushState({}, '', '/dapp.html?route=swap'));
+    await gate.getByRole('button', { name: /Continue anyway/ }).click();
+    expect((await signing).signed).toBe(1);
 });
 
 test('a page that disables the port after connecting gets refusals, not a pass', async ({ configure, context, dapp }) => {
@@ -91,4 +212,42 @@ test('a page that disables the port after connecting gets refusals, not a pass',
     await gate.getByRole('button', { name: 'Reject' }).click();
     expect((await signing).error).toContain('rejected in SignLens');
     expect(await dapp.evaluate(() => window.fakeCalls)).toEqual([]);
+});
+
+test('a page that patches built-ins to catch the port never sees it', async ({ configure, context, dapp, server }) => {
+    const transfer = fixture('legacy_durable_nonce_token_transfer');
+    await configure({ lookupTokens: false, simulate: false, mode: 'passthrough', upstream: 'Fake Wallet' });
+    server.refuseApi(503);
+    await dapp.evaluate(() => {
+        const seen: unknown[] = [];
+        (window as unknown as { seen: unknown[] }).seen = seen;
+        const post = MessagePort.prototype.postMessage;
+        MessagePort.prototype.postMessage = function (this: MessagePort, ...args: unknown[]) {
+            seen.push(this);
+            return Reflect.apply(post, this, args);
+        };
+        const data = Object.getOwnPropertyDescriptor(MessageEvent.prototype, 'data') as PropertyDescriptor;
+        Object.defineProperty(MessageEvent.prototype, 'data', {
+            ...data,
+            get(this: MessageEvent) {
+                if (this.target instanceof MessagePort) seen.push(this.target);
+                return Reflect.apply(data.get as () => unknown, this, []);
+            },
+        });
+        // A wallet announcing itself makes SignLens tell the extension.
+        const another = { version: '1.0.0', name: 'Another', icon: 'data:,', chains: [], accounts: [], features: {} };
+        window.dispatchEvent(
+            new CustomEvent('wallet-standard:register-wallet', {
+                detail: (api: { register(wallet: unknown): void }) => api.register(another),
+            }),
+        );
+    });
+    const signing = dapp.evaluate(({ wallet, base64 }: { wallet: string; base64: string }) => window.sign(wallet, base64), {
+        wallet: WALLET,
+        base64: transfer.base64,
+    });
+    const gate = await liveGate(context);
+    await gate.getByRole('button', { name: 'Reject' }).click();
+    expect((await signing).error).toContain('rejected in SignLens');
+    expect(await dapp.evaluate(() => (window as unknown as { seen: unknown[] }).seen.length)).toBe(0);
 });

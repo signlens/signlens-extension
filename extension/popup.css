@@ -5,8 +5,9 @@
     --line: #d6d9df;
     --text: #14213d;
     --muted: #5b6475;
-    --accent: #b86e00;
-    /* The filled control: amber dark enough for white text (5.4:1). */
+    /* Links and focus rings: amber dark enough to read as small text on the ground (5.4:1) and on raised (4.9:1). */
+    --accent: #9a5c00;
+    /* The filled control: the same amber, with white text (5.4:1). */
     --fill: #9a5c00;
     --on-fill: #ffffff;
     --ok: #1a7f4b;
@@ -22,7 +23,7 @@
         --text: #e8eaee;
         --muted: #9aa3b2;
         --accent: #fca311;
-        /* Dark text on the bright amber (11:1); white would not read. */
+        /* Dark text on the bright amber (8.8:1); white would not read. */
         --fill: #fca311;
         --on-fill: #14181f;
         --ok: #5fd39a;
@@ -41,7 +42,9 @@ body {
     padding: 14px 16px 16px;
     background: var(--ground);
     color: var(--text);
-    font: 13px/1.45 system-ui, sans-serif;
+    font:
+        13px / 1.45 system-ui,
+        sans-serif;
 }
 
 h1 {
@@ -55,6 +58,9 @@ h1 span {
 }
 
 h2 {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
     margin: 16px 0 6px;
     font-size: 13px;
 }
@@ -94,6 +100,8 @@ label.choice {
     display: flex;
     gap: 8px;
     align-items: baseline;
+    /* Rows far enough apart for a finger or an unsteady hand: 24px, WCAG 2.2's minimum target. */
+    min-height: 24px;
     margin: 2px 0;
     color: var(--text);
 }
@@ -113,7 +121,13 @@ input[type='text'] {
     border-radius: 6px;
     background: var(--raised);
     color: var(--text);
-    font: 12px ui-monospace, monospace;
+    font:
+        12px ui-monospace,
+        monospace;
+}
+
+textarea {
+    resize: vertical;
 }
 
 textarea:focus-visible,
@@ -154,9 +168,7 @@ li {
 }
 
 summary {
-    display: flex;
-    gap: 8px;
-    align-items: baseline;
+    display: block;
     padding: 6px 8px;
     background: var(--raised);
     cursor: pointer;
@@ -199,7 +211,9 @@ pre {
     margin: 0;
     padding: 8px;
     overflow: auto;
-    font: 11px/1.45 ui-monospace, monospace;
+    font:
+        11px / 1.45 ui-monospace,
+        monospace;
     white-space: pre-wrap;
     overflow-wrap: anywhere;
 }
@@ -253,28 +267,9 @@ pre {
 }
 
 code {
-    font: 12px ui-monospace, monospace;
-}
-
-textarea {
-    resize: vertical;
-}
-
-/* The confirmation window. */
-body.confirm {
-    width: auto;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
-
-body.confirm ol {
-    flex: 1;
-    overflow: auto;
-}
-
-body.confirm pre {
-    max-height: none;
+    font:
+        12px ui-monospace,
+        monospace;
 }
 
 .row-head {
@@ -283,7 +278,7 @@ body.confirm pre {
 }
 
 #note {
-    margin: 10px 0 8px;
+    margin: 0 0 8px;
     color: var(--muted);
 }
 
@@ -315,14 +310,21 @@ button:focus-visible {
     outline-offset: 1px;
 }
 
-small.note {
-    color: var(--muted);
+/* Controls that read as text (a disclosure's toggle, a term, "show all bytes"): buttons to the keyboard and the screen reader, without a button's box. */
+.toggle,
+.term,
+.more-bytes {
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    text-align: inherit;
 }
 
-h2 {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
+small.note {
+    color: var(--muted);
 }
 
 button.small {
@@ -346,7 +348,8 @@ a.save {
 }
 
 /* The explanation, effects first. */
-.explanation h3 {
+.explanation .effects-title {
+    display: block;
     margin: 10px 0 4px;
     font-size: 12px;
     color: var(--muted);
@@ -378,15 +381,9 @@ a.save {
 }
 
 /* Keys and hex in monospace; words in the text face. */
-.address .key,
-code.bytes {
+.address .key {
     font-family: ui-monospace, monospace;
     font-size: 11.5px;
-}
-
-summary time,
-dl.fields dd {
-    font-variant-numeric: tabular-nums;
 }
 
 .address.self b {
@@ -399,24 +396,20 @@ dl.fields dd {
     border-radius: 6px;
 }
 
-.disclosure > .toggle {
+.disclosure > .disclosure-head {
     padding: 5px 8px;
     background: var(--raised);
     cursor: pointer;
 }
 
-.disclosure > .toggle::before {
-    content: '▸ ';
+/* The arrow is for the eye; to a screen reader, aria-expanded says the same (hence the empty alternative). */
+.disclosure-head > .toggle::before {
+    content: '▸ ' / '';
     color: var(--muted);
 }
 
-.disclosure > .toggle[aria-expanded='true']::before {
-    content: '▾ ';
-}
-
-.disclosure > .toggle:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: -2px;
+.disclosure-head > .toggle[aria-expanded='true']::before {
+    content: '▾ ' / '';
 }
 
 .disclosure .disclosure {
@@ -446,6 +439,7 @@ dl.fields dt {
 dl.fields dd {
     margin: 0;
     overflow-wrap: anywhere;
+    font-variant-numeric: tabular-nums;
 }
 
 /* A term opens its help: a dotted underline says so, the note sits under the value. */
@@ -486,6 +480,33 @@ code.bytes {
 
 .full-text pre {
     border-top: 1px solid var(--line);
+}
+
+/* The sites allowed to see the watched address, in the settings. */
+.field-title {
+    margin: 0 0 4px;
+    color: var(--muted);
+}
+
+#sites {
+    margin: 0 0 4px;
+    padding: 0;
+    list-style: none;
+}
+
+#sites li {
+    display: flex;
+    gap: 8px;
+    align-items: baseline;
+    margin: 0 0 4px;
+    border: 0;
+    border-radius: 0;
+    overflow: visible;
+}
+
+#sites .site {
+    flex: 1;
+    overflow-wrap: anywhere;
 }
 
 /* The confirmation window: header and footer fixed, the explanation between. */
@@ -587,8 +608,17 @@ body.confirm pre {
     max-height: none;
 }
 
-#note {
-    margin: 0 0 8px;
+/* The consent window: the address a site asks to see, in full. */
+body.consent main p {
+    margin: 0 0 10px;
+}
+
+code.watched {
+    font-size: 13px;
+    overflow-wrap: anywhere;
+}
+
+body.consent .aside {
     color: var(--muted);
 }
 
@@ -637,10 +667,6 @@ body.confirm pre {
 
 .view > h2 {
     margin-top: 0;
-}
-
-summary {
-    display: block;
 }
 
 .row-line {
@@ -702,8 +728,28 @@ code.bytes.clamped {
 }
 
 /* The feedback strip under the explanation in the gate. */
-.feedback { margin: 12px 0 0; padding: 10px 12px; border-top: 1px solid #e3e6ea; }
-.feedback-ask { margin: 0 0 6px; font-weight: 600; }
-.feedback-buttons { display: flex; gap: 6px; margin-bottom: 6px; }
-.feedback textarea { width: 100%; box-sizing: border-box; margin: 6px 0; }
-.feedback .note { margin: 4px 0 0; color: #5b6475; }
+.feedback {
+    margin: 12px 0 0;
+    padding: 10px 12px;
+    border-top: 1px solid var(--line);
+}
+
+.feedback-ask {
+    margin: 0 0 6px;
+    font-weight: 600;
+}
+
+.feedback-buttons {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 6px;
+}
+
+.feedback textarea {
+    margin: 6px 0;
+}
+
+.feedback .note {
+    margin: 4px 0 0;
+    color: var(--muted);
+}

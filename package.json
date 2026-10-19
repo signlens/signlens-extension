@@ -12,11 +12,13 @@
     "build": "tsc -p tsconfig.build.json",
     "build:firefox": "npm run build && node scripts/build-firefox.ts",
     "package": "npm run build && node scripts/package.ts",
-    "check": "biome check . && tsc -p tsconfig.json",
+    "check": "biome check --error-on-warnings . && tsc -p tsconfig.json",
     "format": "biome format --write .",
     "test": "node --test \"src/**/*.test.ts\"",
     "pretest:e2e": "npm run build",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "pretest:e2e:record": "npm run build",
+    "test:e2e:record": "node scripts/record-api.ts"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.5.15",

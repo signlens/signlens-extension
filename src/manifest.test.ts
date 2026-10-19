@@ -36,12 +36,16 @@ test('the manifest is Manifest V3 for Chrome, with nothing Chrome would warn abo
     );
 });
 
-test('the Firefox manifest runs the same worker as a background script, with the add-on id', () => {
+test('the Firefox manifest runs the same worker as a background script, with the add-on id and what it sends away', () => {
     const firefox = firefoxManifest(manifest);
     assert.deepEqual(firefox.background, { type: 'module', scripts: ['background.js'] });
-    assert.match(firefox.browser_specific_settings?.gecko.id ?? '', /^[^@]+@[^@]+$/);
-    assert.ok(Number(firefox.browser_specific_settings?.gecko.strict_min_version) >= 128, 'world: MAIN content scripts');
+    const gecko = firefox.browser_specific_settings?.gecko;
+    assert.match(gecko?.id ?? '', /^[^@]+@[^@]+$/);
+    assert.ok(Number(gecko?.strict_min_version) >= 128, 'world: MAIN content scripts');
+    // Required by addons.mozilla.org for new add-ons since November 2025.
+    assert.deepEqual(gecko?.data_collection_permissions.required, ['financialAndPaymentInfo', 'personallyIdentifyingInfo']);
+    assert.equal(firefox.minimum_chrome_version, undefined);
     const { background: _b, browser_specific_settings: _s, ...rest } = firefox;
-    const { background: _c, ...chrome } = manifest;
+    const { background: _c, minimum_chrome_version: _m, ...chrome } = manifest;
     assert.deepEqual(rest, chrome, 'everything else is the same file');
 });

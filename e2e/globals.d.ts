@@ -3,7 +3,13 @@
 interface Window {
     walletNames(): string[];
     connect(wallet: string): Promise<string>;
-    sign(wallet: string, base64: string, method?: string): Promise<{ account?: string; signed?: number; error?: string }>;
+    connectSilently(wallet: string): Promise<string[]>;
+    accountsOf(wallet: string): string[];
+    sign(wallet: string, base64: string, method?: string, chain?: string): Promise<{ account?: string; signed?: number; error?: string }>;
+    signTricky(wallet: string, base64: string, trick: 'mutate' | 'getter'): Promise<{ signed?: boolean; error?: string }>;
+    signUnconnected(wallet: string, base64: string): Promise<{ signed?: boolean; error?: string }>;
     signMessage(wallet: string, text: string): Promise<{ signed?: boolean; error?: string }>;
     fakeCalls: { method: string; count: number }[];
+    /** The transactions the fake wallet was handed, base64. */
+    fakeSigned: string[];
 }

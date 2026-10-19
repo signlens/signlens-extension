@@ -103,7 +103,7 @@ test('lookup tables read once are not fetched again for the next request', async
             wallet: WALLET,
             base64: swap.base64,
         });
-    expect((await sign()).error).toContain('verdict: ok');
-    expect((await sign()).error).toContain('verdict: ok');
+    expect((await sign()).error).toContain('holds no keys');
+    expect((await sign()).error).toContain('holds no keys');
     expect(server.calls.filter((c) => c.method === 'getMultipleAccounts')).toHaveLength(1);
 });

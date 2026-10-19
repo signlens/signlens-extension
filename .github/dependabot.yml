@@ -1,0 +1,19 @@
+# Weekly updates of the dev dependencies and of the actions. The actions
+# stay pinned by commit SHA: Dependabot moves the SHA and its version
+# comment together.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      dev-dependencies:
+        patterns: ['*']
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      actions:
+        patterns: ['*']

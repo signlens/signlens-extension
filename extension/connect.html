@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>SignLens</title>
+        <link rel="stylesheet" href="popup.css" />
+    </head>
+    <body class="confirm consent">
+        <header>
+            <h1>Connect in watch mode</h1>
+            <p id="where" class="status"></p>
+        </header>
+
+        <main>
+            <p>The address SignLens connects as:</p>
+            <p><code id="address" class="watched"></code></p>
+            <p class="aside">
+                Allow lets this site see it whenever it connects. Nothing can be signed with it: SignLens holds no keys. You can take this back in
+                SignLens's settings.
+            </p>
+        </main>
+
+        <footer>
+            <p id="note" role="status">Let this site see the address?</p>
+            <div id="buttons">
+                <button id="deny" type="button">Deny</button>
+                <button id="allow" type="button" class="primary">Allow</button>
+            </div>
+        </footer>
+
+        <script type="module" src="connect.js"></script>
+    </body>
+</html>

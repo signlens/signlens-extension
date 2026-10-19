@@ -18,13 +18,36 @@
 
     let port: MessagePort | null = null;
 
+    /** The requests that may wait on the user, in a window. */
+    const WAITING = new Set(['connect', 'explain', 'message']);
+
+    /**
+     * Sends a request that may wait on the user over a port of its own. The
+     * port closes with the page (a reload, a navigation, the tab closing),
+     * which tells the worker that no one waits for the answer any more: it
+     * refuses the request and closes its window rather than hold the tab.
+     * A dapp changing its route keeps the page, and the port.
+     */
+    function ask(message: { type: string; payload: unknown }): Promise<unknown> {
+        return new Promise((resolve, reject) => {
+            const worker = chrome.runtime.connect({ name: 'request' });
+            worker.onMessage.addListener((answer: unknown) => {
+                resolve(answer);
+                worker.disconnect();
+            });
+            worker.onDisconnect.addListener(() => reject(new Error(chrome.runtime.lastError?.message ?? 'the extension did not answer')));
+            worker.postMessage(message);
+        });
+    }
+
     async function handle(type: string | undefined, payload: unknown): Promise<unknown> {
         try {
             if (type === 'config') return await chrome.runtime.sendMessage({ type: 'config' });
-            if (type === 'explain' || type === 'message' || type === 'wallets' || type === 'connect-failed') {
+            if (type === 'connect' || type === 'explain' || type === 'message' || type === 'wallets' || type === 'connect-failed') {
                 // The origin is stated here, by the extension, not by the page.
                 const given = typeof payload === 'object' && payload !== null ? (payload as Record<string, unknown>) : {};
-                return await chrome.runtime.sendMessage({ type, payload: { ...given, origin: window.location.origin } });
+                const message = { type, payload: { ...given, origin: window.location.origin } };
+                return await (WAITING.has(type) ? ask(message) : chrome.runtime.sendMessage(message));
             }
         } catch (error) {
             const text = error instanceof Error ? error.message : String(error);
@@ -73,8 +96,9 @@
 
     chrome.storage.onChanged.addListener((changes, area) => {
         if (area !== 'local' || !port) return;
-        // Only what the wallet in the page acts on.
-        if (!['mode', 'address', 'upstream'].some((key) => key in changes)) return;
+        // Only what the wallet in the page acts on: a watch session asks again
+        // when the address or the sites allowed to see it change.
+        if (!['mode', 'address', 'upstream', 'watchSites'].some((key) => key in changes)) return;
         chrome.runtime
             .sendMessage({ type: 'config' })
             .then((config) => port?.postMessage({ type: 'config-changed', config }))

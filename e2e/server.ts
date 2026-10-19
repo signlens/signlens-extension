@@ -1,18 +1,27 @@
 // A local server for the tests: serves the dapp page on localhost, which
 // the extension's content scripts match, answers `getMultipleAccounts` for
-// the lookup tables of the fixtures it knows, and relays `/api/*` to a
-// running SignLens API (`SIGNLENS_API_URL`, default `http://127.0.0.1:8787`),
-// counting the calls and refusing them on request. Nothing else touches
-// the network.
+// the lookup tables of the fixtures it knows, and answers `/api/*` as the
+// SignLens API, counting the calls and refusing them on request.
+//
+// The API's answers are replayed from e2e/fixtures/api/, one file per
+// call (its method, path and body), so the suite needs no API; a call
+// nothing was recorded for fails its test. With `SIGNLENS_API_URL` set,
+// the calls go to that API instead and each answer is held against its
+// recording: one that differs, or was never recorded, fails its test. With
+// `SIGNLENS_RECORD=1` as well, each answer is kept instead
+// (`npm run test:e2e:record`). Feedback is never sent anywhere: it is a
+// write, answered here as the API would. Nothing else touches the network.
 
-import { readFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { createServer } from 'node:http';
-import { fileURLToPath } from 'node:url';
 import { base58Decode, base58Encode, tableLookups } from '../src/solana.ts';
 
 const DAPP = readFileSync(new URL('dapp.html', import.meta.url));
 const FIXTURES = new URL('fixtures/', import.meta.url);
-const API = (process.env.SIGNLENS_API_URL ?? 'http://127.0.0.1:8787').replace(/\/+$/, '');
+export const RECORDINGS = new URL('api/', FIXTURES);
+const LIVE = process.env.SIGNLENS_API_URL?.replace(/\/+$/, '');
+const RECORD = process.env.SIGNLENS_RECORD === '1';
 const LOOKUP_TABLE_PROGRAM = 'AddressLookupTab1e1111111111111111111111111';
 
 /** A fixture file's bytes and the addresses its lookup tables load; `path` is its name under e2e/fixtures, with or without `.b64`. */
@@ -21,6 +30,70 @@ export interface Fixture {
     bytes: Uint8Array;
     writable: string[];
     readonly: string[];
+}
+
+/** An API call and the answer it got, as kept under e2e/fixtures/api/. */
+interface Recording {
+    request: { method: string; path: string; body: unknown };
+    /** The answer: its JSON as `body`, or, when it was not JSON, its `text`. */
+    response: { status: number; body: unknown; text?: string };
+}
+
+/** `value` as JSON with its keys sorted, so the same request reads the same however it was built. */
+function canonical(value: unknown): string {
+    if (Array.isArray(value)) return `[${value.map(canonical).join(',')}]`;
+    if (value !== null && typeof value === 'object') {
+        const entries = Object.entries(value).sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0));
+        return `{${entries.map(([key, item]) => `${JSON.stringify(key)}:${canonical(item)}`).join(',')}}`;
+    }
+    return JSON.stringify(value) ?? 'null';
+}
+
+/** The file the answer to a call is kept in: its method and path, and a hash of the three with the body. */
+function recordingOf(method: string, path: string, body: unknown): URL {
+    const hash = createHash('sha256')
+        .update(`${method} ${path} ${canonical(body)}`)
+        .digest('hex')
+        .slice(0, 16);
+    return new URL(`${method.toLowerCase()}${path.replace(/[^A-Za-z0-9]+/g, '-')}-${hash}.json`, RECORDINGS);
+}
+
+/** Whether an answer of `status` and `text` is the one `kept`, JSON compared as JSON. */
+function sameAnswer(kept: Recording, status: number, text: string): boolean {
+    if (kept.response.status !== status) return false;
+    if (kept.response.text !== undefined) return kept.response.text === text;
+    try {
+        return canonical(text ? JSON.parse(text) : null) === canonical(kept.response.body);
+    } catch {
+        return false;
+    }
+}
+
+/** An error document from the relay itself, in the API's shape. */
+function relayError(code: string, message: string): string {
+    return JSON.stringify({ schema: 'signlens-api/1', error: { code, message } });
+}
+
+/** The explanation the SignLens API gave for a fixture, recorded under e2e/fixtures as `<name>.explanation.json`. */
+export function recorded(name: string): object {
+    return JSON.parse(readFileSync(new URL(`${name}.explanation.json`, FIXTURES), 'utf8')) as object;
+}
+
+/** An explanation with nothing in it but `verdict` and `changes`, for a test that needs the API to answer exactly that. */
+export function explanation(verdict: string, changes: Record<string, unknown> = {}): object {
+    const summary = 'A transaction';
+    return {
+        schema: 'signlens-explanation/1',
+        chain: 'solana:mainnet',
+        summary,
+        verdict,
+        findings: [],
+        sections: [],
+        effects: [],
+        raw: null,
+        text: summary,
+        ...changes,
+    };
 }
 
 export function fixture(path: string): Fixture {
@@ -116,6 +189,10 @@ export interface TestServer {
     api: string;
     calls: RpcCall[];
     apiCalls: ApiCall[];
+    /** The API calls nothing was recorded for, when replaying: the test's fixture fails on any. */
+    apiMissed: string[];
+    /** The API calls the live API answered otherwise than recorded, or that were never recorded: the test's fixture fails on any. */
+    apiDrifted: string[];
     know(fixture: Fixture): void;
     knowMint(mint: string, symbol: string, decimals: number): void;
     wallet(address: string, before: number, after: number): void;
@@ -123,6 +200,7 @@ export interface TestServer {
     failSimulation(error: unknown, logs?: string[]): void;
     refuse(method: string, status: number, body: string): void;
     refuseApi(status: number, body?: string): void;
+    answerApi(...documents: unknown[]): void;
     expireBlockhash(): void;
     close(): Promise<void>;
 }
@@ -141,7 +219,13 @@ export async function startTestServer(): Promise<TestServer> {
         refused: { method: string; status: number; body: string } | null;
     } = { before: new Map(), after: new Map(), failure: null, logs: [], units: 4200, blockhashExpired: false, refused: null };
     const calls: RpcCall[] = [];
-    const api: { calls: ApiCall[]; refused: { status: number; body: string } | null } = { calls: [], refused: null };
+    // Answers the relay gives instead of the API's, in turn, the last repeated.
+    const api: { calls: ApiCall[]; missed: string[]; drifted: string[]; answers: { status: number; body: string }[] } = {
+        calls: [],
+        missed: [],
+        drifted: [],
+        answers: [],
+    };
     const rpcAccount = (entry: StoredAccount | undefined) =>
         entry
             ? {
@@ -153,37 +237,71 @@ export async function startTestServer(): Promise<TestServer> {
     const server = createServer((request, response) => {
         const { pathname } = new URL(request.url ?? '/', 'http://localhost');
         if (pathname.startsWith('/api/')) {
-            // Relayed to the real API, body and all, so the tests see what a user sees.
             let body = '';
             request.setEncoding('utf8').on('data', (chunk: string) => {
                 body += chunk;
             });
             request.on('end', async () => {
-                api.calls.push({ method: request.method, path: pathname.slice(4), body: body ? JSON.parse(body) : null });
-                if (api.refused) {
-                    response.writeHead(api.refused.status, { 'content-type': 'application/json' });
-                    response.end(api.refused.body);
-                    return;
-                }
-                try {
-                    const upstream = await fetch(`${API}${pathname.slice(4)}`, {
-                        method: request.method ?? 'GET',
-                        headers: { 'content-type': 'application/json' },
-                        ...(request.method === 'POST' ? { body } : {}),
-                    });
-                    const text = await upstream.text();
-                    response.writeHead(upstream.status, { 'content-type': 'application/json' });
+                const method = request.method ?? 'GET';
+                const path = pathname.slice(4);
+                const sent: unknown = body ? JSON.parse(body) : null;
+                api.calls.push({ method: request.method, path, body: sent });
+                const reply = (status: number, text: string) => {
+                    response.writeHead(status, { 'content-type': 'application/json' });
                     response.end(text);
+                };
+                const answer = api.answers.length > 1 ? api.answers.shift() : api.answers[0];
+                if (answer) return reply(answer.status, answer.body);
+                // Feedback is a write: the tests never send it to an API, live or not.
+                if (method === 'POST' && path === '/v1/feedback') return reply(204, '');
+                const file = recordingOf(method, path, sent);
+                const name = file.pathname.split('/').pop();
+                if (!LIVE) {
+                    if (!existsSync(file)) {
+                        api.missed.push(`${method} ${path} (${name})`);
+                        return reply(
+                            502,
+                            relayError('recording', 'no recorded answer for this call; record with `npm run test:e2e:record`'),
+                        );
+                    }
+                    const kept = JSON.parse(readFileSync(file, 'utf8')) as Recording;
+                    const { status, body: json, text } = kept.response;
+                    return reply(status, text ?? (json === null ? '' : JSON.stringify(json)));
+                }
+                // Relayed to the real API, body and all, so the tests see what a user sees.
+                let status: number;
+                let text: string;
+                try {
+                    const upstream = await fetch(`${LIVE}${path}`, {
+                        method,
+                        headers: { 'content-type': 'application/json' },
+                        ...(method === 'POST' ? { body } : {}),
+                    });
+                    status = upstream.status;
+                    text = await upstream.text();
                 } catch (error) {
                     const message = error instanceof Error ? error.message : String(error);
-                    response.writeHead(502, { 'content-type': 'application/json' });
-                    response.end(
-                        JSON.stringify({
-                            schema: 'signlens-api/1',
-                            error: { code: 'relay', message: `no SignLens API at ${API}: ${message}` },
-                        }),
-                    );
+                    return reply(502, relayError('relay', `no SignLens API at ${LIVE}: ${message}`));
                 }
+                if (!RECORD) {
+                    // Live: the answer held against its recording, so the recordings are known to hold.
+                    if (!existsSync(file)) api.drifted.push(`${method} ${path}: nothing recorded (${name})`);
+                    else if (!sameAnswer(JSON.parse(readFileSync(file, 'utf8')) as Recording, status, text)) {
+                        api.drifted.push(`${method} ${path}: answered otherwise than recorded (${name})`);
+                    }
+                }
+                if (RECORD) {
+                    let answered: Recording['response'];
+                    try {
+                        answered = { status, body: text ? JSON.parse(text) : null };
+                    } catch {
+                        answered = { status, body: null, text };
+                    }
+                    const recording: Recording = { request: { method, path, body: sent }, response: answered };
+                    mkdirSync(RECORDINGS, { recursive: true });
+                    writeFileSync(file, `${JSON.stringify(recording, null, 2)}\n`);
+                }
+                return reply(status, text);
             });
             return;
         }
@@ -313,12 +431,18 @@ export async function startTestServer(): Promise<TestServer> {
         api: `http://127.0.0.1:${port}/api`,
         /** The calls relayed to the API so far. */
         apiCalls: api.calls,
+        apiMissed: api.missed,
+        apiDrifted: api.drifted,
         /** Makes the relay answer every API call with this status and body instead. */
         refuseApi(
             status: number,
             body = '{"schema":"signlens-api/1","error":{"code":"busy","message":"every worker is busy; try again"}}',
         ) {
-            api.refused = { status, body };
+            api.answers = [{ status, body }];
+        },
+        /** Makes the relay answer the API calls with these documents in turn, the last for every call after, as the API would with HTTP 200. */
+        answerApi(...documents: unknown[]) {
+            api.answers = documents.map((document) => ({ status: 200, body: JSON.stringify(document) }));
         },
         close: () => {
             // The browser keeps connections alive; close waits for them otherwise.

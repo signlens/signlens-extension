@@ -16,7 +16,7 @@ export interface Settings {
     /** The SignLens API that computes the explanations (beta). Later the engine runs inside the extension and this goes. */
     apiUrl: string;
     rpcUrl: string;
-    /** Show the explanation and wait for a decision before refusing a request or passing it on. */
+    /** Show the explanation and wait for a decision before refusing a request or passing it on. Off, a request SignLens would refuse (blocked, or not explained) still waits for one (`gate.mustAsk`). */
     gate: boolean;
     /** The address book, one `Name = address` per line. */
     contacts: string;
@@ -42,6 +42,28 @@ export const DEFAULTS: Readonly<Settings> = Object.freeze({
     simulate: true,
     showInstructions: false,
 });
+
+/** The endpoints a user can point the extension at. */
+export const ENDPOINTS = ['apiUrl', 'rpcUrl', 'tokenApiUrl'] as const;
+
+const LOOPBACK = new Set(['localhost', '127.0.0.1', '[::1]']);
+
+/**
+ * Why `url` cannot be an endpoint, or `null` when it can: https, or plain
+ * http to this machine only. The API is sent the transaction and the
+ * address book and the RPC the transaction, so not in the clear.
+ */
+export function endpointProblem(url: string): string | null {
+    let parsed: URL;
+    try {
+        parsed = new URL(url);
+    } catch {
+        return 'not a URL';
+    }
+    if (parsed.protocol === 'https:') return null;
+    if (parsed.protocol !== 'http:') return 'not an http(s) URL';
+    return LOOPBACK.has(parsed.hostname) ? null : 'plain http is for this machine only (localhost, 127.0.0.1); use https';
+}
 
 /** The settings as stored, with the defaults where nothing is stored. */
 export async function settings(): Promise<Settings> {
@@ -76,16 +98,23 @@ export function parseContacts(text: string): { contacts: Contact[]; bad: number[
     return { contacts, bad };
 }
 
-/** The settings the wallet in the page needs, as the worker answers a `config` message. */
+/**
+ * The settings the wallet in the page needs, as the worker answers a
+ * `config` message. Never the watched address: every page asks for this,
+ * and a site sees that address only once the user allows it (sites.ts).
+ */
 export interface PageConfig {
     mode: Mode;
-    address: string;
-    publicKey: number[] | null;
     upstream: string;
 }
 
 export function pageConfig(config: Settings): PageConfig {
+    return { mode: config.mode, upstream: config.upstream };
+}
+
+/** The address watch mode connects as, with its key as a plain array, or `null` while no valid one is set. */
+export function watched(config: Pick<Settings, 'address'>): { address: string; publicKey: number[] } | null {
     const address = config.address.trim();
     const publicKey = base58Decode(address);
-    return { mode: config.mode, address: publicKey ? address : '', publicKey, upstream: config.upstream };
+    return publicKey ? { address, publicKey } : null;
 }

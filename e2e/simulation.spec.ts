@@ -41,12 +41,13 @@ test('a simulation within the effects is shown as a claim and agrees quietly', a
         wallet: WALLET,
         base64: transfer.base64,
     });
-    expect(answer.error).toContain('SignLens verdict: warning');
+    expect(answer.error).toContain('holds no keys');
     expect(server.calls.map((c) => c.method)).toEqual(['getMultipleAccounts', 'simulateTransaction']);
     expect(addressesOf(server.calls[1])).toContain(payer);
 
     await popup.reload();
     const row = popup.locator('#history li').first();
+    await expect(row.locator('.verdict')).toHaveText('warning');
     await row.locator('summary').click();
     await expect(row.locator('.tables')).toContainText('Simulation: 2 balance change(s), unverified');
     await expect(row.locator('.findings')).toContainText('simulation agrees');
@@ -66,14 +67,16 @@ test('a simulation within the effects is shown as a claim and agrees quietly', a
             .last()
             .evaluate((p, o) => p.compareDocumentPosition(o) & Node.DOCUMENT_POSITION_FOLLOWING, await outcome.elementHandle()),
     ).toBeTruthy();
-    await expect(row.locator('.disclosure.more > .toggle')).not.toContainText('simulated outcome');
-    await expect(outcome.locator('.section-head .term')).toHaveText('(claimed, unverified)');
-    // The marker in the head is its own control: it opens its help there, not the section.
-    await outcome.locator('.section-head .term').click();
-    await expect(outcome.locator('.section-head .help-note')).toHaveText(/Everything in this section came from the RPC/);
+    await expect(row.locator('.disclosure.more .toggle').first()).not.toContainText('simulated outcome');
+    const head = outcome.locator(':scope > .disclosure-head');
+    await expect(head.locator('.term')).toHaveText('(claimed, unverified)');
+    // The marker in the head is its own control, beside the toggle and not in it: it opens its help there, not the section.
+    await expect(head.locator('.toggle .term')).toHaveCount(0);
+    await head.locator('.term').click();
+    await expect(head.locator('.help-note')).toHaveText(/Everything in this section came from the RPC/);
     await expect(outcome.locator('dl.fields')).toBeVisible();
-    await outcome.locator('.section-head .term').press('Enter');
-    await expect(outcome.locator('.section-head .help-note')).toHaveCount(0);
+    await head.locator('.term').press('Enter');
+    await expect(head.locator('.help-note')).toHaveCount(0);
     await expect(outcome.locator('dl.fields')).toBeVisible();
     await expect(outcome.locator('.claimed')).toHaveCount(0);
     await outcome.locator('dt .term', { hasText: 'Compute units' }).click();
@@ -89,10 +92,11 @@ test('an RPC that refuses the simulation is named with its answer', async ({ con
         wallet: WALLET,
         base64: transfer.base64,
     });
-    expect(answer.error).toContain('SignLens verdict: warning');
+    expect(answer.error).toContain('holds no keys');
 
     await popup.reload();
     const row = popup.locator('#history li').first();
+    await expect(row.locator('.verdict')).toHaveText('warning');
     await row.locator('summary').click();
     await expect(row.locator('.tables')).toContainText(
         'Simulation: not run (127.0.0.1 answered HTTP 403: <html><body>Forbidden: method not allowed on this plan</body></html>)',
@@ -205,4 +209,26 @@ test('with the simulation off the transaction never leaves for the RPC', async (
         base64: transfer.base64,
     });
     expect(server.calls.map((c) => c.method)).toEqual([]);
+});
+
+test('a page naming another chain does not switch the simulation off, and the window says what it named', async ({
+    configure,
+    dapp,
+    popup,
+    server,
+}) => {
+    const transfer = fixture('legacy_durable_nonce_token_transfer');
+    await configure(settings(transfer, server));
+    await dapp.evaluate(
+        ({ wallet, base64 }: { wallet: string; base64: string }) => window.sign(wallet, base64, 'solana:signTransaction', 'solana:devnet'),
+        { wallet: WALLET, base64: transfer.base64 },
+    );
+    expect(server.calls.map((c) => c.method)).toEqual(['getMultipleAccounts', 'simulateTransaction']);
+
+    await popup.reload();
+    const row = popup.locator('#history li').first();
+    await row.locator('summary').click();
+    await expect(row.locator('.tables').first()).toHaveText(
+        'Chain: the page says solana:devnet; read and simulated on the RPC in the settings all the same',
+    );
 });

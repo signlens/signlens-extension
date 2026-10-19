@@ -13,9 +13,26 @@
     // A request that waits for the user's decision in the SignLens window;
     // past this it is refused, not passed on.
     const DECISION_TIMEOUT_MS = 10 * 60_000;
-    // Taken before any page script runs, so a page that replaces it later
-    // cannot keep a request from reaching the extension.
+    // Taken before any page script runs. A page that replaces the originals
+    // later cannot reach the port through them, keep a request from the
+    // extension, or change the bytes between their explanation and the
+    // wallet: the port, the copies of the bytes and their encoding are only
+    // ever touched through these.
     const post = MessagePort.prototype.postMessage;
+    const apply = Reflect.apply;
+    const defineProperty = Reflect.defineProperty;
+    const create = Object.create;
+    const freeze = Object.freeze;
+    const hasOwn = Object.hasOwn;
+    const ByteArray = Uint8Array;
+    const fromCharCode = String.fromCharCode;
+    const encodeBase64 = btoa;
+    // These getters read internal slots, so they answer for a real typed
+    // array or message event only, whatever an object claims to be.
+    const TYPED_ARRAY = Object.getPrototypeOf(Uint8Array.prototype) as object;
+    const typedArrayName = Object.getOwnPropertyDescriptor(TYPED_ARRAY, Symbol.toStringTag)?.get;
+    const typedArrayLength = Object.getOwnPropertyDescriptor(TYPED_ARRAY, 'length')?.get;
+    const messageData = Object.getOwnPropertyDescriptor(MessageEvent.prototype, 'data')?.get;
     const CHAINS = Object.freeze(['solana:mainnet', 'solana:devnet', 'solana:testnet', 'solana:localnet']);
     const CONNECT = 'standard:connect';
     const DISCONNECT = 'standard:disconnect';
@@ -67,6 +84,8 @@
         account?: WalletAccount;
         transaction?: Uint8Array;
         message?: Uint8Array;
+        chain?: unknown;
+        options?: unknown;
     }
 
     type SignFunction = (...inputs: SignInput[]) => Promise<unknown>;
@@ -76,8 +95,15 @@
     // One MessageChannel: this side keeps one port in its closure and
     // offers the other to the content script in a single window message,
     // which that script consumes before any page listener runs. From then
-    // on nothing on the window is listened to, so a page cannot forge an
-    // answer, a decision or a setting.
+    // on nothing on the window is listened to, and the port is used only
+    // through what was taken at start-up, so a page cannot reach it to
+    // forge an answer or a setting.
+    //
+    // Code in the page's own world cannot be fully protected from the page:
+    // one that rewrites built-ins such as Promise can make this wallet skip
+    // the window, which gains it nothing it could not get by asking the
+    // real wallet directly. What it cannot do is have SignLens explain one
+    // transaction and pass on another; see `snapshot`.
 
     interface Waiting {
         resolve: (value: unknown) => void;
@@ -93,44 +119,66 @@
         error?: string;
     }
 
+    /** What the extension tells every page: never the watched address, which a site gets only once allowed (`askToWatch`). */
     interface PageConfig {
         mode: 'watch' | 'passthrough';
-        address: string;
-        publicKey: number[] | null;
         upstream: string;
     }
 
-    interface Answer {
-        error?: string;
-        gate?: boolean;
-        decision?: 'continue' | 'reject';
-        verdicts?: (string | null)[];
+    /** What `show` makes of the extension's answer: a line for the dapp, and whether the request goes on. */
+    interface Shown {
+        summary: string;
+        passOn: boolean;
+    }
+
+    /** `object[key]` when it is the object's own: a page cannot answer for a missing key through the prototypes it can change. */
+    function own(object: unknown, key: string): unknown {
+        return typeof object === 'object' && object !== null && hasOwn(object, key) ? (object as Record<string, unknown>)[key] : undefined;
+    }
+
+    /** Sets `key` of `object` as its own property, past any setter a page put on a prototype. */
+    function put(object: object, key: PropertyKey, value: unknown): void {
+        const descriptor = create(null) as PropertyDescriptor;
+        descriptor.value = value;
+        descriptor.writable = true;
+        descriptor.enumerable = true;
+        descriptor.configurable = true;
+        if (!defineProperty(object, key, descriptor)) throw new Error(`${NAME}: could not keep a copy of the request`);
+    }
+
+    /** Appends `value` to `list` as its own element, past any setter a page put on the array prototype. */
+    function append<T>(list: T[], value: T): void {
+        put(list, list.length, value);
     }
 
     let nextId = 0;
     const pending = new Map<number, Waiting>();
     const channel = new MessageChannel();
     const port = channel.port1;
-    let connected = false;
 
     port.onmessage = (event: MessageEvent<PortMessage>) => {
-        const data = event.data;
-        if (data?.type === 'connected') {
-            connected = true;
+        if (messageData === undefined) return;
+        const data: unknown = apply(messageData, event, []);
+        const type = own(data, 'type');
+        if (type === 'connected') {
             announceWallets();
             return;
         }
-        if (data?.type === 'config-changed' && data.config) {
-            applyConfig(data.config);
+        if (type === 'config-changed') {
+            const next = own(data, 'config');
+            if (next) applyConfig(next as PageConfig);
+            void recheck();
             return;
         }
-        if (data?.id === undefined) return;
-        const waiting = pending.get(data.id);
+        const id = own(data, 'id');
+        if (typeof id !== 'number') return;
+        const waiting = pending.get(id);
         if (!waiting) return;
-        pending.delete(data.id);
+        pending.delete(id);
         clearTimeout(waiting.timer);
-        if (data.error === undefined) waiting.resolve(data.result);
-        else waiting.reject(new Error(data.error));
+        const error = own(data, 'error');
+        if (error === undefined) waiting.resolve(own(data, 'result'));
+        else waiting.reject(new Error(String(error)));
     };
 
     /**
@@ -147,7 +195,7 @@
 
     /** Tells the extension something it does not answer: the wallets found here, a failed connect. */
     function notify(type: string, payload?: unknown): void {
-        port.postMessage({ type, payload });
+        apply(post, port, [{ type, payload }]);
     }
 
     function request(type: string, payload?: unknown): Promise<unknown> {
@@ -159,12 +207,14 @@
                 pending.delete(id);
                 reject(
                     new Error(
-                        type === 'config' ? 'the extension did not answer; reload the page' : 'no decision in SignLens within 10 minutes',
+                        type === 'config'
+                            ? 'the extension did not answer; reload the page'
+                            : `no decision in SignLens within ${DECISION_TIMEOUT_MS / 60_000} minutes`,
                     ),
                 );
             }, timeout);
             pending.set(id, { resolve, reject, timer });
-            post.call(port, { id, type, payload });
+            apply(post, port, [{ id, type, payload }]);
         });
     }
 
@@ -172,7 +222,7 @@
 
     // ---- State ----
 
-    let config: PageConfig = { mode: 'passthrough', address: '', publicKey: null, upstream: '' };
+    let config: PageConfig = { mode: 'passthrough', upstream: '' };
     let accounts: readonly WalletAccount[] = Object.freeze([]);
     // null until connected; then the mode, and for pass-through the wallet behind it.
     let session: { mode: 'watch' } | { mode: 'passthrough'; upstream: Wallet; stopWatching: (() => void) | undefined } | null = null;
@@ -191,10 +241,10 @@
         }
     }
 
-    function watchAccount(): WalletAccount {
+    function watchAccount(address: string, publicKey: readonly number[]): WalletAccount {
         return Object.freeze({
-            address: config.address,
-            publicKey: new Uint8Array(config.publicKey ?? []),
+            address,
+            publicKey: new Uint8Array(publicKey),
             chains: CHAINS,
             features: Object.freeze([SIGN_TRANSACTION, SIGN_AND_SEND_TRANSACTION, SIGN_MESSAGE]),
             label: 'Watch-only',
@@ -208,16 +258,36 @@
     }
 
     function applyConfig(next: PageConfig): void {
-        const previous = config;
         config = next;
-        if (!session) return;
-        if (session.mode !== config.mode) {
-            // The dapp connected to a different kind of wallet; make it reconnect.
-            endSession();
-        } else if (session.mode === 'watch' && previous.address !== config.address) {
-            if (config.publicKey) setAccounts([watchAccount()]);
-            else endSession();
+        // The dapp connected to a different kind of wallet; make it reconnect.
+        if (session && session.mode !== config.mode) endSession();
+    }
+
+    /**
+     * The watched account, from the extension: it answers once the user has
+     * allowed this site to see the address, asking them first unless
+     * `silent`. `null` for a silent ask that nothing allowed; a refusal
+     * with its reason is thrown.
+     */
+    async function askToWatch(silent: boolean): Promise<WalletAccount | null> {
+        const answer = await request('connect', { silent });
+        const address = own(answer, 'address');
+        const publicKey = own(answer, 'publicKey');
+        if (own(answer, 'approved') === true && typeof address === 'string' && Array.isArray(publicKey)) {
+            return watchAccount(address, publicKey as number[]);
         }
+        const error = own(answer, 'error');
+        if (typeof error === 'string') throw new Error(`${NAME}: ${error}`);
+        return null;
+    }
+
+    /** A watch session lasts while the site may see the address: asked again, without a window, when the settings change. */
+    async function recheck(): Promise<void> {
+        if (session?.mode !== 'watch') return;
+        const account = await askToWatch(true).catch(() => null);
+        if (session?.mode !== 'watch') return;
+        if (!account) endSession();
+        else if (account.address !== accounts[0]?.address) setAccounts([account]);
     }
 
     /** The wallet requests are passed to in pass-through mode. */
@@ -239,79 +309,136 @@
 
     // ---- The extension ----
 
+    /** A copy of `value`, which must be a real Uint8Array, made from its internal slots rather than anything a page can override. */
+    function copyBytes(value: unknown, what: string): Uint8Array {
+        if (typedArrayName === undefined || apply(typedArrayName, value, []) !== 'Uint8Array') {
+            throw new Error(`${NAME}: the ${what} must be a Uint8Array`);
+        }
+        return new ByteArray(value as Uint8Array);
+    }
+
+    /** The base64 of `bytes`, one of this file's own copies. */
     function toBase64(bytes: Uint8Array): string {
+        if (typedArrayLength === undefined) throw new Error(`${NAME}: cannot read the bytes`);
+        const length = apply(typedArrayLength, bytes, []) as number;
         let binary = '';
-        for (const byte of bytes) binary += String.fromCharCode(byte);
-        return btoa(binary);
+        for (let i = 0; i < length; i += 1) binary += fromCharCode(bytes[i] as number);
+        return encodeBase64(binary);
+    }
+
+    /**
+     * The inputs as this wallet keeps them: each field read once and the
+     * bytes copied out of the page's array, in fresh frozen objects. What is
+     * explained is encoded from these copies and what is passed on is these
+     * same copies, so nothing the page does after the call (writing into its
+     * array, a getter that answers differently the second time, replacing a
+     * built-in) changes the bytes between the explanation and the wallet.
+     */
+    function snapshot(inputs: SignInput[], bytes: 'transaction' | 'message'): SignInput[] {
+        const copies: SignInput[] = [];
+        for (let i = 0; i < inputs.length; i += 1) {
+            const input: unknown = inputs[i];
+            if (typeof input !== 'object' || input === null) throw new Error(`${NAME}: each input must be an object`);
+            const given = input as SignInput;
+            // An ordinary object, as a wallet expects one (it may call its
+            // methods), with every field its own, as no prototype can fake.
+            const copy: SignInput = {};
+            put(copy, bytes, copyBytes(given[bytes], bytes));
+            const account = given.account;
+            if (account !== undefined) put(copy, 'account', account);
+            if (bytes === 'transaction') {
+                const chain = given.chain;
+                const options = given.options;
+                if (chain !== undefined) put(copy, 'chain', chain);
+                if (options !== undefined) put(copy, 'options', options);
+            }
+            append(copies, freeze(copy));
+        }
+        return copies;
+    }
+
+    /** The addresses of `list`, for the explanation to call "you". */
+    function addresses(list: readonly WalletAccount[]): string[] {
+        const out: string[] = [];
+        for (let i = 0; i < list.length; i += 1) {
+            const address = list[i]?.address;
+            if (typeof address === 'string') append(out, address);
+        }
+        return out;
     }
 
     /**
      * Sends what was asked to the extension, which explains it, shows the
-     * explanation and waits for the user's decision when the gate is on,
-     * and notes the verdict in the page's console. Returns a one-line
-     * summary and the decision, if one was asked for. An extension that
-     * does not answer (gone, reloaded, or out of time) is a refusal: the
-     * request is never passed on unexplained.
+     * explanation and waits for the user's decision when the window is on.
+     * Returns a line for the dapp and whether to pass the request on: on the
+     * user's "continue", or when the extension says it did not ask (the
+     * window off, and nothing SignLens would refuse).
+     * Anything else (no answer, a reload, the clock, an answer without a
+     * decision) is a refusal: the request is never passed on unexplained.
+     * The answer never says what the explanation found, since that depends
+     * on the user's address book; it stays in the extension.
      */
-    async function show(
-        type: 'explain' | 'message',
-        method: string,
-        payload: Record<string, unknown>,
-    ): Promise<{ summary: string; decision?: 'continue' | 'reject' }> {
-        let answer: Answer;
+    async function show(type: 'explain' | 'message', method: string, payload: Record<string, unknown>): Promise<Shown> {
+        let answer: unknown;
         try {
-            answer = (await request(type, { method, ...payload })) as Answer;
+            answer = await request(type, { method, ...payload });
         } catch (error) {
             const reason = error instanceof Error ? error.message : String(error);
             console.warn(`[${NAME}] ${method}: refused, ${reason}`);
-            return { summary: `SignLens did not answer (${reason}), so the request was refused.`, decision: 'reject' };
+            return { summary: `SignLens did not answer (${reason}), so the request was refused.`, passOn: false };
         }
-        const decision = answer?.decision;
-        if (answer?.error) {
-            console.warn(`[${NAME}] ${method}: ${answer.error}`);
-            return { summary: `SignLens could not explain it: ${answer.error}`, ...(decision ? { decision } : {}) };
+        const decision = own(answer, 'decision');
+        const passOn = decision === 'continue' || (own(answer, 'gate') === false && decision === undefined);
+        const error = own(answer, 'error');
+        if (typeof error === 'string') {
+            console.warn(`[${NAME}] ${method}: ${error}`);
+            return { summary: `SignLens could not explain it: ${error}`, passOn };
         }
-        if (type === 'message') return { summary: 'The message is in the SignLens popup.', ...(decision ? { decision } : {}) };
-        const verdicts = (answer?.verdicts ?? []).map((verdict) => verdict ?? 'not explained').join(', ');
-        console.info(`[${NAME}] ${method}: ${verdicts}. The explanation is in the SignLens popup.`);
-        return { summary: `SignLens verdict: ${verdicts}. The explanation is in the SignLens popup.`, ...(decision ? { decision } : {}) };
+        if (!passOn && decision !== 'reject') return { summary: 'SignLens got no decision, so the request was refused.', passOn };
+        return { summary: `The ${type === 'message' ? 'message' : 'explanation'} is in the SignLens popup.`, passOn };
     }
 
-    /** Hands the request to the real wallet, or refuses it. */
-    function finish(
-        method: string,
-        inputs: SignInput[],
-        { summary, decision }: { summary: string; decision?: 'continue' | 'reject' },
-    ): Promise<unknown> {
-        if (decision === 'reject') throw new Error(`${NAME}: rejected in SignLens. ${summary}`);
+    /** Hands the copies to the real wallet, or refuses them. */
+    function finish(method: string, name: string, copies: SignInput[], { summary, passOn }: Shown): Promise<unknown> {
         if (session?.mode !== 'passthrough') throw new Error(`${NAME} holds no keys: nothing was signed. ${summary}`);
-        const feature = session.upstream.features[method];
-        const name = method.split(':')[1] ?? method;
+        if (!passOn) throw new Error(`${NAME}: rejected in SignLens. ${summary}`);
+        const upstream = session.upstream;
+        const feature = upstream.features[method];
         const sign = feature?.[name];
-        if (typeof sign !== 'function') throw new Error(`${NAME}: ${session.upstream.name} does not support ${method}`);
-        return (sign as SignFunction)(...inputs);
+        if (typeof sign !== 'function') throw new Error(`${NAME}: ${upstream.name} does not support ${method}`);
+        return apply(sign, feature, copies) as Promise<unknown>;
     }
 
-    function transactionFeature(method: string): SignFunction {
+    function transactionFeature(method: string, name: string): SignFunction {
         return async (...inputs) => {
-            const summary = await show('explain', method, {
-                accounts: accounts.map((account) => account.address),
-                transactions: inputs.map((input) => toBase64(input.transaction ?? new Uint8Array())),
-            });
-            return finish(method, inputs, summary);
+            if (!session) throw new Error(`${NAME}: not connected; connect first`);
+            const copies = snapshot(inputs, 'transaction');
+            const transactions: string[] = [];
+            const chains: (string | null)[] = [];
+            for (let i = 0; i < copies.length; i += 1) {
+                const copy = copies[i] as SignInput;
+                append(transactions, toBase64(copy.transaction as Uint8Array));
+                append(chains, typeof copy.chain === 'string' ? copy.chain : null);
+            }
+            const shown = await show('explain', method, { accounts: addresses(accounts), transactions, chains });
+            return finish(method, name, copies, shown);
         };
     }
 
     const signMessage: SignFunction = async (...inputs) => {
-        let shown: { summary: string; decision?: 'continue' | 'reject' } = { summary: '' };
-        for (const input of inputs) {
+        if (!session) throw new Error(`${NAME}: not connected; connect first`);
+        const copies = snapshot(inputs, 'message');
+        let shown: Shown = { summary: '', passOn: false };
+        for (let i = 0; i < copies.length; i += 1) {
+            const copy = copies[i] as SignInput;
+            const address = copy.account?.address;
             shown = await show('message', SIGN_MESSAGE, {
-                account: input.account?.address,
-                message: toBase64(input.message ?? new Uint8Array()),
+                ...(typeof address === 'string' ? { account: address } : {}),
+                message: toBase64(copy.message as Uint8Array),
             });
-            if (shown.decision === 'reject') break;
+            if (!shown.passOn) break;
         }
-        return finish(SIGN_MESSAGE, inputs, shown);
+        return finish(SIGN_MESSAGE, 'signMessage', copies, shown);
     };
 
     // ---- The wallet ----
@@ -330,10 +457,18 @@
             session = { mode: 'passthrough', upstream, stopWatching };
             setAccounts(granted.accounts);
         } else {
-            if (!config.publicKey) throw new Error(`${NAME}: enter the address to watch in the extension's popup, then connect again`);
+            // No wallet behind SignLens asks the user here, so SignLens does: a
+            // silent connect (a dapp reconnecting as it loads) gets the address
+            // only where it was allowed before, and never an error.
+            const silent = own(input, 'silent') === true;
+            const account = silent ? await askToWatch(true).catch(() => null) : await askToWatch(false);
+            if (!account) {
+                if (session?.mode === 'watch') endSession();
+                return { accounts: [] };
+            }
             if (session?.mode === 'passthrough') session.stopWatching?.();
             session = { mode: 'watch' };
-            setAccounts([watchAccount()]);
+            setAccounts([account]);
         }
         return { accounts };
     }
@@ -364,12 +499,12 @@
             [SIGN_TRANSACTION]: Object.freeze({
                 version: '1.0.0',
                 supportedTransactionVersions,
-                signTransaction: transactionFeature(SIGN_TRANSACTION),
+                signTransaction: transactionFeature(SIGN_TRANSACTION, 'signTransaction'),
             }),
             [SIGN_AND_SEND_TRANSACTION]: Object.freeze({
                 version: '1.0.0',
                 supportedTransactionVersions,
-                signAndSendTransaction: transactionFeature(SIGN_AND_SEND_TRANSACTION),
+                signAndSendTransaction: transactionFeature(SIGN_AND_SEND_TRANSACTION, 'signAndSendTransaction'),
             }),
             [SIGN_MESSAGE]: Object.freeze({ version: '1.0.0', signMessage }),
         }),

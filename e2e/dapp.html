@@ -21,9 +21,11 @@
 
             window.walletNames = () => [...wallets.keys()];
 
-            // A wallet to pass requests to: records what it is asked and
-            // "signs" by returning the bytes unchanged.
+            // A wallet to pass requests to: records what it is asked, and the
+            // transactions it was handed, and "signs" by returning the bytes
+            // unchanged.
             window.fakeCalls = [];
+            window.fakeSigned = [];
             const fakeAccount = Object.freeze({
                 address: 'FakeWa11et1111111111111111111111111111111111',
                 publicKey: new Uint8Array(32),
@@ -43,7 +45,13 @@
                         version: '1.0.0',
                         supportedTransactionVersions: ['legacy', 0],
                         signTransaction: async (...inputs) => {
+                            // As real wallets may, it calls a method on what it is handed.
+                            for (const input of inputs) {
+                                // biome-ignore lint/suspicious/noPrototypeBuiltins: the call a wallet may make is what is tested
+                                if (!input.hasOwnProperty('transaction')) throw new Error('no transaction');
+                            }
                             window.fakeCalls.push({ method: 'signTransaction', count: inputs.length });
+                            window.fakeSigned.push(...inputs.map((input) => toBase64(input.transaction)));
                             return inputs.map((input) => ({ signedTransaction: input.transaction }));
                         },
                     },
@@ -69,14 +77,29 @@
                 return bytes;
             }
 
+            function toBase64(bytes) {
+                let binary = '';
+                for (let i = 0; i < bytes.length; i += 1) binary += String.fromCharCode(bytes[i]);
+                return btoa(binary);
+            }
+
             /** Connects to the wallet; returns the first account's address. */
             window.connect = async (name) => {
                 const { accounts } = await wallets.get(name).features['standard:connect'].connect();
                 return accounts[0].address;
             };
 
+            /** Connects as a dapp does as it loads, without asking the user; returns the addresses it got. */
+            window.connectSilently = async (name) => {
+                const { accounts } = await wallets.get(name).features['standard:connect'].connect({ silent: true });
+                return accounts.map((account) => account.address);
+            };
+
+            /** The addresses the wallet has connected this page with, as a dapp reads them. */
+            window.accountsOf = (name) => wallets.get(name).accounts.map((account) => account.address);
+
             /** Connects to the wallet and asks it to sign; returns what it answered. */
-            window.sign = async (name, base64, method = 'solana:signTransaction') => {
+            window.sign = async (name, base64, method = 'solana:signTransaction', chain = 'solana:mainnet') => {
                 const wallet = wallets.get(name);
                 const { accounts } = await wallet.features['standard:connect'].connect();
                 const account = accounts[0];
@@ -85,11 +108,56 @@
                     const outputs = await feature[method.split(':')[1]]({
                         transaction: fromBase64(base64),
                         account,
-                        chain: 'solana:mainnet',
+                        chain,
                     });
                     return { account: account.address, signed: outputs.length };
                 } catch (error) {
                     return { account: account.address, error: error.message };
+                }
+            };
+
+            /**
+             * Connects, asks to sign `base64`, and tries to have the wallet
+             * behind SignLens handed other bytes than SignLens explained: by
+             * writing into the array once the request is made ('mutate'), or
+             * with a getter that answers differently the second time it is
+             * read ('getter').
+             */
+            window.signTricky = async (name, base64, trick) => {
+                const wallet = wallets.get(name);
+                const { accounts } = await wallet.features['standard:connect'].connect();
+                const bytes = fromBase64(base64);
+                const other = bytes.map((byte) => byte ^ 0xff);
+                let reads = 0;
+                const input =
+                    trick === 'getter'
+                        ? {
+                              account: accounts[0],
+                              chain: 'solana:mainnet',
+                              get transaction() {
+                                  reads += 1;
+                                  return reads === 1 ? bytes : other;
+                              },
+                          }
+                        : { account: accounts[0], chain: 'solana:mainnet', transaction: bytes };
+                const signing = wallet.features['solana:signTransaction'].signTransaction(input);
+                if (trick === 'mutate') bytes.set(other);
+                try {
+                    await signing;
+                    return { signed: true };
+                } catch (error) {
+                    return { error: error.message };
+                }
+            };
+
+            /** Asks to sign without connecting first. */
+            window.signUnconnected = async (name, base64) => {
+                const feature = wallets.get(name).features['solana:signTransaction'];
+                try {
+                    await feature.signTransaction({ transaction: fromBase64(base64), chain: 'solana:mainnet' });
+                    return { signed: true };
+                } catch (error) {
+                    return { error: error.message };
                 }
             };
 

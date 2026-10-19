@@ -18,6 +18,8 @@ test('a lookalike of a contact is flagged', async ({ configure, dapp, popup }) =
     const transfer = fixture('legacy_durable_nonce_token_transfer');
     await configure({
         gate: false,
+        lookupTokens: false,
+        simulate: false,
         mode: 'watch',
         address: feePayer(transfer.bytes),
         contacts: `Bob = ${LOOKALIKE}\nnot a line\n`,
@@ -27,7 +29,8 @@ test('a lookalike of a contact is flagged', async ({ configure, dapp, popup }) =
         wallet: WALLET,
         base64: transfer.base64,
     });
-    expect(answer.error).toContain('SignLens verdict: warning');
+    // The verdict depends on the address book: the page is not told it.
+    expect(answer.error).not.toContain('warning');
 
     await popup.reload();
     const row = popup.locator('#history li').first();
@@ -54,10 +57,11 @@ test('the contact itself labels the recipient', async ({ configure, dapp, popup 
         wallet: WALLET,
         base64: transfer.base64,
     });
-    expect(answer.error).toContain('SignLens verdict: warning');
+    expect(answer.error).not.toContain('warning');
 
     await popup.reload();
     const row = popup.locator('#history li').first();
+    await expect(row.locator('.verdict')).toHaveText('warning');
     await row.locator('summary').click();
     await expect(row.locator('pre')).toContainText('To: Bob (DV3B…L7Qp) (verified)');
     await expect(row.locator('.findings')).not.toContainText('looks like');

@@ -3,9 +3,10 @@
 // the explanation. The verdict and the one-line summary stay at the top
 // and the buttons at the bottom; the explanation scrolls between them.
 
-import { element, type HistoryEntry, type Row, type RowVerdictWord, renderRow, rows, rowVerdictWord, worstVerdict } from './render.ts';
+import { element, type HistoryEntry, originNode, type Row, renderRow } from './render.ts';
 import { settings } from './settings.ts';
 import type { Rating } from './types.ts';
+import { rows, rowVerdictWord, worstVerdict } from './verdict.ts';
 
 const id = new URLSearchParams(window.location.search).get('id') ?? '';
 
@@ -13,64 +14,87 @@ function byId<T extends HTMLElement>(name: string): T {
     return document.getElementById(name) as T;
 }
 
-function decide(decision: 'continue' | 'reject'): void {
-    chrome.runtime.sendMessage({ type: 'decision', id, decision }).finally(() => window.close());
-}
+/** Sends the feedback strip's rating, if one was given and not sent yet: on a "clear", and with the decision. */
+let sendFeedback: () => void = () => {};
 
-/** The origin as a line: the scheme muted, the host in bold, so lookalike hosts read differently. */
-function originNode(origin: string | undefined): DocumentFragment {
-    const node = document.createDocumentFragment();
-    const match = /^(\w+:\/\/)(.*)$/.exec(origin ?? '');
-    if (match) {
-        node.append(element('span', 'scheme', match[1]), element('b', 'host', match[2]));
-    } else {
-        node.append(origin ?? 'an unknown page');
-    }
-    node.append(' asks you to sign');
-    return node;
+/**
+ * Sends the decision to the worker. A Continue that no request is waiting
+ * for any more (its page closed or stopped waiting, or the worker was
+ * restarted) went nowhere: the window says so rather than close as if it
+ * had been passed on.
+ */
+function decide(decision: 'continue' | 'reject'): void {
+    // A comment or the cover box goes with the decision, so neither is lost.
+    sendFeedback();
+    chrome.runtime.sendMessage({ type: 'decision', id, decision }).then(
+        (taken: unknown) => {
+            if (taken === true || decision === 'reject') {
+                window.close();
+                return;
+            }
+            byId<HTMLElement>('note').textContent =
+                'This request is no longer pending: nothing was passed on. The page was told it was refused.';
+            byId<HTMLButtonElement>('continue').hidden = true;
+            const reject = byId<HTMLButtonElement>('reject');
+            reject.textContent = 'Close';
+            reject.focus();
+        },
+        () => window.close(),
+    );
 }
 
 /**
  * The feedback strip under the explanation: one of three ratings, a
- * comment, and, on a transaction SignLens could not fully explain, the
- * offer to send the transaction itself so it gets covered. Sent through
- * the worker, which knows the API; the window never waits for it.
+ * comment, and, on a transaction SignLens did not call OK, the offer to
+ * send the transaction itself so it gets covered. One record per explained
+ * transaction, each with its own bytes or none, sent once, through the
+ * worker, which knows the API; the window never waits for it.
  */
-function feedbackStrip(list: Row[], worst: RowVerdictWord): void {
+function feedbackStrip(list: Row[]): void {
     const strip = byId<HTMLElement>('feedback');
-    const digests = list.map((row) => row.digest).filter((digest): digest is string => Boolean(digest));
-    if (digests.length === 0) return;
+    const explained = list.filter((row) => Boolean(row.digest));
+    if (explained.length === 0) return;
     strip.hidden = false;
     const cover = byId<HTMLLabelElement>('feedback-cover');
     const coverBox = cover.querySelector('input') as HTMLInputElement;
     const comment = byId<HTMLTextAreaElement>('feedback-comment');
     const note = byId<HTMLElement>('feedback-note');
-    const transactions = list.map((row) => row.transaction).filter((t): t is string => Boolean(t));
-    cover.hidden = !(worst === 'blocked' || worst === 'warning' || worst === 'error') || transactions.length === 0;
+    const ratings = [...strip.querySelectorAll<HTMLButtonElement>('button[data-rating]')];
+    const coverable = (row: Row) => rowVerdictWord(row) !== 'ok' && Boolean(row.transaction);
+    cover.hidden = !explained.some(coverable);
     let rating: Rating | null = null;
-    const send = () => {
-        if (!rating) return;
+    let sent = false;
+    sendFeedback = () => {
+        if (!rating || sent) return;
+        sent = true;
+        for (const button of ratings) button.disabled = true;
+        comment.disabled = true;
+        coverBox.disabled = true;
+        const records = explained.map((row) => ({
+            digest: row.digest,
+            transaction: coverBox.checked && coverable(row) ? (row.transaction ?? null) : null,
+        }));
         chrome.runtime
-            .sendMessage({
-                type: 'feedback',
-                payload: { digests, rating, comment: comment.value.slice(0, 2000), transactions: coverBox.checked ? transactions : [] },
-            })
-            .catch(() => {});
-        note.textContent = 'Thank you. Sent to SignLens.';
+            .sendMessage({ type: 'feedback', payload: { rating, comment: comment.value.slice(0, 2000), records } })
+            .then(
+                (taken: unknown) => taken === true,
+                () => false,
+            )
+            .then((taken) => {
+                note.textContent = taken ? 'Thank you. Sent to SignLens.' : 'The feedback could not be sent.';
+            });
     };
-    for (const button of strip.querySelectorAll<HTMLButtonElement>('button[data-rating]')) {
+    for (const button of ratings) {
         button.addEventListener('click', () => {
             rating = button.dataset.rating as Rating;
-            for (const other of strip.querySelectorAll<HTMLButtonElement>('button[data-rating]'))
+            for (const other of ratings) {
                 other.classList.toggle('primary', other === button);
+                other.setAttribute('aria-pressed', String(other === button));
+            }
             comment.hidden = rating === 'clear';
-            if (rating === 'clear') send();
+            if (rating === 'clear') sendFeedback();
             else note.textContent = 'Add a word if you like; it is sent when you decide below.';
         });
-    }
-    // A comment or the cover box goes with the decision, so neither is lost.
-    for (const button of [byId<HTMLButtonElement>('continue'), byId<HTMLButtonElement>('reject')]) {
-        button.addEventListener('click', send, { capture: true });
     }
 }
 
@@ -90,7 +114,7 @@ async function start(): Promise<void> {
     }
     const method = (entry.method ?? '').replace(/^\w+:/, '');
     const list = rows(entry);
-    const { showInstructions } = await settings();
+    const { showInstructions, gate } = await settings();
     const transactions = /transaction/i.test(method);
     byId<HTMLElement>('title').textContent = transactions
         ? list.length > 1
@@ -98,7 +122,7 @@ async function start(): Promise<void> {
             : 'Sign a transaction'
         : 'Sign a message';
     byId<HTMLElement>('what').textContent = method;
-    byId<HTMLElement>('where').replaceChildren(originNode(entry.origin));
+    byId<HTMLElement>('where').replaceChildren(originNode(entry.origin, ' asks you to sign'));
 
     const worst = worstVerdict(list);
     const band = byId<HTMLElement>('band');
@@ -120,16 +144,16 @@ async function start(): Promise<void> {
             head.append(element('span', `verdict ${rowVerdictWord(row)}`, rowVerdictWord(row)));
             item.append(head);
         }
-        item.append(renderRow(row, { showInstructions }));
+        item.append(renderRow(row, { showInstructions, heading: 'h2' }));
         container.append(item);
     }
-    if (transactions) feedbackStrip(list, worst);
+    if (transactions) feedbackStrip(list);
 
     const stopped = worst === 'blocked' || worst === 'error';
     if (entry.mode === 'passthrough') {
         const wallet = entry.upstream || 'your wallet';
         note.textContent = stopped
-            ? `SignLens would refuse this. Continuing hands it unchanged to ${wallet} all the same, which asks for its own approval.`
+            ? `${gate ? '' : 'The window is off in the settings, but opens for what SignLens would refuse. '}SignLens would refuse this. Continuing hands it unchanged to ${wallet} all the same, which asks for its own approval.`
             : `Continue hands the request unchanged to ${wallet}, which asks for its own approval.`;
         proceed.textContent = stopped ? `Continue anyway to ${wallet}` : `Continue to ${wallet}`;
         // A refused request gets no inviting button.

@@ -95,13 +95,15 @@ test('the request carries the transaction as base64 beside the engine request, a
 
 test("the engine's error document is passed through, and anything else is an error document too", async () => {
     const engineError = await stub({
-        explain: { status: 400, body: { schema: 'signlens-ffi/1', error: { code: 'transaction', message: 'not a transaction' } } },
+        explain: {
+            status: 400,
+            body: { schema: 'signlens-ffi/1', error: { code: 'transaction', message: 'not a transaction', trace: 'x' }, extra: 1 },
+        },
     });
     try {
         const document = await explainRemotely(engineError.url, new Uint8Array([1]), {});
-        assert.ok('error' in document);
-        assert.equal(document.error.code, 'transaction');
-        assert.equal(rowVerdict(document), null);
+        // Only what is shown of it is kept.
+        assert.deepEqual(document, { schema: 'signlens-api/1', error: { code: 'transaction', message: 'not a transaction' } });
     } finally {
         await engineError.close();
     }
@@ -128,6 +130,10 @@ test("the engine's error document is passed through, and anything else is an err
     const bad = await explainRemotely('ftp://x', new Uint8Array([1]), {});
     assert.ok('error' in bad);
     assert.match(bad.error.message, /not an http\(s\) URL/);
+    // The transaction and the address book do not go out in the clear.
+    const clear = await explainRemotely('http://api.signlens.dev', new Uint8Array([1]), {});
+    assert.ok('error' in clear);
+    assert.match(clear.error.message, /plain http is for this machine only/);
 });
 
 test('the status names the engine and the packs, or why not', async () => {
@@ -154,4 +160,31 @@ test('feedback is one post per record and true only on 204', async () => {
         await api.close();
     }
     assert.equal(await sendFeedback('http://127.0.0.1:1', { messageHash: 'ab'.repeat(32), rating: 'clear' }), false);
+});
+
+test('an explanation that does not hold together, or is too big to be one, is an error document that says where', async () => {
+    const broken = await stub({ explain: { status: 200, body: { ...EXPLANATION, effects: [{ type: 'Transfer', value: {} }] } } });
+    try {
+        const document = await explainRemotely(broken.url, new Uint8Array([1]), {});
+        assert.ok('error' in document);
+        assert.match(document.error.message, /cannot read: explanation\.effects\[0\]\.value\.from is not an object/);
+    } finally {
+        await broken.close();
+    }
+    const unknown = await stub({ explain: { status: 200, body: { ...EXPLANATION, verdict: 'Review' } } });
+    try {
+        const document = await explainRemotely(unknown.url, new Uint8Array([1]), {});
+        assert.ok('error' in document);
+        assert.match(document.error.message, /"Review" is not a verdict this version knows/);
+    } finally {
+        await unknown.close();
+    }
+    const huge = await stub({ explain: { status: 200, body: { ...EXPLANATION, text: 'x'.repeat(2_000_001) } } });
+    try {
+        const document = await explainRemotely(huge.url, new Uint8Array([1]), {});
+        assert.ok('error' in document);
+        assert.match(document.error.message, /not an explanation/);
+    } finally {
+        await huge.close();
+    }
 });

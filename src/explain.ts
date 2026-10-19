@@ -1,0 +1,170 @@
+// What a page asked, explained: each transaction with what the worker read
+// itself (its lookup tables, a simulation, names for unlisted tokens) sent
+// to the SignLens API, and the answer kept as a row for the window and the
+// popup; a message to sign, shown as it is. Needs `fetch` and nothing of
+// the browser's, so it runs in Node under test as it does in the worker.
+
+import { explainRemotely, rowVerdict } from './api.ts';
+import { tokenHints, unknownMints } from './hints.ts';
+import {
+    type ExplainPayload,
+    MAX_MESSAGE_BYTES,
+    MAX_TRANSACTION_BASE64,
+    MAX_TRANSACTION_BYTES,
+    MAX_TRANSACTIONS,
+    type MessagePayload,
+} from './messages.ts';
+import type { Entry, Row } from './render.ts';
+import type { Settings } from './settings.ts';
+import { type SimulationResult, simulate } from './simulation.ts';
+import { fromBase64, isAddress, type LoadedAddresses } from './solana.ts';
+import { resolveTables } from './tables.ts';
+import { printable, withoutControls } from './text.ts';
+import { type Contact, type EngineAnswer, type EngineRequest, isError, type TokenHint } from './types.ts';
+
+/** Where a request came from, for the capture. */
+interface Meta {
+    origin: string;
+    method: string;
+    accounts: string[];
+}
+
+/** A transaction as `signlens census` and `signlens explain` read it: comment lines, then the bytes. */
+function captureOf(transaction: string, meta: Meta, loaded?: LoadedAddresses): string {
+    const lines = [
+        '# Captured by the SignLens extension before signing.',
+        `# origin: ${meta.origin}`,
+        `# method: ${meta.method}`,
+        `# captured: ${new Date().toISOString()}`,
+        ...meta.accounts.map((account) => `# signer: ${account}`),
+        ...(loaded ? [`# loaded-writable: ${loaded.writable.join(' ')}`, `# loaded-readonly: ${loaded.readonly.join(' ')}`] : []),
+    ];
+    for (let i = 0; i < transaction.length; i += 76) lines.push(transaction.slice(i, i + 76));
+    return `${lines.join('\n')}\n`;
+}
+
+/** How many bytes `base64` (valid, padded or not) decodes to. */
+function decodedLength(base64: string): number {
+    return Math.floor((base64.replace(/=+$/, '').length * 3) / 4);
+}
+
+/** The transactions of a request, or why it is refused before anything is asked of anyone. */
+function transactionsOf(payload: ExplainPayload): string[] | string {
+    const transactions = payload.transactions;
+    if (
+        !Array.isArray(transactions) ||
+        transactions.length === 0 ||
+        transactions.length > MAX_TRANSACTIONS ||
+        !transactions.every((t): t is string => typeof t === 'string' && /^[A-Za-z0-9+/]+={0,2}$/.test(t))
+    ) {
+        return 'transactions must be a list of base64 strings';
+    }
+    if (transactions.some((t) => t.length > MAX_TRANSACTION_BASE64 || decodedLength(t) > MAX_TRANSACTION_BYTES)) {
+        return `a transaction is longer than ${MAX_TRANSACTION_BYTES} bytes`;
+    }
+    return transactions;
+}
+
+/** Explains the transactions of an `explain` request through the API, one row each. */
+export async function explainTransactions(payload: ExplainPayload, config: Settings, contacts: Contact[]): Promise<Entry> {
+    const transactions = transactionsOf(payload);
+    if (typeof transactions === 'string') return { error: transactions };
+    const accounts = (Array.isArray(payload.accounts) ? payload.accounts : []).filter((a): a is string => isAddress(a)).slice(0, 16);
+    const meta: Meta = {
+        origin: printable(payload.origin, 200) || 'unknown',
+        method: printable(payload.method, 60) || 'unknown',
+        accounts,
+    };
+    const chains = Array.isArray(payload.chains) ? payload.chains : [];
+    const results: Row[] = [];
+    for (const [i, transaction] of transactions.entries()) {
+        const bytes = fromBase64(transaction);
+        // The chain is the page's word, so it switches nothing off: a page
+        // that called a mainnet drain "devnet" would otherwise keep the
+        // simulation from ever seeing it. The transaction is read and
+        // simulated on the RPC in the settings like any other, and the
+        // window says which chain the page named when it is not mainnet.
+        const chain = chains[i];
+        const claimed = typeof chain === 'string' && chain !== 'solana:mainnet' ? withoutControls(chain).slice(0, 40) : null;
+        const { loaded, note } = await resolveTables(bytes, config.rpcUrl);
+        const capture = captureOf(transaction, meta, loaded);
+        let simulation: SimulationResult = null;
+        let simulationNote = 'off';
+        if (config.simulate) {
+            simulation = await simulate(transaction, bytes, loaded, config.rpcUrl);
+            if (!simulation) simulationNote = 'not run (transaction not parsed)';
+            else if (simulation.unavailable) {
+                simulationNote = `not run (${simulation.unavailable})`;
+                simulation = null;
+            } else simulationNote = simulation.failure ? 'failed' : `${simulation.changes.length} balance change(s), unverified`;
+        }
+        const request: EngineRequest = {
+            ownKeys: accounts,
+            ...(loaded ? { loadedWritable: loaded.writable, loadedReadonly: loaded.readonly } : {}),
+            contacts,
+            ...(simulation ? { simulation: { failure: simulation.failure, units: simulation.units, changes: simulation.changes } } : {}),
+            render: true,
+        };
+        let document: EngineAnswer = await explainRemotely(config.apiUrl, bytes, request);
+        let hints: TokenHint[] = [];
+        if (!isError(document) && config.lookupTokens) {
+            const mints = unknownMints(document);
+            if (mints.length > 0) hints = await tokenHints(mints, config);
+            if (hints.length > 0) {
+                // The names are a nicety: if asking again fails, the first explanation stands without them.
+                const named = await explainRemotely(config.apiUrl, bytes, { ...request, tokenHints: hints });
+                if (isError(named)) hints = [];
+                else document = named;
+            }
+        }
+        results.push(
+            isError(document)
+                ? {
+                      verdict: null,
+                      text: '',
+                      error: withoutControls(document.error.message) || 'the SignLens API answered an error without a message',
+                      tables: note,
+                      ...(claimed ? { chain: claimed } : {}),
+                      capture,
+                  }
+                : {
+                      verdict: rowVerdict(document),
+                      text: withoutControls(document.text),
+                      error: null,
+                      tables: note,
+                      ...(claimed ? { chain: claimed } : {}),
+                      simulation: simulationNote,
+                      capture,
+                      hints: hints.map((h) => h.symbol),
+                      summary: document.summary,
+                      findings: document.findings,
+                      effects: document.effects,
+                      sections: document.sections,
+                      // For the feedback strip: what to name and, if the user asks, what to send.
+                      digest: document.raw?.digest ?? null,
+                      transaction,
+                  },
+        );
+    }
+    return { results };
+}
+
+/** A signed message, shown as it is: SignLens does not explain off-chain messages yet. */
+export function showMessage(payload: MessagePayload): Entry {
+    if (typeof payload.message !== 'string') return { error: 'message is required' };
+    const tooLong = { error: `the message is longer than ${MAX_MESSAGE_BYTES} bytes` };
+    // Bounded before it is decoded, then exactly.
+    if (payload.message.length > Math.ceil(MAX_MESSAGE_BYTES / 3) * 4) return tooLong;
+    let bytes: Uint8Array;
+    try {
+        bytes = fromBase64(payload.message);
+    } catch {
+        return { error: 'the message is not base64' };
+    }
+    if (bytes.length > MAX_MESSAGE_BYTES) return tooLong;
+    try {
+        return { text: withoutControls(new TextDecoder('utf-8', { fatal: true }).decode(bytes)) };
+    } catch {
+        return { text: `(${bytes.length} bytes, not text) ${[...bytes].map((b) => b.toString(16).padStart(2, '0')).join('')}` };
+    }
+}

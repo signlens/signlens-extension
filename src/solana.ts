@@ -4,6 +4,8 @@
 // token account holds. Everything else is the engine's job; the worker is
 // on the untrusted, online side and only gathers hints.
 
+import { withoutControls } from './text.ts';
+
 const ALPHABET = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
 
 /** Owner of every address lookup table account. */
@@ -235,30 +237,39 @@ export async function multipleAccounts(url: string, addresses: string[], fetchFn
     const accounts: (RpcAccount | null)[] = [];
     for (let at = 0; at < addresses.length; at += ACCOUNTS_PER_CALL) {
         const batch = addresses.slice(at, at + ACCOUNTS_PER_CALL);
-        const response = await fetchFn(url, {
-            method: 'POST',
-            headers: { 'content-type': 'application/json' },
-            body: JSON.stringify({
-                jsonrpc: '2.0',
-                id: 1,
-                method: 'getMultipleAccounts',
-                params: [batch, { encoding: 'base64', commitment: 'confirmed' }],
-            }),
-            signal: AbortSignal.timeout(10_000),
-        });
-        if (!response.ok) throw await refusal(url, response);
-        const body = (await response.json()) as { error?: { message: string }; result: { value: (RpcAccount | null)[] } };
-        if (body.error) throw new Error(`RPC error: ${body.error.message}`);
-        accounts.push(...body.result.value);
+        const result = await rpcCall<{ value: (RpcAccount | null)[] }>(
+            url,
+            'getMultipleAccounts',
+            [batch, { encoding: 'base64', commitment: 'confirmed' }],
+            { timeoutMs: 10_000, fetchFn },
+        );
+        accounts.push(...result.value);
     }
     return accounts;
 }
 
+/** One JSON-RPC call to the RPC at `url`: its result, or an error naming what went wrong. */
+export async function rpcCall<T>(
+    url: string,
+    method: string,
+    params: unknown[],
+    { timeoutMs = 15_000, fetchFn = fetch }: { timeoutMs?: number; fetchFn?: typeof fetch } = {},
+): Promise<T> {
+    const response = await fetchFn(url, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ jsonrpc: '2.0', id: 1, method, params }),
+        signal: AbortSignal.timeout(timeoutMs),
+    });
+    if (!response.ok) throw await refusal(url, response);
+    const body = (await response.json()) as { error?: { message: string }; result: T };
+    if (body.error) throw new Error(`RPC error: ${body.error.message}`);
+    return body.result;
+}
+
 /** An HTTP answer that is not JSON-RPC, as an error naming the host and quoting what it said. */
 export async function refusal(url: string, response: Response): Promise<Error> {
-    const said = String(await response.text().catch(() => ''))
-        // biome-ignore lint/suspicious/noControlCharactersInRegex: control characters are what is stripped
-        .replace(/[\x00-\x08\x0b-\x1f\x7f-\x9f]/g, '?')
+    const said = withoutControls(await response.text().catch(() => ''))
         .replace(/\s+/g, ' ')
         .trim()
         .slice(0, 120);

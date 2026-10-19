@@ -1,15 +1,29 @@
 // The contract between the extension and the engine, as the SignLens API
 // serves it and the WebAssembly module will: the explanation document
 // (`signlens-explanation/1`, specified with the engine), the engine's
-// request, and the feedback record. Enum
-// variants are the Rust names; 128-bit integers are decimal strings; bytes
-// are lowercase hex. Consumers tolerate unknown `type` values, since new
-// variants may appear without a schema bump.
+// request, and the feedback record. Enum variants are the Rust names;
+// 128-bit integers are decimal strings; bytes are lowercase hex.
+//
+// New variants may appear without a schema bump. `parseExplanation`
+// (explanation.ts) reads a `type` this version does not know as
+// `Unrecognized`, so every union here is closed and a `switch` on `type`
+// covers it; an unknown value of the enums below is refused instead.
 
-export type Trust = 'Fact' | 'Verified' | 'Claimed';
-export type Bound = 'Exact' | 'AtLeast' | 'AtMost' | 'Unlimited' | 'Unknown';
-export type Severity = 'Info' | 'Warning' | 'High' | 'Critical';
-export type Verdict = 'Ok' | 'Warn' | 'Block';
+export const TRUSTS = ['Fact', 'Verified', 'Claimed'] as const;
+export const BOUNDS = ['Exact', 'AtLeast', 'AtMost', 'Unlimited', 'Unknown'] as const;
+export const SEVERITIES = ['Info', 'Warning', 'High', 'Critical'] as const;
+export const VERDICTS = ['Ok', 'Warn', 'Block'] as const;
+
+export type Trust = (typeof TRUSTS)[number];
+export type Bound = (typeof BOUNDS)[number];
+export type Severity = (typeof SEVERITIES)[number];
+export type Verdict = (typeof VERDICTS)[number];
+
+/** A variant this version does not know: its name, for the window to say what it cannot show. */
+export interface Unrecognized {
+    type: 'Unrecognized';
+    value: { type: string };
+}
 
 export interface Address {
     text: string;
@@ -45,7 +59,7 @@ export type Value =
     | { type: 'Bytes'; value: string }
     | { type: 'Bool'; value: boolean }
     | { type: 'List'; value: Value[] }
-    | { type: string; value?: unknown };
+    | Unrecognized;
 
 export interface Field {
     label: string;
@@ -65,7 +79,7 @@ export type SectionKind =
     | { type: 'Lifetime' }
     | { type: 'Claims' }
     | { type: 'Raw' }
-    | { type: string; value?: unknown };
+    | Unrecognized;
 
 export interface Section {
     kind: SectionKind;
@@ -89,7 +103,7 @@ export type Effect =
     | { type: 'Lifetime'; value: Lifetime }
     | { type: 'Proposed'; value: { by: Address; effect: Effect } }
     | { type: 'Other'; value: { description: string } }
-    | { type: string; value?: unknown };
+    | Unrecognized;
 
 export interface Finding {
     severity: Severity;

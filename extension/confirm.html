@@ -15,23 +15,23 @@
         <main>
             <ol id="rows"></ol>
             <section id="feedback" class="feedback" hidden>
-                <p class="feedback-ask">Was this explanation clear?</p>
-                <div class="feedback-buttons">
-                    <button type="button" class="small" data-rating="clear">Clear</button>
-                    <button type="button" class="small" data-rating="unclear">Unclear</button>
-                    <button type="button" class="small" data-rating="wrong">Wrong</button>
+                <p id="feedback-ask" class="feedback-ask">Was this explanation clear?</p>
+                <div class="feedback-buttons" role="group" aria-labelledby="feedback-ask">
+                    <button type="button" class="small" data-rating="clear" aria-pressed="false">Clear</button>
+                    <button type="button" class="small" data-rating="unclear" aria-pressed="false">Unclear</button>
+                    <button type="button" class="small" data-rating="wrong" aria-pressed="false">Wrong</button>
                 </div>
                 <label id="feedback-cover" class="choice" hidden>
                     <input type="checkbox" name="cover" />
                     <span>Send this transaction to SignLens so it gets covered</span>
                 </label>
-                <textarea id="feedback-comment" rows="2" maxlength="2000" placeholder="What was unclear or wrong? (optional)" hidden></textarea>
-                <p id="feedback-note" class="note"></p>
+                <textarea id="feedback-comment" rows="2" maxlength="2000" placeholder="What was unclear or wrong? (optional)" aria-label="What was unclear or wrong? (optional)" hidden></textarea>
+                <p id="feedback-note" class="note" role="status"></p>
             </section>
         </main>
 
         <footer>
-            <p id="note"></p>
+            <p id="note" role="status"></p>
             <div id="buttons">
                 <button id="reject" type="button">Reject</button>
                 <button id="continue" type="button" class="primary">Continue</button>

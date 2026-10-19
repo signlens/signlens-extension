@@ -16,7 +16,7 @@ test('a nonce transfer is explained for the connected address and refused', asyn
     });
     expect(answer.account).toBe(feePayer(transfer.bytes));
     expect(answer.error).toContain('holds no keys: nothing was signed');
-    expect(answer.error).toContain('SignLens verdict: warning');
+    expect(answer.error).not.toContain('warning');
 
     await popup.reload();
     const row = popup.locator('#history li').first();
@@ -45,7 +45,7 @@ test('lookup tables are read over the RPC and a swap is named', async ({ configu
         wallet: WALLET,
         base64: swap.base64,
     });
-    expect(answer.error).toContain('SignLens verdict: ok');
+    expect(answer.error).toContain('holds no keys');
     expect(server.calls.map((c) => c.method)).toEqual(['getMultipleAccounts']);
 
     await popup.reload();
@@ -73,10 +73,11 @@ test('an unreachable RPC leaves the tables unresolved and the swap refused, not 
         wallet: WALLET,
         base64: swap.base64,
     });
-    expect(answer.error).toContain('SignLens verdict: blocked');
+    expect(answer.error).toContain('holds no keys');
 
     await popup.reload();
     const row = popup.locator('#history li').first();
+    await expect(row.locator('.verdict')).toHaveText('blocked');
     await row.locator('summary').click();
     await expect(row.locator('.tables')).toContainText('not resolved');
     await expect(row.locator('.findings')).toContainText('loaded from lookup tables');

@@ -15,6 +15,32 @@ test('with nothing to show the popup opens on the settings', async ({ configure,
     await expect(popup.locator('#unseen')).toBeHidden();
 });
 
+test('the views are tabs: the arrow keys move between them, and only the chosen one takes Tab', async ({ popup }) => {
+    const requests = popup.getByRole('tab', { name: 'Requests' });
+    const settings = popup.getByRole('tab', { name: 'Settings' });
+    await expect(popup.getByRole('tablist', { name: 'Views' })).toBeVisible();
+    await expect(settings).toHaveAttribute('aria-selected', 'true');
+    await expect(settings).toHaveAttribute('tabindex', '0');
+    await expect(requests).toHaveAttribute('tabindex', '-1');
+    await expect(popup.getByRole('tabpanel', { name: 'Settings' })).toBeVisible();
+
+    await settings.focus();
+    await popup.keyboard.press('ArrowLeft');
+    await expect(requests).toBeFocused();
+    await expect(requests).toHaveAttribute('aria-selected', 'true');
+    await expect(requests).toHaveAttribute('tabindex', '0');
+    await expect(popup.getByRole('tabpanel', { name: 'Requests' })).toBeVisible();
+    await expect(popup.locator('#view-settings')).toBeHidden();
+    // Past the first, the last; Home and End go to the ends.
+    await popup.keyboard.press('ArrowLeft');
+    await expect(settings).toBeFocused();
+    await popup.keyboard.press('Home');
+    await expect(requests).toBeFocused();
+    await popup.keyboard.press('End');
+    await expect(settings).toBeFocused();
+    await expect(settings).toHaveAttribute('aria-selected', 'true');
+});
+
 test('new requests open the popup on them, counted until seen, each with its summary line', async ({
     configure,
     context,

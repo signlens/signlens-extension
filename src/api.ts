@@ -1,14 +1,29 @@
 // The SignLens API as the worker drives it: the engine's request with the
-// transaction inside it goes out as JSON, the engine's explanation document
-// comes back unchanged. This file has no browser dependency beyond `fetch`,
+// transaction inside it goes out as JSON, and the engine's explanation
+// document comes back, checked and typed by `parseExplanation`
+// (explanation.ts). This file has no browser dependency beyond `fetch`,
 // so the same code is tested in Node. Later the WebAssembly module takes
-// this file's place and nothing else changes.
+// the place of `explainRemotely`; the feedback and the status are the
+// server's, and go with it.
 
+import { DocumentError, EXPLANATION_SCHEMA, parseExplanation } from './explanation.ts';
+import { endpointProblem } from './settings.ts';
 import { toBase64 } from './solana.ts';
-import { type EngineAnswer, type EngineRequest, type ErrorDocument, type Feedback, isError, type PacksDocument } from './types.ts';
+import { describe } from './text.ts';
+import {
+    type EngineAnswer,
+    type EngineRequest,
+    type ErrorDocument,
+    type Explanation,
+    type Feedback,
+    isError,
+    type PacksDocument,
+    type Verdict,
+} from './types.ts';
 
-export const EXPLANATION_SCHEMA = 'signlens-explanation/1';
 const TIMEOUT_MS = 20_000;
+/** The longest answer read, in characters: an explanation is tens of kilobytes. */
+const MAX_DOCUMENT = 2_000_000;
 
 export type RowVerdict = 'ok' | 'warning' | 'blocked';
 
@@ -24,8 +39,10 @@ function root(apiUrl: string): string {
     return apiUrl.trim().replace(/\/+$/, '');
 }
 
-function isHttp(base: string): boolean {
-    return /^https?:\/\//.test(base);
+/** Why the API at `base` is not to be asked, or `null`: see `endpointProblem`. */
+function refused(base: string): string | null {
+    const problem = endpointProblem(base);
+    return problem && `the API address in the settings is not usable: ${problem}`;
 }
 
 /** An error document in the engine's own shape, so callers read one kind. */
@@ -33,8 +50,10 @@ function errorDocument(code: string, message: string): ErrorDocument {
     return { schema: 'signlens-api/1', error: { code, message } };
 }
 
-function describe(error: unknown): string {
-    return error instanceof Error ? error.message : String(error);
+/** The engine's or the API's own error document, with only what is shown of it, cut to size. */
+function passedOn(document: ErrorDocument): ErrorDocument {
+    const code = typeof document.error.code === 'string' ? document.error.code.slice(0, 100) : 'api';
+    return errorDocument(code, document.error.message.slice(0, 2_000));
 }
 
 /**
@@ -46,7 +65,8 @@ function describe(error: unknown): string {
  */
 export async function explainRemotely(apiUrl: string, bytes: Uint8Array, request: EngineRequest = {}): Promise<EngineAnswer> {
     const base = root(apiUrl);
-    if (!isHttp(base)) return errorDocument('api', 'the API address in the settings is not an http(s) URL');
+    const problem = refused(base);
+    if (problem) return errorDocument('api', problem);
     let response: Response;
     try {
         response = await fetch(`${base}/v1/explain`, {
@@ -58,27 +78,35 @@ export async function explainRemotely(apiUrl: string, bytes: Uint8Array, request
     } catch (error) {
         return errorDocument('api', `the SignLens API at ${base} did not answer (${describe(error)})`);
     }
+    const notAnExplanation = errorDocument(
+        'api',
+        `the SignLens API answered HTTP ${response.status} with something that is not an explanation`,
+    );
+    if (Number(response.headers.get('content-length')) > MAX_DOCUMENT) return notAnExplanation;
     let document: unknown;
     try {
-        document = await response.json();
+        const body = await response.text();
+        if (body.length > MAX_DOCUMENT) return notAnExplanation;
+        document = JSON.parse(body);
     } catch {
         return errorDocument('api', `the SignLens API answered HTTP ${response.status} without a document`);
     }
-    if (typeof document !== 'object' || document === null) {
-        return errorDocument('api', `the SignLens API answered HTTP ${response.status} with something that is not an explanation`);
+    if (typeof document !== 'object' || document === null) return notAnExplanation;
+    if (isError(document as EngineAnswer)) return passedOn(document as ErrorDocument);
+    if (!response.ok || (document as { schema?: unknown }).schema !== EXPLANATION_SCHEMA) return notAnExplanation;
+    try {
+        return parseExplanation(document);
+    } catch (error) {
+        if (!(error instanceof DocumentError)) throw error;
+        return errorDocument('api', `the SignLens API answered an explanation this version cannot read: ${error.message}`);
     }
-    const answer = document as EngineAnswer;
-    if (isError(answer)) return answer;
-    if (!response.ok || answer.schema !== EXPLANATION_SCHEMA) {
-        return errorDocument('api', `the SignLens API answered HTTP ${response.status} with something that is not an explanation`);
-    }
-    return answer;
 }
 
 /** What the API is: its engine version and packs, from `GET /v1/packs`, or `{error}`. */
 export async function apiStatus(apiUrl: string): Promise<ApiStatus | { error: string }> {
     const base = root(apiUrl);
-    if (!isHttp(base)) return { error: 'the API address in the settings is not an http(s) URL' };
+    const problem = refused(base);
+    if (problem) return { error: problem };
     try {
         const response = await fetch(`${base}/v1/packs`, { signal: AbortSignal.timeout(5_000) });
         const packs = (await response.json()) as Partial<PacksDocument>;
@@ -101,7 +129,7 @@ export async function apiStatus(apiUrl: string): Promise<ApiStatus | { error: st
  */
 export async function sendFeedback(apiUrl: string, feedback: Feedback): Promise<boolean> {
     const base = root(apiUrl);
-    if (!isHttp(base)) return false;
+    if (refused(base)) return false;
     try {
         const response = await fetch(`${base}/v1/feedback`, {
             method: 'POST',
@@ -115,9 +143,9 @@ export async function sendFeedback(apiUrl: string, feedback: Feedback): Promise<
     }
 }
 
-/** The verdict a popup row shows for an explanation document, or `null` for an error document. */
-export function rowVerdict(answer: EngineAnswer): RowVerdict | null {
-    if (isError(answer)) return null;
-    const verdicts: Record<string, RowVerdict> = { Ok: 'ok', Warn: 'warning', Block: 'blocked' };
-    return verdicts[(answer as { verdict?: string }).verdict ?? ''] ?? null;
+const ROW_VERDICTS: Readonly<Record<Verdict, RowVerdict>> = { Ok: 'ok', Warn: 'warning', Block: 'blocked' };
+
+/** The verdict a popup row shows for an explanation. */
+export function rowVerdict(explanation: Explanation): RowVerdict {
+    return ROW_VERDICTS[explanation.verdict];
 }

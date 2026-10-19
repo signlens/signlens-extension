@@ -1,13 +1,15 @@
-// `npm run package`: the extension as the store takes it, a zip under
-// dist/, built so that the same source gives the same bytes: entries in
-// sorted order, stored uncompressed, every timestamp fixed. The SHA-256
-// is printed and written beside the zip, so a published package can be
-// checked against a build of its tag.
+// `npm run package`: the extension as the stores take it, a zip under
+// dist/ for Chrome and one for Firefox (the same files, with the manifest
+// firefox-manifest.ts derives), built so that the same source gives the
+// same bytes: entries in sorted order, stored uncompressed, every
+// timestamp fixed. Each SHA-256 is printed and written beside its zip, so
+// a published package can be checked against a build of its tag.
 
 import { createHash } from 'node:crypto';
 import { mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
 import { dirname, join, posix, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { firefoxManifest, type Manifest } from './firefox-manifest.ts';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, '..');
@@ -112,17 +114,18 @@ function zip(entries: { name: string; data: Uint8Array }[]): Uint8Array {
 }
 
 // What belongs in the package: the static files, and one script per source
-// that is not a test. Anything else in extension/ is a leftover of an old
-// build and refuses the package rather than ship.
+// that is not a test or a test's fake. Anything else in extension/ is a
+// leftover of an old build and refuses the package rather than ship.
 const SOURCES = join(ROOT, 'src');
 const expected = new Set([
     ...files(SOURCES)
-        .filter((name) => name.endsWith('.ts') && !name.endsWith('.test.ts'))
+        .filter((name) => name.endsWith('.ts') && !name.endsWith('.test.ts') && !name.endsWith('.fake.ts'))
         .map((name) => name.replace(/\.ts$/, '.js')),
     'manifest.json',
     'popup.html',
     'popup.css',
     'confirm.html',
+    'connect.html',
     ...['16', '32', '48', '128'].map((size) => `icons/icon-${size}.png`),
 ]);
 const present = files(EXTENSION);
@@ -136,16 +139,25 @@ if (stray.length > 0) {
     console.error(`extension/ holds files that are not part of the package: ${stray.join(', ')}; remove them`);
     process.exit(1);
 }
-const manifest = JSON.parse(readFileSync(join(EXTENSION, 'manifest.json'), 'utf8')) as { version: string };
+const manifest = JSON.parse(readFileSync(join(EXTENSION, 'manifest.json'), 'utf8')) as Manifest & { version: string };
 if (manifest.version !== version) {
     console.error(`extension/manifest.json says version ${manifest.version} but package.json says ${version}`);
     process.exit(1);
 }
 const entries = present.map((name) => ({ name, data: new Uint8Array(readFileSync(join(EXTENSION, name))) }));
-const bytes = zip(entries);
-const digest = createHash('sha256').update(bytes).digest('hex');
+const firefox = entries.map((entry) =>
+    entry.name === 'manifest.json'
+        ? { name: entry.name, data: new TextEncoder().encode(`${JSON.stringify(firefoxManifest(manifest), null, 2)}\n`) }
+        : entry,
+);
 mkdirSync(DIST, { recursive: true });
-const name = `signlens-extension-${version}.zip`;
-writeFileSync(join(DIST, name), bytes);
-writeFileSync(join(DIST, `${name}.sha256`), `${digest}  ${name}\n`);
-console.log(`${digest}  dist/${name} (${entries.length} files, ${bytes.length} bytes)`);
+for (const [name, list] of [
+    [`signlens-extension-${version}.zip`, entries],
+    [`signlens-extension-firefox-${version}.zip`, firefox],
+] as const) {
+    const bytes = zip(list);
+    const digest = createHash('sha256').update(bytes).digest('hex');
+    writeFileSync(join(DIST, name), bytes);
+    writeFileSync(join(DIST, `${name}.sha256`), `${digest}  ${name}\n`);
+    console.log(`${digest}  dist/${name} (${list.length} files, ${bytes.length} bytes)`);
+}

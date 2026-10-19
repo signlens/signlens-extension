@@ -26,12 +26,13 @@ test('a pump token is named from the RPC and the token list, marked unverified',
         wallet: WALLET,
         base64: swap.base64,
     });
-    expect(answer.error).toContain('SignLens verdict: ok');
+    expect(answer.error).toContain('holds no keys');
     expect(server.calls.map((c) => c.method)).toEqual(['getMultipleAccounts', 'getMultipleAccounts', 'tokens']);
     expect(server.calls.find((c) => c.method === 'tokens')?.query).toBe(PUMP_MINT);
 
     await popup.reload();
     const row = popup.locator('#history li').first();
+    await expect(row.locator('.verdict')).toHaveText('ok');
     await row.locator('summary').click();
     await expect(row.locator('.summary-line')).toContainText('≥ 142,243.976392 HMYD (claimed, unverified)');
     await expect(row.locator('.tables').nth(1)).toHaveText(/Unlisted tokens named .*: HMYD/);
@@ -85,6 +86,6 @@ test('with the lookup off nothing leaves for the token list', async ({ configure
         wallet: WALLET,
         base64: swap.base64,
     });
-    expect(answer.error).toContain('SignLens verdict: ok');
+    expect(answer.error).toContain('holds no keys');
     expect(server.calls.map((c) => c.method)).toEqual(['getMultipleAccounts']);
 });

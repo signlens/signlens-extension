@@ -15,84 +15,95 @@
             </p>
         </header>
 
-        <nav class="tabs" aria-label="Views">
-            <button id="tab-requests" type="button" class="tab" data-view="requests">Requests<span id="unseen" class="count" hidden></span></button>
-            <button id="tab-settings" type="button" class="tab" data-view="settings">Settings</button>
-        </nav>
+        <main>
+            <div class="tabs" role="tablist" aria-label="Views">
+                <button id="tab-requests" type="button" class="tab" role="tab" aria-controls="view-requests" data-view="requests">Requests<span id="unseen" class="count" hidden></span></button>
+                <button id="tab-settings" type="button" class="tab" role="tab" aria-controls="view-settings" data-view="settings">Settings</button>
+            </div>
 
-        <section id="view-requests" class="view" hidden>
-            <h2><span class="muted">Newest first</span> <button id="clear" type="button" class="small" hidden>Clear</button></h2>
-            <p id="empty">None yet. Connect “SignLens” in a dapp and start a transaction.</p>
-            <ol id="history"></ol>
-        </section>
+            <section id="view-requests" class="view" role="tabpanel" aria-labelledby="tab-requests" hidden>
+                <h2><span class="muted">Newest first</span> <button id="clear" type="button" class="small" hidden>Clear</button></h2>
+                <p id="empty">None yet. Connect “SignLens” in a dapp and start a transaction.</p>
+                <ol id="history"></ol>
+            </section>
 
-        <section id="view-settings" class="view" hidden>
-        <form id="settings" autocomplete="off">
-            <fieldset>
-                <legend>After explaining a request</legend>
-                <label class="choice">
-                    <input type="radio" name="mode" value="passthrough" />
-                    <span><strong>Pass it to your wallet</strong> to sign, unchanged</span>
-                </label>
-                <label class="choice">
-                    <input type="radio" name="mode" value="watch" />
-                    <span><strong>Refuse it</strong> (watch-only, no keys involved)</span>
-                </label>
-            </fieldset>
+            <section id="view-settings" class="view" role="tabpanel" aria-labelledby="tab-settings" hidden>
+                <form id="settings" autocomplete="off">
+                    <fieldset>
+                        <legend>After explaining a request</legend>
+                        <label class="choice">
+                            <input type="radio" name="mode" value="passthrough" />
+                            <span><strong>Pass it to your wallet</strong> to sign, unchanged</span>
+                        </label>
+                        <label class="choice">
+                            <input type="radio" name="mode" value="watch" />
+                            <span><strong>Refuse it</strong> (watch-only, no keys involved)</span>
+                        </label>
+                    </fieldset>
 
-            <label id="upstream-field">
-                Wallet to pass requests to
-                <select name="upstream">
-                    <option value="">First one found</option>
-                </select>
-                <small id="upstream-hint" class="note"></small>
-            </label>
+                    <label id="upstream-field">
+                        Wallet to pass requests to
+                        <select name="upstream" aria-describedby="upstream-hint">
+                            <option value="">First one found</option>
+                        </select>
+                        <small id="upstream-hint" class="note"></small>
+                    </label>
 
-            <label id="address-field">
-                Address to connect as
-                <input type="text" name="address" spellcheck="false" placeholder="Any Solana address" />
-                <small id="address-hint"></small>
-            </label>
+                    <label id="address-field">
+                        Address to connect as
+                        <input type="text" name="address" aria-describedby="address-hint" spellcheck="false" placeholder="Any Solana address" />
+                        <small id="address-hint"></small>
+                    </label>
 
-            <label class="choice">
-                <input type="checkbox" name="gate" />
-                <span><strong>Show the explanation and ask first</strong>, before refusing or passing a request on</span>
-            </label>
+                    <div id="sites-field">
+                        <p id="sites-title" class="field-title">Sites that may see it</p>
+                        <ul id="sites" aria-labelledby="sites-title"></ul>
+                        <small id="sites-empty" class="note">None yet: a site asks the first time it connects.</small>
+                    </div>
 
-            <label>
-                Address book, one <code>Name = address</code> per line
-                <textarea name="contacts" rows="3" spellcheck="false" placeholder="Bob = 7s3s…"></textarea>
-                <small id="contacts-hint"></small>
-            </label>
+                    <label class="choice">
+                        <input type="checkbox" name="gate" />
+                        <span><strong>Show the explanation and ask first</strong>, before refusing or passing a request on; when off, a request SignLens would refuse (blocked, or not explained) still waits for you before it goes on to your wallet</span>
+                    </label>
 
-            <label id="api-field">
-                SignLens API
-                <input type="text" name="apiUrl" spellcheck="false" />
-                <small class="note">Beta: every transaction you are asked to sign is sent here to be explained, with the addresses your wallet connected with and your address book, so the explanation can say “you” and name your contacts. The server keeps verdicts and finding codes, not the bytes; the transaction is kept only when you press “send this so it gets covered”.</small>
-            </label>
+                    <label>
+                        Address book, one <code>Name = address</code> per line
+                        <textarea name="contacts" aria-describedby="contacts-hint" rows="3" spellcheck="false" placeholder="Bob = 7s3s…"></textarea>
+                        <small id="contacts-hint"></small>
+                    </label>
 
-            <label id="rpc-field">
-                RPC for lookup tables, mints and simulation
-                <input type="text" name="rpcUrl" spellcheck="false" />
-            </label>
+                    <label id="api-field">
+                        SignLens API
+                        <input type="text" name="apiUrl" aria-describedby="apiUrl-hint" spellcheck="false" />
+                        <small id="apiUrl-hint"></small>
+                        <small class="note">Beta: every transaction you are asked to sign is sent here to be explained, with the addresses your wallet connected with and your address book, so the explanation can say “you” and name your contacts. The server keeps verdicts and finding codes, not the bytes; the transaction is kept only when you press “send this so it gets covered”.</small>
+                    </label>
 
-            <label id="simulate-field" class="choice">
-                <input type="checkbox" name="simulate" />
-                <span><strong>Simulate over the RPC</strong> and hold the balance changes against the explanation, as an unverified claim; sends the whole transaction to the RPC</span>
-            </label>
+                    <label id="rpc-field">
+                        RPC for lookup tables, mints and simulation
+                        <input type="text" name="rpcUrl" aria-describedby="rpcUrl-hint" spellcheck="false" />
+                        <small id="rpcUrl-hint"></small>
+                    </label>
 
-            <label id="lookup-field" class="choice">
-                <input type="checkbox" name="lookupTokens" />
-                <span><strong>Name unlisted tokens</strong> from the RPC's mint accounts and the token list below, as unverified claims</span>
-            </label>
+                    <label id="simulate-field" class="choice">
+                        <input type="checkbox" name="simulate" />
+                        <span><strong>Simulate over the RPC</strong> and hold the balance changes against the explanation, as an unverified claim; sends the whole transaction to the RPC</span>
+                    </label>
 
-            <label id="token-api-field">
-                Token list (symbols)
-                <input type="text" name="tokenApiUrl" spellcheck="false" />
-                <small class="note">The mints of unlisted tokens are sent to the RPC and to this list.</small>
-            </label>
-        </form>
-        </section>
+                    <label id="lookup-field" class="choice">
+                        <input type="checkbox" name="lookupTokens" />
+                        <span><strong>Name unlisted tokens</strong> from the RPC's mint accounts and the token list below, as unverified claims</span>
+                    </label>
+
+                    <label id="token-api-field">
+                        Token list (symbols)
+                        <input type="text" name="tokenApiUrl" aria-describedby="tokenApiUrl-hint" spellcheck="false" />
+                        <small id="tokenApiUrl-hint"></small>
+                        <small class="note">The mints of unlisted tokens are sent to the RPC and to this list.</small>
+                    </label>
+                </form>
+            </section>
+        </main>
 
         <script type="module" src="popup.js"></script>
     </body>

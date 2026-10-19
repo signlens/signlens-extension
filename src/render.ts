@@ -3,7 +3,7 @@
 // sections) is rendered effects first; its full text stays one click away,
 // and is all there is for a message.
 
-import type { Address, Amount, Effect, Field, Finding, Section, Trust, Value } from './types.ts';
+import type { Address, Amount, Bound, Effect, Field, Finding, Section, Trust, Value } from './types.ts';
 
 /** One row of an answer: a transaction explained, or a message, or a failure. */
 export interface Row {
@@ -15,6 +15,8 @@ export interface Row {
     effects?: Effect[];
     sections?: Section[];
     tables?: string;
+    /** The chain the page named, when not mainnet: its word, read and simulated against the RPC in the settings all the same. */
+    chain?: string;
     simulation?: string;
     hints?: string[];
     capture?: string;
@@ -41,8 +43,6 @@ export interface HistoryEntry extends Entry {
     decision?: 'continue' | 'reject';
 }
 
-export type RowVerdictWord = 'ok' | 'warning' | 'blocked' | 'error' | 'message';
-
 export function element<K extends keyof HTMLElementTagNameMap>(tag: K, className?: string, text?: string): HTMLElementTagNameMap[K] {
     const node = document.createElement(tag);
     if (className) node.className = className;
@@ -50,9 +50,17 @@ export function element<K extends keyof HTMLElementTagNameMap>(tag: K, className
     return node;
 }
 
-/** The verdict word a row shows. */
-export function rowVerdictWord(row: Row): RowVerdictWord {
-    return row.error ? 'error' : (row.verdict ?? 'message');
+/** A page's origin and what it asks, as a line: the scheme muted, the host in bold, so lookalike hosts read differently. */
+export function originNode(origin: string | undefined, asks: string): DocumentFragment {
+    const node = document.createDocumentFragment();
+    const match = /^(\w+:\/\/)(.*)$/.exec(origin ?? '');
+    if (match) {
+        node.append(element('span', 'scheme', match[1]), element('b', 'host', match[2]));
+    } else {
+        node.append(origin ?? 'an unknown page');
+    }
+    node.append(asks);
+    return node;
 }
 
 /** The trust marker the engine's text uses, after a label or an amount. */
@@ -77,50 +85,60 @@ const CLAIMS_HELP =
  * descriptor chooses are not here: they differ per program, so the
  * descriptor carries their help and the field arrives with it.
  */
-const HELP: Record<string, string> = {
-    Total: 'What the network charges for this transaction. The fee payer pays it whether the transaction succeeds or fails.',
-    Base: 'The flat part of the fee: the network charges it per signature.',
-    Priority: 'A tip the site added so validators take the transaction sooner. It is optional, and it is yours to pay.',
-    'Priority basis': 'How the tip was computed: the price per unit of work, times the work the transaction asked to be allowed.',
-    'Rent deposits':
-        'SOL locked to keep the accounts this transaction creates on chain. It is a deposit, not a fee: closing an account returns it to whoever closes it.',
-    Expires: 'How long the signature can be used. About a minute is normal; a durable nonce keeps it usable until the nonce is advanced.',
-    'Nonce account':
-        'The account that keeps this signature usable. Until it is advanced, anyone holding the signed transaction can submit it.',
-    'Fee payer': 'The account that pays the fee: the first signer.',
-    Signer: 'An account whose signature the transaction needs besides the fee payer.',
-    'Additional accounts':
-        'Additional accounts this instruction uses that its reviewed descriptor does not name. It is normal for instructions to need several.',
-    'Compute unit limit': 'How much work the transaction may do. It affects the fee, not what the transaction does.',
-    'Compute unit price': 'The tip per unit of work, in millionths of a lamport. With the limit, it sets the priority fee.',
-    'Heap size': 'Memory a program asked for. It affects the fee, not what the transaction does.',
-    'Loaded account data limit': 'How much account data the transaction may read. It affects the fee, not what the transaction does.',
-    'Token account': 'An account that holds one token for one wallet. A wallet has a separate one for each token it holds.',
-    Mint: 'The address that identifies the token itself, as opposed to an account holding some of it.',
-    'Rent paid by': 'Who pays the small deposit that keeps a new account alive. It comes back when the account is closed.',
-    'Token program': 'The program that manages this token: SPL Token or Token-2022.',
-    Result: 'What the RPC says would happen if this were sent now. A simulation, not the real thing: the chain can differ by the time it lands.',
-    'Compute units': 'How much work the transaction did in the simulation. The priority fee is paid per unit, so this is what it buys.',
-};
+const HELP = new Map<string, string>(
+    Object.entries({
+        Total: 'What the network charges for this transaction. The fee payer pays it whether the transaction succeeds or fails.',
+        Base: 'The flat part of the fee: the network charges it per signature.',
+        Priority: 'A tip the site added so validators take the transaction sooner. It is optional, and it is yours to pay.',
+        'Priority basis': 'How the tip was computed: the price per unit of work, times the work the transaction asked to be allowed.',
+        'Rent deposits':
+            'SOL locked to keep the accounts this transaction creates on chain. It is a deposit, not a fee: closing an account returns it to whoever closes it.',
+        Expires:
+            'How long the signature can be used. About a minute is normal; a durable nonce keeps it usable until the nonce is advanced.',
+        'Nonce account':
+            'The account that keeps this signature usable. Until it is advanced, anyone holding the signed transaction can submit it.',
+        'Fee payer': 'The account that pays the fee: the first signer.',
+        Signer: 'An account whose signature the transaction needs besides the fee payer.',
+        'Additional accounts':
+            'Additional accounts this instruction uses that its reviewed descriptor does not name. It is normal for instructions to need several.',
+        'Compute unit limit': 'How much work the transaction may do. It affects the fee, not what the transaction does.',
+        'Compute unit price': 'The tip per unit of work, in millionths of a lamport. With the limit, it sets the priority fee.',
+        'Heap size': 'Memory a program asked for. It affects the fee, not what the transaction does.',
+        'Loaded account data limit': 'How much account data the transaction may read. It affects the fee, not what the transaction does.',
+        'Token account': 'An account that holds one token for one wallet. A wallet has a separate one for each token it holds.',
+        Mint: 'The address that identifies the token itself, as opposed to an account holding some of it.',
+        'Rent paid by': 'Who pays the small deposit that keeps a new account alive. It comes back when the account is closed.',
+        'Token program': 'The program that manages this token: SPL Token or Token-2022.',
+        Result: 'What the RPC says would happen if this were sent now. A simulation, not the real thing: the chain can differ by the time it lands.',
+        'Compute units': 'How much work the transaction did in the simulation. The priority fee is paid per unit, so this is what it buys.',
+    }),
+);
 
-/** The help for a label, or undefined when there is none. */
+/** The help for a label, or undefined when there is none. A map, since the label is the engine's text: "constructor" is no key. */
 export function helpFor(label: string): string | undefined {
     const last = label.lastIndexOf(': ');
-    return HELP[label] ?? (last >= 0 ? HELP[label.slice(last + 2)] : undefined);
+    return HELP.get(label) ?? (last >= 0 ? HELP.get(label.slice(last + 2)) : undefined);
+}
+
+/** A button, which the keyboard and the screen reader take as one: Enter and Space press it. */
+function button(className: string, text?: string): HTMLButtonElement {
+    const node = element('button', className, text);
+    node.type = 'button';
+    return node;
 }
 
 /**
- * A term the reader can open: by click, Enter or Space its help appears as
- * a note under the value it sits in (`host`, or the nearest field, item or
- * paragraph) and goes away the same way.
+ * A term the reader can open: a button whose help appears as a note under
+ * the value it sits in (`host`, or the nearest field, item or paragraph)
+ * and goes away the same way.
  */
-export function term(text: string, help: string, host?: HTMLElement): HTMLSpanElement {
-    const node = element('span', 'term', text);
-    node.tabIndex = 0;
-    node.setAttribute('role', 'button');
+export function term(text: string, help: string, host?: HTMLElement): HTMLButtonElement {
+    const node = button('term', text);
     node.setAttribute('aria-expanded', 'false');
     let note: HTMLElement | null = null;
-    const flip = () => {
+    node.addEventListener('click', (event) => {
+        // A term in a disclosure's head is its own control, not the head's.
+        event.stopPropagation();
         if (note) {
             note.remove();
             note = null;
@@ -129,19 +147,6 @@ export function term(text: string, help: string, host?: HTMLElement): HTMLSpanEl
             (host ?? node.closest('dd, li, p') ?? node.parentElement)?.append(note);
         }
         node.setAttribute('aria-expanded', String(note !== null));
-    };
-    // A term inside a disclosure head is its own control: its click and
-    // its keys do not reach the head's toggle.
-    node.addEventListener('click', (event) => {
-        event.stopPropagation();
-        flip();
-    });
-    node.addEventListener('keydown', (event) => {
-        if (event.key === 'Enter' || event.key === ' ') {
-            event.preventDefault();
-            event.stopPropagation();
-            flip();
-        }
     });
     return node;
 }
@@ -152,7 +157,7 @@ export function term(text: string, help: string, host?: HTMLElement): HTMLSpanEl
  * help opens; otherwise it opens under the nearest value.
  */
 export function mark<T extends HTMLElement>(node: T, trust: Trust, help?: string, host?: HTMLElement): T {
-    const marker = MARKER[trust] ?? '';
+    const marker = MARKER[trust];
     if (marker) node.append(' ', term(marker.trim(), help ?? MARKER_HELP[trust] ?? '', host));
     return node;
 }
@@ -186,12 +191,12 @@ export function quantity(amount: Amount): string {
     return `${sign}${fraction ? `${integer}.${fraction}` : integer}`;
 }
 
-const PREFIX: Record<string, string> = { Exact: '', AtLeast: '≥ ', AtMost: '≤ ', Unlimited: 'UNLIMITED ', Unknown: 'unknown amount of ' };
+const PREFIX: Record<Bound, string> = { Exact: '', AtLeast: '≥ ', AtMost: '≤ ', Unlimited: 'UNLIMITED ', Unknown: 'unknown amount of ' };
 
 /** An amount as the engine's text writes it, as a node: the trust marker in it is a term. */
 export function amountNode(amount: Amount): HTMLSpanElement {
     const node = element('span', 'amount');
-    const prefix = PREFIX[amount.bound] ?? '';
+    const prefix = PREFIX[amount.bound];
     const asset = amount.asset;
     if ((amount.bound === 'Unlimited' || amount.bound === 'Unknown') && asset.symbol) node.append(`${prefix}${asset.symbol}`);
     else if (amount.bound === 'Unlimited') node.append('UNLIMITED unverified token');
@@ -206,7 +211,7 @@ export function amountNode(amount: Amount): HTMLSpanElement {
     return node;
 }
 
-/** An address as a node: its label and short form when it has one, the signer's own in bold. */
+/** An address as a node: its label in bold and its short form when it has one. The signer's own is green, and its label says so in words ("Your wallet"). */
 export function addressNode(address: Address): HTMLSpanElement {
     const node = element('span', `address${address.is_self ? ' self' : ''}`);
     node.title = address.text;
@@ -219,34 +224,42 @@ export function addressNode(address: Address): HTMLSpanElement {
     return node;
 }
 
+/** What the window says of a variant this version does not know. */
+function unrecognized(what: string, type: string): string {
+    return `${what} this version cannot show (${type}); the full text below has it`;
+}
+
 /** A field's value as a node. */
 export function valueNode(value: Value): HTMLElement {
     switch (value.type) {
+        case 'Text':
+        case 'Integer':
+            return element('span', '', value.value);
         case 'Amount':
-            return amountNode(value.value as Amount);
+            return amountNode(value.value);
         case 'Address':
-            return addressNode(value.value as Address);
+            return addressNode(value.value);
         case 'BasisPoints':
-            return element('span', '', `${(Number(value.value) / 100).toFixed(2)}%`);
+            return element('span', '', `${(value.value / 100).toFixed(2)}%`);
         case 'Duration':
-            return element('span', '', `${String(value.value)} seconds`);
+            return element('span', '', `${value.value} seconds`);
         case 'Timestamp':
-            return element('span', '', new Date(Number(value.value) * 1000).toLocaleString());
+            return element('span', '', new Date(value.value * 1000).toLocaleString());
         case 'Bytes':
-            return bytesNode(String(value.value));
+            return bytesNode(value.value);
         case 'Bool':
             return element('span', '', value.value ? 'yes' : 'no');
         case 'List': {
             const list = element('ul', 'list');
-            for (const item of (value.value as Value[] | undefined) ?? []) {
+            for (const item of value.value) {
                 const li = element('li');
                 li.append(valueNode(item));
                 list.append(li);
             }
             return list;
         }
-        default:
-            return element('span', '', String(value.value ?? ''));
+        case 'Unrecognized':
+            return element('span', 'unrecognized', unrecognized('A value', value.value.type));
     }
 }
 
@@ -259,18 +272,12 @@ function bytesNode(hex: string): HTMLElement {
     if (hex.length <= HEX_FOLD) return code;
     const node = element('span', 'bytes-fold');
     code.classList.add('clamped');
-    const more = element('span', 'more-bytes', `show all ${hex.length / 2} bytes`);
-    more.tabIndex = 0;
-    const flip = () => {
+    const more = button('more-bytes', `show all ${hex.length / 2} bytes`);
+    more.setAttribute('aria-expanded', 'false');
+    more.addEventListener('click', () => {
         const clamped = code.classList.toggle('clamped');
         more.textContent = clamped ? `show all ${hex.length / 2} bytes` : 'show less';
-    };
-    more.addEventListener('click', flip);
-    more.addEventListener('keydown', (event) => {
-        if (event.key === 'Enter' || event.key === ' ') {
-            event.preventDefault();
-            flip();
-        }
+        more.setAttribute('aria-expanded', String(!clamped));
     });
     node.append(code, more);
     return node;
@@ -287,7 +294,7 @@ export function effectNode(effect: Effect): HTMLLIElement {
     const li = element('li', `effect ${effect.type.toLowerCase()}`);
     switch (effect.type) {
         case 'Transfer': {
-            const v = effect.value as { from: Address; to: Address; amount: Amount };
+            const v = effect.value;
             if (v.from.is_self && !v.to.is_self)
                 return append(li, 'You send ', amountNode(v.amount), ' from ', addressNode(v.from), ' to ', addressNode(v.to));
             if (v.to.is_self && !v.from.is_self)
@@ -295,116 +302,116 @@ export function effectNode(effect: Effect): HTMLLIElement {
             return append(li, 'Transfer ', amountNode(v.amount), ' from ', addressNode(v.from), ' to ', addressNode(v.to));
         }
         case 'Burn': {
-            const v = effect.value as { account: Address; amount: Amount };
+            const v = effect.value;
             return append(li, v.account.is_self ? 'You burn ' : 'Burn ', amountNode(v.amount), ' from ', addressNode(v.account));
         }
         case 'AuthorityChange': {
-            const v = effect.value as { subject: Address; authority: string; new_authority: Address | null };
+            const v = effect.value;
             return v.new_authority
                 ? append(li, `Give the ${v.authority} authority over `, addressNode(v.subject), ' to ', addressNode(v.new_authority))
                 : append(li, `Permanently remove the ${v.authority} authority over `, addressNode(v.subject));
         }
         case 'Delegate': {
-            const v = effect.value as { subject: Address; delegate: Address; amount: Amount };
+            const v = effect.value;
             return append(li, 'Allow ', addressNode(v.delegate), ' to spend ', amountNode(v.amount), ' from ', addressNode(v.subject));
         }
         case 'Revoke': {
-            const v = effect.value as { subject: Address };
+            const v = effect.value;
             return append(li, 'Revoke the delegate on ', addressNode(v.subject));
         }
         case 'Create': {
-            const v = effect.value as { account: Address; owner: Address; deposit: Amount | null; if_missing: boolean };
+            const v = effect.value;
             append(li, 'Create ', addressNode(v.account), ' owned by ', addressNode(v.owner));
             if (v.deposit) append(li, ', depositing ', amountNode(v.deposit));
             if (v.if_missing) li.append(' unless it already exists');
             return li;
         }
         case 'Close': {
-            const v = effect.value as { account: Address; destination: Address };
+            const v = effect.value;
             return append(li, 'Close ', addressNode(v.account), ' and send its balance to ', addressNode(v.destination));
         }
         case 'Fee': {
-            const v = effect.value as { payer: Address; amount: Amount };
+            const v = effect.value;
             return v.payer.is_self
                 ? append(li, 'You pay a fee of ', amountNode(v.amount))
                 : append(li, addressNode(v.payer), ' pays a fee of ', amountNode(v.amount));
         }
         case 'Lifetime': {
-            const v = effect.value as { type: string; value?: { nonce_account: Address } };
-            return v.type === 'DurableNonce' && v.value
+            const v = effect.value;
+            return v.type === 'DurableNonce'
                 ? append(li, 'Valid FOREVER until nonce account ', addressNode(v.value.nonce_account), ' is advanced (durable nonce)')
                 : append(li, 'Valid for about a minute (recent blockhash)');
         }
         case 'Proposed': {
-            const v = effect.value as { by: Address; effect: Effect };
-            const inner = effectNode(v.effect);
+            const inner = effectNode(effect.value.effect);
             inner.className = 'effect proposed';
-            inner.prepend('Once approved, ', addressNode(v.by), ' would: ');
+            inner.prepend('Once approved, ', addressNode(effect.value.by), ' would: ');
             return inner;
         }
-        default: {
-            const v = effect.value as { description?: string } | undefined;
-            return append(li, v?.description ?? effect.type);
-        }
+        case 'Other':
+            return append(li, effect.value.description);
+        case 'Unrecognized':
+            return append(li, unrecognized('Something', effect.value.type));
     }
 }
 
 /**
  * A disclosure that is not a `details` element: the popup's history rows
- * are `details`, and their `summary` must stay the only one in a row. The
- * head toggles the body by click, Enter or Space; `onFlip` hears the new
- * state.
+ * are `details`, and their `summary` must stay the only one in a row. Its
+ * head is a row holding the toggle, a button labelled `label`, and what
+ * `aside` makes beside it (given the row, to open help in); a click on the
+ * row's bare space toggles too. `onFlip` hears the new state.
  */
 export function disclosure(
     className: string,
-    head: HTMLElement,
+    label: string | Node,
     body: HTMLElement,
     open: boolean,
     onFlip?: (shown: boolean) => void,
+    aside?: (head: HTMLElement) => Node,
 ): HTMLDivElement {
     const node = element('div', `disclosure ${className}`);
-    head.classList.add('toggle');
-    head.tabIndex = 0;
-    head.setAttribute('aria-expanded', String(open));
+    const head = element('div', 'disclosure-head');
+    const toggle = button('toggle');
+    toggle.append(label);
+    toggle.setAttribute('aria-expanded', String(open));
+    head.append(toggle);
+    if (aside) head.append(aside(head));
     body.classList.add('disclosure-body');
     body.hidden = !open;
-    const flip = () => {
+    toggle.addEventListener('click', () => {
         body.hidden = !body.hidden;
-        head.setAttribute('aria-expanded', String(!body.hidden));
-        if (onFlip) onFlip(!body.hidden);
-    };
-    head.addEventListener('click', flip);
-    head.addEventListener('keydown', (event) => {
-        if (event.key === 'Enter' || event.key === ' ') {
-            event.preventDefault();
-            flip();
-        }
+        toggle.setAttribute('aria-expanded', String(!body.hidden));
+        onFlip?.(!body.hidden);
+    });
+    head.addEventListener('click', (event) => {
+        if (event.target === head) toggle.click();
     });
     node.append(head, body);
     return node;
 }
 
 function sectionIndex(section: Section): number | null {
-    const kind = section.kind as { type: string; value?: { index?: number; parent?: number } };
-    return kind.value?.index ?? null;
+    const kind = section.kind;
+    return kind.type === 'Instruction' || kind.type === 'Nested' ? kind.value.index : null;
 }
 
 /** A section as a disclosure: its title, its subtitle, and its fields as a definition list. */
 export function sectionNode(section: Section, open: boolean, nested: HTMLElement[]): HTMLDivElement {
-    const head = element('div', 'section-head');
+    const label = element('span', 'section-head');
     const index = sectionIndex(section);
     const title = section.kind.type === 'Nested' && index !== null ? `Step ${index + 1}: ${section.title}` : section.title;
-    head.append(element('span', 'section-title', title));
-    if (section.subtitle) head.append(' ', element('span', 'section-subtitle', section.subtitle));
-    // A section of claims says so once, in its head; its rows are not marked again.
+    label.append(element('span', 'section-title', title));
+    if (section.subtitle) label.append(' ', element('span', 'section-subtitle', section.subtitle));
     const claims = section.kind.type === 'Claims';
-    if (claims) mark(head, 'Claimed', CLAIMS_HELP, head);
     const body = element('div');
     const fields = element('dl', 'fields');
     for (const field of section.fields) fields.append(...fieldNodes(field, claims));
     body.append(fields);
     for (const child of nested) body.append(child);
-    return disclosure('section', head, body, open);
+    // A section of claims says so once, beside its toggle; its rows are not marked again.
+    const marker = claims ? (head: HTMLElement) => mark(element('span', 'section-mark'), 'Claimed', CLAIMS_HELP, head) : undefined;
+    return disclosure('section', label, body, open, undefined, marker);
 }
 
 function fieldNodes(field: Field, inClaims: boolean): [HTMLElement, HTMLElement] {
@@ -426,11 +433,11 @@ function sectionsNode(row: Row & { sections: Section[] }): DocumentFragment {
     const instructions: Section[] = [];
     const rest: Section[] = [];
     for (const section of row.sections) {
-        const kind = section.kind as { type: string; value?: { parent?: number } };
+        const kind = section.kind;
         if (kind.type === 'Instruction') {
             instructions.push(section);
         } else if (kind.type === 'Nested') {
-            const parent = kind.value?.parent ?? -1;
+            const parent = kind.value.parent;
             const list = steps.get(parent) ?? [];
             list.push(section);
             steps.set(parent, list);
@@ -447,9 +454,7 @@ function sectionsNode(row: Row & { sections: Section[] }): DocumentFragment {
     if (rest.length) {
         const body = element('div');
         for (const section of rest) body.append(sectionNode(section, !section.collapsed, []));
-        fragment.append(
-            disclosure('more', element('div', '', `Details: ${rest.map((s) => s.title.toLowerCase()).join(', ')}`), body, false),
-        );
+        fragment.append(disclosure('more', `Details: ${rest.map((s) => s.title.toLowerCase()).join(', ')}`, body, false));
     }
     return fragment;
 }
@@ -468,11 +473,13 @@ function instructionsNode(row: Row & { sections: Section[] }, open: boolean): HT
         if (typeof chrome === 'undefined' || !chrome.storage?.local) return;
         chrome.storage.local.set({ showInstructions: shown }).catch(() => {});
     };
-    return disclosure('instructions', element('div', '', title), body, open, remember);
+    return disclosure('instructions', title, body, open, remember);
 }
 
 export interface RenderOptions {
     showInstructions?: boolean;
+    /** The level of the row's own headings, under the page's: the window has none between its title and the row. */
+    heading?: 'h2' | 'h3';
 }
 
 /**
@@ -499,12 +506,17 @@ export function renderRow(row: Row, options: RenderOptions = {}): HTMLDivElement
     }
     const structured = Array.isArray(row.sections) && Array.isArray(row.effects);
     if (structured && row.effects?.length) {
-        body.append(element('h3', '', 'What this does'));
+        body.append(element(options.heading ?? 'h3', 'effects-title', 'What this does'));
         const list = element('ul', 'effects');
         for (const effect of row.effects) list.append(effectNode(effect));
         body.append(list);
     }
     if (structured && row.sections) body.append(instructionsNode({ ...row, sections: row.sections }, Boolean(options.showInstructions)));
+    if (row.chain) {
+        body.append(
+            element('p', 'tables', `Chain: the page says ${row.chain}; read and simulated on the RPC in the settings all the same`),
+        );
+    }
     if (row.tables && row.tables !== 'none') body.append(element('p', 'tables', `Lookup tables: ${row.tables}`));
     if (row.simulation && row.simulation !== 'off') body.append(element('p', 'tables', `Simulation: ${row.simulation}`));
     if (row.hints?.length) {
@@ -518,7 +530,7 @@ export function renderRow(row: Row, options: RenderOptions = {}): HTMLDivElement
     if (structured) {
         const holder = element('div');
         holder.append(text);
-        body.append(disclosure('full-text', element('div', '', 'Full text, as the engine prints it'), holder, false));
+        body.append(disclosure('full-text', 'Full text, as the engine prints it', holder, false));
     } else {
         body.append(text);
     }
@@ -531,15 +543,4 @@ export function renderRow(row: Row, options: RenderOptions = {}): HTMLDivElement
         body.append(save);
     }
     return body;
-}
-
-/** The rows of an answer: one per transaction, or one for a message or a failure. */
-export function rows(entry: Entry): Row[] {
-    return entry.results ?? [{ error: entry.error ?? null, ...(entry.text !== undefined ? { text: entry.text } : {}) }];
-}
-
-/** The worst verdict among rows: what the window's band shows. */
-export function worstVerdict(list: Row[]): RowVerdictWord {
-    const order: RowVerdictWord[] = ['message', 'ok', 'warning', 'error', 'blocked'];
-    return list.map(rowVerdictWord).sort((a, b) => order.indexOf(b) - order.indexOf(a))[0] ?? 'message';
 }
