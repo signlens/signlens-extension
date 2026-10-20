@@ -4,7 +4,7 @@
 // request through on silence.
 
 import { fixture } from '../test/server.ts';
-import { clickToClose, closing, expect, FAKE_ACCOUNT, liveGate, test } from './extension.ts';
+import { clickToClose, closing, expect, FAKE_ACCOUNT, liveGate, test } from './support/extension.ts';
 
 const WALLET = 'SignLens';
 const RECIPIENT = 'DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp';

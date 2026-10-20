@@ -8,7 +8,7 @@
 // nothing was recorded for fails its test. With `SIGNLENS_API_URL` set,
 // the calls go to that API instead and each answer is held against its
 // recording: one that departs from it, or was never recorded, is drift,
-// which e2e/drift.ts reports (see `departure` for what counts). With
+// which e2e/support/drift.ts reports (see `departure` for what counts). With
 // `SIGNLENS_RECORD=1` as well, each answer is kept instead
 // (`npm run test:e2e:record`). Feedback is never sent anywhere: it is a
 // write, answered here as the API would. Nothing else touches the network.
@@ -234,7 +234,7 @@ export interface TestServer {
     apiCalls: ApiCall[];
     /** The API calls nothing was recorded for, when replaying: the test's fixture fails on any. */
     apiMissed: string[];
-    /** The API calls the live API answered otherwise than recorded, or that were never recorded: reported by e2e/drift.ts. */
+    /** The API calls the live API answered otherwise than recorded, or that were never recorded: reported by e2e/support/drift.ts. */
     apiDrifted: string[];
     know(fixture: Fixture): void;
     knowMint(mint: string, symbol: string, decimals: number): void;

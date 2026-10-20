@@ -3,7 +3,7 @@
 // cleared, and lookup tables are not fetched twice in a row.
 
 import { feePayer, fixture } from '../test/server.ts';
-import { closing, expect, liveGate, test } from './extension.ts';
+import { closing, expect, liveGate, test } from './support/extension.ts';
 
 const WALLET = 'SignLens';
 const SWAP = 'swap__both_mints_named.b64';

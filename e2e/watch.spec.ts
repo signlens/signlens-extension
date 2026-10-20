@@ -2,7 +2,7 @@
 // before a site learns the address, so SignLens asks, once per site and
 // address, and the popup takes it back.
 
-import { clickToClose, expect, liveGate, test } from './extension.ts';
+import { clickToClose, expect, liveGate, test } from './support/extension.ts';
 
 const WALLET = 'SignLens';
 const WATCHED = 'Ffz5kwUjkUNw7hV4r6iCJnUoXXsAPFHkCMCmKKDypiwg';

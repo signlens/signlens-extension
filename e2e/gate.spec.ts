@@ -3,7 +3,7 @@
 
 import type { BrowserContext, Page } from '@playwright/test';
 import { feePayer, fixture } from '../test/server.ts';
-import { clickToClose, expect, liveGate, test } from './extension.ts';
+import { clickToClose, expect, liveGate, test } from './support/extension.ts';
 
 const WALLET = 'SignLens';
 

@@ -5,8 +5,8 @@
 
 import type { ExplainedRow } from '../src/shared/model.ts';
 import { fixture } from '../test/server.ts';
-import { clickToClose, expect, liveGate, test } from './extension.ts';
-import { request, transferRow, windowFor } from './windows.ts';
+import { clickToClose, expect, liveGate, test } from './support/extension.ts';
+import { request, transferRow, windowFor } from './support/windows.ts';
 
 const WALLET = 'SignLens';
 

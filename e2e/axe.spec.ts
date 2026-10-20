@@ -10,8 +10,8 @@ import { readFileSync } from 'node:fs';
 import type { Page } from '@playwright/test';
 import type { AxeResults } from 'axe-core';
 import type { ExplainedRow } from '../src/shared/model.ts';
-import { expect, test } from './extension.ts';
-import { request, transferRow, windowFor } from './windows.ts';
+import { expect, test } from './support/extension.ts';
+import { request, transferRow, windowFor } from './support/windows.ts';
 
 const AXE = readFileSync(new URL(import.meta.resolve('axe-core/axe.min.js')), 'utf8');
 const RULES = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa', 'best-practice'];

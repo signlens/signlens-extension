@@ -14,7 +14,7 @@ import { appendFileSync, mkdirSync, readFileSync, rmSync } from 'node:fs';
 /** Whether drift fails the test it happened in. */
 export const STRICT = process.env.SIGNLENS_STRICT_RECORDINGS === '1';
 
-const DIRECTORY = new URL('../test-results/', import.meta.url);
+const DIRECTORY = new URL('../../test-results/', import.meta.url);
 const FILE = new URL('api-drift.txt', DIRECTORY);
 
 /** Keeps `lines` for the end of the run. */

@@ -3,7 +3,7 @@
 
 import type { Settings } from '../src/shared/settings.ts';
 import { type Fixture, feePayer, fixture, type RpcCall, type TestServer } from '../test/server.ts';
-import { expect, liveGate, test } from './extension.ts';
+import { expect, liveGate, test } from './support/extension.ts';
 
 const WALLET = 'SignLens';
 /** The nonce transfer: 0.996423 USDC from the payer's account. */

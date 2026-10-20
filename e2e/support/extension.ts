@@ -6,12 +6,12 @@
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { type BrowserContext, test as base, chromium, expect, type Locator, type Page, type Worker } from '@playwright/test';
-import type { Settings } from '../src/shared/settings.ts';
-import { startTestServer, type TestServer } from '../test/server.ts';
+import type { Settings } from '../../src/shared/settings.ts';
+import { startTestServer, type TestServer } from '../../test/server.ts';
 import { noteDrift, STRICT } from './drift.ts';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
-export const EXTENSION = join(HERE, '../dist/chrome');
+export const EXTENSION = join(HERE, '../../dist/chrome');
 /** The account of the test dapp's own wallet (test/dapp.html). */
 export const FAKE_ACCOUNT = 'FakeWa11et1111111111111111111111111111111111';
 

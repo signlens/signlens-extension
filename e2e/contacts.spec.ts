@@ -4,7 +4,7 @@
 
 import { base58Decode } from '../src/worker/solana.ts';
 import { feePayer, fixture } from '../test/server.ts';
-import { expect, test } from './extension.ts';
+import { expect, test } from './support/extension.ts';
 
 const WALLET = 'SignLens';
 /** The nonce transfer's receiving token account. */

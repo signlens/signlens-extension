@@ -1,5 +1,5 @@
 // End-to-end tests of the extension in Chromium: the unpacked extension is
-// loaded into a persistent context (see e2e/extension.ts), so the tests
+// loaded into a persistent context (see e2e/support/extension.ts), so the tests
 // run one at a time in one browser.
 
 import { defineConfig } from '@playwright/test';
@@ -14,7 +14,7 @@ export default defineConfig({
     expect: { timeout: 10_000 },
     reporter: process.env.CI ? [['list'], ['github']] : 'list',
     // Says, at the end, which recordings a live API no longer matches.
-    globalSetup: './e2e/drift.ts',
+    globalSetup: './e2e/support/drift.ts',
     use: {
         trace: 'retain-on-failure',
     },

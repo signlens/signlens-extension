@@ -4,7 +4,7 @@
 # Windows, which must come out the same bytes. When a SignLens API is
 # configured as the repository variable SIGNLENS_API_URL, the suite also
 # runs against it, and a recording it no longer matches is a warning on
-# the run (e2e/drift.ts).
+# the run (e2e/support/drift.ts).
 name: CI
 
 on:

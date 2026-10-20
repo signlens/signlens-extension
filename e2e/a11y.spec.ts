@@ -5,8 +5,8 @@
 // any origin or wallet name can be tried.
 
 import type { Locator, Page } from '@playwright/test';
-import { closing, expect, test } from './extension.ts';
-import { request, transferRow, windowFor } from './windows.ts';
+import { closing, expect, test } from './support/extension.ts';
+import { request, transferRow, windowFor } from './support/windows.ts';
 
 const SELF = 'Ffz5kwUjkUNw7hV4r6iCJnUoXXsAPFHkCMCmKKDypiwg';
 const OTHER = 'DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp';

@@ -2,7 +2,7 @@
 // symbol from the token list, and the engine names the token as a claim.
 
 import { feePayer, fixture } from '../test/server.ts';
-import { expect, test } from './extension.ts';
+import { expect, test } from './support/extension.ts';
 
 const WALLET = 'SignLens';
 const PUMP = 'swap__sol_from_wallet.b64';

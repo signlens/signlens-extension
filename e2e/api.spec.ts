@@ -3,7 +3,7 @@
 // what the user chose and nothing more.
 
 import { explanation, fixture, recorded } from '../test/server.ts';
-import { clickToClose, expect, liveGate, test } from './extension.ts';
+import { clickToClose, expect, liveGate, test } from './support/extension.ts';
 
 const WALLET = 'SignLens';
 

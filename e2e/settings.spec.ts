@@ -1,7 +1,7 @@
 // The popup's settings: saved as typed, shown again, and only valid
 // addresses reach the wallet.
 
-import { expect, test } from './extension.ts';
+import { expect, test } from './support/extension.ts';
 
 const ADDRESS = 'TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA';
 

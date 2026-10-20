@@ -2,7 +2,7 @@
 // open, and the settings.
 
 import { feePayer, fixture } from '../test/server.ts';
-import { expect, test } from './extension.ts';
+import { expect, test } from './support/extension.ts';
 
 const WALLET = 'SignLens';
 
