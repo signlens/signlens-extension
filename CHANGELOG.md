@@ -6,6 +6,8 @@ uses [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.1.0] - 2026-10-20
+
 The first public version: a Wallet Standard wallet without keys that
 explains every signing request through the SignLens API and hands it to
 the wallet you sign with; a window with the verdict, the effects and the
@@ -113,3 +115,6 @@ before it, so everything below is new.
   Linux, macOS and Windows, and a release is published only when they do.
   A release runs every test, the live API included, and carries a build
   provenance attestation.
+
+[Unreleased]: https://github.com/signlens/signlens-extension/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/signlens/signlens-extension/releases/tag/v0.1.0
