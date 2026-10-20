@@ -181,7 +181,7 @@ npm run package         # the Chrome and Firefox packages under dist/, with thei
 
 The end-to-end tests load the unpacked extension into Chromium, serve a
 test dapp and a stub RPC on localhost, and answer the API calls with what a
-running SignLens API answered them, recorded under `e2e/fixtures/api/` (one
+running SignLens API answered them, recorded under `test/fixtures/api/` (one
 file per call: its method, path and body), counting them and refusing them
 when a test asks. A call nothing was recorded for fails its test, and the
 browser resolves no host but this machine, so the suite needs no network.
@@ -195,7 +195,7 @@ summary page); with
 Feedback is never sent, live or not.
 `npm run test:e2e:record` runs the suite that way and records every answer
 anew (`SIGNLENS_API_URL`, default `http://127.0.0.1:8787`). The fixtures
-under `e2e/fixtures` are mainnet transactions and what the API made of
+under `test/fixtures` are mainnet transactions and what the API made of
 them.
 
 On every change CI runs the lint, the types, the Node tests and the
@@ -236,12 +236,12 @@ browser APIs and rules. Each module's Node test sits beside it.
 | | `settings.ts`, `endpoint.ts`: the settings and their defaults; the endpoints accepted, checked again at each use |
 | | `verdict.ts`: the verdict words and which is worst, for the badge and the window |
 | | `text.ts`, `json.ts`, `base58.ts`: text from elsewhere made safe to show; objects read from elsewhere; addresses |
-| `src/testing/` | `chrome.fake.ts`, the stand-in for the `chrome` APIs the modules run against in Node |
 | `src/manifest.test.ts`, `src/layout.test.ts` | the manifest, the Firefox manifest, and the host permissions against the endpoint rule; the folders, and what each may import |
 | `static/` | the manifest, the pages, the stylesheet and the icons, copied as they are into the build |
 | `dist/` | what the build makes, never committed: `chrome/` (the unpacked extension, the scripts in the folders they have under `src/`), `firefox/`, and the packages |
 | `scripts/` | the Firefox copy, the reproducible packages, and recording the API's answers for the end-to-end tests |
-| `e2e/` | the end-to-end tests, the test dapp, the stub RPC, the API's recorded answers (or a live API, relayed), and the report of recordings a live API no longer matches |
+| `e2e/` | the end-to-end tests, in Chromium, and the harness that loads the extension and opens its windows; at the end of a run against a live API, which recordings it no longer matches |
+| `test/` | what the Node tests and the end-to-end tests share: the mainnet transactions and the API's recorded answers (`fixtures/`), the stub RPC and API relay, the test dapp it serves, and the stand-in for the `chrome` APIs the modules run against in Node |
 
 ## Verifying a package
 

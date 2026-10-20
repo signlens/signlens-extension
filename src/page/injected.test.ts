@@ -6,7 +6,7 @@
 
 import assert from 'node:assert/strict';
 import { after, before, beforeEach, test } from 'node:test';
-import { until } from '../testing/chrome.fake.ts';
+import { until } from '../../test/chrome.fake.ts';
 
 const SIGN = 'solana:signTransaction';
 

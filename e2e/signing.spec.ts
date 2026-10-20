@@ -1,8 +1,8 @@
 // A dapp asks the wallet to sign; the engine explains; the wallet refuses;
 // the popup shows what the engine made of it.
 
+import { feePayer, fixture } from '../test/server.ts';
 import { expect, test } from './extension.ts';
-import { feePayer, fixture } from './server.ts';
 
 const WALLET = 'SignLens';
 

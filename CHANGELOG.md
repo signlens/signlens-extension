@@ -94,7 +94,7 @@ before it, so everything below is new.
   built and released with the Chrome one. CI runs the lint, the types, the
   Node tests (in a random order) and the whole end-to-end suite on every
   change, against the SignLens API's answers recorded under
-  `e2e/fixtures/api/`, and against the live API when one is configured,
+  `test/fixtures/api/`, and against the live API when one is configured,
   where an answer that no longer holds what was recorded is a warning (a
   release fails on it); in the tests the browser reaches no host but this
   machine. CI also checks that the packages come out the same bytes on

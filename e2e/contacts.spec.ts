@@ -3,8 +3,8 @@
 // shows, is flagged as a lookalike: a high finding, so a warning verdict.
 
 import { base58Decode } from '../src/worker/solana.ts';
+import { feePayer, fixture } from '../test/server.ts';
 import { expect, test } from './extension.ts';
-import { feePayer, fixture } from './server.ts';
 
 const WALLET = 'SignLens';
 /** The nonce transfer's receiving token account. */

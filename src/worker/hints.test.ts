@@ -4,7 +4,7 @@
 
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { startTestServer } from '../../e2e/server.ts';
+import { startTestServer } from '../../test/server.ts';
 import { tokenHints } from './hints.ts';
 
 test("a name learned through one RPC and token list is not taken for another's", async () => {

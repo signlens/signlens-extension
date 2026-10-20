@@ -5,11 +5,11 @@
 
 import assert from 'node:assert/strict';
 import { afterEach, beforeEach, test } from 'node:test';
-import { explanation, startTestServer, type TestServer } from '../../e2e/server.ts';
+import { type FakeChrome, installFakeChrome, until } from '../../test/chrome.fake.ts';
+import { explanation, startTestServer, type TestServer } from '../../test/server.ts';
 import type { HistoryEntry } from '../shared/model.ts';
 import type { Settings } from '../shared/settings.ts';
 import { pendingKey } from '../shared/store.ts';
-import { type FakeChrome, installFakeChrome, until } from '../testing/chrome.fake.ts';
 import * as gate from './gate.ts';
 import { answerRequest, connectFailed } from './requests.ts';
 

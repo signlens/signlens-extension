@@ -4,7 +4,7 @@
 
 import assert from 'node:assert/strict';
 import { beforeEach, test } from 'node:test';
-import { type FakeChrome, installFakeChrome } from '../testing/chrome.fake.ts';
+import { type FakeChrome, installFakeChrome } from '../../test/chrome.fake.ts';
 import type { HistoryEntry } from './model.ts';
 import { dropStalePending, getPending, pendingKey, putPending, session } from './store.ts';
 

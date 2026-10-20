@@ -7,7 +7,7 @@ import { readdirSync, readFileSync } from 'node:fs';
 import { test } from 'node:test';
 
 const SRC = new URL('./', import.meta.url);
-const FOLDERS = ['page', 'worker', 'ui', 'shared', 'testing'] as const;
+const FOLDERS = ['page', 'worker', 'ui', 'shared'] as const;
 type Folder = (typeof FOLDERS)[number];
 
 /** What each folder may import from, besides itself. */
@@ -16,7 +16,6 @@ const MAY: Record<Folder, Folder[]> = {
     worker: ['shared'],
     ui: ['shared'],
     shared: [],
-    testing: [],
 };
 
 /** The folders `source` imports from: every relative specifier, types included, that leaves its own folder. */

@@ -5,11 +5,11 @@
 
 import assert from 'node:assert/strict';
 import { beforeEach, test } from 'node:test';
+import { type FakeChrome, installFakeChrome, until } from '../../test/chrome.fake.ts';
 import type { ConnectReply } from '../shared/messages.ts';
 import type { HistoryEntry } from '../shared/model.ts';
 import { DEFAULTS, type Settings } from '../shared/settings.ts';
 import { pendingKey } from '../shared/store.ts';
-import { type FakeChrome, installFakeChrome, until } from '../testing/chrome.fake.ts';
 import * as gate from './gate.ts';
 import { approvals, approve, connectWatch, revoke } from './sites.ts';
 

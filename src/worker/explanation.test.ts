@@ -7,7 +7,7 @@ import { readdirSync, readFileSync } from 'node:fs';
 import { test } from 'node:test';
 import { DocumentError, parseExplanation } from './explanation.ts';
 
-const FIXTURES = new URL('../../e2e/fixtures/', import.meta.url);
+const FIXTURES = new URL('../../test/fixtures/', import.meta.url);
 
 /** The explanations the SignLens API gave for the mainnet fixtures, recorded. */
 const recorded = readdirSync(FIXTURES)

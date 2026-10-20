@@ -1,8 +1,8 @@
 // Unlisted tokens: the worker reads a mint's decimals over the RPC and its
 // symbol from the token list, and the engine names the token as a claim.
 
+import { feePayer, fixture } from '../test/server.ts';
 import { expect, test } from './extension.ts';
-import { feePayer, fixture } from './server.ts';
 
 const WALLET = 'SignLens';
 const PUMP = 'swap__sol_from_wallet.b64';

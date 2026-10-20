@@ -3,7 +3,7 @@
 // the lookup tables of the fixtures it knows, and answers `/api/*` as the
 // SignLens API, counting the calls and refusing them on request.
 //
-// The API's answers are replayed from e2e/fixtures/api/, one file per
+// The API's answers are replayed from test/fixtures/api/, one file per
 // call (its method, path and body), so the suite needs no API; a call
 // nothing was recorded for fails its test. With `SIGNLENS_API_URL` set,
 // the calls go to that API instead and each answer is held against its
@@ -24,7 +24,7 @@ export const RECORDINGS = new URL('api/', FIXTURES);
 const LIVE = process.env.SIGNLENS_API_URL?.replace(/\/+$/, '');
 const RECORD = process.env.SIGNLENS_RECORD === '1';
 
-/** A fixture file's bytes and the addresses its lookup tables load; `path` is its name under e2e/fixtures, with or without `.b64`. */
+/** A fixture file's bytes and the addresses its lookup tables load; `path` is its name under test/fixtures, with or without `.b64`. */
 export interface Fixture {
     base64: string;
     bytes: Uint8Array;
@@ -32,7 +32,7 @@ export interface Fixture {
     readonly: string[];
 }
 
-/** An API call and the answer it got, as kept under e2e/fixtures/api/. */
+/** An API call and the answer it got, as kept under test/fixtures/api/. */
 interface Recording {
     request: { method: string; path: string; body: unknown };
     /** The answer: its JSON as `body`, or, when it was not JSON, its `text`. */
@@ -121,7 +121,7 @@ function relayError(code: string, message: string): string {
     return JSON.stringify({ schema: 'signlens-api/1', error: { code, message } });
 }
 
-/** The explanation the SignLens API gave for a fixture, recorded under e2e/fixtures as `<name>.explanation.json`. */
+/** The explanation the SignLens API gave for a fixture, recorded under test/fixtures as `<name>.explanation.json`. */
 export function recorded(name: string): object {
     return JSON.parse(readFileSync(new URL(`${name}.explanation.json`, FIXTURES), 'utf8')) as object;
 }

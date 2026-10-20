@@ -5,9 +5,9 @@
 
 import assert from 'node:assert/strict';
 import { beforeEach, test } from 'node:test';
+import { type FakeChrome, installFakeChrome, until } from '../../test/chrome.fake.ts';
 import type { HistoryEntry } from '../shared/model.ts';
 import { pendingKey } from '../shared/store.ts';
-import { type FakeChrome, installFakeChrome, until } from '../testing/chrome.fake.ts';
 import { abandon, askUser, begin, DECISION_TIMEOUT_MS, decide, end, type InFlight, mustAsk } from './gate.ts';
 
 /** A refusal that never comes fails the test rather than hang the run. */

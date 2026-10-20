@@ -17,5 +17,5 @@
     "noEmit": true,
     "skipLibCheck": true
   },
-  "include": ["src", "e2e", "scripts", "playwright.config.ts"]
+  "include": ["src", "e2e", "test", "scripts", "playwright.config.ts"]
 }

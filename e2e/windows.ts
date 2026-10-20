@@ -6,8 +6,8 @@ import type { BrowserContext, Page, Worker } from '@playwright/test';
 import type { ExplainedRow, HistoryEntry } from '../src/shared/model.ts';
 import { type Pending, pendingKey } from '../src/shared/store.ts';
 import type { Explanation } from '../src/shared/types.ts';
+import { fixture, recorded } from '../test/server.ts';
 import { liveGate } from './extension.ts';
-import { fixture, recorded } from './server.ts';
 
 /** The recorded transfer as the worker keeps it: one row, with the terms and toggles the window shows. */
 export function transferRow(): ExplainedRow {

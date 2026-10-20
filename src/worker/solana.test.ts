@@ -4,7 +4,7 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
-import { startTestServer } from '../../e2e/server.ts';
+import { startTestServer } from '../../test/server.ts';
 import {
     base58Decode,
     base58Encode,
@@ -19,7 +19,7 @@ import {
     tokenBalance,
 } from './solana.ts';
 
-const FIXTURES = new URL('../../e2e/fixtures/', import.meta.url);
+const FIXTURES = new URL('../../test/fixtures/', import.meta.url);
 
 function fixture(name: string): { bytes: Uint8Array; writable: string[]; readonly: string[] } {
     const text = readFileSync(new URL(`${name}.b64`, FIXTURES), 'utf8');

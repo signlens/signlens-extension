@@ -1,7 +1,7 @@
 {
     "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
     "files": {
-        "includes": ["src/**", "e2e/**", "scripts/**", "static/*.css", "playwright.config.ts", "!e2e/fixtures"]
+        "includes": ["src/**", "e2e/**", "test/**", "scripts/**", "static/*.css", "playwright.config.ts", "!test/fixtures"]
     },
     "formatter": {
         "indentStyle": "space",

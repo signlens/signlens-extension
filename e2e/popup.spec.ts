@@ -1,8 +1,8 @@
 // The popup's two views: the requests, with what arrived since it was last
 // open, and the settings.
 
+import { feePayer, fixture } from '../test/server.ts';
 import { expect, test } from './extension.ts';
-import { feePayer, fixture } from './server.ts';
 
 const WALLET = 'SignLens';
 

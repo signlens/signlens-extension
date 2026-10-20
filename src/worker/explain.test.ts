@@ -1,15 +1,15 @@
 // What a page asked, explained, in Node: the worker's pipeline against the
 // end-to-end tests' stub RPC and token list, with the API answering the
-// explanations it gave for the fixtures (recorded under e2e/fixtures). No
+// explanations it gave for the fixtures (recorded under test/fixtures). No
 // browser and no live API: what goes out to each, and what the window gets.
 
 import assert from 'node:assert/strict';
 import { afterEach, beforeEach, test } from 'node:test';
-import { explanation, feePayer, fixture, recorded, startTestServer, type TestServer } from '../../e2e/server.ts';
+import { until } from '../../test/chrome.fake.ts';
+import { explanation, feePayer, fixture, recorded, startTestServer, type TestServer } from '../../test/server.ts';
 import { MAX_TRANSACTION_BASE64, MAX_TRANSACTIONS } from '../shared/messages.ts';
 import { type Entry, failure, type Row, requestError } from '../shared/model.ts';
 import { DEFAULTS, type Settings } from '../shared/settings.ts';
-import { until } from '../testing/chrome.fake.ts';
 import { explainTransactions, showMessage } from './explain.ts';
 import { base58Encode } from './solana.ts';
 

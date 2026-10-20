@@ -3,7 +3,7 @@
 
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { fixture, startTestServer } from '../../e2e/server.ts';
+import { fixture, startTestServer } from '../../test/server.ts';
 import { resolveTables } from './tables.ts';
 
 test("tables read through one RPC are not taken for another's", async () => {

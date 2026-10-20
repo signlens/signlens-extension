@@ -4,9 +4,9 @@
 
 import assert from 'node:assert/strict';
 import { beforeEach, test } from 'node:test';
+import { type FakeChrome, installFakeChrome } from '../../test/chrome.fake.ts';
 import type { HistoryEntry } from '../shared/model.ts';
 import { inTurn } from '../shared/store.ts';
-import { type FakeChrome, installFakeChrome } from '../testing/chrome.fake.ts';
 import { clearHistory, ENTRY_BYTES, HISTORY_BYTES, HISTORY_LENGTH, markSeen, remember, showBadge } from './history.ts';
 
 let fake: FakeChrome;

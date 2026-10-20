@@ -3,8 +3,8 @@
 // address book, never have its own address called "you", and never get a
 // request through on silence.
 
+import { fixture } from '../test/server.ts';
 import { clickToClose, closing, expect, FAKE_ACCOUNT, liveGate, test } from './extension.ts';
-import { fixture } from './server.ts';
 
 const WALLET = 'SignLens';
 const RECIPIENT = 'DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp';

@@ -2,8 +2,8 @@
 // the engine holds the balance changes against the decoded effects.
 
 import type { Settings } from '../src/shared/settings.ts';
+import { type Fixture, feePayer, fixture, type RpcCall, type TestServer } from '../test/server.ts';
 import { expect, liveGate, test } from './extension.ts';
-import { type Fixture, feePayer, fixture, type RpcCall, type TestServer } from './server.ts';
 
 const WALLET = 'SignLens';
 /** The nonce transfer: 0.996423 USDC from the payer's account. */

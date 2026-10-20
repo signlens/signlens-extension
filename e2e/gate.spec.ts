@@ -2,8 +2,8 @@
 // refused or passed on, and the user's decision honoured.
 
 import type { BrowserContext, Page } from '@playwright/test';
+import { feePayer, fixture } from '../test/server.ts';
 import { clickToClose, expect, liveGate, test } from './extension.ts';
-import { feePayer, fixture } from './server.ts';
 
 const WALLET = 'SignLens';
 

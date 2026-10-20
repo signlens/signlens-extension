@@ -2,8 +2,8 @@
 // badge clears once the popup is seen, a capture can be saved, the history
 // cleared, and lookup tables are not fetched twice in a row.
 
+import { feePayer, fixture } from '../test/server.ts';
 import { closing, expect, liveGate, test } from './extension.ts';
-import { feePayer, fixture } from './server.ts';
 
 const WALLET = 'SignLens';
 const SWAP = 'swap__both_mints_named.b64';

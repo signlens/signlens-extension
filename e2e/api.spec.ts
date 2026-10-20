@@ -2,8 +2,8 @@
 // is "could not explain", never "nothing wrong"; the feedback strip sends
 // what the user chose and nothing more.
 
+import { explanation, fixture, recorded } from '../test/server.ts';
 import { clickToClose, expect, liveGate, test } from './extension.ts';
-import { explanation, fixture, recorded } from './server.ts';
 
 const WALLET = 'SignLens';
 

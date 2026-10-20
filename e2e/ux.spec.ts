@@ -4,8 +4,8 @@
 // what to do on a page SignLens does not run on.
 
 import type { ExplainedRow } from '../src/shared/model.ts';
+import { fixture } from '../test/server.ts';
 import { clickToClose, expect, liveGate, test } from './extension.ts';
-import { fixture } from './server.ts';
 import { request, transferRow, windowFor } from './windows.ts';
 
 const WALLET = 'SignLens';

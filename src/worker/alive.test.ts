@@ -3,7 +3,7 @@
 
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { installFakeChrome } from '../testing/chrome.fake.ts';
+import { installFakeChrome } from '../../test/chrome.fake.ts';
 import { keepingAlive } from './alive.ts';
 
 /** Work that ends when `finish` is called. */

@@ -1,6 +1,6 @@
 # On every change: lint, types, the Node tests and the build; the
 # end-to-end suite in Chromium, against the SignLens API's recorded
-# answers (e2e/fixtures/api/); and the package built on Linux, macOS and
+# answers (test/fixtures/api/); and the package built on Linux, macOS and
 # Windows, which must come out the same bytes. When a SignLens API is
 # configured as the repository variable SIGNLENS_API_URL, the suite also
 # runs against it, and a recording it no longer matches is a warning on

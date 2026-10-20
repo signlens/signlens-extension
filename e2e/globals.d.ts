@@ -1,4 +1,4 @@
-// What the test dapp (e2e/dapp.html) puts on `window` for the tests to drive.
+// What the test dapp (test/dapp.html) puts on `window` for the tests to drive.
 
 interface Window {
     walletNames(): string[];

@@ -5,10 +5,10 @@ review:
 
 - **One change per pull request**, with the tests that show it. Every
   test runs anywhere: the end-to-end suite answers the API's calls from
-  `e2e/fixtures/api/`. A change that makes the extension ask the API
+  `test/fixtures/api/`. A change that makes the extension ask the API
   something new needs those answers recorded: run
   `npm run test:e2e:record` against a SignLens API and commit what changes
-  under `e2e/fixtures/api/` with the change.
+  under `test/fixtures/api/` with the change.
 - **`npm run check` must pass**: Biome for lint and format (the
   TypeScript and the stylesheet), and the TypeScript compiler in strict
   mode. `npm run format` fixes what Biome can: the formatting, the order of
@@ -36,8 +36,8 @@ is ES modules.
 The worker is small modules with `src/worker/background.ts` wiring them to
 the browser. A module that needs only `fetch` is tested in Node against the
 end-to-end tests' stub RPC and the API's recorded answers
-(`e2e/fixtures/*.explanation.json`); one that needs `chrome` is tested
-against `src/testing/chrome.fake.ts`. A `*.fake.ts` file is a test's stand-in and
+(`test/fixtures/*.explanation.json`); one that needs `chrome` is tested
+against `test/chrome.fake.ts`. A `*.fake.ts` file is a test's stand-in and
 is never built into the extension.
 
 The wallet in the page shares its world with the page, which can replace
