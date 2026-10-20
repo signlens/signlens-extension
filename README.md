@@ -270,14 +270,16 @@ browser APIs and rules. Each module's Node test sits beside it.
 | `docs/design/` | the icon's one drawing, from which `npm run icons` makes the four PNGs (the 128 px one padded as the Chrome Web Store asks) and the wallet icon a dapp shows |
 | `docs/images/` | the README's screenshots, in the light and the dark theme, made by `npm run screenshots` (`e2e/screenshots.shot.ts`) |
 | `dist/` | what the build makes, never committed: `chrome/` (the unpacked extension, the scripts in the folders they have under `src/`), `firefox/`, and the packages |
-| `scripts/` | the Firefox copy, the reproducible packages, and recording the API's answers for the end-to-end tests |
+| `scripts/` | the Firefox copy, the reproducible packages, a release's notes from the changelog, and recording the API's answers for the end-to-end tests |
 | `e2e/` | the end-to-end tests, in Chromium, and the harness that loads the extension and opens its windows; at the end of a run against a live API, which recordings it no longer matches |
 | `test/` | what the Node tests and the end-to-end tests share: the mainnet transactions and the API's recorded answers (`fixtures/`), the stub RPC and API relay, the test dapp it serves, and the stand-in for the `chrome` APIs the modules run against in Node |
 
 ## Verifying a package
 
 A release is a tag `vX.Y.Z` on the default branch that names the version in
-`package.json`. CI runs every test, the end-to-end suite against the API
+`package.json`, and whose version has a section in `CHANGELOG.md`: that
+section is the release's notes (`node scripts/release-notes.ts X.Y.Z`
+shows them). CI runs every test, the end-to-end suite against the API
 included, runs `npm ci && npm run package`, and attaches
 `signlens-extension-X.Y.Z.zip` (Chrome) and
 `signlens-extension-firefox-X.Y.Z.zip`, each with its `.sha256`, to the
