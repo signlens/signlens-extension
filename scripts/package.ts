@@ -124,7 +124,7 @@ const expected = new Set([
         .map((name) => name.replace(/\.ts$/, '.js')),
     'manifest.json',
     'popup.html',
-    'popup.css',
+    'style.css',
     'confirm.html',
     'connect.html',
     'address.html',
