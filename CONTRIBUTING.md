@@ -21,6 +21,7 @@ review:
   ([Developer Certificate of Origin](https://developercertificate.org)).
 - **Security findings** go to the address in [`SECURITY.md`](SECURITY.md),
   not to the issue tracker.
+- **Everyone taking part** follows the [code of conduct](CODE_OF_CONDUCT.md).
 
 `src/` is split by where the code runs: `page/` (inside the dapp's page),
 `worker/` (the background service worker), `ui/` (the extension's own
