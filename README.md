@@ -34,7 +34,7 @@ its SHA-256; see [Verifying a package](#verifying-a-package).
 
 Chromium browsers (Chrome, Brave, Edge, 111 or later): `npm install && npm
 run build`, open `chrome://extensions`, turn on "Developer mode", choose
-"Load unpacked" and pick the `extension/` directory. Firefox (128 or
+"Load unpacked" and pick the `dist/chrome/` directory. Firefox (128 or
 later): `npm run build:firefox`, open `about:debugging#/runtime/this-firefox`,
 choose "Load Temporary Add-on…" and pick `dist/firefox/manifest.json`.
 Firefox lets you withhold an add-on's access to sites: if the popup says
@@ -173,7 +173,7 @@ Node 24.16 or later (`npm test` runs the files in a random order, which Node tak
 npm install
 npm run check           # Biome (lint and format, the stylesheet included) and the TypeScript compiler, strict
 npm test                # in Node: every module but the pages, the worker's against the stub RPC and a fake chrome; in a random order, seed printed
-npm run build           # tsc: src/*.ts → extension/*.js, one file each
+npm run build           # dist/chrome: the files in static/, and tsc's script for each source, one file each
 npm run test:e2e        # the extension in Chromium, against the API's recorded answers
 npm run test:e2e:record # the same against a running SignLens API, recording its answers anew
 npm run package         # the Chrome and Firefox packages under dist/, with their SHA-256s
@@ -238,7 +238,8 @@ browser APIs and rules. Each module's Node test sits beside it.
 | | `text.ts`, `json.ts`, `base58.ts`: text from elsewhere made safe to show; objects read from elsewhere; addresses |
 | `src/testing/` | `chrome.fake.ts`, the stand-in for the `chrome` APIs the modules run against in Node |
 | `src/manifest.test.ts`, `src/layout.test.ts` | the manifest, the Firefox manifest, and the host permissions against the endpoint rule; the folders, and what each may import |
-| `extension/` | the manifest, the pages, the styles and the icons; the compiled scripts land here, in the folders they have under `src/` |
+| `static/` | the manifest, the pages, the stylesheet and the icons, copied as they are into the build |
+| `dist/` | what the build makes, never committed: `chrome/` (the unpacked extension, the scripts in the folders they have under `src/`), `firefox/`, and the packages |
 | `scripts/` | the Firefox copy, the reproducible packages, and recording the API's answers for the end-to-end tests |
 | `e2e/` | the end-to-end tests, the test dapp, the stub RPC, the API's recorded answers (or a live API, relayed), and the report of recordings a live API no longer matches |
 

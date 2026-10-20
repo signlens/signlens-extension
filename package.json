@@ -17,7 +17,7 @@
     "node": ">=24.16"
   },
   "scripts": {
-    "build": "tsc -p tsconfig.build.json",
+    "build": "node scripts/copy-static.ts && tsc -p tsconfig.build.json",
     "build:firefox": "npm run build && node scripts/build-firefox.ts",
     "package": "npm run build && node scripts/package.ts",
     "check": "biome check --error-on-warnings . && tsc -p tsconfig.json",

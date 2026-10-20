@@ -7,7 +7,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
 
-const css = readFileSync(new URL('../../extension/style.css', import.meta.url), 'utf8');
+const css = readFileSync(new URL('../../static/style.css', import.meta.url), 'utf8');
 
 /**
  * The custom properties the block `block` matches in `source` sets (its

@@ -8,7 +8,7 @@ import { test } from 'node:test';
 import { firefoxManifest, type Manifest } from '../scripts/firefox-manifest.ts';
 import { LOOPBACK } from './shared/endpoint.ts';
 
-const manifest = JSON.parse(readFileSync(new URL('../extension/manifest.json', import.meta.url), 'utf8')) as Manifest & {
+const manifest = JSON.parse(readFileSync(new URL('../static/manifest.json', import.meta.url), 'utf8')) as Manifest & {
     manifest_version: number;
     content_security_policy: { extension_pages: string };
     icons: Record<string, string>;

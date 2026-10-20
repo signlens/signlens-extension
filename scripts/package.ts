@@ -13,7 +13,8 @@ import { firefoxManifest, type Manifest } from './firefox-manifest.ts';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, '..');
-const EXTENSION = join(ROOT, 'extension');
+const STATIC = join(ROOT, 'static');
+const CHROME = join(ROOT, 'dist/chrome');
 const DIST = join(ROOT, 'dist');
 
 const version = (JSON.parse(readFileSync(join(ROOT, 'package.json'), 'utf8')) as { version: string }).version;
@@ -115,22 +116,16 @@ function zip(entries: { name: string; data: Uint8Array }[]): Uint8Array {
 
 // What belongs in the package: the static files, and one script per source
 // that is not a test, a test's fake or a declaration (which compiles to
-// nothing). Anything else in extension/ is a
-// leftover of an old build and refuses the package rather than ship.
+// nothing). The build empties dist/chrome first, so anything else there was
+// put by hand, and refuses the package rather than ship.
 const SOURCES = join(ROOT, 'src');
 const expected = new Set([
     ...files(SOURCES)
         .filter((name) => name.endsWith('.ts') && !name.endsWith('.test.ts') && !name.endsWith('.fake.ts') && !name.endsWith('.d.ts'))
         .map((name) => name.replace(/\.ts$/, '.js')),
-    'manifest.json',
-    'popup.html',
-    'style.css',
-    'confirm.html',
-    'connect.html',
-    'address.html',
-    ...['16', '32', '48', '128'].map((size) => `icons/icon-${size}.png`),
+    ...files(STATIC),
 ]);
-const present = files(EXTENSION);
+const present = files(CHROME);
 const missing = [...expected].filter((name) => !present.includes(name));
 const stray = present.filter((name) => !expected.has(name));
 if (missing.length > 0) {
@@ -138,15 +133,15 @@ if (missing.length > 0) {
     process.exit(1);
 }
 if (stray.length > 0) {
-    console.error(`extension/ holds files that are not part of the package: ${stray.join(', ')}; remove them`);
+    console.error(`dist/chrome holds files that are not part of the package: ${stray.join(', ')}; run \`npm run build\` again`);
     process.exit(1);
 }
-const manifest = JSON.parse(readFileSync(join(EXTENSION, 'manifest.json'), 'utf8')) as Manifest & { version: string };
+const manifest = JSON.parse(readFileSync(join(CHROME, 'manifest.json'), 'utf8')) as Manifest & { version: string };
 if (manifest.version !== version) {
-    console.error(`extension/manifest.json says version ${manifest.version} but package.json says ${version}`);
+    console.error(`static/manifest.json says version ${manifest.version} but package.json says ${version}`);
     process.exit(1);
 }
-const entries = present.map((name) => ({ name, data: new Uint8Array(readFileSync(join(EXTENSION, name))) }));
+const entries = present.map((name) => ({ name, data: new Uint8Array(readFileSync(join(CHROME, name))) }));
 const firefox = entries.map((entry) =>
     entry.name === 'manifest.json'
         ? { name: entry.name, data: new TextEncoder().encode(`${JSON.stringify(firefoxManifest(manifest), null, 2)}\n`) }

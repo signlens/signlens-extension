@@ -22,7 +22,7 @@ test('SignLens runs on https pages and on this machine over http, as the manifes
     ]) {
         assert.equal(runsOn(url), false, String(url));
     }
-    const manifest = JSON.parse(readFileSync(new URL('../../extension/manifest.json', import.meta.url), 'utf8')) as {
+    const manifest = JSON.parse(readFileSync(new URL('../../static/manifest.json', import.meta.url), 'utf8')) as {
         content_scripts: { matches: string[] }[];
     };
     for (const script of manifest.content_scripts) {

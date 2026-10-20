@@ -11,7 +11,7 @@ import { noteDrift, STRICT } from './drift.ts';
 import { startTestServer, type TestServer } from './server.ts';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
-export const EXTENSION = join(HERE, '../extension');
+export const EXTENSION = join(HERE, '../dist/chrome');
 /** The account of the test dapp's own wallet (e2e/dapp.html). */
 export const FAKE_ACCOUNT = 'FakeWa11et1111111111111111111111111111111111';
 

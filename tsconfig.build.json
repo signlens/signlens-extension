@@ -3,7 +3,7 @@
   "compilerOptions": {
     "noEmit": false,
     "rootDir": "src",
-    "outDir": "extension",
+    "outDir": "dist/chrome",
     "types": ["chrome"],
     "removeComments": false,
     "newLine": "lf"
