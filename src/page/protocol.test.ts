@@ -35,7 +35,7 @@ test('the content script relays what a page may ask, and sends what waits over t
 });
 
 test("the page's wallet asks only what a page may ask", () => {
-    const asked = new Set([...injected.matchAll(/\b(?:request|notify|askExtension)\('([\w-]+)'/g)].map((m) => m[1]));
+    const asked = new Set([...injected.matchAll(/\b(?:request|notify|askExtension)\('([\w-]+)'/g)].map((m) => m[1] ?? ''));
     assert.ok(asked.size >= 5, [...asked].join(', '));
     for (const type of asked) assert.ok((PAGE_REQUESTS as readonly unknown[]).includes(type), type);
 });

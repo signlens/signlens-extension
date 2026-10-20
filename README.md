@@ -174,7 +174,7 @@ The settings show each address, and you can run your own.
 
 ## Development
 
-Node 24.16 or later (`npm test` runs the files in a random order, which Node takes from 24.16).
+Node 26.1 or later (`npm test` runs the files in a random order, which Node 26 takes from 26.1).
 `nvm use` picks it from `.nvmrc`, and `npm ci` refuses an older Node (`.npmrc`).
 
 ```sh
