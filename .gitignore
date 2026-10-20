@@ -1,6 +1,7 @@
 node_modules/
-# tsc emits the extension's scripts next to its static files; `npm run build`.
-extension/*.js
+# tsc emits the extension's scripts next to its static files, in the folders
+# they have under src/; `npm run build`.
+extension/**/*.js
 dist/
 test-results/
 playwright-report/

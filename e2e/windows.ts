@@ -3,9 +3,9 @@
 // name or set of rows without a dapp, an RPC or the API.
 
 import type { BrowserContext, Page, Worker } from '@playwright/test';
-import type { ExplainedRow, HistoryEntry } from '../src/model.ts';
-import { type Pending, pendingKey } from '../src/store.ts';
-import type { Explanation } from '../src/types.ts';
+import type { ExplainedRow, HistoryEntry } from '../src/shared/model.ts';
+import { type Pending, pendingKey } from '../src/shared/store.ts';
+import type { Explanation } from '../src/shared/types.ts';
 import { liveGate } from './extension.ts';
 import { fixture, recorded } from './server.ts';
 

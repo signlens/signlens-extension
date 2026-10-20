@@ -22,7 +22,7 @@
     "extension_pages": "script-src 'self'; object-src 'self'"
   },
   "background": {
-    "service_worker": "background.js",
+    "service_worker": "worker/background.js",
     "type": "module"
   },
   "action": {
@@ -43,7 +43,7 @@
         "http://127.0.0.1/*"
       ],
       "js": [
-        "content.js"
+        "page/content.js"
       ],
       "run_at": "document_start"
     },
@@ -54,7 +54,7 @@
         "http://127.0.0.1/*"
       ],
       "js": [
-        "injected.js"
+        "page/injected.js"
       ],
       "run_at": "document_start",
       "world": "MAIN"

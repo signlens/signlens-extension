@@ -1,7 +1,7 @@
 // The simulation as a cross-check: the worker simulates over the RPC and
 // the engine holds the balance changes against the decoded effects.
 
-import type { Settings } from '../src/settings.ts';
+import type { Settings } from '../src/shared/settings.ts';
 import { expect, liveGate, test } from './extension.ts';
 import { type Fixture, feePayer, fixture, type RpcCall, type TestServer } from './server.ts';
 

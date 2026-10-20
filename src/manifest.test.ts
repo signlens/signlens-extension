@@ -6,7 +6,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
 import { firefoxManifest, type Manifest } from '../scripts/firefox-manifest.ts';
-import { LOOPBACK } from './endpoint.ts';
+import { LOOPBACK } from './shared/endpoint.ts';
 
 const manifest = JSON.parse(readFileSync(new URL('../extension/manifest.json', import.meta.url), 'utf8')) as Manifest & {
     manifest_version: number;
@@ -19,7 +19,7 @@ const manifest = JSON.parse(readFileSync(new URL('../extension/manifest.json', i
 
 test('the manifest is Manifest V3 for Chrome, with nothing Chrome would warn about and no WebAssembly yet', () => {
     assert.equal(manifest.manifest_version, 3);
-    assert.equal(manifest.background.service_worker, 'background.js');
+    assert.equal(manifest.background.service_worker, 'worker/background.js');
     assert.equal(manifest.background.type, 'module');
     assert.equal(manifest.background.scripts, undefined);
     assert.equal(manifest.browser_specific_settings, undefined);
@@ -38,13 +38,13 @@ test('the manifest is Manifest V3 for Chrome, with nothing Chrome would warn abo
     // both have run (see `offer` in injected.ts).
     assert.deepEqual(
         manifest.content_scripts.map((s) => s.js),
-        [['content.js'], ['injected.js']],
+        [['page/content.js'], ['page/injected.js']],
     );
 });
 
 test('the Firefox manifest runs the same worker as a background script, with the add-on id and what it sends away', () => {
     const firefox = firefoxManifest(manifest);
-    assert.deepEqual(firefox.background, { type: 'module', scripts: ['background.js'] });
+    assert.deepEqual(firefox.background, { type: 'module', scripts: ['worker/background.js'] });
     const gecko = firefox.browser_specific_settings?.gecko;
     assert.match(gecko?.id ?? '', /^[^@]+@[^@]+$/);
     assert.ok(Number(gecko?.strict_min_version) >= 128, 'world: MAIN content scripts');

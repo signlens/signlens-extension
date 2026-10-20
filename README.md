@@ -15,7 +15,7 @@ verdicts and finding codes, not the bytes; the transaction itself is kept
 only when you tick "Send this transaction to SignLens so it gets covered"
 on one SignLens did not call OK. The end goal is the same explanation
 computed inside the extension, offline. Asking for it is one function in
-one module (`explainRemotely` in `src/api.ts`); the feedback strip, the API
+one module (`explainRemotely` in `src/worker/api.ts`); the feedback strip, the API
 status and the API address in the settings are the server's and would go
 with it.
 
@@ -205,31 +205,40 @@ release requires that.
 
 ## Layout
 
+`src/` is split by where the code runs, since each place has its own
+browser APIs and rules. Each module's Node test sits beside it.
+
 | | |
 |---|---|
-| `src/injected.ts` | the Wallet Standard wallet in the page, its copy of the request, and the hand-off to the real one |
-| `src/content.ts` | relays between the page and the extension |
-| `src/page.d.ts` | the types those two classic scripts share with the modules, which they cannot import |
-| `src/background.ts`, `src/alive.ts` | the worker: keeps the wallets each page has and routes the messages; stays up while it holds a request |
-| `src/requests.ts` | a page's request answered: explained, shown, decided on, kept |
-| `src/explain.ts`, `src/tables.ts`, `src/simulation.ts`, `src/hints.ts` | what a request is explained with: the lookup tables and the simulation over your RPC, names for unlisted tokens, and the API's answer as rows |
-| `src/gate.ts`, `src/history.ts` | the window and the user's decision; the popup's history and the badge |
-| `src/sites.ts` | in watch-only mode, the sites allowed to see the watched address, and the window that asks |
-| `src/messages.ts`, `src/feedback.ts`, `src/text.ts` | the messages and who may send what; the feedback records; text from elsewhere, made safe to show |
-| `src/api.ts` | the API client: the engine's request in, the explanation document out |
-| `src/explanation.ts` | the explanation document as this version reads it: checked field by field, or refused with where it fails |
-| `src/types.ts` | the contract: the explanation document, the request, the feedback record |
-| `src/model.ts` | what SignLens keeps of a request: its rows (explained, failed, a message, a site asking, an address not yours) and what became of it |
-| `src/store.ts` | the extension's storage, typed by key, and the queue its read-then-write changes go through |
-| `src/solana.ts`, `src/base58.ts` | the little of Solana's wire format the worker needs; addresses, which the pages read too |
-| `src/render.ts` | one row of a request as the window and the popup show it |
-| `src/verdict.ts` | the verdict words and which is worst, for the badge and the window |
-| `src/settings.ts`, `src/endpoint.ts` | the settings and their defaults; the endpoints accepted, checked again at each use |
-| `src/confirm.ts`, `src/connect.ts`, `src/address.ts`, `src/windows.ts`, `src/dom.ts` | the window, the window that asks to show a site the watched address, the one that asks whether an address is yours, and what they share |
-| `src/popup.ts`, `src/pages.ts` | the popup; the pages SignLens runs on, and what the popup says over one it does not |
-| `extension/` | the manifest, the pages, the styles and the icons; the compiled scripts land here |
+| `src/page/` | runs in the dapp's page, as classic scripts that import nothing |
+| | `injected.ts`: the Wallet Standard wallet in the page, its copy of the request, and the hand-off to the real one |
+| | `content.ts`: relays between the page and the extension |
+| | `page.d.ts`: the types those two share with the modules, which they cannot import |
+| `src/worker/` | the background service worker |
+| | `background.ts`, `alive.ts`: keeps the wallets each page has and routes the messages; stays up while it holds a request |
+| | `requests.ts`: a page's request answered: explained, shown, decided on, kept |
+| | `explain.ts`, `tables.ts`, `simulation.ts`, `hints.ts`: what a request is explained with: the lookup tables and the simulation over your RPC, names for unlisted tokens, and the API's answer as rows |
+| | `api.ts`, `explanation.ts`: the API client, and the explanation document as this version reads it, checked field by field or refused with where it fails |
+| | `gate.ts`, `history.ts`: the window and the user's decision; the popup's history and the badge |
+| | `sites.ts`: in watch-only mode, the sites allowed to see the watched address, and the window that asks |
+| | `feedback.ts`: the feedback records |
+| | `solana.ts`: the little of Solana's wire format the worker needs |
+| `src/ui/` | the extension's own pages |
+| | `popup.ts`, `pages.ts`: the popup; the pages SignLens runs on, and what the popup says over one it does not |
+| | `confirm.ts`, `connect.ts`, `address.ts`, `windows.ts`, `dom.ts`: the window, the window that asks to show a site the watched address, the one that asks whether an address is yours, and what they share |
+| | `render.ts`: one row of a request as the window and the popup show it |
+| `src/shared/` | what the worker and the pages both use, and nothing of either |
+| | `types.ts`: the contract: the explanation document, the request, the feedback record, the API's status |
+| | `model.ts`: what SignLens keeps of a request: its rows (explained, failed, a message, a site asking, an address not yours) and what became of it |
+| | `messages.ts`: the messages and who may send what |
+| | `store.ts`: the extension's storage, typed by key, and the queue its read-then-write changes go through |
+| | `settings.ts`, `endpoint.ts`: the settings and their defaults; the endpoints accepted, checked again at each use |
+| | `verdict.ts`: the verdict words and which is worst, for the badge and the window |
+| | `text.ts`, `json.ts`, `base58.ts`: text from elsewhere made safe to show; objects read from elsewhere; addresses |
+| `src/testing/` | `chrome.fake.ts`, the stand-in for the `chrome` APIs the modules run against in Node |
+| `src/manifest.test.ts`, `src/layout.test.ts` | the manifest, the Firefox manifest, and the host permissions against the endpoint rule; the folders, and what each may import |
+| `extension/` | the manifest, the pages, the styles and the icons; the compiled scripts land here, in the folders they have under `src/` |
 | `scripts/` | the Firefox copy, the reproducible packages, and recording the API's answers for the end-to-end tests |
-| `src/*.test.ts`, `src/chrome.fake.ts` | the Node tests, and the stand-in for the `chrome` APIs the worker's modules run against there |
 | `e2e/` | the end-to-end tests, the test dapp, the stub RPC, the API's recorded answers (or a live API, relayed), and the report of recordings a live API no longer matches |
 
 ## Verifying a package

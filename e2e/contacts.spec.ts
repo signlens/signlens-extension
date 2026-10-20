@@ -2,7 +2,7 @@
 // that merely resembles one, sharing the characters a shortened address
 // shows, is flagged as a lookalike: a high finding, so a warning verdict.
 
-import { base58Decode } from '../src/solana.ts';
+import { base58Decode } from '../src/worker/solana.ts';
 import { expect, test } from './extension.ts';
 import { feePayer, fixture } from './server.ts';
 

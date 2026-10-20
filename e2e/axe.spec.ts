@@ -9,7 +9,7 @@
 import { readFileSync } from 'node:fs';
 import type { Page } from '@playwright/test';
 import type { AxeResults } from 'axe-core';
-import type { ExplainedRow } from '../src/model.ts';
+import type { ExplainedRow } from '../src/shared/model.ts';
 import { expect, test } from './extension.ts';
 import { request, transferRow, windowFor } from './windows.ts';
 

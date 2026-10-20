@@ -16,10 +16,10 @@
 import { createHash } from 'node:crypto';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { createServer } from 'node:http';
-import { base58Decode, LOOKUP_TABLE_PROGRAM, messageAccounts, tableLookups } from '../src/solana.ts';
+import { base58Decode, LOOKUP_TABLE_PROGRAM, messageAccounts, tableLookups } from '../src/worker/solana.ts';
 
-const DAPP = readFileSync(new URL('dapp.html', import.meta.url));
-const FIXTURES = new URL('fixtures/', import.meta.url);
+const DAPP = readFileSync(new URL('./dapp.html', import.meta.url));
+const FIXTURES = new URL('./fixtures/', import.meta.url);
 export const RECORDINGS = new URL('api/', FIXTURES);
 const LIVE = process.env.SIGNLENS_API_URL?.replace(/\/+$/, '');
 const RECORD = process.env.SIGNLENS_RECORD === '1';

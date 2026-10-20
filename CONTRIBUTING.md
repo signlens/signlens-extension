@@ -21,20 +21,26 @@ review:
 - **Security findings** go to the address in [`SECURITY.md`](SECURITY.md),
   not to the issue tracker.
 
-The wallet in the page (`src/injected.ts`) and the content script
-(`src/content.ts`) are classic scripts with no imports, on purpose: they
-run in the page's world and must stay self-contained. Everything else is
-ES modules.
+`src/` is split by where the code runs: `page/` (inside the dapp's page),
+`worker/` (the background service worker), `ui/` (the extension's own
+pages) and `shared/` (what both of the last two use). `shared/` imports
+nothing from the others, and `worker/` and `ui/` import nothing from each
+other; a test sits beside the module it tests.
 
-The worker is small modules with `src/background.ts` wiring them to the
-browser. A module that needs only `fetch` is tested in Node against the
+The wallet in the page (`src/page/injected.ts`) and the content script
+(`src/page/content.ts`) are classic scripts with no imports, on purpose:
+they run in the page's world and must stay self-contained. Everything else
+is ES modules.
+
+The worker is small modules with `src/worker/background.ts` wiring them to
+the browser. A module that needs only `fetch` is tested in Node against the
 end-to-end tests' stub RPC and the API's recorded answers
 (`e2e/fixtures/*.explanation.json`); one that needs `chrome` is tested
-against `src/chrome.fake.ts`. A `*.fake.ts` file is a test's stand-in and
+against `src/testing/chrome.fake.ts`. A `*.fake.ts` file is a test's stand-in and
 is never built into the extension.
 
 The wallet in the page shares its world with the page, which can replace
 any built-in. It touches the port and the bytes of a request only through
-what it took at start-up (see `snapshot` in `src/injected.ts`), so that
+what it took at start-up (see `snapshot` in `src/page/injected.ts`), so that
 what is passed on is what was explained; keep it that way, and add a case
-to `src/injected.test.ts` for anything new it reads from the page.
+to `src/page/injected.test.ts` for anything new it reads from the page.

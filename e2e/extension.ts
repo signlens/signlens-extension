@@ -6,7 +6,7 @@
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { type BrowserContext, test as base, chromium, expect, type Locator, type Page, type Worker } from '@playwright/test';
-import type { Settings } from '../src/settings.ts';
+import type { Settings } from '../src/shared/settings.ts';
 import { noteDrift, STRICT } from './drift.ts';
 import { startTestServer, type TestServer } from './server.ts';
 
