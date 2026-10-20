@@ -1,0 +1,55 @@
+name: An explanation that is missing, wrong or unclear
+description: SignLens could not explain a transaction, blocked one that is fine, or said something it should not have.
+title: "explanation: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Transactions SignLens cannot explain yet are how its coverage grows, so thank you.
+
+        A transaction attached here can be read by anyone. If you would rather not show it, use the strip under the explanation instead: tick **Send this transaction to SignLens so it gets covered**, which sends it to SignLens alone.
+  - type: dropdown
+    id: what
+    attributes:
+      label: What happened
+      options:
+        - It was not explained (an error)
+        - It was blocked, but it is fine
+        - It was explained wrong
+        - The explanation was hard to understand
+    validations:
+      required: true
+  - type: input
+    id: site
+    attributes:
+      label: The site
+      placeholder: jup.ag
+    validations:
+      required: true
+  - type: textarea
+    id: meant
+    attributes:
+      label: What you meant to do
+      placeholder: Swap 1 SOL for USDC.
+    validations:
+      required: true
+  - type: textarea
+    id: shown
+    attributes:
+      label: What SignLens showed
+      description: The verdict and the summary at the top of the window, and what in it is wrong or unclear.
+    validations:
+      required: true
+  - type: textarea
+    id: transaction
+    attributes:
+      label: The transaction
+      description: Attach the file from **Save the transaction** in the window or in the popup's requests. If it was signed, its signature works too.
+  - type: input
+    id: version
+    attributes:
+      label: SignLens version
+      description: In `chrome://extensions` or `about:addons`.
+      placeholder: 0.1.0
+    validations:
+      required: true

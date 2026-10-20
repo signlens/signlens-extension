@@ -1,0 +1,60 @@
+name: Something in the extension does not work
+description: A window that does not open, a request that does not reach your wallet, a setting that does not stick.
+labels: ["bug"]
+body:
+  - type: textarea
+    id: happened
+    attributes:
+      label: What happened, and what you expected
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to make it happen again
+      placeholder: |
+        1. Open jup.ag and connect SignLens.
+        2. ...
+    validations:
+      required: true
+  - type: dropdown
+    id: browser
+    attributes:
+      label: Browser
+      options: [Chrome, Brave, Edge, Firefox, Other]
+    validations:
+      required: true
+  - type: input
+    id: browser-version
+    attributes:
+      label: Browser version
+    validations:
+      required: true
+  - type: dropdown
+    id: mode
+    attributes:
+      label: Mode
+      options:
+        - Pass-through (SignLens hands requests to your wallet)
+        - Watch-only
+    validations:
+      required: true
+  - type: input
+    id: wallet
+    attributes:
+      label: The wallet SignLens passes requests to
+      placeholder: Phantom 25.x
+  - type: input
+    id: version
+    attributes:
+      label: SignLens version
+      description: In `chrome://extensions` or `about:addons`.
+      placeholder: 0.1.0
+    validations:
+      required: true
+  - type: textarea
+    id: console
+    attributes:
+      label: Errors in the console, if any
+      description: The popup's (right-click it, Inspect) and the service worker's (`chrome://extensions`, the extension's "service worker" link).
+      render: text
