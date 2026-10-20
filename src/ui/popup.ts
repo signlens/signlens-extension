@@ -353,16 +353,21 @@ async function showSites(): Promise<void> {
 /** Whether rows open on their instructions: the reader's last choice, kept in storage. */
 let showInstructions = false;
 
-/** When a request came: the time for today's, the date and the time for another day's. */
+/**
+ * When a request came: the time for today's; the date and the minute for
+ * another day's, short enough that the row keeps its room for the site.
+ * The full moment is in the element, and shown on hover.
+ */
 function when(time: number): HTMLTimeElement {
     const at = new Date(time);
     const today = at.toDateString() === new Date().toDateString();
     const node = element(
         'time',
         '',
-        today ? at.toLocaleTimeString() : at.toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'medium' }),
+        today ? at.toLocaleTimeString() : at.toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' }),
     );
     node.dateTime = at.toISOString();
+    node.title = at.toLocaleString(undefined, { dateStyle: 'full', timeStyle: 'medium' });
     return node;
 }
 
@@ -389,7 +394,10 @@ function historyRow(entry: HistoryEntry, row: Row, part?: number): HTMLElement {
     // What became of it sits by the verdict, where it cannot be cut off.
     const outcome = became(entry, consent);
     if (outcome) head.append(element('span', 'decision', outcome), ' ');
-    head.append(element('span', 'where', `${withoutScheme(entry.origin)} · ${methodName(entry.method)}`), ' ', when(entry.time));
+    // The host may break anywhere, as a long one must; the call only as a whole.
+    const where = element('span', 'where', `${withoutScheme(entry.origin)} · `);
+    where.append(element('span', 'call', methodName(entry.method)));
+    head.append(where, ' ', when(entry.time));
     summary.append(head);
     // The one line that says what it is, under the where and when.
     summary.append(' ', element('div', 'lead', summaryOf(row)));

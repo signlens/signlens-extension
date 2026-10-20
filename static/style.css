@@ -205,14 +205,23 @@ summary:focus-visible {
     outline-offset: -2px;
 }
 
-/* The whole host, wrapped if need be: its end is what tells a lookalike apart. */
+/* The whole host, wrapped if need be: its end is what tells a lookalike
+   apart. The call (signTransaction) is never broken inside a word. */
 summary .where {
-    flex: 1;
+    order: 1;
+    flex: 1 0 100%;
     min-width: 0;
     overflow-wrap: anywhere;
 }
 
+summary .where .call {
+    white-space: nowrap;
+}
+
 summary time {
+    flex: none;
+    margin-left: auto;
+    white-space: nowrap;
     color: var(--muted);
     font-variant-numeric: tabular-nums;
 }
@@ -800,9 +809,15 @@ body.consent .aside {
     margin-top: 0;
 }
 
+/* A row's head: the verdict, what became of it and when on the first line,
+   the time at its end; the site and the call on a line of their own, so
+   neither a long date nor a long outcome can squeeze them. They come before
+   the time in the page, as a screen reader reads the row. */
 .row-line {
     display: flex;
-    gap: 8px;
+    flex-wrap: wrap;
+    column-gap: 8px;
+    row-gap: 2px;
     align-items: baseline;
 }
 

@@ -3,6 +3,7 @@
 
 import { feePayer, fixture } from '../test/server.ts';
 import { expect, test } from './support/extension.ts';
+import { request } from './support/windows.ts';
 
 const WALLET = 'SignLens';
 
@@ -84,4 +85,44 @@ test('new requests open the popup on them, counted until seen, each with its sum
     await popup.reload();
     await expect(popup.locator('#view-requests')).toBeVisible();
     await expect(popup.locator('#unseen')).toHaveText('1 new');
+});
+
+test("a row's call is never broken inside a word, whatever the length of its date and outcome", async ({ popup, worker }) => {
+    // The longest outcome and call there are, today and in another year, whose date is the longest a row shows.
+    const longest = { method: 'solana:signAndSendTransaction', decision: 'continue', unasked: true } as const;
+    const lastYear = new Date(new Date().getFullYear() - 1, 2, 4, 12, 0).getTime();
+    await worker.evaluate(
+        (history) => chrome.storage.session.set({ history, unseen: 0 }),
+        [request({ ...longest, time: Date.now() }), request({ ...longest, time: lastYear }), request({ time: lastYear - 60_000 })],
+    );
+    await popup.reload();
+    await popup.getByRole('tab', { name: /^Requests/ }).click();
+    const rows = popup.locator('#history > li');
+    await expect(rows).toHaveCount(3);
+    for (let i = 0; i < 3; i += 1) {
+        const where = rows.nth(i).locator('.where');
+        // The lines the call's text lands on, measured on the text itself.
+        const lines = await where.evaluate((node) => {
+            const text = node.textContent ?? '';
+            const call = text.slice(text.lastIndexOf(' ') + 1);
+            const walker = document.createTreeWalker(node, NodeFilter.SHOW_TEXT);
+            for (let at = walker.nextNode(); at; at = walker.nextNode()) {
+                const start = (at.textContent ?? '').indexOf(call);
+                if (start < 0) continue;
+                const range = document.createRange();
+                range.setStart(at, start);
+                range.setEnd(at, start + call.length);
+                return new Set([...range.getClientRects()].map((rect) => Math.round(rect.top))).size;
+            }
+            return 0;
+        });
+        expect(lines, (await where.textContent()) ?? '').toBe(1);
+        // And nothing in the row reaches past it.
+        const line = rows.nth(i).locator('.row-line');
+        expect(await line.evaluate((node) => node.scrollWidth <= node.clientWidth)).toBe(true);
+    }
+    // Today's by the time; another day's by the date and the minute; each in full on hover.
+    await expect(rows.nth(0).locator('time')).toHaveText(/^\d{1,2}:\d{2}:\d{2}\s[AP]M$/);
+    await expect(rows.nth(1).locator('time')).toHaveText(/^Mar 4, \d{4}, 12:00\s[AP]M$/);
+    await expect(rows.nth(1).locator('time')).toHaveAttribute('title', /March 4, \d{4}/);
 });
