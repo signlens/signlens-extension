@@ -132,6 +132,22 @@
                 }
             };
 
+            /** Connects, and asks to sign `base64` naming `address` as the account it is signed with. */
+            window.signAs = async (name, base64, address) => {
+                const wallet = wallets.get(name);
+                const { accounts } = await wallet.features['standard:connect'].connect();
+                try {
+                    const outputs = await wallet.features['solana:signTransaction'].signTransaction({
+                        transaction: fromBase64(base64),
+                        account: { ...accounts[0], address },
+                        chain: 'solana:mainnet',
+                    });
+                    return { signed: outputs.length };
+                } catch (error) {
+                    return { error: error.message };
+                }
+            };
+
             /**
              * Connects, asks to sign `base64`, and tries to have the wallet
              * behind SignLens handed other bytes than SignLens explained: by

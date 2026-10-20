@@ -5,7 +5,8 @@
 // `unknown` but for the origin the content script states.
 
 import type { ApiStatus } from './api.ts';
-import type { Decision } from './model.ts';
+import { objectFields } from './json.ts';
+import type { Decision, Outcome } from './model.ts';
 import { printable } from './text.ts';
 
 /** How many transactions one request may hold. */
@@ -21,12 +22,17 @@ export const MAX_MESSAGE_BASE64 = Math.ceil(MAX_MESSAGE_BYTES / 3) * 4;
 /** The longest comment a rating carries, in characters. */
 export const MAX_COMMENT = 2000;
 
-/** A page's fields, as the content script relays them: anything, but for the origin, which the content script states. */
-export type PagePayload = Record<string, unknown> & { origin: string };
+/**
+ * What every page request carries: the page's own fields, anything at all
+ * (each payload below names the ones read, as unknown), and the origin of
+ * the page, which the extension states (`readMessage`), printable and cut.
+ */
+interface FromPage {
+    origin: string;
+}
 
-/** A page asking for transactions to be explained. The accounts are the ones the wallet granted, as the page's wallet reports them. */
-export interface ExplainPayload {
-    origin?: string;
+/** A page asking for transactions to be explained. The accounts are the ones the request is signed with, as the page names them. */
+export interface ExplainPayload extends FromPage {
     method?: unknown;
     accounts?: unknown;
     transactions?: unknown;
@@ -37,16 +43,14 @@ export interface ExplainPayload {
 }
 
 /** A page asking for a message to be signed. */
-export interface MessagePayload {
-    origin?: string;
+export interface MessagePayload extends FromPage {
     method?: unknown;
     message?: unknown;
     wallet?: unknown;
 }
 
 /** A page connecting in watch mode; `silent` when it may only be told what was allowed before, without asking. */
-export interface ConnectPayload {
-    origin?: string;
+export interface ConnectPayload extends FromPage {
     silent?: unknown;
 }
 
@@ -54,10 +58,8 @@ export interface ConnectPayload {
 export type ConnectReply = { approved: true; address: string; publicKey: number[] } | { approved: false; error?: string };
 
 /** The wallets a page has, or the connect that found none to pass to. */
-export interface WalletsPayload {
+export interface WalletsPayload extends FromPage {
     wallets?: unknown;
-    origin?: string;
-    message?: unknown;
 }
 
 /** The wallets a page announced, as the popup asks for them. */
@@ -84,9 +86,7 @@ export interface FeedbackPayload {
  * user's address book (a transfer to a lookalike of a contact is a
  * warning), and the page is not to learn who the user knows.
  */
-export interface Reply {
-    decision: Decision;
-    refused?: string;
+export interface Reply extends Outcome {
     error?: string;
 }
 
@@ -105,13 +105,25 @@ export const PAGE_REQUESTS = Object.keys(PAGE) as readonly SignLensPage.Request[
 export const WAITING_REQUESTS: readonly SignLensPage.Request[] = ['connect', 'explain', 'message'];
 export const REQUEST_PORT = 'request';
 
+/** What each page request carries, by its type: a request a page may make with no payload here does not compile. */
+export interface PagePayloads extends Record<Exclude<SignLensPage.Request, 'config'>, FromPage> {
+    connect: ConnectPayload;
+    explain: ExplainPayload;
+    message: MessagePayload;
+    wallets: WalletsPayload;
+    'connect-failed': WalletsPayload;
+}
+
+/** A page's request of each type, with its own payload. */
+type PageMessage = { [T in keyof PagePayloads]: { type: T; payload: PagePayloads[T] } }[keyof PagePayloads];
+
 /** One member per type, each with `fields`, so that a message narrows by its type. */
 type Each<T extends string, Fields extends object = object> = T extends string ? { type: T } & Fields : never;
 
 /** A message to the worker, by type. */
 export type Message =
     | Each<'config' | 'status' | 'seen' | 'clear'>
-    | Each<Exclude<SignLensPage.Request, 'config'>, { payload: PagePayload }>
+    | PageMessage
     | Each<'feedback', { payload: FeedbackPayload }>
     /** The wallets of a tab, or, when the popup cannot tell its tab, of the latest page that announced any. */
     | Each<'wallet-list', { tabId: number | null }>
@@ -147,39 +159,54 @@ export interface Replies {
     revoke: boolean;
 }
 
-/** `value` if it is an object, else an empty one: what a payload is read from. */
-function fields(value: unknown): Record<string, unknown> {
-    return typeof value === 'object' && value !== null && !Array.isArray(value) ? (value as Record<string, unknown>) : {};
+/** `value`'s fields if it is an object, else none: what a payload is read from. */
+function fields(value: unknown): Readonly<Record<string, unknown>> {
+    return objectFields(value) ?? {};
 }
 
-/** A message to the worker as it arrived, read into one this worker knows, or `null`. */
-export function readMessage(value: unknown): Message | null {
-    const { type, payload, tabId, id, decision, origin, address } = fields(value);
-    switch (type) {
-        case 'config':
-        case 'status':
-        case 'seen':
-        case 'clear':
-            return { type };
-        case 'connect':
-        case 'explain':
-        case 'message':
-        case 'wallets':
-        case 'connect-failed': {
-            const given = fields(payload);
-            return { type, payload: { ...given, origin: printable(given.origin, 200) } };
-        }
-        case 'feedback':
-            return { type, payload: fields(payload) };
-        case 'wallet-list':
-            return { type, tabId: typeof tabId === 'number' ? tabId : null };
-        case 'decision':
-            return typeof id === 'string' && id ? { type, id, decision: decision === 'continue' ? 'continue' : 'reject' } : null;
-        case 'revoke':
-            return typeof origin === 'string' && typeof address === 'string' ? { type, origin, address } : null;
-        default:
-            return null;
-    }
+/** A message of type `T`, read from the `fields` that arrived; `origin` is the page's, for a page's request. */
+type Reader<T extends MessageType> = (fields: Record<string, unknown>, origin: string) => Extract<Message, { type: T }> | null;
+
+/** A page's request, with the origin stated by the extension: whatever else the page sent, as it sent it. */
+function pageRequest<T extends keyof PagePayloads>(type: T): Reader<T> {
+    // Every field but the origin is unknown, which anything is: TypeScript cannot see it through T.
+    return ({ payload }, origin) => ({ type, payload: { ...fields(payload), origin } }) as Extract<Message, { type: T }>;
+}
+
+/** How each message is read, by its type: one for every type, or this does not compile. */
+const READERS: { [T in MessageType]: Reader<T> } = {
+    config: () => ({ type: 'config' }),
+    status: () => ({ type: 'status' }),
+    seen: () => ({ type: 'seen' }),
+    clear: () => ({ type: 'clear' }),
+    connect: pageRequest('connect'),
+    explain: pageRequest('explain'),
+    message: pageRequest('message'),
+    wallets: pageRequest('wallets'),
+    'connect-failed': pageRequest('connect-failed'),
+    feedback: ({ payload }) => ({ type: 'feedback', payload: fields(payload) }),
+    'wallet-list': ({ tabId }) => ({ type: 'wallet-list', tabId: typeof tabId === 'number' ? tabId : null }),
+    decision: ({ id, decision }) =>
+        typeof id === 'string' && id ? { type: 'decision', id, decision: decision === 'continue' ? 'continue' : 'reject' } : null,
+    revoke: ({ origin, address }) =>
+        typeof origin === 'string' && typeof address === 'string' ? { type: 'revoke', origin, address } : null,
+};
+
+/** Every message type the worker takes: the readers' keys, so none is left out. */
+export const MESSAGE_TYPES = Object.keys(READERS) as readonly MessageType[];
+
+/**
+ * A message to the worker as it arrived, read into one this worker knows,
+ * or `null`. A page's request has the origin of the page that `sender`
+ * says it came from, where the browser says (Chrome): else the one the
+ * content script stamped, from the page's location in its own world.
+ */
+export function readMessage(value: unknown, sender: { origin?: string | undefined } = {}): Message | null {
+    const all = fields(value);
+    const type = all.type;
+    if (typeof type !== 'string' || !Object.hasOwn(READERS, type)) return null;
+    const origin = printable(typeof sender.origin === 'string' ? sender.origin : fields(all.payload).origin, 200);
+    return (READERS[type as MessageType] as Reader<MessageType>)(all, origin);
 }
 
 /** Sends `message` to the worker, from one of the extension's own pages, and its answer. */
@@ -188,17 +215,19 @@ export function send<T extends MessageType>(message: Extract<Message, { type: T 
 }
 
 /**
- * Whether the worker takes a message of `type` from `sender`: anything from
- * the extension's own pages (`root`, its URL with the trailing slash), and
- * from a content script only what a page may ask. So a page can never
- * decide, rate, clear, or read the settings' status, however it words it.
+ * Whether the worker takes a message of `type`, one it has read, from
+ * `sender`: anything from the extension's own pages (`root`, its URL with
+ * the trailing slash), and from a content script only what a page may
+ * ask. So a page can never decide, rate, clear, or read the settings'
+ * status, however it words it; a type the worker does not know never gets
+ * here (`readMessage`).
  */
 export function accepts(
-    type: unknown,
+    type: MessageType,
     sender: { id?: string | undefined; url?: string | undefined },
     self: { id: string; root: string },
 ): boolean {
     if (sender.id !== self.id) return false;
     if ((sender.url ?? '').startsWith(self.root)) return true;
-    return (PAGE_REQUESTS as readonly unknown[]).includes(type);
+    return (PAGE_REQUESTS as readonly MessageType[]).includes(type);
 }

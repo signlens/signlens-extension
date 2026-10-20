@@ -2,9 +2,9 @@
 // the window; the content script asks the worker for the part the page
 // needs.
 
+import { base58Decode as decodeAddress } from './base58.ts';
 import type { Mode } from './model.ts';
-import { base58Decode as decodeAddress } from './solana.ts';
-import { local } from './store.ts';
+import { inTurn, local } from './store.ts';
 import type { Contact } from './types.ts';
 
 export interface Settings {
@@ -17,9 +17,15 @@ export interface Settings {
     apiUrl: string;
     rpcUrl: string;
     /** "Show the explanation and ask first": wait for a decision before refusing a request or passing it on. Off, in pass-through mode, a request SignLens would refuse (blocked, or an error) still waits for one; in watch mode none does (`gate.mustAsk`). */
-    gate: boolean;
+    askFirst: boolean;
     /** The address book, one `Name = address` per line. */
     contacts: string;
+    /**
+     * Your own addresses, one per line: in pass-through mode the only ones
+     * SignLens calls "you". An address a page names as yours that is not
+     * here is asked about first (requests.ts).
+     */
+    myAddresses: string;
     /** Look up tokens the snapshot does not list: decimals from the RPC's mint accounts, symbols from the token list, passed to the engine as claims. */
     lookupTokens: boolean;
     tokenApiUrl: string;
@@ -35,8 +41,9 @@ export const DEFAULTS: Readonly<Settings> = Object.freeze({
     upstream: '',
     apiUrl: 'https://api.signlens.dev',
     rpcUrl: 'https://solana-rpc.publicnode.com',
-    gate: true,
+    askFirst: true,
     contacts: '',
+    myAddresses: '',
     lookupTokens: true,
     tokenApiUrl: 'https://lite-api.jup.ag/tokens/v2/search',
     simulate: true,
@@ -77,6 +84,29 @@ export function parseContacts(text: string): { contacts: Contact[]; bad: number[
         contacts.push({ name, address });
     });
     return { contacts, bad };
+}
+
+/** Your addresses as the settings hold them: the valid lines of `text`, once each, and the line numbers of the others. */
+export function parseAddresses(text: string): { addresses: string[]; bad: number[] } {
+    const addresses: string[] = [];
+    const bad: number[] = [];
+    text.split('\n').forEach((line, i) => {
+        const address = line.trim();
+        if (address === '') return;
+        if (!addressBytes(address)) bad.push(i + 1);
+        else if (!addresses.includes(address)) addresses.push(address);
+    });
+    return { addresses, bad };
+}
+
+/** Adds `more` to your addresses in the settings, in turn with any other write that reads first. */
+export function addAddresses(more: string[]): Promise<void> {
+    return inTurn(async () => {
+        const { myAddresses = '' } = await local.get('myAddresses');
+        const kept = parseAddresses(myAddresses).addresses;
+        const added = more.filter((address) => !kept.includes(address));
+        if (added.length > 0) await local.set({ myAddresses: [myAddresses.trimEnd(), ...added].filter(Boolean).join('\n') });
+    });
 }
 
 /**

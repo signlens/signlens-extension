@@ -17,8 +17,8 @@ function explained(verdict: TransactionVerdict): ExplainedRow {
         effects: [],
         sections: [],
         text: '',
-        tables: 'none',
-        simulation: 'off',
+        tables: null,
+        simulation: null,
         hints: [],
         capture: '',
         digest: null,
@@ -26,13 +26,13 @@ function explained(verdict: TransactionVerdict): ExplainedRow {
     };
 }
 
-const failed: Row = { kind: 'failed', error: 'down' };
+const failed: Row = { kind: 'failed', scope: 'request', error: 'down' };
 
-test('the worst verdict wins, and a failed row is an error', () => {
+test('the worst verdict wins, a failed row is an error, and so is nothing explained at all', () => {
     assert.equal(worstVerdict([explained('ok'), explained('warning')]), 'warning');
     assert.equal(worstVerdict([explained('ok'), failed, explained('blocked')]), 'blocked');
     assert.equal(worstVerdict([explained('ok'), failed]), 'error');
-    assert.equal(worstVerdict([]), 'message');
+    assert.equal(worstVerdict([]), 'error');
     assert.equal(worstVerdict(failure('down').rows), 'error');
 });
 
@@ -47,7 +47,17 @@ test('a message and a site asking to see the address have no verdict; each row s
     assert.equal(rowVerdictWord({ kind: 'message', text: 'hello' }), 'message');
     assert.equal(rowVerdictWord({ kind: 'consent', address: 'A' }), 'message');
     assert.equal(summaryOf(explained('ok')), 'A ok transaction');
-    assert.equal(summaryOf(failed), 'down');
+    // A line leads with a capital, whatever the failure's own words: beside "Not explained: …", not "not explained: …".
+    assert.equal(summaryOf(failed), 'Down');
+    assert.equal(
+        summaryOf({ kind: 'failed', scope: 'request', error: 'not explained: the page closed or reloaded' }),
+        'Not explained: the page closed or reloaded',
+    );
+    // A transaction that could not be explained says so first: an error is not a glitch to click past.
+    assert.equal(
+        summaryOf({ kind: 'failed', scope: 'transaction', error: 'every worker is busy; try again', capture: 'AQ==' }),
+        'Not explained: every worker is busy; try again',
+    );
     assert.equal(summaryOf({ kind: 'message', text: 'hello' }), 'A message, shown as it is');
     assert.equal(summaryOf({ kind: 'consent', address: 'A' }), 'Asked to see the watched address A');
 });

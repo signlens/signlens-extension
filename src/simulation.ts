@@ -3,16 +3,42 @@
 // and how the balances of the accounts it may write change. The RPC sees
 // the whole transaction, and what it answers is a claim.
 
-import { type Balance, type LoadedAddresses, messageAccounts, multipleAccounts, type RpcAccount, rpcCall, tokenBalance } from './solana.ts';
+import { objectFields } from './json.ts';
+import {
+    type Balance,
+    type LoadedAddresses,
+    messageAccounts,
+    multipleAccounts,
+    type RpcAccount,
+    readAccountList,
+    rpcCall,
+    tokenBalance,
+} from './solana.ts';
 import { describe, withoutControls } from './text.ts';
 import type { SimulatedChange, Simulation } from './types.ts';
 
 /** What `simulateTransaction` answers, as far as it is read. */
+/** A simulation's answer as read (`readSimulation`): the node's error (null when it ran through), its logs, its units, the accounts after. */
 export interface SimulationOutcome {
     err: unknown;
-    logs?: unknown;
-    unitsConsumed?: unknown;
-    accounts?: unknown;
+    logs: string[];
+    unitsConsumed: number | null;
+    accounts: (RpcAccount | null)[] | null;
+}
+
+/** The value of a `simulateTransaction` result, read field by field; `null` when it is not one, or its accounts are not accounts. */
+export function readSimulation(result: unknown): SimulationOutcome | null {
+    const value = objectFields(objectFields(result)?.value);
+    if (!value) return null;
+    const { err = null, logs, unitsConsumed, accounts } = value;
+    const after = accounts === undefined || accounts === null ? null : readAccountList(accounts);
+    if (accounts !== undefined && accounts !== null && after === null) return null;
+    return {
+        err,
+        logs: Array.isArray(logs) ? logs.filter((line): line is string => typeof line === 'string') : [],
+        unitsConsumed: typeof unitsConsumed === 'number' && Number.isInteger(unitsConsumed) && unitsConsumed >= 0 ? unitsConsumed : null,
+        accounts: after,
+    };
 }
 
 /** How many accounts a node reports after a simulation, at most. */
@@ -24,11 +50,10 @@ const READ_ACCOUNTS = 100;
 export type SimulationResult = (Simulation & { unavailable?: string }) | null;
 
 /** Why a simulation failed: the RPC's error, and the program's last word on it when it logged one. */
-export function failureText(outcome: SimulationOutcome): string {
+export function failureText(outcome: Pick<SimulationOutcome, 'err' | 'logs'>): string {
     const error = withoutControls(JSON.stringify(outcome.err));
-    const logs = Array.isArray(outcome.logs) ? (outcome.logs as unknown[]) : [];
-    const said = logs
-        .filter((line): line is string => typeof line === 'string' && /^Program log: /.test(line))
+    const said = outcome.logs
+        .filter((line) => /^Program log: /.test(line))
         .map((line) => withoutControls(line.replace(/^Program log: /, '')).trim())
         .filter((line) => line && !/^Instruction: /.test(line))
         .at(-1);
@@ -86,6 +111,7 @@ export async function simulate(
     bytes: Uint8Array,
     loaded: LoadedAddresses | undefined,
     rpc: string,
+    stop?: AbortSignal,
 ): Promise<SimulationResult> {
     let accounts: ReturnType<typeof messageAccounts>;
     try {
@@ -106,29 +132,33 @@ export async function simulate(
     // it against its nonce, and replacing it would fail that check. Only a
     // blockhash the chain no longer knows is replaced, on a second try.
     const run = (watched: string[], replaceRecentBlockhash: boolean) =>
-        rpcCall<{ value: SimulationOutcome }>(rpc, 'simulateTransaction', [
-            transaction,
-            {
-                encoding: 'base64',
-                sigVerify: false,
-                replaceRecentBlockhash,
-                commitment: 'confirmed',
-                accounts: { encoding: 'base64', addresses: watched },
-            },
-        ]);
+        rpcCall(
+            rpc,
+            'simulateTransaction',
+            [
+                transaction,
+                {
+                    encoding: 'base64',
+                    sigVerify: false,
+                    replaceRecentBlockhash,
+                    commitment: 'confirmed',
+                    accounts: { encoding: 'base64', addresses: watched },
+                },
+            ],
+            readSimulation,
+            undefined,
+            stop,
+        );
     try {
-        const read = await multipleAccounts(rpc, addresses);
+        const read = await multipleAccounts(rpc, addresses, stop);
         const before = new Map(addresses.map((address, i) => [address, tokenBalance(read[i])]));
         const watched = watchList(addresses, signers, before);
         const first = await run(watched, false);
-        const outcome = (first.value.err === 'BlockhashNotFound' ? await run(watched, true) : first).value;
+        const outcome = first.err === 'BlockhashNotFound' ? await run(watched, true) : first;
         return {
             failure: outcome.err ? failureText(outcome) : null,
-            units: typeof outcome.unitsConsumed === 'number' && Number.isInteger(outcome.unitsConsumed) ? outcome.unitsConsumed : null,
-            changes:
-                !outcome.err && Array.isArray(outcome.accounts)
-                    ? balanceChanges(watched, before, outcome.accounts as (RpcAccount | null)[])
-                    : [],
+            units: outcome.unitsConsumed,
+            changes: !outcome.err && outcome.accounts ? balanceChanges(watched, before, outcome.accounts) : [],
         };
     } catch (error) {
         return { failure: null, units: null, changes: [], unavailable: describe(error) };

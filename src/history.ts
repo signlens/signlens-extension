@@ -2,23 +2,27 @@
 // which shows the worst verdict among the answers the popup has not shown
 // yet. Kept in session storage, which content scripts cannot read, and
 // written one change at a time (`inTurn`): two answers at once would
-// otherwise undo each other's counts. A failed write is the caller's to
-// handle.
+// otherwise undo each other's counts. A write the browser refuses for room
+// is tried again with less; any other failure is the caller's to handle.
 
 import type { HistoryEntry, Row, VerdictWord } from './model.ts';
-import { inTurn, session } from './store.ts';
+import { inTurn, isQuotaError, session } from './store.ts';
 import { worse } from './verdict.ts';
 
 /** How many answers are kept. */
 export const HISTORY_LENGTH = 20;
 
 /**
- * How much of session storage the history may take, as JSON in UTF-8:
- * half of Chrome's 10 MB, so the requests waiting in a window always have
- * room. An answer of 32 transactions with their full texts can come close
- * to it on its own.
+ * How much of session storage the history may take, as JSON in UTF-8.
+ * Chrome counts an explanation at about 2.7 times its JSON (an answer of
+ * 32 transactions, 0.44 MB of JSON, takes 1.07 MiB of its 10 MiB), so this
+ * is about half of it, and the requests waiting in a window have the rest.
+ * A write refused for room all the same is tried again with less.
  */
-export const HISTORY_BYTES = 5 * 1024 * 1024;
+export const HISTORY_BYTES = 2 * 1024 * 1024;
+
+/** How much one answer may take before it is slimmed: a quarter of the history, so that one answer cannot push the rest out. */
+export const ENTRY_BYTES = HISTORY_BYTES / 4;
 
 const BADGE: Record<VerdictWord, { text: string; color: string }> = {
     ok: { text: 'OK', color: '#1a7f4b' },
@@ -39,30 +43,54 @@ function slimmer(row: Row, step: 1 | 2): Row {
     return step === 1 ? { ...row, text } : { ...row, text, sections: [], capture: '' };
 }
 
-/** `list` cut to fit `HISTORY_BYTES`: the oldest answers go first, and the newest alone is slimmed until it fits. */
-function withinBudget(list: HistoryEntry[]): HistoryEntry[] {
-    let kept = list;
-    while (kept.length > 1 && size(kept) > HISTORY_BYTES) kept = kept.slice(0, -1);
+/** `entry` slimmed a step at a time until it is within `ENTRY_BYTES`, or as slim as it gets. */
+function withinShare(entry: HistoryEntry): HistoryEntry {
+    let slim = entry;
     for (const step of [1, 2] as const) {
-        const [newest] = kept;
-        if (!newest || size(kept) <= HISTORY_BYTES) break;
-        kept = [{ ...newest, rows: newest.rows.map((row) => slimmer(row, step)) }];
+        if (size(slim) <= ENTRY_BYTES) break;
+        slim = { ...entry, rows: entry.rows.map((row) => slimmer(row, step)) };
+    }
+    return slim;
+}
+
+/** `list` cut to fit `HISTORY_BYTES`: the newest slimmed to its share, then the oldest answers dropped until the rest fit. Each is measured once. */
+function withinBudget([newest, ...older]: HistoryEntry[]): HistoryEntry[] {
+    if (!newest) return [];
+    const kept = [withinShare(newest)];
+    // As JSON: the brackets, and a comma before each answer after the first.
+    let total = 2 + size(kept[0]);
+    for (const entry of older) {
+        total += 1 + size(entry);
+        if (total > HISTORY_BYTES) break;
+        kept.push(entry);
     }
     return kept;
 }
 
-/** Keeps `entry` as the newest answer, and counts it as not shown yet. */
-export function remember(entry: HistoryEntry): Promise<void> {
-    return inTurn(async () => {
-        const { history = [], unseen = 0 } = await session.get('history', 'unseen');
-        await session.set({ history: withinBudget([entry, ...history].slice(0, HISTORY_LENGTH)), unseen: unseen + 1 });
-    });
+/** `list` a step smaller: without its oldest answer, or its only one slimmed to the bone; undefined when it is as small as it gets. */
+function smaller(list: HistoryEntry[]): HistoryEntry[] | undefined {
+    if (list.length > 1) return list.slice(0, -1);
+    const [only] = list;
+    if (!only) return undefined;
+    const slim = { ...only, rows: only.rows.map((row) => slimmer(row, 2)) };
+    return size(slim) < size(only) ? [slim] : undefined;
 }
 
-/** The newest answer kept, if any. */
-export async function latest(): Promise<HistoryEntry | undefined> {
-    const { history = [] } = await session.get('history');
-    return history[0];
+/** Keeps `entry` as the newest answer, in place of the older ones `replacing` picks, and counts it as not shown yet. */
+export function remember(entry: HistoryEntry, replacing: (older: HistoryEntry) => boolean = () => false): Promise<void> {
+    return inTurn(async () => {
+        const { history = [], unseen = 0 } = await session.get('history', 'unseen');
+        let kept = withinBudget([entry, ...history.filter((older) => !replacing(older))].slice(0, HISTORY_LENGTH));
+        for (;;) {
+            try {
+                return await session.set({ history: kept, unseen: unseen + 1 });
+            } catch (error) {
+                const less = isQuotaError(error) ? smaller(kept) : undefined;
+                if (!less) throw error;
+                kept = less;
+            }
+        }
+    });
 }
 
 /** Shows `verdict` on the badge, unless a worse one the popup has not shown is already there. */

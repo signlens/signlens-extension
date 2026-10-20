@@ -41,8 +41,10 @@ test('a half-typed address is flagged and not saved', async ({ popup, worker }) 
 test('an address in plain http to another machine is flagged and not saved, and the default is not stored', async ({ popup, worker }) => {
     await popup.getByLabel('SignLens API').fill('http://api.example.com');
     await popup.getByLabel('SignLens API').press('Tab');
-    // One word for it, typed now or kept from before: the address is not used.
-    await expect(popup.locator('#apiUrl-hint')).toHaveText(/^Not used: plain http is for this machine only/);
+    // One word for it, typed now or kept from before: the address is not used; and what is used instead.
+    await expect(popup.locator('#apiUrl-hint')).toHaveText(
+        'Not used: plain http is for this machine only (localhost, 127.0.0.1); use https. SignLens keeps using https://api.signlens.dev.',
+    );
     // The field says it is wrong, and why, to whoever cannot see the red line under it.
     await expect(popup.getByLabel('SignLens API')).toHaveAttribute('aria-invalid', 'true');
     await expect(popup.getByLabel('SignLens API')).toHaveAccessibleDescription(/Not used: plain http is for this machine only/);
@@ -68,9 +70,16 @@ test('an address kept from before that is no longer taken is flagged when the po
     // Plain http to a LAN host was taken before; now only this machine may be plain http.
     await configure({ apiUrl: 'http://192.168.1.10:8787' });
     await popup.reload();
-    await expect(popup.locator('#apiUrl-hint')).toHaveText(/^Not used: plain http is for this machine only/);
+    // Nothing else stands in for it: SignLens asks no API at all until it is fixed.
+    await expect(popup.locator('#apiUrl-hint')).toHaveText(
+        'Not used: plain http is for this machine only (localhost, 127.0.0.1); use https. SignLens asks no API until it is fixed.',
+    );
     await expect(popup.getByLabel('SignLens API')).toHaveAttribute('aria-invalid', 'true');
     await expect(popup.getByLabel('RPC for lookup tables')).toHaveAttribute('aria-invalid', 'false');
+    // The status line says so once, and points at the setting.
+    await expect(popup.locator('#engine-status')).toHaveText(
+        'SignLens API not used: its address in the settings is not one SignLens may call.',
+    );
 });
 
 test('connecting in watch mode needs an address', async ({ configure, dapp }) => {
@@ -121,7 +130,7 @@ test('a named wallet the page does not have refuses the connect and says so in t
     await expect(popup.locator('#view-requests')).toBeVisible();
     await expect(popup.locator('#history > li')).toHaveCount(1);
     await expect(popup.locator('#history > li').first()).toContainText(
-        'SignLens could not connect: no wallet named "Solflare" to pass requests to (found: Fake Wallet). Choose a wallet in the extension\'s settings.',
+        'SignLens could not connect: no wallet named "Solflare" to pass requests to (found: "Fake Wallet"). Choose a wallet in the extension\'s settings.',
     );
     await expect(popup.locator('#history > li').first().locator('.where')).toHaveText(/^localhost:\d+ · connect$/);
 

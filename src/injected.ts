@@ -24,7 +24,7 @@
 
 (() => {
     const NAME = 'SignLens';
-    const CHANNEL = 'signlens';
+    const CHANNEL: SignLensPage.Offer['channel'] = 'signlens';
     const REQUEST_TIMEOUT_MS = 30_000;
     // A request that waits for the user's decision in the SignLens window;
     // past this it is refused, not passed on.
@@ -179,7 +179,8 @@
 
     /** An answer or a notice from the extension. */
     function receive(data: unknown): void {
-        const type = own(data, 'type');
+        // A notice, by its type; else an answer, by its id.
+        const type = own(data, 'type') as SignLensPage.Notice['type'] | undefined;
         if (type === 'connected') {
             announceWallets();
             return;
@@ -211,7 +212,9 @@
      * The transfer can happen once.
      */
     function offer(): void {
-        window.postMessage({ channel: CHANNEL, to: 'extension', type: 'port' }, window.location.origin, [channel.port2]);
+        window.postMessage({ channel: CHANNEL, to: 'extension', type: 'port' } satisfies SignLensPage.Offer, window.location.origin, [
+            channel.port2,
+        ]);
     }
 
     /** Tells the extension something it does not answer: the wallets found here, a failed connect. */
@@ -332,7 +335,7 @@
         if (found) return found;
         const names = usable.map((wallet) => wallet.name);
         const message = `no wallet${wanted ? ` named "${config.upstream.trim()}"` : ''} to pass requests to (found: ${names.join(', ') || 'none'})`;
-        notify('connect-failed', { message, wallets: names });
+        notify('connect-failed', { wallets: names });
         throw new Error(`${NAME}: ${message}`);
     }
 
@@ -425,7 +428,7 @@
         const why =
             typeof error === 'string'
                 ? `SignLens could not explain it: ${error}`
-                : `The ${type === 'message' ? 'message' : 'explanation'} is in the SignLens popup.`;
+                : `The ${type === 'message' ? 'message' : 'request'} is in the SignLens popup.`;
         return { passOn: false, by: 'user', why };
     }
 
@@ -450,6 +453,20 @@
         return session?.mode === 'passthrough' && typeof session.upstream.name === 'string' ? { wallet: session.upstream.name } : {};
     }
 
+    /**
+     * The addresses a request is signed with, as the dapp names one for each
+     * input, or the session's when it names none. The page's word: the
+     * extension checks them against the addresses you gave it (requests.ts).
+     */
+    function signedWith(copies: SignInput[]): string[] {
+        const out: string[] = [];
+        for (let i = 0; i < copies.length; i += 1) {
+            const address = copies[i]?.account?.address;
+            if (typeof address === 'string') append(out, address);
+        }
+        return out.length > 0 ? out : addresses(accounts);
+    }
+
     function transactionFeature(method: string, name: string): SignFunction {
         return async (...inputs) => {
             if (!session) throw new Error(`${NAME}: not connected; connect first`);
@@ -461,7 +478,7 @@
                 append(transactions, toBase64(copy.transaction as Uint8Array));
                 append(chains, typeof copy.chain === 'string' ? copy.chain : null);
             }
-            const shown = await askExtension('explain', method, { accounts: addresses(accounts), transactions, chains, ...handedTo() });
+            const shown = await askExtension('explain', method, { accounts: signedWith(copies), transactions, chains, ...handedTo() });
             return finish(method, name, copies, shown);
         };
     }
@@ -579,10 +596,18 @@
     // As an app: learn of the other wallets, to pass requests to.
     const app: WalletsApi = Object.freeze({
         register(...wallets: Wallet[]) {
-            for (const other of wallets) if (other !== wallet) otherWallets.add(other);
+            // As @wallet-standard/app does: a wallet already known is not added
+            // again, and the function returned takes back only what this call
+            // added, so a page cannot take out the wallet you sign with.
+            const added: Wallet[] = [];
+            for (const other of wallets) {
+                if (other === wallet || otherWallets.has(other)) continue;
+                otherWallets.add(other);
+                added.push(other);
+            }
             announceWallets();
             return () => {
-                for (const other of wallets) otherWallets.delete(other);
+                for (const other of added) otherWallets.delete(other);
                 announceWallets();
             };
         },

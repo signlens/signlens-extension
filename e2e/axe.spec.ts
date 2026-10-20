@@ -79,7 +79,14 @@ test('the window for several transactions, and for a request gone', async ({ con
     expect(await violations(stale)).toEqual([]);
 });
 
-test('the consent window', async ({ context, worker }) => {
+test('the consent window and the address window', async ({ context, worker }) => {
     const consent = await windowFor(context, worker, { origin: 'https://jup.ag', address: WATCHED }, 'connect.html');
     expect(await violations(consent)).toEqual([]);
+    const address = await windowFor(
+        context,
+        worker,
+        { origin: 'https://jup.ag', address: 'EXkwQoWHvDj7gdLdba4zWo3ktJNocyjT9DDQAryU7Tqa', mine: [WATCHED] },
+        'address.html',
+    );
+    expect(await violations(address)).toEqual([]);
 });

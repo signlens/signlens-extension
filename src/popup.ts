@@ -2,22 +2,24 @@
 // see the watched address, and whether the SignLens API answers.
 
 import type { ApiStatus } from './api.ts';
+import { byId } from './dom.ts';
 import { endpointProblem } from './endpoint.ts';
 import { send, type WalletList } from './messages.ts';
 import type { HistoryEntry, Row } from './model.ts';
 import { noWalletHint, runsOn } from './pages.ts';
 import { element, renderRow } from './render.ts';
-import { addressBytes, DEFAULTS, ENDPOINTS, parseContacts, type Settings, settings } from './settings.ts';
+import { addressBytes, DEFAULTS, ENDPOINTS, parseAddresses, parseContacts, type Settings, settings } from './settings.ts';
 import { local, onChange, session } from './store.ts';
-import { methodName, short, withoutScheme } from './text.ts';
+import { describe, methodName, short, withoutScheme } from './text.ts';
 import { rowVerdictWord, summaryOf } from './verdict.ts';
 
-const form = document.getElementById('settings') as HTMLFormElement;
-const engineStatus = document.getElementById('engine-status') as HTMLElement;
-const addressHint = document.getElementById('address-hint') as HTMLElement;
-const contactsHint = document.getElementById('contacts-hint') as HTMLElement;
-const historyList = document.getElementById('history') as HTMLOListElement;
-const empty = document.getElementById('empty') as HTMLElement;
+const form = byId('settings', HTMLFormElement);
+const engineStatus = byId('engine-status');
+const addressHint = byId('address-hint');
+const contactsHint = byId('contacts-hint');
+const myAddressesHint = byId('myAddresses-hint');
+const historyList = byId('history', HTMLOListElement);
+const empty = byId('empty');
 
 function field(name: string): HTMLInputElement {
     return form.elements.namedItem(name) as HTMLInputElement;
@@ -30,7 +32,7 @@ function field(name: string): HTMLInputElement {
  */
 async function showWallets(saved: string): Promise<void> {
     const select = form.elements.namedItem('upstream') as HTMLSelectElement;
-    const hint = document.getElementById('upstream-hint') as HTMLElement;
+    const hint = byId('upstream-hint');
     // The saved choice is in place before anything is awaited, so a save
     // meanwhile (any input in the form) keeps it rather than clearing it.
     select.replaceChildren(new Option('First one found', ''), ...(saved ? [new Option(saved, saved)] : []));
@@ -57,7 +59,7 @@ async function showWallets(saved: string): Promise<void> {
     let running = true;
     if (tabId !== undefined && found.length === 0 && runsOn(url)) {
         try {
-            const answer = chrome.tabs.sendMessage(tabId, { type: 'ping' });
+            const answer = chrome.tabs.sendMessage(tabId, { type: 'ping' } satisfies SignLensPage.Ping);
             const late = new Promise<false>((resolve) => setTimeout(() => resolve(false), 500));
             running = Boolean(await Promise.race([answer, late]));
         } catch {
@@ -94,6 +96,7 @@ function showView(view: string, remember = false): void {
         tab.setAttribute('aria-selected', String(selected));
         tab.tabIndex = selected ? 0 : -1;
     }
+    // Which view was open is a convenience: not worth a word when it is not kept.
     if (remember) session.set({ view }).catch(() => {});
 }
 
@@ -112,17 +115,19 @@ function onTabKey(event: KeyboardEvent): void {
 
 /** The requests' tab label: how many arrived since the popup was last open. */
 function showUnseen(unseen: number): void {
-    const count = document.getElementById('unseen') as HTMLElement;
+    const count = byId('unseen');
     count.hidden = !unseen;
     count.textContent = unseen ? `${unseen} new` : '';
 }
 
 function showModeFields(): void {
     const watch = field('mode').value === 'watch';
-    (document.getElementById('address-field') as HTMLElement).hidden = !watch;
-    (document.getElementById('sites-field') as HTMLElement).hidden = !watch;
-    (document.getElementById('upstream-field') as HTMLElement).hidden = watch;
-    (document.getElementById('token-api-field') as HTMLElement).hidden = !field('lookupTokens').checked;
+    byId('address-field').hidden = !watch;
+    byId('sites-field').hidden = !watch;
+    byId('upstream-field').hidden = watch;
+    // In watch mode "you" is the watched address.
+    byId('my-addresses-field').hidden = watch;
+    byId('token-api-field').hidden = !field('lookupTokens').checked;
 }
 
 function checkAddress(): void {
@@ -133,19 +138,31 @@ function checkAddress(): void {
     const { bad } = parseContacts(field('contacts').value);
     contactsHint.textContent = bad.length ? `Line${bad.length === 1 ? '' : 's'} ${bad.join(', ')} not read: expected Name = address.` : '';
     field('contacts').setAttribute('aria-invalid', String(bad.length > 0));
+    const notMine = parseAddresses(field('myAddresses').value).bad;
+    myAddressesHint.textContent = notMine.length
+        ? `Line${notMine.length === 1 ? '' : 's'} ${notMine.join(', ')} not read: not a Solana address.`
+        : '';
+    field('myAddresses').setAttribute('aria-invalid', String(notMine.length > 0));
 }
 
 let statusCheck = 0;
 
-/** Asks the worker whether the API answers and what it carries. */
+/** Asks the worker whether the API answers and what it carries; an address SignLens may not call is not asked, and the field says why. */
 async function checkEngine(): Promise<void> {
     statusCheck += 1;
     const check = statusCheck;
+    const { apiUrl } = await settings();
+    if (check !== statusCheck) return;
+    if (endpointProblem(apiUrl)) {
+        engineStatus.textContent = 'SignLens API not used: its address in the settings is not one SignLens may call.';
+        engineStatus.className = 'status down';
+        return;
+    }
     let status: ApiStatus | { error: string };
     try {
         status = await send({ type: 'status' });
     } catch (error) {
-        status = { error: error instanceof Error ? error.message : String(error) };
+        status = { error: describe(error) };
     }
     if (check !== statusCheck) return;
     if ('error' in status) {
@@ -166,28 +183,47 @@ function save(): void {
         // Half-typed addresses are not saved: a connected dapp follows every change.
         ...(address === '' || addressBytes(address) ? { address } : {}),
         upstream: (form.elements.namedItem('upstream') as HTMLSelectElement).value.trim(),
-        gate: field('gate').checked,
+        askFirst: field('askFirst').checked,
         contacts: field('contacts').value,
+        myAddresses: field('myAddresses').value,
         lookupTokens: field('lookupTokens').checked,
         simulate: field('simulate').checked,
     };
     void saved(local.set(update));
 }
 
+/** Says in the status line `status` when the worker did not do what it was asked (`failed`), and stops saying so once it does. */
+async function done(action: Promise<boolean>, status: string, failed: string): Promise<void> {
+    const ok = await action.catch(() => false);
+    byId(status).textContent = ok ? '' : failed;
+}
+
 /** Says, under the settings, when the browser would not keep them, and stops saying so once it does. */
 async function saved(write: Promise<void>): Promise<void> {
-    const status = document.getElementById('save-status') as HTMLElement;
+    const status = byId('save-status');
     try {
         await write;
         status.textContent = '';
     } catch (error) {
-        status.textContent = `Not saved: ${error instanceof Error ? error.message : String(error)}`;
+        status.textContent = `Not saved: ${describe(error)}`;
     }
 }
 
-/** Says what is wrong with endpoint `name`, or clears the field's hint. Typed now or kept from before, such an address is not used. */
-function flagEndpoint(name: (typeof ENDPOINTS)[number], problem: string | null): void {
-    (document.getElementById(`${name}-hint`) as HTMLElement).textContent = problem ? `Not used: ${problem}.` : '';
+/** What each endpoint is, in the hint that says SignLens asks none. */
+const ENDPOINT_NAMES: Readonly<Record<(typeof ENDPOINTS)[number], string>> = { apiUrl: 'API', rpcUrl: 'RPC', tokenApiUrl: 'token list' };
+
+/**
+ * Says what is wrong with endpoint `name`, and what SignLens uses instead:
+ * `kept`, the address it keeps (typed now, a bad address is not saved), or
+ * none when that one is no good either (kept from before the rule). Or
+ * clears the field's hint.
+ */
+function flagEndpoint(name: (typeof ENDPOINTS)[number], problem: string | null, kept?: string): void {
+    const instead =
+        kept !== undefined && !endpointProblem(kept)
+            ? `SignLens keeps using ${kept}.`
+            : `SignLens asks no ${ENDPOINT_NAMES[name]} until it is fixed.`;
+    byId(`${name}-hint`).textContent = problem ? `Not used: ${problem}. ${instead}` : '';
     field(name).setAttribute('aria-invalid', String(problem !== null));
 }
 
@@ -202,18 +238,25 @@ function flagEndpoint(name: (typeof ENDPOINTS)[number], problem: string | null):
 async function saveEndpoints(flag: boolean): Promise<void> {
     const update: Partial<Settings> = {};
     const reset: (typeof ENDPOINTS)[number][] = [];
+    const refused: [(typeof ENDPOINTS)[number], string][] = [];
     for (const name of ENDPOINTS) {
         const value = field(name).value.trim();
         const problem = value === '' ? null : endpointProblem(value);
         if (problem) {
-            if (flag) flagEndpoint(name, problem);
+            refused.push([name, problem]);
             continue;
         }
         flagEndpoint(name, null);
         if (value === '' || value === DEFAULTS[name]) reset.push(name);
         else update[name] = value;
     }
-    await Promise.all([saved(local.set(update)), saved(local.remove(...reset))]);
+    const writes = Promise.all([saved(local.set(update)), saved(local.remove(...reset))]);
+    if (flag && refused.length > 0) {
+        // What is kept in place of each: the address saved before, untouched by these writes.
+        const config = await settings();
+        for (const [name, problem] of refused) flagEndpoint(name, problem, config[name]);
+    }
+    await writes;
 }
 
 /** An item of a list `updateList` keeps, and how to make it the first time. */
@@ -269,8 +312,8 @@ function updateList(
  * allowed for an address watched before, marked so.
  */
 async function showSites(): Promise<void> {
-    const list = document.getElementById('sites') as HTMLUListElement;
-    const none = document.getElementById('sites-empty') as HTMLElement;
+    const list = byId('sites', HTMLUListElement);
+    const none = byId('sites-empty');
     const [{ watchSites: allowed = [] }, { address: watching }] = await Promise.all([local.get('watchSites'), settings()]);
     const current = watching.trim();
     const ordered = [...allowed.filter((a) => a.address === current), ...allowed.filter((a) => a.address !== current)];
@@ -288,7 +331,15 @@ async function showSites(): Promise<void> {
                 // One site may be allowed for several addresses: each button says which.
                 take.setAttribute('aria-label', `Revoke ${withoutScheme(origin)} for ${short(address)}`);
                 // The worker writes the approvals, in turn with a site being allowed meanwhile.
-                take.addEventListener('click', () => void send({ type: 'revoke', origin, address }).catch(() => {}));
+                take.addEventListener(
+                    'click',
+                    () =>
+                        void done(
+                            send({ type: 'revoke', origin, address }),
+                            'save-status',
+                            `${withoutScheme(origin)} could not be revoked; try again.`,
+                        ),
+                );
                 item.append(element('span', 'site', withoutScheme(origin)), ' ', key, ' ');
                 if (address !== current) item.append(element('span', 'other-address', 'another address'), ' ');
                 item.append(take);
@@ -302,8 +353,32 @@ async function showSites(): Promise<void> {
 /** Whether rows open on their instructions: the reader's last choice, kept in storage. */
 let showInstructions = false;
 
+/** When a request came: the time for today's, the date and the time for another day's. */
+function when(time: number): HTMLTimeElement {
+    const at = new Date(time);
+    const today = at.toDateString() === new Date().toDateString();
+    const node = element(
+        'time',
+        '',
+        today ? at.toLocaleTimeString() : at.toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'medium' }),
+    );
+    node.dateTime = at.toISOString();
+    return node;
+}
+
+/** What became of a request, in a word or two: none for one that never got so far. */
+function became(entry: HistoryEntry, consent: boolean): string | null {
+    if (!entry.decision) return null;
+    if (entry.refused) return 'refused';
+    if (consent) return entry.decision === 'continue' ? 'allowed' : 'denied';
+    // Watch-only mode passes nothing on, whatever the window said.
+    if (entry.mode === 'watch') return 'watch-only';
+    if (entry.decision === 'continue') return entry.unasked ? 'passed on, not asked' : 'passed on';
+    return 'rejected';
+}
+
 /** One row of the history: what came of it, where and when on one line, what it is under it, and the explanation when opened. */
-function historyRow(entry: HistoryEntry, row: Row): HTMLElement {
+function historyRow(entry: HistoryEntry, row: Row, part?: number): HTMLElement {
     // A site that asked to see the watched address has no verdict: it was allowed or denied.
     const consent = row.kind === 'consent';
     const verdict = consent ? 'connect' : rowVerdictWord(row);
@@ -312,16 +387,9 @@ function historyRow(entry: HistoryEntry, row: Row): HTMLElement {
     // The parts are spaced by the layout for the eye, and by spaces for the screen reader, which reads the row as one line.
     head.append(element('span', `verdict ${verdict}`, verdict), ' ');
     // What became of it sits by the verdict, where it cannot be cut off.
-    if (entry.decision) {
-        const yes = consent ? 'allowed' : 'passed on';
-        const became = entry.decision === 'continue' ? yes : entry.refused ? 'refused' : consent ? 'denied' : 'rejected';
-        head.append(element('span', 'decision', became), ' ');
-    }
-    head.append(
-        element('span', 'where', `${withoutScheme(entry.origin)} · ${methodName(entry.method)}`),
-        ' ',
-        element('time', '', new Date(entry.time).toLocaleTimeString()),
-    );
+    const outcome = became(entry, consent);
+    if (outcome) head.append(element('span', 'decision', outcome), ' ');
+    head.append(element('span', 'where', `${withoutScheme(entry.origin)} · ${methodName(entry.method)}`), ' ', when(entry.time));
     summary.append(head);
     // The one line that says what it is, under the where and when.
     summary.append(' ', element('div', 'lead', summaryOf(row)));
@@ -334,6 +402,7 @@ function historyRow(entry: HistoryEntry, row: Row): HTMLElement {
             onShowInstructions: (shown) => void saved(local.set({ showInstructions: shown })),
             capturedAt: entry.time,
             site: withoutScheme(entry.origin),
+            ...(part ? { part } : {}),
         }),
     );
     const item = element('li', 'request');
@@ -343,7 +412,7 @@ function historyRow(entry: HistoryEntry, row: Row): HTMLElement {
 
 /** The history, newest first, one row per transaction; a request that failed as a whole, or a message, is one row. A kept answer never changes, so a row is made once. */
 function renderHistory(history: HistoryEntry[]): void {
-    const clear = document.getElementById('clear') as HTMLElement;
+    const clear = byId('clear');
     const before = document.activeElement;
     empty.hidden = history.length > 0;
     clear.hidden = history.length === 0;
@@ -353,7 +422,7 @@ function renderHistory(history: HistoryEntry[]): void {
             const base = `${entry.time} ${entry.origin ?? ''} ${entry.method ?? ''} ${i}`;
             const repeat = seen.get(base) ?? 0;
             seen.set(base, repeat + 1);
-            return { key: `${base} ${repeat}`, make: () => historyRow(entry, row) };
+            return { key: `${base} ${repeat}`, make: () => historyRow(entry, row, entry.rows.length > 1 ? i + 1 : undefined) };
         }),
     );
     updateList(historyList, wanted, empty, [clear], before);
@@ -369,7 +438,7 @@ async function checkPermissions(): Promise<void> {
     } catch {
         // No permissions API: nothing to ask for.
     }
-    const ask = document.getElementById('permissions') as HTMLElement;
+    const ask = byId('permissions');
     const hadFocus = ask.contains(document.activeElement);
     ask.hidden = granted;
     // Its button goes once it has done its part: the focus goes to the view's tab, not to nowhere.
@@ -383,8 +452,9 @@ async function start(): Promise<void> {
     field('address').value = config.address;
     // The list may wait on a tab that never answers: nothing else waits on it.
     void showWallets(config.upstream);
-    field('gate').checked = config.gate;
+    field('askFirst').checked = config.askFirst;
     field('contacts').value = config.contacts;
+    field('myAddresses').value = config.myAddresses;
     field('apiUrl').value = config.apiUrl;
     field('rpcUrl').value = config.rpcUrl;
     field('lookupTokens').checked = config.lookupTokens;
@@ -407,7 +477,7 @@ async function start(): Promise<void> {
     form.addEventListener('submit', (event) => event.preventDefault());
 
     void checkPermissions();
-    document.getElementById('allow')?.addEventListener('click', async () => {
+    byId('allow').addEventListener('click', async () => {
         try {
             await chrome.permissions.request(HOSTS);
         } catch {
@@ -416,7 +486,10 @@ async function start(): Promise<void> {
         void checkPermissions();
         void checkEngine();
     });
-    document.getElementById('clear')?.addEventListener('click', () => send({ type: 'clear' }).catch(() => {}));
+    byId('clear').addEventListener(
+        'click',
+        () => void done(send({ type: 'clear' }), 'clear-status', 'The requests could not be cleared; try again.'),
+    );
     for (const tab of document.querySelectorAll<HTMLElement>('.tab')) {
         tab.addEventListener('click', () => showView(tab.dataset.view ?? 'requests', true));
         tab.addEventListener('keydown', onTabKey);
@@ -425,6 +498,7 @@ async function start(): Promise<void> {
     renderHistory(history);
     showUnseen(unseen);
     // Seen only once read: told first, the worker could zero the count before the popup shows it.
+    // The badge clears the next time, if not now.
     send({ type: 'seen' }).catch(() => {});
     // New requests open on the requests; otherwise the view last used, and
     // the settings until there is a request to show.
@@ -432,6 +506,12 @@ async function start(): Promise<void> {
     onChange('local', (changes) => {
         if ('showInstructions' in changes) showInstructions = Boolean(changes.showInstructions);
         if ('watchSites' in changes || 'address' in changes) void showSites();
+        // An address added from the address window, unless it is being typed in here.
+        const mine = field('myAddresses');
+        if (changes.myAddresses !== undefined && document.activeElement !== mine) {
+            mine.value = changes.myAddresses;
+            checkAddress();
+        }
     });
     onChange('session', (changes) => {
         if ('history' in changes) renderHistory(changes.history ?? []);

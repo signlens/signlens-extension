@@ -1,7 +1,8 @@
-// Shared by the popup and the window: how one explained request is shown.
-// The engine's structured explanation (summary, findings, effects,
-// sections) is rendered effects first; its full text stays one click away,
-// and is all there is for a message.
+// Shared by the popup and the windows: how one row of a request is shown.
+// A transaction explained is its summary, findings and effects first, the
+// instructions and the engine's full text a click away; a transaction not
+// explained says so, why, and what was read; a message is shown as it is;
+// and a site asking, or a page naming an address, says what it asked.
 
 import type { ExplainedRow, Row } from './model.ts';
 import { short } from './text.ts';
@@ -33,7 +34,7 @@ const MARKER: Record<Trust, string> = { Fact: '', Verified: ' (verified)', Claim
 /** What a trust marker means, for a reader who opens it. */
 const MARKER_HELP: Partial<Record<Trust, string>> = {
     Verified:
-        'This name comes from SignLens or from you: its reviewed descriptors, its verified token list, the accounts your wallet connected with, or your address book. The site could not have supplied it.',
+        'This name comes from SignLens or from you: its reviewed descriptors, its verified token list, your addresses in its settings, or your address book. The site could not have supplied it.',
     Claimed:
         'This came from the site or from the RPC the extension asked, not from the transaction itself. SignLens could not check it, so do not rely on it.',
 };
@@ -451,34 +452,94 @@ interface RenderOptions {
     /** When the transaction was captured, and from which site: what a saved file is named by. */
     capturedAt?: number;
     site?: string;
+    /** Which of several transactions of a request this is, from 1: its save link and file are numbered by it. */
+    part?: number;
 }
 
 /**
  * The body of one row: for a transaction explained, the summary, the
  * findings, what it does, then the instructions and the details behind a
  * toggle (open when `options.showInstructions`), the notes on what was
- * read, and the full text; for anything else, what there is to say.
+ * read, and the full text; for a transaction SignLens could not explain,
+ * that nothing is known of it, why, and what was read; for anything else,
+ * what there is to say.
  */
 export function renderRow(row: Row, options: RenderOptions = {}): HTMLDivElement {
     const body = element('div', 'explanation');
     switch (row.kind) {
         case 'failed':
-            body.append(element('pre', '', row.error));
+            if (row.scope === 'transaction') {
+                body.append(
+                    element(
+                        'p',
+                        'not-checked',
+                        'SignLens could not explain this transaction: nothing is known of what it does. To try again, Reject and ask the site again.',
+                    ),
+                );
+            }
+            body.append(element('pre', '', row.error), ...readNotes(row));
+            if (row.capture) body.append(saveLink(row.capture, options));
             return body;
         case 'message':
-            body.append(element('pre', '', row.text));
+            body.append(
+                element(
+                    'p',
+                    'tables',
+                    'SignLens does not check messages: this one is shown as it is. Sign it only if you mean what it says.',
+                ),
+                element('pre', '', row.text),
+            );
             return body;
         case 'consent':
-            body.append(element('p', '', 'Asked to see the watched address '), element('code', 'watched', row.address));
+            // The row's line already says who asked to see which address.
+            body.append(
+                element('p', '', 'The sites allowed to see the watched address are listed in the settings, where Revoke takes one back.'),
+            );
             return body;
+        case 'address': {
+            body.append(element('p', '', 'The page named as yours an address that is not one of yours in SignLens:'));
+            for (const address of row.claimed) {
+                const line = element('p');
+                line.append(element('code', 'watched', address));
+                body.append(line);
+            }
+            body.append(element('p', '', 'The request was refused before anything was explained or sent anywhere.'));
+            return body;
+        }
         case 'explained':
             return explainedNode(body, row, options);
     }
 }
 
+/** What was read for a transaction besides its bytes: the chain the page named, when not mainnet, and the lookup tables. */
+function readNotes(row: { chain?: string | undefined; tables?: string | null | undefined }): HTMLParagraphElement[] {
+    const notes: HTMLParagraphElement[] = [];
+    if (row.chain) {
+        notes.push(element('p', 'tables', `Chain: the page says ${row.chain}; read and simulated on the RPC in the settings all the same`));
+    }
+    if (row.tables) notes.push(element('p', 'tables', `Lookup tables: ${row.tables}`));
+    return notes;
+}
+
+/** A link that saves `capture`, the transaction as the engine reads it; one of several is numbered, so none is saved over another. */
+function saveLink(capture: string, options: RenderOptions): HTMLAnchorElement {
+    const save = element('a', 'save', options.part ? `Save transaction ${options.part}` : 'Save the transaction');
+    save.download = captureName(options.site, options.capturedAt ?? Date.now(), options.part);
+    save.href = `data:text/plain;charset=utf-8,${encodeURIComponent(capture)}`;
+    save.title = 'The transaction with its lookup tables, as the SignLens engine reads it';
+    return save;
+}
+
+/** The file a transaction is saved to: its time, the site in letters, digits, dots and hyphens only, and which `part` of a request it is. */
+export function captureName(site: string | undefined, at: number, part?: number): string {
+    const stamp = new Date(at).toISOString().replace(/[-:]/g, '').replace(/\..*/, '');
+    return `${stamp}-${(site ?? 'capture').replace(/[^a-zA-Z0-9.-]/g, '_')}${part ? `-${part}` : ''}.b64`;
+}
+
 function explainedNode(body: HTMLDivElement, row: ExplainedRow, options: RenderOptions): HTMLDivElement {
     body.append(element('p', 'summary-line', row.summary));
     if (row.findings.length) {
+        body.append(element(options.heading ?? 'h3', 'effects-title', 'What SignLens found'));
         const list = element('ul', 'findings');
         for (const finding of row.findings) {
             // An informational finding is a note, not a warning, and reads as one.
@@ -494,14 +555,10 @@ function explainedNode(body: HTMLDivElement, row: ExplainedRow, options: RenderO
         for (const effect of row.effects) list.append(effectNode(effect));
         body.append(list);
     }
-    body.append(instructionsNode(row, options));
-    if (row.chain) {
-        body.append(
-            element('p', 'tables', `Chain: the page says ${row.chain}; read and simulated on the RPC in the settings all the same`),
-        );
-    }
-    if (row.tables !== 'none') body.append(element('p', 'tables', `Lookup tables: ${row.tables}`));
-    if (row.simulation !== 'off') body.append(element('p', 'tables', `Simulation: ${row.simulation}`));
+    // A row slimmed to fit the history has no instructions left: no toggle with nothing behind it.
+    if (row.sections.length > 0) body.append(instructionsNode(row, options));
+    body.append(...readNotes(row));
+    if (row.simulation !== null) body.append(element('p', 'tables', `Simulation: ${row.simulation}`));
     if (row.hints.length) {
         body.append(element('p', 'tables', `Unlisted tokens named from the RPC and the token list, unverified: ${row.hints.join(', ')}`));
     }
@@ -513,13 +570,6 @@ function explainedNode(body: HTMLDivElement, row: ExplainedRow, options: RenderO
     holder.append(element('pre', '', row.text));
     body.append(disclosure('full-text', 'Full text, as the engine prints it', holder, false));
     // A row slimmed to fit the history has no bytes left to save.
-    if (row.capture) {
-        const save = element('a', 'save', 'Save the transaction');
-        const stamp = new Date(options.capturedAt ?? Date.now()).toISOString().replace(/[-:]/g, '').replace(/\..*/, '');
-        save.download = `${stamp}-${(options.site ?? 'capture').replace(/[^a-zA-Z0-9.-]/g, '_')}.b64`;
-        save.href = `data:text/plain;charset=utf-8,${encodeURIComponent(row.capture)}`;
-        save.title = 'The transaction with its lookup tables, as the SignLens engine reads it';
-        body.append(save);
-    }
+    if (row.capture) body.append(saveLink(row.capture, options));
     return body;
 }

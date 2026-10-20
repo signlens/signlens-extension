@@ -5,15 +5,9 @@
 // the page's tab closing, the page no longer waiting, or a window that
 // cannot open is SignLens's, with the reason.
 
-import type { Decision, HistoryEntry, Mode, VerdictWord } from './model.ts';
+import type { Decision, HistoryEntry, Mode, Outcome, VerdictWord } from './model.ts';
 import { dropPending, type Pending, putPending } from './store.ts';
 import { describe } from './text.ts';
-
-/** How a request ended: the decision, and why SignLens refused it when the user did not decide. */
-export interface Outcome {
-    decision: Decision;
-    refused?: string;
-}
 
 /**
  * How long a request may wait for the user's decision, from when it
@@ -33,7 +27,11 @@ const WINDOW = { width: 520, height: 680 };
 export interface InFlight {
     deadline: number;
     abandoned: boolean;
-    /** Ends the wait for the user's decision, once the window is open. */
+    /** Aborts when the page goes or stops waiting, with which as its reason: what is under way for the request stops with it. */
+    signal: AbortSignal;
+    /** A window was opened for it. */
+    shown?: boolean;
+    /** Ends the wait for the user's decision: set once the request is stored for its window, before the window opens. */
     decide?: (outcome: Outcome) => void;
 }
 
@@ -41,10 +39,15 @@ export interface InFlight {
 export const BUSY = 'still busy with an earlier request from this page';
 
 /** A request whose page closed, reloaded or went elsewhere: no one is left to pass it to. */
-const GONE: Outcome = Object.freeze({ decision: 'reject', refused: 'the page closed or reloaded' });
+export const GONE: Outcome = Object.freeze({ decision: 'reject', refused: 'the page closed or reloaded' });
+
+/** Why what was under way for a request stopped at its deadline. */
+const STOPPED_WAITING = 'the page stopped waiting';
 
 /** The requests in flight, by tab. */
 const inFlight = new Map<number, InFlight>();
+/** What aborts each request's signal when its page goes. */
+const stops = new WeakMap<InFlight, AbortController>();
 /** Decisions awaited, by the id the window knows its request by. */
 const decisions = new Map<string, (outcome: Outcome) => void>();
 let nextRequest = 0;
@@ -63,9 +66,19 @@ export function mustAsk(askFirst: boolean, mode: Mode, worst: VerdictWord): bool
 /** A request from the tab `tabId` begins, or `null` while the tab's last one is still in flight. */
 export function begin(tabId: number, now = Date.now()): InFlight | null {
     if (inFlight.has(tabId)) return null;
-    const flight: InFlight = { deadline: now + DECISION_TIMEOUT_MS, abandoned: false };
+    const deadline = now + DECISION_TIMEOUT_MS;
+    const stop = new AbortController();
+    const late = AbortSignal.timeout(Math.max(0, deadline - Date.now()));
+    late.addEventListener('abort', () => stop.abort(STOPPED_WAITING), { once: true });
+    const flight: InFlight = { deadline, abandoned: false, signal: stop.signal };
+    stops.set(flight, stop);
     inFlight.set(tabId, flight);
     return flight;
+}
+
+/** Whether the request's page went before any window was opened for it: it was withdrawn unseen, and is not worth keeping or flagging. */
+export function withdrawn(flight: InFlight): boolean {
+    return flight.abandoned && !flight.shown;
 }
 
 /** The tab's request `flight` is answered. A request the tab began after this one was abandoned is left in flight. */
@@ -76,14 +89,15 @@ export function end(tabId: number, flight: InFlight): void {
 /**
  * The tab's page closed, reloaded or went elsewhere: its request is
  * refused and its window closes, and the tab may ask again at once, while
- * what was abandoned winds down (`explainTransactions` stops between
- * transactions, and no window opens for it).
+ * what was abandoned winds down: the calls under way stop, explaining
+ * stops between transactions, and no window opens for it.
  */
 export function abandon(tabId: number): void {
     const flight = inFlight.get(tabId);
     if (!flight) return;
     inFlight.delete(tabId);
     flight.abandoned = true;
+    stops.get(flight)?.abort(GONE.refused);
     flight.decide?.(GONE);
 }
 
@@ -120,7 +134,7 @@ export async function ask<P extends keyof Pending>(page: P, pending: Pending[P],
     // The page may have gone while the request was stored, before it could be told.
     if (flight.abandoned) {
         decisions.delete(id);
-        await dropPending(id);
+        await dropPending(page, id);
         return GONE;
     }
     const timer = setTimeout(() => decisions.get(id)?.({ decision: 'reject', refused: 'no decision in time' }), left);
@@ -133,10 +147,11 @@ export async function ask<P extends keyof Pending>(page: P, pending: Pending[P],
             ...WINDOW,
         });
         windowId = created?.id;
+        flight.shown = true;
     } catch (error) {
         clearTimeout(timer);
         decisions.delete(id);
-        await dropPending(id);
+        await dropPending(page, id);
         return { decision: 'reject', refused: `the SignLens window could not open: ${describe(error)}` };
     }
     const closed = (removed: number) => {
@@ -147,7 +162,8 @@ export async function ask<P extends keyof Pending>(page: P, pending: Pending[P],
     chrome.windows.onRemoved.removeListener(closed);
     clearTimeout(timer);
     decisions.delete(id);
-    await dropPending(id);
+    await dropPending(page, id);
+    // The window may have closed itself already, or been closed by the user.
     if (windowId !== undefined) chrome.windows.remove(windowId).catch(() => {});
     return outcome;
 }

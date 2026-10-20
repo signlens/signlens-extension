@@ -157,6 +157,33 @@ test('the status names the engine and the packs, or why not', async () => {
     assert.match(away.error, /did not answer/);
 });
 
+test('a status that is not one is said to be so, and what is shown of it is plain text', async () => {
+    const pack = { programs: 44, createdAt: 1, source: 's' };
+    for (const body of [
+        [],
+        { descriptorPack: null },
+        { descriptorPack: { ...pack, programs: '44' } },
+        { descriptorPack: { ...pack, programs: -1 } },
+    ]) {
+        const api = await stub({ packs: { status: 200, body } });
+        try {
+            const status = await apiStatus(api.url);
+            assert.ok('error' in status, JSON.stringify(body));
+            assert.match(status.error, /^the API at http:\/\/127\.0\.0\.1:\d+ answered a status this version cannot read$/);
+        } finally {
+            await api.close();
+        }
+    }
+    const odd = await stub({
+        packs: { status: 200, body: { engine: '0.1\u202e.0', descriptorPack: pack, tokenSnapshot: { tokens: 'many' } } },
+    });
+    try {
+        assert.deepEqual(await apiStatus(odd.url), { engine: '0.1?.0', programs: 44, tokens: 0, packsAt: 1 });
+    } finally {
+        await odd.close();
+    }
+});
+
 test('feedback is one post per record and true only on 204', async () => {
     const api = await stub();
     try {

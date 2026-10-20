@@ -11,10 +11,10 @@ test("tables read through one RPC are not taken for another's", async () => {
     const [knows, other] = await Promise.all([startTestServer(), startTestServer()]);
     try {
         knows.know(swap);
-        assert.match((await resolveTables(swap.bytes, knows.rpc)).note, /read over RPC, unverified$/);
+        assert.match((await resolveTables(swap.bytes, knows.rpc)).note ?? '', /read over RPC, unverified$/);
         const elsewhere = await resolveTables(swap.bytes, other.rpc);
         assert.equal(elsewhere.loaded, undefined);
-        assert.match(elsewhere.note, /not resolved \(lookup table \w+ was not found\)$/);
+        assert.match(elsewhere.note ?? '', /not resolved \(lookup table \w+ was not found\)$/);
         assert.deepEqual(
             other.calls.map((call) => call.method),
             ['getMultipleAccounts'],

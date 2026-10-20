@@ -69,27 +69,30 @@ function transactionsOf(payload: ExplainPayload): string[] | string {
 
 /**
  * Explains the transactions of an `explain` request through the API, one
- * row each. Once `gone` says the page went away, the rest is not asked
- * about: no one is left to show it to.
+ * row each, with `ownKeys` as the addresses the explanation calls "you":
+ * the caller's to choose, never the page's (requests.ts). Once `stop`
+ * aborts, the page went or stopped waiting: the calls under way stop, and
+ * nothing more is asked, since no one is left to show it to.
  */
 export async function explainTransactions(
     payload: ExplainPayload,
     config: Settings,
     contacts: Contact[],
-    gone: () => boolean = () => false,
+    ownKeys: string[],
+    stop?: AbortSignal,
 ): Promise<Entry> {
     const transactions = transactionsOf(payload);
     if (typeof transactions === 'string') return failure(transactions);
-    const accounts = (Array.isArray(payload.accounts) ? payload.accounts : []).filter((a): a is string => isAddress(a)).slice(0, 16);
+    const accounts = ownKeys.filter(isAddress).slice(0, 16);
     const meta: Meta = {
-        origin: printable(payload.origin, 200) || 'unknown',
+        origin: payload.origin || 'unknown',
         method: printable(payload.method, 60) || 'unknown',
         accounts,
     };
     const chains = Array.isArray(payload.chains) ? payload.chains : [];
     const results: Row[] = [];
     for (const [i, transaction] of transactions.entries()) {
-        if (gone()) return failure('not explained: the page closed or reloaded');
+        if (stop?.aborted) return failure(`not explained: ${String(stop.reason)}`);
         const bytes = fromBase64(transaction);
         // The chain is the page's word, so it switches nothing off: a page
         // that called a mainnet drain "devnet" would otherwise keep the
@@ -98,12 +101,12 @@ export async function explainTransactions(
         // window says which chain the page named when it is not mainnet.
         const chain = chains[i];
         const claimed = typeof chain === 'string' && chain !== 'solana:mainnet' ? withoutControls(chain).slice(0, 40) : null;
-        const { loaded, note } = await resolveTables(bytes, config.rpcUrl);
+        const { loaded, note } = await resolveTables(bytes, config.rpcUrl, stop);
         const capture = captureOf(transaction, meta, loaded);
         let simulation: SimulationResult = null;
-        let simulationNote = 'off';
+        let simulationNote: string | null = null;
         if (config.simulate) {
-            simulation = await simulate(transaction, bytes, loaded, config.rpcUrl);
+            simulation = await simulate(transaction, bytes, loaded, config.rpcUrl, stop);
             if (!simulation) simulationNote = 'not run (transaction not parsed)';
             else if (simulation.unavailable) {
                 simulationNote = `not run (${simulation.unavailable})`;
@@ -117,24 +120,27 @@ export async function explainTransactions(
             ...(simulation ? { simulation: { failure: simulation.failure, units: simulation.units, changes: simulation.changes } } : {}),
             render: true,
         };
-        let document: EngineAnswer = await explainRemotely(config.apiUrl, bytes, request);
+        let document: EngineAnswer = await explainRemotely(config.apiUrl, bytes, request, stop);
         let hints: TokenHint[] = [];
         if (!isError(document) && config.lookupTokens) {
             const mints = unknownMints(document);
-            if (mints.length > 0) hints = await tokenHints(mints, config);
+            if (mints.length > 0) hints = await tokenHints(mints, config, stop);
             if (hints.length > 0) {
                 // The names are a nicety: if asking again fails, the first explanation stands without them.
-                const named = await explainRemotely(config.apiUrl, bytes, { ...request, tokenHints: hints });
+                const named = await explainRemotely(config.apiUrl, bytes, { ...request, tokenHints: hints }, stop);
                 if (isError(named)) hints = [];
                 else document = named;
             }
         }
+        // A call given up because the page went is not the API's failure.
+        if (stop?.aborted) return failure(`not explained: ${String(stop.reason)}`);
         results.push(
             isError(document)
                 ? {
                       kind: 'failed',
+                      scope: 'transaction',
                       error: withoutControls(document.error.message) || 'the SignLens API answered an error without a message',
-                      tables: note,
+                      ...(note ? { tables: note } : {}),
                       ...(claimed ? { chain: claimed } : {}),
                       capture,
                   }

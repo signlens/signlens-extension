@@ -13,7 +13,7 @@ test('a pump token is named from the RPC and the token list, marked unverified',
     server.know(swap);
     server.knowMint(PUMP_MINT, 'HMYD', 6);
     await configure({
-        gate: false,
+        askFirst: false,
         simulate: false,
         mode: 'watch',
         address: feePayer(swap.bytes),
@@ -43,7 +43,7 @@ test('a token nothing names stays in raw units, and the lookup is remembered', a
     const swap = fixture(PUMP);
     server.know(swap);
     await configure({
-        gate: false,
+        askFirst: false,
         simulate: false,
         mode: 'watch',
         address: feePayer(swap.bytes),
@@ -74,7 +74,7 @@ test('with the lookup off nothing leaves for the token list', async ({ configure
     server.know(swap);
     server.knowMint(PUMP_MINT, 'HMYD', 6);
     await configure({
-        gate: false,
+        askFirst: false,
         simulate: false,
         mode: 'watch',
         address: feePayer(swap.bytes),

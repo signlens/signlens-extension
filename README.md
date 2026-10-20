@@ -47,8 +47,8 @@ wallet it finds in the page and passes every request on after explaining
 it; the popup's settings pick the wallet from the ones found in the current
 tab, switch to watch-only mode (connect as any address, explain, refuse),
 turn off "Show the explanation and ask first" (in pass-through mode the
-window still opens for what SignLens would refuse), keep an address book,
-and point the extension at another RPC or API (https, or plain http to this
+window still opens for what SignLens would refuse), list your own
+addresses, keep an address book, and point the extension at another RPC or API (https, or plain http to this
 machine only). A connect that finds no
 wallet to pass to is refused and shown in the popup's requests, with the
 wallets that were there. A dapp has to connect before it can ask for
@@ -65,6 +65,22 @@ where you allowed it. The settings list the sites, those allowed for an
 address you watched before marked so, and Revoke disconnects a site's open
 pages. No page is told the watched address otherwise, whatever the mode.
 
+The explanation calls "you" only addresses you gave SignLens: in
+pass-through mode the ones under "Your addresses" in the settings, in
+watch-only mode the watched one. The page says which address signs a
+transaction, and a page can name its own, so that sending to it would
+read as a move between your accounts. Before a transaction is explained,
+SignLens checks the address the page names: in pass-through mode, one
+that is not among yours opens a window with it beside yours, Reject
+first. Reject refuses the request; "It's mine, add it" adds the address
+to your settings and the request goes on to be explained. One yes is one
+address: a request that names more than one not among yours is refused,
+since a page could put yours beside its own. With "Show the explanation
+and ask first" off, no window opens for it: the request is refused, and
+your addresses go in the settings first. In watch-only mode a request
+that names another address is refused. A message is not checked, since
+nothing in it is explained as yours.
+
 What goes to your wallet is SignLens's own copy of the bytes it explained,
 taken when the dapp asked: a page that changes its transaction afterwards
 changes nothing. The dapp is told whether the request was passed on,
@@ -79,7 +95,7 @@ Every request opens a window before it reaches your wallet, once SignLens
 has read what it needs and asked the API. With "Show the explanation and
 ask first" off, it opens, in pass-through mode, only for a request SignLens
 would refuse (blocked, or an error); the rest go on as explained, and the
-popup keeps them. The verdict and the one-line summary stay at the top and
+popup keeps them, marked "passed on, not asked". The verdict and the one-line summary stay at the top and
 the buttons at the bottom; in between, the findings, what the transaction
 does to you as a list ("You send 0.5 SOL to …", "You pay a fee of …",
 "Valid FOREVER until …"), each instruction with its fields, and the full
@@ -113,8 +129,9 @@ list are named from the RPC and a token list as claims, marked unverified.
 
 Each request to explain a transaction sends the SignLens API the
 transaction, the addresses its lookup tables load, the outcome of the
-simulation if it ran, the addresses of the accounts your wallet connected
-with (so the explanation can say "you"), and your address book, names and
+simulation if it ran, your addresses from the settings (in watch-only
+mode the watched one, so the explanation can say "you"), and your
+address book, names and
 addresses, so contacts can be named; when the explanation leaves tokens
 unnamed and token lookup is on, it asks again with their symbols. This
 happens when the dapp asks, before the window opens, and also when "Show
@@ -136,11 +153,12 @@ kept only when you send them through the feedback strip.
 
 The feedback strip sends nothing until you rate an explanation. A rating
 sends, for each transaction explained: the rating, your comment (up to
-2,000 characters, the same for each), the explanation's digest, a hash of
-the transaction's message, and the transaction itself only if you ticked
-"Send this transaction to SignLens so it gets covered", which is offered
-only on one SignLens did not call OK. It goes to the API in the settings,
-when you rate "Clear" or when you decide. Messages to sign
+2,000 characters, the same for each), the explanation's digest (a hash of
+the transaction's message), and the transaction itself only if you
+ticked "Send this transaction to SignLens so it gets covered", which is
+offered only on one SignLens did not call OK. It goes to the API in the
+settings when you rate "Clear", or when you decide, closing the window
+included. Messages to sign
 never leave the extension, and the dapp learns neither the explanation nor
 its verdict, nor, in watch-only mode, the watched address until you allow
 it.
@@ -201,17 +219,18 @@ release requires that.
 | `src/api.ts` | the API client: the engine's request in, the explanation document out |
 | `src/explanation.ts` | the explanation document as this version reads it: checked field by field, or refused with where it fails |
 | `src/types.ts` | the contract: the explanation document, the request, the feedback record |
-| `src/model.ts` | what SignLens keeps of a request: its rows (explained, failed, a message, a site asking) and what became of it |
+| `src/model.ts` | what SignLens keeps of a request: its rows (explained, failed, a message, a site asking, an address not yours) and what became of it |
 | `src/store.ts` | the extension's storage, typed by key, and the queue its read-then-write changes go through |
-| `src/solana.ts` | the little of Solana's wire format the worker needs |
-| `src/render.ts` | renders an explanation document |
+| `src/solana.ts`, `src/base58.ts` | the little of Solana's wire format the worker needs; addresses, which the pages read too |
+| `src/render.ts` | one row of a request as the window and the popup show it |
 | `src/verdict.ts` | the verdict words and which is worst, for the badge and the window |
 | `src/settings.ts`, `src/endpoint.ts` | the settings and their defaults; the endpoints accepted, checked again at each use |
-| `src/confirm.ts`, `src/connect.ts`, `src/windows.ts`, `src/popup.ts` | the window, the window that asks to show a site the watched address, what the two share, and the popup |
+| `src/confirm.ts`, `src/connect.ts`, `src/address.ts`, `src/windows.ts`, `src/dom.ts` | the window, the window that asks to show a site the watched address, the one that asks whether an address is yours, and what they share |
+| `src/popup.ts`, `src/pages.ts` | the popup; the pages SignLens runs on, and what the popup says over one it does not |
 | `extension/` | the manifest, the pages, the styles and the icons; the compiled scripts land here |
-| `scripts/` | the Firefox copy and the reproducible packages |
+| `scripts/` | the Firefox copy, the reproducible packages, and recording the API's answers for the end-to-end tests |
 | `src/*.test.ts`, `src/chrome.fake.ts` | the Node tests, and the stand-in for the `chrome` APIs the worker's modules run against there |
-| `e2e/` | the end-to-end tests, the test dapp, the stub RPC and API relay, and the report of recordings a live API no longer matches |
+| `e2e/` | the end-to-end tests, the test dapp, the stub RPC, the API's recorded answers (or a live API, relayed), and the report of recordings a live API no longer matches |
 
 ## Verifying a package
 

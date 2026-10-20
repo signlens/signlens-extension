@@ -249,8 +249,10 @@ pre {
     overflow-wrap: anywhere;
 }
 
+/* A row's text breaks where it must (a summary or a finding can carry a whole address): nothing in it is wider than the window. */
 .explanation {
     padding: 8px;
+    overflow-wrap: anywhere;
 }
 
 .explanation .summary-line {
@@ -264,12 +266,17 @@ pre {
     list-style: none;
 }
 
+/* The severity in a column of its own, so that a long finding wraps under its text. */
 .findings li {
+    display: flex;
+    gap: 0 0.5em;
+    align-items: baseline;
     margin: 0 0 3px;
 }
 
 .severity {
     display: inline-block;
+    flex: none;
     min-width: 5.5em;
     font-size: 11px;
     font-weight: 600;
@@ -348,6 +355,11 @@ button.primary {
 button:focus-visible {
     outline: 2px solid var(--accent);
     outline-offset: 1px;
+}
+
+/* The filled button is the ring's own colour: a clear gap of the page sets the ring off. */
+button.primary:focus-visible {
+    outline-offset: 3px;
 }
 
 /* Controls that read as text (a disclosure's toggle, a term, "show all bytes"): buttons to the keyboard and the screen reader, without a button's box. */
@@ -640,6 +652,23 @@ body.confirm footer #buttons {
     overflow-wrap: anywhere;
 }
 
+/* A window too short to hold the header, the explanation and the buttons
+   at once (zoomed in, or on a small screen) scrolls as one page instead,
+   so that every part of it can be reached and the explanation is never
+   left a sliver between the two. The window opens 680 pixels high: this
+   is from about 125% zoom. After the rules it overrides, which it must
+   follow to win. */
+@media (max-height: 560px) {
+    body.confirm {
+        display: block;
+        height: auto;
+    }
+
+    body.confirm main {
+        overflow: visible;
+    }
+}
+
 body.confirm .status {
     margin: 2px 0 8px;
     overflow-wrap: anywhere;
@@ -700,9 +729,19 @@ body.confirm pre {
     max-height: none;
 }
 
-/* The consent window: the address a site asks to see, in full. */
+/* The consent window and the address window: an address in full. */
 body.consent main p {
     margin: 0 0 10px;
+}
+
+ul.addresses {
+    margin: 0 0 10px;
+    padding: 0;
+    list-style: none;
+}
+
+.address-item {
+    margin: 0 0 4px;
 }
 
 code.watched {

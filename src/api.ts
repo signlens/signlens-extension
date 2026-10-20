@@ -6,11 +6,12 @@
 // the place of `explainRemotely`; the feedback and the status are the
 // server's, and go with it.
 
-import { refusedEndpoint } from './endpoint.ts';
+import { refusedEndpoint, within } from './endpoint.ts';
 import { DocumentError, EXPLANATION_SCHEMA, parseExplanation } from './explanation.ts';
+import { objectFields } from './json.ts';
 import { toBase64 } from './solana.ts';
-import { describe } from './text.ts';
-import { type EngineAnswer, type EngineRequest, type ErrorDocument, type Feedback, isError, type PacksDocument } from './types.ts';
+import { describe, printable } from './text.ts';
+import { type EngineAnswer, type EngineRequest, type ErrorDocument, type Feedback, isError } from './types.ts';
 
 const TIMEOUT_MS = 20_000;
 /** The longest answer read, in characters: an explanation is tens of kilobytes. */
@@ -44,9 +45,14 @@ function passedOn(document: ErrorDocument): ErrorDocument {
  * the explanation document, or an error document; never throws. A server
  * that does not answer, answers late or answers something else is an
  * error document, which the wallet shows as "could not explain", never as
- * "nothing wrong".
+ * "nothing wrong". `stop` gives the call up: the request it is for went.
  */
-export async function explainRemotely(apiUrl: string, bytes: Uint8Array, request: EngineRequest): Promise<EngineAnswer> {
+export async function explainRemotely(
+    apiUrl: string,
+    bytes: Uint8Array,
+    request: EngineRequest,
+    stop?: AbortSignal,
+): Promise<EngineAnswer> {
     const base = root(apiUrl);
     const problem = refusedEndpoint(base, 'API');
     if (problem) return errorDocument('api', problem);
@@ -56,7 +62,7 @@ export async function explainRemotely(apiUrl: string, bytes: Uint8Array, request
             method: 'POST',
             headers: { 'content-type': 'application/json' },
             body: JSON.stringify({ transaction: toBase64(bytes), ...request }),
-            signal: AbortSignal.timeout(TIMEOUT_MS),
+            signal: within(TIMEOUT_MS, stop),
         });
     } catch (error) {
         return errorDocument('api', `the SignLens API at ${base} did not answer (${describe(error)})`);
@@ -85,20 +91,33 @@ export async function explainRemotely(apiUrl: string, bytes: Uint8Array, request
     }
 }
 
-/** What the API is: its engine version and packs, from `GET /v1/packs`, or `{error}`. */
+/** A count from elsewhere: a whole number, not negative, or `null`. */
+function count(value: unknown): number | null {
+    return typeof value === 'number' && Number.isSafeInteger(value) && value >= 0 ? value : null;
+}
+
+/**
+ * What the API is: its engine version and packs, from `GET /v1/packs`, or
+ * `{error}`. The document is read field by field, as the explanation is:
+ * one without its program count is not a status, and the engine's name is
+ * shown as plain text.
+ */
 export async function apiStatus(apiUrl: string): Promise<ApiStatus | { error: string }> {
     const base = root(apiUrl);
     const problem = refusedEndpoint(base, 'API');
     if (problem) return { error: problem };
     try {
         const response = await fetch(`${base}/v1/packs`, { signal: AbortSignal.timeout(5_000) });
-        const packs = (await response.json()) as Partial<PacksDocument>;
-        if (!response.ok || !packs.descriptorPack) return { error: `the API at ${base} answered HTTP ${response.status}` };
+        if (!response.ok) return { error: `the API at ${base} answered HTTP ${response.status}` };
+        const packs = objectFields(await response.json().catch(() => null));
+        const pack = objectFields(packs?.descriptorPack);
+        const programs = count(pack?.programs);
+        if (!packs || programs === null) return { error: `the API at ${base} answered a status this version cannot read` };
         return {
-            engine: packs.engine ?? '?',
-            programs: packs.descriptorPack.programs,
-            tokens: packs.tokenSnapshot?.tokens ?? 0,
-            packsAt: packs.descriptorPack.createdAt ?? null,
+            engine: typeof packs.engine === 'string' ? printable(packs.engine, 40) : '?',
+            programs,
+            tokens: count(objectFields(packs.tokenSnapshot)?.tokens) ?? 0,
+            packsAt: typeof pack?.createdAt === 'number' && Number.isFinite(pack.createdAt) ? pack.createdAt : null,
         };
     } catch (error) {
         return { error: `the API at ${base} did not answer (${describe(error)})` };

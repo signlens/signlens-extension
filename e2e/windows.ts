@@ -4,6 +4,7 @@
 
 import type { BrowserContext, Page, Worker } from '@playwright/test';
 import type { ExplainedRow, HistoryEntry } from '../src/model.ts';
+import { type Pending, pendingKey } from '../src/store.ts';
 import type { Explanation } from '../src/types.ts';
 import { liveGate } from './extension.ts';
 import { fixture, recorded } from './server.ts';
@@ -22,8 +23,8 @@ export function transferRow(): ExplainedRow {
         sections: document.sections,
         digest: document.raw?.digest ?? null,
         transaction: transfer.base64,
-        tables: 'none',
-        simulation: 'off',
+        tables: null,
+        simulation: null,
         hints: [],
         capture: `# Captured for the tests.\n${transfer.base64}\n`,
     };
@@ -45,7 +46,8 @@ export function request(changes: Partial<HistoryEntry> = {}): HistoryEntry {
 /** Opens `page` (confirm.html or connect.html) as the gate does, on `pending`, or on nothing: a request no longer there. */
 export async function windowFor(context: BrowserContext, worker: Worker, pending: object | null, page = 'confirm.html'): Promise<Page> {
     const id = `test-${Math.random().toString(36).slice(2)}`;
-    if (pending) await worker.evaluate(([key, value]) => chrome.storage.session.set({ [key]: value }), [`pending:${id}`, pending] as const);
+    const key = pendingKey(page as keyof Pending, id);
+    if (pending) await worker.evaluate(([key, value]) => chrome.storage.session.set({ [key]: value }), [key, pending] as const);
     await worker.evaluate(
         (url) => chrome.windows.create({ url: chrome.runtime.getURL(url), type: 'popup', width: 520, height: 680 }),
         `${page}?id=${id}`,

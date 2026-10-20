@@ -26,6 +26,7 @@
                     <h2 class="muted">Newest first</h2>
                     <button id="clear" type="button" class="small" aria-label="Clear requests" hidden>Clear</button>
                 </div>
+                <p id="clear-status" class="save-status" role="status"></p>
                 <p id="empty" tabindex="-1">None yet. Connect “SignLens” in a dapp and start a transaction.</p>
                 <ol id="history"></ol>
             </section>
@@ -53,6 +54,13 @@
                         <small id="upstream-hint" class="note"></small>
                     </div>
 
+                    <div id="my-addresses-field" class="field">
+                        <label for="myAddresses">Your addresses, one per line</label>
+                        <textarea id="myAddresses" name="myAddresses" aria-describedby="myAddresses-hint myAddresses-note" rows="2" spellcheck="false" placeholder="7s3s…"></textarea>
+                        <small id="myAddresses-hint"></small>
+                        <small id="myAddresses-note" class="note">The only addresses SignLens calls “you”. When a site names another as yours, SignLens asks before explaining anything, or, with “Show the explanation and ask first” off, refuses it; copy them from your wallet.</small>
+                    </div>
+
                     <div id="address-field" class="field">
                         <label for="address">Address to connect as</label>
                         <input id="address" type="text" name="address" aria-describedby="address-hint" spellcheck="false" placeholder="Any Solana address" />
@@ -67,8 +75,8 @@
 
                     <!-- A choice is named by its bold words; the rest of its line describes it. -->
                     <label class="choice">
-                        <input type="checkbox" name="gate" aria-labelledby="gate-name" aria-describedby="gate-more" />
-                        <span><strong id="gate-name">Show the explanation and ask first</strong>, <span id="gate-more">before refusing or passing a request on; when off, a request SignLens would refuse (blocked, or an error) still waits for you before it goes on to your wallet</span></span>
+                        <input type="checkbox" name="askFirst" aria-labelledby="askFirst-name" aria-describedby="askFirst-more" />
+                        <span><strong id="askFirst-name">Show the explanation and ask first</strong>, <span id="askFirst-more">before refusing or passing a request on; when off, in pass-through mode a request SignLens would refuse (blocked, or an error) still waits for you before it goes on to your wallet</span></span>
                     </label>
 
                     <div class="field">
@@ -81,7 +89,7 @@
                         <label for="apiUrl">SignLens API</label>
                         <input id="apiUrl" type="text" name="apiUrl" aria-describedby="apiUrl-hint apiUrl-note" spellcheck="false" />
                         <small id="apiUrl-hint"></small>
-                        <small id="apiUrl-note" class="note">Beta: every transaction you are asked to sign is sent here to be explained, with the addresses your wallet connected with and your address book, so the explanation can say “you” and name your contacts. The server keeps verdicts and finding codes, not the bytes; the transaction is kept only when you tick “Send this transaction to SignLens so it gets covered” under its explanation.</small>
+                        <small id="apiUrl-note" class="note">Beta: every transaction you are asked to sign is sent here to be explained, with your addresses and your address book, so the explanation can say “you” and name your contacts. The server keeps verdicts and finding codes, not the bytes; the transaction is kept only when you tick “Send this transaction to SignLens so it gets covered” under its explanation.</small>
                     </div>
 
                     <div class="field">

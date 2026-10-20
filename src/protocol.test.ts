@@ -1,17 +1,15 @@
 // What the page's classic scripts (injected.ts, content.ts) must copy from
 // the extension's modules, since they import nothing, held to the
 // modules': the requests a page may make and which of them wait, the port
-// they wait on, the page's deadline against the worker's, and the settings
-// the content script watches. The shared types are in page.d.ts; these
-// are the values.
+// they wait on, and the page's deadline against the worker's. The shared
+// types are in page.d.ts; these are the values. What the content script
+// does with them is content.test.ts's.
 
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
 import { DECISION_TIMEOUT_MS } from './gate.ts';
 import { PAGE_REQUESTS, REQUEST_PORT, WAITING_REQUESTS } from './messages.ts';
-import { DEFAULTS } from './settings.ts';
-import type { LocalItems } from './store.ts';
 
 const content = readFileSync(new URL('content.ts', import.meta.url), 'utf8');
 const injected = readFileSync(new URL('injected.ts', import.meta.url), 'utf8');
@@ -47,11 +45,4 @@ test("the worker's deadline for a decision ends a little before the page's, so t
     assert.equal(page, 10 * 60_000);
     assert.ok(DECISION_TIMEOUT_MS < page);
     assert.ok(page - DECISION_TIMEOUT_MS <= 30_000);
-});
-
-test('the content script tells the wallet of a change to settings that are kept, by their names in storage', () => {
-    const watchedKeys = /\[((?:'[\w]+',?\s*)+)\]\.some\(\(key\) => key in changes\)/.exec(content)?.[1];
-    assert.ok(watchedKeys, 'no list of watched keys');
-    const stored: (keyof LocalItems)[] = [...(Object.keys(DEFAULTS) as (keyof LocalItems)[]), 'watchSites'];
-    for (const [, key] of watchedKeys.matchAll(/'(\w+)'/g)) assert.ok((stored as string[]).includes(key ?? ''), key);
 });

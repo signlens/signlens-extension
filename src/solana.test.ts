@@ -4,6 +4,7 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
+import { startTestServer } from '../e2e/server.ts';
 import {
     base58Decode,
     base58Encode,
@@ -11,6 +12,8 @@ import {
     isAddress,
     loadedAddresses,
     messageAccounts,
+    multipleAccounts,
+    readAccountList,
     tableLookups,
     toBase64,
     tokenBalance,
@@ -134,4 +137,48 @@ test('a token account is read for its mint, owner and amount; a wallet for its l
     const wallet = tokenBalance({ owner: '11111111111111111111111111111111', lamports: 5, data: ['', 'base64'] });
     assert.deepEqual(wallet, { lamports: 5n, token: null });
     assert.equal(tokenBalance(null), null);
+});
+
+test('accounts are read as the RPC must answer them, or not at all', () => {
+    const account = { owner: 'TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA', lamports: 2_039_280, data: ['AQID', 'base64'], space: 3 };
+    assert.deepEqual(readAccountList([account, null], 2), [{ owner: account.owner, lamports: 2_039_280, data: ['AQID', 'base64'] }, null]);
+    for (const odd of [
+        'x',
+        [account],
+        [{ ...account, owner: 7 }, null],
+        [{ ...account, lamports: -1 }, null],
+        [{ ...account, lamports: 1.5 }, null],
+        [{ ...account, data: ['AQID', 'jsonParsed'] }, null],
+        [{ ...account, data: 'AQID' }, null],
+        ['account', null],
+    ]) {
+        assert.equal(readAccountList(odd, 2), null, JSON.stringify(odd));
+    }
+});
+
+test('an RPC answer that is not what was asked for is an error, never taken for an answer', async () => {
+    const server = await startTestServer();
+    const address = 'Ffz5kwUjkUNw7hV4r6iCJnUoXXsAPFHkCMCmKKDypiwg';
+    try {
+        const answers: [string, RegExp][] = [
+            ['[]', /the RPC at 127\.0\.0\.1:\d+ answered something that is not JSON-RPC$/],
+            ['not json', /not JSON-RPC/],
+            ['{"jsonrpc":"2.0","id":1,"error":{"code":-32005,"message":"busy"}}', /RPC error: busy$/],
+            ['{"jsonrpc":"2.0","id":1,"error":"busy"}', /RPC error: no message$/],
+            [
+                '{"jsonrpc":"2.0","id":1,"result":{"value":"x"}}',
+                /the RPC at 127\.0\.0\.1:\d+ answered getMultipleAccounts with something else$/,
+            ],
+            ['{"jsonrpc":"2.0","id":1,"result":{"value":[]}}', /with something else/],
+            ['{"jsonrpc":"2.0","id":1}', /with something else/],
+        ];
+        for (const [body, said] of answers) {
+            server.refuse('getMultipleAccounts', 200, body);
+            await assert.rejects(multipleAccounts(server.rpc, [address]), said, body);
+        }
+        server.stopRefusing();
+        assert.deepEqual(await multipleAccounts(server.rpc, [address]), [null]);
+    } finally {
+        await server.close();
+    }
 });

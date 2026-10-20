@@ -1,16 +1,19 @@
 // Test fixtures: Chromium with the unpacked extension loaded, its background
-// worker, and a local server that plays the dapp and the RPC and relays
-// the API to a running SignLens API.
+// worker, and a local server that plays the dapp and the RPC, and the API
+// from its answers recorded under e2e/fixtures/api/ (or relays it to a
+// running SignLens API, when SIGNLENS_API_URL names one).
 
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { type BrowserContext, test as base, chromium, expect, type Page, type Worker } from '@playwright/test';
+import { type BrowserContext, test as base, chromium, expect, type Locator, type Page, type Worker } from '@playwright/test';
 import type { Settings } from '../src/settings.ts';
 import { noteDrift, STRICT } from './drift.ts';
 import { startTestServer, type TestServer } from './server.ts';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 export const EXTENSION = join(HERE, '../extension');
+/** The account of the test dapp's own wallet (e2e/dapp.html). */
+export const FAKE_ACCOUNT = 'FakeWa11et1111111111111111111111111111111111';
 
 interface Fixtures {
     worker: Worker;
@@ -55,7 +58,7 @@ export const test = base.extend<Fixtures>({
         await use(new URL(worker.url()).host);
     },
 
-    /** The local server: the dapp page at `/dapp.html`, the RPC at `/rpc`, the API relay at `/api`. */
+    /** The local server: the dapp page at `/dapp.html`, the RPC at `/rpc`, the API (recorded, or relayed) at `/api`. */
     // biome-ignore lint/correctness/noEmptyPattern: Playwright's fixture signature
     server: async ({}, use) => {
         const server = await startTestServer();
@@ -78,15 +81,22 @@ export const test = base.extend<Fixtures>({
 
     /**
      * Writes the extension's settings as the popup would, pointing the API at
-     * the local server's relay. Setting watch mode with an address also lets
-     * the test dapp see it, as if the user had allowed it once, unless
+     * the local server's relay. The test dapp's wallet account is one of
+     * "your addresses" unless `myAddresses` says otherwise: the address
+     * window has tests of its own. Setting watch mode with an address also
+     * lets the test dapp see it, as if the user had allowed it once, unless
      * `allowed` is false: watch.spec tests the asking itself.
      */
     configure: async ({ worker, server }, use) => {
         await use(async (settings, { allowed = true } = {}) => {
             const address = settings.mode === 'watch' ? settings.address?.trim() : undefined;
             const sites = address ? { watchSites: allowed ? [{ origin: new URL(server.url).origin, address, at: 0 }] : [] } : {};
-            await worker.evaluate((s) => chrome.storage.local.set(s), { apiUrl: server.api, ...sites, ...settings });
+            await worker.evaluate((s) => chrome.storage.local.set(s), {
+                apiUrl: server.api,
+                myAddresses: FAKE_ACCOUNT,
+                ...sites,
+                ...settings,
+            });
         });
     },
 
@@ -114,8 +124,8 @@ export const test = base.extend<Fixtures>({
  * once it is open and settled. Chrome may create the
  * page and then move it into its popup window, which Playwright reports as
  * one page closing and another opening, so the first page seen is not
- * trusted: this waits until exactly one live confirm page has stayed for
- * a moment and its buttons are visible.
+ * trusted: this waits until exactly one live window of that page has
+ * stayed for a moment and its buttons are visible.
  */
 export async function liveGate(context: BrowserContext, page = 'confirm.html'): Promise<Page> {
     let gate: Page | undefined;
@@ -136,6 +146,25 @@ export async function liveGate(context: BrowserContext, page = 'confirm.html'): 
     if (!gate) throw new Error('no gate window');
     await expect(gate.locator('#buttons button:visible').first()).toBeVisible();
     return gate;
+}
+
+/**
+ * Does `action` on `page`, which closes it, and waits until it has closed.
+ * The window can close before Playwright is done with the click or the
+ * key, which it reports as an error; that is what the action was for, so
+ * it is not one. Any other error is.
+ */
+export async function closing(page: Page, action: () => Promise<unknown>): Promise<void> {
+    const closed = page.waitForEvent('close');
+    await action().catch((error: unknown) => {
+        if (!page.isClosed()) throw error;
+    });
+    await closed;
+}
+
+/** Clicks `button`, a decision that closes its window: see `closing`. */
+export function clickToClose(button: Locator): Promise<void> {
+    return closing(button.page(), () => button.click());
 }
 
 export { expect };

@@ -33,8 +33,9 @@
         <footer>
             <p id="note" role="status"></p>
             <div id="buttons">
-                <button id="reject" type="button">Reject</button>
-                <button id="continue" type="button" class="primary">Continue</button>
+                <!-- Heard with the verdict and the summary, and Continue with what it does: the window opens on Reject. -->
+                <button id="reject" type="button" aria-describedby="band">Reject</button>
+                <button id="continue" type="button" class="primary" aria-describedby="band note">Continue</button>
             </div>
         </footer>
 

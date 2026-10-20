@@ -3,7 +3,7 @@
 
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { balanceChanges, failureText, SIMULATED_ACCOUNTS, watchList } from './simulation.ts';
+import { balanceChanges, failureText, readSimulation, SIMULATED_ACCOUNTS, watchList } from './simulation.ts';
 import { type Balance, base58Decode, type RpcAccount, toBase64, tokenBalance } from './solana.ts';
 
 const TOKEN_PROGRAM = 'TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA';
@@ -80,6 +80,35 @@ test("a failure quotes the program's last word, without its control characters",
         }),
         '{"InstructionError":[2,{"Custom":6001}]}; the program said: Slippage? exceeded',
     );
-    assert.equal(failureText({ err: 'BlockhashNotFound' }), '"BlockhashNotFound"');
+    assert.equal(failureText({ err: 'BlockhashNotFound', logs: [] }), '"BlockhashNotFound"');
     assert.equal(failureText({ err: 'x', logs: [`Program log: ${'y'.repeat(400)}`] }).length, 300);
+});
+
+test('a simulation answer is read field by field: what is not one is no answer', () => {
+    const account = wallet(5);
+    assert.deepEqual(
+        readSimulation({ value: { err: null, logs: ['Program log: ok', 7], unitsConsumed: 1200, accounts: [null, account] } }),
+        {
+            err: null,
+            logs: ['Program log: ok'],
+            unitsConsumed: 1200,
+            accounts: [null, account],
+        },
+    );
+    // What the node may leave out, or give otherwise, is left out.
+    assert.deepEqual(readSimulation({ value: { err: { InstructionError: [0, 'x'] }, unitsConsumed: -3 } }), {
+        err: { InstructionError: [0, 'x'] },
+        logs: [],
+        unitsConsumed: null,
+        accounts: null,
+    });
+    for (const odd of [
+        null,
+        'x',
+        { value: 'x' },
+        { value: { err: null, accounts: 'x' } },
+        { value: { err: null, accounts: [{ owner: 7 }] } },
+    ]) {
+        assert.equal(readSimulation(odd), null, JSON.stringify(odd));
+    }
 });

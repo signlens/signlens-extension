@@ -5,8 +5,11 @@
 // is wrong, and the window shows it as an error, never as a pass. A `type`
 // this version does not know becomes `Unrecognized`, which the window says
 // it cannot show; an unknown verdict, trust, severity or bound is refused,
-// since the window would have to guess what it means.
+// since the window would have to guess what it means. Text comes through
+// without what would hide or reorder it (text.ts): it can carry what a
+// transaction says of itself, a memo or a token's name.
 
+import { withoutControls } from './text.ts';
 import {
     type Address,
     type Amount,
@@ -83,7 +86,7 @@ const text =
     (value, path) => {
         if (typeof value !== 'string') return fail(path, 'is not a string');
         if (value.length > max) fail(path, `is longer than ${max} characters`);
-        return value;
+        return withoutControls(value);
     };
 
 const flag: Read<boolean> = (value, path) => (typeof value === 'boolean' ? value : fail(path, 'is not true or false'));

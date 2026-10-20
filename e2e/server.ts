@@ -396,7 +396,13 @@ export async function startTestServer(): Promise<TestServer> {
                         context: { slot: 1 },
                         value: call.params[0].map((address: string) => {
                             const data = tables.get(address);
-                            if (data) return { owner: LOOKUP_TABLE_PROGRAM, data: [Buffer.from(data).toString('base64'), 'base64'] };
+                            // With their rent, as a node answers every account.
+                            if (data)
+                                return {
+                                    owner: LOOKUP_TABLE_PROGRAM,
+                                    lamports: 1_398_960,
+                                    data: [Buffer.from(data).toString('base64'), 'base64'],
+                                };
                             const mint = mints.get(address);
                             if (mint) {
                                 // A mint account: decimals at byte 44 of its 82.
@@ -404,6 +410,7 @@ export async function startTestServer(): Promise<TestServer> {
                                 account[44] = mint.decimals;
                                 return {
                                     owner: 'TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA',
+                                    lamports: 1_461_600,
                                     data: [Buffer.from(account).toString('base64'), 'base64'],
                                 };
                             }

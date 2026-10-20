@@ -26,3 +26,18 @@ export function refusedEndpoint(url: string, what: string): string | null {
     const problem = endpointProblem(url);
     return problem && `the ${what} address in the settings is not usable: ${problem}`;
 }
+
+/**
+ * The signal a call to an endpoint goes with: it stops after `ms`, or when
+ * `stop` does (the request the call is for went), with `stop`'s reason.
+ * Chrome before 116 has no `AbortSignal.any`.
+ */
+export function within(ms: number, stop?: AbortSignal): AbortSignal {
+    const timeout = AbortSignal.timeout(ms);
+    if (!stop) return timeout;
+    const either = new AbortController();
+    if (stop.aborted) either.abort(stop.reason);
+    stop.addEventListener('abort', () => either.abort(stop.reason), { once: true });
+    timeout.addEventListener('abort', () => either.abort(timeout.reason), { once: true });
+    return either.signal;
+}

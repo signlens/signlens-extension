@@ -2,12 +2,15 @@
 // lookup tables a transaction references and reading the addresses they
 // load from the tables' accounts, the accounts a message names, and what a
 // token account holds. Everything else is the engine's job; the worker is
-// on the untrusted, online side and only gathers hints.
+// on the untrusted, online side and only gathers hints. Base58 is its
+// own module (base58.ts), which the pages load without the rest.
 
-import { refusedEndpoint } from './endpoint.ts';
+export { base58Decode, base58Encode, isAddress } from './base58.ts';
+
+import { base58Encode } from './base58.ts';
+import { refusedEndpoint, within } from './endpoint.ts';
+import { objectFields } from './json.ts';
 import { withoutControls } from './text.ts';
-
-const ALPHABET = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
 
 /** Owner of every address lookup table account. */
 export const LOOKUP_TABLE_PROGRAM = 'AddressLookupTab1e1111111111111111111111111';
@@ -48,48 +51,6 @@ export interface TokenHolding {
 export interface Balance {
     lamports: bigint;
     token: TokenHolding | null;
-}
-
-/** Base58 of `bytes`, as addresses are written. */
-export function base58Encode(bytes: Uint8Array): string {
-    let n = 0n;
-    for (const b of bytes) n = (n << 8n) | BigInt(b);
-    let out = '';
-    while (n > 0n) {
-        out = ALPHABET[Number(n % 58n)] + out;
-        n /= 58n;
-    }
-    let zeros = 0;
-    while (zeros < bytes.length && bytes[zeros] === 0) zeros += 1;
-    return '1'.repeat(zeros) + out;
-}
-
-/** The 32 bytes `text` is the base58 of, or `null` if it is not an address. */
-export function base58Decode(text: unknown): Uint8Array | null {
-    if (typeof text !== 'string' || text.length < 32 || text.length > 44) return null;
-    let n = 0n;
-    for (const c of text) {
-        const digit = ALPHABET.indexOf(c);
-        if (digit < 0) return null;
-        n = n * 58n + BigInt(digit);
-    }
-    if (n >> 256n !== 0n) return null;
-    const bytes = new Uint8Array(32);
-    for (let i = 31; i >= 0; i -= 1) {
-        bytes[i] = Number(n & 0xffn);
-        n >>= 8n;
-    }
-    // One leading '1' per leading zero byte, no more and no fewer.
-    let ones = 0;
-    while (ones < text.length && text[ones] === '1') ones += 1;
-    let zeros = 0;
-    while (zeros < 32 && bytes[zeros] === 0) zeros += 1;
-    return ones === zeros ? bytes : null;
-}
-
-/** Whether `text` is the base58 of exactly 32 bytes. */
-export function isAddress(text: unknown): text is string {
-    return base58Decode(text) !== null;
 }
 
 class Reader {
@@ -221,8 +182,8 @@ export function loadedAddresses(lookups: TableLookup[], tables: Map<string, Uint
  * at `url`, as a map from address to account data. Accounts that do not
  * exist or are not owned by the lookup table program are left out.
  */
-export async function fetchLookupTables(url: string, addresses: string[]): Promise<Map<string, Uint8Array>> {
-    const accounts = await multipleAccounts(url, addresses);
+export async function fetchLookupTables(url: string, addresses: string[], stop?: AbortSignal): Promise<Map<string, Uint8Array>> {
+    const accounts = await multipleAccounts(url, addresses, stop);
     const tables = new Map<string, Uint8Array>();
     accounts.forEach((account, i) => {
         const address = addresses[i];
@@ -240,35 +201,68 @@ const ACCOUNTS_PER_CALL = 10;
  * as publicnode refuse a longer list outright (HTTP 403, "Request
  * blocked"). The data is base64 at the confirmed commitment.
  */
-export async function multipleAccounts(url: string, addresses: string[]): Promise<(RpcAccount | null)[]> {
+export async function multipleAccounts(url: string, addresses: string[], stop?: AbortSignal): Promise<(RpcAccount | null)[]> {
     const accounts: (RpcAccount | null)[] = [];
     for (let at = 0; at < addresses.length; at += ACCOUNTS_PER_CALL) {
         const batch = addresses.slice(at, at + ACCOUNTS_PER_CALL);
-        const result = await rpcCall<{ value: (RpcAccount | null)[] }>(
-            url,
-            'getMultipleAccounts',
-            [batch, { encoding: 'base64', commitment: 'confirmed' }],
-            10_000,
+        const read = (result: unknown) => readAccountList(objectFields(result)?.value, batch.length);
+        accounts.push(
+            ...(await rpcCall(url, 'getMultipleAccounts', [batch, { encoding: 'base64', commitment: 'confirmed' }], read, 10_000, stop)),
         );
-        accounts.push(...result.value);
     }
     return accounts;
 }
 
-/** One JSON-RPC call to the RPC at `url`: its result, or an error naming what went wrong. */
-export async function rpcCall<T>(url: string, method: string, params: unknown[], timeoutMs = 15_000): Promise<T> {
+/** An account as the RPC answers one with base64 data, `null` where there is none, or `undefined` when it is not one. */
+function readAccount(value: unknown): RpcAccount | null | undefined {
+    if (value === null) return null;
+    const { owner, lamports, data } = objectFields(value) ?? {};
+    if (typeof owner !== 'string' || typeof lamports !== 'number' || !Number.isInteger(lamports) || lamports < 0) return undefined;
+    if (!Array.isArray(data) || typeof data[0] !== 'string' || data[1] !== 'base64') return undefined;
+    return { owner, lamports, data: [data[0], 'base64'] };
+}
+
+/** `value` as a list of accounts, `count` of them when given, or `null` when it is not one: a wrong answer is no answer. */
+export function readAccountList(value: unknown, count?: number): (RpcAccount | null)[] | null {
+    if (!Array.isArray(value) || (count !== undefined && value.length !== count)) return null;
+    const accounts = value.map(readAccount);
+    return accounts.every((account) => account !== undefined) ? accounts : null;
+}
+
+/**
+ * One JSON-RPC call to the RPC at `url`, given up after `timeoutMs` or when
+ * `stop` aborts: its result as `read` makes it out, or an error naming what
+ * went wrong. The answer is read, not cast: one that is not JSON-RPC, or
+ * whose result `read` cannot make out (`null`), is an error, never taken
+ * for what was asked.
+ */
+export async function rpcCall<T>(
+    url: string,
+    method: string,
+    params: unknown[],
+    read: (result: unknown) => T | null,
+    timeoutMs = 15_000,
+    stop?: AbortSignal,
+): Promise<T> {
     const refused = refusedEndpoint(url, 'RPC');
     if (refused) throw new Error(refused);
     const response = await fetch(url, {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({ jsonrpc: '2.0', id: 1, method, params }),
-        signal: AbortSignal.timeout(timeoutMs),
+        signal: within(timeoutMs, stop),
     });
     if (!response.ok) throw await refusal(url, response);
-    const body = (await response.json()) as { error?: { message: string }; result: T };
-    if (body.error) throw new Error(`RPC error: ${body.error.message}`);
-    return body.result;
+    const host = new URL(url).host;
+    const body = objectFields(await response.json().catch(() => null));
+    if (!body) throw new Error(`the RPC at ${host} answered something that is not JSON-RPC`);
+    if (body.error !== undefined && body.error !== null) {
+        const said = objectFields(body.error)?.message;
+        throw new Error(`RPC error: ${typeof said === 'string' && said.trim() ? withoutControls(said).slice(0, 200) : 'no message'}`);
+    }
+    const result = read(body.result);
+    if (result === null) throw new Error(`the RPC at ${host} answered ${method} with something else`);
+    return result;
 }
 
 /** An HTTP answer that is not JSON-RPC, as an error naming the host and quoting what it said. */

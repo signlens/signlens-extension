@@ -12,7 +12,7 @@ import type { ConnectPayload, ConnectReply } from './messages.ts';
 import type { Approval, ConnectRequest } from './model.ts';
 import { type Settings, watched } from './settings.ts';
 import { inTurn, local } from './store.ts';
-import { printable } from './text.ts';
+import { describe, logged } from './text.ts';
 
 /** The sites allowed so far, oldest first. */
 export async function approvals(): Promise<Approval[]> {
@@ -50,7 +50,7 @@ export function revoke(origin: string, address: string): Promise<void> {
 export async function connectWatch(payload: ConnectPayload, tabId: number, config: Settings): Promise<ConnectReply> {
     if (config.mode !== 'watch') return { approved: false, error: 'SignLens is not set to watch-only' };
     const key = watched(config);
-    const origin = printable(payload.origin, 200);
+    const { origin } = payload;
     // A sandboxed page's origin is "null", shared with every other such page:
     // allowing one would allow them all. Only a site's own address is asked about.
     if (!/^https?:\/\/[^/]+$/.test(origin)) {
@@ -64,7 +64,19 @@ export async function connectWatch(payload: ConnectPayload, tabId: number, confi
     if (!flight) return { approved: false, error: `SignLens is ${gate.BUSY}` };
     try {
         const request: ConnectRequest = { origin, address: key.address };
-        const outcome = await gate.ask('connect.html', request, flight);
+        let outcome = await gate.ask('connect.html', request, flight);
+        let refusal = 'the connection was refused in SignLens';
+        // A page that went before its window opened withdrew its request: nothing to keep.
+        if (gate.withdrawn(flight)) return { approved: false, error: refusal };
+        // The site is allowed before the requests say so: an Allow that cannot be kept is a refusal.
+        if (outcome.decision === 'continue') {
+            try {
+                await approve(origin, key.address);
+            } catch (error) {
+                refusal = `could not keep the site allowed: ${describe(error)}`;
+                outcome = { decision: 'reject', refused: refusal };
+            }
+        }
         // Kept for the popup; a failure to keep it changes nothing of the answer.
         await remember({
             time: Date.now(),
@@ -74,10 +86,8 @@ export async function connectWatch(payload: ConnectPayload, tabId: number, confi
             upstream: '',
             rows: [{ kind: 'consent', address: key.address }],
             ...outcome,
-        }).catch((error: unknown) => console.error('SignLens could not keep the request', error));
-        if (outcome.decision !== 'continue') return { approved: false, error: 'the connection was refused in SignLens' };
-        await approve(origin, key.address);
-        return { approved: true, ...key };
+        }).catch(logged('keep the request'));
+        return outcome.decision === 'continue' ? { approved: true, ...key } : { approved: false, error: refusal };
     } finally {
         gate.end(tabId, flight);
     }

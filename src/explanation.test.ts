@@ -191,3 +191,14 @@ test('what the window would choke on is refused: huge decimals, non-numbers, dep
     assert.equal(parseExplanation(document({ text: 'x'.repeat(1_000_000) })).text?.length, 1_000_000);
     assert.match(refusal(document({ text: 'x'.repeat(1_000_001) })).message, /text is longer than 1000000 characters/);
 });
+
+test('no text from the API hides or reorders what is around it', () => {
+    const read = parseExplanation(
+        document({
+            summary: 'Refund \u202eDEFAS',
+            findings: [{ severity: 'Info', code: 'fee', message: 'A\u200bfee\u2028paid', instruction: null }],
+        }),
+    );
+    assert.equal(read.summary, 'Refund ?DEFAS');
+    assert.equal(read.findings[0]?.message, 'A?fee?paid');
+});

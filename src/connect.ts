@@ -3,17 +3,21 @@
 // opened it. Deny has the focus, Escape denies, and closing the window
 // denies too.
 
+import { byId } from './dom.ts';
 import type { Decision } from './model.ts';
 import { originNode } from './render.ts';
 import { getPending } from './store.ts';
 import { withoutScheme } from './text.ts';
-import { byId, noLongerPending, requestId, sendDecision } from './windows.ts';
-
-const NO_LONGER_PENDING = 'This request is no longer pending.';
+import { goneAtOpen, requestId, sendDecision } from './windows.ts';
 
 /** Sends the answer to the worker; an Allow no request waits for any more says so rather than close as if it counted. */
 function decide(decision: Decision): void {
-    sendDecision(decision, () => noLongerPending(NO_LONGER_PENDING, byId('allow'), byId('deny')));
+    sendDecision(
+        decision,
+        'The site was not allowed: this request was no longer pending. Connect again from the site if you still mean to.',
+        byId('allow'),
+        byId('deny', HTMLButtonElement),
+    );
 }
 
 async function start(): Promise<void> {
@@ -23,7 +27,7 @@ async function start(): Promise<void> {
         if (event.key === 'Escape') decide('reject');
     });
     if (!request) {
-        noLongerPending(NO_LONGER_PENDING, byId('allow'), byId('deny'));
+        goneAtOpen(byId('allow'), byId('deny', HTMLButtonElement));
         return;
     }
     byId('where').replaceChildren(originNode(request.origin, ' wants to see the address SignLens watches'));

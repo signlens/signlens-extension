@@ -2,7 +2,7 @@
 // badge clears once the popup is seen, a capture can be saved, the history
 // cleared, and lookup tables are not fetched twice in a row.
 
-import { expect, liveGate, test } from './extension.ts';
+import { closing, expect, liveGate, test } from './extension.ts';
 import { feePayer, fixture } from './server.ts';
 
 const WALLET = 'SignLens';
@@ -29,14 +29,14 @@ test('a request SignLens would refuse offers "Continue anyway", not the primary 
     await expect(gate.locator('#note')).toContainText('SignLens would refuse this');
     await expect(gate.locator('#reject')).toBeFocused();
     // The window closes on the keydown, before the keyup a press waits for.
-    await gate.keyboard.press('Escape').catch(() => {});
+    await closing(gate, () => gate.keyboard.press('Escape'));
     expect((await signing).error).toContain('rejected in SignLens');
     await expect.poll(() => gate.isClosed()).toBe(true);
 });
 
 test('the badge shows the verdict until the popup is opened', async ({ configure, context, dapp, extensionId, worker }) => {
     const transfer = fixture('legacy_durable_nonce_token_transfer');
-    await configure({ gate: false, lookupTokens: false, simulate: false, mode: 'watch', address: feePayer(transfer.bytes) });
+    await configure({ askFirst: false, lookupTokens: false, simulate: false, mode: 'watch', address: feePayer(transfer.bytes) });
     await dapp.evaluate(({ wallet, base64 }: { wallet: string; base64: string }) => window.sign(wallet, base64), {
         wallet: WALLET,
         base64: transfer.base64,
@@ -51,7 +51,7 @@ test('a capture can be saved as a fixture, and the history cleared', async ({ co
     const swap = fixture(SWAP);
     server.know(swap);
     await configure({
-        gate: false,
+        askFirst: false,
         lookupTokens: false,
         simulate: false,
         mode: 'watch',
@@ -91,7 +91,7 @@ test('lookup tables read once are not fetched again for the next request', async
     const swap = fixture(SWAP);
     server.know(swap);
     await configure({
-        gate: false,
+        askFirst: false,
         lookupTokens: false,
         simulate: false,
         mode: 'watch',

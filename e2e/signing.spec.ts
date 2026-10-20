@@ -8,7 +8,7 @@ const WALLET = 'SignLens';
 
 test('a nonce transfer is explained for the connected address and refused', async ({ configure, dapp, popup }) => {
     const transfer = fixture('legacy_durable_nonce_token_transfer');
-    await configure({ gate: false, lookupTokens: false, simulate: false, mode: 'watch', address: feePayer(transfer.bytes) });
+    await configure({ askFirst: false, lookupTokens: false, simulate: false, mode: 'watch', address: feePayer(transfer.bytes) });
 
     const answer = await dapp.evaluate(({ wallet, base64 }: { wallet: string; base64: string }) => window.sign(wallet, base64), {
         wallet: WALLET,
@@ -33,7 +33,7 @@ test('lookup tables are read over the RPC and a swap is named', async ({ configu
     const swap = fixture('swap__both_mints_named.b64');
     server.know(swap);
     await configure({
-        gate: false,
+        askFirst: false,
         lookupTokens: false,
         simulate: false,
         mode: 'watch',
@@ -61,7 +61,7 @@ test('lookup tables are read over the RPC and a swap is named', async ({ configu
 test('an unreachable RPC leaves the tables unresolved and the swap refused, not guessed', async ({ configure, dapp, popup, server }) => {
     const swap = fixture('swap__both_mints_named.b64');
     await configure({
-        gate: false,
+        askFirst: false,
         lookupTokens: false,
         simulate: false,
         mode: 'watch',
@@ -85,7 +85,7 @@ test('an unreachable RPC leaves the tables unresolved and the swap refused, not 
 
 test('a message is shown as it is, since SignLens does not explain messages', async ({ configure, dapp, popup }) => {
     const transfer = fixture('legacy_durable_nonce_token_transfer');
-    await configure({ gate: false, lookupTokens: false, simulate: false, mode: 'watch', address: feePayer(transfer.bytes) });
+    await configure({ askFirst: false, lookupTokens: false, simulate: false, mode: 'watch', address: feePayer(transfer.bytes) });
 
     const answer = await dapp.evaluate((wallet: string) => window.signMessage(wallet, 'Sign in to the test dapp'), WALLET);
     expect(answer.error).toContain('The message is in the SignLens popup');

@@ -8,7 +8,7 @@
 // imports.
 
 (() => {
-    const CHANNEL = 'signlens';
+    const CHANNEL: SignLensPage.Offer['channel'] = 'signlens';
 
     interface PortMessage {
         id?: number;
@@ -78,13 +78,13 @@
                 (error: unknown) => port?.postMessage({ id: data.id, error: String(error instanceof Error ? error.message : error) }),
             );
         };
-        port.postMessage({ type: 'connected' });
+        port.postMessage({ type: 'connected' } satisfies SignLensPage.Notice);
     }
 
     // The one window message this script takes: the wallet's port, the
     // first time it is offered. Stopped here so that no later listener,
     // the page's included, receives the event that carries the port.
-    window.addEventListener('message', (event: MessageEvent<{ channel?: string; to?: string; type?: string }>) => {
+    window.addEventListener('message', (event: MessageEvent<Partial<SignLensPage.Offer> | null>) => {
         if (event.source !== window || event.data?.channel !== CHANNEL || event.data.to !== 'extension' || event.data.type !== 'port')
             return;
         event.stopImmediatePropagation();
@@ -94,20 +94,33 @@
     });
     // The popup asks whether this script runs in a tab at all: a tab open
     // from before the extension was installed or updated has none.
-    chrome.runtime.onMessage.addListener((message: { type?: string }, _sender, sendResponse) => {
+    chrome.runtime.onMessage.addListener((message: Partial<SignLensPage.Ping> | null, _sender, sendResponse) => {
         if (message?.type !== 'ping') return false;
-        sendResponse({ port: port !== null });
+        sendResponse({ port: port !== null } satisfies SignLensPage.PingReply);
         return false;
     });
+
+    /** The sites allowed to see the watched address (sites.ts), as far as they are this page's. */
+    function allowedHere(sites: unknown): string {
+        const here = Array.isArray(sites)
+            ? sites.filter((site: { origin?: unknown } | null) => site?.origin === window.location.origin)
+            : [];
+        return JSON.stringify(here);
+    }
 
     chrome.storage.onChanged.addListener((changes, area) => {
         if (area !== 'local' || !port) return;
         // Only what the wallet in the page acts on: a watch session asks again
-        // when the address or the sites allowed to see it change.
-        if (!['mode', 'address', 'upstream', 'watchSites'].some((key) => key in changes)) return;
+        // when the address changes, or whether this site may see it; another
+        // site allowed or revoked is none of this page's business.
+        const sites = changes.watchSites;
+        const allowed = sites !== undefined && allowedHere(sites.oldValue) !== allowedHere(sites.newValue);
+        if (!allowed && !['mode', 'address', 'upstream'].some((key) => key in changes)) return;
         chrome.runtime
             .sendMessage({ type: 'config' })
-            .then((config) => port?.postMessage({ type: 'config-changed', config }))
+            .then((config: SignLensPage.Config | null) =>
+                port?.postMessage({ type: 'config-changed', config } satisfies SignLensPage.Notice),
+            )
             .catch(() => {});
     });
 })();

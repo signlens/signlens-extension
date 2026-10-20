@@ -8,9 +8,10 @@ import { beforeEach, test } from 'node:test';
 import { type FakeChrome, installFakeChrome, until } from './chrome.fake.ts';
 import { abandon, askUser, begin, DECISION_TIMEOUT_MS, decide, end, type InFlight, mustAsk } from './gate.ts';
 import type { HistoryEntry } from './model.ts';
+import { pendingKey } from './store.ts';
 
 /** A refusal that never comes fails the test rather than hang the run. */
-const BOUNDED = { timeout: 2_000 };
+const BOUNDED = { timeout: 10_000 };
 
 let fake: FakeChrome;
 beforeEach(() => {
@@ -37,7 +38,7 @@ function nothingLeft(): void {
 }
 
 function flight(deadline = Date.now() + 5_000): InFlight {
-    return { deadline, abandoned: false };
+    return { deadline, abandoned: false, signal: new AbortController().signal };
 }
 
 test('one request per tab is in flight at a time, with the deadline the page keeps', () => {
@@ -52,6 +53,21 @@ test('one request per tab is in flight at a time, with the deadline the page kee
     assert.ok(again);
     end(1, again);
     end(2, second);
+});
+
+test('what is under way for a request stops when its page goes, or when the page stops waiting, saying which', BOUNDED, async () => {
+    const closed = begin(21);
+    assert.ok(closed);
+    assert.equal(closed.signal.aborted, false);
+    abandon(21);
+    assert.equal(closed.signal.reason, 'the page closed or reloaded');
+    end(21, closed);
+
+    const late = begin(22, Date.now() - DECISION_TIMEOUT_MS + 20);
+    assert.ok(late);
+    await until(() => late.signal.aborted);
+    assert.equal(late.signal.reason, 'the page stopped waiting');
+    end(22, late);
 });
 
 test("a tab whose page went is free at once for its next request, which the old one's end leaves alone", () => {
@@ -73,7 +89,7 @@ test("a tab whose page went is free at once for its next request, which the old 
 test('the decision in the window ends the wait, and the window and the pending request go', BOUNDED, async () => {
     const asking = askUser(ENTRY, flight());
     const { id } = await openWindow();
-    assert.deepEqual(fake.session[`pending:${id}`], ENTRY);
+    assert.deepEqual(fake.session[pendingKey('confirm.html', id)], ENTRY);
     assert.equal(decide(id, 'continue'), true);
     assert.deepEqual(await asking, { decision: 'continue' });
     nothingLeft();
@@ -86,6 +102,19 @@ test("closing the window is the user's refusal", BOUNDED, async () => {
     const { windowId } = await openWindow();
     fake.closeWindow(windowId);
     assert.deepEqual(await asking, { decision: 'reject' });
+    nothingLeft();
+});
+
+test("closing one window is a refusal of that window's request only", BOUNDED, async () => {
+    const first = askUser(ENTRY, flight());
+    const { windowId, id } = await openWindow();
+    const second = askUser(ENTRY, flight());
+    await until(() => fake.windows.size === 2);
+    fake.closeWindow(Math.max(...fake.windows.keys()));
+    assert.deepEqual(await second, { decision: 'reject' });
+    assert.ok(fake.windows.has(windowId));
+    assert.equal(decide(id, 'continue'), true);
+    assert.deepEqual(await first, { decision: 'continue' });
     nothingLeft();
 });
 

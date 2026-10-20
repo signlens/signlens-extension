@@ -8,22 +8,24 @@ import { keepingAlive } from './alive.ts';
 import { apiStatus } from './api.ts';
 import { sendRating } from './feedback.ts';
 import * as gate from './gate.ts';
-import { clearHistory, latest, markSeen, remember, showBadge } from './history.ts';
+import { clearHistory, markSeen } from './history.ts';
 import {
     accepts,
     isWaiting,
+    type Message,
     type MessageType,
     REQUEST_PORT,
     type Replies,
     readMessage,
+    type WaitingMessage,
     type WalletList,
     type WalletsPayload,
 } from './messages.ts';
-import { answerRequest } from './requests.ts';
+import { answerRequest, connectFailed } from './requests.ts';
 import { pageConfig, settings } from './settings.ts';
 import { revoke } from './sites.ts';
-import { type SessionItems, session } from './store.ts';
-import { describe, withoutControls } from './text.ts';
+import { dropStalePending, type SessionItems, session, walletsKey } from './store.ts';
+import { describe, logged, withoutControls } from './text.ts';
 
 // ---- The page's wallets ----
 
@@ -37,47 +39,24 @@ function walletNames(payload: WalletsPayload): string[] {
 /** The wallets the page in `tabId` has, for the popup's list; the latest page's list stands in when the popup cannot tell the tab. */
 async function rememberWallets(tabId: number | undefined, payload: WalletsPayload): Promise<void> {
     const wallets = walletNames(payload);
-    const entry: WalletList = { wallets, origin: payload.origin ?? '', at: Date.now() };
+    const entry: WalletList = { wallets, origin: payload.origin, at: Date.now() };
     const items: Partial<SessionItems> = { latestWallets: entry };
-    if (tabId !== undefined) items[`wallets:${tabId}`] = entry;
+    if (tabId !== undefined) items[walletsKey(tabId)] = entry;
     // A list of wallets is a convenience for the popup: not worth failing a page over.
-    await session.set(items).catch((error: unknown) => console.error('SignLens could not keep the wallets', error));
-}
-
-/**
- * A connect that found no wallet to pass to: shown in the popup like any
- * failed request, once. A page can call connect in a loop, and the same
- * failure as the latest row would only push the real requests out.
- */
-async function connectFailed(payload: WalletsPayload): Promise<void> {
-    const config = await settings();
-    const error = withoutControls(payload.message).slice(0, 300) || 'no wallet to pass requests to';
-    const last = await latest();
-    const lastRow = last?.rows[0];
-    if (
-        last?.method === 'standard:connect' &&
-        last.origin === payload.origin &&
-        lastRow?.kind === 'failed' &&
-        lastRow.error.includes(error)
-    )
-        return;
-    await showBadge('error');
-    await remember({
-        time: Date.now(),
-        ...(payload.origin ? { origin: payload.origin } : {}),
-        method: 'standard:connect',
-        mode: config.mode,
-        upstream: config.upstream,
-        rows: [{ kind: 'failed', error: `SignLens could not connect: ${error}. Choose a wallet in the extension's settings.` }],
-    });
+    await session.set(items).catch(logged('keep the wallets'));
 }
 
 // ---- Messages ----
 
+// A worker that stopped took the requests it had waiting with it: what they
+// left in storage would only take room. In turn before any new request is kept.
+dropStalePending().catch(logged('drop the requests left waiting'));
+
 // A closed tab's wallets go with it, and its request is refused: no one is
 // left to pass it to.
 chrome.tabs.onRemoved.addListener((tabId) => {
-    session.remove(`wallets:${tabId}`).catch(() => {});
+    // A list of wallets left behind only takes room until the session ends.
+    session.remove(walletsKey(tabId)).catch(() => {});
     gate.abandon(tabId);
 });
 
@@ -96,7 +75,7 @@ chrome.runtime.onConnect.addListener((port) => {
     const sender = port.sender ?? {};
     let answered = false;
     port.onMessage.addListener((raw: unknown) => {
-        const message = readMessage(raw);
+        const message = readMessage(raw, sender);
         if (!message || !isWaiting(message) || !accepts(message.type, sender, self())) {
             port.disconnect();
             return;
@@ -115,83 +94,89 @@ chrome.runtime.onConnect.addListener((port) => {
     });
 });
 
-/** Answers with what `answer` settles to, or what `failed` makes of its error. True: the answer comes later. */
-function later<T extends MessageType>(
-    respond: (reply: Replies[T]) => void,
-    answer: Promise<Replies[T]>,
-    failed: (error: unknown) => Replies[T],
-): true {
-    answer.then(respond, (error: unknown) => respond(failed(error)));
-    return true;
+/** A message that is answered at once: everything but a page's request that may wait on the user. */
+type Answered = Exclude<MessageType, WaitingMessage['type']>;
+
+/** How the worker answers a message of type `T`, and what it answers when that fails. */
+interface Answer<T extends Answered> {
+    reply(message: Extract<Message, { type: T }>, sender: chrome.runtime.MessageSender): Replies[T] | Promise<Replies[T]>;
+    failed(error: unknown): Replies[T];
+}
+
+/** The answer to each message, by its type: one for every type, or this does not compile. */
+const ANSWERS: { [T in Answered]: Answer<T> } = {
+    status: { reply: async () => apiStatus((await settings()).apiUrl), failed: (error) => ({ error: describe(error) }) },
+    config: { reply: async () => pageConfig(await settings()), failed: () => null },
+    // A list of wallets is a convenience for the popup: not worth failing a page over.
+    wallets: {
+        reply: async (message, sender) => {
+            await rememberWallets(sender.tab?.id, message.payload);
+            return true as const;
+        },
+        failed: () => true,
+    },
+    'connect-failed': {
+        reply: async (message) => {
+            await connectFailed(message.payload.origin, walletNames(message.payload));
+            return true;
+        },
+        failed: () => false,
+    },
+    'wallet-list': {
+        reply: async ({ tabId }) => {
+            const key = tabId !== null ? walletsKey(tabId) : 'latestWallets';
+            return (await session.get(key))[key] ?? null;
+        },
+        failed: () => null,
+    },
+    seen: {
+        reply: () => {
+            // The badge is a nicety: a failure to clear it is logged, never the popup's to handle.
+            markSeen().catch(logged('clear the badge'));
+            return true;
+        },
+        failed: () => true,
+    },
+    clear: {
+        reply: async () => {
+            await clearHistory();
+            return true;
+        },
+        failed: () => false,
+    },
+    // Whether the request was still waiting, so the window can say so rather than close on a Continue that went nowhere.
+    decision: { reply: ({ id, decision }) => gate.decide(id, decision), failed: () => false },
+    revoke: {
+        reply: async ({ origin, address }) => {
+            await revoke(origin, address);
+            return true;
+        },
+        failed: () => false,
+    },
+    feedback: { reply: async ({ payload }) => sendRating(payload, (await settings()).apiUrl), failed: () => false },
+};
+
+/** `message`'s answer, by its type. */
+async function answer<T extends Answered>(
+    message: Extract<Message, { type: T }>,
+    sender: chrome.runtime.MessageSender,
+): Promise<Replies[T]> {
+    // A message narrows its answer by its type, which TypeScript cannot follow through the table: the one cast.
+    const { reply, failed } = ANSWERS[(message as Message).type as T] as Answer<T>;
+    try {
+        return await reply(message, sender);
+    } catch (error) {
+        return failed(error);
+    }
 }
 
 chrome.runtime.onMessage.addListener((raw: unknown, sender, sendResponse) => {
-    const message = readMessage(raw);
-    if (!message || !accepts(message.type, sender, self())) {
+    const message = readMessage(raw, sender);
+    // A page's requests that wait on the user come over a port of their own, never here.
+    if (!message || isWaiting(message) || !accepts(message.type, sender, self())) {
         sendResponse(false);
         return false;
     }
-    switch (message.type) {
-        case 'status':
-            return later<'status'>(
-                sendResponse,
-                settings().then((config) => apiStatus(config.apiUrl)),
-                (error) => ({ error: describe(error) }),
-            );
-        case 'config':
-            return later<'config'>(sendResponse, settings().then(pageConfig), () => null);
-        case 'wallets':
-            return later<'wallets'>(
-                sendResponse,
-                rememberWallets(sender.tab?.id, message.payload).then(() => true),
-                () => true,
-            );
-        case 'connect-failed':
-            return later<'connect-failed'>(
-                sendResponse,
-                connectFailed(message.payload).then(() => true),
-                () => false,
-            );
-        case 'wallet-list': {
-            const key = message.tabId !== null ? (`wallets:${message.tabId}` as const) : 'latestWallets';
-            return later<'wallet-list'>(
-                sendResponse,
-                session.get(key).then((stored) => stored[key] ?? null),
-                () => null,
-            );
-        }
-        case 'seen':
-            void markSeen();
-            sendResponse(true);
-            return false;
-        case 'clear':
-            return later<'clear'>(
-                sendResponse,
-                clearHistory().then(() => true),
-                () => false,
-            );
-        case 'decision':
-            // Answers whether the request was still waiting, so the window
-            // can say so rather than close on a Continue that went nowhere.
-            sendResponse(gate.decide(message.id, message.decision));
-            return false;
-        case 'revoke':
-            return later<'revoke'>(
-                sendResponse,
-                revoke(message.origin, message.address).then(() => true),
-                () => false,
-            );
-        case 'feedback':
-            return later<'feedback'>(
-                sendResponse,
-                settings().then((config) => sendRating(message.payload, config.apiUrl)),
-                () => false,
-            );
-        // A page's requests that wait on the user come over a port, not here.
-        case 'connect':
-        case 'explain':
-        case 'message':
-            sendResponse(false);
-            return false;
-    }
+    void answer(message, sender).then(sendResponse);
+    return true;
 });

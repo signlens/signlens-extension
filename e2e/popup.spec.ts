@@ -49,7 +49,7 @@ test('new requests open the popup on them, counted until seen, each with its sum
     worker,
 }) => {
     const transfer = fixture('legacy_durable_nonce_token_transfer');
-    await configure({ gate: false, lookupTokens: false, simulate: false, mode: 'watch', address: feePayer(transfer.bytes) });
+    await configure({ askFirst: false, lookupTokens: false, simulate: false, mode: 'watch', address: feePayer(transfer.bytes) });
     for (let i = 0; i < 2; i += 1) {
         await dapp.evaluate(({ wallet, base64 }: { wallet: string; base64: string }) => window.sign(wallet, base64), {
             wallet: WALLET,

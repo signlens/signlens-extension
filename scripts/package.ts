@@ -127,6 +127,7 @@ const expected = new Set([
     'popup.css',
     'confirm.html',
     'connect.html',
+    'address.html',
     ...['16', '32', '48', '128'].map((size) => `icons/icon-${size}.png`),
 ]);
 const present = files(EXTENSION);

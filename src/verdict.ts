@@ -36,12 +36,14 @@ export function rowVerdictWord(row: Row): VerdictWord {
         case 'message':
         case 'consent':
             return 'message';
+        case 'address':
+            return 'warning';
     }
 }
 
-/** The worst verdict among rows: what the band and the badge show. */
+/** The worst verdict among rows: what the band and the badge show. Nothing explained at all is nothing known: an error, never a pass. */
 export function worstVerdict(list: readonly Row[]): VerdictWord {
-    return list.map(rowVerdictWord).reduce(worse, 'message');
+    return list.length === 0 ? 'error' : list.map(rowVerdictWord).reduce(worse, 'message');
 }
 
 /** A row in one line: what the band and a history row lead with. */
@@ -50,10 +52,13 @@ export function summaryOf(row: Row): string {
         case 'explained':
             return row.summary;
         case 'failed':
-            return row.error;
+            // A line leads with a capital, whatever the failure's own words (which the page is told as they are).
+            return row.scope === 'transaction' ? `Not explained: ${row.error}` : row.error.charAt(0).toUpperCase() + row.error.slice(1);
         case 'message':
             return 'A message, shown as it is';
         case 'consent':
             return `Asked to see the watched address ${row.address}`;
+        case 'address':
+            return `Named ${row.claimed.join(', ')} as your address, which is not one of yours in SignLens`;
     }
 }

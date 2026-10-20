@@ -17,7 +17,7 @@ test('a lookalike of a contact is flagged', async ({ configure, dapp, popup }) =
     expect(LOOKALIKE).not.toBe(RECIPIENT);
     const transfer = fixture('legacy_durable_nonce_token_transfer');
     await configure({
-        gate: false,
+        askFirst: false,
         lookupTokens: false,
         simulate: false,
         mode: 'watch',
@@ -45,7 +45,7 @@ test('a lookalike of a contact is flagged', async ({ configure, dapp, popup }) =
 test('the contact itself labels the recipient', async ({ configure, dapp, popup }) => {
     const transfer = fixture('legacy_durable_nonce_token_transfer');
     await configure({
-        gate: false,
+        askFirst: false,
         lookupTokens: false,
         simulate: false,
         mode: 'watch',

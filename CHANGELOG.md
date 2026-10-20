@@ -21,7 +21,9 @@ before it, so everything below is new.
   to the wallet you sign with (named in the settings, or the first one
   found) only on your decision, or with "Show the explanation and ask
   first" off when SignLens would not refuse it; anything else (no answer,
-  a closed or reloaded page, no decision in time) refuses it. In
+  a closed or reloaded page, no decision in time) refuses it. A page that
+  goes stops the calls made for its request, and one it withdrew before
+  anything was shown is not kept. In
   watch-only mode it connects as any address, explains, and refuses.
 - **What the dapp gets.** The wallet is handed SignLens's own copy of the
   bytes it explained, taken when the dapp asked, whatever the page does
@@ -31,6 +33,14 @@ before it, so everything below is new.
   depend on your address book. The channel to the extension is a
   MessageChannel the page cannot reach, through patched built-ins or
   `window.event`.
+- **Your addresses.** The explanation calls "you" only addresses you gave
+  SignLens: the ones in the settings, or the watched one. A transaction
+  whose page names another as the one that signs it is not explained
+  until you say whether it is yours, in a window that shows it beside
+  yours, Reject first; "It's mine, add it" adds it to the settings. A
+  request naming more than one such address is refused, and so is one
+  with "Show the explanation and ask first" off, with no window. In
+  watch-only mode such a request is refused.
 - **Watch-only consent.** A site sees the watched address only once you
   allow it, in a window of its own, once per site and address; a Deny
   holds for that time only, a silent connect never asks, and the settings
@@ -43,12 +53,20 @@ before it, so everything below is new.
   it does not know is shown as one. The window shows the verdict and the
   summary first, each transaction of a request under its own heading,
   what each does to you, and the instructions and the full text under
-  toggles; its title carries the verdict and the site. Blocked and error
-  requests wait for you even with "Show the explanation and ask first"
-  off.
+  toggles; its title carries the verdict and the site. In pass-through
+  mode, blocked and error requests wait for you even with "Show the
+  explanation and ask first" off. No text from the API, the RPC or the page keeps a character that
+  hides or reorders what is around it (a right-to-left override, a
+  zero-width space): each shows as "?". A zero-width joiner stays only
+  between two characters that are not ASCII, as in an emoji sequence or
+  Persian and Indic text; beside ASCII it shows too.
 - **The popup.** The latest requests, with what became of each and why
   SignLens refused one, the sites that asked to see the watched address,
-  and the settings. The badge shows the worst verdict not seen yet,
+  and the settings. A connect that found no wallet to pass to is one row
+  per site, in SignLens's words, with the wallets the page named quoted.
+  The requests keep to about half of the browser's room
+  for the session, an answer too large without its full text, and give
+  way to a request waiting in a window when the browser runs short. The badge shows the worst verdict not seen yet,
   ranked as the window ranks it.
 - **Feedback.** A strip under the explanation sends a rating and a
   comment, once, one record per explained transaction with its digest, and
@@ -60,7 +78,7 @@ before it, so everything below is new.
   rule. Defaults are not copied into storage, so later defaults reach
   everyone.
 - **Accessibility**, aiming at WCAG 2.2 AA; axe-core finds nothing in the
-  window, the consent window or the popup, in either theme, and the
+  window, the consent and address windows or the popup, in either theme, and the
   end-to-end suite runs it (`e2e/axe.spec.ts`):
   - every control is a button, tab or field with its own name, its hints
     as its description;
@@ -69,8 +87,9 @@ before it, so everything below is new.
   - Escape rejects only when nothing nearer is open;
   - text reads at 4.5:1 and a field's edge at 3:1 in both themes, held by
     a test;
-  - the window and the consent window reflow to 320 pixels, and nothing
-    cuts off a focus ring.
+  - every window reflows to 320 pixels, and nothing
+    cuts off a focus ring; one too short for its header, the
+    explanation and the buttons at once (zoomed in) scrolls as one page.
 - **Packages and CI.** A Firefox package, declaring the data it sends,
   built and released with the Chrome one. CI runs the lint, the types, the
   Node tests (in a random order) and the whole end-to-end suite on every
@@ -79,5 +98,6 @@ before it, so everything below is new.
   where an answer that no longer holds what was recorded is a warning (a
   release fails on it); in the tests the browser reaches no host but this
   machine. CI also checks that the packages come out the same bytes on
-  Linux, macOS and Windows. A release runs every test, the live API
-  included, and carries a build provenance attestation.
+  Linux, macOS and Windows, and a release is published only when they do.
+  A release runs every test, the live API included, and carries a build
+  provenance attestation.

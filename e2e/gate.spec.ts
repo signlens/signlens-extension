@@ -2,7 +2,7 @@
 // refused or passed on, and the user's decision honoured.
 
 import type { BrowserContext, Page } from '@playwright/test';
-import { expect, liveGate, test } from './extension.ts';
+import { clickToClose, expect, liveGate, test } from './extension.ts';
 import { feePayer, fixture } from './server.ts';
 
 const WALLET = 'SignLens';
@@ -35,7 +35,7 @@ test('in pass-through mode the window shows the explanation and Continue hands t
     await expect(gate.locator('#note')).toContainText('hands the request unchanged to Fake Wallet');
     expect(await worker.evaluate(() => chrome.action.getBadgeText({}))).toBe('WARN');
 
-    await gate.getByRole('button', { name: 'Continue to Fake Wallet' }).click();
+    await clickToClose(gate.getByRole('button', { name: 'Continue to Fake Wallet' }));
     const answer = await signing;
     expect(answer).toEqual({ account: 'FakeWa11et1111111111111111111111111111111111', signed: 1 });
     expect(await dapp.evaluate(() => window.fakeCalls)).toEqual([{ method: 'signTransaction', count: 1 }]);
@@ -47,7 +47,7 @@ test('Reject stops the request before the wallet sees it', async ({ configure, c
     await configure({ lookupTokens: false, simulate: false, mode: 'passthrough', upstream: 'Fake Wallet' });
 
     const { signing, gate } = await askToSign(context, dapp, transfer.base64);
-    await gate.getByRole('button', { name: 'Reject' }).click();
+    await clickToClose(gate.getByRole('button', { name: 'Reject' }));
     const answer = await signing;
     expect(answer.error).toContain('rejected in SignLens');
     expect(await dapp.evaluate(() => window.fakeCalls)).toEqual([]);
@@ -86,14 +86,14 @@ test('a message goes through the gate too', async ({ configure, context, dapp })
     const gate = await liveGate(context);
     await expect(gate.locator('#what')).toHaveText('signMessage');
     await expect(gate.locator('pre')).toHaveText('Sign in to the test dapp');
-    await gate.getByRole('button', { name: 'Continue to Fake Wallet' }).click();
+    await clickToClose(gate.getByRole('button', { name: 'Continue to Fake Wallet' }));
     expect(await signing).toEqual({ signed: true });
     expect(await dapp.evaluate(() => window.fakeCalls)).toEqual([{ method: 'signMessage', count: 1 }]);
 });
 
 test('with the window off, a request SignLens would not refuse is passed on at once', async ({ configure, dapp }) => {
     const transfer = fixture('legacy_durable_nonce_token_transfer');
-    await configure({ gate: false, lookupTokens: false, simulate: false, mode: 'passthrough', upstream: 'Fake Wallet' });
+    await configure({ askFirst: false, lookupTokens: false, simulate: false, mode: 'passthrough', upstream: 'Fake Wallet' });
     const answer = await dapp.evaluate(({ wallet, base64 }: { wallet: string; base64: string }) => window.sign(wallet, base64), {
         wallet: WALLET,
         base64: transfer.base64,
@@ -105,7 +105,7 @@ test('with the window off, a request SignLens would block still waits for the us
     // The stub RPC has none of the swap's lookup tables: unresolved, it is blocked.
     const swap = fixture('swap__both_mints_named.b64');
     await configure({
-        gate: false,
+        askFirst: false,
         lookupTokens: false,
         simulate: false,
         mode: 'passthrough',
@@ -115,7 +115,7 @@ test('with the window off, a request SignLens would block still waits for the us
     const { signing, gate } = await askToSign(context, dapp, swap.base64);
     await expect(gate.locator('#band')).toHaveClass(/blocked/);
     await expect(gate.getByRole('button', { name: /Continue anyway/ })).not.toHaveClass(/primary/);
-    await gate.getByRole('button', { name: 'Reject' }).click();
+    await clickToClose(gate.getByRole('button', { name: 'Reject' }));
     expect((await signing).error).toContain('rejected in SignLens');
     expect(await dapp.evaluate(() => window.fakeCalls)).toEqual([]);
 });
@@ -234,15 +234,25 @@ test('long instruction data folds to two lines until asked for', async ({ config
     await expect(bytes).not.toHaveClass(/clamped/);
     await expect(more).toHaveText('show less');
     await expect(more).toHaveAttribute('aria-expanded', 'true');
-    await gate.getByRole('button', { name: 'Reject' }).click();
+    await clickToClose(gate.getByRole('button', { name: 'Reject' }));
     await signing.catch(() => {});
 });
 
-test('a window whose request is gone says so, with no verdict band and only a way to close it', async ({ context, extensionId }) => {
-    const stale = await context.newPage();
-    await stale.goto(`chrome-extension://${extensionId}/confirm.html?id=gone`);
-    await expect(stale.locator('#note')).toHaveText('This request is no longer pending.');
-    await expect(stale.locator('#band')).toBeHidden();
-    await expect(stale.getByRole('button', { name: 'Continue' })).toBeHidden();
-    await expect(stale.getByRole('button', { name: 'Close' })).toBeVisible();
+test('a window whose request is gone says so in its heading, shows nothing of a request, and offers only Close', async ({
+    context,
+    extensionId,
+}) => {
+    for (const page of ['confirm.html', 'connect.html', 'address.html']) {
+        const stale = await context.newPage();
+        await stale.goto(`chrome-extension://${extensionId}/${page}?id=gone`);
+        await expect(stale.getByRole('heading', { level: 1 }), page).toHaveText('No longer pending');
+        await expect(stale.locator('main > :visible'), page).toHaveText(
+            'This request is no longer pending: its page closed, reloaded or stopped waiting. Nothing came of it.',
+        );
+        // No empty lines where the site, the request or the band would be.
+        await expect(stale.locator('header > :not(h1):visible, main > :visible'), page).toHaveCount(1);
+        await expect(stale.getByRole('button'), page).toHaveText(['Close']);
+        await expect(stale.getByRole('button', { name: 'Close' }), page).toBeFocused();
+        await stale.close();
+    }
 });

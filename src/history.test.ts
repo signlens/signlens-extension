@@ -5,7 +5,7 @@
 import assert from 'node:assert/strict';
 import { beforeEach, test } from 'node:test';
 import { type FakeChrome, installFakeChrome } from './chrome.fake.ts';
-import { clearHistory, HISTORY_BYTES, HISTORY_LENGTH, latest, markSeen, remember, showBadge } from './history.ts';
+import { clearHistory, ENTRY_BYTES, HISTORY_BYTES, HISTORY_LENGTH, markSeen, remember, showBadge } from './history.ts';
 import type { HistoryEntry } from './model.ts';
 import { inTurn } from './store.ts';
 
@@ -26,7 +26,6 @@ test('answers that arrive together are all kept and counted, and the badge shows
     );
     assert.equal(fake.session.unseen, 2);
     assert.equal(fake.badge, 'BLOCK');
-    assert.equal((await latest())?.time, 2);
 });
 
 test('the history keeps the newest answers only', async () => {
@@ -61,8 +60,8 @@ function large(time: number, size: number): HistoryEntry {
                 effects: [],
                 sections: [],
                 text: 'x'.repeat(size),
-                tables: 'none',
-                simulation: 'off',
+                tables: null,
+                simulation: null,
                 hints: [],
                 capture: 'AQ==',
                 digest: null,
@@ -74,21 +73,61 @@ function large(time: number, size: number): HistoryEntry {
 
 const bytes = (value: unknown) => new TextEncoder().encode(JSON.stringify(value)).length;
 
-test('the history keeps within its share of session storage: the oldest go first, and one too large on its own is slimmed', async () => {
-    for (let i = 0; i < 9; i += 1) await remember(large(i, 1_000_000));
-    let kept = fake.session.history as HistoryEntry[];
+const SLIMMED = 'The full text was too long to keep in the history.';
+const textOf = (kept: HistoryEntry) => {
+    const [row] = kept.rows;
+    return row?.kind === 'explained' ? row.text : undefined;
+};
+
+test('the history keeps within its share of session storage: the oldest go first', async () => {
+    for (let i = 0; i < 9; i += 1) await remember(large(i, 400_000));
+    const kept = fake.session.history as HistoryEntry[];
     assert.ok(bytes(kept) <= HISTORY_BYTES);
-    assert.equal(kept.length, 5);
     assert.deepEqual(
         kept.map((e) => e.time),
         [8, 7, 6, 5, 4],
     );
-    await remember(large(100, HISTORY_BYTES + 1));
+});
+
+test('an answer over its share is slimmed, and pushes none of the others out', async () => {
+    for (let i = 0; i < 3; i += 1) await remember(large(i, 100_000));
+    await remember(large(3, ENTRY_BYTES));
+    await remember(large(4, HISTORY_BYTES + 1));
+    const kept = fake.session.history as HistoryEntry[];
+    assert.deepEqual(
+        kept.map((e) => e.time),
+        [4, 3, 2, 1, 0],
+    );
+    assert.deepEqual(kept.map(textOf).slice(0, 2), [SLIMMED, SLIMMED]);
+    // Without its text each fits its share, and keeps its bytes to save.
+    const captures = kept.slice(0, 2).map((e) => (e.rows[0]?.kind === 'explained' ? e.rows[0].capture : undefined));
+    assert.deepEqual(captures, ['AQ==', 'AQ==']);
+    assert.equal(textOf(kept[2] as HistoryEntry)?.length, 100_000);
+    assert.equal(kept[0]?.rows[0]?.kind === 'explained' && kept[0].rows[0].summary, 'Send 1 SOL');
+});
+
+test('a write the browser refuses for room drops the oldest answers until it fits, and the newest last of all', async () => {
+    for (let i = 0; i < 6; i += 1) await remember(large(i, 100_000));
+    fake.sessionQuota = 350_000;
+    await remember(large(6, 100_000));
+    let kept = fake.session.history as HistoryEntry[];
+    assert.deepEqual(
+        kept.map((e) => e.time),
+        [6, 5, 4],
+    );
+    assert.equal(fake.session.unseen, 7);
+    fake.sessionQuota = 50_000;
+    await remember(large(7, 100_000));
     kept = fake.session.history as HistoryEntry[];
-    assert.equal(kept.length, 1);
-    const row = kept[0]?.rows[0];
-    assert.equal(row?.kind === 'explained' && row.text, 'The full text was too long to keep in the history.');
-    assert.equal(row?.kind === 'explained' && row.summary, 'Send 1 SOL');
+    assert.deepEqual(
+        kept.map((e) => [e.time, textOf(e)]),
+        [[7, SLIMMED]],
+    );
+});
+
+test('a write too large for the browser even alone and slimmed fails, as the browser failed it', async () => {
+    fake.sessionQuota = 10;
+    await assert.rejects(remember(entry(1)), /quota bytes exceeded/);
 });
 
 test("a write that fails is its caller's to handle, and the writes queued after it still run in turn", async () => {

@@ -2,7 +2,7 @@
 // is "could not explain", never "nothing wrong"; the feedback strip sends
 // what the user chose and nothing more.
 
-import { expect, liveGate, test } from './extension.ts';
+import { clickToClose, expect, liveGate, test } from './extension.ts';
 import { explanation, fixture, recorded } from './server.ts';
 
 const WALLET = 'SignLens';
@@ -28,14 +28,14 @@ test('an API that refuses leaves the request unexplained, with a verdict that ca
     await expect(gate.locator('#note')).toContainText('SignLens would refuse this');
     await expect(gate.getByRole('button', { name: /Continue anyway/ })).not.toHaveClass(/primary/);
     expect(await worker.evaluate(() => chrome.action.getBadgeText({}))).toBe('?');
-    await gate.getByRole('button', { name: 'Reject' }).click();
+    await clickToClose(gate.getByRole('button', { name: 'Reject' }));
     expect((await signing).error).toContain('rejected in SignLens');
 });
 
 test('with the window off, a request the API could not explain still waits for the user', async ({ configure, context, dapp, popup }) => {
     const transfer = fixture('legacy_durable_nonce_token_transfer');
     await configure({
-        gate: false,
+        askFirst: false,
         lookupTokens: false,
         simulate: false,
         mode: 'passthrough',
@@ -54,13 +54,38 @@ test('with the window off, a request the API could not explain still waits for t
     await expect(gate.locator('#note')).toHaveText(
         '“Show the explanation and ask first” is off, but SignLens still asks before passing on what it would refuse. Continuing hands this unchanged to Fake Wallet, which asks for its own approval.',
     );
-    await gate.getByRole('button', { name: /Continue anyway/ }).click();
+    await clickToClose(gate.getByRole('button', { name: /Continue anyway/ }));
     expect((await signing).signed).toBe(1);
     await popup.reload();
     await expect(popup.locator('#engine-status')).toHaveText(/SignLens API not reachable/);
     const row = popup.locator('#history li').first();
     await expect(row.locator('.verdict')).toHaveText('error');
     await expect(row.locator('.lead')).toContainText('did not answer');
+});
+
+test('a rating left in the window goes when the window is closed by its frame, as closing is a decision', async ({
+    configure,
+    context,
+    dapp,
+    server,
+}) => {
+    const transfer = fixture('legacy_durable_nonce_token_transfer');
+    await configure({ lookupTokens: false, simulate: false, mode: 'passthrough', upstream: 'Fake Wallet' });
+    const signing = dapp.evaluate(({ wallet, base64 }: { wallet: string; base64: string }) => window.sign(wallet, base64), {
+        wallet: WALLET,
+        base64: transfer.base64,
+    });
+    const gate = await liveGate(context);
+    await gate.getByRole('button', { name: 'Unclear' }).click();
+    await gate.getByRole('textbox', { name: 'What was unclear or wrong? (optional)' }).fill('Closed before deciding');
+    // Closed by the window's own close button: no Reject was pressed.
+    await gate.close();
+    expect((await signing).error).toContain('rejected in SignLens');
+    await expect.poll(() => server.apiCalls.filter((c) => c.path === '/v1/feedback').length).toBe(1);
+    expect(server.apiCalls.find((c) => c.path === '/v1/feedback')?.body).toMatchObject({
+        rating: 'unclear',
+        comment: 'Closed before deciding',
+    });
 });
 
 test('the feedback strip sends the rating, and the transaction only when asked', async ({ configure, context, dapp, server }) => {
@@ -84,7 +109,7 @@ test('the feedback strip sends the rating, and the transaction only when asked',
     // What the strip says next is announced; the comment box has a name, not just a placeholder.
     await expect(gate.getByRole('status').filter({ hasText: 'Add a word if you like' })).toBeVisible();
     await gate.getByRole('textbox', { name: 'What was unclear or wrong? (optional)' }).fill('What is a durable nonce?');
-    await gate.getByRole('button', { name: 'Continue to Fake Wallet' }).click();
+    await clickToClose(gate.getByRole('button', { name: 'Continue to Fake Wallet' }));
     await signing;
     await expect.poll(() => server.apiCalls.filter((c) => c.path === '/v1/feedback').length).toBe(1);
     const sent = server.apiCalls.find((c) => c.path === '/v1/feedback')?.body as { messageHash: string };
@@ -99,7 +124,7 @@ test('the feedback strip sends the rating, and the transaction only when asked',
     const second = await liveGate(context);
     await second.locator('#feedback-cover input').check();
     await second.getByRole('button', { name: 'Wrong' }).click();
-    await second.getByRole('button', { name: 'Reject' }).click();
+    await clickToClose(second.getByRole('button', { name: 'Reject' }));
     await again.catch(() => {});
     await expect.poll(() => server.apiCalls.filter((c) => c.path === '/v1/feedback').length).toBe(2);
     expect(server.apiCalls.filter((c) => c.path === '/v1/feedback').at(-1)?.body).toMatchObject({
@@ -121,7 +146,7 @@ test('an explanation SignLens called OK has no transaction to offer for coverage
     await expect(gate.locator('#band')).toHaveClass(/\bok\b/);
     await expect(gate.locator('#feedback')).toBeVisible();
     await expect(gate.locator('#feedback-cover')).toBeHidden();
-    await gate.getByRole('button', { name: 'Reject' }).click();
+    await clickToClose(gate.getByRole('button', { name: 'Reject' }));
     await signing.catch(() => {});
 });
 
@@ -136,7 +161,7 @@ test('a clear rating is sent at once', async ({ configure, context, dapp, server
     await gate.getByRole('button', { name: 'Clear', exact: true }).click();
     await expect(gate.locator('#feedback-note')).toHaveText(/Sent to SignLens/);
     await expect.poll(() => server.apiCalls.filter((c) => c.path === '/v1/feedback').length).toBe(1);
-    await gate.getByRole('button', { name: 'Reject' }).click();
+    await clickToClose(gate.getByRole('button', { name: 'Reject' }));
     await signing.catch(() => {});
     // The decision does not send it a second time.
     expect(server.apiCalls.filter((c) => c.path === '/v1/feedback')).toHaveLength(1);
@@ -160,7 +185,7 @@ test('an API that answers an error without a message is an error, never a messag
     await expect(gate.locator('#band')).toHaveClass(/error/);
     await expect(gate.locator('#band-summary')).toContainText('not an explanation');
     await expect(gate.getByRole('button', { name: /Continue anyway/ })).not.toHaveClass(/primary/);
-    await gate.getByRole('button', { name: 'Reject' }).click();
+    await clickToClose(gate.getByRole('button', { name: 'Reject' }));
     expect((await signing).error).toContain('rejected in SignLens');
 });
 
@@ -179,7 +204,7 @@ test('a verdict this version does not know is an error, never a pass', async ({ 
     await expect(gate.getByRole('button', { name: /Continue anyway/ })).not.toHaveClass(/primary/);
     // The badge says the same as the window.
     expect(await worker.evaluate(() => chrome.action.getBadgeText({}))).toBe('?');
-    await gate.getByRole('button', { name: 'Reject' }).click();
+    await clickToClose(gate.getByRole('button', { name: 'Reject' }));
     expect((await signing).error).toContain('rejected in SignLens');
 });
 
@@ -195,6 +220,6 @@ test('an effect this version does not know is shown as one, not left out', async
     const gate = await liveGate(context);
     await expect(gate.locator('#band')).toHaveClass(/warning/);
     await expect(gate.locator('.effects')).toContainText('Something this version cannot show (Drain); the full text below has it');
-    await gate.getByRole('button', { name: 'Reject' }).click();
+    await clickToClose(gate.getByRole('button', { name: 'Reject' }));
     expect((await signing).error).toContain('rejected in SignLens');
 });

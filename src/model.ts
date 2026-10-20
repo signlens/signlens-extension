@@ -28,12 +28,12 @@ export interface ExplainedRow {
     sections: Section[];
     /** The engine's full text. */
     text: string;
-    /** The lookup tables: "none", read, or why not. */
-    tables: string;
+    /** The lookup tables, read or why not; null for a transaction that loads from none. */
+    tables: string | null;
     /** The chain the page named, when not mainnet: its word, read and simulated against the RPC in the settings all the same. */
     chain?: string;
-    /** The simulation: "off", not run and why, or what it found. */
-    simulation: string;
+    /** The simulation, not run and why, or what it found; null when it is off in the settings. */
+    simulation: string | null;
     /** The symbols of unlisted tokens named from the RPC and the token list. */
     hints: string[];
     /** The transaction as `signlens explain` reads it, to save; empty once slimmed to fit the history (history.ts). */
@@ -44,9 +44,15 @@ export interface ExplainedRow {
     transaction: string;
 }
 
-/** A transaction SignLens could not explain, or a request that failed as a whole. */
+/**
+ * What failed: one `transaction` of a request, read but not explained (the
+ * API was away or refused), with what was read for it; or the `request`
+ * as a whole (malformed, its page went, a connect with no wallet), which
+ * a page asking to sign is told of too.
+ */
 export interface FailedRow {
     kind: 'failed';
+    scope: 'transaction' | 'request';
     error: string;
     tables?: string;
     chain?: string;
@@ -65,17 +71,29 @@ export interface ConsentRow {
     address: string;
 }
 
-export type Row = ExplainedRow | FailedRow | MessageRow | ConsentRow;
+/** A request refused before it was explained: the page named an address as yours that is not one of yours. */
+export interface AddressRow {
+    kind: 'address';
+    /** The addresses the page named, which your settings do not have. */
+    claimed: string[];
+}
+
+export type Row = ExplainedRow | FailedRow | MessageRow | ConsentRow | AddressRow;
+
+/** How a request ended: the decision, and why SignLens refused it when the user did not decide. */
+export interface Outcome {
+    decision: Decision;
+    refused?: string;
+}
 
 /** An answer: one row or more. */
 export interface Entry {
     rows: Row[];
-    /** Why the request as a whole could not be explained (malformed, or its page went), which the page is told too. */
-    error?: string;
 }
 
 /** An answer as the window and the popup keep it: where it came from and what became of it. */
-export interface HistoryEntry extends Entry {
+/** What became of it is its `Outcome`: absent from a request that never got so far. */
+export interface HistoryEntry extends Entry, Partial<Outcome> {
     time: number;
     origin?: string;
     method?: string;
@@ -83,10 +101,8 @@ export interface HistoryEntry extends Entry {
     upstream: string;
     /** What the page calls the wallet it hands the request to on Continue, in plain ASCII: its word, shown as such when `upstream` names none. */
     wallet?: string;
-    /** What became of a request the user was asked about in pass-through mode, or of a site's asking to see the watched address. */
-    decision?: Decision;
-    /** Why SignLens refused it, when it was not the user's decision. */
-    refused?: string;
+    /** Passed on without asking: the window was off, and SignLens would not refuse it. */
+    unasked?: true;
 }
 
 /** A site allowed to see an address, and when. */
@@ -102,7 +118,20 @@ export interface ConnectRequest {
     address: string;
 }
 
+/** What the address window shows: the one address a page names as yours that your settings do not have, and the ones they do. */
+export interface AddressRequest {
+    origin: string;
+    address: string;
+    mine: string[];
+}
+
 /** An answer that is a failure of the request as a whole. */
 export function failure(error: string): Entry {
-    return { rows: [{ kind: 'failed', error }], error };
+    return { rows: [{ kind: 'failed', scope: 'request', error }] };
+}
+
+/** Why the request as a whole failed, if it did: what the page is told besides the decision. */
+export function requestError(entry: Entry): string | undefined {
+    const [row] = entry.rows;
+    return row?.kind === 'failed' && row.scope === 'request' ? row.error : undefined;
 }

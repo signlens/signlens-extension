@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>SignLens</title>
+        <link rel="stylesheet" href="popup.css" />
+    </head>
+    <body class="confirm consent">
+        <header>
+            <h1>Is this address yours?</h1>
+            <p id="where" class="status"></p>
+        </header>
+
+        <main>
+            <p>The page says the wallet that signs this request has the address:</p>
+            <p id="claimed" class="address-item"></p>
+            <p id="mine-title">Your addresses in SignLens:</p>
+            <ul id="mine" class="addresses" aria-labelledby="mine-title"></ul>
+            <p id="mine-empty" class="aside" hidden>None yet.</p>
+            <p class="aside">
+                Add it only if your wallet shows exactly this address. A site that wants you to send to its own address can tell SignLens that
+                address is yours, and the transfer would then read as one between your own accounts.
+            </p>
+        </main>
+
+        <footer>
+            <p id="note" role="status">Nothing has been explained or sent anywhere yet.</p>
+            <div id="buttons">
+                <button id="reject" type="button">Reject</button>
+                <button id="add" type="button">It's mine, add it</button>
+            </div>
+        </footer>
+
+        <script type="module" src="address.js"></script>
+    </body>
+</html>

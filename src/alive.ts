@@ -17,6 +17,7 @@ let timer: ReturnType<typeof setInterval> | undefined;
 export async function keepingAlive<T>(work: () => Promise<T>): Promise<T> {
     held += 1;
     timer ??= setInterval(() => {
+        // The call is what keeps the worker up; its answer, or its failure, is nothing.
         chrome.runtime.getPlatformInfo().catch(() => {});
     }, INTERVAL_MS);
     try {

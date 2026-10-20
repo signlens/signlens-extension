@@ -9,13 +9,21 @@ import { test } from 'node:test';
 
 const css = readFileSync(new URL('../extension/popup.css', import.meta.url), 'utf8');
 
-/** The custom properties a block of the stylesheet sets, from its first `{` after `start`. */
-function tokens(start: string): Map<string, string> {
-    const from = css.indexOf(start);
-    assert.ok(from >= 0, `no ${start} in the stylesheet`);
-    const open = css.indexOf('{', from);
-    const block = css.slice(open, css.indexOf('}', open));
-    return new Map([...block.matchAll(/--([\w-]+):\s*(#[0-9a-f]{6})/gi)].map((m) => [m[1] ?? '', m[2] ?? '']));
+/**
+ * The custom properties the block `block` matches in `source` sets (its
+ * first group is the body), each a six-digit hex colour: a token written
+ * otherwise (rgb(), three digits, a name) would be passed over, and the
+ * theme checked with another colour in its place, so it fails instead.
+ */
+function tokens(source: string, block: RegExp): Map<string, string> {
+    const body = block.exec(source)?.[1];
+    assert.ok(body !== undefined, `no ${block} in the stylesheet`);
+    const found = new Map<string, string>();
+    for (const [, name = '', value = ''] of body.matchAll(/--([\w-]+):\s*([^;]+);/g)) {
+        assert.match(value.trim(), /^#[0-9a-f]{6}$/i, `--${name}: ${value.trim()} is not a colour this test can check`);
+        found.set(name, value.trim());
+    }
+    return found;
 }
 
 function luminance(hex: string): number {
@@ -31,8 +39,20 @@ function contrast(a: string, b: string): number {
     return ((light ?? 0) + 0.05) / ((dark ?? 0) + 0.05);
 }
 
-const light = tokens(':root {');
-const dark = new Map([...light, ...tokens('@media (prefers-color-scheme: dark)')]);
+const LIGHT = /^:root \{([^}]*)\}/m;
+const DARK = /@media \(prefers-color-scheme: dark\) \{\s*:root \{([^}]*)\}/;
+const light = tokens(css, LIGHT);
+const dark = tokens(css, DARK);
+
+test('the dark theme sets every colour the light one does, none left to the light value', () => {
+    assert.deepEqual([...dark.keys()].sort(), [...light.keys()].sort());
+});
+
+test('a colour the test cannot read fails it, rather than being passed over', () => {
+    assert.throws(() => tokens(':root { --text: rgb(20 33 61); }', LIGHT), /--text: rgb\(20 33 61\) is not a colour this test can check/);
+    assert.throws(() => tokens(':root { --muted: #fff; }', LIGHT), /--muted/);
+    assert.equal(tokens(':root { color-scheme: light dark; --text: #14213d; }', LIGHT).get('text'), '#14213d');
+});
 
 for (const [theme, colors] of [
     ['light', light],

@@ -2,7 +2,7 @@
 
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { helpFor, quantity } from './render.ts';
+import { captureName, helpFor, quantity } from './render.ts';
 import type { Amount } from './types.ts';
 
 function amount(units: string, decimals: number | null): Amount {
@@ -25,4 +25,12 @@ test('a label gets the help written for it, and no other, whatever the engine ca
     for (const label of ['constructor', 'toString', '__proto__', 'Create token account if missing: hasOwnProperty']) {
         assert.equal(helpFor(label), undefined, label);
     }
+});
+
+test('a transaction is saved under its time and the site, with no character a file name could be steered by', () => {
+    assert.equal(captureName('jup.ag', Date.UTC(2026, 9, 20, 8, 5, 9, 123)), '20261020T080509-jup.ag.b64');
+    assert.equal(captureName('a/../b\\c d:\u202eexe', 0), '19700101T000000-a_.._b_c_d__exe.b64');
+    assert.equal(captureName(undefined, 0), '19700101T000000-capture.b64');
+    // One of several is numbered, so that none is saved over another.
+    assert.equal(captureName('jup.ag', 0, 2), '19700101T000000-jup.ag-2.b64');
 });

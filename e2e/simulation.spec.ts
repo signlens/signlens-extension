@@ -14,7 +14,7 @@ const FEE = 12_218;
 
 function settings(transfer: Fixture, server: TestServer, extra: Partial<Settings> = {}): Partial<Settings> {
     return {
-        gate: false,
+        askFirst: false,
         lookupTokens: false,
         simulate: true,
         mode: 'watch',
@@ -142,7 +142,7 @@ test('a drain the instructions do not state is a high finding in the gate', asyn
     // Five SOL leave the wallet that no instruction accounts for.
     server.wallet(payer, 10_000_000_000, 5_000_000_000 - FEE);
     // Watch mode: the payer is the signer, so its wallet is "yours".
-    await configure(settings(transfer, server, { gate: true }));
+    await configure(settings(transfer, server, { askFirst: true }));
 
     const signing = dapp.evaluate(({ wallet, base64 }: { wallet: string; base64: string }) => window.sign(wallet, base64), {
         wallet: WALLET,

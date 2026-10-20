@@ -13,8 +13,10 @@ const SIGN = 'solana:signTransaction';
 /** A request the wallet sent the extension, and how to answer it. */
 interface Asked {
     type: string;
-    payload: { transactions?: string[]; message?: string; wallet?: string };
+    payload: { transactions?: string[]; message?: string; wallet?: string; accounts?: string[] };
     reply(result: unknown): void;
+    /** Answers with an error in place of a result, as the content script does when the worker cannot be reached. */
+    fail(error: string): void;
 }
 
 // The harness keeps the originals for itself: some tests replace them.
@@ -136,11 +138,12 @@ before(async () => {
         const data = realData.call(event) as { id?: number; type: string; payload: Asked['payload'] };
         if (data.id === undefined) return;
         const reply = (result: unknown) => realPost.call(port, { id: data.id, result });
+        const fail = (error: string) => realPost.call(port, { id: data.id, error });
         if (data.type === 'config') {
             reply(pageConfig);
             return;
         }
-        const request = { type: data.type, payload: data.payload, reply };
+        const request = { type: data.type, payload: data.payload, reply, fail };
         if (waiting) {
             waiting(request);
             waiting = undefined;
@@ -364,6 +367,49 @@ test('the real wallet is handed ordinary objects, which it may call methods on',
     assert.equal(signed[0]?.plain, true);
 });
 
+test("a page cannot take the wallet you sign with out of SignLens's list, nor put its own ahead of it", async () => {
+    // The page reaches SignLens's app as any wallet would, takes back a
+    // wallet it did not add, and adds an impostor under the same name.
+    let api: { register(...wallets: unknown[]): () => void } | undefined;
+    page.dispatchEvent(
+        detailEvent('wallet-standard:register-wallet', (given: typeof api) => {
+            api = given;
+        }),
+    );
+    api?.register(upstream)();
+    const impostor = {
+        ...upstream,
+        features: { ...upstream.features, [SIGN]: { version: '1.0.0', signTransaction: async () => [] } },
+    };
+    api?.register(impostor);
+    await disconnect();
+    await connect();
+    const signing = sign({ account, transaction: BENIGN() });
+    (await nextRequest()).reply(CONTINUE);
+    await signing;
+    assert.equal(signed[0]?.self, signFeature);
+});
+
+test('the extension is told the address a request is signed with, as the dapp names it, to check against yours', async () => {
+    const other = { ...account, address: 'EXkwQoWHvDj7gdLdba4zWo3ktJNocyjT9DDQAryU7Tqa' };
+    const signing = sign({ account: other, transaction: BENIGN() }, { account, transaction: BENIGN() });
+    const request = await nextRequest();
+    assert.deepEqual(request.payload.accounts, [other.address, account.address]);
+    request.reply({ decision: 'reject' });
+    await signing;
+});
+
+test('an error in place of an answer is a refusal by SignLens: nothing is signed, and the dapp is told why', async () => {
+    const signing = sign({ account, transaction: BENIGN() });
+    (await nextRequest()).fail('the extension was reloaded');
+    assert.deepEqual(await signing, { error: 'SignLens: refused (the extension was reloaded).' });
+    const messaging = signMessage({ account, message: BENIGN() });
+    (await nextRequest()).fail('the extension was reloaded');
+    assert.deepEqual(await messaging, { error: 'SignLens: refused (the extension was reloaded).' });
+    assert.deepEqual(signed, []);
+    assert.deepEqual(signedMessages, []);
+});
+
 test('the extension is told which wallet a request goes to, by the name it registered with', async () => {
     const signing = sign({ account, transaction: BENIGN() });
     const transaction = await nextRequest();
@@ -388,7 +434,7 @@ test('the real wallet is called as a method of its feature', async () => {
 test('only a decision to continue passes a request on, and the dapp is told who refused it and why, once', async () => {
     const answers: [unknown, string | null][] = [
         [CONTINUE, null],
-        [{ decision: 'reject' }, 'SignLens: rejected in SignLens. The explanation is in the SignLens popup.'],
+        [{ decision: 'reject' }, 'SignLens: rejected in SignLens. The request is in the SignLens popup.'],
         [
             { decision: 'reject', error: 'the API is down' },
             'SignLens: rejected in SignLens. SignLens could not explain it: the API is down',

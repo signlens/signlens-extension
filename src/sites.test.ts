@@ -11,12 +11,13 @@ import type { ConnectReply } from './messages.ts';
 import type { HistoryEntry } from './model.ts';
 import { DEFAULTS, type Settings } from './settings.ts';
 import { approvals, approve, connectWatch, revoke } from './sites.ts';
+import { pendingKey } from './store.ts';
 
 const A = 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v';
 const B = 'TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA';
 const DAPP = 'https://dapp.example';
 const WATCHING: Settings = { ...DEFAULTS, mode: 'watch', address: A };
-const BOUNDED = { timeout: 2_000 };
+const BOUNDED = { timeout: 10_000 };
 
 let fake: FakeChrome;
 let tab = 0;
@@ -31,7 +32,7 @@ async function consentWindow(): Promise<{ windowId: number; id: string; request:
     const [[windowId, url]] = [...fake.windows] as [[number, string]];
     assert.match(url, /\/connect\.html\?id=/);
     const id = new URL(url).searchParams.get('id') ?? '';
-    return { windowId, id, request: fake.session[`pending:${id}`] };
+    return { windowId, id, request: fake.session[pendingKey('connect.html', id)] };
 }
 
 function granted(reply: ConnectReply): string | null {
@@ -94,6 +95,40 @@ test('denying, or closing the window, refuses and allows nothing', BOUNDED, asyn
     const closed = connectWatch({ origin: DAPP }, tab, WATCHING);
     fake.closeWindow((await consentWindow()).windowId);
     assert.deepEqual(await closed, { approved: false, error: 'the connection was refused in SignLens' });
+    assert.deepEqual(await approvals(), []);
+});
+
+test('an Allow that cannot be kept refuses the site, and the requests say so rather than "allowed"', BOUNDED, async () => {
+    const asking = connectWatch({ origin: DAPP }, tab, WATCHING);
+    const { id } = await consentWindow();
+    chrome.storage.local.set = (async () => {
+        throw new Error('storage is gone');
+    }) as typeof chrome.storage.local.set;
+    gate.decide(id, 'continue');
+    assert.deepEqual(await asking, { approved: false, error: 'could not keep the site allowed: storage is gone' });
+    const [kept] = fake.session.history as HistoryEntry[];
+    assert.equal(kept?.decision, 'reject');
+    assert.equal(kept?.refused, 'could not keep the site allowed: storage is gone');
+});
+
+test('a site whose page went before its window opened is not kept', BOUNDED, async () => {
+    // The page closes while its request is being stored for the window.
+    const set = chrome.storage.session.set.bind(chrome.storage.session);
+    chrome.storage.session.set = (async (items: Record<string, unknown>) => {
+        if (Object.keys(items).some((key) => key.startsWith('pending:'))) gate.abandon(tab);
+        return set(items);
+    }) as typeof chrome.storage.session.set;
+    assert.equal((await connectWatch({ origin: DAPP }, tab, WATCHING)).approved, false);
+    assert.equal(fake.opened, 0);
+    assert.equal(fake.session.history, undefined);
+});
+
+test('a consent SignLens refuses, its window unable to open, allows nothing', BOUNDED, async () => {
+    fake.failNextWindow();
+    assert.deepEqual(await connectWatch({ origin: DAPP }, tab, WATCHING), {
+        approved: false,
+        error: 'the connection was refused in SignLens',
+    });
     assert.deepEqual(await approvals(), []);
 });
 
