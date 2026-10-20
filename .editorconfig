@@ -1,0 +1,24 @@
+# The same layout in every editor, for the files Biome does not format
+# (the pages, the Markdown, the YAML, package.json and the manifest) as for
+# those it does, which it formats the same way (biome.json).
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 4
+
+# Written by npm, and the manifest and tsconfig in the same style.
+[{package.json,package-lock.json,static/manifest.json,tsconfig*.json}]
+indent_size = 2
+
+[*.{yml,yaml}]
+indent_size = 2
+
+# Recorded and fetched as they came; never edited by hand.
+[test/fixtures/**]
+insert_final_newline = unset
+trim_trailing_whitespace = unset
