@@ -1,5 +1,8 @@
 # SignLens for the browser
 
+[![CI](https://github.com/signlens/signlens-extension/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/signlens/signlens-extension/actions/workflows/ci.yml)
+[![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
+
 See what a Solana transaction does before you sign it. SignLens registers
 itself as a [Wallet Standard](https://github.com/anza-xyz/wallet-standard)
 wallet that holds no keys: a dapp sends it what it wants signed, SignLens
