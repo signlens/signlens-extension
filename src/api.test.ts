@@ -157,6 +157,24 @@ test('the status names the engine and the packs, or why not', async () => {
     assert.match(away.error, /did not answer/);
 });
 
+test("the status is asked past the browser's cache, so a stale one never says the API is ready", async () => {
+    const api = await stub();
+    const real = globalThis.fetch;
+    const asked: (RequestInit | undefined)[] = [];
+    globalThis.fetch = (input, init) => {
+        asked.push(init);
+        return real(input, init);
+    };
+    try {
+        assert.ok(!('error' in (await apiStatus(api.url))));
+        assert.equal(asked.length, 1);
+        assert.equal(asked[0]?.cache, 'no-store');
+    } finally {
+        globalThis.fetch = real;
+        await api.close();
+    }
+});
+
 test('a status that is not one is said to be so, and what is shown of it is plain text', async () => {
     const pack = { programs: 44, createdAt: 1, source: 's' };
     for (const body of [

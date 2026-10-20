@@ -100,14 +100,16 @@ function count(value: unknown): number | null {
  * What the API is: its engine version and packs, from `GET /v1/packs`, or
  * `{error}`. The document is read field by field, as the explanation is:
  * one without its program count is not a status, and the engine's name is
- * shown as plain text.
+ * shown as plain text. It is asked past the browser's cache, whatever the
+ * answer's headers say: a status kept from earlier would call an API ready
+ * that no longer answers, or show packs a refresh has replaced.
  */
 export async function apiStatus(apiUrl: string): Promise<ApiStatus | { error: string }> {
     const base = root(apiUrl);
     const problem = refusedEndpoint(base, 'API');
     if (problem) return { error: problem };
     try {
-        const response = await fetch(`${base}/v1/packs`, { signal: AbortSignal.timeout(5_000) });
+        const response = await fetch(`${base}/v1/packs`, { cache: 'no-store', signal: AbortSignal.timeout(5_000) });
         if (!response.ok) return { error: `the API at ${base} answered HTTP ${response.status}` };
         const packs = objectFields(await response.json().catch(() => null));
         const pack = objectFields(packs?.descriptorPack);
