@@ -11,7 +11,8 @@ review:
   under `e2e/fixtures/api/` with the change.
 - **`npm run check` must pass**: Biome for lint and format (the
   TypeScript and the stylesheet), and the TypeScript compiler in strict
-  mode. `npm run format` fixes what it can.
+  mode. `npm run format` fixes what Biome can: the formatting, the order of
+  the imports and the lint rules with a safe fix.
 - **No new dependencies without a reason** in the pull request. The
   extension ships no third-party code; its only dependencies are
   development tools.

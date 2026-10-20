@@ -21,7 +21,7 @@
     "build:firefox": "npm run build && node scripts/build-firefox.ts",
     "package": "npm run build && node scripts/package.ts",
     "check": "biome check --error-on-warnings . && tsc -p tsconfig.json",
-    "format": "biome format --write .",
+    "format": "biome check --write .",
     "test": "node --test --test-randomize --test-timeout=30000 --test-force-exit \"src/**/*.test.ts\"",
     "pretest:e2e": "npm run build",
     "test:e2e": "playwright test",
