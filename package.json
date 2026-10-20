@@ -4,6 +4,14 @@
   "private": true,
   "description": "SignLens for the browser: a Wallet Standard wallet without keys that explains every signing request and hands it unchanged to your own wallet",
   "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/signlens/signlens-extension.git"
+  },
+  "homepage": "https://github.com/signlens/signlens-extension#readme",
+  "bugs": {
+    "url": "https://github.com/signlens/signlens-extension/issues"
+  },
   "type": "module",
   "engines": {
     "node": ">=24.16"
