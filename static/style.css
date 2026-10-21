@@ -7,10 +7,11 @@
     --field-line: #868d9a;
     --text: #14213d;
     --muted: #5b6475;
-    /* Links and focus rings: amber dark enough to read as small text on the ground (5.4:1) and on raised (4.9:1). */
-    --accent: #9a5c00;
-    /* The filled control: the same amber, with white text (5.4:1). */
-    --fill: #9a5c00;
+    /* Links and focus rings: a deep shade of the icon's cyan, to read as small text on the ground (5.4:1) and on raised (4.9:1).
+       Cyan is no verdict's colour, so neither is an action or the focus: amber means a warning, and only that. */
+    --accent: #0e7490;
+    /* The filled control: the same cyan, with white text (5.4:1). */
+    --fill: #0e7490;
     --on-fill: #ffffff;
     --ok: #1a7f4b;
     --warning: #a15c00;
@@ -25,9 +26,10 @@
         --field-line: #6b7486;
         --text: #e8eaee;
         --muted: #9aa3b2;
-        --accent: #fca311;
-        /* Dark text on the bright amber (8.8:1); white would not read. */
-        --fill: #fca311;
+        /* The icon's own cyan: 10.1:1 on the ground, 8.8:1 on raised. */
+        --accent: #00d4ff;
+        /* Dark text on the bright cyan (10.1:1); white would not read. */
+        --fill: #00d4ff;
         --on-fill: #14181f;
         --ok: #5fd39a;
         --warning: #fcb94a;
