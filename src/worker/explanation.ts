@@ -336,7 +336,6 @@ const raw: Read<Raw> = (value, path) => {
     const o = new Fields(value, path);
     return {
         format: o.read('format', text(100)),
-        payload: o.read('payload', hex(100_000)),
         digest: o.read('digest', nullable(hex(64))),
     };
 };

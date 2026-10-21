@@ -16,7 +16,7 @@ const EXPLANATION: Explanation = {
     findings: [],
     effects: [],
     sections: [],
-    raw: { format: 'solana legacy', payload: '', digest: 'ab'.repeat(32) },
+    raw: { format: 'solana legacy', digest: 'ab'.repeat(32) },
 };
 
 interface Answer {

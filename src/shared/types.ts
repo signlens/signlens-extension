@@ -114,11 +114,13 @@ export interface Finding {
     instruction: number | null;
 }
 
+/**
+ * What the explanation says of the signed bytes. The API leaves out their
+ * hex, `payload`: the extension sent them, and reads only the digest.
+ */
 export interface Raw {
     format: string;
-    /** Lowercase hex. */
-    payload: string;
-    /** SHA-256 of the payload, lowercase hex, or null. */
+    /** SHA-256 of the signed bytes, lowercase hex, or null. */
     digest: string | null;
 }
 

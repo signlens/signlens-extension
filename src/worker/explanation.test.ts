@@ -51,7 +51,7 @@ function document(changes: Record<string, unknown> = {}): Record<string, unknown
                 },
             },
         ],
-        raw: { format: 'solana legacy', payload: 'abcd', digest: 'ab'.repeat(32) },
+        raw: { format: 'solana legacy', digest: 'ab'.repeat(32) },
         ...changes,
     };
 }
@@ -79,6 +79,9 @@ test('what is not in the contract is left out, and the result shares nothing wit
     assert.equal(Object.getPrototypeOf(parsed), Object.prototype);
     assert.notEqual(parsed.effects, input.effects);
     assert.deepEqual(parseExplanation(document()), document());
+    // The engine writes the signed bytes as hex; the API leaves them out, and so does the parser.
+    const engines = parseExplanation(document({ raw: { format: 'solana legacy', payload: 'abcd', digest: 'ab'.repeat(32) } }));
+    assert.deepEqual(engines.raw, { format: 'solana legacy', digest: 'ab'.repeat(32) });
 });
 
 test('a type this version does not know is shown as unrecognized, wherever it is', () => {
@@ -142,7 +145,7 @@ test('a known variant without what it needs is refused, with where', () => {
             'explanation.sections[0].kind.value.parent',
         ],
         [{ findings: [{ severity: 'high', code: 'x', message: 7, instruction: null }] }, 'explanation.findings[0].message'],
-        [{ raw: { format: 'x', payload: 'ABCD', digest: null } }, 'explanation.raw.payload'],
+        [{ raw: { format: 'x', digest: 'AB'.repeat(32) } }, 'explanation.raw.digest'],
         [{ schema: 'signlens-explanation/2' }, 'explanation.schema'],
         [{ summary: undefined }, 'explanation.summary'],
     ];
