@@ -64,7 +64,7 @@ function history(): HistoryEntry[] {
 
 test('with the window off, what SignLens would not refuse goes on at once, and the history says it went on unasked', BOUNDED, async () => {
     await configure({ askFirst: false });
-    server.answerApi(explanation('Ok'));
+    server.answerApi(explanation('ok'));
     assert.deepEqual(await sign({ wallet: 'Phan\u0007tom ' }), { decision: 'continue' });
     assert.equal(fake.opened, 0);
     const [kept] = history();
@@ -95,7 +95,7 @@ test('a request that cannot be explained at all says why once, and the user deci
 
 test('a window that cannot be kept refuses the request: its failure never passes it on', BOUNDED, async () => {
     await configure({ askFirst: true });
-    server.answerApi(explanation('Ok'));
+    server.answerApi(explanation('ok'));
     fake.sessionQuota = 0;
     assert.deepEqual(await sign(), {
         decision: 'reject',
@@ -116,7 +116,7 @@ test('an explanation that throws is an error, which waits for the user even with
 test('anything else that throws while answering refuses the request, with why, and sends nothing anywhere', BOUNDED, async () => {
     // As above, with your addresses: checked before anything is explained.
     await configure({ askFirst: false, myAddresses: 42 as unknown as string });
-    server.answerApi(explanation('Ok'));
+    server.answerApi(explanation('ok'));
     assert.deepEqual(await sign(), { decision: 'reject', refused: 'failed: text.split is not a function' });
     assert.equal(server.apiCalls.length, 0);
     assert.equal(fake.opened, 0);
@@ -124,7 +124,7 @@ test('anything else that throws while answering refuses the request, with why, a
 
 test('a page that goes while its request is explained stops the call under way, and leaves nothing behind', BOUNDED, async () => {
     await configure({ askFirst: true });
-    server.answerApi(explanation('Ok'));
+    server.answerApi(explanation('ok'));
     server.delayApi(3_000);
     const started = Date.now();
     const asking = sign();
@@ -153,7 +153,7 @@ test('a second request from a tab still busy is refused by SignLens, with the re
 
 test('in watch mode, with the window off, a request is refused without asking: nothing can be signed', BOUNDED, async () => {
     await configure({ askFirst: false, mode: 'watch', address: 'Ffz5kwUjkUNw7hV4r6iCJnUoXXsAPFHkCMCmKKDypiwg' });
-    server.answerApi(explanation('Ok'));
+    server.answerApi(explanation('ok'));
     assert.deepEqual(await sign({ wallet: 'Phantom' }), { decision: 'reject' });
     assert.equal(fake.opened, 0);
     // Nothing passed on, and no wallet behind it.
@@ -171,7 +171,7 @@ test('without its settings, SignLens refuses, and says so', BOUNDED, async () =>
 
 test('an address the page signs with that your settings have is "you", and nothing is asked', BOUNDED, async () => {
     await configure({ askFirst: false, myAddresses: MINE });
-    server.answerApi(explanation('Ok'));
+    server.answerApi(explanation('ok'));
     assert.deepEqual(await sign({ accounts: [MINE] }), { decision: 'continue' });
     assert.equal(fake.opened, 0);
     assert.deepEqual(ownKeys(), [MINE]);
@@ -194,7 +194,7 @@ test('an address your settings lack is asked about before anything is sent, and 
 
 test('a yes adds the address to yours, and only then is the request explained, with it as "you"', BOUNDED, async () => {
     await configure({ askFirst: true, myAddresses: MINE });
-    server.answerApi(explanation('Ok'));
+    server.answerApi(explanation('ok'));
     const asking = sign({ accounts: [OTHER] });
     gate.decide(await windowId('address.html'), 'continue');
     // Then the explanation, asked about as any is with asking first on.
@@ -213,7 +213,7 @@ test('an address window that cannot be kept, or a yes that cannot be kept, refus
         refused: 'the SignLens window failed: Session storage quota bytes exceeded. Values were not stored.',
     });
     fake.sessionQuota = Infinity;
-    server.answerApi(explanation('Ok'));
+    server.answerApi(explanation('ok'));
     const asking = sign({ accounts: [OTHER] });
     const id = await windowId('address.html');
     chrome.storage.local.set = (async () => {
@@ -280,7 +280,7 @@ test('in watch mode the watched address alone is "you": another the page names i
     assert.equal(fake.opened, 0);
     assert.equal(server.apiCalls.length, 0);
     // The watched address is "you" whatever the page names, or if it names none.
-    server.answerApi(explanation('Ok'));
+    server.answerApi(explanation('ok'));
     await sign({ accounts: [MINE] });
     await sign();
     assert.deepEqual(

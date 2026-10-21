@@ -43,87 +43,87 @@
       "chain": "solana",
       "effects": [
         {
-          "type": "Transfer",
+          "type": "transfer",
           "value": {
             "amount": {
               "asset": {
                 "decimals": 9,
                 "id": "TSPXcLV76s6V2zDiZQ18kBfcbnjaE2ZzNT3ga2Pd99v",
                 "symbol": "tSpaceX",
-                "trust": "Verified"
+                "trust": "verified"
               },
-              "bound": "AtMost",
+              "bound": "at_most",
               "note": null,
               "units": "5265026"
             },
             "from": {
               "is_self": true,
               "label": "Your wallet",
-              "label_trust": "Verified",
+              "label_trust": "verified",
               "text": "5yLgQQwD42seAkce1heScsh2spYgNA3q43SPhZBn8Ldc"
             },
             "to": {
               "is_self": false,
               "label": "DFlow Aggregator",
-              "label_trust": "Verified",
+              "label_trust": "verified",
               "text": "DF1ow4tspfHX9JwWJsAb9epbkA8hmpSEAtxXy1V27QBH"
             }
           }
         },
         {
-          "type": "Transfer",
+          "type": "transfer",
           "value": {
             "amount": {
               "asset": {
                 "decimals": 9,
                 "id": "TKLSidmLVt3cqGaaodG8tyRzoANfQwoh67AccjmubeZ",
                 "symbol": "tKalshi",
-                "trust": "Verified"
+                "trust": "verified"
               },
-              "bound": "AtLeast",
+              "bound": "at_least",
               "note": null,
               "units": "4080684"
             },
             "from": {
               "is_self": false,
               "label": "DFlow Aggregator",
-              "label_trust": "Verified",
+              "label_trust": "verified",
               "text": "DF1ow4tspfHX9JwWJsAb9epbkA8hmpSEAtxXy1V27QBH"
             },
             "to": {
               "is_self": true,
               "label": "Your token account",
-              "label_trust": "Verified",
+              "label_trust": "verified",
               "text": "2n1wSskTShm6o1nLy86vCJ5vbUXsx1J4zHzAzudRSJBw"
             }
           }
         },
         {
-          "type": "Fee",
+          "type": "fee",
           "value": {
             "amount": {
               "asset": {
                 "decimals": 9,
                 "id": "native",
                 "symbol": "SOL",
-                "trust": "Fact"
+                "trust": "fact"
               },
-              "bound": "Exact",
+              "bound": "exact",
               "note": null,
               "units": "5535"
             },
             "payer": {
               "is_self": true,
               "label": "Your wallet",
-              "label_trust": "Verified",
+              "label_trust": "verified",
               "text": "5yLgQQwD42seAkce1heScsh2spYgNA3q43SPhZBn8Ldc"
             }
           }
         },
         {
-          "type": "Lifetime",
+          "type": "lifetime",
           "value": {
-            "type": "RecentBlockhash"
+            "type": "recent_blockhash"
           }
         }
       ],
@@ -141,17 +141,17 @@
             {
               "help": null,
               "label": "Send",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "Amount",
+                "type": "amount",
                 "value": {
                   "asset": {
                     "decimals": 9,
                     "id": "TSPXcLV76s6V2zDiZQ18kBfcbnjaE2ZzNT3ga2Pd99v",
                     "symbol": "tSpaceX",
-                    "trust": "Verified"
+                    "trust": "verified"
                   },
-                  "bound": "AtMost",
+                  "bound": "at_most",
                   "note": null,
                   "units": "5265026"
                 }
@@ -160,17 +160,17 @@
             {
               "help": null,
               "label": "Receive",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "Amount",
+                "type": "amount",
                 "value": {
                   "asset": {
                     "decimals": 9,
                     "id": "TKLSidmLVt3cqGaaodG8tyRzoANfQwoh67AccjmubeZ",
                     "symbol": "tKalshi",
-                    "trust": "Verified"
+                    "trust": "verified"
                   },
-                  "bound": "AtLeast",
+                  "bound": "at_least",
                   "note": null,
                   "units": "4080684"
                 }
@@ -179,17 +179,17 @@
             {
               "help": null,
               "label": "Quoted",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "Amount",
+                "type": "amount",
                 "value": {
                   "asset": {
                     "decimals": 9,
                     "id": "TKLSidmLVt3cqGaaodG8tyRzoANfQwoh67AccjmubeZ",
                     "symbol": "tKalshi",
-                    "trust": "Verified"
+                    "trust": "verified"
                   },
-                  "bound": "Exact",
+                  "bound": "exact",
                   "note": null,
                   "units": "4206891"
                 }
@@ -198,25 +198,25 @@
             {
               "help": null,
               "label": "Max slippage",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "BasisPoints",
+                "type": "basis_points",
                 "value": 300
               }
             },
             {
               "help": null,
               "label": "Route",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "List",
+                "type": "list",
                 "value": [
                   {
-                    "type": "Text",
+                    "type": "text",
                     "value": "MeteoraDlmmSwapV2 (3379812 base units)"
                   },
                   {
-                    "type": "Text",
+                    "type": "text",
                     "value": "MeteoraDlmmSwapV2 (1885214 base units)"
                   }
                 ]
@@ -225,13 +225,13 @@
             {
               "help": null,
               "label": "From account",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "Address",
+                "type": "address",
                 "value": {
                   "is_self": true,
                   "label": "Your token account",
-                  "label_trust": "Verified",
+                  "label_trust": "verified",
                   "text": "FfxPBxmkrboB5cpihWxv4y5TKXthv93ZzfkuxDBAC7ft"
                 }
               }
@@ -239,13 +239,13 @@
             {
               "help": null,
               "label": "To account",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "Address",
+                "type": "address",
                 "value": {
                   "is_self": true,
                   "label": "Your token account",
-                  "label_trust": "Verified",
+                  "label_trust": "verified",
                   "text": "2n1wSskTShm6o1nLy86vCJ5vbUXsx1J4zHzAzudRSJBw"
                 }
               }
@@ -253,15 +253,15 @@
             {
               "help": null,
               "label": "Instruction",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "Text",
+                "type": "text",
                 "value": "swap"
               }
             }
           ],
           "kind": {
-            "type": "Instruction",
+            "type": "instruction",
             "value": {
               "index": 2
             }
@@ -275,24 +275,24 @@
             {
               "help": null,
               "label": "Compute unit limit",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "Integer",
+                "type": "integer",
                 "value": "197941"
               }
             },
             {
               "help": null,
               "label": "Compute unit price",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "Text",
+                "type": "text",
                 "value": "2701 micro-lamports per unit"
               }
             }
           ],
           "kind": {
-            "type": "Housekeeping"
+            "type": "housekeeping"
           },
           "subtitle": null,
           "title": "Also"
@@ -303,20 +303,20 @@
             {
               "help": null,
               "label": "Fee payer",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "Address",
+                "type": "address",
                 "value": {
                   "is_self": true,
                   "label": "Your wallet",
-                  "label_trust": "Verified",
+                  "label_trust": "verified",
                   "text": "5yLgQQwD42seAkce1heScsh2spYgNA3q43SPhZBn8Ldc"
                 }
               }
             }
           ],
           "kind": {
-            "type": "Signers"
+            "type": "signers"
           },
           "subtitle": null,
           "title": "Signers"
@@ -327,17 +327,17 @@
             {
               "help": null,
               "label": "Total",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "Amount",
+                "type": "amount",
                 "value": {
                   "asset": {
                     "decimals": 9,
                     "id": "native",
                     "symbol": "SOL",
-                    "trust": "Fact"
+                    "trust": "fact"
                   },
-                  "bound": "Exact",
+                  "bound": "exact",
                   "note": null,
                   "units": "5535"
                 }
@@ -346,17 +346,17 @@
             {
               "help": null,
               "label": "Base",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "Amount",
+                "type": "amount",
                 "value": {
                   "asset": {
                     "decimals": 9,
                     "id": "native",
                     "symbol": "SOL",
-                    "trust": "Fact"
+                    "trust": "fact"
                   },
-                  "bound": "Exact",
+                  "bound": "exact",
                   "note": null,
                   "units": "5000"
                 }
@@ -365,17 +365,17 @@
             {
               "help": null,
               "label": "Priority",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "Amount",
+                "type": "amount",
                 "value": {
                   "asset": {
                     "decimals": 9,
                     "id": "native",
                     "symbol": "SOL",
-                    "trust": "Fact"
+                    "trust": "fact"
                   },
-                  "bound": "Exact",
+                  "bound": "exact",
                   "note": null,
                   "units": "535"
                 }
@@ -384,15 +384,15 @@
             {
               "help": null,
               "label": "Priority basis",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "Text",
+                "type": "text",
                 "value": "2701 micro-lamports per unit × 197941 units requested"
               }
             }
           ],
           "kind": {
-            "type": "Fees"
+            "type": "fees"
           },
           "subtitle": null,
           "title": "Fee"
@@ -403,15 +403,15 @@
             {
               "help": null,
               "label": "Expires",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "Text",
+                "type": "text",
                 "value": "in about a minute (recent blockhash)"
               }
             }
           ],
           "kind": {
-            "type": "Lifetime"
+            "type": "lifetime"
           },
           "subtitle": null,
           "title": "Validity"
@@ -419,7 +419,7 @@
       ],
       "summary": "Swap ≤ 0.005265026 tSpaceX (verified) for ≥ 0.004080684 tKalshi (verified) via DFlow",
       "text": "Swap ≤ 0.005265026 tSpaceX (verified) for ≥ 0.004080684 tKalshi (verified) via DFlow\nOK\n\n== Swap | DFlow Aggregator (verified)\n  Send: ≤ 0.005265026 tSpaceX (verified)\n  Receive: ≥ 0.004080684 tKalshi (verified)\n  Quoted: 0.004206891 tKalshi (verified)\n  Max slippage: 3.00%\n  Route:\n    - MeteoraDlmmSwapV2 (3379812 base units)\n    - MeteoraDlmmSwapV2 (1885214 base units)\n  From account: Your token account (FfxP…C7ft) (verified)\n  To account: Your token account (2n1w…SJBw) (verified)\n  Instruction: swap\n\n== Also [collapsed]\n  Compute unit limit: 197941\n  Compute unit price: 2701 micro-lamports per unit\n\n== Signers\n  Fee payer: Your wallet (5yLg…8Ldc) (verified)\n\n== Fee\n  Total: 0.000005535 SOL\n  Base: 0.000005 SOL\n  Priority: 0.000000535 SOL\n  Priority basis: 2701 micro-lamports per unit × 197941 units requested\n\n== Validity\n  Expires: in about a minute (recent blockhash)\n\nEffects:\n  - send ≤ 0.005265026 tSpaceX (verified) from Your wallet (5yLg…8Ldc) (verified) to DFlow Aggregator (DF1o…7QBH) (verified)\n  - receive ≥ 0.004080684 tKalshi (verified) into Your token account (2n1w…SJBw) (verified) from DFlow Aggregator (DF1o…7QBH) (verified)\n  - Your wallet (5yLg…8Ldc) (verified) pays a fee of 0.000005535 SOL\n  - valid for about a minute (recent blockhash)\n\nRaw: solana v0 (574 bytes)\n  digest: 9bdd08c0fa2a6a063bcab6cc1581b881a5fbc0a5eefa3c4ee59dc380cdb66876\n",
-      "verdict": "Ok"
+      "verdict": "ok"
     }
   }
 }

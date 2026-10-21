@@ -14,8 +14,8 @@ const recorded = readdirSync(FIXTURES)
     .filter((name) => name.endsWith('.explanation.json'))
     .map((name) => ({ name, document: JSON.parse(readFileSync(new URL(name, FIXTURES), 'utf8')) as Record<string, unknown> }));
 
-const SELF = { text: 'Ffz5kwUjkUNw7hV4r6iCJnUoXXsAPFHkCMCmKKDypiwg', label: null, label_trust: 'Fact', is_self: true };
-const USDC = { id: 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v', symbol: 'USDC', decimals: 6, trust: 'Verified' };
+const SELF = { text: 'Ffz5kwUjkUNw7hV4r6iCJnUoXXsAPFHkCMCmKKDypiwg', label: null, label_trust: 'fact', is_self: true };
+const USDC = { id: 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v', symbol: 'USDC', decimals: 6, trust: 'verified' };
 
 /** A small explanation, with `changes` on top. */
 function document(changes: Record<string, unknown> = {}): Record<string, unknown> {
@@ -23,18 +23,18 @@ function document(changes: Record<string, unknown> = {}): Record<string, unknown
         schema: 'signlens-explanation/1',
         chain: 'solana',
         summary: 'Send 1 USDC',
-        verdict: 'Ok',
-        findings: [{ severity: 'Info', code: 'fee', message: 'A fee is paid', instruction: null }],
+        verdict: 'ok',
+        findings: [{ severity: 'info', code: 'fee', message: 'A fee is paid', instruction: null }],
         sections: [
             {
-                kind: { type: 'Instruction', value: { index: 0 } },
+                kind: { type: 'instruction', value: { index: 0 } },
                 title: 'Transfer',
                 subtitle: null,
                 fields: [
                     {
                         label: 'Amount',
-                        value: { type: 'Amount', value: { units: '1000000', asset: USDC, bound: 'Exact', note: null } },
-                        trust: 'Fact',
+                        value: { type: 'amount', value: { units: '1000000', asset: USDC, bound: 'exact', note: null } },
+                        trust: 'fact',
                         help: null,
                     },
                 ],
@@ -43,11 +43,11 @@ function document(changes: Record<string, unknown> = {}): Record<string, unknown
         ],
         effects: [
             {
-                type: 'Transfer',
+                type: 'transfer',
                 value: {
                     from: SELF,
                     to: { ...SELF, is_self: false },
-                    amount: { units: '1000000', asset: USDC, bound: 'Exact', note: null },
+                    amount: { units: '1000000', asset: USDC, bound: 'exact', note: null },
                 },
             },
         ],
@@ -84,21 +84,21 @@ test('what is not in the contract is left out, and the result shares nothing wit
 test('a type this version does not know is shown as unrecognized, wherever it is', () => {
     const parsed = parseExplanation(
         document({
-            effects: [{ type: 'Drain', value: { everything: true } }],
+            effects: [{ type: 'drain', value: { everything: true } }],
             sections: [
                 {
-                    kind: { type: 'Hooks' },
+                    kind: { type: 'hooks' },
                     title: 'Hooks',
                     subtitle: null,
-                    fields: [{ label: 'Hook', value: { type: 'Matrix', value: [[1]] }, trust: 'Fact', help: null }],
+                    fields: [{ label: 'Hook', value: { type: 'matrix', value: [[1]] }, trust: 'fact', help: null }],
                     collapsed: true,
                 },
             ],
         }),
     );
-    assert.deepEqual(parsed.effects, [{ type: 'Unrecognized', value: { type: 'Drain' } }]);
-    assert.deepEqual(parsed.sections[0]?.kind, { type: 'Unrecognized', value: { type: 'Hooks' } });
-    assert.deepEqual(parsed.sections[0]?.fields[0]?.value, { type: 'Unrecognized', value: { type: 'Matrix' } });
+    assert.deepEqual(parsed.effects, [{ type: 'Unrecognized', value: { type: 'drain' } }]);
+    assert.deepEqual(parsed.sections[0]?.kind, { type: 'Unrecognized', value: { type: 'hooks' } });
+    assert.deepEqual(parsed.sections[0]?.fields[0]?.value, { type: 'Unrecognized', value: { type: 'matrix' } });
 });
 
 test('an unknown verdict, trust, severity, bound or lifetime is refused, with where', () => {
@@ -112,16 +112,16 @@ test('an unknown verdict, trust, severity, bound or lifetime is refused, with wh
             /a severity/,
         ],
         [
-            { effects: [{ type: 'Fee', value: { payer: { ...SELF, label_trust: 'Sure' }, amount: transfer?.value?.amount } }] },
+            { effects: [{ type: 'fee', value: { payer: { ...SELF, label_trust: 'Sure' }, amount: transfer?.value?.amount } }] },
             'explanation.effects[0].value.payer.label_trust',
             /a trust/,
         ],
         [
-            { effects: [{ type: 'Fee', value: { payer: SELF, amount: { units: '1', asset: USDC, bound: 'Around', note: null } } }] },
+            { effects: [{ type: 'fee', value: { payer: SELF, amount: { units: '1', asset: USDC, bound: 'Around', note: null } } }] },
             'explanation.effects[0].value.amount.bound',
             /a bound/,
         ],
-        [{ effects: [{ type: 'Lifetime', value: { type: 'Slot' } }] }, 'explanation.effects[0].value.type', /a lifetime/],
+        [{ effects: [{ type: 'lifetime', value: { type: 'slot' } }] }, 'explanation.effects[0].value.type', /a lifetime/],
     ];
     for (const [changes, path, problem] of cases) {
         const error = refusal(document(changes));
@@ -133,15 +133,15 @@ test('an unknown verdict, trust, severity, bound or lifetime is refused, with wh
 test('a known variant without what it needs is refused, with where', () => {
     const cases: [Record<string, unknown>, string][] = [
         [
-            { effects: [{ type: 'Transfer', value: { from: SELF, amount: { units: '1', asset: USDC, bound: 'Exact', note: null } } }] },
+            { effects: [{ type: 'transfer', value: { from: SELF, amount: { units: '1', asset: USDC, bound: 'exact', note: null } } }] },
             'explanation.effects[0].value.to',
         ],
-        [{ effects: [{ type: 'Other' }] }, 'explanation.effects[0].value'],
+        [{ effects: [{ type: 'other' }] }, 'explanation.effects[0].value'],
         [
-            { sections: [{ kind: { type: 'Nested', value: { index: 1 } }, title: 't', subtitle: null, fields: [], collapsed: false }] },
+            { sections: [{ kind: { type: 'nested', value: { index: 1 } }, title: 't', subtitle: null, fields: [], collapsed: false }] },
             'explanation.sections[0].kind.value.parent',
         ],
-        [{ findings: [{ severity: 'High', code: 'x', message: 7, instruction: null }] }, 'explanation.findings[0].message'],
+        [{ findings: [{ severity: 'high', code: 'x', message: 7, instruction: null }] }, 'explanation.findings[0].message'],
         [{ raw: { format: 'x', payload: 'ABCD', digest: null } }, 'explanation.raw.payload'],
         [{ schema: 'signlens-explanation/2' }, 'explanation.schema'],
         [{ summary: undefined }, 'explanation.summary'],
@@ -153,28 +153,28 @@ test('a known variant without what it needs is refused, with where', () => {
 
 test('what the window would choke on is refused: huge decimals, non-numbers, depth, length', () => {
     const amount = (asset: object, units = '1') => ({
-        effects: [{ type: 'Fee', value: { payer: SELF, amount: { units, asset, bound: 'Exact', note: null } } }],
+        effects: [{ type: 'fee', value: { payer: SELF, amount: { units, asset, bound: 'exact', note: null } } }],
     });
     assert.match(refusal(document(amount({ ...USDC, decimals: 1e9 }))).message, /from 0 to 255/);
     assert.match(refusal(document(amount({ ...USDC, decimals: 1.5 }))).message, /whole number/);
     assert.match(refusal(document(amount(USDC, '1e9'))).message, /decimal integer/);
     assert.match(refusal(document(amount(USDC, '9'.repeat(41)))).message, /decimal integer/);
-    let nested: object = { type: 'Text', value: 'x' };
-    for (let i = 0; i < 12; i += 1) nested = { type: 'List', value: [nested] };
+    let nested: object = { type: 'text', value: 'x' };
+    for (let i = 0; i < 12; i += 1) nested = { type: 'list', value: [nested] };
     const deep = {
         sections: [
             {
-                kind: { type: 'Fees' },
+                kind: { type: 'fees' },
                 title: 't',
                 subtitle: null,
-                fields: [{ label: 'x', value: nested, trust: 'Fact', help: null }],
+                fields: [{ label: 'x', value: nested, trust: 'fact', help: null }],
                 collapsed: false,
             },
         ],
     };
     assert.match(refusal(document(deep)).message, /nested too deep/);
     assert.match(
-        refusal(document({ findings: Array(501).fill({ severity: 'Info', code: 'x', message: 'x', instruction: null }) })).message,
+        refusal(document({ findings: Array(501).fill({ severity: 'info', code: 'x', message: 'x', instruction: null }) })).message,
         /more than 500/,
     );
     assert.match(refusal(document({ summary: 'x'.repeat(2_001) })).message, /longer than 2000/);
@@ -184,8 +184,8 @@ test('what the window would choke on is refused: huge decimals, non-numbers, dep
     assert.equal(refusal(document({ verdict: tower })).message, 'explanation.verdict a list is not a verdict this version knows');
     assert.equal(refusal(document({ verdict: { Ok: true } })).message, 'explanation.verdict an object is not a verdict this version knows');
     // A proposed effect proposes another, and so on, as deep as a list.
-    let proposed: object = { type: 'Unheard', value: null };
-    for (let i = 0; i < 12; i += 1) proposed = { type: 'Proposed', value: { by: SELF, effect: proposed } };
+    let proposed: object = { type: 'unheard', value: null };
+    for (let i = 0; i < 12; i += 1) proposed = { type: 'proposed', value: { by: SELF, effect: proposed } };
     assert.match(refusal(document({ effects: [proposed] })).message, /effects\[0\](\.value\.effect)+ is nested too deep/);
     // The full text has a bound of its own, far above a line's.
     assert.equal(parseExplanation(document({ text: 'x'.repeat(1_000_000) })).text?.length, 1_000_000);
@@ -196,7 +196,7 @@ test('no text from the API hides or reorders what is around it', () => {
     const read = parseExplanation(
         document({
             summary: 'Refund \u202eDEFAS',
-            findings: [{ severity: 'Info', code: 'fee', message: 'A\u200bfee\u2028paid', instruction: null }],
+            findings: [{ severity: 'info', code: 'fee', message: 'A\u200bfee\u2028paid', instruction: null }],
         }),
     );
     assert.equal(read.summary, 'Refund ?DEFAS');

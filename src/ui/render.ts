@@ -29,13 +29,13 @@ export function originNode(origin: string | undefined, asks: string): DocumentFr
 }
 
 /** The trust marker the engine's text uses, after a label or an amount. */
-const MARKER: Record<Trust, string> = { Fact: '', Verified: ' (verified)', Claimed: ' (claimed, unverified)' };
+const MARKER: Record<Trust, string> = { fact: '', verified: ' (verified)', claimed: ' (claimed, unverified)' };
 
 /** What a trust marker means, for a reader who opens it. */
 const MARKER_HELP: Partial<Record<Trust, string>> = {
-    Verified:
+    verified:
         'This name comes from SignLens or from you: its reviewed descriptors, its verified token list, your addresses in its settings, or your address book. The site could not have supplied it.',
-    Claimed:
+    claimed:
         'This came from the site or from the RPC the extension asked, not from the transaction itself. SignLens could not check it, so do not rely on it.',
 };
 
@@ -159,16 +159,16 @@ export function quantity(amount: Amount): string {
     return `${sign}${fraction ? `${integer}.${fraction}` : integer}`;
 }
 
-const PREFIX: Record<Bound, string> = { Exact: '', AtLeast: '≥ ', AtMost: '≤ ', Unlimited: 'UNLIMITED ', Unknown: 'unknown amount of ' };
+const PREFIX: Record<Bound, string> = { exact: '', at_least: '≥ ', at_most: '≤ ', unlimited: 'UNLIMITED ', unknown: 'unknown amount of ' };
 
 /** An amount as the engine's text writes it, as a node: the trust marker in it is a term. */
 function amountNode(amount: Amount): HTMLSpanElement {
     const node = element('span', 'amount');
     const prefix = PREFIX[amount.bound];
     const asset = amount.asset;
-    if ((amount.bound === 'Unlimited' || amount.bound === 'Unknown') && asset.symbol) node.append(`${prefix}${asset.symbol}`);
-    else if (amount.bound === 'Unlimited') node.append('UNLIMITED unverified token');
-    else if (amount.bound === 'Unknown') node.append('unknown amount of an unverified token');
+    if ((amount.bound === 'unlimited' || amount.bound === 'unknown') && asset.symbol) node.append(`${prefix}${asset.symbol}`);
+    else if (amount.bound === 'unlimited') node.append('UNLIMITED unverified token');
+    else if (amount.bound === 'unknown') node.append('unknown amount of an unverified token');
     else if (asset.symbol) node.append(`${prefix}${quantity(amount)} ${asset.symbol}`);
     else node.append(`${prefix}${quantity(amount)} of an unverified token`);
     mark(node, asset.trust);
@@ -200,24 +200,24 @@ function unrecognized(what: string, type: string): string {
 /** A field's value as a node. */
 function valueNode(value: Value): HTMLElement {
     switch (value.type) {
-        case 'Text':
-        case 'Integer':
+        case 'text':
+        case 'integer':
             return element('span', '', value.value);
-        case 'Amount':
+        case 'amount':
             return amountNode(value.value);
-        case 'Address':
+        case 'address':
             return addressNode(value.value);
-        case 'BasisPoints':
+        case 'basis_points':
             return element('span', '', `${(value.value / 100).toFixed(2)}%`);
-        case 'Duration':
+        case 'duration':
             return element('span', '', `${value.value} seconds`);
-        case 'Timestamp':
+        case 'timestamp':
             return element('span', '', new Date(value.value * 1000).toLocaleString());
-        case 'Bytes':
+        case 'bytes':
             return bytesNode(value.value);
-        case 'Bool':
+        case 'bool':
             return element('span', '', value.value ? 'yes' : 'no');
-        case 'List': {
+        case 'list': {
             const list = element('ul', 'list');
             for (const item of value.value) {
                 const li = element('li');
@@ -261,7 +261,7 @@ function append<T extends HTMLElement>(node: T, ...parts: (string | Node)[]): T 
 function effectNode(effect: Effect): HTMLLIElement {
     const li = element('li', `effect ${effect.type.toLowerCase()}`);
     switch (effect.type) {
-        case 'Transfer': {
+        case 'transfer': {
             const v = effect.value;
             if (v.from.is_self && !v.to.is_self)
                 return append(li, 'You send ', amountNode(v.amount), ' from ', addressNode(v.from), ' to ', addressNode(v.to));
@@ -269,54 +269,54 @@ function effectNode(effect: Effect): HTMLLIElement {
                 return append(li, 'You receive ', amountNode(v.amount), ' into ', addressNode(v.to), ' from ', addressNode(v.from));
             return append(li, 'Transfer ', amountNode(v.amount), ' from ', addressNode(v.from), ' to ', addressNode(v.to));
         }
-        case 'Burn': {
+        case 'burn': {
             const v = effect.value;
             return append(li, v.account.is_self ? 'You burn ' : 'Burn ', amountNode(v.amount), ' from ', addressNode(v.account));
         }
-        case 'AuthorityChange': {
+        case 'authority_change': {
             const v = effect.value;
             return v.new_authority
                 ? append(li, `Give the ${v.authority} authority over `, addressNode(v.subject), ' to ', addressNode(v.new_authority))
                 : append(li, `Permanently remove the ${v.authority} authority over `, addressNode(v.subject));
         }
-        case 'Delegate': {
+        case 'delegate': {
             const v = effect.value;
             return append(li, 'Allow ', addressNode(v.delegate), ' to spend ', amountNode(v.amount), ' from ', addressNode(v.subject));
         }
-        case 'Revoke': {
+        case 'revoke': {
             const v = effect.value;
             return append(li, 'Revoke the delegate on ', addressNode(v.subject));
         }
-        case 'Create': {
+        case 'create': {
             const v = effect.value;
             append(li, 'Create ', addressNode(v.account), ' owned by ', addressNode(v.owner));
             if (v.deposit) append(li, ', depositing ', amountNode(v.deposit));
             if (v.if_missing) li.append(' unless it already exists');
             return li;
         }
-        case 'Close': {
+        case 'close': {
             const v = effect.value;
             return append(li, 'Close ', addressNode(v.account), ' and send its balance to ', addressNode(v.destination));
         }
-        case 'Fee': {
+        case 'fee': {
             const v = effect.value;
             return v.payer.is_self
                 ? append(li, 'You pay a fee of ', amountNode(v.amount))
                 : append(li, addressNode(v.payer), ' pays a fee of ', amountNode(v.amount));
         }
-        case 'Lifetime': {
+        case 'lifetime': {
             const v = effect.value;
-            return v.type === 'DurableNonce'
+            return v.type === 'durable_nonce'
                 ? append(li, 'Valid FOREVER until nonce account ', addressNode(v.value.nonce_account), ' is advanced (durable nonce)')
                 : append(li, 'Valid for about a minute (recent blockhash)');
         }
-        case 'Proposed': {
+        case 'proposed': {
             const inner = effectNode(effect.value.effect);
             inner.className = 'effect proposed';
             inner.prepend('Once approved, ', addressNode(effect.value.by), ' would: ');
             return inner;
         }
-        case 'Other':
+        case 'other':
             return append(li, effect.value.description);
         case 'Unrecognized':
             return append(li, unrecognized('Something', effect.value.type));
@@ -361,24 +361,24 @@ function disclosure(
 
 function sectionIndex(section: Section): number | null {
     const kind = section.kind;
-    return kind.type === 'Instruction' || kind.type === 'Nested' ? kind.value.index : null;
+    return kind.type === 'instruction' || kind.type === 'nested' ? kind.value.index : null;
 }
 
 /** A section as a disclosure: its title, its subtitle, and its fields as a definition list. */
 function sectionNode(section: Section, open: boolean, nested: HTMLElement[]): HTMLDivElement {
     const label = element('span', 'section-head');
     const index = sectionIndex(section);
-    const title = section.kind.type === 'Nested' && index !== null ? `Step ${index + 1}: ${section.title}` : section.title;
+    const title = section.kind.type === 'nested' && index !== null ? `Step ${index + 1}: ${section.title}` : section.title;
     label.append(element('span', 'section-title', title));
     if (section.subtitle) label.append(' ', element('span', 'section-subtitle', section.subtitle));
-    const claims = section.kind.type === 'Claims';
+    const claims = section.kind.type === 'claims';
     const body = element('div');
     const fields = element('dl', 'fields');
     for (const field of section.fields) fields.append(...fieldNodes(field, claims));
     body.append(fields);
     for (const child of nested) body.append(child);
     // A section of claims says so once, beside its toggle; its rows are not marked again.
-    const marker = claims ? (head: HTMLElement) => mark(element('span', 'section-mark'), 'Claimed', CLAIMS_HELP, head) : undefined;
+    const marker = claims ? (head: HTMLElement) => mark(element('span', 'section-mark'), 'claimed', CLAIMS_HELP, head) : undefined;
     return disclosure('section', label, body, open, undefined, marker);
 }
 
@@ -388,7 +388,7 @@ function fieldNodes(field: Field, inClaims: boolean): [HTMLElement, HTMLElement]
     const help = field.help ?? helpFor(field.label);
     dt.append(help ? term(field.label, help, dd) : field.label);
     dd.append(valueNode(field.value));
-    if (field.trust === 'Claimed' && !inClaims) dd.append(mark(element('span', 'claimed'), 'Claimed'));
+    if (field.trust === 'claimed' && !inClaims) dd.append(mark(element('span', 'claimed'), 'claimed'));
     return [dt, dd];
 }
 
@@ -402,14 +402,14 @@ function sectionsNode(row: ExplainedRow): DocumentFragment {
     const rest: Section[] = [];
     for (const section of row.sections) {
         const kind = section.kind;
-        if (kind.type === 'Instruction') {
+        if (kind.type === 'instruction') {
             instructions.push(section);
-        } else if (kind.type === 'Nested') {
+        } else if (kind.type === 'nested') {
             const parent = kind.value.parent;
             const list = steps.get(parent) ?? [];
             list.push(section);
             steps.set(parent, list);
-        } else if (kind.type !== 'Claims') {
+        } else if (kind.type !== 'claims') {
             rest.push(section);
         }
     }
@@ -436,7 +436,7 @@ function sectionsNode(row: ExplainedRow): DocumentFragment {
  * transaction does, and this is the proof for whoever wants to check.
  */
 function instructionsNode(row: ExplainedRow, options: RenderOptions): HTMLDivElement {
-    const count = row.sections.filter((s) => s.kind.type === 'Instruction').length;
+    const count = row.sections.filter((s) => s.kind.type === 'instruction').length;
     const title = count === 0 ? 'Details' : count === 1 ? 'Instruction and details' : `Instructions (${count}) and details`;
     const body = element('div');
     body.append(sectionsNode(row));
@@ -543,8 +543,10 @@ function explainedNode(body: HTMLDivElement, row: ExplainedRow, options: RenderO
         const list = element('ul', 'findings');
         for (const finding of row.findings) {
             // An informational finding is a note, not a warning, and reads as one.
-            const item = element('li', finding.severity.toLowerCase());
-            item.append(element('span', `severity ${finding.severity.toLowerCase()}`, finding.severity), ' ', finding.message);
+            const item = element('li', finding.severity);
+            // Shown as a word with a capital (High); the document's value is lowercase.
+            const severity = finding.severity.charAt(0).toUpperCase() + finding.severity.slice(1);
+            item.append(element('span', `severity ${finding.severity}`, severity), ' ', finding.message);
             list.append(item);
         }
         body.append(list);
@@ -563,7 +565,7 @@ function explainedNode(body: HTMLDivElement, row: ExplainedRow, options: RenderO
         body.append(element('p', 'tables', `Unlisted tokens named from the RPC and the token list, unverified: ${row.hints.join(', ')}`));
     }
     // What the simulation found, under the line that says it ran.
-    for (const section of row.sections.filter((s) => s.kind.type === 'Claims')) {
+    for (const section of row.sections.filter((s) => s.kind.type === 'claims')) {
         body.append(sectionNode(section, !section.collapsed, []));
     }
     const holder = element('div');

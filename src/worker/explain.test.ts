@@ -248,7 +248,7 @@ test("the API's error, or an explanation that does not hold together, is an erro
     assert.equal(busy.error, 'every worker is busy; try again');
     assert.match(busy?.tables ?? '', /read over RPC/);
     assert.ok(busy?.capture);
-    server.answerApi(explanation('Ok', { effects: [{ type: 'Transfer', value: {} }] }));
+    server.answerApi(explanation('ok', { effects: [{ type: 'transfer', value: {} }] }));
     const broken = rowOf(await explainTransactions({ ...PAGE, transactions: [swap.base64] }, config(), [], []), 'failed');
     assert.match(broken.error, /explanation\.effects\[0\]\.value\.from is not an object/);
 });

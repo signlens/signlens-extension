@@ -2,68 +2,68 @@
   "chain": "solana",
   "effects": [
     {
-      "type": "Transfer",
+      "type": "transfer",
       "value": {
         "amount": {
           "asset": {
             "decimals": 9,
             "id": "native",
             "symbol": "SOL",
-            "trust": "Fact"
+            "trust": "fact"
           },
-          "bound": "AtMost",
+          "bound": "at_most",
           "note": null,
           "units": "235478"
         },
         "from": {
           "is_self": false,
           "label": null,
-          "label_trust": "Fact",
+          "label_trust": "fact",
           "text": "G93MH3589G8Wj16suqKCU7e846WXPzhKsT5suf4vpAnU"
         },
         "to": {
           "is_self": false,
           "label": "Pump.fun",
-          "label_trust": "Verified",
+          "label_trust": "verified",
           "text": "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P"
         }
       }
     },
     {
-      "type": "Transfer",
+      "type": "transfer",
       "value": {
         "amount": {
           "asset": {
             "decimals": null,
             "id": "9sVJwhNTEtoq8PWeZJigJKNbRMZW7CoByosnxV2Cpump",
             "symbol": null,
-            "trust": "Fact"
+            "trust": "fact"
           },
-          "bound": "Unknown",
+          "bound": "unknown",
           "note": "at least 3731969312 raw units before a transfer fee the signer cannot know",
           "units": "0"
         },
         "from": {
           "is_self": false,
           "label": "Pump.fun",
-          "label_trust": "Verified",
+          "label_trust": "verified",
           "text": "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P"
         },
         "to": {
           "is_self": false,
           "label": null,
-          "label_trust": "Fact",
+          "label_trust": "fact",
           "text": "7oT8RSgMTph8WNqvxXUSapzvVjKSNqFgSADDfCnpmjKW"
         }
       }
     },
     {
-      "type": "Create",
+      "type": "create",
       "value": {
         "account": {
           "is_self": false,
           "label": null,
-          "label_trust": "Fact",
+          "label_trust": "fact",
           "text": "7oT8RSgMTph8WNqvxXUSapzvVjKSNqFgSADDfCnpmjKW"
         },
         "deposit": {
@@ -71,9 +71,9 @@
             "decimals": 9,
             "id": "native",
             "symbol": "SOL",
-            "trust": "Fact"
+            "trust": "fact"
           },
-          "bound": "Exact",
+          "bound": "exact",
           "note": null,
           "units": "1513840"
         },
@@ -81,37 +81,37 @@
         "owner": {
           "is_self": false,
           "label": "Token-2022 program",
-          "label_trust": "Verified",
+          "label_trust": "verified",
           "text": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"
         }
       }
     },
     {
-      "type": "Fee",
+      "type": "fee",
       "value": {
         "amount": {
           "asset": {
             "decimals": 9,
             "id": "native",
             "symbol": "SOL",
-            "trust": "Fact"
+            "trust": "fact"
           },
-          "bound": "Exact",
+          "bound": "exact",
           "note": null,
           "units": "85000"
         },
         "payer": {
           "is_self": false,
           "label": null,
-          "label_trust": "Fact",
+          "label_trust": "fact",
           "text": "G93MH3589G8Wj16suqKCU7e846WXPzhKsT5suf4vpAnU"
         }
       }
     },
     {
-      "type": "Lifetime",
+      "type": "lifetime",
       "value": {
-        "type": "RecentBlockhash"
+        "type": "recent_blockhash"
       }
     }
   ],
@@ -120,13 +120,13 @@
       "code": "TRADER_NOT_YOU",
       "instruction": 3,
       "message": "The trade is signed for and paid by a key that is not yours",
-      "severity": "High"
+      "severity": "high"
     },
     {
       "code": "DESTINATION_NOT_VERIFIED",
       "instruction": 3,
       "message": "The destination token account is not one of your accounts for a verified token; the signer cannot prove who owns it",
-      "severity": "Info"
+      "severity": "info"
     }
   ],
   "raw": {
@@ -142,17 +142,17 @@
         {
           "help": "The budget: the program spends up to this much to buy what it can at the current price.",
           "label": "Pay up to",
-          "trust": "Fact",
+          "trust": "fact",
           "value": {
-            "type": "Amount",
+            "type": "amount",
             "value": {
               "asset": {
                 "decimals": 9,
                 "id": "native",
                 "symbol": "SOL",
-                "trust": "Fact"
+                "trust": "fact"
               },
-              "bound": "AtMost",
+              "bound": "at_most",
               "note": null,
               "units": "235478"
             }
@@ -161,17 +161,17 @@
         {
           "help": "What comes back to you. Shown as at least when the program only guarantees a floor and fails below it.",
           "label": "Receive",
-          "trust": "Fact",
+          "trust": "fact",
           "value": {
-            "type": "Amount",
+            "type": "amount",
             "value": {
               "asset": {
                 "decimals": null,
                 "id": "9sVJwhNTEtoq8PWeZJigJKNbRMZW7CoByosnxV2Cpump",
                 "symbol": null,
-                "trust": "Fact"
+                "trust": "fact"
               },
-              "bound": "AtLeast",
+              "bound": "at_least",
               "note": "before any transfer fee",
               "units": "3731969312"
             }
@@ -180,13 +180,13 @@
         {
           "help": "The token being bought or sold.",
           "label": "Token",
-          "trust": "Fact",
+          "trust": "fact",
           "value": {
-            "type": "Address",
+            "type": "address",
             "value": {
               "is_self": false,
               "label": null,
-              "label_trust": "Fact",
+              "label_trust": "fact",
               "text": "9sVJwhNTEtoq8PWeZJigJKNbRMZW7CoByosnxV2Cpump"
             }
           }
@@ -194,13 +194,13 @@
         {
           "help": "The market for a token that has not graduated to a pool yet. Its price rises with every buy along a fixed curve.",
           "label": "Bonding curve",
-          "trust": "Fact",
+          "trust": "fact",
           "value": {
-            "type": "Address",
+            "type": "address",
             "value": {
               "is_self": false,
               "label": "Pump.fun bonding curve for this token",
-              "label_trust": "Verified",
+              "label_trust": "verified",
               "text": "DmbshQGYgnRnC7XQtQeZ5doBfR2opB15FWKWNUEpyUbo"
             }
           }
@@ -208,13 +208,13 @@
         {
           "help": "Your account for this token.",
           "label": "Token account",
-          "trust": "Fact",
+          "trust": "fact",
           "value": {
-            "type": "Address",
+            "type": "address",
             "value": {
               "is_self": false,
               "label": null,
-              "label_trust": "Fact",
+              "label_trust": "fact",
               "text": "7oT8RSgMTph8WNqvxXUSapzvVjKSNqFgSADDfCnpmjKW"
             }
           }
@@ -222,15 +222,15 @@
         {
           "help": null,
           "label": "Additional accounts",
-          "trust": "Fact",
+          "trust": "fact",
           "value": {
-            "type": "Text",
+            "type": "text",
             "value": "2, not named by this descriptor"
           }
         }
       ],
       "kind": {
-        "type": "Instruction",
+        "type": "instruction",
         "value": {
           "index": 3
         }
@@ -244,31 +244,31 @@
         {
           "help": null,
           "label": "Compute unit limit",
-          "trust": "Fact",
+          "trust": "fact",
           "value": {
-            "type": "Integer",
+            "type": "integer",
             "value": "400000"
           }
         },
         {
           "help": null,
           "label": "Compute unit price",
-          "trust": "Fact",
+          "trust": "fact",
           "value": {
-            "type": "Text",
+            "type": "text",
             "value": "200000 micro-lamports per unit"
           }
         },
         {
           "help": null,
           "label": "Create token account if missing: Token account",
-          "trust": "Fact",
+          "trust": "fact",
           "value": {
-            "type": "Address",
+            "type": "address",
             "value": {
               "is_self": false,
               "label": null,
-              "label_trust": "Fact",
+              "label_trust": "fact",
               "text": "7oT8RSgMTph8WNqvxXUSapzvVjKSNqFgSADDfCnpmjKW"
             }
           }
@@ -276,13 +276,13 @@
         {
           "help": null,
           "label": "Create token account if missing: Owner",
-          "trust": "Fact",
+          "trust": "fact",
           "value": {
-            "type": "Address",
+            "type": "address",
             "value": {
               "is_self": false,
               "label": null,
-              "label_trust": "Fact",
+              "label_trust": "fact",
               "text": "G93MH3589G8Wj16suqKCU7e846WXPzhKsT5suf4vpAnU"
             }
           }
@@ -290,13 +290,13 @@
         {
           "help": null,
           "label": "Create token account if missing: Mint",
-          "trust": "Fact",
+          "trust": "fact",
           "value": {
-            "type": "Address",
+            "type": "address",
             "value": {
               "is_self": false,
               "label": null,
-              "label_trust": "Fact",
+              "label_trust": "fact",
               "text": "9sVJwhNTEtoq8PWeZJigJKNbRMZW7CoByosnxV2Cpump"
             }
           }
@@ -304,13 +304,13 @@
         {
           "help": null,
           "label": "Create token account if missing: Rent paid by",
-          "trust": "Fact",
+          "trust": "fact",
           "value": {
-            "type": "Address",
+            "type": "address",
             "value": {
               "is_self": false,
               "label": null,
-              "label_trust": "Fact",
+              "label_trust": "fact",
               "text": "G93MH3589G8Wj16suqKCU7e846WXPzhKsT5suf4vpAnU"
             }
           }
@@ -318,20 +318,20 @@
         {
           "help": null,
           "label": "Create token account if missing: Token program",
-          "trust": "Fact",
+          "trust": "fact",
           "value": {
-            "type": "Address",
+            "type": "address",
             "value": {
               "is_self": false,
               "label": "Token-2022 program",
-              "label_trust": "Verified",
+              "label_trust": "verified",
               "text": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"
             }
           }
         }
       ],
       "kind": {
-        "type": "Housekeeping"
+        "type": "housekeeping"
       },
       "subtitle": null,
       "title": "Also"
@@ -342,20 +342,20 @@
         {
           "help": null,
           "label": "Fee payer",
-          "trust": "Fact",
+          "trust": "fact",
           "value": {
-            "type": "Address",
+            "type": "address",
             "value": {
               "is_self": false,
               "label": null,
-              "label_trust": "Fact",
+              "label_trust": "fact",
               "text": "G93MH3589G8Wj16suqKCU7e846WXPzhKsT5suf4vpAnU"
             }
           }
         }
       ],
       "kind": {
-        "type": "Signers"
+        "type": "signers"
       },
       "subtitle": null,
       "title": "Signers"
@@ -366,17 +366,17 @@
         {
           "help": null,
           "label": "Total",
-          "trust": "Fact",
+          "trust": "fact",
           "value": {
-            "type": "Amount",
+            "type": "amount",
             "value": {
               "asset": {
                 "decimals": 9,
                 "id": "native",
                 "symbol": "SOL",
-                "trust": "Fact"
+                "trust": "fact"
               },
-              "bound": "Exact",
+              "bound": "exact",
               "note": null,
               "units": "85000"
             }
@@ -385,17 +385,17 @@
         {
           "help": null,
           "label": "Base",
-          "trust": "Fact",
+          "trust": "fact",
           "value": {
-            "type": "Amount",
+            "type": "amount",
             "value": {
               "asset": {
                 "decimals": 9,
                 "id": "native",
                 "symbol": "SOL",
-                "trust": "Fact"
+                "trust": "fact"
               },
-              "bound": "Exact",
+              "bound": "exact",
               "note": null,
               "units": "5000"
             }
@@ -404,17 +404,17 @@
         {
           "help": null,
           "label": "Priority",
-          "trust": "Fact",
+          "trust": "fact",
           "value": {
-            "type": "Amount",
+            "type": "amount",
             "value": {
               "asset": {
                 "decimals": 9,
                 "id": "native",
                 "symbol": "SOL",
-                "trust": "Fact"
+                "trust": "fact"
               },
-              "bound": "Exact",
+              "bound": "exact",
               "note": null,
               "units": "80000"
             }
@@ -423,24 +423,24 @@
         {
           "help": null,
           "label": "Priority basis",
-          "trust": "Fact",
+          "trust": "fact",
           "value": {
-            "type": "Text",
+            "type": "text",
             "value": "200000 micro-lamports per unit × 400000 units requested"
           }
         },
         {
           "help": null,
           "label": "Rent deposits",
-          "trust": "Fact",
+          "trust": "fact",
           "value": {
-            "type": "Text",
+            "type": "text",
             "value": "up to 0.00151384 SOL if the accounts it creates only when missing do not exist yet; returned when the accounts are closed"
           }
         }
       ],
       "kind": {
-        "type": "Fees"
+        "type": "fees"
       },
       "subtitle": null,
       "title": "Fee"
@@ -451,15 +451,15 @@
         {
           "help": null,
           "label": "Expires",
-          "trust": "Fact",
+          "trust": "fact",
           "value": {
-            "type": "Text",
+            "type": "text",
             "value": "in about a minute (recent blockhash)"
           }
         }
       ],
       "kind": {
-        "type": "Lifetime"
+        "type": "lifetime"
       },
       "subtitle": null,
       "title": "Validity"
@@ -467,5 +467,5 @@
   ],
   "summary": "Buy ≥ 3731969312 raw units of an unverified token (before any transfer fee) (9sVJwhNTEtoq8PWeZJigJKNbRMZW7CoByosnxV2Cpump) for ≤ 0.000235478 SOL via Pump.fun",
   "text": "Buy ≥ 3731969312 raw units of an unverified token (before any transfer fee) (9sVJwhNTEtoq8PWeZJigJKNbRMZW7CoByosnxV2Cpump) for ≤ 0.000235478 SOL via Pump.fun\nWARNING: review the findings before approving\n\nFindings:\n  [HIGH] The trade is signed for and paid by a key that is not yours (instruction 3)\n  [INFO] The destination token account is not one of your accounts for a verified token; the signer cannot prove who owns it (instruction 3)\n\n== Buy | Pump.fun (descriptor reviewed 2026-10-18, upgradeable by 7gZu…jFr8)\n  Pay up to: ≤ 0.000235478 SOL\n  Receive: ≥ 3731969312 raw units of an unverified token (before any transfer fee) (9sVJwhNTEtoq8PWeZJigJKNbRMZW7CoByosnxV2Cpump)\n  Token: 9sVJwhNTEtoq8PWeZJigJKNbRMZW7CoByosnxV2Cpump\n  Bonding curve: Pump.fun bonding curve for this token (Dmbs…yUbo) (verified)\n  Token account: 7oT8RSgMTph8WNqvxXUSapzvVjKSNqFgSADDfCnpmjKW\n  Additional accounts: 2, not named by this descriptor\n\n== Also [collapsed]\n  Compute unit limit: 400000\n  Compute unit price: 200000 micro-lamports per unit\n  Create token account if missing: Token account: 7oT8RSgMTph8WNqvxXUSapzvVjKSNqFgSADDfCnpmjKW\n  Create token account if missing: Owner: G93MH3589G8Wj16suqKCU7e846WXPzhKsT5suf4vpAnU\n  Create token account if missing: Mint: 9sVJwhNTEtoq8PWeZJigJKNbRMZW7CoByosnxV2Cpump\n  Create token account if missing: Rent paid by: G93MH3589G8Wj16suqKCU7e846WXPzhKsT5suf4vpAnU\n  Create token account if missing: Token program: Token-2022 program (Toke…xuEb) (verified)\n\n== Signers\n  Fee payer: G93MH3589G8Wj16suqKCU7e846WXPzhKsT5suf4vpAnU\n\n== Fee\n  Total: 0.000085 SOL\n  Base: 0.000005 SOL\n  Priority: 0.00008 SOL\n  Priority basis: 200000 micro-lamports per unit × 400000 units requested\n  Rent deposits: up to 0.00151384 SOL if the accounts it creates only when missing do not exist yet; returned when the accounts are closed\n\n== Validity\n  Expires: in about a minute (recent blockhash)\n\nEffects:\n  - transfer ≤ 0.000235478 SOL from G93MH3589G8Wj16suqKCU7e846WXPzhKsT5suf4vpAnU to Pump.fun (6EF8…wF6P) (verified)\n  - transfer unknown amount of an unverified token (at least 3731969312 raw units before a transfer fee the signer cannot know) (9sVJwhNTEtoq8PWeZJigJKNbRMZW7CoByosnxV2Cpump) from Pump.fun (6EF8…wF6P) (verified) to 7oT8RSgMTph8WNqvxXUSapzvVjKSNqFgSADDfCnpmjKW\n  - create 7oT8RSgMTph8WNqvxXUSapzvVjKSNqFgSADDfCnpmjKW owned by Token-2022 program (Toke…xuEb) (verified), depositing 0.00151384 SOL unless it already exists\n  - G93MH3589G8Wj16suqKCU7e846WXPzhKsT5suf4vpAnU pays a fee of 0.000085 SOL\n  - valid for about a minute (recent blockhash)\n\nRaw: solana legacy (753 bytes)\n  digest: 7c86bc9defeee8a6705f7abc498275f845a7db2db2756be47af036c4fab29cf2\n",
-  "verdict": "Warn"
+  "verdict": "warn"
 }

@@ -64,5 +64,5 @@ test('a message and a site asking to see the address have no verdict; each row s
 
 test("the engine's verdicts are the window's ok, warning and blocked", () => {
     const of = (verdict: Explanation['verdict']) => verdictOf({ verdict } as Explanation);
-    assert.deepEqual([of('Ok'), of('Warn'), of('Block')], ['ok', 'warning', 'blocked']);
+    assert.deepEqual([of('ok'), of('warn'), of('block')], ['ok', 'warning', 'blocked']);
 });

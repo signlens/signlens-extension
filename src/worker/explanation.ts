@@ -173,23 +173,23 @@ function valueAt(depth: number): Read<Value> {
     return (input, path) => {
         const { type, fields: o } = variant(input, path);
         switch (type) {
-            case 'Text':
+            case 'text':
                 return { type, value: o.read('value', text()) };
-            case 'Amount':
+            case 'amount':
                 return { type, value: o.read('value', amount) };
-            case 'Address':
+            case 'address':
                 return { type, value: o.read('value', address) };
-            case 'Integer':
+            case 'integer':
                 return { type, value: o.read('value', decimal) };
-            case 'BasisPoints':
-            case 'Duration':
-            case 'Timestamp':
+            case 'basis_points':
+            case 'duration':
+            case 'timestamp':
                 return { type, value: o.read('value', finite) };
-            case 'Bytes':
+            case 'bytes':
                 return { type, value: o.read('value', hex(MAX_TEXT)) };
-            case 'Bool':
+            case 'bool':
                 return { type, value: o.read('value', flag) };
-            case 'List':
+            case 'list':
                 if (depth >= MAX_DEPTH) fail(path, 'is nested too deep');
                 return { type, value: o.read('value', list(valueAt(depth + 1))) };
             default:
@@ -213,17 +213,17 @@ const index = integer(0, 10_000);
 const sectionKind: Read<SectionKind> = (value, path) => {
     const { type, fields: o } = variant(value, path);
     switch (type) {
-        case 'Summary':
-        case 'Housekeeping':
-        case 'Signers':
-        case 'Fees':
-        case 'Lifetime':
-        case 'Claims':
-        case 'Raw':
+        case 'summary':
+        case 'housekeeping':
+        case 'signers':
+        case 'fees':
+        case 'lifetime':
+        case 'claims':
+        case 'raw':
             return { type };
-        case 'Instruction':
+        case 'instruction':
             return { type, value: o.read('value', (v, p) => ({ index: new Fields(v, p).read('index', index) })) };
-        case 'Nested':
+        case 'nested':
             return {
                 type,
                 value: o.read('value', (v, p) => {
@@ -251,9 +251,9 @@ const section: Read<Section> = (value, path) => {
 const lifetime: Read<Lifetime> = (value, path) => {
     const { type, fields: o } = variant(value, path);
     switch (type) {
-        case 'RecentBlockhash':
+        case 'recent_blockhash':
             return { type };
-        case 'DurableNonce':
+        case 'durable_nonce':
             return { type, value: o.read('value', (v, p) => ({ nonce_account: new Fields(v, p).read('nonce_account', address) })) };
         default:
             return fail(`${path}.type`, `${quote(type)} is not a lifetime this version knows`);
@@ -265,14 +265,14 @@ function effectAt(depth: number): Read<Effect> {
         const { type, fields: o } = variant(input, path);
         const value = <T>(read: (fields: Fields) => T): T => o.read('value', (v, p) => read(new Fields(v, p)));
         switch (type) {
-            case 'Transfer':
+            case 'transfer':
                 return {
                     type,
                     value: value((v) => ({ from: v.read('from', address), to: v.read('to', address), amount: v.read('amount', amount) })),
                 };
-            case 'Burn':
+            case 'burn':
                 return { type, value: value((v) => ({ account: v.read('account', address), amount: v.read('amount', amount) })) };
-            case 'AuthorityChange':
+            case 'authority_change':
                 return {
                     type,
                     value: value((v) => ({
@@ -281,7 +281,7 @@ function effectAt(depth: number): Read<Effect> {
                         new_authority: v.read('new_authority', nullable(address)),
                     })),
                 };
-            case 'Delegate':
+            case 'delegate':
                 return {
                     type,
                     value: value((v) => ({
@@ -290,9 +290,9 @@ function effectAt(depth: number): Read<Effect> {
                         amount: v.read('amount', amount),
                     })),
                 };
-            case 'Revoke':
+            case 'revoke':
                 return { type, value: value((v) => ({ subject: v.read('subject', address) })) };
-            case 'Create':
+            case 'create':
                 return {
                     type,
                     value: value((v) => ({
@@ -302,19 +302,19 @@ function effectAt(depth: number): Read<Effect> {
                         if_missing: v.read('if_missing', flag),
                     })),
                 };
-            case 'Close':
+            case 'close':
                 return {
                     type,
                     value: value((v) => ({ account: v.read('account', address), destination: v.read('destination', address) })),
                 };
-            case 'Fee':
+            case 'fee':
                 return { type, value: value((v) => ({ payer: v.read('payer', address), amount: v.read('amount', amount) })) };
-            case 'Lifetime':
+            case 'lifetime':
                 return { type, value: o.read('value', lifetime) };
-            case 'Proposed':
+            case 'proposed':
                 if (depth >= MAX_DEPTH) fail(path, 'is nested too deep');
                 return { type, value: value((v) => ({ by: v.read('by', address), effect: v.read('effect', effectAt(depth + 1)) })) };
-            case 'Other':
+            case 'other':
                 return { type, value: value((v) => ({ description: v.read('description', text()) })) };
             default:
                 return unrecognized(type);

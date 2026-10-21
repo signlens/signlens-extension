@@ -33,40 +33,40 @@
       "chain": "solana",
       "effects": [
         {
-          "type": "Transfer",
+          "type": "transfer",
           "value": {
             "amount": {
               "asset": {
                 "decimals": 6,
                 "id": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
                 "symbol": "USDC",
-                "trust": "Verified"
+                "trust": "verified"
               },
-              "bound": "Exact",
+              "bound": "exact",
               "note": null,
               "units": "996423"
             },
             "from": {
               "is_self": true,
               "label": "Your token account",
-              "label_trust": "Verified",
+              "label_trust": "verified",
               "text": "Ffz5kwUjkUNw7hV4r6iCJnUoXXsAPFHkCMCmKKDypiwg"
             },
             "to": {
               "is_self": false,
               "label": null,
-              "label_trust": "Fact",
+              "label_trust": "fact",
               "text": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp"
             }
           }
         },
         {
-          "type": "Create",
+          "type": "create",
           "value": {
             "account": {
               "is_self": false,
               "label": null,
-              "label_trust": "Fact",
+              "label_trust": "fact",
               "text": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp"
             },
             "deposit": {
@@ -74,9 +74,9 @@
                 "decimals": 9,
                 "id": "native",
                 "symbol": "SOL",
-                "trust": "Fact"
+                "trust": "fact"
               },
-              "bound": "Exact",
+              "bound": "exact",
               "note": null,
               "units": "1488440"
             },
@@ -84,42 +84,42 @@
             "owner": {
               "is_self": false,
               "label": "Token program",
-              "label_trust": "Verified",
+              "label_trust": "verified",
               "text": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
             }
           }
         },
         {
-          "type": "Fee",
+          "type": "fee",
           "value": {
             "amount": {
               "asset": {
                 "decimals": 9,
                 "id": "native",
                 "symbol": "SOL",
-                "trust": "Fact"
+                "trust": "fact"
               },
-              "bound": "Exact",
+              "bound": "exact",
               "note": null,
               "units": "12218"
             },
             "payer": {
               "is_self": true,
               "label": "Your wallet",
-              "label_trust": "Verified",
+              "label_trust": "verified",
               "text": "8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa"
             }
           }
         },
         {
-          "type": "Lifetime",
+          "type": "lifetime",
           "value": {
-            "type": "DurableNonce",
+            "type": "durable_nonce",
             "value": {
               "nonce_account": {
                 "is_self": false,
                 "label": null,
-                "label_trust": "Fact",
+                "label_trust": "fact",
                 "text": "AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw"
               }
             }
@@ -131,13 +131,13 @@
           "code": "DURABLE_NONCE",
           "instruction": null,
           "message": "This signature never expires; anyone holding the signed transaction can submit it at any later time until the nonce is advanced",
-          "severity": "High"
+          "severity": "high"
         },
         {
           "code": "SIMULATION_AGREES",
           "instruction": null,
           "message": "The host's simulation agrees with the instructions' effects on your balances",
-          "severity": "Info"
+          "severity": "info"
         }
       ],
       "raw": {
@@ -153,17 +153,17 @@
             {
               "help": null,
               "label": "Amount",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "Amount",
+                "type": "amount",
                 "value": {
                   "asset": {
                     "decimals": 6,
                     "id": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
                     "symbol": "USDC",
-                    "trust": "Verified"
+                    "trust": "verified"
                   },
-                  "bound": "Exact",
+                  "bound": "exact",
                   "note": null,
                   "units": "996423"
                 }
@@ -172,13 +172,13 @@
             {
               "help": null,
               "label": "From",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "Address",
+                "type": "address",
                 "value": {
                   "is_self": true,
                   "label": "Your token account",
-                  "label_trust": "Verified",
+                  "label_trust": "verified",
                   "text": "Ffz5kwUjkUNw7hV4r6iCJnUoXXsAPFHkCMCmKKDypiwg"
                 }
               }
@@ -186,13 +186,13 @@
             {
               "help": null,
               "label": "To",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "Address",
+                "type": "address",
                 "value": {
                   "is_self": false,
                   "label": null,
-                  "label_trust": "Fact",
+                  "label_trust": "fact",
                   "text": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp"
                 }
               }
@@ -200,13 +200,13 @@
             {
               "help": null,
               "label": "Authorized by",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "Address",
+                "type": "address",
                 "value": {
                   "is_self": true,
                   "label": "Your wallet",
-                  "label_trust": "Verified",
+                  "label_trust": "verified",
                   "text": "8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa"
                 }
               }
@@ -214,20 +214,20 @@
             {
               "help": null,
               "label": "Mint",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "Address",
+                "type": "address",
                 "value": {
                   "is_self": false,
                   "label": "USDC mint",
-                  "label_trust": "Verified",
+                  "label_trust": "verified",
                   "text": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
                 }
               }
             }
           ],
           "kind": {
-            "type": "Instruction",
+            "type": "instruction",
             "value": {
               "index": 2
             }
@@ -241,13 +241,13 @@
             {
               "help": null,
               "label": "Advance durable nonce: Nonce account",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "Address",
+                "type": "address",
                 "value": {
                   "is_self": false,
                   "label": null,
-                  "label_trust": "Fact",
+                  "label_trust": "fact",
                   "text": "AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw"
                 }
               }
@@ -255,13 +255,13 @@
             {
               "help": null,
               "label": "Advance durable nonce: Authority",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "Address",
+                "type": "address",
                 "value": {
                   "is_self": false,
                   "label": null,
-                  "label_trust": "Fact",
+                  "label_trust": "fact",
                   "text": "EbsUZEFAU23Z2SgAymFtU2hADLiyNLzaPLKiJfvpKnE7"
                 }
               }
@@ -269,13 +269,13 @@
             {
               "help": null,
               "label": "Create token account if missing: Token account",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "Address",
+                "type": "address",
                 "value": {
                   "is_self": false,
                   "label": null,
-                  "label_trust": "Fact",
+                  "label_trust": "fact",
                   "text": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp"
                 }
               }
@@ -283,13 +283,13 @@
             {
               "help": null,
               "label": "Create token account if missing: Owner",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "Address",
+                "type": "address",
                 "value": {
                   "is_self": false,
                   "label": null,
-                  "label_trust": "Fact",
+                  "label_trust": "fact",
                   "text": "BNgsxo3eHqQLNTaKy4juhAUJ8DyewcJNEcYdMuSmTT1Z"
                 }
               }
@@ -297,13 +297,13 @@
             {
               "help": null,
               "label": "Create token account if missing: Mint",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "Address",
+                "type": "address",
                 "value": {
                   "is_self": false,
                   "label": "USDC mint",
-                  "label_trust": "Verified",
+                  "label_trust": "verified",
                   "text": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
                 }
               }
@@ -311,13 +311,13 @@
             {
               "help": null,
               "label": "Create token account if missing: Rent paid by",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "Address",
+                "type": "address",
                 "value": {
                   "is_self": true,
                   "label": "Your wallet",
-                  "label_trust": "Verified",
+                  "label_trust": "verified",
                   "text": "8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa"
                 }
               }
@@ -325,13 +325,13 @@
             {
               "help": null,
               "label": "Create token account if missing: Token program",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "Address",
+                "type": "address",
                 "value": {
                   "is_self": false,
                   "label": "Token program",
-                  "label_trust": "Verified",
+                  "label_trust": "verified",
                   "text": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
                 }
               }
@@ -339,24 +339,24 @@
             {
               "help": null,
               "label": "Compute unit limit",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "Integer",
+                "type": "integer",
                 "value": "20728"
               }
             },
             {
               "help": null,
               "label": "Compute unit price",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "Text",
+                "type": "text",
                 "value": "107000 micro-lamports per unit"
               }
             }
           ],
           "kind": {
-            "type": "Housekeeping"
+            "type": "housekeeping"
           },
           "subtitle": null,
           "title": "Also"
@@ -367,13 +367,13 @@
             {
               "help": null,
               "label": "Fee payer",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "Address",
+                "type": "address",
                 "value": {
                   "is_self": true,
                   "label": "Your wallet",
-                  "label_trust": "Verified",
+                  "label_trust": "verified",
                   "text": "8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa"
                 }
               }
@@ -381,20 +381,20 @@
             {
               "help": null,
               "label": "Signer",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "Address",
+                "type": "address",
                 "value": {
                   "is_self": false,
                   "label": null,
-                  "label_trust": "Fact",
+                  "label_trust": "fact",
                   "text": "EbsUZEFAU23Z2SgAymFtU2hADLiyNLzaPLKiJfvpKnE7"
                 }
               }
             }
           ],
           "kind": {
-            "type": "Signers"
+            "type": "signers"
           },
           "subtitle": null,
           "title": "Signers"
@@ -405,17 +405,17 @@
             {
               "help": null,
               "label": "Total",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "Amount",
+                "type": "amount",
                 "value": {
                   "asset": {
                     "decimals": 9,
                     "id": "native",
                     "symbol": "SOL",
-                    "trust": "Fact"
+                    "trust": "fact"
                   },
-                  "bound": "Exact",
+                  "bound": "exact",
                   "note": null,
                   "units": "12218"
                 }
@@ -424,17 +424,17 @@
             {
               "help": null,
               "label": "Base",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "Amount",
+                "type": "amount",
                 "value": {
                   "asset": {
                     "decimals": 9,
                     "id": "native",
                     "symbol": "SOL",
-                    "trust": "Fact"
+                    "trust": "fact"
                   },
-                  "bound": "Exact",
+                  "bound": "exact",
                   "note": null,
                   "units": "10000"
                 }
@@ -443,17 +443,17 @@
             {
               "help": null,
               "label": "Priority",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "Amount",
+                "type": "amount",
                 "value": {
                   "asset": {
                     "decimals": 9,
                     "id": "native",
                     "symbol": "SOL",
-                    "trust": "Fact"
+                    "trust": "fact"
                   },
-                  "bound": "Exact",
+                  "bound": "exact",
                   "note": null,
                   "units": "2218"
                 }
@@ -462,24 +462,24 @@
             {
               "help": null,
               "label": "Priority basis",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "Text",
+                "type": "text",
                 "value": "107000 micro-lamports per unit × 20728 units requested"
               }
             },
             {
               "help": null,
               "label": "Rent deposits",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "Text",
+                "type": "text",
                 "value": "up to 0.00148844 SOL if the accounts it creates only when missing do not exist yet; returned when the accounts are closed"
               }
             }
           ],
           "kind": {
-            "type": "Fees"
+            "type": "fees"
           },
           "subtitle": null,
           "title": "Fee"
@@ -490,29 +490,29 @@
             {
               "help": null,
               "label": "Expires",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "Text",
+                "type": "text",
                 "value": "never, until the nonce account is advanced"
               }
             },
             {
               "help": null,
               "label": "Nonce account",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "Address",
+                "type": "address",
                 "value": {
                   "is_self": false,
                   "label": null,
-                  "label_trust": "Fact",
+                  "label_trust": "fact",
                   "text": "AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw"
                 }
               }
             }
           ],
           "kind": {
-            "type": "Lifetime"
+            "type": "lifetime"
           },
           "subtitle": null,
           "title": "Validity"
@@ -523,42 +523,42 @@
             {
               "help": null,
               "label": "Result",
-              "trust": "Claimed",
+              "trust": "claimed",
               "value": {
-                "type": "Text",
+                "type": "text",
                 "value": "would succeed"
               }
             },
             {
               "help": null,
               "label": "Compute units",
-              "trust": "Claimed",
+              "trust": "claimed",
               "value": {
-                "type": "Integer",
+                "type": "integer",
                 "value": "4200"
               }
             },
             {
               "help": null,
               "label": "Your USDC",
-              "trust": "Claimed",
+              "trust": "claimed",
               "value": {
-                "type": "Text",
+                "type": "text",
                 "value": "−0.996423 USDC (verified)"
               }
             },
             {
               "help": null,
               "label": "Your SOL",
-              "trust": "Claimed",
+              "trust": "claimed",
               "value": {
-                "type": "Text",
+                "type": "text",
                 "value": "−0.000012218 SOL"
               }
             }
           ],
           "kind": {
-            "type": "Claims"
+            "type": "claims"
           },
           "subtitle": "the host's simulation",
           "title": "Simulated outcome"
@@ -566,7 +566,7 @@
       ],
       "summary": "Send 0.996423 USDC (verified) to DV3B…L7Qp",
       "text": "Send 0.996423 USDC (verified) to DV3B…L7Qp\nWARNING: review the findings before approving\n\nFindings:\n  [HIGH] This signature never expires; anyone holding the signed transaction can submit it at any later time until the nonce is advanced\n  [INFO] The host's simulation agrees with the instructions' effects on your balances\n\n== Transfer tokens | Token program (verified)\n  Amount: 0.996423 USDC (verified)\n  From: Your token account (Ffz5…piwg) (verified)\n  To: DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp\n  Authorized by: Your wallet (8Kvy…p1fa) (verified)\n  Mint: USDC mint (EPjF…Dt1v) (verified)\n\n== Also [collapsed]\n  Advance durable nonce: Nonce account: AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw\n  Advance durable nonce: Authority: EbsUZEFAU23Z2SgAymFtU2hADLiyNLzaPLKiJfvpKnE7\n  Create token account if missing: Token account: DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp\n  Create token account if missing: Owner: BNgsxo3eHqQLNTaKy4juhAUJ8DyewcJNEcYdMuSmTT1Z\n  Create token account if missing: Mint: USDC mint (EPjF…Dt1v) (verified)\n  Create token account if missing: Rent paid by: Your wallet (8Kvy…p1fa) (verified)\n  Create token account if missing: Token program: Token program (Toke…Q5DA) (verified)\n  Compute unit limit: 20728\n  Compute unit price: 107000 micro-lamports per unit\n\n== Signers\n  Fee payer: Your wallet (8Kvy…p1fa) (verified)\n  Signer: EbsUZEFAU23Z2SgAymFtU2hADLiyNLzaPLKiJfvpKnE7\n\n== Fee\n  Total: 0.000012218 SOL\n  Base: 0.00001 SOL\n  Priority: 0.000002218 SOL\n  Priority basis: 107000 micro-lamports per unit × 20728 units requested\n  Rent deposits: up to 0.00148844 SOL if the accounts it creates only when missing do not exist yet; returned when the accounts are closed\n\n== Validity\n  Expires: never, until the nonce account is advanced\n  Nonce account: AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw\n\n== Simulated outcome | the host's simulation (claimed, unverified)\n  Result: would succeed\n  Compute units: 4200\n  Your USDC: −0.996423 USDC (verified)\n  Your SOL: −0.000012218 SOL\n\nEffects:\n  - send 0.996423 USDC (verified) from Your token account (Ffz5…piwg) (verified) to DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp\n  - create DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp owned by Token program (Toke…Q5DA) (verified), depositing 0.00148844 SOL unless it already exists\n  - Your wallet (8Kvy…p1fa) (verified) pays a fee of 0.000012218 SOL\n  - valid FOREVER until nonce account AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw is advanced (durable nonce)\n\nRaw: solana legacy (511 bytes)\n  digest: 05d51e61e33bad79d124089e71be7988c37cccf1f9268ee6e338e439f5ec582f\n",
-      "verdict": "Warn"
+      "verdict": "warn"
     }
   }
 }

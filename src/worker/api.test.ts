@@ -11,7 +11,7 @@ import { apiStatus, explainRemotely, sendFeedback } from './api.ts';
 const EXPLANATION: Explanation = {
     schema: 'signlens-explanation/1',
     chain: 'solana',
-    verdict: 'Ok',
+    verdict: 'ok',
     summary: 'Send 1 SOL',
     findings: [],
     effects: [],
@@ -87,7 +87,7 @@ test('the request carries the transaction as base64 beside the engine request, a
             path: '/v1/explain',
             body: { transaction: 'AQID', ownKeys: ['A'], loadedWritable: [], render: true },
         });
-        assert.ok(!('error' in document) && document.verdict === 'Ok');
+        assert.ok(!('error' in document) && document.verdict === 'ok');
     } finally {
         await api.close();
     }
@@ -217,7 +217,7 @@ test('feedback is one post per record and true only on 204', async () => {
 });
 
 test('an explanation that does not hold together, or is too big to be one, is an error document that says where', async () => {
-    const broken = await stub({ explain: { status: 200, body: { ...EXPLANATION, effects: [{ type: 'Transfer', value: {} }] } } });
+    const broken = await stub({ explain: { status: 200, body: { ...EXPLANATION, effects: [{ type: 'transfer', value: {} }] } } });
     try {
         const document = await explainRemotely(broken.url, new Uint8Array([1]), {});
         assert.ok('error' in document);
