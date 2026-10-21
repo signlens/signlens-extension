@@ -48,7 +48,7 @@ function nextRequest(): Promise<Asked> {
 
 // The real wallet: keeps what it was handed, and how it was called. Like a
 // real one, it calls a method on what it is handed.
-const signed: { bytes: string; self: unknown; plain: boolean }[] = [];
+const signed: { bytes: string; self: unknown; plain: boolean; account: unknown }[] = [];
 const account = Object.freeze({
     address: 'Up11111111111111111111111111111111111111111',
     publicKey: new Uint8Array(32),
@@ -57,13 +57,14 @@ const account = Object.freeze({
 });
 const signFeature = {
     version: '1.0.0',
-    async signTransaction(this: unknown, ...inputs: { transaction: Uint8Array }[]) {
+    async signTransaction(this: unknown, ...inputs: { transaction: Uint8Array; account?: unknown }[]) {
         for (const input of inputs) {
             signed.push({
                 bytes: Buffer.from(input.transaction).toString('hex'),
                 self: this,
                 // biome-ignore lint/suspicious/noPrototypeBuiltins: the call a wallet may make is what is tested
                 plain: Object.getPrototypeOf(input) === Object.prototype && input.hasOwnProperty('transaction'),
+                account: input.account,
             });
         }
         return inputs.map((input) => ({ signedTransaction: input.transaction }));
@@ -71,14 +72,53 @@ const signFeature = {
 };
 /** The messages the real wallet was handed, as hex. */
 const signedMessages: string[] = [];
+interface UpstreamAccount {
+    readonly address: string;
+    readonly publicKey: Uint8Array;
+    readonly chains: readonly string[];
+    readonly features: readonly string[];
+}
+// Its connection to the page, which a site may make it drop (jup.ag does
+// Backpack's) and a connect takes up again, as a new account object.
+let upstreamAccounts: readonly UpstreamAccount[] = [account];
+const upstreamListeners = new Set<(properties: { accounts: readonly UpstreamAccount[] }) => void>();
+/** Whether the real wallet still lets this site connect without asking. */
+let trusted = true;
+/** What each connect asked the real wallet, `null` for nothing. */
+const connects: unknown[] = [];
+/** The real wallet's connection changes, and it says so. */
+function upstreamChange(next: readonly UpstreamAccount[]): void {
+    upstreamAccounts = next;
+    for (const listener of upstreamListeners) listener({ accounts: next });
+}
 const upstream = {
     version: '1.0.0',
     name: 'Real Wallet',
     icon: 'data:,',
     chains: ['solana:mainnet'],
-    accounts: [account],
+    get accounts() {
+        return upstreamAccounts;
+    },
     features: {
-        'standard:connect': { version: '1.0.0', connect: async () => ({ accounts: [account] }) },
+        'standard:connect': {
+            version: '1.0.0',
+            async connect(input?: { silent?: boolean }) {
+                connects.push(input ?? null);
+                if (upstreamAccounts.length === 0) {
+                    if (input?.silent && !trusted) throw new Error('Not connected');
+                    upstreamChange([Object.freeze({ ...account })]);
+                }
+                return { accounts: upstreamAccounts };
+            },
+        },
+        'standard:events': {
+            version: '1.0.0',
+            on(event: string, listener: (properties: { accounts: readonly UpstreamAccount[] }) => void) {
+                if (event !== 'change') return () => {};
+                upstreamListeners.add(listener);
+                return () => upstreamListeners.delete(listener);
+            },
+        },
         [SIGN]: signFeature,
         'solana:signMessage': {
             version: '1.0.0',
@@ -169,11 +209,14 @@ beforeEach(async () => {
     waiting = undefined;
     signed.length = 0;
     signedMessages.length = 0;
+    upstreamAccounts = [account];
+    trusted = true;
     if (pageConfig.mode !== 'passthrough') {
         settingsChange('passthrough');
         await until(() => accountsNow().length === 0);
     }
     if (accountsNow()[0] !== account.address) await connect();
+    connects.length = 0;
 });
 
 type Field = 'transaction' | 'message';
@@ -532,6 +575,77 @@ test('a request before connecting is refused without reaching the extension', as
         assert.equal(asked.length, 0);
     } finally {
         await connect();
+    }
+});
+
+/** The request `pending` sent the extension; a failure if it settled without asking. */
+async function askedBy(pending: Promise<{ ok?: unknown; error?: string }>): Promise<Asked> {
+    const first = await Promise.race([nextRequest(), pending.then((outcome) => ({ outcome }))]);
+    if ('outcome' in first) assert.fail(`settled without asking the extension: ${first.outcome.error ?? 'signed'}`);
+    return first;
+}
+
+/** What SignLens tells a dapp of its accounts, as the addresses of each change, until `stop` is called. */
+function watchChanges(): { changes: string[][]; stop: () => void } {
+    const changes: string[][] = [];
+    const on = signlens.features['standard:events']?.on as unknown as (
+        event: string,
+        listener: (properties: { accounts: readonly { address: string }[] }) => void,
+    ) => () => void;
+    const stop = on('change', (properties) => changes.push(properties.accounts.map((a) => a.address)));
+    return { changes, stop };
+}
+
+test('the wallet behind dropping its connection keeps the session: asked again silently at the request, it gets its own account', async () => {
+    const { changes, stop } = watchChanges();
+    try {
+        const given = (signlens as unknown as { accounts: readonly unknown[] }).accounts[0];
+        // As jup.ag makes Backpack drop whenever another wallet is connected.
+        upstreamChange([]);
+        assert.deepEqual(accountsNow(), [account.address]);
+        const pending = sign({ account: given, transaction: BENIGN() });
+        (await askedBy(pending)).reply(CONTINUE);
+        const outcome = await pending;
+        assert.equal(outcome.error, undefined);
+        assert.deepEqual(connects, [{ silent: true }]);
+        // Handed the account it holds now, of the same address, not the object the dapp kept.
+        assert.equal(signed.length, 1);
+        assert.equal(signed[0]?.account, upstreamAccounts[0]);
+        assert.notEqual(signed[0]?.account, given);
+        assert.equal(signed[0]?.bytes, hex(Buffer.from(BENIGN()).toString('base64')));
+        // The same address back: nothing for the dapp, which never saw it go.
+        assert.deepEqual(changes, []);
+    } finally {
+        stop();
+    }
+});
+
+test('a wallet behind that will not reconnect without asking has left: nothing is signed, the session ends, the dapp is told', async () => {
+    const { changes, stop } = watchChanges();
+    try {
+        upstreamChange([]);
+        trusted = false;
+        const pending = sign({ account, transaction: BENIGN() });
+        (await askedBy(pending)).reply(CONTINUE);
+        const outcome = await pending;
+        assert.match(outcome.error ?? '', /Real Wallet is no longer connected to this site; connect again/);
+        assert.equal(signed.length, 0);
+        assert.deepEqual(accountsNow(), []);
+        assert.deepEqual(changes, [[]]);
+    } finally {
+        stop();
+    }
+});
+
+test("another account in the wallet behind is the dapp's to know", async () => {
+    const { changes, stop } = watchChanges();
+    try {
+        const other = Object.freeze({ ...account, address: 'Other1111111111111111111111111111111111111' });
+        upstreamChange([other]);
+        assert.deepEqual(accountsNow(), [other.address]);
+        assert.deepEqual(changes, [[other.address]]);
+    } finally {
+        stop();
     }
 });
 
