@@ -22,12 +22,12 @@ function root(apiUrl: string): string {
     return apiUrl.trim().replace(/\/+$/, '');
 }
 
-/** An error document in the engine's own shape, so callers read one kind. */
+/** An error document in the API's shape, so callers read one kind. */
 function errorDocument(code: string, message: string): ErrorDocument {
-    return { schema: 'signlens-api/1', error: { code, message } };
+    return { schema: 'signlens-api-error/1', error: { code, message } };
 }
 
-/** The engine's or the API's own error document, with only what is shown of it, cut to size. */
+/** The API's error document, its own or the engine's refusal, with only what is shown of it, cut to size. */
 function passedOn(document: ErrorDocument): ErrorDocument {
     const code = typeof document.error.code === 'string' ? document.error.code.slice(0, 100) : 'api';
     return errorDocument(code, document.error.message.slice(0, 2_000));

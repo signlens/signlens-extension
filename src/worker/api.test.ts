@@ -37,7 +37,7 @@ async function stub({
     packs = {
         status: 200,
         body: {
-            schema: 'signlens-ffi/1',
+            schema: 'signlens-api-status/1',
             engine: '0.1.0',
             descriptor_pack: { programs: 44, created_at: 1, source: 's' },
             token_snapshot: { tokens: 4003, created_at: 1, source: 's' },
@@ -93,17 +93,17 @@ test('the request carries the transaction as base64 beside the engine request, a
     }
 });
 
-test("the engine's error document is passed through, and anything else is an error document too", async () => {
+test("the API's error document is passed through, and anything else is an error document too", async () => {
     const engineError = await stub({
         explain: {
             status: 400,
-            body: { schema: 'signlens-ffi/1', error: { code: 'transaction', message: 'not a transaction', trace: 'x' }, extra: 1 },
+            body: { schema: 'signlens-api-error/1', error: { code: 'transaction', message: 'not a transaction', trace: 'x' }, extra: 1 },
         },
     });
     try {
         const document = await explainRemotely(engineError.url, new Uint8Array([1]), {});
         // Only what is shown of it is kept.
-        assert.deepEqual(document, { schema: 'signlens-api/1', error: { code: 'transaction', message: 'not a transaction' } });
+        assert.deepEqual(document, { schema: 'signlens-api-error/1', error: { code: 'transaction', message: 'not a transaction' } });
     } finally {
         await engineError.close();
     }

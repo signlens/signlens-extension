@@ -230,7 +230,7 @@ test('if asking again with the names fails, the first explanation stands', async
     server.know(swap);
     server.knowMint(PUMP_MINT, 'HMYD', 6);
     const first = recorded('swap__sol_from_wallet.tables_read') as { summary: string };
-    server.answerApi(first, { schema: 'signlens-api/1', error: { code: 'busy', message: 'every worker is busy' } });
+    server.answerApi(first, { schema: 'signlens-api-error/1', error: { code: 'busy', message: 'every worker is busy' } });
     const row = rowOf(
         await explainTransactions({ ...PAGE, transactions: [swap.base64] }, config({ lookupTokens: true }), [], []),
         'explained',

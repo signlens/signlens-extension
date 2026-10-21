@@ -118,7 +118,7 @@ function drift(kept: Recording, status: number, text: string): string | null {
 
 /** An error document from the relay itself, in the API's shape. */
 function relayError(code: string, message: string): string {
-    return JSON.stringify({ schema: 'signlens-api/1', error: { code, message } });
+    return JSON.stringify({ schema: 'signlens-api-error/1', error: { code, message } });
 }
 
 /** The explanation the SignLens API gave for a fixture, recorded under test/fixtures as `<name>.explanation.json`. */
@@ -500,7 +500,7 @@ export async function startTestServer(): Promise<TestServer> {
         /** Makes the relay answer every API call with this status and body instead. */
         refuseApi(
             status: number,
-            body = '{"schema":"signlens-api/1","error":{"code":"busy","message":"every worker is busy; try again"}}',
+            body = '{"schema":"signlens-api-error/1","error":{"code":"busy","message":"every worker is busy; try again"}}',
         ) {
             api.answers = [{ status, body }];
         },
