@@ -105,14 +105,14 @@ export async function apiStatus(apiUrl: string): Promise<ApiStatus | { error: st
         const response = await fetch(`${base}/v1/packs`, { cache: 'no-store', signal: AbortSignal.timeout(5_000) });
         if (!response.ok) return { error: `the API at ${base} answered HTTP ${response.status}` };
         const packs = objectFields(await response.json().catch(() => null));
-        const pack = objectFields(packs?.descriptorPack);
+        const pack = objectFields(packs?.descriptor_pack);
         const programs = count(pack?.programs);
         if (!packs || programs === null) return { error: `the API at ${base} answered a status this version cannot read` };
         return {
             engine: typeof packs.engine === 'string' ? printable(packs.engine, 40) : '?',
             programs,
-            tokens: count(objectFields(packs.tokenSnapshot)?.tokens) ?? 0,
-            packsAt: typeof pack?.createdAt === 'number' && Number.isFinite(pack.createdAt) ? pack.createdAt : null,
+            tokens: count(objectFields(packs.token_snapshot)?.tokens) ?? 0,
+            packsAt: typeof pack?.created_at === 'number' && Number.isFinite(pack.created_at) ? pack.created_at : null,
         };
     } catch (error) {
         return { error: `the API at ${base} did not answer (${describe(error)})` };

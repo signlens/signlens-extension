@@ -20,8 +20,8 @@ test('each record keeps its own digest and its own bytes', () => {
         ],
     });
     assert.deepEqual(records, [
-        { messageHash: A, rating: 'wrong', comment: 'What is this?', transaction: 'AQID' },
-        { messageHash: B, rating: 'wrong', comment: 'What is this?', transaction: null },
+        { message_hash: A, rating: 'wrong', comment: 'What is this?', transaction: 'AQID' },
+        { message_hash: B, rating: 'wrong', comment: 'What is this?', transaction: null },
     ]);
 });
 
@@ -46,7 +46,7 @@ test('a record that is not one is dropped, and the rest are bounded', () => {
         ],
     });
     assert.deepEqual(
-        records.map((r) => r.messageHash),
+        records.map((r) => r.message_hash),
         [B],
     );
     assert.equal(records[0]?.comment?.length, 2_000);

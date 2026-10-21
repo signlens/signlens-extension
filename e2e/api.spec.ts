@@ -112,9 +112,9 @@ test('the feedback strip sends the rating, and the transaction only when asked',
     await clickToClose(gate.getByRole('button', { name: 'Continue to Fake Wallet' }));
     await signing;
     await expect.poll(() => server.apiCalls.filter((c) => c.path === '/v1/feedback').length).toBe(1);
-    const sent = server.apiCalls.find((c) => c.path === '/v1/feedback')?.body as { messageHash: string };
+    const sent = server.apiCalls.find((c) => c.path === '/v1/feedback')?.body as { message_hash: string };
     expect(sent).toMatchObject({ rating: 'unclear', comment: 'What is a durable nonce?', transaction: null });
-    expect(sent.messageHash).toMatch(/^[0-9a-f]{64}$/);
+    expect(sent.message_hash).toMatch(/^[0-9a-f]{64}$/);
 
     // And with the box ticked, the bytes go along.
     const again = dapp.evaluate(({ wallet, base64 }: { wallet: string; base64: string }) => window.sign(wallet, base64), {

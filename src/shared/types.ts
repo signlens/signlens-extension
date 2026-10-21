@@ -1,9 +1,10 @@
 // The contract between the extension and the engine, as the SignLens API
 // serves it and the WebAssembly module will: the explanation document
 // (`signlens-explanation/1`, specified with the engine), the engine's
-// request, and the feedback record. Enum variants are the Rust names in
-// snake_case ("block", "at_least", "authority_change");
-// 128-bit integers are decimal strings; bytes are lowercase hex.
+// request, and the feedback record. Keys are the Rust field names
+// (`own_keys`, `label_trust`), enum variants the Rust names in snake_case
+// ("block", "at_least", "authority_change"); 128-bit integers are decimal
+// strings; bytes are lowercase hex.
 //
 // New variants may appear without a schema bump. `parseExplanation`
 // (explanation.ts) reads a `type` this version does not know as
@@ -182,11 +183,11 @@ export interface Simulation {
 /** The engine's request, as its C header declares it; the API takes it with `transaction` beside it. */
 export interface EngineRequest {
     kind?: 'transaction' | 'message';
-    ownKeys?: string[];
-    loadedWritable?: string[];
-    loadedReadonly?: string[];
+    own_keys?: string[];
+    loaded_writable?: string[];
+    loaded_readonly?: string[];
     contacts?: Contact[];
-    tokenHints?: TokenHint[];
+    token_hints?: TokenHint[];
     simulation?: Simulation;
     render?: boolean;
 }
@@ -195,8 +196,8 @@ export interface EngineRequest {
 export interface PacksDocument {
     schema: string;
     engine?: string;
-    descriptorPack: { programs: number; createdAt: number; source: string } | null;
-    tokenSnapshot: { tokens: number; createdAt: number; source: string } | null;
+    descriptor_pack: { programs: number; created_at: number; source: string } | null;
+    token_snapshot: { tokens: number; created_at: number; source: string } | null;
 }
 
 /** What the popup shows of a `PacksDocument`, as the worker reads it. */
@@ -212,7 +213,7 @@ export type Rating = 'clear' | 'unclear' | 'wrong';
 /** One feedback record, `POST /v1/feedback`. */
 export interface Feedback {
     /** The explanation's `raw.digest`. */
-    messageHash: string;
+    message_hash: string;
     rating: Rating;
     comment?: string;
     /** The transaction, base64, only when the user asked for it to be covered. */

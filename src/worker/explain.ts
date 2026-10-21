@@ -114,8 +114,8 @@ export async function explainTransactions(
             } else simulationNote = simulation.failure ? 'failed' : `${simulation.changes.length} balance change(s), unverified`;
         }
         const request: EngineRequest = {
-            ownKeys: accounts,
-            ...(loaded ? { loadedWritable: loaded.writable, loadedReadonly: loaded.readonly } : {}),
+            own_keys: accounts,
+            ...(loaded ? { loaded_writable: loaded.writable, loaded_readonly: loaded.readonly } : {}),
             contacts,
             ...(simulation ? { simulation: { failure: simulation.failure, units: simulation.units, changes: simulation.changes } } : {}),
             render: true,
@@ -127,7 +127,7 @@ export async function explainTransactions(
             if (mints.length > 0) hints = await tokenHints(mints, config, stop);
             if (hints.length > 0) {
                 // The names are a nicety: if asking again fails, the first explanation stands without them.
-                const named = await explainRemotely(config.apiUrl, bytes, { ...request, tokenHints: hints }, stop);
+                const named = await explainRemotely(config.apiUrl, bytes, { ...request, token_hints: hints }, stop);
                 if (isError(named)) hints = [];
                 else document = named;
             }

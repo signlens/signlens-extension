@@ -65,12 +65,12 @@ function recordingOf(method: string, path: string, body: unknown): URL {
  */
 const VOLATILE = new Set([
     'engine',
-    'descriptorPack.createdAt',
-    'descriptorPack.source',
-    'descriptorPack.programs',
-    'tokenSnapshot.createdAt',
-    'tokenSnapshot.source',
-    'tokenSnapshot.tokens',
+    'descriptor_pack.created_at',
+    'descriptor_pack.source',
+    'descriptor_pack.programs',
+    'token_snapshot.created_at',
+    'token_snapshot.source',
+    'token_snapshot.tokens',
 ]);
 
 /**

@@ -55,7 +55,7 @@ const OTHER = 'EXkwQoWHvDj7gdLdba4zWo3ktJNocyjT9DDQAryU7Tqa';
 
 /** What the engine was told "you" are, on the first API call. */
 function ownKeys(): unknown {
-    return (server.apiCalls[0]?.body as { ownKeys?: unknown } | undefined)?.ownKeys;
+    return (server.apiCalls[0]?.body as { own_keys?: unknown } | undefined)?.own_keys;
 }
 
 function history(): HistoryEntry[] {
@@ -284,7 +284,7 @@ test('in watch mode the watched address alone is "you": another the page names i
     await sign({ accounts: [MINE] });
     await sign();
     assert.deepEqual(
-        server.apiCalls.map((call) => (call.body as { ownKeys?: unknown }).ownKeys),
+        server.apiCalls.map((call) => (call.body as { own_keys?: unknown }).own_keys),
         [[MINE], [MINE]],
     );
 });

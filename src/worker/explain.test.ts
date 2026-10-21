@@ -81,8 +81,8 @@ test('as many transactions as the limit are each explained, and as many of your 
     const entry = await explainTransactions({ ...PAGE, transactions: Array(MAX_TRANSACTIONS).fill(transfer.base64) }, config(), [], yours);
     assert.equal(entry.rows.length, MAX_TRANSACTIONS);
     assert.equal(server.apiCalls.length, MAX_TRANSACTIONS);
-    const sent = server.apiCalls[0]?.body as { ownKeys?: string[] } | undefined;
-    assert.deepEqual(sent?.ownKeys, yours.slice(0, 16));
+    const sent = server.apiCalls[0]?.body as { own_keys?: string[] } | undefined;
+    assert.deepEqual(sent?.own_keys, yours.slice(0, 16));
 });
 
 test('a transaction is explained with its lookup tables, the signer and the contacts, and the row keeps what the window needs', async () => {
@@ -109,9 +109,9 @@ test('a transaction is explained with its lookup tables, the signer and the cont
     );
     assert.deepEqual(server.apiCalls[0]?.body, {
         transaction: swap.base64,
-        ownKeys: [payer],
-        loadedWritable: swap.writable,
-        loadedReadonly: swap.readonly,
+        own_keys: [payer],
+        loaded_writable: swap.writable,
+        loaded_readonly: swap.readonly,
         contacts: [BOB],
         render: true,
     });
@@ -182,8 +182,8 @@ test('an unlisted token is named from the RPC and the token list, and the explan
     server.answerApi(recorded('swap__sol_from_wallet.tables_read'), recorded('swap__sol_from_wallet.named_by_hint'));
     const entry = await explainTransactions({ ...PAGE, transactions: [swap.base64] }, config({ lookupTokens: true }), [], []);
     assert.equal(server.apiCalls.length, 2);
-    const named = server.apiCalls[1]?.body as { tokenHints?: unknown } | undefined;
-    assert.deepEqual(named?.tokenHints, [{ mint: PUMP_MINT, symbol: 'HMYD', decimals: 6 }]);
+    const named = server.apiCalls[1]?.body as { token_hints?: unknown } | undefined;
+    assert.deepEqual(named?.token_hints, [{ mint: PUMP_MINT, symbol: 'HMYD', decimals: 6 }]);
     const row = rowOf(entry, 'explained');
     assert.deepEqual(row?.hints, ['HMYD']);
     assert.equal(row?.summary, (recorded('swap__sol_from_wallet.named_by_hint') as { summary: string }).summary);

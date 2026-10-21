@@ -39,8 +39,8 @@ async function stub({
         body: {
             schema: 'signlens-ffi/1',
             engine: '0.1.0',
-            descriptorPack: { programs: 44, createdAt: 1, source: 's' },
-            tokenSnapshot: { tokens: 4003, createdAt: 1, source: 's' },
+            descriptor_pack: { programs: 44, created_at: 1, source: 's' },
+            token_snapshot: { tokens: 4003, created_at: 1, source: 's' },
         },
     },
 }: {
@@ -77,15 +77,15 @@ test('the request carries the transaction as base64 beside the engine request, a
     const api = await stub();
     try {
         const document = await explainRemotely(`${api.url}/`, new Uint8Array([1, 2, 3]), {
-            ownKeys: ['A'],
-            loadedWritable: [],
+            own_keys: ['A'],
+            loaded_writable: [],
             render: true,
         });
         assert.deepEqual(document, EXPLANATION);
         assert.deepEqual(api.calls[0], {
             method: 'POST',
             path: '/v1/explain',
-            body: { transaction: 'AQID', ownKeys: ['A'], loadedWritable: [], render: true },
+            body: { transaction: 'AQID', own_keys: ['A'], loaded_writable: [], render: true },
         });
         assert.ok(!('error' in document) && document.verdict === 'ok');
     } finally {
@@ -176,12 +176,12 @@ test("the status is asked past the browser's cache, so a stale one never says th
 });
 
 test('a status that is not one is said to be so, and what is shown of it is plain text', async () => {
-    const pack = { programs: 44, createdAt: 1, source: 's' };
+    const pack = { programs: 44, created_at: 1, source: 's' };
     for (const body of [
         [],
-        { descriptorPack: null },
-        { descriptorPack: { ...pack, programs: '44' } },
-        { descriptorPack: { ...pack, programs: -1 } },
+        { descriptor_pack: null },
+        { descriptor_pack: { ...pack, programs: '44' } },
+        { descriptor_pack: { ...pack, programs: -1 } },
     ]) {
         const api = await stub({ packs: { status: 200, body } });
         try {
@@ -193,7 +193,7 @@ test('a status that is not one is said to be so, and what is shown of it is plai
         }
     }
     const odd = await stub({
-        packs: { status: 200, body: { engine: '0.1\u202e.0', descriptorPack: pack, tokenSnapshot: { tokens: 'many' } } },
+        packs: { status: 200, body: { engine: '0.1\u202e.0', descriptor_pack: pack, token_snapshot: { tokens: 'many' } } },
     });
     try {
         assert.deepEqual(await apiStatus(odd.url), { engine: '0.1?.0', programs: 44, tokens: 0, packsAt: 1 });
@@ -206,14 +206,14 @@ test('feedback is one post per record and true only on 204', async () => {
     const api = await stub();
     try {
         assert.equal(
-            await sendFeedback(api.url, { messageHash: 'ab'.repeat(32), rating: 'wrong', comment: 'says sell', transaction: 'AQID' }),
+            await sendFeedback(api.url, { message_hash: 'ab'.repeat(32), rating: 'wrong', comment: 'says sell', transaction: 'AQID' }),
             true,
         );
-        assert.deepEqual(api.calls[0]?.body, { messageHash: 'ab'.repeat(32), rating: 'wrong', comment: 'says sell', transaction: 'AQID' });
+        assert.deepEqual(api.calls[0]?.body, { message_hash: 'ab'.repeat(32), rating: 'wrong', comment: 'says sell', transaction: 'AQID' });
     } finally {
         await api.close();
     }
-    assert.equal(await sendFeedback('http://127.0.0.1:1', { messageHash: 'ab'.repeat(32), rating: 'clear' }), false);
+    assert.equal(await sendFeedback('http://127.0.0.1:1', { message_hash: 'ab'.repeat(32), rating: 'clear' }), false);
 });
 
 test('an explanation that does not hold together, or is too big to be one, is an error document that says where', async () => {

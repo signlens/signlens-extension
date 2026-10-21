@@ -4,14 +4,14 @@
     "path": "/v1/explain",
     "body": {
       "transaction": "AaIQf3Oschj/qh92ASvd+RLn4TfbYPqbfBkHF6IzgaL1nRjtwMBdVPYOs5Y+ftvh8qXVWkAdVyj+yYVOWY0wtAiAAQAGD2p64Wy3DwExkgISHXGxD44ChZyypRxHOIy1k3B5dv4ufV+npr00kKWnl/tnnzgVpa0vdgW1eBtBjtkxUi+F44dplIf1aqQr81GQgy3Pr/kylInCSRBL7yZrjv+5q5MHSTbmZ1qYQEooaGarbiYz43o7vof7TwHCDS69lSEqFk6q1sLT0VjnBs+ZwXGLYUsswIr4N6hjJqgJPnHAXxgauouAwUdHRe1jvlE1NCfD7R5qioHYjUNdWNBaoCbJ5/INuOSUIcgSB96qiXwfeQffVg11Ph4+XdWfbNfV0D2WCNrtm5sARtwvzW7AP9uVi33IYdGgfPctVFoshUPwNjyhuoZ4Uhyxec67hYm1VqLV7JTSSYaC/fm7KvWtZOSRzEFT2gMGRm/lIRcy/+ytunLDm+e8jOW7xfcSayxDmzpAAAAAjJclj04kifG7PRApFI4NgwtaE5na/xCEBI572Nvp+Fny/l0WNQK/LFqbJoXcYycf5+sqmsPHNvsgMlKJyZCgLwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAteNKFOK8c0hpDuH1r13u1lU4QKNtqrhgsFBgc73APBBYw43zkOIdCkJ8aTcDwMFXJE+e3elMJuTMpOqIdMfu2nhlCHp/9qhE6hLLwT73UAIwlGYYY8TZIudp97gVn9UZBwkABQIgoQcACQAJA+JJAgAAAAAACgYAAQALDBEBAQwCAAIMAgAAACChBwAAAAAADQYAAxITCgwQLz6brIPNJclgT/MCAAAAAA0dEwoMABQNDRURDQsWFw8LBAUBAAYYAxIZBxobDhBv+MaekeF1h8gCAAAAJVmzXNQeqLXtmQ96Ny8FSKvJkCccynUZZOnt+HH22gShWlgbZIAN/5QP1sbTfKjORT82Iy8UPHVJ6KEUKLRU3QIXMw8bAABaQQAAAAAIYE/zAgAAAAADwkFyzCQAAADoAwAADAIACAwCAAAAxdwBAAAAAAABg4sL5A9FV+sVlm7jTSBReURrdqAXwtC1s9CQorJ6bPwCZIMLBrgFCgEdRj1bXFo=",
-      "ownKeys": [
+      "own_keys": [
         "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo"
       ],
-      "loadedWritable": [
+      "loaded_writable": [
         "AVmoTthdrX6tKt4nDjco2D775W2YK3sDhxPcMmzUAmTY",
         "3BpXnfJaUTiwXnJNe7Ej1rcbzqTTQUvLShZaWazebsVR"
       ],
-      "loadedReadonly": [
+      "loaded_readonly": [
         "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
         "So11111111111111111111111111111111111111112",
         "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
@@ -25,14 +25,7 @@
         "pfeeUxB6jkeY1Hxd7CsFCAjcbHA9rWtchMGdZ6VojVZ"
       ],
       "contacts": [],
-      "render": true,
-      "tokenHints": [
-        {
-          "mint": "HMYd9tosnUXuNHmq7pXmoePRVBLBBjA3JBfydq6upump",
-          "symbol": "HMYD",
-          "decimals": 6
-        }
-      ]
+      "render": true
     }
   },
   "response": {
@@ -135,10 +128,10 @@
           "value": {
             "amount": {
               "asset": {
-                "decimals": 6,
+                "decimals": null,
                 "id": "HMYd9tosnUXuNHmq7pXmoePRVBLBBjA3JBfydq6upump",
-                "symbol": "HMYD",
-                "trust": "claimed"
+                "symbol": null,
+                "trust": "fact"
               },
               "bound": "at_least",
               "note": null,
@@ -402,10 +395,10 @@
                 "type": "amount",
                 "value": {
                   "asset": {
-                    "decimals": 6,
+                    "decimals": null,
                     "id": "HMYd9tosnUXuNHmq7pXmoePRVBLBBjA3JBfydq6upump",
-                    "symbol": "HMYD",
-                    "trust": "claimed"
+                    "symbol": null,
+                    "trust": "fact"
                   },
                   "bound": "at_least",
                   "note": null,
@@ -421,10 +414,10 @@
                 "type": "amount",
                 "value": {
                   "asset": {
-                    "decimals": 6,
+                    "decimals": null,
                     "id": "HMYd9tosnUXuNHmq7pXmoePRVBLBBjA3JBfydq6upump",
-                    "symbol": "HMYD",
-                    "trust": "claimed"
+                    "symbol": null,
+                    "trust": "fact"
                   },
                   "bound": "exact",
                   "note": null,
@@ -546,8 +539,8 @@
                 "value": {
                   "address": "HMYd9tosnUXuNHmq7pXmoePRVBLBBjA3JBfydq6upump",
                   "is_self": false,
-                  "label": "HMYD mint",
-                  "label_trust": "claimed"
+                  "label": null,
+                  "label_trust": "fact"
                 }
               }
             },
@@ -762,8 +755,8 @@
           "title": "Validity"
         }
       ],
-      "summary": "3 actions: Send 0.0005 SOL to 879A…MGsA; Wrap 0.0495 SOL into wrapped SOL account Your SOL account (4hJn…VH6R) (verified) via DFlow; Swap ≤ 0.0495 SOL for ≥ 142,243.976392 HMYD (claimed, unverified) via DFlow",
-      "text": "3 actions: Send 0.0005 SOL to 879A…MGsA; Wrap 0.0495 SOL into wrapped SOL account Your SOL account (4hJn…VH6R) (verified) via DFlow; Swap ≤ 0.0495 SOL for ≥ 142,243.976392 HMYD (claimed, unverified) via DFlow\nOK\n\n== Transfer | System program (verified)\n  Amount: 0.0005 SOL\n  From: Your wallet (8Aet…tiTo) (verified)\n  To: 879ArayuxbYjBhpUe4QCx8nqaAKjiwCG1hFiJo6zMGsA\n\n== Wrap SOL | DFlow Aggregator (descriptor reviewed 2026-10-17, upgradeable by 9uo2…wgsh)\n  Amount: 0.0495 SOL\n  From: Your wallet (8Aet…tiTo) (verified)\n  Wrapped SOL account: Your SOL account (4hJn…VH6R) (verified)\n\n== Swap | DFlow Aggregator (verified)\n  Send: ≤ 0.0495 SOL\n  Receive: ≥ 142,243.976392 HMYD (claimed, unverified)\n  Quoted: 158,048.862658 HMYD (claimed, unverified)\n  Max slippage: 10.00%\n  Route:\n    - PumpFunBuy (49500000 base units)\n  To account: Your token account (9SQZ…GxVU) (verified)\n  Instruction: swap\n\n== Also [collapsed]\n  Compute unit limit: 500000\n  Compute unit price: 149986 micro-lamports per unit\n  Create token account if missing: Token account: 9SQZUTsLbv469tCRm9BFo64vpUiWToZukM4WeNdDGxVU\n  Create token account if missing: Owner: Your wallet (8Aet…tiTo) (verified)\n  Create token account if missing: Mint: HMYD mint (HMYd…pump) (claimed, unverified)\n  Create token account if missing: Rent paid by: Your wallet (8Aet…tiTo) (verified)\n  Create token account if missing: Token program: Token-2022 program (Toke…xuEb) (verified)\n  Jito tip: Amount: 0.000122053 SOL\n  Jito tip: From: Your wallet (8Aet…tiTo) (verified)\n  Jito tip: To: Jito tip account (96gY…rZU5) (verified)\n\n== Signers\n  Fee payer: Your wallet (8Aet…tiTo) (verified)\n\n== Fee\n  Total: 0.000079993 SOL\n  Base: 0.000005 SOL\n  Priority: 0.000074993 SOL\n  Priority basis: 149986 micro-lamports per unit × 500000 units requested\n  Rent deposits: up to 0.00151384 SOL if the accounts it creates only when missing do not exist yet; returned when the accounts are closed\n\n== Validity\n  Expires: in about a minute (recent blockhash)\n\nEffects:\n  - send 0.0005 SOL from Your wallet (8Aet…tiTo) (verified) to 879ArayuxbYjBhpUe4QCx8nqaAKjiwCG1hFiJo6zMGsA\n  - transfer 0.0495 SOL from Your wallet (8Aet…tiTo) (verified) to Your SOL account (4hJn…VH6R) (verified)\n  - creates the wrapped SOL account first if it does not exist, as the sender's associated token account and at the sender's cost; the program's source is not public, and this is what its mainnet transactions show\n  - send ≤ 0.0495 SOL from Your wallet (8Aet…tiTo) (verified) to DFlow Aggregator (DF1o…7QBH) (verified)\n  - receive ≥ 142,243.976392 HMYD (claimed, unverified) into Your token account (9SQZ…GxVU) (verified) from DFlow Aggregator (DF1o…7QBH) (verified)\n  - create 9SQZUTsLbv469tCRm9BFo64vpUiWToZukM4WeNdDGxVU owned by Token-2022 program (Toke…xuEb) (verified), depositing 0.00151384 SOL unless it already exists\n  - send 0.000122053 SOL from Your wallet (8Aet…tiTo) (verified) to Jito tip account (96gY…rZU5) (verified)\n  - Your wallet (8Aet…tiTo) (verified) pays a fee of 0.000079993 SOL\n  - valid for about a minute (recent blockhash)\n\nRaw: solana v0 (798 bytes)\n  digest: b892642d9d9599ea782feb6bffdc9939bf6aa2c699eb2c67b6e5d3463baa7682\n",
+      "summary": "3 actions: Send 0.0005 SOL to 879A…MGsA; Wrap 0.0495 SOL into wrapped SOL account Your SOL account (4hJn…VH6R) (verified) via DFlow; Swap ≤ 0.0495 SOL for ≥ 142243976392 raw units of an unverified token (HMYd9tosnUXuNHmq7pXmoePRVBLBBjA3JBfydq6upump) via DFlow",
+      "text": "3 actions: Send 0.0005 SOL to 879A…MGsA; Wrap 0.0495 SOL into wrapped SOL account Your SOL account (4hJn…VH6R) (verified) via DFlow; Swap ≤ 0.0495 SOL for ≥ 142243976392 raw units of an unverified token (HMYd9tosnUXuNHmq7pXmoePRVBLBBjA3JBfydq6upump) via DFlow\nOK\n\n== Transfer | System program (verified)\n  Amount: 0.0005 SOL\n  From: Your wallet (8Aet…tiTo) (verified)\n  To: 879ArayuxbYjBhpUe4QCx8nqaAKjiwCG1hFiJo6zMGsA\n\n== Wrap SOL | DFlow Aggregator (descriptor reviewed 2026-10-17, upgradeable by 9uo2…wgsh)\n  Amount: 0.0495 SOL\n  From: Your wallet (8Aet…tiTo) (verified)\n  Wrapped SOL account: Your SOL account (4hJn…VH6R) (verified)\n\n== Swap | DFlow Aggregator (verified)\n  Send: ≤ 0.0495 SOL\n  Receive: ≥ 142243976392 raw units of an unverified token (HMYd9tosnUXuNHmq7pXmoePRVBLBBjA3JBfydq6upump)\n  Quoted: 158048862658 raw units of an unverified token (HMYd9tosnUXuNHmq7pXmoePRVBLBBjA3JBfydq6upump)\n  Max slippage: 10.00%\n  Route:\n    - PumpFunBuy (49500000 base units)\n  To account: Your token account (9SQZ…GxVU) (verified)\n  Instruction: swap\n\n== Also [collapsed]\n  Compute unit limit: 500000\n  Compute unit price: 149986 micro-lamports per unit\n  Create token account if missing: Token account: 9SQZUTsLbv469tCRm9BFo64vpUiWToZukM4WeNdDGxVU\n  Create token account if missing: Owner: Your wallet (8Aet…tiTo) (verified)\n  Create token account if missing: Mint: HMYd9tosnUXuNHmq7pXmoePRVBLBBjA3JBfydq6upump\n  Create token account if missing: Rent paid by: Your wallet (8Aet…tiTo) (verified)\n  Create token account if missing: Token program: Token-2022 program (Toke…xuEb) (verified)\n  Jito tip: Amount: 0.000122053 SOL\n  Jito tip: From: Your wallet (8Aet…tiTo) (verified)\n  Jito tip: To: Jito tip account (96gY…rZU5) (verified)\n\n== Signers\n  Fee payer: Your wallet (8Aet…tiTo) (verified)\n\n== Fee\n  Total: 0.000079993 SOL\n  Base: 0.000005 SOL\n  Priority: 0.000074993 SOL\n  Priority basis: 149986 micro-lamports per unit × 500000 units requested\n  Rent deposits: up to 0.00151384 SOL if the accounts it creates only when missing do not exist yet; returned when the accounts are closed\n\n== Validity\n  Expires: in about a minute (recent blockhash)\n\nEffects:\n  - send 0.0005 SOL from Your wallet (8Aet…tiTo) (verified) to 879ArayuxbYjBhpUe4QCx8nqaAKjiwCG1hFiJo6zMGsA\n  - transfer 0.0495 SOL from Your wallet (8Aet…tiTo) (verified) to Your SOL account (4hJn…VH6R) (verified)\n  - creates the wrapped SOL account first if it does not exist, as the sender's associated token account and at the sender's cost; the program's source is not public, and this is what its mainnet transactions show\n  - send ≤ 0.0495 SOL from Your wallet (8Aet…tiTo) (verified) to DFlow Aggregator (DF1o…7QBH) (verified)\n  - receive ≥ 142243976392 raw units of an unverified token (HMYd9tosnUXuNHmq7pXmoePRVBLBBjA3JBfydq6upump) into Your token account (9SQZ…GxVU) (verified) from DFlow Aggregator (DF1o…7QBH) (verified)\n  - create 9SQZUTsLbv469tCRm9BFo64vpUiWToZukM4WeNdDGxVU owned by Token-2022 program (Toke…xuEb) (verified), depositing 0.00151384 SOL unless it already exists\n  - send 0.000122053 SOL from Your wallet (8Aet…tiTo) (verified) to Jito tip account (96gY…rZU5) (verified)\n  - Your wallet (8Aet…tiTo) (verified) pays a fee of 0.000079993 SOL\n  - valid for about a minute (recent blockhash)\n\nRaw: solana v0 (798 bytes)\n  digest: b892642d9d9599ea782feb6bffdc9939bf6aa2c699eb2c67b6e5d3463baa7682\n",
       "verdict": "ok"
     }
   }

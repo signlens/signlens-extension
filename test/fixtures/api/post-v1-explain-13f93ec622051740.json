@@ -4,25 +4,14 @@
     "path": "/v1/explain",
     "body": {
       "transaction": "AmIHCiJr3qGOpw3J/RoC6nFPGp4cZvj5OXdFEW+2RtIxnatvYOnBfp5vgojfbCopIiEGbDEfKJ+S2VWpjID0YgOk0RfylCPfFYXp6tgDZr4E5Ojq7HTZ5pRCEzVLl2I7lFqHNzJjO0ZtaXZGuPvyYBu4pBJjBhaPS1vX2nXif7AIAgEIDWzbTSORkLlRD2B1iXNZmTugpfx/HKjCfePPBmQkM6QFyha/+yWS3ihSSiGhrp6o7V4IAQQWneno5Zm2D0aEsiyLAOs2rEgq9kakRnkb/IW8WOrE60uK5K1hUYgZKj4/Prl692pCMtSgUohtDM8D2KH3dJhtC1XSFybBbIUtkN+F2gA7Bnr1ABu4fDIf+oguy5B4LwWLy9RsmfGCd9Bmwv8Gp9UXGSxWjuCKhF9z0peIzwNcMUWyGrNE2AYuqUAAAJojKD3FS3qecYOCMGOFVDcc0dQ+7VOnOThCnjdAol44xvp6877brTo9ZfNqq8l0MbG75MLS9uDkfKYCA0UvXWEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbd9uHXZaGT2cvhRs7reawctIXtX1s3kTqM9YV+/wCpBqfVFxksXFEhjMlMPUrxf1ja7gibof1E49vZigAAAACMlyWPTiSJ8bs9ECkUjg2DC1oTmdr/EIQEjnvY2+n4WQMGRm/lIRcy/+ytunLDm+e8jOW7xfcSayxDmzpAAAAAdI9VKVQxKl861pri3hPZK0Q0k5M1x1y5QD/ks/GROa0FCAMCBQEEBAAAAAsHAAMGBwgJCgEBCQQEBwMACgxHNA8AAAAAAAYMAAUC+FAAAAwACQP4oQEAAAAAAA==",
-      "ownKeys": [
+      "own_keys": [
         "8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa"
       ],
       "contacts": [],
       "simulation": {
-        "failure": null,
-        "units": 4200,
-        "changes": [
-          {
-            "account": "8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa",
-            "delta": "-12218"
-          },
-          {
-            "account": "Ffz5kwUjkUNw7hV4r6iCJnUoXXsAPFHkCMCmKKDypiwg",
-            "owner": "8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa",
-            "mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
-            "delta": "-996423"
-          }
-        ]
+        "failure": "{\"InstructionError\":[1,{\"Custom\":6001}]}; the program said: Error: insufficient funds",
+        "units": 0,
+        "changes": []
       },
       "render": true
     }
@@ -134,10 +123,10 @@
           "severity": "high"
         },
         {
-          "code": "SIMULATION_AGREES",
+          "code": "SIMULATION_FAILED",
           "instruction": null,
-          "message": "The host's simulation agrees with the instructions' effects on your balances",
-          "severity": "info"
+          "message": "The host's simulation of this transaction failed ({\"InstructionError\":[1,{\"Custom\":6001}]}; the program said: Error: insufficient funds); it would not execute as shown",
+          "severity": "warning"
         }
       ],
       "raw": {
@@ -526,7 +515,7 @@
               "trust": "claimed",
               "value": {
                 "type": "text",
-                "value": "would succeed"
+                "value": "would fail: {\"InstructionError\":[1,{\"Custom\":6001}]}; the program said: Error: insufficient funds"
               }
             },
             {
@@ -535,25 +524,7 @@
               "trust": "claimed",
               "value": {
                 "type": "integer",
-                "value": "4200"
-              }
-            },
-            {
-              "help": null,
-              "label": "Your USDC",
-              "trust": "claimed",
-              "value": {
-                "type": "text",
-                "value": "−0.996423 USDC (verified)"
-              }
-            },
-            {
-              "help": null,
-              "label": "Your SOL",
-              "trust": "claimed",
-              "value": {
-                "type": "text",
-                "value": "−0.000012218 SOL"
+                "value": "0"
               }
             }
           ],
@@ -565,7 +536,7 @@
         }
       ],
       "summary": "Send 0.996423 USDC (verified) to DV3B…L7Qp",
-      "text": "Send 0.996423 USDC (verified) to DV3B…L7Qp\nWARNING: review the findings before approving\n\nFindings:\n  [HIGH] This signature never expires; anyone holding the signed transaction can submit it at any later time until the nonce is advanced\n  [INFO] The host's simulation agrees with the instructions' effects on your balances\n\n== Transfer tokens | Token program (verified)\n  Amount: 0.996423 USDC (verified)\n  From: Your token account (Ffz5…piwg) (verified)\n  To: DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp\n  Authorized by: Your wallet (8Kvy…p1fa) (verified)\n  Mint: USDC mint (EPjF…Dt1v) (verified)\n\n== Also [collapsed]\n  Advance durable nonce: Nonce account: AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw\n  Advance durable nonce: Authority: EbsUZEFAU23Z2SgAymFtU2hADLiyNLzaPLKiJfvpKnE7\n  Create token account if missing: Token account: DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp\n  Create token account if missing: Owner: BNgsxo3eHqQLNTaKy4juhAUJ8DyewcJNEcYdMuSmTT1Z\n  Create token account if missing: Mint: USDC mint (EPjF…Dt1v) (verified)\n  Create token account if missing: Rent paid by: Your wallet (8Kvy…p1fa) (verified)\n  Create token account if missing: Token program: Token program (Toke…Q5DA) (verified)\n  Compute unit limit: 20728\n  Compute unit price: 107000 micro-lamports per unit\n\n== Signers\n  Fee payer: Your wallet (8Kvy…p1fa) (verified)\n  Signer: EbsUZEFAU23Z2SgAymFtU2hADLiyNLzaPLKiJfvpKnE7\n\n== Fee\n  Total: 0.000012218 SOL\n  Base: 0.00001 SOL\n  Priority: 0.000002218 SOL\n  Priority basis: 107000 micro-lamports per unit × 20728 units requested\n  Rent deposits: up to 0.00148844 SOL if the accounts it creates only when missing do not exist yet; returned when the accounts are closed\n\n== Validity\n  Expires: never, until the nonce account is advanced\n  Nonce account: AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw\n\n== Simulated outcome | the host's simulation (claimed, unverified)\n  Result: would succeed\n  Compute units: 4200\n  Your USDC: −0.996423 USDC (verified)\n  Your SOL: −0.000012218 SOL\n\nEffects:\n  - send 0.996423 USDC (verified) from Your token account (Ffz5…piwg) (verified) to DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp\n  - create DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp owned by Token program (Toke…Q5DA) (verified), depositing 0.00148844 SOL unless it already exists\n  - Your wallet (8Kvy…p1fa) (verified) pays a fee of 0.000012218 SOL\n  - valid FOREVER until nonce account AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw is advanced (durable nonce)\n\nRaw: solana legacy (511 bytes)\n  digest: 05d51e61e33bad79d124089e71be7988c37cccf1f9268ee6e338e439f5ec582f\n",
+      "text": "Send 0.996423 USDC (verified) to DV3B…L7Qp\nWARNING: review the findings before approving\n\nFindings:\n  [HIGH] This signature never expires; anyone holding the signed transaction can submit it at any later time until the nonce is advanced\n  [WARNING] The host's simulation of this transaction failed ({\"InstructionError\":[1,{\"Custom\":6001}]}; the program said: Error: insufficient funds); it would not execute as shown\n\n== Transfer tokens | Token program (verified)\n  Amount: 0.996423 USDC (verified)\n  From: Your token account (Ffz5…piwg) (verified)\n  To: DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp\n  Authorized by: Your wallet (8Kvy…p1fa) (verified)\n  Mint: USDC mint (EPjF…Dt1v) (verified)\n\n== Also [collapsed]\n  Advance durable nonce: Nonce account: AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw\n  Advance durable nonce: Authority: EbsUZEFAU23Z2SgAymFtU2hADLiyNLzaPLKiJfvpKnE7\n  Create token account if missing: Token account: DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp\n  Create token account if missing: Owner: BNgsxo3eHqQLNTaKy4juhAUJ8DyewcJNEcYdMuSmTT1Z\n  Create token account if missing: Mint: USDC mint (EPjF…Dt1v) (verified)\n  Create token account if missing: Rent paid by: Your wallet (8Kvy…p1fa) (verified)\n  Create token account if missing: Token program: Token program (Toke…Q5DA) (verified)\n  Compute unit limit: 20728\n  Compute unit price: 107000 micro-lamports per unit\n\n== Signers\n  Fee payer: Your wallet (8Kvy…p1fa) (verified)\n  Signer: EbsUZEFAU23Z2SgAymFtU2hADLiyNLzaPLKiJfvpKnE7\n\n== Fee\n  Total: 0.000012218 SOL\n  Base: 0.00001 SOL\n  Priority: 0.000002218 SOL\n  Priority basis: 107000 micro-lamports per unit × 20728 units requested\n  Rent deposits: up to 0.00148844 SOL if the accounts it creates only when missing do not exist yet; returned when the accounts are closed\n\n== Validity\n  Expires: never, until the nonce account is advanced\n  Nonce account: AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw\n\n== Simulated outcome | the host's simulation (claimed, unverified)\n  Result: would fail: {\"InstructionError\":[1,{\"Custom\":6001}]}; the program said: Error: insufficient funds\n  Compute units: 0\n\nEffects:\n  - send 0.996423 USDC (verified) from Your token account (Ffz5…piwg) (verified) to DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp\n  - create DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp owned by Token program (Toke…Q5DA) (verified), depositing 0.00148844 SOL unless it already exists\n  - Your wallet (8Kvy…p1fa) (verified) pays a fee of 0.000012218 SOL\n  - valid FOREVER until nonce account AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw is advanced (durable nonce)\n\nRaw: solana legacy (511 bytes)\n  digest: 05d51e61e33bad79d124089e71be7988c37cccf1f9268ee6e338e439f5ec582f\n",
       "verdict": "warn"
     }
   }
