@@ -14,7 +14,7 @@ import type { Explanation, Verdict } from './types.ts';
 const ORDER: readonly VerdictWord[] = ['message', 'ok', 'warning', 'error', 'blocked'];
 
 /** The engine's verdicts in the window's words. */
-const WORDS: Readonly<Record<Verdict, TransactionVerdict>> = { Ok: 'ok', Warn: 'warning', Block: 'blocked' };
+const WORDS: Readonly<Record<Verdict, TransactionVerdict>> = { ok: 'ok', warn: 'warning', block: 'blocked' };
 
 /** The window's word for the engine's verdict on `explanation`. */
 export function verdictOf(explanation: Explanation): TransactionVerdict {

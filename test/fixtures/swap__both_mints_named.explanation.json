@@ -2,31 +2,31 @@
   "chain": "solana",
   "effects": [
     {
-      "type": "Fee",
+      "type": "fee",
       "value": {
         "amount": {
           "asset": {
             "decimals": 9,
             "id": "native",
             "symbol": "SOL",
-            "trust": "Fact"
+            "trust": "fact"
           },
-          "bound": "Exact",
+          "bound": "exact",
           "note": null,
           "units": "5535"
         },
         "payer": {
+          "address": "5yLgQQwD42seAkce1heScsh2spYgNA3q43SPhZBn8Ldc",
           "is_self": false,
           "label": null,
-          "label_trust": "Fact",
-          "text": "5yLgQQwD42seAkce1heScsh2spYgNA3q43SPhZBn8Ldc"
+          "label_trust": "fact"
         }
       }
     },
     {
-      "type": "Lifetime",
+      "type": "lifetime",
       "value": {
-        "type": "RecentBlockhash"
+        "type": "recent_blockhash"
       }
     }
   ],
@@ -35,13 +35,12 @@
       "code": "DFLOW_ROUTE_UNRESOLVED",
       "instruction": 2,
       "message": "The accounts that fix the route's layout are loaded from lookup tables the signer cannot read",
-      "severity": "Critical"
+      "severity": "critical"
     }
   ],
   "raw": {
     "digest": "9bdd08c0fa2a6a063bcab6cc1581b881a5fbc0a5eefa3c4ee59dc380cdb66876",
-    "format": "solana v0",
-    "payload": "800100020749dd86490e356fc1fb4f8625c6a6234e562454acd64d9b9baf0284db6882491f1a63e27f5be80e2b24ed4b196584ccdf9a626b495c788bff1f99d877a9121a46c556c87d5ae26c01bf2ae7af59369736b2426a54148ef59ee68b3bc30f408b24d9fe4f1993868dd5a8c547abc0f705ca003675346dd3ef2a0ed164c7ae1ae3aff49a61f97b353187ca288e58b7931c120c23b6ed2a6b9aec1bf2146508a446c20306466fe5211732ffecadba72c39be7bc8ce5bbc5f7126b2c439b3a40000000b5e34a14e2bc7348690ee1f5af5deed6553840a36daab860b0506073bdc03c100f02c61e77049550b820e75d8b66cfd3ced2175de6c65e598cb018f6851959af030500050235050300050009038d0a00000000000006291619120018060615170c1c11020d0e03040c1b101300141a130f0913070b04011c1b081300141a130a7bf8c69e91e17587c803000000259225095578ca432074e549a4fc7c5341fb546063977884832a84c218597c29d51d187223569b43192c511256021bcd8dcc2766cc6c4a56cb3f5149a78bc9690481bbe81a0000ae411e0300001964923300000000000181191ec41c000000000001012b314000000000002c01000003838b0be40f4557eb15966ee34d205179446b76a017c2d0b5b3d090a2b27a6cfc000a001b080105060a0741b97cf01dd112f60bf7b9ce2934613c519f6fff1800071494534578988d2a5957720519181b1fda0120b0397c9056ece8898b93a9887be3fa41a58c7cc2d39eab9a491dd335152a5b2906b7bdb9b5b2b800"
+    "format": "solana v0"
   },
   "schema": "signlens-explanation/1",
   "sections": [
@@ -51,24 +50,24 @@
         {
           "help": null,
           "label": "Accounts",
-          "trust": "Fact",
+          "trust": "fact",
           "value": {
-            "type": "Integer",
+            "type": "integer",
             "value": "41"
           }
         },
         {
           "help": null,
           "label": "Data",
-          "trust": "Fact",
+          "trust": "fact",
           "value": {
-            "type": "Bytes",
+            "type": "bytes",
             "value": "f8c69e91e17587c803000000259225095578ca432074e549a4fc7c5341fb546063977884832a84c218597c29d51d187223569b43192c511256021bcd8dcc2766cc6c4a56cb3f5149a78bc9690481bbe81a0000ae411e0300001964923300000000000181191ec41c000000000001012b314000000000002c010000"
           }
         }
       ],
       "kind": {
-        "type": "Instruction",
+        "type": "instruction",
         "value": {
           "index": 2
         }
@@ -82,24 +81,24 @@
         {
           "help": null,
           "label": "Compute unit limit",
-          "trust": "Fact",
+          "trust": "fact",
           "value": {
-            "type": "Integer",
+            "type": "integer",
             "value": "197941"
           }
         },
         {
           "help": null,
           "label": "Compute unit price",
-          "trust": "Fact",
+          "trust": "fact",
           "value": {
-            "type": "Text",
+            "type": "text",
             "value": "2701 micro-lamports per unit"
           }
         }
       ],
       "kind": {
-        "type": "Housekeeping"
+        "type": "housekeeping"
       },
       "subtitle": null,
       "title": "Also"
@@ -110,20 +109,20 @@
         {
           "help": null,
           "label": "Fee payer",
-          "trust": "Fact",
+          "trust": "fact",
           "value": {
-            "type": "Address",
+            "type": "address",
             "value": {
+              "address": "5yLgQQwD42seAkce1heScsh2spYgNA3q43SPhZBn8Ldc",
               "is_self": false,
               "label": null,
-              "label_trust": "Fact",
-              "text": "5yLgQQwD42seAkce1heScsh2spYgNA3q43SPhZBn8Ldc"
+              "label_trust": "fact"
             }
           }
         }
       ],
       "kind": {
-        "type": "Signers"
+        "type": "signers"
       },
       "subtitle": null,
       "title": "Signers"
@@ -134,17 +133,17 @@
         {
           "help": null,
           "label": "Total",
-          "trust": "Fact",
+          "trust": "fact",
           "value": {
-            "type": "Amount",
+            "type": "amount",
             "value": {
               "asset": {
                 "decimals": 9,
                 "id": "native",
                 "symbol": "SOL",
-                "trust": "Fact"
+                "trust": "fact"
               },
-              "bound": "Exact",
+              "bound": "exact",
               "note": null,
               "units": "5535"
             }
@@ -153,17 +152,17 @@
         {
           "help": null,
           "label": "Base",
-          "trust": "Fact",
+          "trust": "fact",
           "value": {
-            "type": "Amount",
+            "type": "amount",
             "value": {
               "asset": {
                 "decimals": 9,
                 "id": "native",
                 "symbol": "SOL",
-                "trust": "Fact"
+                "trust": "fact"
               },
-              "bound": "Exact",
+              "bound": "exact",
               "note": null,
               "units": "5000"
             }
@@ -172,17 +171,17 @@
         {
           "help": null,
           "label": "Priority",
-          "trust": "Fact",
+          "trust": "fact",
           "value": {
-            "type": "Amount",
+            "type": "amount",
             "value": {
               "asset": {
                 "decimals": 9,
                 "id": "native",
                 "symbol": "SOL",
-                "trust": "Fact"
+                "trust": "fact"
               },
-              "bound": "Exact",
+              "bound": "exact",
               "note": null,
               "units": "535"
             }
@@ -191,15 +190,15 @@
         {
           "help": null,
           "label": "Priority basis",
-          "trust": "Fact",
+          "trust": "fact",
           "value": {
-            "type": "Text",
+            "type": "text",
             "value": "2701 micro-lamports per unit × 197941 units requested"
           }
         }
       ],
       "kind": {
-        "type": "Fees"
+        "type": "fees"
       },
       "subtitle": null,
       "title": "Fee"
@@ -210,15 +209,15 @@
         {
           "help": null,
           "label": "Expires",
-          "trust": "Fact",
+          "trust": "fact",
           "value": {
-            "type": "Text",
+            "type": "text",
             "value": "in about a minute (recent blockhash)"
           }
         }
       ],
       "kind": {
-        "type": "Lifetime"
+        "type": "lifetime"
       },
       "subtitle": null,
       "title": "Validity"
@@ -226,5 +225,5 @@
   ],
   "summary": "DFlow swap whose route cannot be resolved",
   "text": "DFlow swap whose route cannot be resolved\nBLOCKED BY DEFAULT (1 critical finding(s))\n\nFindings:\n  [CRITICAL] The accounts that fix the route's layout are loaded from lookup tables the signer cannot read (instruction 2)\n\n== DFlow swap | DFlow Aggregator (verified)\n  Accounts: 41\n  Data: 0xf8c69e91e17587c803000000259225095578ca432074e549a4fc7c5341fb546063977884832a84c218597c29d51d187223569b43192c511256021bcd8dcc2766cc6c4a56cb3f5149a78bc9690481bbe81a0000ae411e0300001964923300000000000181191ec41c000000000001012b314000000000002c010000\n\n== Also [collapsed]\n  Compute unit limit: 197941\n  Compute unit price: 2701 micro-lamports per unit\n\n== Signers\n  Fee payer: 5yLgQQwD42seAkce1heScsh2spYgNA3q43SPhZBn8Ldc\n\n== Fee\n  Total: 0.000005535 SOL\n  Base: 0.000005 SOL\n  Priority: 0.000000535 SOL\n  Priority basis: 2701 micro-lamports per unit × 197941 units requested\n\n== Validity\n  Expires: in about a minute (recent blockhash)\n\nEffects:\n  - 5yLgQQwD42seAkce1heScsh2spYgNA3q43SPhZBn8Ldc pays a fee of 0.000005535 SOL\n  - valid for about a minute (recent blockhash)\n\nRaw: solana v0 (574 bytes)\n  digest: 9bdd08c0fa2a6a063bcab6cc1581b881a5fbc0a5eefa3c4ee59dc380cdb66876\n",
-  "verdict": "Block"
+  "verdict": "block"
 }

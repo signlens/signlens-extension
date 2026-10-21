@@ -1,18 +1,20 @@
 // The contract between the extension and the engine, as the SignLens API
 // serves it and the WebAssembly module will: the explanation document
 // (`signlens-explanation/1`, specified with the engine), the engine's
-// request, and the feedback record. Enum variants are the Rust names;
-// 128-bit integers are decimal strings; bytes are lowercase hex.
+// request, and the feedback record. Keys are the Rust field names
+// (`own_keys`, `label_trust`), enum variants the Rust names in snake_case
+// ("block", "at_least", "authority_change"); 128-bit integers are decimal
+// strings; bytes are lowercase hex.
 //
 // New variants may appear without a schema bump. `parseExplanation`
 // (explanation.ts) reads a `type` this version does not know as
 // `Unrecognized`, so every union here is closed and a `switch` on `type`
 // covers it; an unknown value of the enums below is refused instead.
 
-export const TRUSTS = ['Fact', 'Verified', 'Claimed'] as const;
-export const BOUNDS = ['Exact', 'AtLeast', 'AtMost', 'Unlimited', 'Unknown'] as const;
-export const SEVERITIES = ['Info', 'Warning', 'High', 'Critical'] as const;
-export const VERDICTS = ['Ok', 'Warn', 'Block'] as const;
+export const TRUSTS = ['fact', 'verified', 'claimed'] as const;
+export const BOUNDS = ['exact', 'at_least', 'at_most', 'unlimited', 'unknown'] as const;
+export const SEVERITIES = ['info', 'warning', 'high', 'critical'] as const;
+export const VERDICTS = ['ok', 'warn', 'block'] as const;
 
 export type Trust = (typeof TRUSTS)[number];
 export type Bound = (typeof BOUNDS)[number];
@@ -26,7 +28,7 @@ export interface Unrecognized {
 }
 
 export interface Address {
-    text: string;
+    address: string;
     label: string | null;
     label_trust: Trust;
     is_self: boolean;
@@ -49,16 +51,16 @@ export interface Amount {
 }
 
 export type Value =
-    | { type: 'Text'; value: string }
-    | { type: 'Amount'; value: Amount }
-    | { type: 'Address'; value: Address }
-    | { type: 'Integer'; value: string }
-    | { type: 'BasisPoints'; value: number }
-    | { type: 'Duration'; value: number }
-    | { type: 'Timestamp'; value: number }
-    | { type: 'Bytes'; value: string }
-    | { type: 'Bool'; value: boolean }
-    | { type: 'List'; value: Value[] }
+    | { type: 'text'; value: string }
+    | { type: 'amount'; value: Amount }
+    | { type: 'address'; value: Address }
+    | { type: 'integer'; value: string }
+    | { type: 'basis_points'; value: number }
+    | { type: 'duration'; value: number }
+    | { type: 'timestamp'; value: number }
+    | { type: 'bytes'; value: string }
+    | { type: 'bool'; value: boolean }
+    | { type: 'list'; value: Value[] }
     | Unrecognized;
 
 export interface Field {
@@ -70,15 +72,15 @@ export interface Field {
 }
 
 export type SectionKind =
-    | { type: 'Summary' }
-    | { type: 'Instruction'; value: { index: number } }
-    | { type: 'Nested'; value: { parent: number; index: number } }
-    | { type: 'Housekeeping' }
-    | { type: 'Signers' }
-    | { type: 'Fees' }
-    | { type: 'Lifetime' }
-    | { type: 'Claims' }
-    | { type: 'Raw' }
+    | { type: 'summary' }
+    | { type: 'instruction'; value: { index: number } }
+    | { type: 'nested'; value: { parent: number; index: number } }
+    | { type: 'housekeeping' }
+    | { type: 'signers' }
+    | { type: 'fees' }
+    | { type: 'lifetime' }
+    | { type: 'claims' }
+    | { type: 'raw' }
     | Unrecognized;
 
 export interface Section {
@@ -89,20 +91,20 @@ export interface Section {
     collapsed: boolean;
 }
 
-export type Lifetime = { type: 'RecentBlockhash' } | { type: 'DurableNonce'; value: { nonce_account: Address } };
+export type Lifetime = { type: 'recent_blockhash' } | { type: 'durable_nonce'; value: { nonce_account: Address } };
 
 export type Effect =
-    | { type: 'Transfer'; value: { from: Address; to: Address; amount: Amount } }
-    | { type: 'Burn'; value: { account: Address; amount: Amount } }
-    | { type: 'AuthorityChange'; value: { subject: Address; authority: string; new_authority: Address | null } }
-    | { type: 'Delegate'; value: { subject: Address; delegate: Address; amount: Amount } }
-    | { type: 'Revoke'; value: { subject: Address } }
-    | { type: 'Create'; value: { account: Address; owner: Address; deposit: Amount | null; if_missing: boolean } }
-    | { type: 'Close'; value: { account: Address; destination: Address } }
-    | { type: 'Fee'; value: { payer: Address; amount: Amount } }
-    | { type: 'Lifetime'; value: Lifetime }
-    | { type: 'Proposed'; value: { by: Address; effect: Effect } }
-    | { type: 'Other'; value: { description: string } }
+    | { type: 'transfer'; value: { from: Address; to: Address; amount: Amount } }
+    | { type: 'burn'; value: { account: Address; amount: Amount } }
+    | { type: 'authority_change'; value: { subject: Address; authority: string; new_authority: Address | null } }
+    | { type: 'delegate'; value: { subject: Address; delegate: Address; amount: Amount } }
+    | { type: 'revoke'; value: { subject: Address } }
+    | { type: 'create'; value: { account: Address; owner: Address; deposit: Amount | null; if_missing: boolean } }
+    | { type: 'close'; value: { account: Address; destination: Address } }
+    | { type: 'fee'; value: { payer: Address; amount: Amount } }
+    | { type: 'lifetime'; value: Lifetime }
+    | { type: 'proposed'; value: { by: Address; effect: Effect } }
+    | { type: 'other'; value: { description: string } }
     | Unrecognized;
 
 export interface Finding {
@@ -112,11 +114,13 @@ export interface Finding {
     instruction: number | null;
 }
 
+/**
+ * What the explanation says of the signed bytes. The API leaves out their
+ * hex, `payload`: the extension sent them, and reads only the digest.
+ */
 export interface Raw {
     format: string;
-    /** Lowercase hex. */
-    payload: string;
-    /** SHA-256 of the payload, lowercase hex, or null. */
+    /** SHA-256 of the signed bytes, lowercase hex, or null. */
     digest: string | null;
 }
 
@@ -181,11 +185,11 @@ export interface Simulation {
 /** The engine's request, as its C header declares it; the API takes it with `transaction` beside it. */
 export interface EngineRequest {
     kind?: 'transaction' | 'message';
-    ownKeys?: string[];
-    loadedWritable?: string[];
-    loadedReadonly?: string[];
+    own_keys?: string[];
+    loaded_writable?: string[];
+    loaded_readonly?: string[];
     contacts?: Contact[];
-    tokenHints?: TokenHint[];
+    token_hints?: TokenHint[];
     simulation?: Simulation;
     render?: boolean;
 }
@@ -194,8 +198,8 @@ export interface EngineRequest {
 export interface PacksDocument {
     schema: string;
     engine?: string;
-    descriptorPack: { programs: number; createdAt: number; source: string } | null;
-    tokenSnapshot: { tokens: number; createdAt: number; source: string } | null;
+    descriptor_pack: { programs: number; created_at: number; source: string } | null;
+    token_snapshot: { tokens: number; created_at: number; source: string } | null;
 }
 
 /** What the popup shows of a `PacksDocument`, as the worker reads it. */
@@ -211,7 +215,7 @@ export type Rating = 'clear' | 'unclear' | 'wrong';
 /** One feedback record, `POST /v1/feedback`. */
 export interface Feedback {
     /** The explanation's `raw.digest`. */
-    messageHash: string;
+    message_hash: string;
     rating: Rating;
     comment?: string;
     /** The transaction, base64, only when the user asked for it to be covered. */

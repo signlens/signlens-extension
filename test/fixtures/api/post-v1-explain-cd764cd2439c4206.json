@@ -4,10 +4,10 @@
     "path": "/v1/explain",
     "body": {
       "transaction": "AS2uutPxpxlee+eAaL6Zy9cqCysUhRaNwaRUP4c2MqrKTtLfHyif2mJVmT+/QAOgkeN5SGlEViAIVQFDOkHASAeAAQAFCqqwI/5W6dWiye2ocweN62KGQMxyK9pgfrMIX0Tn/jPMdxW4goL+J2qtGBRUyq+kSb9blzOP+BZujneNLNdD7KTuwkVQb9Tebb+rDe6MkC97bfVmU4bqhET5f5yObdhjUpgeINHEcyC0NnAWRUv7Y9wNGqJANGYt2FZM6DHu3UN2Hnux2yFhc3ms3ARWJVpsMz9zcSqx4OmKWijl7blcu6wDBkZv5SEXMv/srbpyw5vnvIzlu8X3EmssQ5s6QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADEKb18GPUPgVbZr8HN3nLfZo2as77K9rVw1XZmRa2chgMUcENA3t3zcf1CRyFI8kjp0abRpesqw6zYt/1dayQ76TmoMJ9WQHGH//MKxUsWlJi+mfbY4b/UJEaAzU99Hict2tEAV1lYdOUfDoH/VBKLlUpPFX86E23cFNAhTVag8GBQAFAkgZEwAFAAkBAAABAAAAAAAFAAkDjAYAAAAAAAAGAgABDAIAAABRUBwAAAAAAAcGAAABKywGCZPxe2T0hK52/QdgAAIBNCsDBwoHCy0sLgYvBzcAAgwbHB0eHywtMDQxICEiIzUAAgwVNRYXNDEYNS0sMDYZGgY3AAILJCUmJygsLTA0KykqBgYyCgwLMw0ODxAsLTAxKxESExQyMjIICQMEP76cqbCVmqFsvkW7OwAAAAD5osk9IwAAADP2zwQAAAAAMgAEAAAAC+YKAS42AQEL9BoCiRAnEqCYe0AAAGT0AQXkhruJ6z0cc5JZMl4PsUgoXDyie7itCjOaApQPRYbiEAMBAgMHPEFAQnBrPYB57FalGJaWAPlvicYQjan2r5DUzYCFycr71wj+Rw5cCAsQHiAJe31+AgEIWAtpttOd+gC3Xnkfp0jzLEBwKhzGOHNPLs+7W7lCbcgGAA0BBQ4IAwMHCtXmJ8wElt2gjcvbK/JveVJX+jn823A/VE49l+zziM1JCQQCCAYJDwESEAEF5Ps6PHxRJ+JP4XlwQNcyr2PlGQIVlISMsooK5/xPBuwHCQABCwwFCAA=",
-      "ownKeys": [
+      "own_keys": [
         "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR"
       ],
-      "loadedWritable": [
+      "loaded_writable": [
         "ARu4n5mFdZogZAravu7CcizaojWnS6oqka37gdLT5SZn",
         "DT2krA8vSP96D68nH86eAztZHVM18YB5i4gDXjLBDXm7",
         "8XrtGP8RG33AnrN2yJ6H3gnXPNQ3dYXKqM72bpzhcsd6",
@@ -42,7 +42,7 @@
         "6LVaeSqMQyWjQqJP31cp2MAyLjVUQEUbCJp3rXakShn9",
         "3W2fY3iUMSUrWuBt48qK8VELvffecBiCFrg3ArurTmAv"
       ],
-      "loadedReadonly": [
+      "loaded_readonly": [
         "So11111111111111111111111111111111111111112",
         "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
         "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
@@ -72,144 +72,144 @@
       "chain": "solana",
       "effects": [
         {
-          "type": "Transfer",
+          "type": "transfer",
           "value": {
             "amount": {
               "asset": {
                 "decimals": 9,
                 "id": "native",
                 "symbol": "SOL",
-                "trust": "Fact"
+                "trust": "fact"
               },
-              "bound": "Exact",
+              "bound": "exact",
               "note": null,
               "units": "1855569"
             },
             "from": {
+              "address": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR",
               "is_self": true,
               "label": "Your wallet",
-              "label_trust": "Verified",
-              "text": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR"
+              "label_trust": "verified"
             },
             "to": {
+              "address": "91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD",
               "is_self": false,
               "label": null,
-              "label_trust": "Fact",
-              "text": "91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD"
+              "label_trust": "fact"
             }
           }
         },
         {
-          "type": "Transfer",
+          "type": "transfer",
           "value": {
             "amount": {
               "asset": {
                 "decimals": 9,
                 "id": "HcRLc9VDgjLeK154xDawfb1dmVJ98DoSqcwTHGqiDeJR",
                 "symbol": "ZCAT",
-                "trust": "Verified"
+                "trust": "verified"
               },
-              "bound": "Exact",
+              "bound": "exact",
               "note": null,
               "units": "151360479993"
             },
             "from": {
+              "address": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR",
               "is_self": true,
               "label": "Your wallet",
-              "label_trust": "Verified",
-              "text": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR"
+              "label_trust": "verified"
             },
             "to": {
+              "address": "proVF4pMXVaYqmy4NjniPh4pqKNfMmsihgd4wdkCX3u",
               "is_self": false,
               "label": "OKX DEX Router",
-              "label_trust": "Verified",
-              "text": "proVF4pMXVaYqmy4NjniPh4pqKNfMmsihgd4wdkCX3u"
+              "label_trust": "verified"
             }
           }
         },
         {
-          "type": "Transfer",
+          "type": "transfer",
           "value": {
             "amount": {
               "asset": {
                 "decimals": 9,
                 "id": "So11111111111111111111111111111111111111112",
                 "symbol": "SOL",
-                "trust": "Verified"
+                "trust": "verified"
               },
-              "bound": "AtLeast",
+              "bound": "at_least",
               "note": null,
               "units": "80334153"
             },
             "from": {
+              "address": "proVF4pMXVaYqmy4NjniPh4pqKNfMmsihgd4wdkCX3u",
               "is_self": false,
               "label": "OKX DEX Router",
-              "label_trust": "Verified",
-              "text": "proVF4pMXVaYqmy4NjniPh4pqKNfMmsihgd4wdkCX3u"
+              "label_trust": "verified"
             },
             "to": {
+              "address": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR",
               "is_self": true,
               "label": "Your wallet",
-              "label_trust": "Verified",
-              "text": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR"
+              "label_trust": "verified"
             }
           }
         },
         {
-          "type": "Create",
+          "type": "create",
           "value": {
             "account": {
+              "address": "91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD",
               "is_self": false,
               "label": null,
-              "label_trust": "Fact",
-              "text": "91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD"
+              "label_trust": "fact"
             },
             "deposit": {
               "asset": {
                 "decimals": 9,
                 "id": "native",
                 "symbol": "SOL",
-                "trust": "Fact"
+                "trust": "fact"
               },
-              "bound": "Exact",
+              "bound": "exact",
               "note": null,
               "units": "1488440"
             },
             "if_missing": false,
             "owner": {
+              "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
               "is_self": false,
               "label": "Token program",
-              "label_trust": "Verified",
-              "text": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+              "label_trust": "verified"
             }
           }
         },
         {
-          "type": "Fee",
+          "type": "fee",
           "value": {
             "amount": {
               "asset": {
                 "decimals": 9,
                 "id": "native",
                 "symbol": "SOL",
-                "trust": "Fact"
+                "trust": "fact"
               },
-              "bound": "Exact",
+              "bound": "exact",
               "note": null,
               "units": "7098"
             },
             "payer": {
+              "address": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR",
               "is_self": true,
               "label": "Your wallet",
-              "label_trust": "Verified",
-              "text": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR"
+              "label_trust": "verified"
             }
           }
         },
         {
-          "type": "Lifetime",
+          "type": "lifetime",
           "value": {
-            "type": "RecentBlockhash"
+            "type": "recent_blockhash"
           }
         }
       ],
@@ -218,25 +218,24 @@
           "code": "SIMULATION_DISAGREES",
           "instruction": null,
           "message": "The simulation credits your accounts with 0 SOL of SOL, less than the 0.080334153 SOL the instructions guarantee",
-          "severity": "High"
+          "severity": "high"
         },
         {
           "code": "DESTINATION_NOT_VERIFIED",
           "instruction": 5,
           "message": "The destination token account is not one of your accounts for a verified token; the signer cannot prove who owns it",
-          "severity": "Info"
+          "severity": "info"
         },
         {
           "code": "IGNORED_TRAILING_BYTES",
           "instruction": 1,
           "message": "4 byte(s) after this compute budget value are ignored; the runtime reads only the value, as shown",
-          "severity": "Info"
+          "severity": "info"
         }
       ],
       "raw": {
         "digest": "9f46f53cb1549cfb1d859dc7109c80f65b636658c9999b7f227a133aad7823a2",
-        "format": "solana v0",
-        "payload": "800100050aaab023fe56e9d5a2c9eda873078deb628640cc722bda607eb3085f44e7fe33cc7715b88282fe276aad181454caafa449bf5b97338ff8166e8e778d2cd743eca4eec245506fd4de6dbfab0dee8c902f7b6df5665386ea8444f97f9c8e6dd86352981e20d1c47320b4367016454bfb63dc0d1aa24034662dd8564ce831eedd43761e7bb1db21617379acdc0456255a6c333f73712ab1e0e98a5a28e5edb95cbbac0306466fe5211732ffecadba72c39be7bc8ce5bbc5f7126b2c439b3a4000000000000000000000000000000000000000000000000000000000000000000000000c429bd7c18f50f8156d9afc1cdde72df668d9ab3becaf6b570d5766645ad9c860314704340deddf371fd42472148f248e9d1a6d1a5eb2ac3acd8b7fd5d6b243be939a8309f56407187fff30ac54b169498be99f6d8e1bfd4244680cd4f7d1e272ddad10057595874e51f0e81ff54128b954a4f157f3a136ddc14d0214d56a0f060500050248191300050009010000010000000000050009038c06000000000000060200010c0200000051501c000000000007060000012b2c060993f17b64f484ae76fd0760000201342b03070a070b2d2c2e062f073700020c1b1c1d1e1f2c2d303431202122233500020c15351617343118352d2c3036191a063700020b24252627282c2d30342b292a0606320a0c0b330d0e0f102c2d30312b11121314323232080903043fbe9ca9b0959aa16cbe45bb3b00000000f9a2c93d2300000033f6cf04000000003200040000000be60a012e3601010bf41a0289102712a0987b40000064f40105e486bb89eb3d1c739259325e0fb148285c3ca27bb8ad0a339a02940f4586e21003010203073c414042706b3d8079ec56a518969600f96f89c6108da9f6af90d4cd8085c9cafbd708fe470e5c080b101e20097b7d7e020108580b69b6d39dfa00b75e791fa748f32c40702a1cc638734f2ecfbb5bb9426dc806000d01050e080303070ad5e627cc0496dda08dcbdb2bf26f795257fa39fcdb703f544e3d97ecf388cd490904020806090f0112100105e4fb3a3c7c5127e24fe1797040d732af63e519021594848cb28a0ae7fc4f06ec070900010b0c050800"
+        "format": "solana v0"
       },
       "schema": "signlens-explanation/1",
       "sections": [
@@ -246,17 +245,17 @@
             {
               "help": null,
               "label": "Amount",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "Amount",
+                "type": "amount",
                 "value": {
                   "asset": {
                     "decimals": 9,
                     "id": "native",
                     "symbol": "SOL",
-                    "trust": "Fact"
+                    "trust": "fact"
                   },
-                  "bound": "Exact",
+                  "bound": "exact",
                   "note": null,
                   "units": "1855569"
                 }
@@ -265,34 +264,34 @@
             {
               "help": null,
               "label": "From",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "Address",
+                "type": "address",
                 "value": {
+                  "address": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR",
                   "is_self": true,
                   "label": "Your wallet",
-                  "label_trust": "Verified",
-                  "text": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR"
+                  "label_trust": "verified"
                 }
               }
             },
             {
               "help": null,
               "label": "To",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "Address",
+                "type": "address",
                 "value": {
+                  "address": "91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD",
                   "is_self": false,
                   "label": null,
-                  "label_trust": "Fact",
-                  "text": "91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD"
+                  "label_trust": "fact"
                 }
               }
             }
           ],
           "kind": {
-            "type": "Instruction",
+            "type": "instruction",
             "value": {
               "index": 3
             }
@@ -306,17 +305,17 @@
             {
               "help": "What is swapped, after the commission is taken.",
               "label": "Send",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "Amount",
+                "type": "amount",
                 "value": {
                   "asset": {
                     "decimals": 9,
                     "id": "HcRLc9VDgjLeK154xDawfb1dmVJ98DoSqcwTHGqiDeJR",
                     "symbol": "ZCAT",
-                    "trust": "Verified"
+                    "trust": "verified"
                   },
-                  "bound": "Exact",
+                  "bound": "exact",
                   "note": null,
                   "units": "151360479993"
                 }
@@ -325,17 +324,17 @@
             {
               "help": "What comes back to you. Shown as at least when the program only guarantees a floor and fails below it.",
               "label": "Receive",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "Amount",
+                "type": "amount",
                 "value": {
                   "asset": {
                     "decimals": 9,
                     "id": "So11111111111111111111111111111111111111112",
                     "symbol": "SOL",
-                    "trust": "Verified"
+                    "trust": "verified"
                   },
-                  "bound": "AtLeast",
+                  "bound": "at_least",
                   "note": null,
                   "units": "80334153"
                 }
@@ -344,17 +343,17 @@
             {
               "help": "What the site expected when it built the transaction. The Receive floor is this less the slippage allowance.",
               "label": "Quoted",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "Amount",
+                "type": "amount",
                 "value": {
                   "asset": {
                     "decimals": 9,
                     "id": "So11111111111111111111111111111111111111112",
                     "symbol": "SOL",
-                    "trust": "Verified"
+                    "trust": "verified"
                   },
-                  "bound": "Exact",
+                  "bound": "exact",
                   "note": null,
                   "units": "80737843"
                 }
@@ -363,83 +362,83 @@
             {
               "help": "How far the executed price may move against you before the swap fails, as a percentage of the quote.",
               "label": "Max slippage",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "BasisPoints",
+                "type": "basis_points",
                 "value": 50
               }
             },
             {
               "help": "The cut the site takes, as a percentage of the swap.",
               "label": "Commission",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "BasisPoints",
+                "type": "basis_points",
                 "value": 81
               }
             },
             {
               "help": "Where the commission goes: an account of the site that built this transaction.",
               "label": "Commission account",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "Address",
+                "type": "address",
                 "value": {
+                  "address": "BEochrdGhm5pcKVF73DURYrGo1DLzxq6bBcUBphQR64d",
                   "is_self": false,
                   "label": null,
-                  "label_trust": "Fact",
-                  "text": "BEochrdGhm5pcKVF73DURYrGo1DLzxq6bBcUBphQR64d"
+                  "label_trust": "fact"
                 }
               }
             },
             {
               "help": "A share of any surplus over the quote the router keeps, in its own units.",
               "label": "Trim rate (program units)",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "Integer",
+                "type": "integer",
                 "value": "100"
               }
             },
             {
               "help": "A further fee rate the router applies, in its own units.",
               "label": "Charge rate (program units)",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "Integer",
+                "type": "integer",
                 "value": "500"
               }
             },
             {
               "help": "When set, the router closes the temporary token account it used and returns its rent.",
               "label": "Closes the temporary token account afterwards (flag)",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "Integer",
+                "type": "integer",
                 "value": "1"
               }
             },
             {
               "help": "The path the swap takes: which markets, and what share of the amount goes through each.",
               "label": "Route",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "List",
+                "type": "list",
                 "value": [
                   {
-                    "type": "Text",
+                    "type": "text",
                     "value": "RaydiumClmmSwapV2 (weight 2790, leg 1)"
                   },
                   {
-                    "type": "Text",
+                    "type": "text",
                     "value": "MeteoraDlmmSwap2 (weight 310, leg 1)"
                   },
                   {
-                    "type": "Text",
+                    "type": "text",
                     "value": "RaydiumClmmSwapV2 (weight 6900, leg 2)"
                   },
                   {
-                    "type": "Text",
+                    "type": "text",
                     "value": "ByrealClmm3 (weight 10000, leg 18)"
                   }
                 ]
@@ -448,43 +447,43 @@
             {
               "help": "The token account the tokens leave. It should be one of yours.",
               "label": "From account",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "Address",
+                "type": "address",
                 "value": {
+                  "address": "H51r5KPyahCGiGCQ9jZr5r5bukcXFaRDFtPFZBUyiHfo",
                   "is_self": true,
                   "label": "Your ZCAT account",
-                  "label_trust": "Verified",
-                  "text": "H51r5KPyahCGiGCQ9jZr5r5bukcXFaRDFtPFZBUyiHfo"
+                  "label_trust": "verified"
                 }
               }
             },
             {
               "help": "The token account that receives the tokens. Check it is yours, unless you mean to pay someone else.",
               "label": "To account",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "Address",
+                "type": "address",
                 "value": {
+                  "address": "91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD",
                   "is_self": false,
                   "label": null,
-                  "label_trust": "Fact",
-                  "text": "91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD"
+                  "label_trust": "fact"
                 }
               }
             },
             {
               "help": null,
               "label": "Additional accounts",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "Text",
+                "type": "text",
                 "value": "80, not named by this descriptor"
               }
             }
           ],
           "kind": {
-            "type": "Instruction",
+            "type": "instruction",
             "value": {
               "index": 5
             }
@@ -498,103 +497,103 @@
             {
               "help": null,
               "label": "Compute unit limit",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "Integer",
+                "type": "integer",
                 "value": "1251656"
               }
             },
             {
               "help": null,
               "label": "Heap size",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "Text",
+                "type": "text",
                 "value": "65536 bytes"
               }
             },
             {
               "help": null,
               "label": "Compute unit price",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "Text",
+                "type": "text",
                 "value": "1676 micro-lamports per unit"
               }
             },
             {
               "help": "An account that holds one token for one wallet.",
               "label": "Create token account: Token account",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "Address",
+                "type": "address",
                 "value": {
+                  "address": "91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD",
                   "is_self": false,
                   "label": null,
-                  "label_trust": "Fact",
-                  "text": "91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD"
+                  "label_trust": "fact"
                 }
               }
             },
             {
               "help": "The wallet that controls the account.",
               "label": "Create token account: Owner",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "Address",
+                "type": "address",
                 "value": {
+                  "address": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR",
                   "is_self": true,
                   "label": "Your wallet",
-                  "label_trust": "Verified",
-                  "text": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR"
+                  "label_trust": "verified"
                 }
               }
             },
             {
               "help": "The address that identifies the token itself, as opposed to an account holding some of it.",
               "label": "Create token account: Mint",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "Address",
+                "type": "address",
                 "value": {
+                  "address": "So11111111111111111111111111111111111111112",
                   "is_self": false,
                   "label": "SOL mint",
-                  "label_trust": "Verified",
-                  "text": "So11111111111111111111111111111111111111112"
+                  "label_trust": "verified"
                 }
               }
             },
             {
               "help": "Who pays the small deposit that keeps a new account alive on chain. It comes back when the account is closed.",
               "label": "Create token account: Rent paid by",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "Address",
+                "type": "address",
                 "value": {
+                  "address": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR",
                   "is_self": true,
                   "label": "Your wallet",
-                  "label_trust": "Verified",
-                  "text": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR"
+                  "label_trust": "verified"
                 }
               }
             },
             {
               "help": "The program that manages this token: SPL Token or Token-2022.",
               "label": "Create token account: Token program",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "Address",
+                "type": "address",
                 "value": {
+                  "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
                   "is_self": false,
                   "label": "Token program",
-                  "label_trust": "Verified",
-                  "text": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+                  "label_trust": "verified"
                 }
               }
             }
           ],
           "kind": {
-            "type": "Housekeeping"
+            "type": "housekeeping"
           },
           "subtitle": null,
           "title": "Also"
@@ -605,20 +604,20 @@
             {
               "help": null,
               "label": "Fee payer",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "Address",
+                "type": "address",
                 "value": {
+                  "address": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR",
                   "is_self": true,
                   "label": "Your wallet",
-                  "label_trust": "Verified",
-                  "text": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR"
+                  "label_trust": "verified"
                 }
               }
             }
           ],
           "kind": {
-            "type": "Signers"
+            "type": "signers"
           },
           "subtitle": null,
           "title": "Signers"
@@ -629,17 +628,17 @@
             {
               "help": null,
               "label": "Total",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "Amount",
+                "type": "amount",
                 "value": {
                   "asset": {
                     "decimals": 9,
                     "id": "native",
                     "symbol": "SOL",
-                    "trust": "Fact"
+                    "trust": "fact"
                   },
-                  "bound": "Exact",
+                  "bound": "exact",
                   "note": null,
                   "units": "7098"
                 }
@@ -648,17 +647,17 @@
             {
               "help": null,
               "label": "Base",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "Amount",
+                "type": "amount",
                 "value": {
                   "asset": {
                     "decimals": 9,
                     "id": "native",
                     "symbol": "SOL",
-                    "trust": "Fact"
+                    "trust": "fact"
                   },
-                  "bound": "Exact",
+                  "bound": "exact",
                   "note": null,
                   "units": "5000"
                 }
@@ -667,17 +666,17 @@
             {
               "help": null,
               "label": "Priority",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "Amount",
+                "type": "amount",
                 "value": {
                   "asset": {
                     "decimals": 9,
                     "id": "native",
                     "symbol": "SOL",
-                    "trust": "Fact"
+                    "trust": "fact"
                   },
-                  "bound": "Exact",
+                  "bound": "exact",
                   "note": null,
                   "units": "2098"
                 }
@@ -686,24 +685,24 @@
             {
               "help": null,
               "label": "Priority basis",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "Text",
+                "type": "text",
                 "value": "1676 micro-lamports per unit × 1251656 units requested"
               }
             },
             {
               "help": null,
               "label": "Rent deposits",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "Text",
+                "type": "text",
                 "value": "0.00148844 SOL; returned when the accounts are closed"
               }
             }
           ],
           "kind": {
-            "type": "Fees"
+            "type": "fees"
           },
           "subtitle": null,
           "title": "Fee"
@@ -714,15 +713,15 @@
             {
               "help": null,
               "label": "Expires",
-              "trust": "Fact",
+              "trust": "fact",
               "value": {
-                "type": "Text",
+                "type": "text",
                 "value": "in about a minute (recent blockhash)"
               }
             }
           ],
           "kind": {
-            "type": "Lifetime"
+            "type": "lifetime"
           },
           "subtitle": null,
           "title": "Validity"
@@ -733,33 +732,33 @@
             {
               "help": null,
               "label": "Result",
-              "trust": "Claimed",
+              "trust": "claimed",
               "value": {
-                "type": "Text",
+                "type": "text",
                 "value": "would succeed"
               }
             },
             {
               "help": null,
               "label": "Compute units",
-              "trust": "Claimed",
+              "trust": "claimed",
               "value": {
-                "type": "Integer",
+                "type": "integer",
                 "value": "4200"
               }
             },
             {
               "help": null,
               "label": "Your balances",
-              "trust": "Claimed",
+              "trust": "claimed",
               "value": {
-                "type": "Text",
+                "type": "text",
                 "value": "unchanged"
               }
             }
           ],
           "kind": {
-            "type": "Claims"
+            "type": "claims"
           },
           "subtitle": "the host's simulation",
           "title": "Simulated outcome"
@@ -767,7 +766,7 @@
       ],
       "summary": "2 actions: Send 0.001855569 SOL to 91rj…BXHD; Swap 151.360479993 ZCAT (verified) for ≥ 0.080334153 SOL (verified) via OKX",
       "text": "2 actions: Send 0.001855569 SOL to 91rj…BXHD; Swap 151.360479993 ZCAT (verified) for ≥ 0.080334153 SOL (verified) via OKX\nWARNING: review the findings before approving\n\nFindings:\n  [HIGH] The simulation credits your accounts with 0 SOL of SOL, less than the 0.080334153 SOL the instructions guarantee\n  [INFO] The destination token account is not one of your accounts for a verified token; the signer cannot prove who owns it (instruction 5)\n  [INFO] 4 byte(s) after this compute budget value are ignored; the runtime reads only the value, as shown (instruction 1)\n\n== Transfer | System program (verified)\n  Amount: 0.001855569 SOL\n  From: Your wallet (CVJ6…Q3bR) (verified)\n  To: 91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD\n\n== Swap | OKX DEX Router (descriptor reviewed 2026-10-06, upgradeable by CjoV…N1Mj)\n  Send: 151.360479993 ZCAT (verified)\n  Receive: ≥ 0.080334153 SOL (verified)\n  Quoted: 0.080737843 SOL (verified)\n  Max slippage: 0.50%\n  Commission: 0.81%\n  Commission account: BEochrdGhm5pcKVF73DURYrGo1DLzxq6bBcUBphQR64d\n  Trim rate (program units): 100\n  Charge rate (program units): 500\n  Closes the temporary token account afterwards (flag): 1\n  Route:\n    - RaydiumClmmSwapV2 (weight 2790, leg 1)\n    - MeteoraDlmmSwap2 (weight 310, leg 1)\n    - RaydiumClmmSwapV2 (weight 6900, leg 2)\n    - ByrealClmm3 (weight 10000, leg 18)\n  From account: Your ZCAT account (H51r…iHfo) (verified)\n  To account: 91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD\n  Additional accounts: 80, not named by this descriptor\n\n== Also [collapsed]\n  Compute unit limit: 1251656\n  Heap size: 65536 bytes\n  Compute unit price: 1676 micro-lamports per unit\n  Create token account: Token account: 91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD\n  Create token account: Owner: Your wallet (CVJ6…Q3bR) (verified)\n  Create token account: Mint: SOL mint (So11…1112) (verified)\n  Create token account: Rent paid by: Your wallet (CVJ6…Q3bR) (verified)\n  Create token account: Token program: Token program (Toke…Q5DA) (verified)\n\n== Signers\n  Fee payer: Your wallet (CVJ6…Q3bR) (verified)\n\n== Fee\n  Total: 0.000007098 SOL\n  Base: 0.000005 SOL\n  Priority: 0.000002098 SOL\n  Priority basis: 1676 micro-lamports per unit × 1251656 units requested\n  Rent deposits: 0.00148844 SOL; returned when the accounts are closed\n\n== Validity\n  Expires: in about a minute (recent blockhash)\n\n== Simulated outcome | the host's simulation (claimed, unverified)\n  Result: would succeed\n  Compute units: 4200\n  Your balances: unchanged\n\nEffects:\n  - send 0.001855569 SOL from Your wallet (CVJ6…Q3bR) (verified) to 91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD\n  - send 151.360479993 ZCAT (verified) from Your wallet (CVJ6…Q3bR) (verified) to OKX DEX Router (proV…CX3u) (verified)\n  - receive ≥ 0.080334153 SOL (verified) into Your wallet (CVJ6…Q3bR) (verified) from OKX DEX Router (proV…CX3u) (verified)\n  - create 91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD owned by Token program (Toke…Q5DA) (verified), depositing 0.00148844 SOL\n  - Your wallet (CVJ6…Q3bR) (verified) pays a fee of 0.000007098 SOL\n  - valid for about a minute (recent blockhash)\n\nRaw: solana v0 (804 bytes)\n  digest: 9f46f53cb1549cfb1d859dc7109c80f65b636658c9999b7f227a133aad7823a2\n",
-      "verdict": "Warn"
+      "verdict": "warn"
     }
   }
 }

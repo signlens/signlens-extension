@@ -112,9 +112,9 @@ test('the feedback strip sends the rating, and the transaction only when asked',
     await clickToClose(gate.getByRole('button', { name: 'Continue to Fake Wallet' }));
     await signing;
     await expect.poll(() => server.apiCalls.filter((c) => c.path === '/v1/feedback').length).toBe(1);
-    const sent = server.apiCalls.find((c) => c.path === '/v1/feedback')?.body as { messageHash: string };
+    const sent = server.apiCalls.find((c) => c.path === '/v1/feedback')?.body as { message_hash: string };
     expect(sent).toMatchObject({ rating: 'unclear', comment: 'What is a durable nonce?', transaction: null });
-    expect(sent.messageHash).toMatch(/^[0-9a-f]{64}$/);
+    expect(sent.message_hash).toMatch(/^[0-9a-f]{64}$/);
 
     // And with the box ticked, the bytes go along.
     const again = dapp.evaluate(({ wallet, base64 }: { wallet: string; base64: string }) => window.sign(wallet, base64), {
@@ -137,7 +137,7 @@ test('an explanation SignLens called OK has no transaction to offer for coverage
     const transfer = fixture('legacy_durable_nonce_token_transfer');
     await configure({ lookupTokens: false, simulate: false, mode: 'passthrough', upstream: 'Fake Wallet' });
     // The recorded explanation, called OK: a digest, so a strip to rate it in.
-    server.answerApi({ ...(recorded('legacy_durable_nonce_token_transfer') as object), verdict: 'Ok' });
+    server.answerApi({ ...(recorded('legacy_durable_nonce_token_transfer') as object), verdict: 'ok' });
     const signing = dapp.evaluate(({ wallet, base64 }: { wallet: string; base64: string }) => window.sign(wallet, base64), {
         wallet: WALLET,
         base64: transfer.base64,
@@ -211,7 +211,7 @@ test('a verdict this version does not know is an error, never a pass', async ({ 
 test('an effect this version does not know is shown as one, not left out', async ({ configure, context, dapp, server }) => {
     const transfer = fixture('legacy_durable_nonce_token_transfer');
     await configure({ lookupTokens: false, simulate: false, mode: 'passthrough', upstream: 'Fake Wallet' });
-    server.answerApi(explanation('Warn', { effects: [{ type: 'Drain', value: { everything: true } }] }));
+    server.answerApi(explanation('warn', { effects: [{ type: 'drain', value: { everything: true } }] }));
 
     const signing = dapp.evaluate(({ wallet, base64 }: { wallet: string; base64: string }) => window.sign(wallet, base64), {
         wallet: WALLET,
@@ -219,7 +219,7 @@ test('an effect this version does not know is shown as one, not left out', async
     });
     const gate = await liveGate(context);
     await expect(gate.locator('#band')).toHaveClass(/warning/);
-    await expect(gate.locator('.effects')).toContainText('Something this version cannot show (Drain); the full text below has it');
+    await expect(gate.locator('.effects')).toContainText('Something this version cannot show (drain); the full text below has it');
     await clickToClose(gate.getByRole('button', { name: 'Reject' }));
     expect((await signing).error).toContain('rejected in SignLens');
 });

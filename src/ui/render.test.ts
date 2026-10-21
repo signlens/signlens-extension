@@ -6,7 +6,7 @@ import type { Amount } from '../shared/types.ts';
 import { captureName, helpFor, quantity } from './render.ts';
 
 function amount(units: string, decimals: number | null): Amount {
-    return { units, asset: { id: 'x', symbol: null, decimals, trust: 'Fact' }, bound: 'Exact', note: null };
+    return { units, asset: { id: 'x', symbol: null, decimals, trust: 'fact' }, bound: 'exact', note: null };
 }
 
 test('a quantity is scaled by its decimals, grouped by thousands, and signed', () => {

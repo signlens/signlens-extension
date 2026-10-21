@@ -23,7 +23,7 @@ export function feedbackRecords(payload: FeedbackPayload): Feedback[] {
                 (record.transaction === null ||
                     (typeof record.transaction === 'string' && record.transaction.length <= MAX_TRANSACTION_BASE64)),
         )
-        .map((record) => ({ messageHash: record.digest, rating, comment, transaction: record.transaction }));
+        .map((record) => ({ message_hash: record.digest, rating, comment, transaction: record.transaction }));
 }
 
 /** Sends the records of `payload` to the API at `apiUrl`; whether it took them all. */

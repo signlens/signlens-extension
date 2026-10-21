@@ -1,0 +1,509 @@
+{
+  "request": {
+    "method": "POST",
+    "path": "/v1/explain",
+    "body": {
+      "transaction": "AmIHCiJr3qGOpw3J/RoC6nFPGp4cZvj5OXdFEW+2RtIxnatvYOnBfp5vgojfbCopIiEGbDEfKJ+S2VWpjID0YgOk0RfylCPfFYXp6tgDZr4E5Ojq7HTZ5pRCEzVLl2I7lFqHNzJjO0ZtaXZGuPvyYBu4pBJjBhaPS1vX2nXif7AIAgEIDWzbTSORkLlRD2B1iXNZmTugpfx/HKjCfePPBmQkM6QFyha/+yWS3ihSSiGhrp6o7V4IAQQWneno5Zm2D0aEsiyLAOs2rEgq9kakRnkb/IW8WOrE60uK5K1hUYgZKj4/Prl692pCMtSgUohtDM8D2KH3dJhtC1XSFybBbIUtkN+F2gA7Bnr1ABu4fDIf+oguy5B4LwWLy9RsmfGCd9Bmwv8Gp9UXGSxWjuCKhF9z0peIzwNcMUWyGrNE2AYuqUAAAJojKD3FS3qecYOCMGOFVDcc0dQ+7VOnOThCnjdAol44xvp6877brTo9ZfNqq8l0MbG75MLS9uDkfKYCA0UvXWEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbd9uHXZaGT2cvhRs7reawctIXtX1s3kTqM9YV+/wCpBqfVFxksXFEhjMlMPUrxf1ja7gibof1E49vZigAAAACMlyWPTiSJ8bs9ECkUjg2DC1oTmdr/EIQEjnvY2+n4WQMGRm/lIRcy/+ytunLDm+e8jOW7xfcSayxDmzpAAAAAdI9VKVQxKl861pri3hPZK0Q0k5M1x1y5QD/ks/GROa0FCAMCBQEEBAAAAAsHAAMGBwgJCgEBCQQEBwMACgxHNA8AAAAAAAYMAAUC+FAAAAwACQP4oQEAAAAAAA==",
+      "own_keys": [
+        "FakeWa11et1111111111111111111111111111111111"
+      ],
+      "contacts": [],
+      "render": true
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "chain": "solana",
+      "effects": [
+        {
+          "type": "transfer",
+          "value": {
+            "amount": {
+              "asset": {
+                "decimals": 6,
+                "id": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+                "symbol": "USDC",
+                "trust": "verified"
+              },
+              "bound": "exact",
+              "note": null,
+              "units": "996423"
+            },
+            "from": {
+              "address": "Ffz5kwUjkUNw7hV4r6iCJnUoXXsAPFHkCMCmKKDypiwg",
+              "is_self": false,
+              "label": null,
+              "label_trust": "fact"
+            },
+            "to": {
+              "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp",
+              "is_self": false,
+              "label": null,
+              "label_trust": "fact"
+            }
+          }
+        },
+        {
+          "type": "create",
+          "value": {
+            "account": {
+              "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp",
+              "is_self": false,
+              "label": null,
+              "label_trust": "fact"
+            },
+            "deposit": {
+              "asset": {
+                "decimals": 9,
+                "id": "native",
+                "symbol": "SOL",
+                "trust": "fact"
+              },
+              "bound": "exact",
+              "note": null,
+              "units": "1488440"
+            },
+            "if_missing": true,
+            "owner": {
+              "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "is_self": false,
+              "label": "Token program",
+              "label_trust": "verified"
+            }
+          }
+        },
+        {
+          "type": "fee",
+          "value": {
+            "amount": {
+              "asset": {
+                "decimals": 9,
+                "id": "native",
+                "symbol": "SOL",
+                "trust": "fact"
+              },
+              "bound": "exact",
+              "note": null,
+              "units": "12218"
+            },
+            "payer": {
+              "address": "8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa",
+              "is_self": false,
+              "label": null,
+              "label_trust": "fact"
+            }
+          }
+        },
+        {
+          "type": "lifetime",
+          "value": {
+            "type": "durable_nonce",
+            "value": {
+              "nonce_account": {
+                "address": "AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw",
+                "is_self": false,
+                "label": null,
+                "label_trust": "fact"
+              }
+            }
+          }
+        }
+      ],
+      "findings": [
+        {
+          "code": "DURABLE_NONCE",
+          "instruction": null,
+          "message": "This signature never expires; anyone holding the signed transaction can submit it at any later time until the nonce is advanced",
+          "severity": "high"
+        },
+        {
+          "code": "FEE_PAID_BY_OTHER",
+          "instruction": null,
+          "message": "The fee is paid by 8Kvy…p1fa, not by you",
+          "severity": "info"
+        }
+      ],
+      "raw": {
+        "digest": "05d51e61e33bad79d124089e71be7988c37cccf1f9268ee6e338e439f5ec582f",
+        "format": "solana legacy"
+      },
+      "schema": "signlens-explanation/1",
+      "sections": [
+        {
+          "collapsed": false,
+          "fields": [
+            {
+              "help": null,
+              "label": "Amount",
+              "trust": "fact",
+              "value": {
+                "type": "amount",
+                "value": {
+                  "asset": {
+                    "decimals": 6,
+                    "id": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+                    "symbol": "USDC",
+                    "trust": "verified"
+                  },
+                  "bound": "exact",
+                  "note": null,
+                  "units": "996423"
+                }
+              }
+            },
+            {
+              "help": null,
+              "label": "From",
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "Ffz5kwUjkUNw7hV4r6iCJnUoXXsAPFHkCMCmKKDypiwg",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "fact"
+                }
+              }
+            },
+            {
+              "help": null,
+              "label": "To",
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "fact"
+                }
+              }
+            },
+            {
+              "help": null,
+              "label": "Authorized by",
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "fact"
+                }
+              }
+            },
+            {
+              "help": null,
+              "label": "Mint",
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+                  "is_self": false,
+                  "label": "USDC mint",
+                  "label_trust": "verified"
+                }
+              }
+            }
+          ],
+          "kind": {
+            "type": "instruction",
+            "value": {
+              "index": 2
+            }
+          },
+          "subtitle": "Token program (verified)",
+          "title": "Transfer tokens"
+        },
+        {
+          "collapsed": true,
+          "fields": [
+            {
+              "help": null,
+              "label": "Advance durable nonce: Nonce account",
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "fact"
+                }
+              }
+            },
+            {
+              "help": null,
+              "label": "Advance durable nonce: Authority",
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "EbsUZEFAU23Z2SgAymFtU2hADLiyNLzaPLKiJfvpKnE7",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "fact"
+                }
+              }
+            },
+            {
+              "help": null,
+              "label": "Create token account if missing: Token account",
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "fact"
+                }
+              }
+            },
+            {
+              "help": null,
+              "label": "Create token account if missing: Owner",
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "BNgsxo3eHqQLNTaKy4juhAUJ8DyewcJNEcYdMuSmTT1Z",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "fact"
+                }
+              }
+            },
+            {
+              "help": null,
+              "label": "Create token account if missing: Mint",
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+                  "is_self": false,
+                  "label": "USDC mint",
+                  "label_trust": "verified"
+                }
+              }
+            },
+            {
+              "help": null,
+              "label": "Create token account if missing: Rent paid by",
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "fact"
+                }
+              }
+            },
+            {
+              "help": null,
+              "label": "Create token account if missing: Token program",
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+                  "is_self": false,
+                  "label": "Token program",
+                  "label_trust": "verified"
+                }
+              }
+            },
+            {
+              "help": null,
+              "label": "Compute unit limit",
+              "trust": "fact",
+              "value": {
+                "type": "integer",
+                "value": "20728"
+              }
+            },
+            {
+              "help": null,
+              "label": "Compute unit price",
+              "trust": "fact",
+              "value": {
+                "type": "text",
+                "value": "107000 micro-lamports per unit"
+              }
+            }
+          ],
+          "kind": {
+            "type": "housekeeping"
+          },
+          "subtitle": null,
+          "title": "Also"
+        },
+        {
+          "collapsed": false,
+          "fields": [
+            {
+              "help": null,
+              "label": "Fee payer",
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "fact"
+                }
+              }
+            },
+            {
+              "help": null,
+              "label": "Signer",
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "EbsUZEFAU23Z2SgAymFtU2hADLiyNLzaPLKiJfvpKnE7",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "fact"
+                }
+              }
+            }
+          ],
+          "kind": {
+            "type": "signers"
+          },
+          "subtitle": null,
+          "title": "Signers"
+        },
+        {
+          "collapsed": false,
+          "fields": [
+            {
+              "help": null,
+              "label": "Total",
+              "trust": "fact",
+              "value": {
+                "type": "amount",
+                "value": {
+                  "asset": {
+                    "decimals": 9,
+                    "id": "native",
+                    "symbol": "SOL",
+                    "trust": "fact"
+                  },
+                  "bound": "exact",
+                  "note": null,
+                  "units": "12218"
+                }
+              }
+            },
+            {
+              "help": null,
+              "label": "Base",
+              "trust": "fact",
+              "value": {
+                "type": "amount",
+                "value": {
+                  "asset": {
+                    "decimals": 9,
+                    "id": "native",
+                    "symbol": "SOL",
+                    "trust": "fact"
+                  },
+                  "bound": "exact",
+                  "note": null,
+                  "units": "10000"
+                }
+              }
+            },
+            {
+              "help": null,
+              "label": "Priority",
+              "trust": "fact",
+              "value": {
+                "type": "amount",
+                "value": {
+                  "asset": {
+                    "decimals": 9,
+                    "id": "native",
+                    "symbol": "SOL",
+                    "trust": "fact"
+                  },
+                  "bound": "exact",
+                  "note": null,
+                  "units": "2218"
+                }
+              }
+            },
+            {
+              "help": null,
+              "label": "Priority basis",
+              "trust": "fact",
+              "value": {
+                "type": "text",
+                "value": "107000 micro-lamports per unit × 20728 units requested"
+              }
+            },
+            {
+              "help": null,
+              "label": "Rent deposits",
+              "trust": "fact",
+              "value": {
+                "type": "text",
+                "value": "up to 0.00148844 SOL if the accounts it creates only when missing do not exist yet; returned when the accounts are closed"
+              }
+            }
+          ],
+          "kind": {
+            "type": "fees"
+          },
+          "subtitle": null,
+          "title": "Fee"
+        },
+        {
+          "collapsed": false,
+          "fields": [
+            {
+              "help": null,
+              "label": "Expires",
+              "trust": "fact",
+              "value": {
+                "type": "text",
+                "value": "never, until the nonce account is advanced"
+              }
+            },
+            {
+              "help": null,
+              "label": "Nonce account",
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "fact"
+                }
+              }
+            }
+          ],
+          "kind": {
+            "type": "lifetime"
+          },
+          "subtitle": null,
+          "title": "Validity"
+        }
+      ],
+      "summary": "Transfer 0.996423 USDC (verified) from Ffz5…piwg to DV3B…L7Qp",
+      "text": "Transfer 0.996423 USDC (verified) from Ffz5…piwg to DV3B…L7Qp\nWARNING: review the findings before approving\n\nFindings:\n  [HIGH] This signature never expires; anyone holding the signed transaction can submit it at any later time until the nonce is advanced\n  [INFO] The fee is paid by 8Kvy…p1fa, not by you\n\n== Transfer tokens | Token program (verified)\n  Amount: 0.996423 USDC (verified)\n  From: Ffz5kwUjkUNw7hV4r6iCJnUoXXsAPFHkCMCmKKDypiwg\n  To: DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp\n  Authorized by: 8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa\n  Mint: USDC mint (EPjF…Dt1v) (verified)\n\n== Also [collapsed]\n  Advance durable nonce: Nonce account: AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw\n  Advance durable nonce: Authority: EbsUZEFAU23Z2SgAymFtU2hADLiyNLzaPLKiJfvpKnE7\n  Create token account if missing: Token account: DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp\n  Create token account if missing: Owner: BNgsxo3eHqQLNTaKy4juhAUJ8DyewcJNEcYdMuSmTT1Z\n  Create token account if missing: Mint: USDC mint (EPjF…Dt1v) (verified)\n  Create token account if missing: Rent paid by: 8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa\n  Create token account if missing: Token program: Token program (Toke…Q5DA) (verified)\n  Compute unit limit: 20728\n  Compute unit price: 107000 micro-lamports per unit\n\n== Signers\n  Fee payer: 8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa\n  Signer: EbsUZEFAU23Z2SgAymFtU2hADLiyNLzaPLKiJfvpKnE7\n\n== Fee\n  Total: 0.000012218 SOL\n  Base: 0.00001 SOL\n  Priority: 0.000002218 SOL\n  Priority basis: 107000 micro-lamports per unit × 20728 units requested\n  Rent deposits: up to 0.00148844 SOL if the accounts it creates only when missing do not exist yet; returned when the accounts are closed\n\n== Validity\n  Expires: never, until the nonce account is advanced\n  Nonce account: AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw\n\nEffects:\n  - transfer 0.996423 USDC (verified) from Ffz5kwUjkUNw7hV4r6iCJnUoXXsAPFHkCMCmKKDypiwg to DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp\n  - create DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp owned by Token program (Toke…Q5DA) (verified), depositing 0.00148844 SOL unless it already exists\n  - 8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa pays a fee of 0.000012218 SOL\n  - valid FOREVER until nonce account AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw is advanced (durable nonce)\n\nRaw: solana legacy (511 bytes)\n  digest: 05d51e61e33bad79d124089e71be7988c37cccf1f9268ee6e338e439f5ec582f\n",
+      "verdict": "warn"
+    }
+  }
+}

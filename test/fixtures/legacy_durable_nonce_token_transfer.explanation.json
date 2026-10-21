@@ -2,94 +2,94 @@
   "chain": "solana",
   "effects": [
     {
-      "type": "Transfer",
+      "type": "transfer",
       "value": {
         "amount": {
           "asset": {
             "decimals": 6,
             "id": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
             "symbol": "USDC",
-            "trust": "Verified"
+            "trust": "verified"
           },
-          "bound": "Exact",
+          "bound": "exact",
           "note": null,
           "units": "996423"
         },
         "from": {
+          "address": "Ffz5kwUjkUNw7hV4r6iCJnUoXXsAPFHkCMCmKKDypiwg",
           "is_self": false,
           "label": null,
-          "label_trust": "Fact",
-          "text": "Ffz5kwUjkUNw7hV4r6iCJnUoXXsAPFHkCMCmKKDypiwg"
+          "label_trust": "fact"
         },
         "to": {
+          "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp",
           "is_self": false,
           "label": null,
-          "label_trust": "Fact",
-          "text": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp"
+          "label_trust": "fact"
         }
       }
     },
     {
-      "type": "Create",
+      "type": "create",
       "value": {
         "account": {
+          "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp",
           "is_self": false,
           "label": null,
-          "label_trust": "Fact",
-          "text": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp"
+          "label_trust": "fact"
         },
         "deposit": {
           "asset": {
             "decimals": 9,
             "id": "native",
             "symbol": "SOL",
-            "trust": "Fact"
+            "trust": "fact"
           },
-          "bound": "Exact",
+          "bound": "exact",
           "note": null,
           "units": "1488440"
         },
         "if_missing": true,
         "owner": {
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
           "is_self": false,
           "label": "Token program",
-          "label_trust": "Verified",
-          "text": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+          "label_trust": "verified"
         }
       }
     },
     {
-      "type": "Fee",
+      "type": "fee",
       "value": {
         "amount": {
           "asset": {
             "decimals": 9,
             "id": "native",
             "symbol": "SOL",
-            "trust": "Fact"
+            "trust": "fact"
           },
-          "bound": "Exact",
+          "bound": "exact",
           "note": null,
           "units": "12218"
         },
         "payer": {
+          "address": "8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa",
           "is_self": false,
           "label": null,
-          "label_trust": "Fact",
-          "text": "8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa"
+          "label_trust": "fact"
         }
       }
     },
     {
-      "type": "Lifetime",
+      "type": "lifetime",
       "value": {
-        "type": "DurableNonce",
+        "type": "durable_nonce",
         "value": {
           "nonce_account": {
+            "address": "AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw",
             "is_self": false,
             "label": null,
-            "label_trust": "Fact",
-            "text": "AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw"
+            "label_trust": "fact"
           }
         }
       }
@@ -100,13 +100,12 @@
       "code": "DURABLE_NONCE",
       "instruction": null,
       "message": "This signature never expires; anyone holding the signed transaction can submit it at any later time until the nonce is advanced",
-      "severity": "High"
+      "severity": "high"
     }
   ],
   "raw": {
     "digest": "05d51e61e33bad79d124089e71be7988c37cccf1f9268ee6e338e439f5ec582f",
-    "format": "solana legacy",
-    "payload": "0201080d6cdb4d239190b9510f6075897359993ba0a5fc7f1ca8c27de3cf06642433a405ca16bffb2592de28524a21a1ae9ea8ed5e080104169de9e8e599b60f4684b22c8b00eb36ac482af646a446791bfc85bc58eac4eb4b8ae4ad615188192a3e3f3eb97af76a4232d4a052886d0ccf03d8a1f774986d0b55d21726c16c852d90df85da003b067af5001bb87c321ffa882ecb90782f058bcbd46c99f18277d066c2ff06a7d517192c568ee08a845f73d29788cf035c3145b21ab344d8062ea94000009a23283dc54b7a9e71838230638554371cd1d43eed53a73938429e3740a25e38c6fa7af3bedbad3a3d65f36aabc97431b1bbe4c2d2f6e0e47ca60203452f5d61000000000000000000000000000000000000000000000000000000000000000006ddf6e1d765a193d9cbe146ceeb79ac1cb485ed5f5b37913a8cf5857eff00a906a7d517192c5c51218cc94c3d4af17f58daee089ba1fd44e3dbd98a000000008c97258f4e2489f1bb3d1029148e0d830b5a1399daff1084048e7bd8dbe9f8590306466fe5211732ffecadba72c39be7bc8ce5bbc5f7126b2c439b3a40000000748f552954312a5f3ad69ae2de13d92b4434939335c75cb9403fe4b3f19139ad05080302050104040000000b070003060708090a01010904040703000a0c47340f0000000000060c000502f85000000c000903f8a1010000000000"
+    "format": "solana legacy"
   },
   "schema": "signlens-explanation/1",
   "sections": [
@@ -116,17 +115,17 @@
         {
           "help": null,
           "label": "Amount",
-          "trust": "Fact",
+          "trust": "fact",
           "value": {
-            "type": "Amount",
+            "type": "amount",
             "value": {
               "asset": {
                 "decimals": 6,
                 "id": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
                 "symbol": "USDC",
-                "trust": "Verified"
+                "trust": "verified"
               },
-              "bound": "Exact",
+              "bound": "exact",
               "note": null,
               "units": "996423"
             }
@@ -135,62 +134,62 @@
         {
           "help": null,
           "label": "From",
-          "trust": "Fact",
+          "trust": "fact",
           "value": {
-            "type": "Address",
+            "type": "address",
             "value": {
+              "address": "Ffz5kwUjkUNw7hV4r6iCJnUoXXsAPFHkCMCmKKDypiwg",
               "is_self": false,
               "label": null,
-              "label_trust": "Fact",
-              "text": "Ffz5kwUjkUNw7hV4r6iCJnUoXXsAPFHkCMCmKKDypiwg"
+              "label_trust": "fact"
             }
           }
         },
         {
           "help": null,
           "label": "To",
-          "trust": "Fact",
+          "trust": "fact",
           "value": {
-            "type": "Address",
+            "type": "address",
             "value": {
+              "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp",
               "is_self": false,
               "label": null,
-              "label_trust": "Fact",
-              "text": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp"
+              "label_trust": "fact"
             }
           }
         },
         {
           "help": null,
           "label": "Authorized by",
-          "trust": "Fact",
+          "trust": "fact",
           "value": {
-            "type": "Address",
+            "type": "address",
             "value": {
+              "address": "8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa",
               "is_self": false,
               "label": null,
-              "label_trust": "Fact",
-              "text": "8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa"
+              "label_trust": "fact"
             }
           }
         },
         {
           "help": null,
           "label": "Mint",
-          "trust": "Fact",
+          "trust": "fact",
           "value": {
-            "type": "Address",
+            "type": "address",
             "value": {
+              "address": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
               "is_self": false,
               "label": "USDC mint",
-              "label_trust": "Verified",
-              "text": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+              "label_trust": "verified"
             }
           }
         }
       ],
       "kind": {
-        "type": "Instruction",
+        "type": "instruction",
         "value": {
           "index": 2
         }
@@ -204,122 +203,122 @@
         {
           "help": null,
           "label": "Advance durable nonce: Nonce account",
-          "trust": "Fact",
+          "trust": "fact",
           "value": {
-            "type": "Address",
+            "type": "address",
             "value": {
+              "address": "AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw",
               "is_self": false,
               "label": null,
-              "label_trust": "Fact",
-              "text": "AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw"
+              "label_trust": "fact"
             }
           }
         },
         {
           "help": null,
           "label": "Advance durable nonce: Authority",
-          "trust": "Fact",
+          "trust": "fact",
           "value": {
-            "type": "Address",
+            "type": "address",
             "value": {
+              "address": "EbsUZEFAU23Z2SgAymFtU2hADLiyNLzaPLKiJfvpKnE7",
               "is_self": false,
               "label": null,
-              "label_trust": "Fact",
-              "text": "EbsUZEFAU23Z2SgAymFtU2hADLiyNLzaPLKiJfvpKnE7"
+              "label_trust": "fact"
             }
           }
         },
         {
           "help": null,
           "label": "Create token account if missing: Token account",
-          "trust": "Fact",
+          "trust": "fact",
           "value": {
-            "type": "Address",
+            "type": "address",
             "value": {
+              "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp",
               "is_self": false,
               "label": null,
-              "label_trust": "Fact",
-              "text": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp"
+              "label_trust": "fact"
             }
           }
         },
         {
           "help": null,
           "label": "Create token account if missing: Owner",
-          "trust": "Fact",
+          "trust": "fact",
           "value": {
-            "type": "Address",
+            "type": "address",
             "value": {
+              "address": "BNgsxo3eHqQLNTaKy4juhAUJ8DyewcJNEcYdMuSmTT1Z",
               "is_self": false,
               "label": null,
-              "label_trust": "Fact",
-              "text": "BNgsxo3eHqQLNTaKy4juhAUJ8DyewcJNEcYdMuSmTT1Z"
+              "label_trust": "fact"
             }
           }
         },
         {
           "help": null,
           "label": "Create token account if missing: Mint",
-          "trust": "Fact",
+          "trust": "fact",
           "value": {
-            "type": "Address",
+            "type": "address",
             "value": {
+              "address": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
               "is_self": false,
               "label": "USDC mint",
-              "label_trust": "Verified",
-              "text": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+              "label_trust": "verified"
             }
           }
         },
         {
           "help": null,
           "label": "Create token account if missing: Rent paid by",
-          "trust": "Fact",
+          "trust": "fact",
           "value": {
-            "type": "Address",
+            "type": "address",
             "value": {
+              "address": "8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa",
               "is_self": false,
               "label": null,
-              "label_trust": "Fact",
-              "text": "8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa"
+              "label_trust": "fact"
             }
           }
         },
         {
           "help": null,
           "label": "Create token account if missing: Token program",
-          "trust": "Fact",
+          "trust": "fact",
           "value": {
-            "type": "Address",
+            "type": "address",
             "value": {
+              "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
               "is_self": false,
               "label": "Token program",
-              "label_trust": "Verified",
-              "text": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+              "label_trust": "verified"
             }
           }
         },
         {
           "help": null,
           "label": "Compute unit limit",
-          "trust": "Fact",
+          "trust": "fact",
           "value": {
-            "type": "Integer",
+            "type": "integer",
             "value": "20728"
           }
         },
         {
           "help": null,
           "label": "Compute unit price",
-          "trust": "Fact",
+          "trust": "fact",
           "value": {
-            "type": "Text",
+            "type": "text",
             "value": "107000 micro-lamports per unit"
           }
         }
       ],
       "kind": {
-        "type": "Housekeeping"
+        "type": "housekeeping"
       },
       "subtitle": null,
       "title": "Also"
@@ -330,34 +329,34 @@
         {
           "help": null,
           "label": "Fee payer",
-          "trust": "Fact",
+          "trust": "fact",
           "value": {
-            "type": "Address",
+            "type": "address",
             "value": {
+              "address": "8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa",
               "is_self": false,
               "label": null,
-              "label_trust": "Fact",
-              "text": "8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa"
+              "label_trust": "fact"
             }
           }
         },
         {
           "help": null,
           "label": "Signer",
-          "trust": "Fact",
+          "trust": "fact",
           "value": {
-            "type": "Address",
+            "type": "address",
             "value": {
+              "address": "EbsUZEFAU23Z2SgAymFtU2hADLiyNLzaPLKiJfvpKnE7",
               "is_self": false,
               "label": null,
-              "label_trust": "Fact",
-              "text": "EbsUZEFAU23Z2SgAymFtU2hADLiyNLzaPLKiJfvpKnE7"
+              "label_trust": "fact"
             }
           }
         }
       ],
       "kind": {
-        "type": "Signers"
+        "type": "signers"
       },
       "subtitle": null,
       "title": "Signers"
@@ -368,17 +367,17 @@
         {
           "help": null,
           "label": "Total",
-          "trust": "Fact",
+          "trust": "fact",
           "value": {
-            "type": "Amount",
+            "type": "amount",
             "value": {
               "asset": {
                 "decimals": 9,
                 "id": "native",
                 "symbol": "SOL",
-                "trust": "Fact"
+                "trust": "fact"
               },
-              "bound": "Exact",
+              "bound": "exact",
               "note": null,
               "units": "12218"
             }
@@ -387,17 +386,17 @@
         {
           "help": null,
           "label": "Base",
-          "trust": "Fact",
+          "trust": "fact",
           "value": {
-            "type": "Amount",
+            "type": "amount",
             "value": {
               "asset": {
                 "decimals": 9,
                 "id": "native",
                 "symbol": "SOL",
-                "trust": "Fact"
+                "trust": "fact"
               },
-              "bound": "Exact",
+              "bound": "exact",
               "note": null,
               "units": "10000"
             }
@@ -406,17 +405,17 @@
         {
           "help": null,
           "label": "Priority",
-          "trust": "Fact",
+          "trust": "fact",
           "value": {
-            "type": "Amount",
+            "type": "amount",
             "value": {
               "asset": {
                 "decimals": 9,
                 "id": "native",
                 "symbol": "SOL",
-                "trust": "Fact"
+                "trust": "fact"
               },
-              "bound": "Exact",
+              "bound": "exact",
               "note": null,
               "units": "2218"
             }
@@ -425,24 +424,24 @@
         {
           "help": null,
           "label": "Priority basis",
-          "trust": "Fact",
+          "trust": "fact",
           "value": {
-            "type": "Text",
+            "type": "text",
             "value": "107000 micro-lamports per unit × 20728 units requested"
           }
         },
         {
           "help": null,
           "label": "Rent deposits",
-          "trust": "Fact",
+          "trust": "fact",
           "value": {
-            "type": "Text",
+            "type": "text",
             "value": "up to 0.00148844 SOL if the accounts it creates only when missing do not exist yet; returned when the accounts are closed"
           }
         }
       ],
       "kind": {
-        "type": "Fees"
+        "type": "fees"
       },
       "subtitle": null,
       "title": "Fee"
@@ -453,29 +452,29 @@
         {
           "help": null,
           "label": "Expires",
-          "trust": "Fact",
+          "trust": "fact",
           "value": {
-            "type": "Text",
+            "type": "text",
             "value": "never, until the nonce account is advanced"
           }
         },
         {
           "help": null,
           "label": "Nonce account",
-          "trust": "Fact",
+          "trust": "fact",
           "value": {
-            "type": "Address",
+            "type": "address",
             "value": {
+              "address": "AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw",
               "is_self": false,
               "label": null,
-              "label_trust": "Fact",
-              "text": "AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw"
+              "label_trust": "fact"
             }
           }
         }
       ],
       "kind": {
-        "type": "Lifetime"
+        "type": "lifetime"
       },
       "subtitle": null,
       "title": "Validity"
@@ -483,5 +482,5 @@
   ],
   "summary": "Transfer 0.996423 USDC (verified) from Ffz5…piwg to DV3B…L7Qp",
   "text": "Transfer 0.996423 USDC (verified) from Ffz5…piwg to DV3B…L7Qp\nWARNING: review the findings before approving\n\nFindings:\n  [HIGH] This signature never expires; anyone holding the signed transaction can submit it at any later time until the nonce is advanced\n\n== Transfer tokens | Token program (verified)\n  Amount: 0.996423 USDC (verified)\n  From: Ffz5kwUjkUNw7hV4r6iCJnUoXXsAPFHkCMCmKKDypiwg\n  To: DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp\n  Authorized by: 8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa\n  Mint: USDC mint (EPjF…Dt1v) (verified)\n\n== Also [collapsed]\n  Advance durable nonce: Nonce account: AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw\n  Advance durable nonce: Authority: EbsUZEFAU23Z2SgAymFtU2hADLiyNLzaPLKiJfvpKnE7\n  Create token account if missing: Token account: DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp\n  Create token account if missing: Owner: BNgsxo3eHqQLNTaKy4juhAUJ8DyewcJNEcYdMuSmTT1Z\n  Create token account if missing: Mint: USDC mint (EPjF…Dt1v) (verified)\n  Create token account if missing: Rent paid by: 8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa\n  Create token account if missing: Token program: Token program (Toke…Q5DA) (verified)\n  Compute unit limit: 20728\n  Compute unit price: 107000 micro-lamports per unit\n\n== Signers\n  Fee payer: 8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa\n  Signer: EbsUZEFAU23Z2SgAymFtU2hADLiyNLzaPLKiJfvpKnE7\n\n== Fee\n  Total: 0.000012218 SOL\n  Base: 0.00001 SOL\n  Priority: 0.000002218 SOL\n  Priority basis: 107000 micro-lamports per unit × 20728 units requested\n  Rent deposits: up to 0.00148844 SOL if the accounts it creates only when missing do not exist yet; returned when the accounts are closed\n\n== Validity\n  Expires: never, until the nonce account is advanced\n  Nonce account: AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw\n\nEffects:\n  - transfer 0.996423 USDC (verified) from Ffz5kwUjkUNw7hV4r6iCJnUoXXsAPFHkCMCmKKDypiwg to DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp\n  - create DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp owned by Token program (Toke…Q5DA) (verified), depositing 0.00148844 SOL unless it already exists\n  - 8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa pays a fee of 0.000012218 SOL\n  - valid FOREVER until nonce account AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw is advanced (durable nonce)\n\nRaw: solana legacy (511 bytes)\n  digest: 05d51e61e33bad79d124089e71be7988c37cccf1f9268ee6e338e439f5ec582f\n",
-  "verdict": "Warn"
+  "verdict": "warn"
 }

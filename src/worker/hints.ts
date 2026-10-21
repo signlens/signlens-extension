@@ -17,14 +17,14 @@ const hintCache = new Map<string, TokenHint | null>();
 /** The amounts an effect moves, a proposed one's included. */
 function effectAmounts(effect: Effect): Amount[] {
     switch (effect.type) {
-        case 'Transfer':
-        case 'Burn':
-        case 'Delegate':
-        case 'Fee':
+        case 'transfer':
+        case 'burn':
+        case 'delegate':
+        case 'fee':
             return [effect.value.amount];
-        case 'Create':
+        case 'create':
             return effect.value.deposit ? [effect.value.deposit] : [];
-        case 'Proposed':
+        case 'proposed':
             return effectAmounts(effect.value.effect);
         default:
             return [];
@@ -35,7 +35,7 @@ function effectAmounts(effect: Effect): Amount[] {
 export function unknownMints(document: Explanation): string[] {
     const amounts = document.effects.flatMap(effectAmounts);
     for (const section of document.sections) {
-        for (const field of section.fields) if (field.value.type === 'Amount') amounts.push(field.value.value);
+        for (const field of section.fields) if (field.value.type === 'amount') amounts.push(field.value.value);
     }
     const mints = new Set<string>();
     for (const { asset } of amounts) {

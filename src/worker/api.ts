@@ -22,12 +22,12 @@ function root(apiUrl: string): string {
     return apiUrl.trim().replace(/\/+$/, '');
 }
 
-/** An error document in the engine's own shape, so callers read one kind. */
+/** An error document in the API's shape, so callers read one kind. */
 function errorDocument(code: string, message: string): ErrorDocument {
-    return { schema: 'signlens-api/1', error: { code, message } };
+    return { schema: 'signlens-api-error/1', error: { code, message } };
 }
 
-/** The engine's or the API's own error document, with only what is shown of it, cut to size. */
+/** The API's error document, its own or the engine's refusal, with only what is shown of it, cut to size. */
 function passedOn(document: ErrorDocument): ErrorDocument {
     const code = typeof document.error.code === 'string' ? document.error.code.slice(0, 100) : 'api';
     return errorDocument(code, document.error.message.slice(0, 2_000));
@@ -105,14 +105,14 @@ export async function apiStatus(apiUrl: string): Promise<ApiStatus | { error: st
         const response = await fetch(`${base}/v1/packs`, { cache: 'no-store', signal: AbortSignal.timeout(5_000) });
         if (!response.ok) return { error: `the API at ${base} answered HTTP ${response.status}` };
         const packs = objectFields(await response.json().catch(() => null));
-        const pack = objectFields(packs?.descriptorPack);
+        const pack = objectFields(packs?.descriptor_pack);
         const programs = count(pack?.programs);
         if (!packs || programs === null) return { error: `the API at ${base} answered a status this version cannot read` };
         return {
             engine: typeof packs.engine === 'string' ? printable(packs.engine, 40) : '?',
             programs,
-            tokens: count(objectFields(packs.tokenSnapshot)?.tokens) ?? 0,
-            packsAt: typeof pack?.createdAt === 'number' && Number.isFinite(pack.createdAt) ? pack.createdAt : null,
+            tokens: count(objectFields(packs.token_snapshot)?.tokens) ?? 0,
+            packsAt: typeof pack?.created_at === 'number' && Number.isFinite(pack.created_at) ? pack.created_at : null,
         };
     } catch (error) {
         return { error: `the API at ${base} did not answer (${describe(error)})` };
