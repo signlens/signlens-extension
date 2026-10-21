@@ -23,8 +23,12 @@ before it, so everything below is new.
   first" off when SignLens would not refuse it; anything else (no answer,
   a closed or reloaded page, no decision in time) refuses it. A page that
   goes stops the calls made for its request, and one it withdrew before
-  anything was shown is not kept. In
-  watch-only mode it connects as any address, explains, and refuses.
+  anything was shown is not kept. The connection holds when the wallet
+  behind SignLens drops its own, as jup.ag makes Backpack do whenever
+  another wallet is connected: SignLens takes it up again, silently,
+  before handing the wallet the next request, and ends the session only
+  if the wallet will not reconnect without asking. In watch-only mode it
+  connects as any address, explains, and refuses.
 - **What the dapp gets.** The wallet is handed SignLens's own copy of the
   bytes it explained, taken when the dapp asked, whatever the page does
   afterwards (writing into its array, a getter, a replaced built-in). The

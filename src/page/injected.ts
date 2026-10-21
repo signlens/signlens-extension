@@ -432,8 +432,68 @@
         return { passOn: false, by: 'user', why };
     }
 
+    /** Whether `a` and `b` hold the same addresses, in the same order. */
+    function sameAddresses(a: readonly WalletAccount[], b: readonly WalletAccount[]): boolean {
+        if (a.length !== b.length) return false;
+        for (let i = 0; i < a.length; i += 1) if (a[i]?.address !== b[i]?.address) return false;
+        return true;
+    }
+
+    /**
+     * The accounts of the wallet behind SignLens, asked for again, silently,
+     * if it dropped its connection to the page since (see the change
+     * listener in `connect`). Asked just before it is handed a request: a
+     * site that disconnects the wallet whenever it connects (jup.ag with
+     * Backpack) gets no turn in between. A wallet that will not reconnect
+     * without asking the user has left: the session ends, and the dapp is
+     * told to connect again.
+     */
+    async function reconnected(upstream: Wallet): Promise<readonly WalletAccount[]> {
+        if (upstream.accounts.length > 0) return upstream.accounts;
+        let granted: readonly WalletAccount[] = [];
+        try {
+            granted = (await (upstream.features[CONNECT] as ConnectFeature).connect({ silent: true })).accounts;
+        } catch {
+            granted = [];
+        }
+        if (granted.length > 0) return granted;
+        if (session?.mode === 'passthrough' && session.upstream === upstream) endSession();
+        throw new Error(`${NAME}: ${upstream.name} is no longer connected to this site; connect again`);
+    }
+
+    /**
+     * `copies` with each input's account replaced by the wallet's own
+     * account of that address. A wallet may compare the account it is
+     * handed with its own, and one that dropped its connection and took it
+     * up again holds a new object, where the dapp still has the one it was
+     * given. The bytes are the same copies; an address the wallet does not
+     * hold is left for it to refuse.
+     */
+    function withAccounts(copies: SignInput[], current: readonly WalletAccount[], field: 'transaction' | 'message'): SignInput[] {
+        const out: SignInput[] = [];
+        for (let i = 0; i < copies.length; i += 1) {
+            const copy = copies[i] as SignInput;
+            const given = copy.account;
+            let match: WalletAccount | undefined;
+            for (let j = 0; given !== undefined && j < current.length; j += 1) {
+                if (current[j]?.address === given.address) match = current[j];
+            }
+            if (given === undefined || match === undefined || match === given) {
+                append(out, copy);
+                continue;
+            }
+            const next: SignInput = {};
+            put(next, field, copy[field]);
+            put(next, 'account', match);
+            if (hasOwn(copy, 'chain')) put(next, 'chain', copy.chain);
+            if (hasOwn(copy, 'options')) put(next, 'options', copy.options);
+            append(out, freeze(next));
+        }
+        return out;
+    }
+
     /** Hands the copies to the real wallet, or refuses them, saying once who refused and why. */
-    function finish(method: string, name: string, copies: SignInput[], shown: Shown): Promise<unknown> {
+    async function finish(method: string, name: string, copies: SignInput[], shown: Shown): Promise<unknown> {
         if (session?.mode !== 'passthrough') {
             const why = shown.passOn ? '' : shown.by === 'signlens' ? ` Refused by SignLens (${shown.why}).` : ` ${shown.why}`;
             throw new Error(`${NAME} holds no keys: nothing was signed.${why}`);
@@ -442,10 +502,12 @@
             throw new Error(shown.by === 'signlens' ? `${NAME}: refused (${shown.why}).` : `${NAME}: rejected in SignLens. ${shown.why}`);
         }
         const upstream = session.upstream;
+        const current = await reconnected(upstream);
         const feature = upstream.features[method];
         const sign = feature?.[name];
         if (typeof sign !== 'function') throw new Error(`${NAME}: ${upstream.name} does not support ${method}`);
-        return apply(sign, feature, copies) as Promise<unknown>;
+        const field = method === SIGN_MESSAGE ? 'message' : 'transaction';
+        return apply(sign, feature, withAccounts(copies, current, field)) as Promise<unknown>;
     }
 
     /** The wallet a request goes to on Continue, by the name it registered with, for the window to say so. */
@@ -510,8 +572,16 @@
             if (session?.mode === 'passthrough') session.stopWatching?.();
             const stopWatching = (upstream.features[EVENTS] as EventsFeature | undefined)?.on('change', (properties) => {
                 if (session?.mode !== 'passthrough' || session.upstream !== upstream || !properties.accounts) return;
-                if (properties.accounts.length === 0) endSession();
-                else setAccounts(properties.accounts);
+                // The wallet behind dropping its connection to the page is
+                // not the user leaving SignLens: a site may disconnect a
+                // wallet it does not see in use (jup.ag does Backpack's
+                // whenever another wallet is connected), and a wallet may
+                // drop and take it up again by itself. The session stays,
+                // and the wallet is asked again when a request needs it
+                // (`reconnected`).
+                if (properties.accounts.length === 0) return;
+                // The same addresses, perhaps as new objects: nothing for the dapp.
+                if (!sameAddresses(properties.accounts, accounts)) setAccounts(properties.accounts);
             });
             session = { mode: 'passthrough', upstream, stopWatching };
             setAccounts(granted.accounts);
