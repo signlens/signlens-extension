@@ -11,8 +11,14 @@ unchanged to the wallet you actually sign with. You approve or reject there
 as usual. SignLens only watches.
 
 <p align="center">
-  <img src="docs/images/window.png" width="440" alt="The SignLens window on a USDC transfer: a warning that the signature never expires, what the transaction does to you, the simulated outcome, and Reject and Continue to Phantom">
-  <img src="docs/images/popup.png" width="360" alt="The SignLens popup: the API ready, and three requests, a warning passed on, an OK swap passed on, and a blocked swap rejected">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/images/window-dark.png">
+    <img src="docs/images/window-light.png" width="440" alt="The SignLens window on a USDC transfer: a warning that the signature never expires, what the transaction does to you, the simulated outcome, and Reject and Continue to Phantom">
+  </picture>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/images/popup-dark.png">
+    <img src="docs/images/popup-light.png" width="360" alt="The SignLens popup: the API ready, and three requests, a warning passed on, an OK swap passed on, and a blocked swap rejected">
+  </picture>
 </p>
 
 **Beta.** In this version the explanation is computed by SignLens's server:
@@ -249,7 +255,7 @@ browser APIs and rules. Each module's Node test sits beside it.
 | `src/manifest.test.ts`, `src/layout.test.ts` | the manifest, the Firefox manifest, and the host permissions against the endpoint rule; the folders, and what each may import |
 | `static/` | the manifest, the pages, the stylesheet and the icons, copied as they are into the build |
 | `docs/design/` | the icon's one drawing, from which `npm run icons` makes the four PNGs (the 128 px one padded as the Chrome Web Store asks) and the wallet icon a dapp shows |
-| `docs/images/` | the README's screenshots, made by `npm run screenshots` (`e2e/screenshots.shot.ts`) |
+| `docs/images/` | the README's screenshots, in the light and the dark theme, made by `npm run screenshots` (`e2e/screenshots.shot.ts`) |
 | `dist/` | what the build makes, never committed: `chrome/` (the unpacked extension, the scripts in the folders they have under `src/`), `firefox/`, and the packages |
 | `scripts/` | the Firefox copy, the reproducible packages, and recording the API's answers for the end-to-end tests |
 | `e2e/` | the end-to-end tests, in Chromium, and the harness that loads the extension and opens its windows; at the end of a run against a live API, which recordings it no longer matches |
