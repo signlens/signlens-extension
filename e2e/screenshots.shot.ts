@@ -1,6 +1,6 @@
 // The README's screenshots, of the real window and popup on explanations
-// the API gave for mainnet transactions: `npm run screenshots` writes them
-// to docs/images/. Not part of the suite: playwright.screenshots.config.ts
+// the API gave for mainnet transactions, in the light and the dark theme:
+// `npm run screenshots` writes them to docs/images/. Not part of the suite: playwright.screenshots.config.ts
 // runs the *.shot.ts files alone, so a test run never writes an image.
 
 import { fileURLToPath } from 'node:url';
@@ -40,27 +40,30 @@ const TRANSFER = () =>
 const SWAP = () => row('swap__sol_from_wallet', 'swap__sol_from_wallet.tables_read', '4 balance changes, unverified');
 const UNRESOLVED = () => row('swap__both_mints_named', 'swap__both_mints_named', null);
 
-test('the window, on a transfer that is valid until its nonce is used', async ({ context, worker }) => {
-    const gate = await windowFor(context, worker, request({ origin: SITE, upstream: 'Phantom', rows: [TRANSFER()] }));
-    // The size the gate opens it at (src/worker/gate.ts).
-    await gate.setViewportSize({ width: 520, height: 680 });
-    await gate.emulateMedia({ colorScheme: 'light' });
-    await gate.screenshot({ path: `${IMAGES}window.png` });
-});
+// Each in both themes: the README shows a reader the one their GitHub uses.
+for (const scheme of ['light', 'dark'] as const) {
+    test(`the window, on a transfer that is valid until its nonce is used (${scheme})`, async ({ context, worker }) => {
+        const gate = await windowFor(context, worker, request({ origin: SITE, upstream: 'Phantom', rows: [TRANSFER()] }));
+        // The size the gate opens it at (src/worker/gate.ts).
+        await gate.setViewportSize({ width: 520, height: 680 });
+        await gate.emulateMedia({ colorScheme: scheme });
+        await gate.screenshot({ path: `${IMAGES}window-${scheme}.png` });
+    });
 
-test('the popup, with the requests of the last minutes', async ({ configure, popup, worker }) => {
-    // The API the harness replays, so that the status line says what a working one says.
-    await configure({});
-    const at = Date.now();
-    const history: HistoryEntry[] = [
-        request({ time: at, origin: SITE, upstream: 'Phantom', rows: [TRANSFER()], decision: 'continue' }),
-        request({ time: at - 60_000, origin: SITE, upstream: 'Phantom', rows: [SWAP()], decision: 'continue' }),
-        request({ time: at - 180_000, origin: SITE, upstream: 'Phantom', rows: [UNRESOLVED()], decision: 'reject' }),
-    ];
-    await worker.evaluate((kept) => chrome.storage.session.set({ history: kept, unseen: 0 }), history);
-    await popup.setViewportSize({ width: 480, height: 640 });
-    await popup.emulateMedia({ colorScheme: 'light' });
-    await popup.reload();
-    await popup.getByRole('tab', { name: /^Requests/ }).click();
-    await popup.locator('body').screenshot({ path: `${IMAGES}popup.png` });
-});
+    test(`the popup, with the requests of the last minutes (${scheme})`, async ({ configure, popup, worker }) => {
+        // The API the harness replays, so that the status line says what a working one says.
+        await configure({});
+        const at = Date.now();
+        const history: HistoryEntry[] = [
+            request({ time: at, origin: SITE, upstream: 'Phantom', rows: [TRANSFER()], decision: 'continue' }),
+            request({ time: at - 60_000, origin: SITE, upstream: 'Phantom', rows: [SWAP()], decision: 'continue' }),
+            request({ time: at - 180_000, origin: SITE, upstream: 'Phantom', rows: [UNRESOLVED()], decision: 'reject' }),
+        ];
+        await worker.evaluate((kept) => chrome.storage.session.set({ history: kept, unseen: 0 }), history);
+        await popup.setViewportSize({ width: 480, height: 640 });
+        await popup.emulateMedia({ colorScheme: scheme });
+        await popup.reload();
+        await popup.getByRole('tab', { name: /^Requests/ }).click();
+        await popup.locator('body').screenshot({ path: `${IMAGES}popup-${scheme}.png` });
+    });
+}

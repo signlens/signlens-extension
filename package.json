@@ -28,7 +28,8 @@
     "pretest:e2e:record": "npm run build",
     "test:e2e:record": "node scripts/record-api.ts",
     "prescreenshots": "npm run build",
-    "screenshots": "playwright test -c playwright.screenshots.config.ts"
+    "screenshots": "playwright test -c playwright.screenshots.config.ts",
+    "icons": "node scripts/icons.ts"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.5.15",
