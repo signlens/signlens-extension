@@ -185,6 +185,7 @@ npm run build           # dist/chrome: the files in static/, and tsc's script fo
 npm run test:e2e        # the extension in Chromium, against the API's recorded answers
 npm run test:e2e:record # the same against a running SignLens API, recording its answers anew
 npm run screenshots     # the README's images, of the real window and popup on recorded explanations
+npm run icons           # the icons and the wallet icon, from docs/design/icon.svg
 npm run package         # the Chrome and Firefox packages under dist/, with their SHA-256s
 ```
 
@@ -247,6 +248,7 @@ browser APIs and rules. Each module's Node test sits beside it.
 | | `text.ts`, `json.ts`, `base58.ts`: text from elsewhere made safe to show; objects read from elsewhere; addresses |
 | `src/manifest.test.ts`, `src/layout.test.ts` | the manifest, the Firefox manifest, and the host permissions against the endpoint rule; the folders, and what each may import |
 | `static/` | the manifest, the pages, the stylesheet and the icons, copied as they are into the build |
+| `docs/design/` | the icon's one drawing, from which `npm run icons` makes the four PNGs (the 128 px one padded as the Chrome Web Store asks) and the wallet icon a dapp shows |
 | `docs/images/` | the README's screenshots, made by `npm run screenshots` (`e2e/screenshots.shot.ts`) |
 | `dist/` | what the build makes, never committed: `chrome/` (the unpacked extension, the scripts in the folders they have under `src/`), `firefox/`, and the packages |
 | `scripts/` | the Firefox copy, the reproducible packages, and recording the API's answers for the end-to-end tests |
