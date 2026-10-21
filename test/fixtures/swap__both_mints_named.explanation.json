@@ -16,10 +16,10 @@
           "units": "5535"
         },
         "payer": {
+          "address": "5yLgQQwD42seAkce1heScsh2spYgNA3q43SPhZBn8Ldc",
           "is_self": false,
           "label": null,
-          "label_trust": "fact",
-          "text": "5yLgQQwD42seAkce1heScsh2spYgNA3q43SPhZBn8Ldc"
+          "label_trust": "fact"
         }
       }
     },
@@ -114,10 +114,10 @@
           "value": {
             "type": "address",
             "value": {
+              "address": "5yLgQQwD42seAkce1heScsh2spYgNA3q43SPhZBn8Ldc",
               "is_self": false,
               "label": null,
-              "label_trust": "fact",
-              "text": "5yLgQQwD42seAkce1heScsh2spYgNA3q43SPhZBn8Ldc"
+              "label_trust": "fact"
             }
           }
         }

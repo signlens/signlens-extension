@@ -57,16 +57,16 @@
               "units": "5265026"
             },
             "from": {
+              "address": "5yLgQQwD42seAkce1heScsh2spYgNA3q43SPhZBn8Ldc",
               "is_self": true,
               "label": "Your wallet",
-              "label_trust": "verified",
-              "text": "5yLgQQwD42seAkce1heScsh2spYgNA3q43SPhZBn8Ldc"
+              "label_trust": "verified"
             },
             "to": {
+              "address": "DF1ow4tspfHX9JwWJsAb9epbkA8hmpSEAtxXy1V27QBH",
               "is_self": false,
               "label": "DFlow Aggregator",
-              "label_trust": "verified",
-              "text": "DF1ow4tspfHX9JwWJsAb9epbkA8hmpSEAtxXy1V27QBH"
+              "label_trust": "verified"
             }
           }
         },
@@ -85,16 +85,16 @@
               "units": "4080684"
             },
             "from": {
+              "address": "DF1ow4tspfHX9JwWJsAb9epbkA8hmpSEAtxXy1V27QBH",
               "is_self": false,
               "label": "DFlow Aggregator",
-              "label_trust": "verified",
-              "text": "DF1ow4tspfHX9JwWJsAb9epbkA8hmpSEAtxXy1V27QBH"
+              "label_trust": "verified"
             },
             "to": {
+              "address": "2n1wSskTShm6o1nLy86vCJ5vbUXsx1J4zHzAzudRSJBw",
               "is_self": true,
               "label": "Your token account",
-              "label_trust": "verified",
-              "text": "2n1wSskTShm6o1nLy86vCJ5vbUXsx1J4zHzAzudRSJBw"
+              "label_trust": "verified"
             }
           }
         },
@@ -113,10 +113,10 @@
               "units": "5535"
             },
             "payer": {
+              "address": "5yLgQQwD42seAkce1heScsh2spYgNA3q43SPhZBn8Ldc",
               "is_self": true,
               "label": "Your wallet",
-              "label_trust": "verified",
-              "text": "5yLgQQwD42seAkce1heScsh2spYgNA3q43SPhZBn8Ldc"
+              "label_trust": "verified"
             }
           }
         },
@@ -229,10 +229,10 @@
               "value": {
                 "type": "address",
                 "value": {
+                  "address": "FfxPBxmkrboB5cpihWxv4y5TKXthv93ZzfkuxDBAC7ft",
                   "is_self": true,
                   "label": "Your token account",
-                  "label_trust": "verified",
-                  "text": "FfxPBxmkrboB5cpihWxv4y5TKXthv93ZzfkuxDBAC7ft"
+                  "label_trust": "verified"
                 }
               }
             },
@@ -243,10 +243,10 @@
               "value": {
                 "type": "address",
                 "value": {
+                  "address": "2n1wSskTShm6o1nLy86vCJ5vbUXsx1J4zHzAzudRSJBw",
                   "is_self": true,
                   "label": "Your token account",
-                  "label_trust": "verified",
-                  "text": "2n1wSskTShm6o1nLy86vCJ5vbUXsx1J4zHzAzudRSJBw"
+                  "label_trust": "verified"
                 }
               }
             },
@@ -307,10 +307,10 @@
               "value": {
                 "type": "address",
                 "value": {
+                  "address": "5yLgQQwD42seAkce1heScsh2spYgNA3q43SPhZBn8Ldc",
                   "is_self": true,
                   "label": "Your wallet",
-                  "label_trust": "verified",
-                  "text": "5yLgQQwD42seAkce1heScsh2spYgNA3q43SPhZBn8Ldc"
+                  "label_trust": "verified"
                 }
               }
             }

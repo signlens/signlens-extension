@@ -16,16 +16,16 @@
           "units": "235478"
         },
         "from": {
+          "address": "G93MH3589G8Wj16suqKCU7e846WXPzhKsT5suf4vpAnU",
           "is_self": false,
           "label": null,
-          "label_trust": "fact",
-          "text": "G93MH3589G8Wj16suqKCU7e846WXPzhKsT5suf4vpAnU"
+          "label_trust": "fact"
         },
         "to": {
+          "address": "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P",
           "is_self": false,
           "label": "Pump.fun",
-          "label_trust": "verified",
-          "text": "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P"
+          "label_trust": "verified"
         }
       }
     },
@@ -44,16 +44,16 @@
           "units": "0"
         },
         "from": {
+          "address": "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P",
           "is_self": false,
           "label": "Pump.fun",
-          "label_trust": "verified",
-          "text": "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P"
+          "label_trust": "verified"
         },
         "to": {
+          "address": "7oT8RSgMTph8WNqvxXUSapzvVjKSNqFgSADDfCnpmjKW",
           "is_self": false,
           "label": null,
-          "label_trust": "fact",
-          "text": "7oT8RSgMTph8WNqvxXUSapzvVjKSNqFgSADDfCnpmjKW"
+          "label_trust": "fact"
         }
       }
     },
@@ -61,10 +61,10 @@
       "type": "create",
       "value": {
         "account": {
+          "address": "7oT8RSgMTph8WNqvxXUSapzvVjKSNqFgSADDfCnpmjKW",
           "is_self": false,
           "label": null,
-          "label_trust": "fact",
-          "text": "7oT8RSgMTph8WNqvxXUSapzvVjKSNqFgSADDfCnpmjKW"
+          "label_trust": "fact"
         },
         "deposit": {
           "asset": {
@@ -79,10 +79,10 @@
         },
         "if_missing": true,
         "owner": {
+          "address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
           "is_self": false,
           "label": "Token-2022 program",
-          "label_trust": "verified",
-          "text": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"
+          "label_trust": "verified"
         }
       }
     },
@@ -101,10 +101,10 @@
           "units": "85000"
         },
         "payer": {
+          "address": "G93MH3589G8Wj16suqKCU7e846WXPzhKsT5suf4vpAnU",
           "is_self": false,
           "label": null,
-          "label_trust": "fact",
-          "text": "G93MH3589G8Wj16suqKCU7e846WXPzhKsT5suf4vpAnU"
+          "label_trust": "fact"
         }
       }
     },
@@ -184,10 +184,10 @@
           "value": {
             "type": "address",
             "value": {
+              "address": "9sVJwhNTEtoq8PWeZJigJKNbRMZW7CoByosnxV2Cpump",
               "is_self": false,
               "label": null,
-              "label_trust": "fact",
-              "text": "9sVJwhNTEtoq8PWeZJigJKNbRMZW7CoByosnxV2Cpump"
+              "label_trust": "fact"
             }
           }
         },
@@ -198,10 +198,10 @@
           "value": {
             "type": "address",
             "value": {
+              "address": "DmbshQGYgnRnC7XQtQeZ5doBfR2opB15FWKWNUEpyUbo",
               "is_self": false,
               "label": "Pump.fun bonding curve for this token",
-              "label_trust": "verified",
-              "text": "DmbshQGYgnRnC7XQtQeZ5doBfR2opB15FWKWNUEpyUbo"
+              "label_trust": "verified"
             }
           }
         },
@@ -212,10 +212,10 @@
           "value": {
             "type": "address",
             "value": {
+              "address": "7oT8RSgMTph8WNqvxXUSapzvVjKSNqFgSADDfCnpmjKW",
               "is_self": false,
               "label": null,
-              "label_trust": "fact",
-              "text": "7oT8RSgMTph8WNqvxXUSapzvVjKSNqFgSADDfCnpmjKW"
+              "label_trust": "fact"
             }
           }
         },
@@ -266,10 +266,10 @@
           "value": {
             "type": "address",
             "value": {
+              "address": "7oT8RSgMTph8WNqvxXUSapzvVjKSNqFgSADDfCnpmjKW",
               "is_self": false,
               "label": null,
-              "label_trust": "fact",
-              "text": "7oT8RSgMTph8WNqvxXUSapzvVjKSNqFgSADDfCnpmjKW"
+              "label_trust": "fact"
             }
           }
         },
@@ -280,10 +280,10 @@
           "value": {
             "type": "address",
             "value": {
+              "address": "G93MH3589G8Wj16suqKCU7e846WXPzhKsT5suf4vpAnU",
               "is_self": false,
               "label": null,
-              "label_trust": "fact",
-              "text": "G93MH3589G8Wj16suqKCU7e846WXPzhKsT5suf4vpAnU"
+              "label_trust": "fact"
             }
           }
         },
@@ -294,10 +294,10 @@
           "value": {
             "type": "address",
             "value": {
+              "address": "9sVJwhNTEtoq8PWeZJigJKNbRMZW7CoByosnxV2Cpump",
               "is_self": false,
               "label": null,
-              "label_trust": "fact",
-              "text": "9sVJwhNTEtoq8PWeZJigJKNbRMZW7CoByosnxV2Cpump"
+              "label_trust": "fact"
             }
           }
         },
@@ -308,10 +308,10 @@
           "value": {
             "type": "address",
             "value": {
+              "address": "G93MH3589G8Wj16suqKCU7e846WXPzhKsT5suf4vpAnU",
               "is_self": false,
               "label": null,
-              "label_trust": "fact",
-              "text": "G93MH3589G8Wj16suqKCU7e846WXPzhKsT5suf4vpAnU"
+              "label_trust": "fact"
             }
           }
         },
@@ -322,10 +322,10 @@
           "value": {
             "type": "address",
             "value": {
+              "address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
               "is_self": false,
               "label": "Token-2022 program",
-              "label_trust": "verified",
-              "text": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"
+              "label_trust": "verified"
             }
           }
         }
@@ -346,10 +346,10 @@
           "value": {
             "type": "address",
             "value": {
+              "address": "G93MH3589G8Wj16suqKCU7e846WXPzhKsT5suf4vpAnU",
               "is_self": false,
               "label": null,
-              "label_trust": "fact",
-              "text": "G93MH3589G8Wj16suqKCU7e846WXPzhKsT5suf4vpAnU"
+              "label_trust": "fact"
             }
           }
         }

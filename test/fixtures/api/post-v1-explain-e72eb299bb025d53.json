@@ -36,16 +36,16 @@
               "units": "996423"
             },
             "from": {
+              "address": "Ffz5kwUjkUNw7hV4r6iCJnUoXXsAPFHkCMCmKKDypiwg",
               "is_self": true,
               "label": "Your token account",
-              "label_trust": "verified",
-              "text": "Ffz5kwUjkUNw7hV4r6iCJnUoXXsAPFHkCMCmKKDypiwg"
+              "label_trust": "verified"
             },
             "to": {
+              "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp",
               "is_self": false,
               "label": "Bob",
-              "label_trust": "verified",
-              "text": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp"
+              "label_trust": "verified"
             }
           }
         },
@@ -53,10 +53,10 @@
           "type": "create",
           "value": {
             "account": {
+              "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp",
               "is_self": false,
               "label": "Bob",
-              "label_trust": "verified",
-              "text": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp"
+              "label_trust": "verified"
             },
             "deposit": {
               "asset": {
@@ -71,10 +71,10 @@
             },
             "if_missing": true,
             "owner": {
+              "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
               "is_self": false,
               "label": "Token program",
-              "label_trust": "verified",
-              "text": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+              "label_trust": "verified"
             }
           }
         },
@@ -93,10 +93,10 @@
               "units": "12218"
             },
             "payer": {
+              "address": "8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa",
               "is_self": true,
               "label": "Your wallet",
-              "label_trust": "verified",
-              "text": "8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa"
+              "label_trust": "verified"
             }
           }
         },
@@ -106,10 +106,10 @@
             "type": "durable_nonce",
             "value": {
               "nonce_account": {
+                "address": "AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw",
                 "is_self": false,
                 "label": null,
-                "label_trust": "fact",
-                "text": "AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw"
+                "label_trust": "fact"
               }
             }
           }
@@ -159,10 +159,10 @@
               "value": {
                 "type": "address",
                 "value": {
+                  "address": "Ffz5kwUjkUNw7hV4r6iCJnUoXXsAPFHkCMCmKKDypiwg",
                   "is_self": true,
                   "label": "Your token account",
-                  "label_trust": "verified",
-                  "text": "Ffz5kwUjkUNw7hV4r6iCJnUoXXsAPFHkCMCmKKDypiwg"
+                  "label_trust": "verified"
                 }
               }
             },
@@ -173,10 +173,10 @@
               "value": {
                 "type": "address",
                 "value": {
+                  "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp",
                   "is_self": false,
                   "label": "Bob",
-                  "label_trust": "verified",
-                  "text": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp"
+                  "label_trust": "verified"
                 }
               }
             },
@@ -187,10 +187,10 @@
               "value": {
                 "type": "address",
                 "value": {
+                  "address": "8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa",
                   "is_self": true,
                   "label": "Your wallet",
-                  "label_trust": "verified",
-                  "text": "8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa"
+                  "label_trust": "verified"
                 }
               }
             },
@@ -201,10 +201,10 @@
               "value": {
                 "type": "address",
                 "value": {
+                  "address": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
                   "is_self": false,
                   "label": "USDC mint",
-                  "label_trust": "verified",
-                  "text": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+                  "label_trust": "verified"
                 }
               }
             }
@@ -228,10 +228,10 @@
               "value": {
                 "type": "address",
                 "value": {
+                  "address": "AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw",
                   "is_self": false,
                   "label": null,
-                  "label_trust": "fact",
-                  "text": "AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw"
+                  "label_trust": "fact"
                 }
               }
             },
@@ -242,10 +242,10 @@
               "value": {
                 "type": "address",
                 "value": {
+                  "address": "EbsUZEFAU23Z2SgAymFtU2hADLiyNLzaPLKiJfvpKnE7",
                   "is_self": false,
                   "label": null,
-                  "label_trust": "fact",
-                  "text": "EbsUZEFAU23Z2SgAymFtU2hADLiyNLzaPLKiJfvpKnE7"
+                  "label_trust": "fact"
                 }
               }
             },
@@ -256,10 +256,10 @@
               "value": {
                 "type": "address",
                 "value": {
+                  "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp",
                   "is_self": false,
                   "label": "Bob",
-                  "label_trust": "verified",
-                  "text": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp"
+                  "label_trust": "verified"
                 }
               }
             },
@@ -270,10 +270,10 @@
               "value": {
                 "type": "address",
                 "value": {
+                  "address": "BNgsxo3eHqQLNTaKy4juhAUJ8DyewcJNEcYdMuSmTT1Z",
                   "is_self": false,
                   "label": null,
-                  "label_trust": "fact",
-                  "text": "BNgsxo3eHqQLNTaKy4juhAUJ8DyewcJNEcYdMuSmTT1Z"
+                  "label_trust": "fact"
                 }
               }
             },
@@ -284,10 +284,10 @@
               "value": {
                 "type": "address",
                 "value": {
+                  "address": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
                   "is_self": false,
                   "label": "USDC mint",
-                  "label_trust": "verified",
-                  "text": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+                  "label_trust": "verified"
                 }
               }
             },
@@ -298,10 +298,10 @@
               "value": {
                 "type": "address",
                 "value": {
+                  "address": "8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa",
                   "is_self": true,
                   "label": "Your wallet",
-                  "label_trust": "verified",
-                  "text": "8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa"
+                  "label_trust": "verified"
                 }
               }
             },
@@ -312,10 +312,10 @@
               "value": {
                 "type": "address",
                 "value": {
+                  "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
                   "is_self": false,
                   "label": "Token program",
-                  "label_trust": "verified",
-                  "text": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+                  "label_trust": "verified"
                 }
               }
             },
@@ -354,10 +354,10 @@
               "value": {
                 "type": "address",
                 "value": {
+                  "address": "8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa",
                   "is_self": true,
                   "label": "Your wallet",
-                  "label_trust": "verified",
-                  "text": "8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa"
+                  "label_trust": "verified"
                 }
               }
             },
@@ -368,10 +368,10 @@
               "value": {
                 "type": "address",
                 "value": {
+                  "address": "EbsUZEFAU23Z2SgAymFtU2hADLiyNLzaPLKiJfvpKnE7",
                   "is_self": false,
                   "label": null,
-                  "label_trust": "fact",
-                  "text": "EbsUZEFAU23Z2SgAymFtU2hADLiyNLzaPLKiJfvpKnE7"
+                  "label_trust": "fact"
                 }
               }
             }
@@ -486,10 +486,10 @@
               "value": {
                 "type": "address",
                 "value": {
+                  "address": "AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw",
                   "is_self": false,
                   "label": null,
-                  "label_trust": "fact",
-                  "text": "AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw"
+                  "label_trust": "fact"
                 }
               }
             }

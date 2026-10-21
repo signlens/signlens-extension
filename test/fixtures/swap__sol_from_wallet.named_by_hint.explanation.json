@@ -16,16 +16,16 @@
           "units": "500000"
         },
         "from": {
+          "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
           "is_self": true,
           "label": "Your wallet",
-          "label_trust": "verified",
-          "text": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo"
+          "label_trust": "verified"
         },
         "to": {
+          "address": "879ArayuxbYjBhpUe4QCx8nqaAKjiwCG1hFiJo6zMGsA",
           "is_self": false,
           "label": null,
-          "label_trust": "fact",
-          "text": "879ArayuxbYjBhpUe4QCx8nqaAKjiwCG1hFiJo6zMGsA"
+          "label_trust": "fact"
         }
       }
     },
@@ -44,16 +44,16 @@
           "units": "49500000"
         },
         "from": {
+          "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
           "is_self": true,
           "label": "Your wallet",
-          "label_trust": "verified",
-          "text": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo"
+          "label_trust": "verified"
         },
         "to": {
+          "address": "4hJnan1NC4BuwPSn41WAQ7yG3zMK5JfXzDiq8jw2VH6R",
           "is_self": true,
           "label": "Your SOL account",
-          "label_trust": "verified",
-          "text": "4hJnan1NC4BuwPSn41WAQ7yG3zMK5JfXzDiq8jw2VH6R"
+          "label_trust": "verified"
         }
       }
     },
@@ -78,16 +78,16 @@
           "units": "49500000"
         },
         "from": {
+          "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
           "is_self": true,
           "label": "Your wallet",
-          "label_trust": "verified",
-          "text": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo"
+          "label_trust": "verified"
         },
         "to": {
+          "address": "DF1ow4tspfHX9JwWJsAb9epbkA8hmpSEAtxXy1V27QBH",
           "is_self": false,
           "label": "DFlow Aggregator",
-          "label_trust": "verified",
-          "text": "DF1ow4tspfHX9JwWJsAb9epbkA8hmpSEAtxXy1V27QBH"
+          "label_trust": "verified"
         }
       }
     },
@@ -106,16 +106,16 @@
           "units": "142243976392"
         },
         "from": {
+          "address": "DF1ow4tspfHX9JwWJsAb9epbkA8hmpSEAtxXy1V27QBH",
           "is_self": false,
           "label": "DFlow Aggregator",
-          "label_trust": "verified",
-          "text": "DF1ow4tspfHX9JwWJsAb9epbkA8hmpSEAtxXy1V27QBH"
+          "label_trust": "verified"
         },
         "to": {
+          "address": "9SQZUTsLbv469tCRm9BFo64vpUiWToZukM4WeNdDGxVU",
           "is_self": true,
           "label": "Your token account",
-          "label_trust": "verified",
-          "text": "9SQZUTsLbv469tCRm9BFo64vpUiWToZukM4WeNdDGxVU"
+          "label_trust": "verified"
         }
       }
     },
@@ -123,10 +123,10 @@
       "type": "create",
       "value": {
         "account": {
+          "address": "9SQZUTsLbv469tCRm9BFo64vpUiWToZukM4WeNdDGxVU",
           "is_self": false,
           "label": null,
-          "label_trust": "fact",
-          "text": "9SQZUTsLbv469tCRm9BFo64vpUiWToZukM4WeNdDGxVU"
+          "label_trust": "fact"
         },
         "deposit": {
           "asset": {
@@ -141,10 +141,10 @@
         },
         "if_missing": true,
         "owner": {
+          "address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
           "is_self": false,
           "label": "Token-2022 program",
-          "label_trust": "verified",
-          "text": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"
+          "label_trust": "verified"
         }
       }
     },
@@ -163,16 +163,16 @@
           "units": "122053"
         },
         "from": {
+          "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
           "is_self": true,
           "label": "Your wallet",
-          "label_trust": "verified",
-          "text": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo"
+          "label_trust": "verified"
         },
         "to": {
+          "address": "96gYZGLnJYVFmbjzopPSU6QiEV5fGqZNyN9nmNhvrZU5",
           "is_self": false,
           "label": "Jito tip account",
-          "label_trust": "verified",
-          "text": "96gYZGLnJYVFmbjzopPSU6QiEV5fGqZNyN9nmNhvrZU5"
+          "label_trust": "verified"
         }
       }
     },
@@ -191,10 +191,10 @@
           "units": "79993"
         },
         "payer": {
+          "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
           "is_self": true,
           "label": "Your wallet",
-          "label_trust": "verified",
-          "text": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo"
+          "label_trust": "verified"
         }
       }
     },
@@ -242,10 +242,10 @@
           "value": {
             "type": "address",
             "value": {
+              "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
               "is_self": true,
               "label": "Your wallet",
-              "label_trust": "verified",
-              "text": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo"
+              "label_trust": "verified"
             }
           }
         },
@@ -256,10 +256,10 @@
           "value": {
             "type": "address",
             "value": {
+              "address": "879ArayuxbYjBhpUe4QCx8nqaAKjiwCG1hFiJo6zMGsA",
               "is_self": false,
               "label": null,
-              "label_trust": "fact",
-              "text": "879ArayuxbYjBhpUe4QCx8nqaAKjiwCG1hFiJo6zMGsA"
+              "label_trust": "fact"
             }
           }
         }
@@ -302,10 +302,10 @@
           "value": {
             "type": "address",
             "value": {
+              "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
               "is_self": true,
               "label": "Your wallet",
-              "label_trust": "verified",
-              "text": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo"
+              "label_trust": "verified"
             }
           }
         },
@@ -316,10 +316,10 @@
           "value": {
             "type": "address",
             "value": {
+              "address": "4hJnan1NC4BuwPSn41WAQ7yG3zMK5JfXzDiq8jw2VH6R",
               "is_self": true,
               "label": "Your SOL account",
-              "label_trust": "verified",
-              "text": "4hJnan1NC4BuwPSn41WAQ7yG3zMK5JfXzDiq8jw2VH6R"
+              "label_trust": "verified"
             }
           }
         }
@@ -423,10 +423,10 @@
           "value": {
             "type": "address",
             "value": {
+              "address": "9SQZUTsLbv469tCRm9BFo64vpUiWToZukM4WeNdDGxVU",
               "is_self": true,
               "label": "Your token account",
-              "label_trust": "verified",
-              "text": "9SQZUTsLbv469tCRm9BFo64vpUiWToZukM4WeNdDGxVU"
+              "label_trust": "verified"
             }
           }
         },
@@ -477,10 +477,10 @@
           "value": {
             "type": "address",
             "value": {
+              "address": "9SQZUTsLbv469tCRm9BFo64vpUiWToZukM4WeNdDGxVU",
               "is_self": false,
               "label": null,
-              "label_trust": "fact",
-              "text": "9SQZUTsLbv469tCRm9BFo64vpUiWToZukM4WeNdDGxVU"
+              "label_trust": "fact"
             }
           }
         },
@@ -491,10 +491,10 @@
           "value": {
             "type": "address",
             "value": {
+              "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
               "is_self": true,
               "label": "Your wallet",
-              "label_trust": "verified",
-              "text": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo"
+              "label_trust": "verified"
             }
           }
         },
@@ -505,10 +505,10 @@
           "value": {
             "type": "address",
             "value": {
+              "address": "HMYd9tosnUXuNHmq7pXmoePRVBLBBjA3JBfydq6upump",
               "is_self": false,
               "label": "HMYD mint",
-              "label_trust": "claimed",
-              "text": "HMYd9tosnUXuNHmq7pXmoePRVBLBBjA3JBfydq6upump"
+              "label_trust": "claimed"
             }
           }
         },
@@ -519,10 +519,10 @@
           "value": {
             "type": "address",
             "value": {
+              "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
               "is_self": true,
               "label": "Your wallet",
-              "label_trust": "verified",
-              "text": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo"
+              "label_trust": "verified"
             }
           }
         },
@@ -533,10 +533,10 @@
           "value": {
             "type": "address",
             "value": {
+              "address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
               "is_self": false,
               "label": "Token-2022 program",
-              "label_trust": "verified",
-              "text": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"
+              "label_trust": "verified"
             }
           }
         },
@@ -566,10 +566,10 @@
           "value": {
             "type": "address",
             "value": {
+              "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
               "is_self": true,
               "label": "Your wallet",
-              "label_trust": "verified",
-              "text": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo"
+              "label_trust": "verified"
             }
           }
         },
@@ -580,10 +580,10 @@
           "value": {
             "type": "address",
             "value": {
+              "address": "96gYZGLnJYVFmbjzopPSU6QiEV5fGqZNyN9nmNhvrZU5",
               "is_self": false,
               "label": "Jito tip account",
-              "label_trust": "verified",
-              "text": "96gYZGLnJYVFmbjzopPSU6QiEV5fGqZNyN9nmNhvrZU5"
+              "label_trust": "verified"
             }
           }
         }
@@ -604,10 +604,10 @@
           "value": {
             "type": "address",
             "value": {
+              "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
               "is_self": true,
               "label": "Your wallet",
-              "label_trust": "verified",
-              "text": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo"
+              "label_trust": "verified"
             }
           }
         }

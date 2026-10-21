@@ -182,12 +182,12 @@ function amountNode(amount: Amount): HTMLSpanElement {
 /** An address as a node: its label in bold and its short form when it has one. The signer's own is green, and its label says so in words ("Your wallet"). */
 function addressNode(address: Address): HTMLSpanElement {
     const node = element('span', `address${address.is_self ? ' self' : ''}`);
-    node.title = address.text;
+    node.title = address.address;
     if (address.label) {
-        node.append(element('b', '', address.label), ' (', element('span', 'key', short(address.text)), ')');
+        node.append(element('b', '', address.label), ' (', element('span', 'key', short(address.address)), ')');
         mark(node, address.label_trust);
     } else {
-        node.append(element('span', 'key', address.text));
+        node.append(element('span', 'key', address.address));
     }
     return node;
 }

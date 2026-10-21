@@ -16,16 +16,16 @@
           "units": "500000"
         },
         "from": {
+          "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
           "is_self": false,
           "label": null,
-          "label_trust": "fact",
-          "text": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo"
+          "label_trust": "fact"
         },
         "to": {
+          "address": "879ArayuxbYjBhpUe4QCx8nqaAKjiwCG1hFiJo6zMGsA",
           "is_self": false,
           "label": null,
-          "label_trust": "fact",
-          "text": "879ArayuxbYjBhpUe4QCx8nqaAKjiwCG1hFiJo6zMGsA"
+          "label_trust": "fact"
         }
       }
     },
@@ -44,16 +44,16 @@
           "units": "49500000"
         },
         "from": {
+          "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
           "is_self": false,
           "label": null,
-          "label_trust": "fact",
-          "text": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo"
+          "label_trust": "fact"
         },
         "to": {
+          "address": "4hJnan1NC4BuwPSn41WAQ7yG3zMK5JfXzDiq8jw2VH6R",
           "is_self": false,
           "label": null,
-          "label_trust": "fact",
-          "text": "4hJnan1NC4BuwPSn41WAQ7yG3zMK5JfXzDiq8jw2VH6R"
+          "label_trust": "fact"
         }
       }
     },
@@ -67,10 +67,10 @@
       "type": "create",
       "value": {
         "account": {
+          "address": "9SQZUTsLbv469tCRm9BFo64vpUiWToZukM4WeNdDGxVU",
           "is_self": false,
           "label": null,
-          "label_trust": "fact",
-          "text": "9SQZUTsLbv469tCRm9BFo64vpUiWToZukM4WeNdDGxVU"
+          "label_trust": "fact"
         },
         "deposit": {
           "asset": {
@@ -85,10 +85,10 @@
         },
         "if_missing": true,
         "owner": {
+          "address": "lookup table 9rVP…5hT9[6]",
           "is_self": false,
           "label": "not read",
-          "label_trust": "fact",
-          "text": "lookup table 9rVP…5hT9[6]"
+          "label_trust": "fact"
         }
       }
     },
@@ -107,16 +107,16 @@
           "units": "122053"
         },
         "from": {
+          "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
           "is_self": false,
           "label": null,
-          "label_trust": "fact",
-          "text": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo"
+          "label_trust": "fact"
         },
         "to": {
+          "address": "96gYZGLnJYVFmbjzopPSU6QiEV5fGqZNyN9nmNhvrZU5",
           "is_self": false,
           "label": "Jito tip account",
-          "label_trust": "verified",
-          "text": "96gYZGLnJYVFmbjzopPSU6QiEV5fGqZNyN9nmNhvrZU5"
+          "label_trust": "verified"
         }
       }
     },
@@ -135,10 +135,10 @@
           "units": "79993"
         },
         "payer": {
+          "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
           "is_self": false,
           "label": null,
-          "label_trust": "fact",
-          "text": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo"
+          "label_trust": "fact"
         }
       }
     },
@@ -199,10 +199,10 @@
           "value": {
             "type": "address",
             "value": {
+              "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
               "is_self": false,
               "label": null,
-              "label_trust": "fact",
-              "text": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo"
+              "label_trust": "fact"
             }
           }
         },
@@ -213,10 +213,10 @@
           "value": {
             "type": "address",
             "value": {
+              "address": "879ArayuxbYjBhpUe4QCx8nqaAKjiwCG1hFiJo6zMGsA",
               "is_self": false,
               "label": null,
-              "label_trust": "fact",
-              "text": "879ArayuxbYjBhpUe4QCx8nqaAKjiwCG1hFiJo6zMGsA"
+              "label_trust": "fact"
             }
           }
         }
@@ -259,10 +259,10 @@
           "value": {
             "type": "address",
             "value": {
+              "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
               "is_self": false,
               "label": null,
-              "label_trust": "fact",
-              "text": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo"
+              "label_trust": "fact"
             }
           }
         },
@@ -273,10 +273,10 @@
           "value": {
             "type": "address",
             "value": {
+              "address": "4hJnan1NC4BuwPSn41WAQ7yG3zMK5JfXzDiq8jw2VH6R",
               "is_self": false,
               "label": null,
-              "label_trust": "fact",
-              "text": "4hJnan1NC4BuwPSn41WAQ7yG3zMK5JfXzDiq8jw2VH6R"
+              "label_trust": "fact"
             }
           }
         }
@@ -349,10 +349,10 @@
           "value": {
             "type": "address",
             "value": {
+              "address": "9SQZUTsLbv469tCRm9BFo64vpUiWToZukM4WeNdDGxVU",
               "is_self": false,
               "label": null,
-              "label_trust": "fact",
-              "text": "9SQZUTsLbv469tCRm9BFo64vpUiWToZukM4WeNdDGxVU"
+              "label_trust": "fact"
             }
           }
         },
@@ -363,10 +363,10 @@
           "value": {
             "type": "address",
             "value": {
+              "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
               "is_self": false,
               "label": null,
-              "label_trust": "fact",
-              "text": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo"
+              "label_trust": "fact"
             }
           }
         },
@@ -377,10 +377,10 @@
           "value": {
             "type": "address",
             "value": {
+              "address": "HMYd9tosnUXuNHmq7pXmoePRVBLBBjA3JBfydq6upump",
               "is_self": false,
               "label": null,
-              "label_trust": "fact",
-              "text": "HMYd9tosnUXuNHmq7pXmoePRVBLBBjA3JBfydq6upump"
+              "label_trust": "fact"
             }
           }
         },
@@ -391,10 +391,10 @@
           "value": {
             "type": "address",
             "value": {
+              "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
               "is_self": false,
               "label": null,
-              "label_trust": "fact",
-              "text": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo"
+              "label_trust": "fact"
             }
           }
         },
@@ -405,10 +405,10 @@
           "value": {
             "type": "address",
             "value": {
+              "address": "lookup table 9rVP…5hT9[6]",
               "is_self": false,
               "label": "not read",
-              "label_trust": "fact",
-              "text": "lookup table 9rVP…5hT9[6]"
+              "label_trust": "fact"
             }
           }
         },
@@ -438,10 +438,10 @@
           "value": {
             "type": "address",
             "value": {
+              "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
               "is_self": false,
               "label": null,
-              "label_trust": "fact",
-              "text": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo"
+              "label_trust": "fact"
             }
           }
         },
@@ -452,10 +452,10 @@
           "value": {
             "type": "address",
             "value": {
+              "address": "96gYZGLnJYVFmbjzopPSU6QiEV5fGqZNyN9nmNhvrZU5",
               "is_self": false,
               "label": "Jito tip account",
-              "label_trust": "verified",
-              "text": "96gYZGLnJYVFmbjzopPSU6QiEV5fGqZNyN9nmNhvrZU5"
+              "label_trust": "verified"
             }
           }
         }
@@ -476,10 +476,10 @@
           "value": {
             "type": "address",
             "value": {
+              "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
               "is_self": false,
               "label": null,
-              "label_trust": "fact",
-              "text": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo"
+              "label_trust": "fact"
             }
           }
         }

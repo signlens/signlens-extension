@@ -27,7 +27,7 @@ export interface Unrecognized {
 }
 
 export interface Address {
-    text: string;
+    address: string;
     label: string | null;
     label_trust: Trust;
     is_self: boolean;

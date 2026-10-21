@@ -14,7 +14,7 @@ const recorded = readdirSync(FIXTURES)
     .filter((name) => name.endsWith('.explanation.json'))
     .map((name) => ({ name, document: JSON.parse(readFileSync(new URL(name, FIXTURES), 'utf8')) as Record<string, unknown> }));
 
-const SELF = { text: 'Ffz5kwUjkUNw7hV4r6iCJnUoXXsAPFHkCMCmKKDypiwg', label: null, label_trust: 'fact', is_self: true };
+const SELF = { address: 'Ffz5kwUjkUNw7hV4r6iCJnUoXXsAPFHkCMCmKKDypiwg', label: null, label_trust: 'fact', is_self: true };
 const USDC = { id: 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v', symbol: 'USDC', decimals: 6, trust: 'verified' };
 
 /** A small explanation, with `changes` on top. */

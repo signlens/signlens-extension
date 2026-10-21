@@ -141,7 +141,7 @@ const unrecognized = (type: string) => ({ type: 'Unrecognized' as const, value: 
 const address: Read<Address> = (value, path) => {
     const o = new Fields(value, path);
     return {
-        text: o.read('text', text(100)),
+        address: o.read('address', text(100)),
         label: o.read('label', nullable(text(200))),
         label_trust: o.read('label_trust', oneOf(TRUSTS, 'a trust')),
         is_self: o.read('is_self', flag),

@@ -16,16 +16,16 @@
           "units": "1855569"
         },
         "from": {
+          "address": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR",
           "is_self": false,
           "label": null,
-          "label_trust": "fact",
-          "text": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR"
+          "label_trust": "fact"
         },
         "to": {
+          "address": "91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD",
           "is_self": false,
           "label": null,
-          "label_trust": "fact",
-          "text": "91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD"
+          "label_trust": "fact"
         }
       }
     },
@@ -44,16 +44,16 @@
           "units": "151360479993"
         },
         "from": {
+          "address": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR",
           "is_self": false,
           "label": null,
-          "label_trust": "fact",
-          "text": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR"
+          "label_trust": "fact"
         },
         "to": {
+          "address": "proVF4pMXVaYqmy4NjniPh4pqKNfMmsihgd4wdkCX3u",
           "is_self": false,
           "label": "OKX DEX Router",
-          "label_trust": "verified",
-          "text": "proVF4pMXVaYqmy4NjniPh4pqKNfMmsihgd4wdkCX3u"
+          "label_trust": "verified"
         }
       }
     },
@@ -72,16 +72,16 @@
           "units": "0"
         },
         "from": {
+          "address": "proVF4pMXVaYqmy4NjniPh4pqKNfMmsihgd4wdkCX3u",
           "is_self": false,
           "label": "OKX DEX Router",
-          "label_trust": "verified",
-          "text": "proVF4pMXVaYqmy4NjniPh4pqKNfMmsihgd4wdkCX3u"
+          "label_trust": "verified"
         },
         "to": {
+          "address": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR",
           "is_self": false,
           "label": null,
-          "label_trust": "fact",
-          "text": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR"
+          "label_trust": "fact"
         }
       }
     },
@@ -89,10 +89,10 @@
       "type": "create",
       "value": {
         "account": {
+          "address": "91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD",
           "is_self": false,
           "label": null,
-          "label_trust": "fact",
-          "text": "91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD"
+          "label_trust": "fact"
         },
         "deposit": {
           "asset": {
@@ -107,10 +107,10 @@
         },
         "if_missing": false,
         "owner": {
+          "address": "lookup table GP57…1gPy[65]",
           "is_self": false,
           "label": "not read",
-          "label_trust": "fact",
-          "text": "lookup table GP57…1gPy[65]"
+          "label_trust": "fact"
         }
       }
     },
@@ -129,10 +129,10 @@
           "units": "7098"
         },
         "payer": {
+          "address": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR",
           "is_self": false,
           "label": null,
-          "label_trust": "fact",
-          "text": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR"
+          "label_trust": "fact"
         }
       }
     },
@@ -199,10 +199,10 @@
           "value": {
             "type": "address",
             "value": {
+              "address": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR",
               "is_self": false,
               "label": null,
-              "label_trust": "fact",
-              "text": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR"
+              "label_trust": "fact"
             }
           }
         },
@@ -213,10 +213,10 @@
           "value": {
             "type": "address",
             "value": {
+              "address": "91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD",
               "is_self": false,
               "label": null,
-              "label_trust": "fact",
-              "text": "91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD"
+              "label_trust": "fact"
             }
           }
         }
@@ -315,10 +315,10 @@
           "value": {
             "type": "address",
             "value": {
+              "address": "BEochrdGhm5pcKVF73DURYrGo1DLzxq6bBcUBphQR64d",
               "is_self": false,
               "label": null,
-              "label_trust": "fact",
-              "text": "BEochrdGhm5pcKVF73DURYrGo1DLzxq6bBcUBphQR64d"
+              "label_trust": "fact"
             }
           }
         },
@@ -382,10 +382,10 @@
           "value": {
             "type": "address",
             "value": {
+              "address": "H51r5KPyahCGiGCQ9jZr5r5bukcXFaRDFtPFZBUyiHfo",
               "is_self": false,
               "label": null,
-              "label_trust": "fact",
-              "text": "H51r5KPyahCGiGCQ9jZr5r5bukcXFaRDFtPFZBUyiHfo"
+              "label_trust": "fact"
             }
           }
         },
@@ -396,10 +396,10 @@
           "value": {
             "type": "address",
             "value": {
+              "address": "91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD",
               "is_self": false,
               "label": null,
-              "label_trust": "fact",
-              "text": "91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD"
+              "label_trust": "fact"
             }
           }
         },
@@ -459,10 +459,10 @@
           "value": {
             "type": "address",
             "value": {
+              "address": "91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD",
               "is_self": false,
               "label": null,
-              "label_trust": "fact",
-              "text": "91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD"
+              "label_trust": "fact"
             }
           }
         },
@@ -473,10 +473,10 @@
           "value": {
             "type": "address",
             "value": {
+              "address": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR",
               "is_self": false,
               "label": null,
-              "label_trust": "fact",
-              "text": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR"
+              "label_trust": "fact"
             }
           }
         },
@@ -487,10 +487,10 @@
           "value": {
             "type": "address",
             "value": {
+              "address": "lookup table GP57…1gPy[60]",
               "is_self": false,
               "label": "not read",
-              "label_trust": "fact",
-              "text": "lookup table GP57…1gPy[60]"
+              "label_trust": "fact"
             }
           }
         },
@@ -501,10 +501,10 @@
           "value": {
             "type": "address",
             "value": {
+              "address": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR",
               "is_self": false,
               "label": null,
-              "label_trust": "fact",
-              "text": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR"
+              "label_trust": "fact"
             }
           }
         },
@@ -515,10 +515,10 @@
           "value": {
             "type": "address",
             "value": {
+              "address": "lookup table GP57…1gPy[65]",
               "is_self": false,
               "label": "not read",
-              "label_trust": "fact",
-              "text": "lookup table GP57…1gPy[65]"
+              "label_trust": "fact"
             }
           }
         }
@@ -539,10 +539,10 @@
           "value": {
             "type": "address",
             "value": {
+              "address": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR",
               "is_self": false,
               "label": null,
-              "label_trust": "fact",
-              "text": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR"
+              "label_trust": "fact"
             }
           }
         }

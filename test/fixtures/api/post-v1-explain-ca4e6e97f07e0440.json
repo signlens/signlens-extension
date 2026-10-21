@@ -31,10 +31,10 @@
               "units": "5535"
             },
             "payer": {
+              "address": "5yLgQQwD42seAkce1heScsh2spYgNA3q43SPhZBn8Ldc",
               "is_self": true,
               "label": "Your wallet",
-              "label_trust": "verified",
-              "text": "5yLgQQwD42seAkce1heScsh2spYgNA3q43SPhZBn8Ldc"
+              "label_trust": "verified"
             }
           }
         },
@@ -129,10 +129,10 @@
               "value": {
                 "type": "address",
                 "value": {
+                  "address": "5yLgQQwD42seAkce1heScsh2spYgNA3q43SPhZBn8Ldc",
                   "is_self": true,
                   "label": "Your wallet",
-                  "label_trust": "verified",
-                  "text": "5yLgQQwD42seAkce1heScsh2spYgNA3q43SPhZBn8Ldc"
+                  "label_trust": "verified"
                 }
               }
             }
