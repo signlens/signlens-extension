@@ -83,10 +83,11 @@ function loadedOf(capture: string): { loaded_writable: string[]; loaded_readonly
 
 /**
  * The feedback strip under the explanation: one of three ratings, a
- * comment, and, on a transaction SignLens did not call OK, the offer to
- * send the transaction itself so it gets covered. One record per explained
- * transaction, each with its own bytes or none, sent once, through the
- * worker, which knows the API; the window never waits for it.
+ * comment, and the offer to send the transaction itself, whatever the
+ * verdict, so a rendering called OK but rated wrong can be explained
+ * again as the user saw it. One record per explained transaction, each
+ * with its own bytes or none, sent once, through the worker, which knows
+ * the API; the window never waits for it.
  */
 function feedbackStrip(list: Row[], page: { origin?: string; method?: string }): void {
     const strip = byId('feedback');
@@ -99,16 +100,10 @@ function feedbackStrip(list: Row[], page: { origin?: string; method?: string }):
     comment.maxLength = MAX_COMMENT;
     const note = byId('feedback-note');
     const ratings = [...strip.querySelectorAll<HTMLButtonElement>('button[data-rating]')];
-    const coverable = (row: ExplainedRow) => row.verdict !== 'ok';
-    cover.hidden = !explained.some(coverable);
-    // What a rating sends, said before it is given: a "Clear" sends at once.
-    byId('feedback-what').textContent = cover.hidden
-        ? 'A rating sends SignLens the site, what this window shows (the verdict, the findings and the programs called) and your comment, never the transaction.'
-        : 'A rating sends SignLens the site, what this window shows (the verdict, the findings and the programs called) and your comment. The transaction itself goes only if you tick the box below.';
     (cover.querySelector('span') as HTMLElement).textContent =
-        explained.filter(coverable).length > 1
-            ? 'Send these transactions to SignLens so they get covered'
-            : 'Send this transaction to SignLens so it gets covered';
+        explained.length > 1
+            ? 'Send these transactions to SignLens so they can be looked into'
+            : 'Send this transaction to SignLens so it can be looked into';
     let rating: Rating | null = null;
     let sent = false;
     sendFeedback = () => {
@@ -119,7 +114,7 @@ function feedbackStrip(list: Row[], page: { origin?: string; method?: string }):
         comment.disabled = true;
         coverBox.disabled = true;
         const records = explained.map((row) => {
-            const covered = coverBox.checked && coverable(row);
+            const covered = coverBox.checked;
             return {
                 digest: row.digest,
                 transaction: covered ? row.transaction : null,

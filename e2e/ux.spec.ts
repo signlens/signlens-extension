@@ -238,7 +238,7 @@ test('a yes that no request waits for any more says what did not happen, and wha
     }
 });
 
-test('several transactions are each saved under a name of their own, and covered in the plural', async ({ context, worker }) => {
+test('several transactions are each saved under a name of their own, and offered in the plural', async ({ context, worker }) => {
     const rows: ExplainedRow[] = [
         { ...transferRow(), verdict: 'warning' },
         { ...transferRow(), verdict: 'blocked' },
@@ -249,7 +249,7 @@ test('several transactions are each saved under a name of their own, and covered
     await expect(saves.nth(0)).toHaveAttribute('download', '20261019T120000-jup.ag-1.b64');
     await expect(saves.nth(1)).toHaveAttribute('download', '20261019T120000-jup.ag-2.b64');
     await gate.getByRole('button', { name: 'Unclear' }).click();
-    await expect(gate.getByRole('checkbox')).toHaveAccessibleName('Send these transactions to SignLens so they get covered');
+    await expect(gate.getByRole('checkbox')).toHaveAccessibleName('Send these transactions to SignLens so they can be looked into');
 });
 
 test('a finding wraps under its own text, not under its severity', async ({ context, worker }) => {

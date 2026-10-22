@@ -153,7 +153,7 @@ test('the feedback strip sends the rating, and the transaction only when asked',
     });
 });
 
-test('an explanation SignLens called OK has no transaction to offer for coverage', async ({ configure, context, dapp, server }) => {
+test('an explanation SignLens called OK can send its transaction too, when asked', async ({ configure, context, dapp, server }) => {
     const transfer = fixture('legacy_durable_nonce_token_transfer');
     await configure({ lookupTokens: false, simulate: false, mode: 'passthrough', upstream: 'Fake Wallet' });
     // The recorded explanation, called OK: a digest, so a strip to rate it in.
@@ -165,10 +165,20 @@ test('an explanation SignLens called OK has no transaction to offer for coverage
     const gate = await liveGate(context);
     await expect(gate.locator('#band')).toHaveClass(/\bok\b/);
     await expect(gate.locator('#feedback')).toBeVisible();
-    await expect(gate.locator('#feedback-cover')).toBeHidden();
-    await expect(gate.locator('#feedback-what')).toContainText('never the transaction');
+    // An OK that reads wrong is a gap too, so the offer is there, unchecked.
+    const box = gate.getByRole('checkbox', { name: 'Send this transaction to SignLens so it can be looked into' });
+    await expect(box).not.toBeChecked();
+    await expect(gate.locator('#feedback-what')).toContainText('only if you tick the box below');
+    await box.check();
+    await gate.getByRole('button', { name: 'Wrong' }).click();
     await clickToClose(gate.getByRole('button', { name: 'Reject' }));
     await signing.catch(() => {});
+    await expect.poll(() => server.apiCalls.filter((c) => c.path === '/v1/feedback').length).toBe(1);
+    expect(server.apiCalls.find((c) => c.path === '/v1/feedback')?.body).toMatchObject({
+        rating: 'wrong',
+        transaction: transfer.base64,
+        seen: { verdict: 'ok' },
+    });
 });
 
 test('a clear rating is sent at once', async ({ configure, context, dapp, server }) => {

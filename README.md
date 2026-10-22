@@ -26,8 +26,8 @@ the extension sends it the transaction with what it read itself (the
 addresses the transaction's lookup tables load, the outcome of a simulation
 on the RPC in the settings) and renders the answer. The server keeps
 verdicts and finding codes, not the bytes; the transaction itself is kept
-only when you tick "Send this transaction to SignLens so it gets covered"
-on one SignLens did not call OK. The end goal is the same explanation
+only when you tick "Send this transaction to SignLens so it can be looked
+into" under its explanation. The end goal is the same explanation
 computed inside the extension, offline. Asking for it is one function in
 one module (`explainRemotely` in `src/worker/api.ts`); the feedback strip, the API
 status and the API address in the settings are the server's and would go
@@ -174,10 +174,11 @@ version, and what the window showed you: the verdict, the one-line
 summary, the findings by code and severity, and the program each
 instruction calls, read from the transaction in the extension. The
 transaction itself, with the addresses its lookup tables loaded, goes only
-if you ticked "Send this transaction to SignLens so it gets covered",
-which is offered only on one SignLens did not call OK. It goes to the API in the
-settings when you rate "Clear", or when you decide, closing the window
-included. Messages to sign
+if you ticked "Send this transaction to SignLens so it can be looked
+into", which is offered under every explanation, unticked, so a rendering
+SignLens called OK but you rated wrong can be explained again as you saw
+it. It goes to the API in the settings when you rate "Clear", or when
+you decide, closing the window included. Messages to sign
 never leave the extension, and the dapp learns neither the explanation nor
 its verdict, nor, in watch-only mode, the watched address until you allow
 it.
