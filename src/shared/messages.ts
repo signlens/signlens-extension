@@ -21,6 +21,13 @@ export const MAX_MESSAGE_BYTES = 65_536;
 export const MAX_MESSAGE_BASE64 = Math.ceil(MAX_MESSAGE_BYTES / 3) * 4;
 /** The longest comment a rating carries, in characters. */
 export const MAX_COMMENT = 2000;
+/** The longest summary a report carries of what the window showed, in characters. */
+export const MAX_SEEN_SUMMARY = 1000;
+/** The most findings and instructions a report carries of what the window showed. */
+export const MAX_SEEN_FINDINGS = 128;
+export const MAX_SEEN_INSTRUCTIONS = 64;
+/** The most lookup-table addresses a report carries with its transaction. */
+export const MAX_LOADED = 512;
 
 /**
  * What every page request carries: the page's own fields, anything at all
@@ -73,7 +80,15 @@ export interface WalletList {
 export interface FeedbackPayload {
     rating?: unknown;
     comment?: unknown;
-    /** One per explained transaction: its digest, and its bytes when the user asked for them to be sent. */
+    /** The page that asked, as the window has it: the request's origin. */
+    origin?: unknown;
+    /** The wallet method the page called. */
+    method?: unknown;
+    /**
+     * One per explained transaction: its digest, what the window showed of
+     * it (`seen`), and its bytes with the addresses its lookup tables loaded
+     * when the user asked for them to be sent.
+     */
     records?: unknown;
 }
 

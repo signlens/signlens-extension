@@ -73,9 +73,14 @@ before it, so everything below is new.
   way to a request waiting in a window when the browser runs short. The badge shows the worst verdict not seen yet,
   ranked as the window ranks it.
 - **Feedback.** A strip under the explanation sends a rating and a
-  comment, once, one record per explained transaction with its digest, and
-  the transaction itself only when you ask for it to be covered, on one
-  SignLens did not call OK.
+  comment, once, one record per explained transaction with its digest, the
+  site's host, the wallet method, the extension's version and what the
+  window showed (the verdict, the summary, the findings by code and the
+  program each instruction calls), and the transaction itself, with the
+  addresses its lookup tables loaded, only when you ask for it to be
+  covered, on one SignLens did not call OK. The strip says what a rating
+  sends before one is given. The record is the API's
+  `signlens-feedback/2`.
 - **Endpoints.** The API, the RPC and the token list must be https, or
   plain http to localhost or 127.0.0.1; the worker checks again before
   each call, and the popup says "Not used" of an address that breaks the

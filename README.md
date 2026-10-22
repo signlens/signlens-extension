@@ -165,12 +165,17 @@ The API logs the verdict, the finding codes, the program names, the size,
 the latency and a hash of the message, and stores nothing else; bytes are
 kept only when you send them through the feedback strip.
 
-The feedback strip sends nothing until you rate an explanation. A rating
-sends, for each transaction explained: the rating, your comment (up to
-2,000 characters, the same for each), the explanation's digest (a hash of
-the transaction's message), and the transaction itself only if you
-ticked "Send this transaction to SignLens so it gets covered", which is
-offered only on one SignLens did not call OK. It goes to the API in the
+The feedback strip sends nothing until you rate an explanation, and says
+what a rating sends before you give one. A rating sends, for each
+transaction explained: the rating, your comment (up to 2,000 characters,
+the same for each), the explanation's digest (a hash of the transaction's
+message), the site's host, the wallet method it called, the extension's
+version, and what the window showed you: the verdict, the one-line
+summary, the findings by code and severity, and the program each
+instruction calls, read from the transaction in the extension. The
+transaction itself, with the addresses its lookup tables loaded, goes only
+if you ticked "Send this transaction to SignLens so it gets covered",
+which is offered only on one SignLens did not call OK. It goes to the API in the
 settings when you rate "Clear", or when you decide, closing the window
 included. Messages to sign
 never leave the extension, and the dapp learns neither the explanation nor
@@ -246,6 +251,7 @@ browser APIs and rules. Each module's Node test sits beside it.
 | | `render.ts`: one row of a request as the window and the popup show it |
 | `src/shared/` | what the worker and the pages both use, and nothing of either |
 | | `types.ts`: the contract: the explanation document, the request, the feedback record, the API's status |
+| | `programs.ts`: the program each instruction of a transaction calls, which a report says, read from its bytes |
 | | `model.ts`: what SignLens keeps of a request: its rows (explained, failed, a message, a site asking, an address not yours) and what became of it |
 | | `messages.ts`: the messages and who may send what |
 | | `store.ts`: the extension's storage, typed by key, and the queue its read-then-write changes go through |

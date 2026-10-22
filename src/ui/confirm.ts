@@ -5,10 +5,11 @@
 
 import { MAX_COMMENT, send } from '../shared/messages.ts';
 import type { Decision, ExplainedRow, Row, VerdictWord } from '../shared/model.ts';
+import { base64Bytes, instructionPrograms } from '../shared/programs.ts';
 import { settings } from '../shared/settings.ts';
 import { getPending, local } from '../shared/store.ts';
 import { logged, methodName, withoutScheme } from '../shared/text.ts';
-import type { Rating } from '../shared/types.ts';
+import type { Rating, Seen } from '../shared/types.ts';
 import { rowVerdictWord, summaryOf, worstVerdict } from '../shared/verdict.ts';
 import { byId } from './dom.ts';
 import { element, originNode, renderRow } from './render.ts';
@@ -42,6 +43,44 @@ function decide(decision: Decision): void {
     );
 }
 
+/** The engine's word for the window's verdict. */
+const ENGINE_VERDICT = { ok: 'ok', warning: 'warn', blocked: 'block' } as const;
+
+/**
+ * What the window shows of an explained transaction, as a report carries
+ * it: the verdict, the summary, the findings by code, and the program each
+ * instruction calls, read from the bytes, which stay here unless the user
+ * sends them.
+ */
+function seenOf(row: ExplainedRow): Seen {
+    const titles = new Map<number, string>();
+    for (const section of row.sections) {
+        if (section.kind.type === 'instruction') titles.set(section.kind.value.index, section.title);
+    }
+    let programs: string[] = [];
+    try {
+        programs = instructionPrograms(base64Bytes(row.transaction) ?? new Uint8Array());
+    } catch {
+        // The instructions go without their programs; the rest of the report stands.
+    }
+    return {
+        verdict: ENGINE_VERDICT[row.verdict],
+        summary: row.summary,
+        findings: row.findings.map((f) => ({ code: f.code, severity: f.severity, instruction: f.instruction })),
+        instructions: programs.map((program, index) => ({ program, title: titles.get(index) ?? null })),
+    };
+}
+
+/** The addresses the transaction's lookup tables loaded, from its capture's comment lines. */
+function loadedOf(capture: string): { loaded_writable: string[]; loaded_readonly: string[] } {
+    const list = (name: string) =>
+        (capture.split('\n').find((line) => line.startsWith(`# ${name}:`)) ?? '')
+            .slice(name.length + 3)
+            .split(' ')
+            .filter(Boolean);
+    return { loaded_writable: list('loaded-writable'), loaded_readonly: list('loaded-readonly') };
+}
+
 /**
  * The feedback strip under the explanation: one of three ratings, a
  * comment, and, on a transaction SignLens did not call OK, the offer to
@@ -49,7 +88,7 @@ function decide(decision: Decision): void {
  * transaction, each with its own bytes or none, sent once, through the
  * worker, which knows the API; the window never waits for it.
  */
-function feedbackStrip(list: Row[]): void {
+function feedbackStrip(list: Row[], page: { origin?: string; method?: string }): void {
     const strip = byId('feedback');
     const explained = list.filter((row): row is ExplainedRow => row.kind === 'explained' && Boolean(row.digest));
     if (explained.length === 0) return;
@@ -62,6 +101,10 @@ function feedbackStrip(list: Row[]): void {
     const ratings = [...strip.querySelectorAll<HTMLButtonElement>('button[data-rating]')];
     const coverable = (row: ExplainedRow) => row.verdict !== 'ok';
     cover.hidden = !explained.some(coverable);
+    // What a rating sends, said before it is given: a "Clear" sends at once.
+    byId('feedback-what').textContent = cover.hidden
+        ? 'A rating sends SignLens the site, what this window shows (the verdict, the findings and the programs called) and your comment, never the transaction.'
+        : 'A rating sends SignLens the site, what this window shows (the verdict, the findings and the programs called) and your comment. The transaction itself goes only if you tick the box below.';
     (cover.querySelector('span') as HTMLElement).textContent =
         explained.filter(coverable).length > 1
             ? 'Send these transactions to SignLens so they get covered'
@@ -75,11 +118,17 @@ function feedbackStrip(list: Row[]): void {
         for (const button of ratings) button.setAttribute('aria-disabled', 'true');
         comment.disabled = true;
         coverBox.disabled = true;
-        const records = explained.map((row) => ({
-            digest: row.digest,
-            transaction: coverBox.checked && coverable(row) ? row.transaction : null,
-        }));
-        send({ type: 'feedback', payload: { rating, comment: comment.value.slice(0, MAX_COMMENT), records } })
+        const records = explained.map((row) => {
+            const covered = coverBox.checked && coverable(row);
+            return {
+                digest: row.digest,
+                transaction: covered ? row.transaction : null,
+                seen: seenOf(row),
+                ...(covered ? loadedOf(row.capture) : {}),
+            };
+        });
+        const payload = { rating, comment: comment.value.slice(0, MAX_COMMENT), origin: page.origin, method: page.method, records };
+        send({ type: 'feedback', payload })
             .catch(() => false)
             .then((taken) => {
                 note.textContent = taken ? 'Thank you. Sent to SignLens.' : 'The feedback could not be sent.';
@@ -184,7 +233,7 @@ async function start(): Promise<void> {
         );
         container.append(item);
     }
-    if (transactions) feedbackStrip(list);
+    if (transactions) feedbackStrip(list, entry);
     // Closing the window is a decision too (a refusal): a rating or comment left in it goes, as with Reject.
     window.addEventListener('pagehide', () => sendFeedback());
 

@@ -101,6 +101,9 @@ test('the feedback strip sends the rating, and the transaction only when asked',
     // A warning: the offer to send the transaction is there, unchecked.
     const cover = gate.locator('#feedback-cover');
     await expect(cover).toBeVisible();
+    // What a rating sends is said before one is given.
+    await expect(gate.locator('#feedback-what')).toContainText('the site, what this window shows');
+    await expect(gate.locator('#feedback-what')).toContainText('only if you tick the box below');
     // The ratings are a group under their question, and the chosen one says it is pressed.
     const ratings = gate.getByRole('group', { name: 'Was this explanation clear?' });
     await ratings.getByRole('button', { name: 'Unclear' }).click();
@@ -112,9 +115,26 @@ test('the feedback strip sends the rating, and the transaction only when asked',
     await clickToClose(gate.getByRole('button', { name: 'Continue to Fake Wallet' }));
     await signing;
     await expect.poll(() => server.apiCalls.filter((c) => c.path === '/v1/feedback').length).toBe(1);
-    const sent = server.apiCalls.find((c) => c.path === '/v1/feedback')?.body as { message_hash: string };
-    expect(sent).toMatchObject({ rating: 'unclear', comment: 'What is a durable nonce?', transaction: null });
+    const sent = server.apiCalls.find((c) => c.path === '/v1/feedback')?.body as {
+        message_hash: string;
+        origin: string;
+        extension: string;
+        seen: { verdict: string; findings: { code: string }[]; instructions: { program: string }[] };
+    };
+    expect(sent).toMatchObject({
+        rating: 'unclear',
+        comment: 'What is a durable nonce?',
+        transaction: null,
+        method: 'solana:signTransaction',
+    });
     expect(sent.message_hash).toMatch(/^[0-9a-f]{64}$/);
+    // The site and what the window showed go with every rating; the tables only with the bytes.
+    expect(sent.origin).toMatch(/^(localhost|127\.0\.0\.1):\d+$/);
+    expect(sent.extension).toMatch(/^\d+\.\d+\.\d+/);
+    expect(sent.seen.verdict).toBe('warn');
+    expect(sent.seen.findings.length).toBeGreaterThan(0);
+    expect(sent.seen.instructions.map((i) => i.program)).toContain('TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA');
+    expect(sent).not.toHaveProperty('loaded_writable');
 
     // And with the box ticked, the bytes go along.
     const again = dapp.evaluate(({ wallet, base64 }: { wallet: string; base64: string }) => window.sign(wallet, base64), {
@@ -146,6 +166,7 @@ test('an explanation SignLens called OK has no transaction to offer for coverage
     await expect(gate.locator('#band')).toHaveClass(/\bok\b/);
     await expect(gate.locator('#feedback')).toBeVisible();
     await expect(gate.locator('#feedback-cover')).toBeHidden();
+    await expect(gate.locator('#feedback-what')).toContainText('never the transaction');
     await clickToClose(gate.getByRole('button', { name: 'Reject' }));
     await signing.catch(() => {});
 });
