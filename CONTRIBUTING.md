@@ -1,7 +1,8 @@
 # Contributing
 
-Issues and pull requests are welcome. A few things keep the project easy to
-review:
+Issues and pull requests are welcome; [`DEVELOPMENT.md`](DEVELOPMENT.md)
+says how to build the extension and run its tests. A few things keep the
+project easy to review:
 
 - **One change per pull request**, with the tests that show it. Every
   test runs anywhere: the end-to-end suite answers the API's calls from

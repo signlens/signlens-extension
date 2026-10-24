@@ -3,21 +3,16 @@
 [![CI](https://github.com/signlens/signlens-extension/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/signlens/signlens-extension/actions/workflows/ci.yml)
 [![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 
-See what a Solana transaction does before you sign it. SignLens registers
-itself as a [Wallet Standard](https://github.com/anza-xyz/wallet-standard)
-wallet that holds no keys: a dapp sends it what it wants signed, SignLens
-explains it in its own window, and once you say so the request goes
-unchanged to the wallet you actually sign with. You approve or reject there
-as usual. SignLens only watches.
+See what a Solana transaction does before you sign it: not only what
+leaves your wallet, but where it goes and what for. SignLens works beside
+the Solana wallet you already use (Phantom, Backpack, …). It holds no
+keys: it explains each request in its own window, and once you say so
+passes it on to your wallet, where you approve or reject as usual.
 
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="docs/images/window-dark.png">
-    <img src="docs/images/window-light.png" width="440" alt="The SignLens window on a USDC transfer: a warning that the signature never expires, what the transaction does to you, the simulated outcome, and Reject and Continue to Phantom">
-  </picture>
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="docs/images/popup-dark.png">
-    <img src="docs/images/popup-light.png" width="360" alt="The SignLens popup: the API ready, and three requests, a warning passed on, an OK swap passed on, and a blocked swap rejected">
+    <source media="(prefers-color-scheme: dark)" srcset="docs/images/deposit-dark.png">
+    <img src="docs/images/deposit-light.png" width="440" alt="The SignLens window on a deposit: OK, Deposit 4,635.28675 USDC (verified) into Kamino Lend as collateral; what it does, from your wallet to Kamino Lend, the fee and how long it is valid; and Reject and Continue to Phantom">
   </picture>
 </p>
 
@@ -27,11 +22,71 @@ addresses the transaction's lookup tables load, the outcome of a simulation
 on the RPC in the settings) and renders the answer. The server keeps
 verdicts and finding codes, not the bytes; the transaction itself is kept
 only when you tick "Send this transaction to SignLens so it can be looked
-into" under its explanation. The end goal is the same explanation
-computed inside the extension, offline. Asking for it is one function in
-one module (`explainRemotely` in `src/worker/api.ts`); the feedback strip, the API
-status and the API address in the settings are the server's and would go
-with it.
+into" under its explanation.
+
+## Why
+
+Before you sign, your wallet can show what a transaction will take from
+you: 4,635.29 USDC, say. It does not say where that goes or what it buys.
+A deposit into a lending market, a liquidity position, a stake, a
+leveraged order and a drain can all look the same there. SignLens reads
+the transaction itself, every instruction of it, and says in words what
+it does, before your wallet asks you to sign.
+
+Some mainnet transactions, by what leaves the wallet and by SignLens's
+summary of them:
+
+| On | Leaves your wallet | SignLens says |
+|---|---|---|
+| Kamino | 4,635.28675 USDC | Deposit 4,635.28675 USDC (verified) into Kamino Lend as collateral |
+| Raydium | 33.874114 USDC, 0.00985543 GOOGLx | Open a Raydium CLMM position with ≤ 0.00985543 GOOGLx (verified) and ≤ 33.874114 USDC (verified) |
+| Orca | 2.0004 SOL, 0.0019912 ETH | Open an Orca Whirlpool position from tick -54248 to tick -54240; Add ≤ 2.0004 SOL (verified) and ≤ 0.0019912 ETH (verified) to an Orca Whirlpool position |
+| Jito | 0.01 SOL | Stake 0.01 SOL in a stake pool for its pool token |
+| Jupiter | 1.922511449 SOL | Place a long Jupiter Perps limit order of 10457.567852 USD with 1.922511449 SOL collateral, triggered below 117.5 USD |
+
+Under the summary the window lists each step: who sends what to whom
+("You send 4,635.28675 USDC from Your wallet to Kamino Lend"), the fee,
+how long the signature stays valid, and the details, such as the pool the
+stake goes to (Jito's) and the token it gives back (JitoSOL). "(verified)"
+marks a token or an account SignLens knows by its address, not by the name
+it gives itself; "≤" an amount the program may take less of.
+
+## It also warns you
+
+Some of the worst transactions take nothing when you sign them, so a
+balance preview shows nothing at all: they hand over the right to take it
+later. SignLens names them in the window, right under the verdict:
+
+- **Spending rights.** "Lets … spend an UNLIMITED amount from this token
+  account at any time", or up to an amount, without asking again.
+- **Accounts given away.** Your token account, or your wallet account
+  itself, handed to a new owner or to a program, which then controls
+  everything in it. SignLens blocks these.
+- **Signatures that never expire.** A transaction built on a durable nonce
+  stays valid until the nonce is used, so whoever holds it can send it
+  next month; the window says "Valid FOREVER".
+- **Lookalike addresses.** An address that shares only its first and last
+  characters with a token or a program SignLens knows.
+- **A swap paying out elsewhere.** "The swap's output goes to an account
+  that is not yours."
+- **Programs it does not know.** Shown as unknown and blocked, never
+  called safe.
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/images/window-dark.png">
+    <img src="docs/images/window-light.png" width="440" alt="The SignLens window on a USDC transfer: a warning that the signature never expires, what the transaction does to you, the simulated outcome, and Reject and Continue to Phantom">
+  </picture>
+</p>
+
+## How it works
+
+SignLens registers itself as a
+[Wallet Standard](https://github.com/anza-xyz/wallet-standard) wallet that
+holds no keys: a dapp sends it what it wants signed, SignLens explains it
+in its own window, and once you say so the request goes unchanged to the
+wallet you actually sign with. You approve or reject there as usual.
+SignLens only watches.
 
 ```
 dapp ──signTransaction──▶ SignLens wallet ──bytes──▶ SignLens API ──▶ explanation window
@@ -42,19 +97,80 @@ dapp ──signTransaction──▶ SignLens wallet ──bytes──▶ SignLen
 Everything that runs in your browser is in this repository, in TypeScript,
 compiled file for file with no bundler, so the shipped scripts line up with
 the sources. A release package is built reproducibly and published with
-its SHA-256; see [Verifying a package](#verifying-a-package).
+its SHA-256; see [Verifying a package](#verifying-a-package). How to
+build and test it from the sources is in
+[`DEVELOPMENT.md`](DEVELOPMENT.md).
+
+## What it isn't
+
+- **Not a wallet.** It holds no keys and signs nothing. Your wallet still
+  asks you for every signature, as it did before.
+- **Not a guarantee.** OK means SignLens read every instruction and found
+  nothing to warn about, not that a trade is a good one or a token worth
+  holding. It can be wrong, and the strip under each explanation is where
+  to say so.
+- **Not a guess.** What it cannot read, it says it cannot read, and
+  blocks rather than fill in. A simulation is shown as what the RPC
+  claims, not as fact.
+- **Not offline, in this beta.** The explanation is computed on
+  SignLens's server, which sees the transaction; [Privacy](#privacy) says
+  what it keeps.
+- **Solana mainnet only.**
+
+## Works with
+
+SignLens explains the programs below, whichever site calls them: a
+Jupiter swap reads the same on jup.ag as in another site's swap widget.
+
+- **Jupiter**: Aggregator v6, Order Engine, Limit Order v2, Perpetuals,
+  Lend (Earn, Borrow, Flashloan), Lock, DAO staking and governance, Genie
+  and merkle distributors, prediction market, Doves oracle
+- **Kamino**: Lend, Lending Vault, Farms, Limit Orders, Scope
+- **Meteora**: DLMM, DAMM v2, Dynamic Bonding Curve, Alpha Vault, Zap,
+  liquidity distributor
+- **Raydium**: AMM v4, CPMM, CLMM, LaunchLab, router
+- **Orca**: Whirlpool
+- **marginfi** (Project 0)
+- **Pump**: Pump.fun, PumpSwap, Pump Fees, Pump stables router
+- **Stake pools**: SPL Stake Pool, which Jito's JitoSOL and many others
+  run on
+- **MetaDAO**: Futarchy, Conditional Vault
+- **Squads**: v4 multisig, the transaction inside a proposal included
+- **Aggregators and routers**: DFlow, Titan, OKX DEX Router, 0x Settler,
+  LI.FI, Rango, Binance router and fee router, Kobayashi router, Liquid
+  Mesh router
+- **Lighthouse**, the checks some wallets add to a transaction
+- **Solana's own programs**: SOL transfers, tokens and Token-2022,
+  associated token accounts, native staking, compute budget and fees,
+  memos, lookup tables, program deploys and upgrades
+
+A program not on the list is shown as unknown, and its transaction
+blocked. SignLens is not affiliated with any of these projects; their
+names are their owners' trademarks.
 
 ## Install
 
-Chromium browsers (Chrome, Brave, Edge, 111 or later): `npm install && npm
-run build`, open `chrome://extensions`, turn on "Developer mode", choose
-"Load unpacked" and pick the `dist/chrome/` directory. Firefox (128 or
-later): `npm run build:firefox`, open `about:debugging#/runtime/this-firefox`,
-choose "Load Temporary Add-on…" and pick `dist/firefox/manifest.json`.
+From a release: download `signlens-extension-X.Y.Z.zip` (Chrome) or
+`signlens-extension-firefox-X.Y.Z.zip` (Firefox) from the
+[releases](https://github.com/signlens/signlens-extension/releases), and
+check it as [Verifying a package](#verifying-a-package) says.
+
+- Chromium browsers (Chrome, Brave, Edge, 111 or later): unzip it, open
+  `chrome://extensions`, turn on "Developer mode", choose "Load unpacked"
+  and pick the unzipped folder.
+- Firefox (128 or later): open `about:debugging#/runtime/this-firefox`,
+  choose "Load Temporary Add-on…" and pick the zip. Firefox keeps an
+  add-on loaded this way only until it restarts; one that stays installed
+  comes from addons.mozilla.org, once SignLens is there.
+
+From the sources: [`DEVELOPMENT.md`](DEVELOPMENT.md) says how to build
+both and load them.
+
 Firefox lets you withhold an add-on's access to sites: if the popup says
 the browser has not let the extension reach the API, the RPC and the token
 list, press "Allow https access" there, or nothing can be explained.
-`npm run package` builds the store packages for both.
+
+## Using it
 
 In a dapp, connect "SignLens". By default it connects to the first other
 wallet it finds in the page and passes every request on after explaining
@@ -62,10 +178,10 @@ it; the popup's settings pick the wallet from the ones found in the current
 tab, switch to watch-only mode (connect as any address, explain, refuse),
 turn off "Show the explanation and ask first" (in pass-through mode the
 window still opens for what SignLens would refuse), list your own
-addresses, keep an address book, and point the extension at another RPC or API (https, or plain http to this
-machine only). A connect that finds no
-wallet to pass to is refused and shown in the popup's requests, with the
-wallets that were there. A dapp has to connect before it can ask for
+addresses, keep an address book, and point the extension at another RPC
+or API (https, or plain http to this machine only). A connect that finds
+no wallet to pass to is refused and shown in the popup's requests, with
+the wallets that were there. A dapp has to connect before it can ask for
 anything, and asks one thing at a time: a second request while the first is
 open is refused.
 
@@ -109,14 +225,21 @@ Every request opens a window before it reaches your wallet, once SignLens
 has read what it needs and asked the API. With "Show the explanation and
 ask first" off, it opens, in pass-through mode, only for a request SignLens
 would refuse (blocked, or an error); the rest go on as explained, and the
-popup keeps them, marked "passed on, not asked". The verdict and the one-line summary stay at the top and
-the buttons at the bottom; in between, the findings, what the transaction
-does to you as a list ("You send 0.5 SOL to …", "You pay a fee of …",
-"Valid FOREVER until …"), each instruction with its fields, and the full
-text under toggles. A request of several transactions shows each under its
-own heading, and the summary at the top is the most serious one's. The
-window's title carries the verdict and the site, so the window is known by
-them in the taskbar.
+popup keeps them, marked "passed on, not asked". The verdict and the
+one-line summary stay at the top and the buttons at the bottom; in
+between, the findings, what the transaction does to you as a list ("You
+send 0.5 SOL to …", "You pay a fee of …", "Valid FOREVER until …"), each
+instruction with its fields, and the full text under toggles. A request
+of several transactions shows each under its own heading, and the summary
+at the top is the most serious one's. The window's title carries the
+verdict and the site, so the window is known by them in the taskbar.
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/images/popup-dark.png">
+    <img src="docs/images/popup-light.png" width="360" alt="The SignLens popup: the API ready, and three requests, a warning passed on, an OK swap passed on, and a blocked swap rejected">
+  </picture>
+</p>
 
 The verdict is one of four:
 
@@ -130,7 +253,10 @@ The verdict is one of four:
   a verdict this version does not know. No answer at all, or a 502, 503 or
   530 (what a deploy, a restart or a busy server looks like), is tried
   once more after a pause of half a second, or of what the API's
-  `Retry-After` asks for up to two, before it counts. Nothing is known about the
+  `Retry-After` asks for up to two, before it counts. The API explains
+  ten transactions a minute for each address it is asked from (a request
+  of several counts each), and refuses more, which shows as an error
+  until a few seconds have passed. Nothing is known about the
   transaction, so it is treated as blocked, never as a pass.
 
 An effect or a value of a kind this version does not know is shown as one,
@@ -154,6 +280,11 @@ unnamed and token lookup is on, it asks again with their symbols. This
 happens when the dapp asks, before the window opens, and also when "Show
 the explanation and ask first" is off.
 
+Every request reaches the API through Cloudflare, which sees your IP
+address, as it does for any site it serves. The API takes the address
+only to count your requests against its limit, in memory and as a keyed
+hash, and logs it nowhere.
+
 The RPC in the settings, by default the public
 `solana-rpc.publicnode.com`, is asked for the lookup tables of every
 transaction that uses any, sees the whole transaction when simulation is
@@ -164,15 +295,18 @@ A transaction the dapp names as for another chain than mainnet goes to the
 same RPC all the same, since the name is only the dapp's word; the window
 shows the chain it named.
 
-The API logs the verdict, the finding codes, the program names, the size,
-the latency and a hash of the message, and stores nothing else; bytes are
-kept only when you send them through the feedback strip.
+Of an explanation, the API logs the verdict, the finding codes, the
+program names, the size, the latency and a hash of the message, and keeps
+nothing else. What a rating sends is kept, as below, and the bytes only
+when you send them through the feedback strip.
 
 The feedback strip sends nothing until you rate an explanation, and says
 what a rating sends before you give one. A rating sends, for each
 transaction explained: the rating, your comment (up to 2,000 characters,
 the same for each), the explanation's digest (a hash of the transaction's
-message), the site's host, the wallet method it called, the extension's
+message), the site's host (in Firefox only once you allow it: Firefox
+asks the first time you rate, and "Permissions and data" in its add-on
+manager changes the answer), the wallet method it called, the extension's
 version, and what the window showed you: the verdict, the one-line
 summary, the findings by code and severity, and the program each
 instruction calls, read from the transaction in the extension. The
@@ -185,99 +319,16 @@ you decide, closing the window included. Messages to sign
 never leave the extension, and the dapp learns neither the explanation nor
 its verdict, nor, in watch-only mode, the watched address until you allow
 it.
-The settings show each address, and you can run your own.
-
-## Development
-
-Node 26.1 or later (`npm test` runs the files in a random order, which Node 26 takes from 26.1).
-`nvm use` picks it from `.nvmrc`, and `npm ci` refuses an older Node (`.npmrc`).
-
-```sh
-npm install
-npm run check           # Biome (lint and format, the stylesheet included) and the TypeScript compiler, strict
-npm test                # in Node: every module but the pages, the worker's against the stub RPC and a fake chrome; in a random order, seed printed
-npm run build           # dist/chrome: the files in static/, and tsc's script for each source, one file each
-npm run test:e2e        # the extension in Chromium, against the API's recorded answers
-npm run test:e2e:record # the same against a running SignLens API, recording its answers anew
-npm run screenshots     # the README's images, of the real window and popup on recorded explanations
-npm run icons           # the icons and the wallet icon, from docs/design/icon.svg
-npm run package         # the Chrome and Firefox packages under dist/, with their SHA-256s
-```
-
-The end-to-end tests load the unpacked extension into Chromium, serve a
-test dapp and a stub RPC on localhost, and answer the API calls with what a
-running SignLens API answered them, recorded under `test/fixtures/api/` (one
-file per call: its method, path and body), counting them and refusing them
-when a test asks. A call nothing was recorded for fails its test, and the
-browser resolves no host but this machine, so the suite needs no network.
-With `SIGNLENS_API_URL` set, the calls go to that API instead, and each
-answer is held against its recording: every value recorded must still be
-there, the same (a field the API added, or a newer token snapshot, is
-not a change). One that departs is reported at the end of the run, as a
-warning (in GitHub Actions, an annotation and a line on the run's
-summary page); with
-`SIGNLENS_STRICT_RECORDINGS=1`, as a release runs, it fails its test.
-The API limits explanations per address, and a run comes from one: a
-call it refuses with `429` is answered from its recording and named in a
-note at the end, as checked against nothing, never as drift, strict or
-not, and never recorded. Feedback is never sent, live or not.
-`npm run test:e2e:record` runs the suite that way and records every answer
-anew (`SIGNLENS_API_URL`, default `http://127.0.0.1:8787`). The fixtures
-under `test/fixtures` are mainnet transactions and what the API made of
-them.
-
-On every change CI runs the lint, the types, the Node tests and the
-end-to-end suite, and builds the package on Linux, macOS and Windows,
-which must come out the same bytes. When the repository variable
-`SIGNLENS_API_URL` names an API, the suite also runs against it; a
-release requires that.
-
-## Layout
-
-`src/` is split by where the code runs, since each place has its own
-browser APIs and rules. Each module's Node test sits beside it.
-
-| | |
-|---|---|
-| `src/page/` | runs in the dapp's page, as classic scripts that import nothing |
-| | `injected.ts`: the Wallet Standard wallet in the page, its copy of the request, and the hand-off to the real one |
-| | `content.ts`: relays between the page and the extension |
-| | `page.d.ts`: the types those two share with the modules, which they cannot import |
-| `src/worker/` | the background service worker |
-| | `background.ts`, `alive.ts`: keeps the wallets each page has and routes the messages; stays up while it holds a request |
-| | `requests.ts`: a page's request answered: explained, shown, decided on, kept |
-| | `explain.ts`, `tables.ts`, `simulation.ts`, `hints.ts`: what a request is explained with: the lookup tables and the simulation over your RPC, names for unlisted tokens, and the API's answer as rows |
-| | `api.ts`, `explanation.ts`: the API client, and the explanation document as this version reads it, checked field by field or refused with where it fails |
-| | `gate.ts`, `history.ts`: the window and the user's decision; the popup's history and the badge |
-| | `sites.ts`: in watch-only mode, the sites allowed to see the watched address, and the window that asks |
-| | `feedback.ts`: the feedback records |
-| | `solana.ts`: the little of Solana's wire format the worker needs |
-| `src/ui/` | the extension's own pages |
-| | `popup.ts`, `pages.ts`: the popup; the pages SignLens runs on, and what the popup says over one it does not |
-| | `confirm.ts`, `connect.ts`, `address.ts`, `windows.ts`, `dom.ts`: the window, the window that asks to show a site the watched address, the one that asks whether an address is yours, and what they share |
-| | `render.ts`: one row of a request as the window and the popup show it |
-| `src/shared/` | what the worker and the pages both use, and nothing of either |
-| | `types.ts`: the contract: the explanation document, the request, the feedback record, the API's status |
-| | `programs.ts`: the program each instruction of a transaction calls, which a report says, read from its bytes |
-| | `model.ts`: what SignLens keeps of a request: its rows (explained, failed, a message, a site asking, an address not yours) and what became of it |
-| | `messages.ts`: the messages and who may send what |
-| | `store.ts`: the extension's storage, typed by key, and the queue its read-then-write changes go through |
-| | `settings.ts`, `endpoint.ts`: the settings and their defaults; the endpoints accepted, checked again at each use |
-| | `verdict.ts`: the verdict words and which is worst, for the badge and the window |
-| | `text.ts`, `json.ts`, `base58.ts`: text from elsewhere made safe to show; objects read from elsewhere; addresses |
-| `src/manifest.test.ts`, `src/layout.test.ts` | the manifest, the Firefox manifest, and the host permissions against the endpoint rule; the folders, and what each may import |
-| `static/` | the manifest, the pages, the stylesheet and the icons, copied as they are into the build |
-| `docs/design/` | the icon's one drawing, from which `npm run icons` makes the four PNGs (the 128 px one padded as the Chrome Web Store asks) and the wallet icon a dapp shows |
-| `docs/images/` | the README's screenshots, in the light and the dark theme, made by `npm run screenshots` (`e2e/screenshots.shot.ts`) |
-| `dist/` | what the build makes, never committed: `chrome/` (the unpacked extension, the scripts in the folders they have under `src/`), `firefox/`, and the packages |
-| `scripts/` | the Firefox copy, the reproducible packages, and recording the API's answers for the end-to-end tests |
-| `e2e/` | the end-to-end tests, in Chromium, and the harness that loads the extension and opens its windows; at the end of a run against a live API, which recordings it no longer matches |
-| `test/` | what the Node tests and the end-to-end tests share: the mainnet transactions and the API's recorded answers (`fixtures/`), the stub RPC and API relay, the test dapp it serves, and the stand-in for the `chrome` APIs the modules run against in Node |
+The settings show each address. The RPC and the token list can be your
+own; the API's address is there for development, since the API's source
+is not public.
 
 ## Verifying a package
 
 A release is a tag `vX.Y.Z` on the default branch that names the version in
-`package.json`. CI runs every test, the end-to-end suite against the API
+`package.json`, and whose version has a section in `CHANGELOG.md`: that
+section is the release's notes (`node scripts/release-notes.ts X.Y.Z`
+shows them). CI runs every test, the end-to-end suite against the API
 included, runs `npm ci && npm run package`, and attaches
 `signlens-extension-X.Y.Z.zip` (Chrome) and
 `signlens-extension-firefox-X.Y.Z.zip`, each with its `.sha256`, to the
@@ -303,6 +354,15 @@ git checkout vX.Y.Z && npm ci && npm run package
 cd dist && sha256sum -c ~/Downloads/signlens-extension-X.Y.Z.zip.sha256 ~/Downloads/signlens-extension-firefox-X.Y.Z.zip.sha256
 ```
 
+## Reporting a problem
+
+An explanation that read wrong or unclear: the feedback strip under it,
+which is what it is for. A bug in the extension: an issue in this
+repository. A way to make SignLens show a transaction as something it is
+not, pass a request on without your decision, or send what it says it
+does not: not an issue, but an email to security@signlens.dev, as
+[`SECURITY.md`](SECURITY.md) says.
+
 ## License
 
-Copyright 2026 Boris Oncev. Apache-2.0, see [`LICENSE`](LICENSE).
+Copyright 2026 Boris Onchev. Apache-2.0, see [`LICENSE`](LICENSE).

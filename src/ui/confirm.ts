@@ -3,6 +3,7 @@
 // the explanation. The verdict and the one-line summary stay at the top
 // and the buttons at the bottom; the explanation scrolls between them.
 
+import { askForSite, asksForSite } from '../shared/consent.ts';
 import { MAX_COMMENT, send } from '../shared/messages.ts';
 import type { Decision, ExplainedRow, Row, VerdictWord } from '../shared/model.ts';
 import { base64Bytes, instructionPrograms } from '../shared/programs.ts';
@@ -100,12 +101,25 @@ function feedbackStrip(list: Row[], page: { origin?: string; method?: string }):
     comment.maxLength = MAX_COMMENT;
     const note = byId('feedback-note');
     const ratings = [...strip.querySelectorAll<HTMLButtonElement>('button[data-rating]')];
+    if (asksForSite()) {
+        byId('feedback-what').textContent =
+            'A rating sends SignLens the site, once you allow it when Firefox asks, what this window shows (the verdict, the findings and the programs called) and your comment. The transaction itself goes only if you tick the box below.';
+    }
     (cover.querySelector('span') as HTMLElement).textContent =
         explained.length > 1
             ? 'Send these transactions to SignLens so they can be looked into'
             : 'Send this transaction to SignLens so it can be looked into';
     let rating: Rating | null = null;
     let sent = false;
+    // Firefox asks once whether a rating may carry the site; until storage
+    // says it has not asked yet, a click asks nothing.
+    let siteAskedBefore = true;
+    local
+        .get('siteAsked')
+        .then(({ siteAsked }) => {
+            siteAskedBefore = siteAsked === true;
+        })
+        .catch(logged('read whether Firefox asked about the site'));
     sendFeedback = () => {
         if (!rating || sent) return;
         sent = true;
@@ -132,13 +146,17 @@ function feedbackStrip(list: Row[], page: { origin?: string; method?: string }):
     for (const button of ratings) {
         button.addEventListener('click', () => {
             if (sent) return;
+            // First, in the click itself, as Firefox asks only from one.
+            const answered = askForSite(siteAskedBefore);
+            siteAskedBefore = true;
             rating = button.dataset.rating as Rating;
             for (const other of ratings) {
                 other.classList.toggle('primary', other === button);
                 other.setAttribute('aria-pressed', String(other === button));
             }
             comment.hidden = rating === 'clear';
-            if (rating === 'clear') sendFeedback();
+            // A "clear" goes at once, after the answer if Firefox is asking.
+            if (rating === 'clear') void answered.finally(() => sendFeedback());
             else note.textContent = 'Add a word if you like; it is sent when you decide below.';
         });
     }

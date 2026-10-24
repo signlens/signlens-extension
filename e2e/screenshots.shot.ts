@@ -39,9 +39,18 @@ const TRANSFER = () =>
     row('legacy_durable_nonce_token_transfer', 'legacy_durable_nonce_token_transfer.simulated_to_contact', '2 balance changes, unverified');
 const SWAP = () => row('swap__sol_from_wallet', 'swap__sol_from_wallet.tables_read', '4 balance changes, unverified');
 const UNRESOLVED = () => row('swap__both_mints_named', 'swap__both_mints_named', null);
+// The README's first image: what a balance preview shows as USDC leaving, explained as what it is for.
+const DEPOSIT = () => row('deposit__usdc_into_kamino_lend', 'deposit__usdc_into_kamino_lend', null);
 
 // Each in both themes: the README shows a reader the one their GitHub uses.
 for (const scheme of ['light', 'dark'] as const) {
+    test(`the window, on a USDC deposit into Kamino Lend (${scheme})`, async ({ context, worker }) => {
+        const gate = await windowFor(context, worker, request({ origin: SITE, upstream: 'Phantom', rows: [DEPOSIT()] }));
+        await gate.setViewportSize({ width: 520, height: 680 });
+        await gate.emulateMedia({ colorScheme: scheme });
+        await gate.screenshot({ path: `${IMAGES}deposit-${scheme}.png` });
+    });
+
     test(`the window, on a transfer that is valid until its nonce is used (${scheme})`, async ({ context, worker }) => {
         const gate = await windowFor(context, worker, request({ origin: SITE, upstream: 'Phantom', rows: [TRANSFER()] }));
         // The size the gate opens it at (src/worker/gate.ts).

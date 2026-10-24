@@ -3,7 +3,9 @@
 # Windows, which must come out the same bytes), runs every test, the
 # end-to-end suite against the live API included (where a stale recording
 # fails), and publishes the packages with their SHA-256s and a build
-# provenance attestation as a GitHub release. Anyone can rebuild the tag
+# provenance attestation as a GitHub release, whose notes are the version's
+# section of CHANGELOG.md (a version without one is refused before any
+# build) and how to check the packages. Anyone can rebuild the tag
 # with `npm ci && npm run package` and compare the hashes, or check the
 # attestation with `gh attestation verify`.
 name: Release
@@ -43,6 +45,8 @@ jobs:
           # The Node line developers run (.nvmrc), not the newest the engines range allows.
           node-version-file: .nvmrc
           cache: npm
+      - name: The release's notes, from its section of CHANGELOG.md
+        run: node scripts/release-notes.ts "${GITHUB_REF_NAME#v}" release-notes.md
       - run: npm ci
       - run: npm run check
       - run: npm test
@@ -53,6 +57,10 @@ jobs:
           path: |
             dist/*.zip
             dist/*.sha256
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: release-notes
+          path: release-notes.md
 
   e2e:
     name: Extension in Chromium, against the API
@@ -145,6 +153,10 @@ jobs:
         with:
           name: packages
           path: dist
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: release-notes
+          path: notes
       - uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8 # v4.2.2
         with:
           subject-path: dist/*.zip
@@ -153,4 +165,7 @@ jobs:
           files: |
             dist/*.zip
             dist/*.sha256
+          # The changelog's section first; GitHub's own notes after it (the
+          # pull requests merged since the last release, and the full diff).
+          body_path: notes/release-notes.md
           generate_release_notes: true
