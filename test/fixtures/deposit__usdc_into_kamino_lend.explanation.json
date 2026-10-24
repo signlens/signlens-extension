@@ -1,0 +1,496 @@
+{
+  "chain": "solana",
+  "effects": [
+    {
+      "type": "transfer",
+      "value": {
+        "amount": {
+          "asset": {
+            "decimals": 6,
+            "id": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+            "symbol": "USDC",
+            "trust": "verified"
+          },
+          "bound": "exact",
+          "note": null,
+          "units": "4635286750"
+        },
+        "from": {
+          "address": "2P5tkJVpceLPdnejvc5DBGd4RxkmtouYfNkb9KKPsPxW",
+          "is_self": true,
+          "label": "Your wallet",
+          "label_trust": "verified"
+        },
+        "to": {
+          "address": "KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD",
+          "is_self": false,
+          "label": "Kamino Lend",
+          "label_trust": "verified"
+        }
+      }
+    },
+    {
+      "type": "other",
+      "value": {
+        "description": "credits the deposit to the obligation as collateral"
+      }
+    },
+    {
+      "type": "create",
+      "value": {
+        "account": {
+          "address": "4PusLnTYexjqGnHofx85uCymgdGc4QYmNhzKwtJjgpZ8",
+          "is_self": true,
+          "label": "Your USDC account",
+          "label_trust": "verified"
+        },
+        "deposit": {
+          "asset": {
+            "decimals": 9,
+            "id": "native",
+            "symbol": "SOL",
+            "trust": "fact"
+          },
+          "bound": "exact",
+          "note": null,
+          "units": "1488440"
+        },
+        "if_missing": true,
+        "owner": {
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+          "is_self": false,
+          "label": "Token program",
+          "label_trust": "verified"
+        }
+      }
+    },
+    {
+      "type": "other",
+      "value": {
+        "description": "updates the reserve's oracle prices and accrued interest; moves no tokens"
+      }
+    },
+    {
+      "type": "other",
+      "value": {
+        "description": "updates the reserve's oracle prices and accrued interest; moves no tokens"
+      }
+    },
+    {
+      "type": "other",
+      "value": {
+        "description": "updates the reserve's oracle prices and accrued interest; moves no tokens"
+      }
+    },
+    {
+      "type": "other",
+      "value": {
+        "description": "recomputes the obligation's collateral and debt values; moves no tokens"
+      }
+    },
+    {
+      "type": "fee",
+      "value": {
+        "amount": {
+          "asset": {
+            "decimals": 9,
+            "id": "native",
+            "symbol": "SOL",
+            "trust": "fact"
+          },
+          "bound": "exact",
+          "note": null,
+          "units": "20000"
+        },
+        "payer": {
+          "address": "2P5tkJVpceLPdnejvc5DBGd4RxkmtouYfNkb9KKPsPxW",
+          "is_self": true,
+          "label": "Your wallet",
+          "label_trust": "verified"
+        }
+      }
+    },
+    {
+      "type": "lifetime",
+      "value": {
+        "type": "recent_blockhash"
+      }
+    }
+  ],
+  "findings": [],
+  "raw": {
+    "digest": "00aceb9aa518bff00dfe2464dfe370cd22dc63e59126a1521d38557ae97a3612",
+    "format": "solana v0"
+  },
+  "schema": "signlens-explanation/1",
+  "sections": [
+    {
+      "collapsed": false,
+      "fields": [
+        {
+          "help": "What you put into the reserve. It earns interest and backs what you borrow.",
+          "label": "Deposit",
+          "trust": "fact",
+          "value": {
+            "type": "amount",
+            "value": {
+              "asset": {
+                "decimals": 6,
+                "id": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+                "symbol": "USDC",
+                "trust": "verified"
+              },
+              "bound": "exact",
+              "note": null,
+              "units": "4635286750"
+            }
+          }
+        },
+        {
+          "help": "Your account with Kamino Lend: what you have deposited and what you owe.",
+          "label": "Obligation",
+          "trust": "fact",
+          "value": {
+            "type": "address",
+            "value": {
+              "address": "5iLEgayZ19eL6vGLEtELtCpYrGxZYGL4xEBsxMaYAfFz",
+              "is_self": false,
+              "label": null,
+              "label_trust": "fact"
+            }
+          }
+        },
+        {
+          "help": "The pool for one token in the market. Deposits go in, loans come out.",
+          "label": "Reserve",
+          "trust": "fact",
+          "value": {
+            "type": "address",
+            "value": {
+              "address": "D6q6wuQSrifJKZYpR1M8R4YawnLDtDsMmWM1NbBmgJ59",
+              "is_self": false,
+              "label": null,
+              "label_trust": "fact"
+            }
+          }
+        },
+        {
+          "help": "The token account the tokens leave. It should be one of yours.",
+          "label": "From account",
+          "trust": "fact",
+          "value": {
+            "type": "address",
+            "value": {
+              "address": "4PusLnTYexjqGnHofx85uCymgdGc4QYmNhzKwtJjgpZ8",
+              "is_self": true,
+              "label": "Your USDC account",
+              "label_trust": "verified"
+            }
+          }
+        }
+      ],
+      "kind": {
+        "type": "instruction",
+        "value": {
+          "index": 7
+        }
+      },
+      "subtitle": "Kamino Lend (descriptor reviewed 2026-09-29, upgradeable by GzFg\u2026kzkW)",
+      "title": "Deposit collateral"
+    },
+    {
+      "collapsed": true,
+      "fields": [
+        {
+          "help": null,
+          "label": "Compute unit limit",
+          "trust": "fact",
+          "value": {
+            "type": "integer",
+            "value": "213727"
+          }
+        },
+        {
+          "help": null,
+          "label": "Compute unit price",
+          "trust": "fact",
+          "value": {
+            "type": "text",
+            "value": "70182 micro-lamports per unit"
+          }
+        },
+        {
+          "help": null,
+          "label": "Create token account if missing: Token account",
+          "trust": "fact",
+          "value": {
+            "type": "address",
+            "value": {
+              "address": "4PusLnTYexjqGnHofx85uCymgdGc4QYmNhzKwtJjgpZ8",
+              "is_self": true,
+              "label": "Your USDC account",
+              "label_trust": "verified"
+            }
+          }
+        },
+        {
+          "help": null,
+          "label": "Create token account if missing: Owner",
+          "trust": "fact",
+          "value": {
+            "type": "address",
+            "value": {
+              "address": "2P5tkJVpceLPdnejvc5DBGd4RxkmtouYfNkb9KKPsPxW",
+              "is_self": true,
+              "label": "Your wallet",
+              "label_trust": "verified"
+            }
+          }
+        },
+        {
+          "help": null,
+          "label": "Create token account if missing: Mint",
+          "trust": "fact",
+          "value": {
+            "type": "address",
+            "value": {
+              "address": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+              "is_self": false,
+              "label": "USDC mint",
+              "label_trust": "verified"
+            }
+          }
+        },
+        {
+          "help": null,
+          "label": "Create token account if missing: Rent paid by",
+          "trust": "fact",
+          "value": {
+            "type": "address",
+            "value": {
+              "address": "2P5tkJVpceLPdnejvc5DBGd4RxkmtouYfNkb9KKPsPxW",
+              "is_self": true,
+              "label": "Your wallet",
+              "label_trust": "verified"
+            }
+          }
+        },
+        {
+          "help": null,
+          "label": "Create token account if missing: Token program",
+          "trust": "fact",
+          "value": {
+            "type": "address",
+            "value": {
+              "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "is_self": false,
+              "label": "Token program",
+              "label_trust": "verified"
+            }
+          }
+        },
+        {
+          "help": "The pool for one token in the market. Deposits go in, loans come out.",
+          "label": "Refresh reserve: Reserve",
+          "trust": "fact",
+          "value": {
+            "type": "address",
+            "value": {
+              "address": "37Jk2zkz23vkAYBT66HM2gaqJuNg2nYLsCreQAVt5MWK",
+              "is_self": false,
+              "label": null,
+              "label_trust": "fact"
+            }
+          }
+        },
+        {
+          "help": "The pool for one token in the market. Deposits go in, loans come out.",
+          "label": "Refresh reserve: Reserve",
+          "trust": "fact",
+          "value": {
+            "type": "address",
+            "value": {
+              "address": "d4A2prbA2whesmvHaL88BH6Ewn5N4bTSU2Ze8P6Bc4Q",
+              "is_self": false,
+              "label": null,
+              "label_trust": "fact"
+            }
+          }
+        },
+        {
+          "help": "The pool for one token in the market. Deposits go in, loans come out.",
+          "label": "Refresh reserve: Reserve",
+          "trust": "fact",
+          "value": {
+            "type": "address",
+            "value": {
+              "address": "D6q6wuQSrifJKZYpR1M8R4YawnLDtDsMmWM1NbBmgJ59",
+              "is_self": false,
+              "label": null,
+              "label_trust": "fact"
+            }
+          }
+        },
+        {
+          "help": "Your account with Kamino Lend: what you have deposited and what you owe.",
+          "label": "Refresh obligation: Obligation",
+          "trust": "fact",
+          "value": {
+            "type": "address",
+            "value": {
+              "address": "5iLEgayZ19eL6vGLEtELtCpYrGxZYGL4xEBsxMaYAfFz",
+              "is_self": false,
+              "label": null,
+              "label_trust": "fact"
+            }
+          }
+        },
+        {
+          "help": null,
+          "label": "Refresh obligation: Additional accounts",
+          "trust": "fact",
+          "value": {
+            "type": "text",
+            "value": "3, not named by this descriptor"
+          }
+        }
+      ],
+      "kind": {
+        "type": "housekeeping"
+      },
+      "subtitle": null,
+      "title": "Also"
+    },
+    {
+      "collapsed": false,
+      "fields": [
+        {
+          "help": null,
+          "label": "Fee payer",
+          "trust": "fact",
+          "value": {
+            "type": "address",
+            "value": {
+              "address": "2P5tkJVpceLPdnejvc5DBGd4RxkmtouYfNkb9KKPsPxW",
+              "is_self": true,
+              "label": "Your wallet",
+              "label_trust": "verified"
+            }
+          }
+        }
+      ],
+      "kind": {
+        "type": "signers"
+      },
+      "subtitle": null,
+      "title": "Signers"
+    },
+    {
+      "collapsed": false,
+      "fields": [
+        {
+          "help": null,
+          "label": "Total",
+          "trust": "fact",
+          "value": {
+            "type": "amount",
+            "value": {
+              "asset": {
+                "decimals": 9,
+                "id": "native",
+                "symbol": "SOL",
+                "trust": "fact"
+              },
+              "bound": "exact",
+              "note": null,
+              "units": "20000"
+            }
+          }
+        },
+        {
+          "help": null,
+          "label": "Base",
+          "trust": "fact",
+          "value": {
+            "type": "amount",
+            "value": {
+              "asset": {
+                "decimals": 9,
+                "id": "native",
+                "symbol": "SOL",
+                "trust": "fact"
+              },
+              "bound": "exact",
+              "note": null,
+              "units": "5000"
+            }
+          }
+        },
+        {
+          "help": null,
+          "label": "Priority",
+          "trust": "fact",
+          "value": {
+            "type": "amount",
+            "value": {
+              "asset": {
+                "decimals": 9,
+                "id": "native",
+                "symbol": "SOL",
+                "trust": "fact"
+              },
+              "bound": "exact",
+              "note": null,
+              "units": "15000"
+            }
+          }
+        },
+        {
+          "help": null,
+          "label": "Priority basis",
+          "trust": "fact",
+          "value": {
+            "type": "text",
+            "value": "70182 micro-lamports per unit \u00d7 213727 units requested"
+          }
+        },
+        {
+          "help": null,
+          "label": "Rent deposits",
+          "trust": "fact",
+          "value": {
+            "type": "text",
+            "value": "up to 0.00148844 SOL if the accounts it creates only when missing do not exist yet; returned when the accounts are closed"
+          }
+        }
+      ],
+      "kind": {
+        "type": "fees"
+      },
+      "subtitle": null,
+      "title": "Fee"
+    },
+    {
+      "collapsed": false,
+      "fields": [
+        {
+          "help": null,
+          "label": "Expires",
+          "trust": "fact",
+          "value": {
+            "type": "text",
+            "value": "in about a minute (recent blockhash)"
+          }
+        }
+      ],
+      "kind": {
+        "type": "lifetime"
+      },
+      "subtitle": null,
+      "title": "Validity"
+    }
+  ],
+  "summary": "Deposit 4,635.28675 USDC (verified) into Kamino Lend as collateral",
+  "text": "Deposit 4,635.28675 USDC (verified) into Kamino Lend as collateral\nOK\n\n== Deposit collateral | Kamino Lend (descriptor reviewed 2026-09-29, upgradeable by GzFg\u2026kzkW)\n  Deposit: 4,635.28675 USDC (verified)\n  Obligation: 5iLEgayZ19eL6vGLEtELtCpYrGxZYGL4xEBsxMaYAfFz\n  Reserve: D6q6wuQSrifJKZYpR1M8R4YawnLDtDsMmWM1NbBmgJ59\n  From account: Your USDC account (4Pus\u2026gpZ8) (verified)\n\n== Also [collapsed]\n  Compute unit limit: 213727\n  Compute unit price: 70182 micro-lamports per unit\n  Create token account if missing: Token account: Your USDC account (4Pus\u2026gpZ8) (verified)\n  Create token account if missing: Owner: Your wallet (2P5t\u2026sPxW) (verified)\n  Create token account if missing: Mint: USDC mint (EPjF\u2026Dt1v) (verified)\n  Create token account if missing: Rent paid by: Your wallet (2P5t\u2026sPxW) (verified)\n  Create token account if missing: Token program: Token program (Toke\u2026Q5DA) (verified)\n  Refresh reserve: Reserve: 37Jk2zkz23vkAYBT66HM2gaqJuNg2nYLsCreQAVt5MWK\n  Refresh reserve: Reserve: d4A2prbA2whesmvHaL88BH6Ewn5N4bTSU2Ze8P6Bc4Q\n  Refresh reserve: Reserve: D6q6wuQSrifJKZYpR1M8R4YawnLDtDsMmWM1NbBmgJ59\n  Refresh obligation: Obligation: 5iLEgayZ19eL6vGLEtELtCpYrGxZYGL4xEBsxMaYAfFz\n  Refresh obligation: Additional accounts: 3, not named by this descriptor\n\n== Signers\n  Fee payer: Your wallet (2P5t\u2026sPxW) (verified)\n\n== Fee\n  Total: 0.00002 SOL\n  Base: 0.000005 SOL\n  Priority: 0.000015 SOL\n  Priority basis: 70182 micro-lamports per unit \u00d7 213727 units requested\n  Rent deposits: up to 0.00148844 SOL if the accounts it creates only when missing do not exist yet; returned when the accounts are closed\n\n== Validity\n  Expires: in about a minute (recent blockhash)\n\nEffects:\n  - send 4,635.28675 USDC (verified) from Your wallet (2P5t\u2026sPxW) (verified) to Kamino Lend (KLen\u2026gmjD) (verified)\n  - credits the deposit to the obligation as collateral\n  - create Your USDC account (4Pus\u2026gpZ8) (verified) owned by Token program (Toke\u2026Q5DA) (verified), depositing 0.00148844 SOL unless it already exists\n  - updates the reserve's oracle prices and accrued interest; moves no tokens\n  - updates the reserve's oracle prices and accrued interest; moves no tokens\n  - updates the reserve's oracle prices and accrued interest; moves no tokens\n  - recomputes the obligation's collateral and debt values; moves no tokens\n  - Your wallet (2P5t\u2026sPxW) (verified) pays a fee of 0.00002 SOL\n  - valid for about a minute (recent blockhash)\n\nRaw: solana v0 (507 bytes)\n  digest: 00aceb9aa518bff00dfe2464dfe370cd22dc63e59126a1521d38557ae97a3612\n",
+  "verdict": "ok"
+}
