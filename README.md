@@ -3,21 +3,16 @@
 [![CI](https://github.com/signlens/signlens-extension/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/signlens/signlens-extension/actions/workflows/ci.yml)
 [![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 
-See what a Solana transaction does before you sign it. SignLens registers
-itself as a [Wallet Standard](https://github.com/anza-xyz/wallet-standard)
-wallet that holds no keys: a dapp sends it what it wants signed, SignLens
-explains it in its own window, and once you say so the request goes
-unchanged to the wallet you actually sign with. You approve or reject there
-as usual. SignLens only watches.
+See what a Solana transaction does before you sign it: not only what
+leaves your wallet, but where it goes and what for. SignLens works beside
+the Solana wallet you already use (Phantom, Backpack, …). It holds no
+keys: it explains each request in its own window, and once you say so
+passes it on to your wallet, where you approve or reject as usual.
 
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="docs/images/window-dark.png">
-    <img src="docs/images/window-light.png" width="440" alt="The SignLens window on a USDC transfer: a warning that the signature never expires, what the transaction does to you, the simulated outcome, and Reject and Continue to Phantom">
-  </picture>
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="docs/images/popup-dark.png">
-    <img src="docs/images/popup-light.png" width="360" alt="The SignLens popup: the API ready, and three requests, a warning passed on, an OK swap passed on, and a blocked swap rejected">
+    <source media="(prefers-color-scheme: dark)" srcset="docs/images/deposit-dark.png">
+    <img src="docs/images/deposit-light.png" width="440" alt="The SignLens window on a deposit: OK, Deposit 4,635.28675 USDC (verified) into Kamino Lend as collateral; what it does, from your wallet to Kamino Lend, the fee and how long it is valid; and Reject and Continue to Phantom">
   </picture>
 </p>
 
@@ -27,11 +22,71 @@ addresses the transaction's lookup tables load, the outcome of a simulation
 on the RPC in the settings) and renders the answer. The server keeps
 verdicts and finding codes, not the bytes; the transaction itself is kept
 only when you tick "Send this transaction to SignLens so it can be looked
-into" under its explanation. The end goal is the same explanation
-computed inside the extension, offline. Asking for it is one function in
-one module (`explainRemotely` in `src/worker/api.ts`); the feedback
-strip, the API status and the API address in the settings are the
-server's and would go with it.
+into" under its explanation.
+
+## Why
+
+Before you sign, your wallet can show what a transaction will take from
+you: 4,635.29 USDC, say. It does not say where that goes or what it buys.
+A deposit into a lending market, a liquidity position, a stake, a
+leveraged order and a drain can all look the same there. SignLens reads
+the transaction itself, every instruction of it, and says in words what
+it does, before your wallet asks you to sign.
+
+Some mainnet transactions, by what leaves the wallet and by SignLens's
+summary of them:
+
+| On | Leaves your wallet | SignLens says |
+|---|---|---|
+| Kamino | 4,635.28675 USDC | Deposit 4,635.28675 USDC (verified) into Kamino Lend as collateral |
+| Raydium | 33.874114 USDC, 0.00985543 GOOGLx | Open a Raydium CLMM position with ≤ 0.00985543 GOOGLx (verified) and ≤ 33.874114 USDC (verified) |
+| Orca | 2.0004 SOL, 0.0019912 ETH | Open an Orca Whirlpool position from tick -54248 to tick -54240; Add ≤ 2.0004 SOL (verified) and ≤ 0.0019912 ETH (verified) to an Orca Whirlpool position |
+| Jito | 0.01 SOL | Stake 0.01 SOL in a stake pool for its pool token |
+| Jupiter | 1.922511449 SOL | Place a long Jupiter Perps limit order of 10457.567852 USD with 1.922511449 SOL collateral, triggered below 117.5 USD |
+
+Under the summary the window lists each step: who sends what to whom
+("You send 4,635.28675 USDC from Your wallet to Kamino Lend"), the fee,
+how long the signature stays valid, and the details, such as the pool the
+stake goes to (Jito's) and the token it gives back (JitoSOL). "(verified)"
+marks a token or an account SignLens knows by its address, not by the name
+it gives itself; "≤" an amount the program may take less of.
+
+## It also warns you
+
+Some of the worst transactions take nothing when you sign them, so a
+balance preview shows nothing at all: they hand over the right to take it
+later. SignLens names them in the window, right under the verdict:
+
+- **Spending rights.** "Lets … spend an UNLIMITED amount from this token
+  account at any time", or up to an amount, without asking again.
+- **Accounts given away.** Your token account, or your wallet account
+  itself, handed to a new owner or to a program, which then controls
+  everything in it. SignLens blocks these.
+- **Signatures that never expire.** A transaction built on a durable nonce
+  stays valid until the nonce is used, so whoever holds it can send it
+  next month; the window says "Valid FOREVER".
+- **Lookalike addresses.** An address that shares only its first and last
+  characters with a token or a program SignLens knows.
+- **A swap paying out elsewhere.** "The swap's output goes to an account
+  that is not yours."
+- **Programs it does not know.** Shown as unknown and blocked, never
+  called safe.
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/images/window-dark.png">
+    <img src="docs/images/window-light.png" width="440" alt="The SignLens window on a USDC transfer: a warning that the signature never expires, what the transaction does to you, the simulated outcome, and Reject and Continue to Phantom">
+  </picture>
+</p>
+
+## How it works
+
+SignLens registers itself as a
+[Wallet Standard](https://github.com/anza-xyz/wallet-standard) wallet that
+holds no keys: a dapp sends it what it wants signed, SignLens explains it
+in its own window, and once you say so the request goes unchanged to the
+wallet you actually sign with. You approve or reject there as usual.
+SignLens only watches.
 
 ```
 dapp ──signTransaction──▶ SignLens wallet ──bytes──▶ SignLens API ──▶ explanation window
@@ -45,6 +100,53 @@ the sources. A release package is built reproducibly and published with
 its SHA-256; see [Verifying a package](#verifying-a-package). How to
 build and test it from the sources is in
 [`DEVELOPMENT.md`](DEVELOPMENT.md).
+
+## What it isn't
+
+- **Not a wallet.** It holds no keys and signs nothing. Your wallet still
+  asks you for every signature, as it did before.
+- **Not a guarantee.** OK means SignLens read every instruction and found
+  nothing to warn about, not that a trade is a good one or a token worth
+  holding. It can be wrong, and the strip under each explanation is where
+  to say so.
+- **Not a guess.** What it cannot read, it says it cannot read, and
+  blocks rather than fill in. A simulation is shown as what the RPC
+  claims, not as fact.
+- **Not offline, in this beta.** The explanation is computed on
+  SignLens's server, which sees the transaction; [Privacy](#privacy) says
+  what it keeps.
+- **Solana mainnet only.**
+
+## Works with
+
+SignLens explains the programs below, whichever site calls them: a
+Jupiter swap reads the same on jup.ag as in another site's swap widget.
+
+- **Jupiter**: Aggregator v6, Order Engine, Limit Order v2, Perpetuals,
+  Lend (Earn, Borrow, Flashloan), Lock, DAO staking and governance, Genie
+  and merkle distributors, prediction market, Doves oracle
+- **Kamino**: Lend, Lending Vault, Farms, Limit Orders, Scope
+- **Meteora**: DLMM, DAMM v2, Dynamic Bonding Curve, Alpha Vault, Zap,
+  liquidity distributor
+- **Raydium**: AMM v4, CPMM, CLMM, LaunchLab, router
+- **Orca**: Whirlpool
+- **marginfi** (Project 0)
+- **Pump**: Pump.fun, PumpSwap, Pump Fees, Pump stables router
+- **Stake pools**: SPL Stake Pool, which Jito's JitoSOL and many others
+  run on
+- **MetaDAO**: Futarchy, Conditional Vault
+- **Squads**: v4 multisig, the transaction inside a proposal included
+- **Aggregators and routers**: DFlow, Titan, OKX DEX Router, 0x Settler,
+  LI.FI, Rango, Binance router and fee router, Kobayashi router, Liquid
+  Mesh router
+- **Lighthouse**, the checks some wallets add to a transaction
+- **Solana's own programs**: SOL transfers, tokens and Token-2022,
+  associated token accounts, native staking, compute budget and fees,
+  memos, lookup tables, program deploys and upgrades
+
+A program not on the list is shown as unknown, and its transaction
+blocked. SignLens is not affiliated with any of these projects; their
+names are their owners' trademarks.
 
 ## Install
 
@@ -67,6 +169,8 @@ both and load them.
 Firefox lets you withhold an add-on's access to sites: if the popup says
 the browser has not let the extension reach the API, the RPC and the token
 list, press "Allow https access" there, or nothing can be explained.
+
+## Using it
 
 In a dapp, connect "SignLens". By default it connects to the first other
 wallet it finds in the page and passes every request on after explaining
@@ -129,6 +233,13 @@ instruction with its fields, and the full text under toggles. A request
 of several transactions shows each under its own heading, and the summary
 at the top is the most serious one's. The window's title carries the
 verdict and the site, so the window is known by them in the taskbar.
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/images/popup-dark.png">
+    <img src="docs/images/popup-light.png" width="360" alt="The SignLens popup: the API ready, and three requests, a warning passed on, an OK swap passed on, and a blocked swap rejected">
+  </picture>
+</p>
 
 The verdict is one of four:
 
@@ -254,4 +365,4 @@ does not: not an issue, but an email to security@signlens.dev, as
 
 ## License
 
-Copyright 2026 Boris Oncev. Apache-2.0, see [`LICENSE`](LICENSE).
+Copyright 2026 Boris Onchev. Apache-2.0, see [`LICENSE`](LICENSE).

@@ -6,7 +6,7 @@ uses [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
-## [0.1.0] - 2026-10-20
+## [0.1.0] - 2026-10-24
 
 The first public version: a Wallet Standard wallet without keys that
 explains every signing request through the SignLens API and hands it to
