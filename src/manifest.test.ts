@@ -6,7 +6,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
 import { firefoxManifest, type Manifest } from '../scripts/firefox-manifest.ts';
-import { LOOPBACK } from './shared/endpoint.ts';
+import { HTTPS_HOSTS, hostsNeeded, LOOPBACK } from './shared/endpoint.ts';
 
 const manifest = JSON.parse(readFileSync(new URL('../static/manifest.json', import.meta.url), 'utf8')) as Manifest & {
     manifest_version: number;
@@ -25,7 +25,11 @@ test('the manifest is Manifest V3 for Chrome, with nothing Chrome would warn abo
     assert.equal(manifest.browser_specific_settings, undefined);
     assert.ok(!manifest.content_security_policy.extension_pages.includes('wasm-unsafe-eval'));
     for (const size of ['16', '32', '48', '128']) assert.equal(manifest.icons[size], `icons/icon-${size}.png`);
-    assert.ok(manifest.host_permissions.includes('https://*/*'));
+    assert.ok(manifest.host_permissions.includes(HTTPS_HOSTS));
+    // Whatever the popup asks Firefox for is the manifest's to grant.
+    for (const host of hostsNeeded(LOOPBACK.map((name) => `http://${name}:8787`))) {
+        assert.ok(manifest.host_permissions.includes(host), host);
+    }
     // Plain http goes where the worker may reach it without CORS, and nowhere else.
     assert.deepEqual(
         manifest.host_permissions.filter((p) => p.startsWith('http://')),

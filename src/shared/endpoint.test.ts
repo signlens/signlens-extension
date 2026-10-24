@@ -3,7 +3,7 @@
 
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { within } from './endpoint.ts';
+import { HTTPS_HOSTS, hostsNeeded, within } from './endpoint.ts';
 
 test('a call stops at its timeout, or when the request it is for stops, with why', async () => {
     const timed = within(10);
@@ -20,4 +20,16 @@ test('a call stops at its timeout, or when the request it is for stops, with why
     const stopped = new AbortController();
     stopped.abort('the page stopped waiting');
     assert.equal(within(60_000, stopped.signal).reason, 'the page stopped waiting');
+});
+
+test('the hosts asked for are every https site, and this machine only for an endpoint on it', () => {
+    const DEFAULTS = ['https://api.signlens.dev', 'https://solana-rpc.publicnode.com', 'https://lite-api.jup.ag/tokens/v2/search'];
+    assert.deepEqual(hostsNeeded(DEFAULTS), [HTTPS_HOSTS]);
+    assert.deepEqual(hostsNeeded(['http://127.0.0.1:8787', 'http://localhost:8899', ' http://127.0.0.1:9000/ ']), [
+        HTTPS_HOSTS,
+        'http://127.0.0.1/*',
+        'http://localhost/*',
+    ]);
+    // Anything else needs nothing more: it is refused as an endpoint.
+    assert.deepEqual(hostsNeeded(['http://192.168.1.2:8787', 'ftp://localhost', 'not a URL', '']), [HTTPS_HOSTS]);
 });

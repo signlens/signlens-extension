@@ -1,7 +1,7 @@
 // The popup: the latest requests, the settings with the sites allowed to
 // see the watched address, and whether the SignLens API answers.
 
-import { endpointProblem } from '../shared/endpoint.ts';
+import { endpointProblem, hostsNeeded } from '../shared/endpoint.ts';
 import { send, type WalletList } from '../shared/messages.ts';
 import type { HistoryEntry, Row } from '../shared/model.ts';
 import { addressBytes, DEFAULTS, ENDPOINTS, parseAddresses, parseContacts, type Settings, settings } from '../shared/settings.ts';
@@ -436,13 +436,22 @@ function renderHistory(history: HistoryEntry[]): void {
     updateList(historyList, wanted, empty, [clear], before);
 }
 
-/** The host permissions the manifest asks for: granted at install in Chrome, asked for in Firefox. */
-const HOSTS = { origins: chrome.runtime.getManifest().host_permissions ?? [] };
+/**
+ * The host permissions the settings need (endpoint.ts): every https site,
+ * and this machine only for an endpoint on it. Chrome grants the
+ * manifest's whole list at install; Firefox asks, and is asked for these
+ * only. Kept current as the endpoints change, since the button that asks
+ * must ask at once, in its click.
+ */
+let hosts = { origins: hostsNeeded([]) };
 
 async function checkPermissions(): Promise<void> {
+    const config = await settings();
+    hosts = { origins: hostsNeeded(ENDPOINTS.map((name) => config[name])) };
+    byId('allow').textContent = hosts.origins.length > 1 ? 'Allow https and local access' : 'Allow https access';
     let granted = true;
     try {
-        granted = await chrome.permissions.contains(HOSTS);
+        granted = await chrome.permissions.contains(hosts);
     } catch {
         // No permissions API: nothing to ask for.
     }
@@ -481,13 +490,15 @@ async function start(): Promise<void> {
         if ((ENDPOINTS as readonly string[]).includes((event.target as HTMLInputElement).name)) void saveEndpoints(false);
         else save();
     });
-    for (const name of ENDPOINTS) field(name).addEventListener('change', () => void saveEndpoints(true).then(checkEngine));
+    for (const name of ENDPOINTS) {
+        field(name).addEventListener('change', () => void saveEndpoints(true).then(checkEngine).then(checkPermissions));
+    }
     form.addEventListener('submit', (event) => event.preventDefault());
 
     void checkPermissions();
     byId('allow').addEventListener('click', async () => {
         try {
-            await chrome.permissions.request(HOSTS);
+            await chrome.permissions.request(hosts);
         } catch {
             // Refused, or not askable here.
         }
