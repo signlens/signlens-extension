@@ -8,7 +8,7 @@ import { fileURLToPath } from 'node:url';
 import { type BrowserContext, test as base, chromium, expect, type Locator, type Page, type Worker } from '@playwright/test';
 import type { Settings } from '../../src/shared/settings.ts';
 import { startTestServer, type TestServer } from '../../test/server.ts';
-import { noteDrift, STRICT } from './drift.ts';
+import { noteDrift, noteLimited, STRICT } from './drift.ts';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 export const EXTENSION = join(HERE, '../../dist/chrome');
@@ -77,6 +77,8 @@ export const test = base.extend<Fixtures>({
             }
             noteDrift(server.apiDrifted);
         }
+        // A call the live API's rate limit refused was answered from its recording: said at the end of the run, never failing.
+        if (server.apiLimited.length > 0) noteLimited(server.apiLimited);
     },
 
     /**

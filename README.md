@@ -214,7 +214,10 @@ not a change). One that departs is reported at the end of the run, as a
 warning (in GitHub Actions, an annotation and a line on the run's
 summary page); with
 `SIGNLENS_STRICT_RECORDINGS=1`, as a release runs, it fails its test.
-Feedback is never sent, live or not.
+The API limits explanations per address, and a run comes from one: a
+call it refuses with `429` is answered from its recording and named in a
+note at the end, as checked against nothing, never as drift, strict or
+not, and never recorded. Feedback is never sent, live or not.
 `npm run test:e2e:record` runs the suite that way and records every answer
 anew (`SIGNLENS_API_URL`, default `http://127.0.0.1:8787`). The fixtures
 under `test/fixtures` are mainnet transactions and what the API made of
