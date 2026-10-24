@@ -25,6 +25,8 @@ test('an API that refuses leaves the request unexplained, with a verdict that ca
     const gate = await liveGate(context);
     await expect(gate.locator('#band')).toHaveClass(/error/);
     await expect(gate.locator('#band-summary')).toContainText('every worker is busy');
+    // Busy is worth one more try, after a pause; the second answer stands.
+    expect(server.apiCalls.filter((call) => call.path === '/v1/explain')).toHaveLength(2);
     await expect(gate.locator('#note')).toContainText('SignLens would refuse this');
     await expect(gate.getByRole('button', { name: /Continue anyway/ })).not.toHaveClass(/primary/);
     expect(await worker.evaluate(() => chrome.action.getBadgeText({}))).toBe('?');

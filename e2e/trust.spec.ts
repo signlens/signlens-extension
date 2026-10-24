@@ -112,7 +112,7 @@ test('no answer from SignLens runs page code inside its port message, so window.
 }) => {
     const transfer = fixture('legacy_durable_nonce_token_transfer');
     await configure({ lookupTokens: false, simulate: false, mode: 'passthrough', upstream: 'Fake Wallet' });
-    server.refuseApi(503);
+    server.refuseApi(500);
     // A connect and a request passed on, each settled by an answer over the port.
     const signing = dapp.evaluate(({ wallet, base64 }: { wallet: string; base64: string }) => window.sign(wallet, base64), {
         wallet: WALLET,
@@ -172,7 +172,7 @@ for (const trick of ['mutate', 'getter'] as const) {
         const transfer = fixture('legacy_durable_nonce_token_transfer');
         await configure({ lookupTokens: false, simulate: false, mode: 'passthrough', upstream: 'Fake Wallet' });
         // No explanation is needed to see which bytes go where.
-        server.refuseApi(503);
+        server.refuseApi(500);
         const signing = dapp.evaluate(
             ({ wallet, base64, trick }: { wallet: string; base64: string; trick: 'mutate' | 'getter' }) =>
                 window.signTricky(wallet, base64, trick),
@@ -202,7 +202,7 @@ test('a page that never connected cannot open the window or reach the API', asyn
 test('a second request while the first is open is refused, not stacked behind it', async ({ configure, context, dapp, server }) => {
     const transfer = fixture('legacy_durable_nonce_token_transfer');
     await configure({ lookupTokens: false, simulate: false, mode: 'passthrough', upstream: 'Fake Wallet' });
-    server.refuseApi(503);
+    server.refuseApi(500);
     const sign = () =>
         dapp.evaluate(({ wallet, base64 }: { wallet: string; base64: string }) => window.sign(wallet, base64), {
             wallet: WALLET,
@@ -221,7 +221,7 @@ test('a second request while the first is open is refused, not stacked behind it
 test('closing the page refuses its request and closes the window', async ({ configure, context, dapp, popup, server }) => {
     const transfer = fixture('legacy_durable_nonce_token_transfer');
     await configure({ lookupTokens: false, simulate: false, mode: 'passthrough', upstream: 'Fake Wallet' });
-    server.refuseApi(503);
+    server.refuseApi(500);
     dapp.evaluate(({ wallet, base64 }: { wallet: string; base64: string }) => window.sign(wallet, base64), {
         wallet: WALLET,
         base64: transfer.base64,
@@ -244,7 +244,7 @@ test('a page that reloads has its request refused and its window closed, and may
 }) => {
     const transfer = fixture('legacy_durable_nonce_token_transfer');
     await configure({ lookupTokens: false, simulate: false, mode: 'passthrough', upstream: 'Fake Wallet' });
-    server.refuseApi(503);
+    server.refuseApi(500);
     const sign = () =>
         dapp.evaluate(({ wallet, base64 }: { wallet: string; base64: string }) => window.sign(wallet, base64), {
             wallet: WALLET,
@@ -277,7 +277,7 @@ test('a page that reloads while its request is still being explained may ask aga
 }) => {
     const transfer = fixture('legacy_durable_nonce_token_transfer');
     await configure({ lookupTokens: false, simulate: false, mode: 'passthrough', upstream: 'Fake Wallet' });
-    server.refuseApi(503);
+    server.refuseApi(500);
     server.delayApi(4_000);
     const sign = () =>
         dapp.evaluate(({ wallet, base64 }: { wallet: string; base64: string }) => window.sign(wallet, base64), {
@@ -303,7 +303,7 @@ test('a page that reloads while its request is still being explained may ask aga
 test('a dapp changing its route while the window is open keeps its request', async ({ configure, context, dapp, server }) => {
     const transfer = fixture('legacy_durable_nonce_token_transfer');
     await configure({ lookupTokens: false, simulate: false, mode: 'passthrough', upstream: 'Fake Wallet' });
-    server.refuseApi(503);
+    server.refuseApi(500);
     const signing = dapp.evaluate(({ wallet, base64 }: { wallet: string; base64: string }) => window.sign(wallet, base64), {
         wallet: WALLET,
         base64: transfer.base64,
@@ -337,7 +337,7 @@ test('a page that disables the port after connecting gets refusals, not a pass',
 test('a page that patches built-ins to catch the port never sees it', async ({ configure, context, dapp, server }) => {
     const transfer = fixture('legacy_durable_nonce_token_transfer');
     await configure({ lookupTokens: false, simulate: false, mode: 'passthrough', upstream: 'Fake Wallet' });
-    server.refuseApi(503);
+    server.refuseApi(500);
     await dapp.evaluate(() => {
         const seen: unknown[] = [];
         (window as unknown as { seen: unknown[] }).seen = seen;

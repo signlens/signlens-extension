@@ -524,7 +524,11 @@ export async function startTestServer(): Promise<TestServer> {
         apiMissed: api.missed,
         apiDrifted: api.drifted,
         apiLimited: api.limited,
-        /** Makes the relay answer every API call with this status and body instead. */
+        /**
+         * Makes the relay answer every API call with this status and body
+         * instead. The extension tries a 502, 503 or 530 once more, so a test
+         * that counts calls refuses with 500, which it takes at once.
+         */
         refuseApi(
             status: number,
             body = '{"schema":"signlens-api-error/1","error":{"code":"busy","message":"every worker is busy; try again"}}',

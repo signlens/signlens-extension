@@ -54,7 +54,10 @@ before it, so everything below is new.
   RPC and a token list, and the API's answer is checked field by field
   before anything is shown: one that does not hold together, or a verdict
   this version does not know, is an error, and a kind of effect or value
-  it does not know is shown as one. The window shows the verdict and the
+  it does not know is shown as one. An API that did not answer, or
+  answered 502, 503 or 530, is asked once more after a short pause (its
+  `Retry-After`, at most two seconds) before the request counts as
+  unexplained; feedback is sent once. The window shows the verdict and the
   summary first, each transaction of a request under its own heading,
   what each does to you, and the instructions and the full text under
   toggles; its title carries the verdict and the site. In pass-through

@@ -127,7 +127,10 @@ The verdict is one of four:
   call it safe. SignLens refuses it unless you choose "Continue anyway".
 - **Error**: SignLens has no explanation to show. The API was away or
   refused, or answered with something that does not hold together, or with
-  a verdict this version does not know. Nothing is known about the
+  a verdict this version does not know. No answer at all, or a 502, 503 or
+  530 (what a deploy, a restart or a busy server looks like), is tried
+  once more after a pause of half a second, or of what the API's
+  `Retry-After` asks for up to two, before it counts. Nothing is known about the
   transaction, so it is treated as blocked, never as a pass.
 
 An effect or a value of a kind this version does not know is shown as one,
