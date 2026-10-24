@@ -29,9 +29,9 @@ verdicts and finding codes, not the bytes; the transaction itself is kept
 only when you tick "Send this transaction to SignLens so it can be looked
 into" under its explanation. The end goal is the same explanation
 computed inside the extension, offline. Asking for it is one function in
-one module (`explainRemotely` in `src/worker/api.ts`); the feedback strip, the API
-status and the API address in the settings are the server's and would go
-with it.
+one module (`explainRemotely` in `src/worker/api.ts`); the feedback
+strip, the API status and the API address in the settings are the
+server's and would go with it.
 
 ```
 dapp ──signTransaction──▶ SignLens wallet ──bytes──▶ SignLens API ──▶ explanation window
@@ -46,15 +46,27 @@ its SHA-256; see [Verifying a package](#verifying-a-package).
 
 ## Install
 
-Chromium browsers (Chrome, Brave, Edge, 111 or later): `npm install && npm
-run build`, open `chrome://extensions`, turn on "Developer mode", choose
-"Load unpacked" and pick the `dist/chrome/` directory. Firefox (128 or
-later): `npm run build:firefox`, open `about:debugging#/runtime/this-firefox`,
-choose "Load Temporary Add-on…" and pick `dist/firefox/manifest.json`.
+From a release: download `signlens-extension-X.Y.Z.zip` (Chrome) or
+`signlens-extension-firefox-X.Y.Z.zip` (Firefox) from the
+[releases](https://github.com/signlens/signlens-extension/releases), and
+check it as [Verifying a package](#verifying-a-package) says.
+
+- Chromium browsers (Chrome, Brave, Edge, 111 or later): unzip it, open
+  `chrome://extensions`, turn on "Developer mode", choose "Load unpacked"
+  and pick the unzipped folder.
+- Firefox (128 or later): open `about:debugging#/runtime/this-firefox`,
+  choose "Load Temporary Add-on…" and pick the zip. Firefox keeps an
+  add-on loaded this way only until it restarts; one that stays installed
+  comes from addons.mozilla.org, once SignLens is there.
+
+From the sources: `npm install && npm run build` makes `dist/chrome/`,
+loaded unpacked as above, and `npm run build:firefox` makes
+`dist/firefox/`, whose `manifest.json` Firefox loads as a temporary
+add-on. `npm run package` builds both packages.
+
 Firefox lets you withhold an add-on's access to sites: if the popup says
 the browser has not let the extension reach the API, the RPC and the token
 list, press "Allow https access" there, or nothing can be explained.
-`npm run package` builds the store packages for both.
 
 In a dapp, connect "SignLens". By default it connects to the first other
 wallet it finds in the page and passes every request on after explaining
@@ -62,10 +74,10 @@ it; the popup's settings pick the wallet from the ones found in the current
 tab, switch to watch-only mode (connect as any address, explain, refuse),
 turn off "Show the explanation and ask first" (in pass-through mode the
 window still opens for what SignLens would refuse), list your own
-addresses, keep an address book, and point the extension at another RPC or API (https, or plain http to this
-machine only). A connect that finds no
-wallet to pass to is refused and shown in the popup's requests, with the
-wallets that were there. A dapp has to connect before it can ask for
+addresses, keep an address book, and point the extension at another RPC
+or API (https, or plain http to this machine only). A connect that finds
+no wallet to pass to is refused and shown in the popup's requests, with
+the wallets that were there. A dapp has to connect before it can ask for
 anything, and asks one thing at a time: a second request while the first is
 open is refused.
 
@@ -109,14 +121,14 @@ Every request opens a window before it reaches your wallet, once SignLens
 has read what it needs and asked the API. With "Show the explanation and
 ask first" off, it opens, in pass-through mode, only for a request SignLens
 would refuse (blocked, or an error); the rest go on as explained, and the
-popup keeps them, marked "passed on, not asked". The verdict and the one-line summary stay at the top and
-the buttons at the bottom; in between, the findings, what the transaction
-does to you as a list ("You send 0.5 SOL to …", "You pay a fee of …",
-"Valid FOREVER until …"), each instruction with its fields, and the full
-text under toggles. A request of several transactions shows each under its
-own heading, and the summary at the top is the most serious one's. The
-window's title carries the verdict and the site, so the window is known by
-them in the taskbar.
+popup keeps them, marked "passed on, not asked". The verdict and the
+one-line summary stay at the top and the buttons at the bottom; in
+between, the findings, what the transaction does to you as a list ("You
+send 0.5 SOL to …", "You pay a fee of …", "Valid FOREVER until …"), each
+instruction with its fields, and the full text under toggles. A request
+of several transactions shows each under its own heading, and the summary
+at the top is the most serious one's. The window's title carries the
+verdict and the site, so the window is known by them in the taskbar.
 
 The verdict is one of four:
 
@@ -130,7 +142,10 @@ The verdict is one of four:
   a verdict this version does not know. No answer at all, or a 502, 503 or
   530 (what a deploy, a restart or a busy server looks like), is tried
   once more after a pause of half a second, or of what the API's
-  `Retry-After` asks for up to two, before it counts. Nothing is known about the
+  `Retry-After` asks for up to two, before it counts. The API explains
+  ten transactions a minute for each address it is asked from (a request
+  of several counts each), and refuses more, which shows as an error
+  until a few seconds have passed. Nothing is known about the
   transaction, so it is treated as blocked, never as a pass.
 
 An effect or a value of a kind this version does not know is shown as one,
@@ -154,6 +169,11 @@ unnamed and token lookup is on, it asks again with their symbols. This
 happens when the dapp asks, before the window opens, and also when "Show
 the explanation and ask first" is off.
 
+Every request reaches the API through Cloudflare, which sees your IP
+address, as it does for any site it serves. The API takes the address
+only to count your requests against its limit, in memory and as a keyed
+hash, and logs it nowhere.
+
 The RPC in the settings, by default the public
 `solana-rpc.publicnode.com`, is asked for the lookup tables of every
 transaction that uses any, sees the whole transaction when simulation is
@@ -164,9 +184,10 @@ A transaction the dapp names as for another chain than mainnet goes to the
 same RPC all the same, since the name is only the dapp's word; the window
 shows the chain it named.
 
-The API logs the verdict, the finding codes, the program names, the size,
-the latency and a hash of the message, and stores nothing else; bytes are
-kept only when you send them through the feedback strip.
+Of an explanation, the API logs the verdict, the finding codes, the
+program names, the size, the latency and a hash of the message, and keeps
+nothing else. What a rating sends is kept, as below, and the bytes only
+when you send them through the feedback strip.
 
 The feedback strip sends nothing until you rate an explanation, and says
 what a rating sends before you give one. A rating sends, for each
@@ -187,12 +208,15 @@ you decide, closing the window included. Messages to sign
 never leave the extension, and the dapp learns neither the explanation nor
 its verdict, nor, in watch-only mode, the watched address until you allow
 it.
-The settings show each address, and you can run your own.
+The settings show each address. The RPC and the token list can be your
+own; the API's address is there for development, since the API's source
+is not public.
 
 ## Development
 
-Node 26.1 or later (`npm test` runs the files in a random order, which Node 26 takes from 26.1).
-`nvm use` picks it from `.nvmrc`, and `npm ci` refuses an older Node (`.npmrc`).
+Node 26.1 or later (`npm test` runs the files in a random order, which
+Node 26 takes from 26.1). `nvm use` picks it from `.nvmrc`, and `npm ci`
+refuses an older Node (`.npmrc`).
 
 ```sh
 npm install
@@ -265,9 +289,10 @@ browser APIs and rules. Each module's Node test sits beside it.
 | | `messages.ts`: the messages and who may send what |
 | | `store.ts`: the extension's storage, typed by key, and the queue its read-then-write changes go through |
 | | `settings.ts`, `endpoint.ts`: the settings and their defaults; the endpoints accepted, checked again at each use |
+| | `consent.ts`: in Firefox, the user's say on whether a rating carries the site |
 | | `verdict.ts`: the verdict words and which is worst, for the badge and the window |
 | | `text.ts`, `json.ts`, `base58.ts`: text from elsewhere made safe to show; objects read from elsewhere; addresses |
-| `src/manifest.test.ts`, `src/layout.test.ts` | the manifest, the Firefox manifest, and the host permissions against the endpoint rule; the folders, and what each may import |
+| `src/manifest.test.ts`, `src/layout.test.ts`, `src/icons.test.ts`, `src/release-notes.test.ts` | the manifest, the Firefox manifest, and the host permissions against the endpoint rule; the folders, and what each may import; the icons against their one drawing; a release's notes against the changelog |
 | `static/` | the manifest, the pages, the stylesheet and the icons, copied as they are into the build |
 | `docs/design/` | the icon's one drawing, from which `npm run icons` makes the four PNGs (the 128 px one padded as the Chrome Web Store asks) and the wallet icon a dapp shows |
 | `docs/images/` | the README's screenshots, in the light and the dark theme, made by `npm run screenshots` (`e2e/screenshots.shot.ts`) |
@@ -306,6 +331,15 @@ release's `.sha256` files from the `dist/` the build writes to:
 git checkout vX.Y.Z && npm ci && npm run package
 cd dist && sha256sum -c ~/Downloads/signlens-extension-X.Y.Z.zip.sha256 ~/Downloads/signlens-extension-firefox-X.Y.Z.zip.sha256
 ```
+
+## Reporting a problem
+
+An explanation that read wrong or unclear: the feedback strip under it,
+which is what it is for. A bug in the extension: an issue in this
+repository. A way to make SignLens show a transaction as something it is
+not, pass a request on without your decision, or send what it says it
+does not: not an issue, but an email to security@signlens.dev, as
+[`SECURITY.md`](SECURITY.md) says.
 
 ## License
 
