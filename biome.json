@@ -39,5 +39,17 @@
                 "noNonNullAssertion": "error"
             }
         }
-    }
+    },
+    "overrides": [
+        {
+            "includes": ["src/**", "test/**", "scripts/**"],
+            "linter": {
+                "rules": {
+                    "correctness": {
+                        "usePlaywrightValidDescribeCallback": "off"
+                    }
+                }
+            }
+        }
+    ]
 }
