@@ -78,7 +78,7 @@ test('with the window off, what SignLens would not refuse goes on at once, and t
 
 test('what SignLens would refuse waits for the user, the window off or not; their answer is theirs', BOUNDED, async () => {
     await configure({ askFirst: false });
-    server.refuseApi(503);
+    server.refuseApi(500);
     const asking = sign();
     gate.decide(await windowId(), 'reject');
     assert.deepEqual(await asking, { decision: 'reject' });

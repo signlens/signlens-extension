@@ -7,7 +7,7 @@ body:
       value: |
         Transactions SignLens cannot explain yet are how its coverage grows, so thank you.
 
-        A transaction attached here can be read by anyone. If you would rather not show it, use the strip under the explanation instead: tick **Send this transaction to SignLens so it gets covered**, which sends it to SignLens alone.
+        A transaction attached here can be read by anyone. If you would rather not show it, use the strip under the explanation instead: tick **Send this transaction to SignLens so it can be looked into**, which sends it to SignLens alone.
   - type: dropdown
     id: what
     attributes:

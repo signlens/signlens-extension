@@ -26,8 +26,8 @@ the extension sends it the transaction with what it read itself (the
 addresses the transaction's lookup tables load, the outcome of a simulation
 on the RPC in the settings) and renders the answer. The server keeps
 verdicts and finding codes, not the bytes; the transaction itself is kept
-only when you tick "Send this transaction to SignLens so it gets covered"
-on one SignLens did not call OK. The end goal is the same explanation
+only when you tick "Send this transaction to SignLens so it can be looked
+into" under its explanation. The end goal is the same explanation
 computed inside the extension, offline. Asking for it is one function in
 one module (`explainRemotely` in `src/worker/api.ts`); the feedback strip, the API
 status and the API address in the settings are the server's and would go
@@ -127,7 +127,10 @@ The verdict is one of four:
   call it safe. SignLens refuses it unless you choose "Continue anyway".
 - **Error**: SignLens has no explanation to show. The API was away or
   refused, or answered with something that does not hold together, or with
-  a verdict this version does not know. Nothing is known about the
+  a verdict this version does not know. No answer at all, or a 502, 503 or
+  530 (what a deploy, a restart or a busy server looks like), is tried
+  once more after a pause of half a second, or of what the API's
+  `Retry-After` asks for up to two, before it counts. Nothing is known about the
   transaction, so it is treated as blocked, never as a pass.
 
 An effect or a value of a kind this version does not know is shown as one,
@@ -165,14 +168,20 @@ The API logs the verdict, the finding codes, the program names, the size,
 the latency and a hash of the message, and stores nothing else; bytes are
 kept only when you send them through the feedback strip.
 
-The feedback strip sends nothing until you rate an explanation. A rating
-sends, for each transaction explained: the rating, your comment (up to
-2,000 characters, the same for each), the explanation's digest (a hash of
-the transaction's message), and the transaction itself only if you
-ticked "Send this transaction to SignLens so it gets covered", which is
-offered only on one SignLens did not call OK. It goes to the API in the
-settings when you rate "Clear", or when you decide, closing the window
-included. Messages to sign
+The feedback strip sends nothing until you rate an explanation, and says
+what a rating sends before you give one. A rating sends, for each
+transaction explained: the rating, your comment (up to 2,000 characters,
+the same for each), the explanation's digest (a hash of the transaction's
+message), the site's host, the wallet method it called, the extension's
+version, and what the window showed you: the verdict, the one-line
+summary, the findings by code and severity, and the program each
+instruction calls, read from the transaction in the extension. The
+transaction itself, with the addresses its lookup tables loaded, goes only
+if you ticked "Send this transaction to SignLens so it can be looked
+into", which is offered under every explanation, unticked, so a rendering
+SignLens called OK but you rated wrong can be explained again as you saw
+it. It goes to the API in the settings when you rate "Clear", or when
+you decide, closing the window included. Messages to sign
 never leave the extension, and the dapp learns neither the explanation nor
 its verdict, nor, in watch-only mode, the watched address until you allow
 it.
@@ -208,7 +217,10 @@ not a change). One that departs is reported at the end of the run, as a
 warning (in GitHub Actions, an annotation and a line on the run's
 summary page); with
 `SIGNLENS_STRICT_RECORDINGS=1`, as a release runs, it fails its test.
-Feedback is never sent, live or not.
+The API limits explanations per address, and a run comes from one: a
+call it refuses with `429` is answered from its recording and named in a
+note at the end, as checked against nothing, never as drift, strict or
+not, and never recorded. Feedback is never sent, live or not.
 `npm run test:e2e:record` runs the suite that way and records every answer
 anew (`SIGNLENS_API_URL`, default `http://127.0.0.1:8787`). The fixtures
 under `test/fixtures` are mainnet transactions and what the API made of
@@ -246,6 +258,7 @@ browser APIs and rules. Each module's Node test sits beside it.
 | | `render.ts`: one row of a request as the window and the popup show it |
 | `src/shared/` | what the worker and the pages both use, and nothing of either |
 | | `types.ts`: the contract: the explanation document, the request, the feedback record, the API's status |
+| | `programs.ts`: the program each instruction of a transaction calls, which a report says, read from its bytes |
 | | `model.ts`: what SignLens keeps of a request: its rows (explained, failed, a message, a site asking, an address not yours) and what became of it |
 | | `messages.ts`: the messages and who may send what |
 | | `store.ts`: the extension's storage, typed by key, and the queue its read-then-write changes go through |

@@ -75,7 +75,7 @@ test('a request that is not a list of base64 transactions within bounds is refus
 });
 
 test('as many transactions as the limit are each explained, and as many of your addresses as the engine takes are sent', async () => {
-    server.refuseApi(503);
+    server.refuseApi(500);
     const transfer = fixture('legacy_durable_nonce_token_transfer');
     const yours = Array.from({ length: 17 }, (_, i) => base58Encode(new Uint8Array(32).fill(i + 1)));
     const entry = await explainTransactions({ ...PAGE, transactions: Array(MAX_TRANSACTIONS).fill(transfer.base64) }, config(), [], yours);
@@ -243,7 +243,7 @@ test('if asking again with the names fails, the first explanation stands', async
 test("the API's error, or an explanation that does not hold together, is an error row that keeps the tables and the capture", async () => {
     const swap = fixture('swap__both_mints_named');
     server.know(swap);
-    server.refuseApi(503);
+    server.refuseApi(500);
     const busy = rowOf(await explainTransactions({ ...PAGE, transactions: [swap.base64] }, config(), [], []), 'failed');
     assert.equal(busy.error, 'every worker is busy; try again');
     assert.match(busy?.tables ?? '', /read over RPC/);
@@ -254,7 +254,7 @@ test("the API's error, or an explanation that does not hold together, is an erro
 });
 
 test('the size limits are on the bytes: 4096 bytes of transaction pass, 4097 do not, and messages are bounded too', async () => {
-    server.refuseApi(503);
+    server.refuseApi(500);
     const of = (bytes: number) => Buffer.alloc(bytes, 1).toString('base64');
     // 4097 and 4098 bytes fit in as many base64 characters as 4096.
     assert.equal(of(4096).length, of(4098).length);

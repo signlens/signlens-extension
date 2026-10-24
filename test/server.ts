@@ -8,7 +8,10 @@
 // nothing was recorded for fails its test. With `SIGNLENS_API_URL` set,
 // the calls go to that API instead and each answer is held against its
 // recording: one that departs from it, or was never recorded, is drift,
-// which e2e/support/drift.ts reports (see `departure` for what counts). With
+// which e2e/support/drift.ts reports (see `departure` for what counts). A
+// call the live API's rate limit refuses (a run is one address) is
+// answered from its recording and reported apart, as checked against
+// nothing, never as drift and never recorded. With
 // `SIGNLENS_RECORD=1` as well, each answer is kept instead
 // (`npm run test:e2e:record`). Feedback is never sent anywhere: it is a
 // write, answered here as the API would. Nothing else touches the network.
@@ -114,6 +117,12 @@ function drift(kept: Recording, status: number, text: string): string | null {
     }
     const at = departure(kept.response.body, live);
     return at && `answered otherwise than recorded at ${at}`;
+}
+
+/** A recording's answer as the API sent it: its JSON, or its text. */
+function recordedText(kept: Recording): string {
+    const { body, text } = kept.response;
+    return text ?? (body === null ? '' : JSON.stringify(body));
 }
 
 /** An error document from the relay itself, in the API's shape. */
@@ -236,6 +245,8 @@ export interface TestServer {
     apiMissed: string[];
     /** The API calls the live API answered otherwise than recorded, or that were never recorded: reported by e2e/support/drift.ts. */
     apiDrifted: string[];
+    /** The API calls the live API's rate limit refused, answered from their recordings instead: reported by e2e/support/drift.ts, never failing. */
+    apiLimited: string[];
     know(fixture: Fixture): void;
     knowMint(mint: string, symbol: string, decimals: number): void;
     wallet(address: string, before: number, after: number): void;
@@ -265,9 +276,17 @@ export async function startTestServer(): Promise<TestServer> {
     } = { before: new Map(), after: new Map(), failure: null, logs: [], units: 4200, blockhashExpired: false, refused: null };
     const calls: RpcCall[] = [];
     // Answers the relay gives instead of the API's, in turn, the last repeated.
-    const api: { calls: ApiCall[]; missed: string[]; drifted: string[]; answers: { status: number; body: string }[]; delay: number } = {
+    const api: {
+        calls: ApiCall[];
+        missed: string[];
+        drifted: string[];
+        limited: string[];
+        answers: { status: number; body: string }[];
+        delay: number;
+    } = {
         calls: [],
         missed: [],
+        limited: [],
         drifted: [],
         answers: [],
         delay: 0,
@@ -313,8 +332,7 @@ export async function startTestServer(): Promise<TestServer> {
                         );
                     }
                     const kept = JSON.parse(readFileSync(file, 'utf8')) as Recording;
-                    const { status, body: json, text } = kept.response;
-                    return reply(status, text ?? (json === null ? '' : JSON.stringify(json)));
+                    return reply(kept.response.status, recordedText(kept));
                 }
                 // Relayed to the real API, body and all, so the tests see what a user sees.
                 let status: number;
@@ -331,14 +349,22 @@ export async function startTestServer(): Promise<TestServer> {
                     const message = error instanceof Error ? error.message : String(error);
                     return reply(502, relayError('relay', `no SignLens API at ${LIVE}: ${message}`));
                 }
+                const kept = existsSync(file) ? (JSON.parse(readFileSync(file, 'utf8')) as Recording) : null;
+                // The API limits explanations per address, and a run is one: a
+                // call it refused says nothing about the recordings, so it is
+                // answered from its own and kept apart. One with no recording
+                // fails its test, as any unrecorded call does.
+                if (status === 429 && kept) {
+                    api.limited.push(`${method} ${path} (${name})`);
+                    return reply(kept.response.status, recordedText(kept));
+                }
                 if (!RECORD) {
                     // Live: the answer held against its recording, so the recordings are known to hold.
-                    const departed = existsSync(file)
-                        ? drift(JSON.parse(readFileSync(file, 'utf8')) as Recording, status, text)
-                        : 'nothing recorded';
+                    const departed = kept ? drift(kept, status, text) : 'nothing recorded';
                     if (departed) api.drifted.push(`${method} ${path}: ${departed} (${name})`);
                 }
-                if (RECORD) {
+                // A refusal is not an answer worth keeping.
+                if (RECORD && status !== 429) {
                     let answered: Recording['response'];
                     try {
                         answered = { status, body: text ? JSON.parse(text) : null };
@@ -497,7 +523,12 @@ export async function startTestServer(): Promise<TestServer> {
         apiCalls: api.calls,
         apiMissed: api.missed,
         apiDrifted: api.drifted,
-        /** Makes the relay answer every API call with this status and body instead. */
+        apiLimited: api.limited,
+        /**
+         * Makes the relay answer every API call with this status and body
+         * instead. The extension tries a 502, 503 or 530 once more, so a test
+         * that counts calls refuses with 500, which it takes at once.
+         */
         refuseApi(
             status: number,
             body = '{"schema":"signlens-api-error/1","error":{"code":"busy","message":"every worker is busy; try again"}}',

@@ -54,7 +54,10 @@ before it, so everything below is new.
   RPC and a token list, and the API's answer is checked field by field
   before anything is shown: one that does not hold together, or a verdict
   this version does not know, is an error, and a kind of effect or value
-  it does not know is shown as one. The window shows the verdict and the
+  it does not know is shown as one. An API that did not answer, or
+  answered 502, 503 or 530, is asked once more after a short pause (its
+  `Retry-After`, at most two seconds) before the request counts as
+  unexplained; feedback is sent once. The window shows the verdict and the
   summary first, each transaction of a request under its own heading,
   what each does to you, and the instructions and the full text under
   toggles; its title carries the verdict and the site. In pass-through
@@ -73,9 +76,14 @@ before it, so everything below is new.
   way to a request waiting in a window when the browser runs short. The badge shows the worst verdict not seen yet,
   ranked as the window ranks it.
 - **Feedback.** A strip under the explanation sends a rating and a
-  comment, once, one record per explained transaction with its digest, and
-  the transaction itself only when you ask for it to be covered, on one
-  SignLens did not call OK.
+  comment, once, one record per explained transaction with its digest,
+  the site's host, the wallet method, the extension's version and what
+  the window showed (the verdict, the summary, the findings by code and
+  the program each instruction calls), and the transaction itself, with
+  the addresses its lookup tables loaded, only when you tick the box
+  that offers it, under every explanation, OK included. The strip says
+  what a rating sends before one is given. The record is the API's
+  `signlens-feedback/2`.
 - **Endpoints.** The API, the RPC and the token list must be https, or
   plain http to localhost or 127.0.0.1; the worker checks again before
   each call, and the popup says "Not used" of an address that breaks the

@@ -212,7 +212,7 @@ export interface ApiStatus {
 
 export type Rating = 'clear' | 'unclear' | 'wrong';
 
-/** One feedback record, `POST /v1/feedback`. */
+/** One feedback record, `POST /v1/feedback`, version 2 (`signlens-feedback/2`). */
 export interface Feedback {
     /** The explanation's `raw.digest`. */
     message_hash: string;
@@ -220,4 +220,23 @@ export interface Feedback {
     comment?: string;
     /** The transaction, base64, only when the user asked for it to be covered. */
     transaction?: string | null;
+    /** The site that asked for the signature: its host. */
+    origin?: string;
+    /** The wallet method it called, `solana:signTransaction` and the like. */
+    method?: string;
+    /** This extension's version. */
+    extension?: string;
+    /** What the window showed about the transaction. */
+    seen?: Seen;
+    /** With the transaction only: the addresses its lookup tables loaded, in the message's order. */
+    loaded_writable?: string[];
+    loaded_readonly?: string[];
+}
+
+/** What the window showed: the engine's verdict and summary, the findings by code, and each instruction's program. */
+export interface Seen {
+    verdict: Verdict;
+    summary: string;
+    findings: { code: string; severity: Severity; instruction: number | null }[];
+    instructions: { program: string; title: string | null }[];
 }

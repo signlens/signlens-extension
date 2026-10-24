@@ -23,6 +23,9 @@ interface Answer {
     status: number;
     body?: unknown;
     raw?: string;
+    headers?: Record<string, string>;
+    /** Close the connection without answering, as a server that went away does. */
+    drop?: boolean;
 }
 
 interface Call {
@@ -31,7 +34,11 @@ interface Call {
     body: unknown;
 }
 
-/** A stub API: answers `/v1/explain` with `explain`, `/v1/packs` with `packs`, `/v1/feedback` with 204; records calls. */
+/**
+ * A stub API: answers `/v1/explain` with `explain`, `/v1/packs` with
+ * `packs`, `/v1/feedback` with 204; records calls. A list of answers is
+ * given in turn, the last repeated.
+ */
 async function stub({
     explain = { status: 200, body: EXPLANATION },
     packs = {
@@ -44,9 +51,15 @@ async function stub({
         },
     },
 }: {
-    explain?: Answer;
-    packs?: Answer;
+    explain?: Answer | Answer[];
+    packs?: Answer | Answer[];
 } = {}) {
+    const next = (given: Answer | Answer[]): Answer => {
+        if (!Array.isArray(given)) return given;
+        const answer = given.length > 1 ? given.shift() : given[0];
+        if (!answer) throw new Error('the stub was given no answer');
+        return answer;
+    };
     const calls: Call[] = [];
     const server = createServer((request, response) => {
         let body = '';
@@ -57,13 +70,17 @@ async function stub({
             calls.push({ method: request.method, path: request.url, body: body ? JSON.parse(body) : null });
             const answer: Answer =
                 request.url === '/v1/explain'
-                    ? explain
+                    ? next(explain)
                     : request.url === '/v1/packs'
-                      ? packs
+                      ? next(packs)
                       : request.url === '/v1/feedback'
                         ? { status: 204 }
                         : { status: 404, body: {} };
-            response.writeHead(answer.status, { 'content-type': 'application/json' });
+            if (answer.drop) {
+                request.socket.destroy();
+                return;
+            }
+            response.writeHead(answer.status, { 'content-type': 'application/json', ...answer.headers });
             response.end(answer.raw ?? (answer.body === undefined ? '' : JSON.stringify(answer.body)));
         });
     });
@@ -240,5 +257,102 @@ test('an explanation that does not hold together, or is too big to be one, is an
         assert.match(document.error.message, /not an explanation/);
     } finally {
         await huge.close();
+    }
+});
+
+test('a deploy, a restart or a busy server is tried once more, after a pause the server may name', async () => {
+    const BAD_GATEWAY = { status: 502, raw: '' };
+    const back = await stub({ explain: [BAD_GATEWAY, { status: 200, body: EXPLANATION }] });
+    try {
+        assert.deepEqual(await explainRemotely(back.url, new Uint8Array([1]), {}), EXPLANATION);
+        assert.equal(back.calls.length, 2);
+        // The second try is the same request.
+        assert.deepEqual(back.calls[1], back.calls[0]);
+    } finally {
+        await back.close();
+    }
+    const busy = await stub({
+        explain: [
+            { status: 503, raw: '', headers: { 'retry-after': '1' } },
+            { status: 200, body: EXPLANATION },
+        ],
+    });
+    try {
+        const started = Date.now();
+        assert.deepEqual(await explainRemotely(busy.url, new Uint8Array([1]), {}), EXPLANATION);
+        assert.ok(Date.now() - started >= 950, 'the one second the server asked for');
+    } finally {
+        await busy.close();
+    }
+    const tunnel = await stub({
+        explain: [
+            { status: 530, raw: '<html>' },
+            { drop: true, status: 0 },
+        ],
+    });
+    try {
+        // A connection the server dropped is retried too; the second answer stands, whatever it is.
+        const document = await explainRemotely(tunnel.url, new Uint8Array([1]), {});
+        assert.ok('error' in document);
+        assert.match(document.error.message, /did not answer/);
+        assert.equal(tunnel.calls.length, 2);
+    } finally {
+        await tunnel.close();
+    }
+    const gone = await stub({
+        explain: [
+            { drop: true, status: 0 },
+            { status: 200, body: EXPLANATION },
+        ],
+    });
+    try {
+        assert.deepEqual(await explainRemotely(gone.url, new Uint8Array([1]), {}), EXPLANATION);
+    } finally {
+        await gone.close();
+    }
+    const status = await stub({
+        packs: [
+            BAD_GATEWAY,
+            { status: 200, body: { schema: 'signlens-api-status/1', engine: '0.1.0', descriptor_pack: { programs: 1, created_at: 1 } } },
+        ],
+    });
+    try {
+        const answer = await apiStatus(status.url);
+        assert.ok(!('error' in answer), JSON.stringify(answer));
+    } finally {
+        await status.close();
+    }
+});
+
+test('a refusal, a limit or a request given up is not tried again, nor is feedback', async () => {
+    for (const answer of [
+        { status: 429, body: { schema: 'signlens-api-error/1', error: { code: 'rate', message: 'too many' } } },
+        { status: 400, body: { schema: 'signlens-api-error/1', error: { code: 'transaction', message: 'no' } } },
+        { status: 500, raw: '' },
+    ]) {
+        const once = await stub({ explain: answer });
+        try {
+            await explainRemotely(once.url, new Uint8Array([1]), {});
+            assert.equal(once.calls.length, 1, `HTTP ${answer.status}`);
+        } finally {
+            await once.close();
+        }
+    }
+    const slow = await stub({ explain: { status: 503, raw: '', headers: { 'retry-after': '2' } } });
+    try {
+        const stop = new AbortController();
+        setTimeout(() => stop.abort('the page went'), 100);
+        const document = await explainRemotely(slow.url, new Uint8Array([1]), {}, stop.signal);
+        assert.ok('error' in document);
+        assert.equal(slow.calls.length, 1, 'the pause ends with the request');
+    } finally {
+        await slow.close();
+    }
+    const feedback = await stub();
+    try {
+        const failing = await sendFeedback('http://127.0.0.1:1', { messageHash: 'ab'.repeat(32), rating: 'clear' } as never);
+        assert.equal(failing, false);
+    } finally {
+        await feedback.close();
     }
 });

@@ -57,3 +57,79 @@ test('a record that is not one is dropped, and the rest are bounded', () => {
     );
     assert.deepEqual(feedbackRecords({ rating: 'clear', records: 'all' }), []);
 });
+
+const PROGRAM = 'DF1ow4tspfHX9JwWJsAb9epbkA8hmpSEAtxXy1V27QBH';
+const TABLE_ADDRESS = 'So11111111111111111111111111111111111111112';
+const SEEN = {
+    verdict: 'block',
+    summary: 'Swap ≤ 1 USDC for ≥ 2 SOL via DFlow',
+    findings: [{ code: 'DFLOW_INPUT_UNNAMED', severity: 'critical', instruction: 3 }],
+    instructions: [{ program: PROGRAM, title: 'Swap' }],
+};
+
+test('a record carries the site, the method, the version and what the window showed', () => {
+    const [record] = feedbackRecords(
+        {
+            rating: 'unclear',
+            comment: '',
+            origin: 'https://kamino.com',
+            method: 'solana:signTransaction',
+            records: [{ digest: A, transaction: 'AQID', seen: SEEN, loaded_writable: [TABLE_ADDRESS], loaded_readonly: [] }],
+        },
+        '0.4.0',
+    );
+    assert.deepEqual(record, {
+        message_hash: A,
+        rating: 'unclear',
+        comment: '',
+        transaction: 'AQID',
+        origin: 'kamino.com',
+        method: 'solana:signTransaction',
+        extension: '0.4.0',
+        seen: SEEN,
+        loaded_writable: [TABLE_ADDRESS],
+        loaded_readonly: [],
+    });
+});
+
+test('the tables go only with the transaction, and what is not as described is left out', () => {
+    const [record] = feedbackRecords({
+        rating: 'wrong',
+        origin: 'not a url',
+        method: 'sign transaction',
+        records: [
+            {
+                digest: A,
+                transaction: null,
+                seen: {
+                    ...SEEN,
+                    summary: `x\u0000${'y'.repeat(2_000)}`,
+                    findings: [...SEEN.findings, { code: 'lower', severity: 'info' }, { code: 'OK', severity: 'fatal' }],
+                    instructions: [...SEEN.instructions, { program: 'not an address', title: 'Bad' }],
+                },
+                loaded_writable: [TABLE_ADDRESS],
+                loaded_readonly: [],
+            },
+        ],
+    });
+    assert.equal(record?.origin, undefined);
+    assert.equal(record?.method, undefined);
+    assert.equal(record?.extension, undefined);
+    assert.equal(record?.loaded_writable, undefined);
+    assert.equal(record?.seen?.summary.length, 1_000);
+    assert.deepEqual(record?.seen?.findings, SEEN.findings);
+    assert.deepEqual(record?.seen?.instructions, SEEN.instructions);
+    // A verdict the engine does not give drops what was seen altogether.
+    const [other] = feedbackRecords({
+        rating: 'clear',
+        records: [{ digest: B, transaction: null, seen: { ...SEEN, verdict: 'blocked' } }],
+    });
+    assert.equal(other?.seen, undefined);
+    // Tables with a bad address in them are left out, the transaction kept.
+    const [tables] = feedbackRecords({
+        rating: 'clear',
+        records: [{ digest: B, transaction: 'AQID', loaded_writable: ['nope'], loaded_readonly: [] }],
+    });
+    assert.equal(tables?.loaded_writable, undefined);
+    assert.equal(tables?.transaction, 'AQID');
+});

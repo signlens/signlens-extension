@@ -16,10 +16,59 @@ import { toBase64 } from './solana.ts';
 const TIMEOUT_MS = 20_000;
 /** The longest answer read, in characters: an explanation is tens of kilobytes. */
 const MAX_DOCUMENT = 2_000_000;
+/** What a deploy, a restart or a busy server looks like from here: worth one more try. */
+const RETRY_STATUSES = new Set([502, 503, 530]);
+/** The pause before that try without a `Retry-After`, and the longest with one. */
+const RETRY_PAUSE_MS = 500;
+const MAX_RETRY_PAUSE_MS = 2_000;
 
 /** `apiUrl` without a trailing slash. */
 function root(apiUrl: string): string {
     return apiUrl.trim().replace(/\/+$/, '');
+}
+
+/** Waits `ms`, or rejects as soon as `signal` gives up. */
+function pause(ms: number, signal: AbortSignal): Promise<void> {
+    return new Promise((resolve, reject) => {
+        if (signal.aborted) return reject(signal.reason);
+        const timer = setTimeout(resolve, ms);
+        signal.addEventListener(
+            'abort',
+            () => {
+                clearTimeout(timer);
+                reject(signal.reason);
+            },
+            { once: true },
+        );
+    });
+}
+
+/** The pause a `Retry-After` of whole seconds asks for, within `MAX_RETRY_PAUSE_MS`. */
+function retryPause(retryAfter: string | null): number {
+    const seconds = Number(retryAfter);
+    if (retryAfter === null || retryAfter.trim() === '' || !Number.isFinite(seconds) || seconds < 0) return RETRY_PAUSE_MS;
+    return Math.min(seconds * 1_000, MAX_RETRY_PAUSE_MS);
+}
+
+/**
+ * `send`, and once more after a short pause when the first try met no
+ * server or an answer in `RETRY_STATUSES`: the second answer stands,
+ * whatever it is. A request `signal` gave up on is not tried again. Only
+ * for requests that change nothing on the server, which a second try
+ * cannot do twice.
+ */
+async function withOneRetry(send: () => Promise<Response>, signal: AbortSignal): Promise<Response> {
+    let wait = RETRY_PAUSE_MS;
+    try {
+        const first = await send();
+        if (!RETRY_STATUSES.has(first.status)) return first;
+        wait = retryPause(first.headers.get('retry-after'));
+        await first.body?.cancel();
+    } catch (error) {
+        if (signal.aborted) throw error;
+    }
+    await pause(wait, signal);
+    return send();
 }
 
 /** An error document in the API's shape, so callers read one kind. */
@@ -50,13 +99,15 @@ export async function explainRemotely(
     const problem = refusedEndpoint(base, 'API');
     if (problem) return errorDocument('api', problem);
     let response: Response;
+    const signal = within(TIMEOUT_MS, stop);
+    const body = JSON.stringify({ transaction: toBase64(bytes), ...request });
     try {
-        response = await fetch(`${base}/v1/explain`, {
-            method: 'POST',
-            headers: { 'content-type': 'application/json' },
-            body: JSON.stringify({ transaction: toBase64(bytes), ...request }),
-            signal: within(TIMEOUT_MS, stop),
-        });
+        // An explanation changes nothing on the server, so a deploy or a
+        // restart between two tries is no harm.
+        response = await withOneRetry(
+            () => fetch(`${base}/v1/explain`, { method: 'POST', headers: { 'content-type': 'application/json' }, body, signal }),
+            signal,
+        );
     } catch (error) {
         return errorDocument('api', `the SignLens API at ${base} did not answer (${describe(error)})`);
     }
@@ -102,7 +153,8 @@ export async function apiStatus(apiUrl: string): Promise<ApiStatus | { error: st
     const problem = refusedEndpoint(base, 'API');
     if (problem) return { error: problem };
     try {
-        const response = await fetch(`${base}/v1/packs`, { cache: 'no-store', signal: AbortSignal.timeout(5_000) });
+        const signal = AbortSignal.timeout(5_000);
+        const response = await withOneRetry(() => fetch(`${base}/v1/packs`, { cache: 'no-store', signal }), signal);
         if (!response.ok) return { error: `the API at ${base} answered HTTP ${response.status}` };
         const packs = objectFields(await response.json().catch(() => null));
         const pack = objectFields(packs?.descriptor_pack);
@@ -122,7 +174,8 @@ export async function apiStatus(apiUrl: string): Promise<ApiStatus | { error: st
 /**
  * Sends feedback about an explanation: a rating, a comment, and the
  * transaction only when the user asked for it to be covered. Resolves to
- * `true` when the API took it.
+ * `true` when the API took it. Tried once: a record that reached the
+ * server before its answer was lost would be kept twice.
  */
 export async function sendFeedback(apiUrl: string, feedback: Feedback): Promise<boolean> {
     const base = root(apiUrl);
