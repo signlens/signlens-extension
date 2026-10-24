@@ -172,7 +172,9 @@ The feedback strip sends nothing until you rate an explanation, and says
 what a rating sends before you give one. A rating sends, for each
 transaction explained: the rating, your comment (up to 2,000 characters,
 the same for each), the explanation's digest (a hash of the transaction's
-message), the site's host, the wallet method it called, the extension's
+message), the site's host (in Firefox only once you allow it: Firefox
+asks the first time you rate, and "Permissions and data" in its add-on
+manager changes the answer), the wallet method it called, the extension's
 version, and what the window showed you: the verdict, the one-line
 summary, the findings by code and severity, and the program each
 instruction calls, read from the transaction in the extension. The

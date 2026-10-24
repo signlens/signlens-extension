@@ -133,3 +133,17 @@ test('the tables go only with the transaction, and what is not as described is l
     assert.equal(tables?.loaded_writable, undefined);
     assert.equal(tables?.transaction, 'AQID');
 });
+
+test('without the site allowed, a record carries everything but the site', () => {
+    const payload = {
+        rating: 'clear',
+        origin: 'https://jup.ag',
+        method: 'solana:signTransaction',
+        records: [{ digest: A, transaction: null }],
+    };
+    assert.equal(feedbackRecords(payload)[0]?.origin, 'jup.ag');
+    const without = feedbackRecords(payload, '0.1.0', false);
+    assert.equal(without[0]?.origin, undefined);
+    assert.equal(without[0]?.method, 'solana:signTransaction');
+    assert.equal(without[0]?.extension, '0.1.0');
+});

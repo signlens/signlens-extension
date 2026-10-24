@@ -48,8 +48,12 @@ test('the Firefox manifest runs the same worker as a background script, with the
     const gecko = firefox.browser_specific_settings?.gecko;
     assert.match(gecko?.id ?? '', /^[^@]+@[^@]+$/);
     assert.ok(Number(gecko?.strict_min_version) >= 128, 'world: MAIN content scripts');
-    // Required by addons.mozilla.org for new add-ons since November 2025.
-    assert.deepEqual(gecko?.data_collection_permissions.required, ['financialAndPaymentInfo', 'personallyIdentifyingInfo']);
+    // Required by addons.mozilla.org for new add-ons since November 2025;
+    // the site a rating carries is asked for (consent.ts).
+    assert.deepEqual(gecko?.data_collection_permissions, {
+        required: ['financialAndPaymentInfo', 'personallyIdentifyingInfo'],
+        optional: ['browsingActivity'],
+    });
     assert.equal(firefox.minimum_chrome_version, undefined);
     const { background: _b, browser_specific_settings: _s, ...rest } = firefox;
     const { background: _c, minimum_chrome_version: _m, ...chrome } = manifest;

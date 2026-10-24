@@ -7,7 +7,7 @@
 export interface Manifest {
     background: { service_worker: string; type?: string; scripts?: string[] };
     browser_specific_settings?: {
-        gecko: { id: string; strict_min_version: string; data_collection_permissions: { required: string[] } };
+        gecko: { id: string; strict_min_version: string; data_collection_permissions: { required: string[]; optional?: string[] } };
     };
     minimum_chrome_version?: string;
     [key: string]: unknown;
@@ -17,9 +17,11 @@ export interface Manifest {
  * What leaves the device, in Firefox's terms: the transactions and the
  * wallet's addresses (financial), and the names in the address book
  * (personally identifying), sent to the SignLens API, and the transactions
- * to the RPC. None of it is optional to what the add-on does.
+ * to the RPC, none of it optional to what the add-on does; and the site a
+ * rating was given on (browsing activity), which a rating carries only
+ * once the user allowed it when Firefox asked (src/shared/consent.ts).
  */
-const DATA_COLLECTION = { required: ['financialAndPaymentInfo', 'personallyIdentifyingInfo'] };
+const DATA_COLLECTION = { required: ['financialAndPaymentInfo', 'personallyIdentifyingInfo'], optional: ['browsingActivity'] };
 
 /** The Chrome manifest's Firefox counterpart. */
 export function firefoxManifest(chrome: Manifest): Manifest {

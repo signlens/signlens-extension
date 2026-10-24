@@ -79,8 +79,9 @@ before it, so everything below is new.
   ranked as the window ranks it.
 - **Feedback.** A strip under the explanation sends a rating and a
   comment, once, one record per explained transaction with its digest,
-  the site's host, the wallet method, the extension's version and what
-  the window showed (the verdict, the summary, the findings by code and
+  the site's host (in Firefox only once you allow it: Firefox asks the
+  first time you rate, and its add-on manager changes the answer), the
+  wallet method, the extension's version and what the window showed (the verdict, the summary, the findings by code and
   the program each instruction calls), and the transaction itself, with
   the addresses its lookup tables loaded, only when you tick the box
   that offers it, under every explanation, OK included. The strip says
@@ -104,8 +105,9 @@ before it, so everything below is new.
   - every window reflows to 320 pixels, and nothing
     cuts off a focus ring; one too short for its header, the
     explanation and the buttons at once (zoomed in) scrolls as one page.
-- **Packages and CI.** A Firefox package, declaring the data it sends,
-  built and released with the Chrome one. CI runs the lint, the types, the
+- **Packages and CI.** A Firefox package, declaring the data it sends
+  (the site a rating carries as optional, asked for), built and released
+  with the Chrome one. CI runs the lint, the types, the
   Node tests (in a random order) and the whole end-to-end suite on every
   change, against the SignLens API's answers recorded under
   `test/fixtures/api/`, and against the live API when one is configured,

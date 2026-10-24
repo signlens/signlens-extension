@@ -1,10 +1,12 @@
 // A rating from the window's feedback strip, sent to the API: one record
-// per explained transaction, each with its own digest, the site and what
-// the window showed of it, and its bytes, with the addresses its lookup
-// tables loaded, only when the user asked for them to be sent. Everything
-// the window hands over is checked here again before it goes out.
+// per explained transaction, each with its own digest, the site (in
+// Firefox, once the user allowed it: consent.ts) and what the window
+// showed of it, and its bytes, with the addresses its lookup tables
+// loaded, only when the user asked for them to be sent. Everything the
+// window hands over is checked here again before it goes out.
 
 import { isAddress } from '../shared/base58.ts';
+import { siteAllowed } from '../shared/consent.ts';
 import {
     type FeedbackPayload,
     MAX_COMMENT,
@@ -61,12 +63,12 @@ function addresses(value: unknown): string[] | undefined {
     return Array.isArray(value) && value.every(isAddress) ? value : undefined;
 }
 
-/** The records `payload` stands for, or none when it is not a rating of anything. */
-export function feedbackRecords(payload: FeedbackPayload, extension?: string): Feedback[] {
+/** The records `payload` stands for, or none when it is not a rating of anything; the site only `withSite`. */
+export function feedbackRecords(payload: FeedbackPayload, extension?: string, withSite = true): Feedback[] {
     const rating = RATINGS.find((known) => known === payload.rating);
     if (!rating) return [];
     const comment = withoutControls(payload.comment).slice(0, MAX_COMMENT);
-    const origin = hostOf(payload.origin);
+    const origin = withSite ? hostOf(payload.origin) : undefined;
     const method = typeof payload.method === 'string' && /^[A-Za-z0-9:_.-]{1,64}$/.test(payload.method) ? payload.method : undefined;
     const version = typeof extension === 'string' && /^[A-Za-z0-9.+-]{1,32}$/.test(extension) ? extension : undefined;
     return (Array.isArray(payload.records) ? payload.records : [])
@@ -106,7 +108,7 @@ export function feedbackRecords(payload: FeedbackPayload, extension?: string): F
 
 /** Sends the records of `payload` to the API at `apiUrl`; whether it took them all. */
 export async function sendRating(payload: FeedbackPayload, apiUrl: string): Promise<boolean> {
-    const records = feedbackRecords(payload, globalThis.chrome?.runtime?.getManifest?.().version);
+    const records = feedbackRecords(payload, globalThis.chrome?.runtime?.getManifest?.().version, await siteAllowed());
     if (records.length === 0) return false;
     const sent = await Promise.all(records.map((record) => sendFeedback(apiUrl, record)));
     return sent.every(Boolean);
