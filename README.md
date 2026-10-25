@@ -67,7 +67,8 @@ later. SignLens names them in the window, right under the verdict:
   stays valid until the nonce is used, so whoever holds it can send it
   next month; the window says "Valid FOREVER".
 - **Lookalike addresses.** An address that shares only its first and last
-  characters with a token or a program SignLens knows.
+  four characters with one of your own or a contact's in your address
+  book: the address-poisoning trick.
 - **A swap paying out elsewhere.** "The swap's output goes to an account
   that is not yours."
 - **Programs it does not know.** Shown as unknown and blocked, never
