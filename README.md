@@ -41,15 +41,16 @@ summary of them:
 | Kamino | 4,635.28675 USDC | Deposit 4,635.28675 USDC (verified) into Kamino Lend as collateral |
 | Raydium | 33.874114 USDC, 0.00985543 GOOGLx | Open a Raydium CLMM position with ≤ 0.00985543 GOOGLx (verified) and ≤ 33.874114 USDC (verified) |
 | Orca | 2.0004 SOL, 0.0019912 ETH | Open an Orca Whirlpool position from tick -54248 to tick -54240; Add ≤ 2.0004 SOL (verified) and ≤ 0.0019912 ETH (verified) to an Orca Whirlpool position |
-| Jito | 0.01 SOL | Stake 0.01 SOL in a stake pool for its pool token |
+| Jito | 0.0511 SOL | Stake 0.0511 SOL in a stake pool for its pool token, at the pool's ratio at execution |
 | Jupiter | 1.922511449 SOL | Place a long Jupiter Perps limit order of 10457.567852 USD with 1.922511449 SOL collateral, triggered below 117.5 USD |
 
 Under the summary the window lists each step: who sends what to whom
 ("You send 4,635.28675 USDC from Your wallet to Kamino Lend"), the fee,
 how long the signature stays valid, and the details, such as the pool the
-stake goes to (Jito's) and the token it gives back (JitoSOL). "(verified)"
-marks a token or an account SignLens knows by its address, not by the name
-it gives itself; "≤" an amount the program may take less of.
+stake goes to, named by its token ("JitoSOL stake pool"), and the account
+the JitoSOL lands in, yours. "(verified)" marks a token or an account
+SignLens knows by its address, not by the name it gives itself; "≤" an
+amount the program may take less of.
 
 ## It also warns you
 
