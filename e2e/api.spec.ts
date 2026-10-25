@@ -104,7 +104,7 @@ test('the feedback strip sends the rating, and the transaction only when asked',
     const cover = gate.locator('#feedback-cover');
     await expect(cover).toBeVisible();
     // What a rating sends is said before one is given.
-    await expect(gate.locator('#feedback-what')).toContainText('the site, what this window shows');
+    await expect(gate.locator('#feedback-what')).toContainText("the site, SignLens's version, what this window shows");
     await expect(gate.locator('#feedback-what')).toContainText('only if you tick the box below');
     // The ratings are a group under their question, and the chosen one says it is pressed.
     const ratings = gate.getByRole('group', { name: 'Was this explanation clear?' });

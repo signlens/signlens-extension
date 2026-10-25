@@ -1,12 +1,12 @@
-// Firefox's consent for a rating to carry the site: asked only where the
-// manifest says so, once, and the site sent only once it is given.
+// Firefox's consent for a rating to carry the site and the version: asked
+// only where the manifest says so, once, and each sent only once given.
 
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { beforeEach, test } from 'node:test';
 import { firefoxManifest, type Manifest } from '../../scripts/firefox-manifest.ts';
 import { installFakeChrome } from '../../test/chrome.fake.ts';
-import { askForSite, asksForSite, SITE_DATA, siteAllowed } from './consent.ts';
+import { askBeforeRating, asksBeforeRating, ratingAllowed, SITE_DATA, VERSION_DATA } from './consent.ts';
 import { local } from './store.ts';
 
 const CHROME = JSON.parse(readFileSync(new URL('../../static/manifest.json', import.meta.url), 'utf8')) as Manifest;
@@ -33,32 +33,35 @@ beforeEach(() => {
     installFakeChrome();
 });
 
-test('only the Firefox build asks before a rating carries the site', () => {
-    assert.equal(asksForSite(FIREFOX), true);
-    assert.equal(asksForSite(CHROME), false);
-    assert.equal(asksForSite(undefined), false);
+test('only the Firefox build asks before a rating carries the site and the version', () => {
+    assert.equal(asksBeforeRating(FIREFOX), true);
+    assert.equal(asksBeforeRating(CHROME), false);
+    assert.equal(asksBeforeRating(undefined), false);
 });
 
-test('a rating carries the site in Chrome always, and in Firefox only once allowed', async () => {
+test('a rating carries both in Chrome always, and in Firefox each only once allowed', async () => {
     browser(CHROME);
-    assert.equal(await siteAllowed(), true);
-    browser(FIREFOX, [SITE_DATA]);
-    assert.equal(await siteAllowed(), true);
+    assert.deepEqual(await ratingAllowed(), { site: true, version: true });
+    browser(FIREFOX, [SITE_DATA, VERSION_DATA]);
+    assert.deepEqual(await ratingAllowed(), { site: true, version: true });
+    // Firefox's add-on manager lets the user take back one and keep the other.
+    browser(FIREFOX, [VERSION_DATA]);
+    assert.deepEqual(await ratingAllowed(), { site: false, version: true });
     browser(FIREFOX, []);
-    assert.equal(await siteAllowed(), false);
-    // Firefox before 140 has no data collection to grant: nothing was allowed.
+    assert.deepEqual(await ratingAllowed(), { site: false, version: false });
+    // A Firefox with no data collection to grant has allowed nothing.
     browser(FIREFOX);
-    assert.equal(await siteAllowed(), false);
+    assert.deepEqual(await ratingAllowed(), { site: false, version: false });
 });
 
-test('Firefox is asked once, from the click, and Chrome never', async () => {
+test('Firefox is asked once, for both in one question, from the click, and Chrome never', async () => {
     const chrome = browser(CHROME);
-    await askForSite(false);
+    await askBeforeRating(false);
     assert.deepEqual(chrome.asked, []);
     const firefox = browser(FIREFOX, []);
-    await askForSite(false);
-    assert.deepEqual(firefox.asked, [{ data_collection: [SITE_DATA] }]);
-    assert.deepEqual(await local.get('siteAsked'), { siteAsked: true });
-    await askForSite(true);
+    await askBeforeRating(false);
+    assert.deepEqual(firefox.asked, [{ data_collection: [SITE_DATA, VERSION_DATA] }]);
+    assert.deepEqual(await local.get('ratingAsked'), { ratingAsked: true });
+    await askBeforeRating(true);
     assert.equal(firefox.asked.length, 1, 'asked before: the add-on manager has it from there');
 });

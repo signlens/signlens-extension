@@ -19,6 +19,15 @@ uses [Semantic Versioning](https://semver.org/).
   accounts an explanation needs" in the settings turns it off. A saved
   transaction carries the accounts read with it.
 
+### Changed
+
+- **Firefox 140 or later.** It is the first Firefox to ask you about the
+  data an add-on sends, which addons.mozilla.org requires; an earlier one
+  would install SignLens without asking.
+- **A rating's version, in Firefox, only once you allow it.** Firefox
+  asks, the first time you rate, whether a rating may carry the site and
+  SignLens's version, in one question; each goes only once allowed.
+
 ## [0.1.0] - 2026-10-24
 
 The first public version: a Wallet Standard wallet without keys that

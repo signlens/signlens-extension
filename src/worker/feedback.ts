@@ -6,7 +6,7 @@
 // window hands over is checked here again before it goes out.
 
 import { isAddress } from '../shared/base58.ts';
-import { siteAllowed } from '../shared/consent.ts';
+import { ratingAllowed } from '../shared/consent.ts';
 import {
     type FeedbackPayload,
     MAX_COMMENT,
@@ -108,7 +108,9 @@ export function feedbackRecords(payload: FeedbackPayload, extension?: string, wi
 
 /** Sends the records of `payload` to the API at `apiUrl`; whether it took them all. */
 export async function sendRating(payload: FeedbackPayload, apiUrl: string): Promise<boolean> {
-    const records = feedbackRecords(payload, globalThis.chrome?.runtime?.getManifest?.().version, await siteAllowed());
+    const allowed = await ratingAllowed();
+    const version = allowed.version ? globalThis.chrome?.runtime?.getManifest?.().version : undefined;
+    const records = feedbackRecords(payload, version, allowed.site);
     if (records.length === 0) return false;
     const sent = await Promise.all(records.map((record) => sendFeedback(apiUrl, record)));
     return sent.every(Boolean);
