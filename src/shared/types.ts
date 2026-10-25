@@ -136,6 +136,23 @@ export interface Explanation {
     raw: Raw | null;
     /** The text rendering, when the request asked for it (`render: true`). */
     text?: string;
+    /** Accounts whose contents would explain more, for the worker to read from the RPC and ask again with; absent when none. */
+    wanted_accounts?: WantedAccount[];
+}
+
+/** An account an explanation would read: its address and what its contents would show. */
+export interface WantedAccount {
+    address: string;
+    reason: string;
+}
+
+/** An account as the RPC returned it, which the engine checks before it uses it and shows as a claim. */
+export interface AccountData {
+    address: string;
+    owner: string;
+    /** The account's data, base64. */
+    data: string;
+    slot: number;
 }
 
 /** What the engine or the API answers instead of an explanation. */
@@ -192,6 +209,8 @@ export interface EngineRequest {
     token_hints?: TokenHint[];
     simulation?: Simulation;
     render?: boolean;
+    /** The accounts an earlier answer wanted, as the RPC returned them. */
+    accounts?: AccountData[];
 }
 
 /** What `GET /v1/packs` answers. */

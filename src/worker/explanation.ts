@@ -9,6 +9,7 @@
 // without what would hide or reorder it (text.ts): it can carry what a
 // transaction says of itself, a memo or a token's name.
 
+import { isAddress } from '../shared/base58.ts';
 import { withoutControls } from '../shared/text.ts';
 import {
     type Address,
@@ -27,6 +28,7 @@ import {
     TRUSTS,
     type Value,
     VERDICTS,
+    type WantedAccount,
 } from '../shared/types.ts';
 
 export const EXPLANATION_SCHEMA = 'signlens-explanation/1';
@@ -340,6 +342,14 @@ const raw: Read<Raw> = (value, path) => {
     };
 };
 
+/** An account the explanation would read; its address is asked of the RPC, so it must be one. */
+const wanted: Read<WantedAccount> = (value, path) => {
+    const o = new Fields(value, path);
+    const at = o.read('address', text(100));
+    if (!isAddress(at)) fail(`${path}.address`, 'is not an address');
+    return { address: at, reason: o.read('reason', text(500)) };
+};
+
 /**
  * `document`, the JSON of an explanation, as this version reads it, or a
  * `DocumentError` saying where it does not hold together. The result is a
@@ -361,5 +371,9 @@ export function parseExplanation(document: unknown): Explanation {
         raw: o.read('raw', nullable(raw)),
     };
     const full = o.read('text', (v, p) => (v === undefined ? undefined : text(MAX_FULL_TEXT)(v, p)));
-    return full === undefined ? explanation : { ...explanation, text: full };
+    if (full !== undefined) explanation.text = full;
+    // Left out when the explanation wants none.
+    const wants = o.read('wanted_accounts', (v, p) => (v === undefined ? undefined : list(wanted)(v, p)));
+    if (wants !== undefined) explanation.wanted_accounts = wants;
+    return explanation;
 }

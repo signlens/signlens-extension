@@ -193,7 +193,7 @@ export async function fetchLookupTables(url: string, addresses: string[], stop?:
 }
 
 /** How many accounts one `getMultipleAccounts` asks for: public endpoints block longer lists. */
-const ACCOUNTS_PER_CALL = 10;
+export const ACCOUNTS_PER_CALL = 10;
 
 /**
  * The accounts at `addresses` over the RPC, in order, `null` where there

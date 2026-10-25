@@ -84,6 +84,18 @@ test('what is not in the contract is left out, and the result shares nothing wit
     assert.deepEqual(engines.raw, { format: 'solana legacy', digest: 'ab'.repeat(32) });
 });
 
+test('the accounts an explanation wants come through, and one that is not an address is refused', () => {
+    const wanted = [{ address: SELF.address, reason: 'the transaction proposal #7 stores' }];
+    assert.deepEqual(parseExplanation(document({ wanted_accounts: wanted })).wanted_accounts, wanted);
+    assert.equal('wanted_accounts' in parseExplanation(document()), false);
+    // Its address is asked of the RPC.
+    assert.equal(
+        refusal(document({ wanted_accounts: [{ address: 'not an address', reason: 'x' }] })).path,
+        'explanation.wanted_accounts[0].address',
+    );
+    assert.equal(refusal(document({ wanted_accounts: [{ address: SELF.address }] })).path, 'explanation.wanted_accounts[0].reason');
+});
+
 test('a type this version does not know is shown as unrecognized, wherever it is', () => {
     const parsed = parseExplanation(
         document({

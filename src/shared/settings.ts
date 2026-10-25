@@ -31,6 +31,8 @@ export interface Settings {
     tokenApiUrl: string;
     /** Simulate the transaction over the RPC and hold the balance changes against the explanation, as a claim. */
     simulate: boolean;
+    /** Read over the RPC the accounts an explanation names (a multisig proposal's stored transaction, a DAO proposal's options), and ask again with them, as claims. */
+    lookupAccounts: boolean;
     /** Show the instructions and the details under the effects rather than behind one toggle: the reader's last choice, not a setting. */
     showInstructions: boolean;
 }
@@ -47,6 +49,7 @@ export const DEFAULTS: Readonly<Settings> = Object.freeze({
     lookupTokens: true,
     tokenApiUrl: 'https://lite-api.jup.ag/tokens/v2/search',
     simulate: true,
+    lookupAccounts: true,
     showInstructions: false,
 });
 

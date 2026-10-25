@@ -6,6 +6,19 @@ uses [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Added
+
+- **Accounts an explanation names.** Approving a multisig proposal made
+  in an earlier transaction signs a reference to it; the transaction it
+  runs is stored on chain. A Jupiter DAO vote signs a side's number; the
+  proposal says which option that is. When an explanation names accounts
+  like these that it would read, SignLens reads them from the RPC in the
+  settings and asks the API again with them, up to twice, and the window
+  lists the accounts read, unverified. What they hold is shown as the
+  RPC's claim and never lowers a finding. On by default; "Read the
+  accounts an explanation needs" in the settings turns it off. A saved
+  transaction carries the accounts read with it.
+
 ## [0.1.0] - 2026-10-24
 
 The first public version: a Wallet Standard wallet without keys that
