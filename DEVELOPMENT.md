@@ -16,6 +16,42 @@ and `npm run build:firefox` makes `dist/firefox/`, whose `manifest.json`
 Firefox loads as a temporary add-on. `npm run package` builds both
 packages, as a release has them.
 
+## Building for review
+
+A store's reviewer rebuilds a package from its source and compares the
+two. Every package rebuilds to the same bytes, with open-source tools
+only, on Linux, macOS or Windows, x64 or ARM64 (CI builds it on Ubuntu,
+on macOS on Apple silicon and on Windows, and compares).
+
+1. Any of those; for example Ubuntu 24.04.
+2. Node 26.1 or later, with the npm that comes with it. Not Node 24:
+   `npm ci` refuses an older Node (`.npmrc` sets `engine-strict`). With
+   [nvm](https://github.com/nvm-sh/nvm): `nvm install 26 && nvm use 26`,
+   the version `.nvmrc` names.
+3. In the source's directory, a release's tag or its source archive,
+   which needs no git:
+
+   ```sh
+   npm ci
+   npm run package
+   ```
+
+4. `dist/signlens-extension-firefox-X.Y.Z.zip` is the Firefox package,
+   byte for byte, and `dist/signlens-extension-X.Y.Z.zip` the Chrome one:
+   `sha256sum dist/*.zip` prints the SHA-256s the release publishes. The
+   files inside are `dist/chrome/`, with the Firefox manifest in the
+   Firefox package.
+
+`npm ci` installs exactly what `package-lock.json` pins. `npm run
+package` runs `scripts/copy-static.ts` (copies `static/` into
+`dist/chrome/`), the TypeScript 7 compiler (`tsc -p
+tsconfig.build.json`: one JavaScript file for each source file under
+`src/`, neither bundled nor minified, so each reads as its source does
+without the types), and `scripts/package.ts`, which writes both zips:
+sorted entries, stored uncompressed, fixed timestamps, and for Firefox
+the manifest `scripts/firefox-manifest.ts` derives from
+`static/manifest.json`.
+
 ## Tests and tools
 
 ```sh
