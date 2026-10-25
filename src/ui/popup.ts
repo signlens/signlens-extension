@@ -4,7 +4,17 @@
 import { endpointProblem, hostsNeeded } from '../shared/endpoint.ts';
 import { send, type WalletList } from '../shared/messages.ts';
 import type { HistoryEntry, Row } from '../shared/model.ts';
-import { addressBytes, DEFAULTS, ENDPOINTS, parseAddresses, parseContacts, type Settings, settings } from '../shared/settings.ts';
+import {
+    addressBytes,
+    DEFAULTS,
+    ENDPOINTS,
+    MAX_CONTACTS,
+    MAX_OWN_KEYS,
+    parseAddresses,
+    parseContacts,
+    type Settings,
+    settings,
+} from '../shared/settings.ts';
 import { local, onChange, session } from '../shared/store.ts';
 import { describe, methodName, short, withoutScheme } from '../shared/text.ts';
 import type { ApiStatus } from '../shared/types.ts';
@@ -135,13 +145,23 @@ function checkAddress(): void {
     const badAddress = address !== '' && !addressBytes(address);
     addressHint.textContent = badAddress ? 'Not a Solana address (base58 of 32 bytes).' : '';
     field('address').setAttribute('aria-invalid', String(badAddress));
-    const { bad } = parseContacts(field('contacts').value);
-    contactsHint.textContent = bad.length ? `Line${bad.length === 1 ? '' : 's'} ${bad.join(', ')} not read: expected Name = address.` : '';
+    const { bad, over } = parseContacts(field('contacts').value);
+    contactsHint.textContent = [
+        bad.length ? `Line${bad.length === 1 ? '' : 's'} ${bad.join(', ')} not read: expected Name = address.` : '',
+        over.length ? `Only the first ${MAX_CONTACTS} contacts are used; line${over.length === 1 ? '' : 's'} ${over.join(', ')} not.` : '',
+    ]
+        .filter(Boolean)
+        .join(' ');
     field('contacts').setAttribute('aria-invalid', String(bad.length > 0));
-    const notMine = parseAddresses(field('myAddresses').value).bad;
-    myAddressesHint.textContent = notMine.length
-        ? `Line${notMine.length === 1 ? '' : 's'} ${notMine.join(', ')} not read: not a Solana address.`
-        : '';
+    const { addresses, bad: notMine } = parseAddresses(field('myAddresses').value);
+    myAddressesHint.textContent = [
+        notMine.length ? `Line${notMine.length === 1 ? '' : 's'} ${notMine.join(', ')} not read: not a Solana address.` : '',
+        addresses.length > MAX_OWN_KEYS
+            ? `A request carries ${MAX_OWN_KEYS} of these: those the site names, then the first in the list.`
+            : '',
+    ]
+        .filter(Boolean)
+        .join(' ');
     field('myAddresses').setAttribute('aria-invalid', String(notMine.length > 0));
 }
 
