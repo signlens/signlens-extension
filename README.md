@@ -19,7 +19,8 @@ passes it on to your wallet, where you approve or reject as usual.
 **Beta.** In this version the explanation is computed by SignLens's server:
 the extension sends it the transaction with what it read itself (the
 addresses the transaction's lookup tables load, the outcome of a simulation
-on the RPC in the settings) and renders the answer. The server keeps
+on the RPC in the settings, the accounts the explanation names) and renders
+the answer. The server keeps
 verdicts and finding codes, not the bytes; the transaction itself is kept
 only when you tick "Send this transaction to SignLens so it can be looked
 into" under its explanation.
@@ -92,7 +93,7 @@ SignLens only watches.
 
 ```
 dapp ──signTransaction──▶ SignLens wallet ──bytes──▶ SignLens API ──▶ explanation window
-                              │                     └─ lookup tables, simulation ◀── your RPC
+                              │                     └─ lookup tables, simulation, accounts ◀── your RPC
                               └─ "Continue" ──▶ your wallet (Phantom, Backpack, …) ──▶ signs
 ```
 
@@ -269,6 +270,13 @@ Simulation runs on your RPC and is shown as what it is, an unverified
 claim held against the decoded instructions: more leaving than they state
 is a finding, agreement is a quiet line. Tokens outside SignLens's verified
 list are named from the RPC and a token list as claims, marked unverified.
+Some instructions depend on an account they name: approving a multisig
+proposal made in an earlier transaction signs a reference to it, and the
+transaction it runs is stored on chain; a Jupiter DAO vote signs a side's
+number, and the proposal says which option that is. The explanation then
+names the accounts it would read; SignLens reads them from your RPC and
+asks again, and shows what they hold as the RPC's claim, which never
+lowers a finding.
 
 ## Privacy
 
@@ -277,8 +285,10 @@ transaction, the addresses its lookup tables load, the outcome of the
 simulation if it ran, your addresses from the settings (in watch-only
 mode the watched one, so the explanation can say "you"), and your
 address book, names and
-addresses, so contacts can be named; when the explanation leaves tokens
-unnamed and token lookup is on, it asks again with their symbols. This
+addresses, so contacts can be named. When the explanation names accounts
+it would read and account lookup is on, it asks again with those accounts
+as the RPC returned them, up to twice; when it leaves tokens unnamed and
+token lookup is on, it asks again with their symbols. This
 happens when the dapp asks, before the window opens, and also when "Show
 the explanation and ask first" is off.
 
@@ -290,12 +300,15 @@ hash, and logs it nowhere.
 The RPC in the settings, by default the public
 `solana-rpc.publicnode.com`, is asked for the lookup tables of every
 transaction that uses any, sees the whole transaction when simulation is
-on, and the mints of unlisted tokens when token lookup is on. Those mints
-also go to the token list, by default Jupiter's `lite-api.jup.ag`.
-Simulation and token lookup are on by default; the settings turn them off.
-A transaction the dapp names as for another chain than mainnet goes to the
-same RPC all the same, since the name is only the dapp's word; the window
-shows the chain it named.
+on, the addresses of the accounts an explanation names (a multisig
+proposal and the transaction it stores, a DAO proposal and its options)
+when account lookup is on, and the mints of unlisted tokens when token
+lookup is on. Those mints also go to the token list, by default
+Jupiter's `lite-api.jup.ag`. Simulation, account lookup and token lookup
+are on by default; the settings turn them off. A transaction the dapp
+names as for another chain than mainnet goes to the same RPC all the
+same, since the name is only the dapp's word; the window shows the chain
+it named.
 
 Of an explanation, the API logs the verdict, the finding codes, the
 program names, the size, the latency and a hash of the message, and keeps

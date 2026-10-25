@@ -9,6 +9,7 @@ test('settings survive closing the popup', async ({ popup, worker }) => {
     await popup.getByText('Refuse it', { exact: false }).click();
     await popup.getByLabel('Address to connect as').fill(ADDRESS);
     await popup.getByLabel('RPC for lookup tables').fill('http://127.0.0.1:1/rpc');
+    await popup.getByLabel('Read the accounts an explanation needs').uncheck();
     await popup.getByLabel('SignLens API').fill('http://127.0.0.1:2');
     // An address is saved once its field is left, not at each key.
     await popup.getByLabel('SignLens API').press('Tab');
@@ -17,10 +18,17 @@ test('settings survive closing the popup', async ({ popup, worker }) => {
     await popup.reload();
     await expect(popup.getByLabel('Address to connect as')).toHaveValue(ADDRESS);
     await expect(popup.getByLabel('SignLens API')).toHaveValue('http://127.0.0.1:2');
+    await expect(popup.getByLabel('Read the accounts an explanation needs')).not.toBeChecked();
     await expect(popup.locator('#engine-status')).toHaveText(/SignLens API not reachable: the API at http:\/\/127\.0\.0\.1:2/);
 
     const stored = await worker.evaluate(() => chrome.storage.local.get(null));
-    expect(stored).toMatchObject({ mode: 'watch', address: ADDRESS, apiUrl: 'http://127.0.0.1:2', rpcUrl: 'http://127.0.0.1:1/rpc' });
+    expect(stored).toMatchObject({
+        mode: 'watch',
+        address: ADDRESS,
+        apiUrl: 'http://127.0.0.1:2',
+        rpcUrl: 'http://127.0.0.1:1/rpc',
+        lookupAccounts: false,
+    });
 });
 
 test('the API that answers is reported with its engine and packs', async ({ configure, popup, server }) => {

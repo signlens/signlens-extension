@@ -1,6 +1,6 @@
 // A local server for the tests: serves the dapp page on localhost, which
 // the extension's content scripts match, answers `getMultipleAccounts` for
-// the lookup tables of the fixtures it knows, and answers `/api/*` as the
+// the lookup tables and the accounts of the fixtures it knows, and answers `/api/*` as the
 // SignLens API, counting the calls and refusing them on request.
 //
 // The API's answers are replayed from test/fixtures/api/, one file per
@@ -27,12 +27,14 @@ export const RECORDINGS = new URL('api/', FIXTURES);
 const LIVE = process.env.SIGNLENS_API_URL?.replace(/\/+$/, '');
 const RECORD = process.env.SIGNLENS_RECORD === '1';
 
-/** A fixture file's bytes and the addresses its lookup tables load; `path` is its name under test/fixtures, with or without `.b64`. */
+/** A fixture file's bytes, the addresses its lookup tables load and the accounts it carries; `path` is its name under test/fixtures, with or without `.b64`. */
 export interface Fixture {
     base64: string;
     bytes: Uint8Array;
     writable: string[];
     readonly: string[];
+    /** Its `# account: <address> <owner> <slot> <base64>` lines: accounts as an RPC returned them. */
+    accounts: { address: string; owner: string; slot: number; data: string }[];
 }
 
 /** An API call and the answer it got, as kept under test/fixtures/api/. */
@@ -169,11 +171,19 @@ export function fixture(path: string): Fixture {
         .split('\n')
         .filter((line) => !line.startsWith('#'))
         .join('');
+    const accounts = text
+        .split('\n')
+        .filter((line) => line.startsWith('# account: '))
+        .map((line) => {
+            const [address = '', owner = '', slot = '', data = ''] = line.slice('# account: '.length).split(/\s+/);
+            return { address, owner, slot: Number(slot), data };
+        });
     return {
         base64,
         bytes: new Uint8Array(Buffer.from(base64, 'base64')),
         writable: list('loaded-writable'),
         readonly: list('loaded-readonly'),
+        accounts,
     };
 }
 
@@ -273,7 +283,9 @@ export async function startTestServer(): Promise<TestServer> {
         units: number;
         blockhashExpired: boolean;
         refused: { method: string; status: number; body: string } | null;
-    } = { before: new Map(), after: new Map(), failure: null, logs: [], units: 4200, blockhashExpired: false, refused: null };
+        /** The slot `getMultipleAccounts` says it read at: the latest of the fixtures' accounts, or 1. */
+        slot: number;
+    } = { before: new Map(), after: new Map(), failure: null, logs: [], units: 4200, blockhashExpired: false, refused: null, slot: 1 };
     const calls: RpcCall[] = [];
     // Answers the relay gives instead of the API's, in turn, the last repeated.
     const api: {
@@ -419,7 +431,7 @@ export async function startTestServer(): Promise<TestServer> {
                 let result: unknown;
                 if (call.method === 'getMultipleAccounts') {
                     result = {
-                        context: { slot: 1 },
+                        context: { slot: state.slot },
                         value: call.params[0].map((address: string) => {
                             const data = tables.get(address);
                             // With their rent, as a node answers every account.
@@ -477,6 +489,11 @@ export async function startTestServer(): Promise<TestServer> {
         calls,
         know(fixture: Fixture) {
             for (const [table, data] of tablesOf(fixture)) tables.set(table, data);
+            for (const account of fixture.accounts) {
+                // The lamports go unread: what the engine checks is the owner and the data.
+                state.before.set(account.address, { owner: account.owner, lamports: 1_000_000, data: Buffer.from(account.data, 'base64') });
+                state.slot = Math.max(state.slot, account.slot);
+            }
         },
         /** Teaches the RPC and the token list a mint. */
         knowMint(mint: string, symbol: string, decimals: number) {

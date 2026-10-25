@@ -32,6 +32,7 @@ async function configure(changes: Partial<Settings>): Promise<void> {
         rpcUrl: server.rpc,
         simulate: false,
         lookupTokens: false,
+        lookupAccounts: false,
         mode: 'passthrough',
         ...changes,
     });

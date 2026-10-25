@@ -36,6 +36,8 @@ export interface ExplainedRow {
     simulation: string | null;
     /** The symbols of unlisted tokens named from the RPC and the token list. */
     hints: string[];
+    /** The accounts read from the RPC because the explanation named them (absent in rows kept before there were any). */
+    accounts?: string[];
     /** The transaction as `signlens explain` reads it, to save; empty once slimmed to fit the history (history.ts). */
     capture: string;
     /** The explanation's digest, which feedback names it by. */

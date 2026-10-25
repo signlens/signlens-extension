@@ -188,6 +188,7 @@ function save(): void {
         myAddresses: field('myAddresses').value,
         lookupTokens: field('lookupTokens').checked,
         simulate: field('simulate').checked,
+        lookupAccounts: field('lookupAccounts').checked,
     };
     void saved(local.set(update));
 }
@@ -476,6 +477,7 @@ async function start(): Promise<void> {
     field('rpcUrl').value = config.rpcUrl;
     field('lookupTokens').checked = config.lookupTokens;
     field('simulate').checked = config.simulate;
+    field('lookupAccounts').checked = config.lookupAccounts;
     field('tokenApiUrl').value = config.tokenApiUrl;
     // An address kept from before that is no longer taken (plain http to a
     // LAN host, say) is not used: say so, rather than leave every request

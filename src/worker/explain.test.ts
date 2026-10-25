@@ -45,6 +45,7 @@ function config(changes: Partial<Settings> = {}): Settings {
         tokenApiUrl: server.tokens,
         simulate: false,
         lookupTokens: false,
+        lookupAccounts: false,
         ...changes,
     };
 }
@@ -238,6 +239,108 @@ test('if asking again with the names fails, the first explanation stands', async
     assert.equal(server.apiCalls.length, 2, 'asked again with the name');
     assert.equal(row.summary, first.summary);
     assert.deepEqual(row?.hints, []);
+});
+
+/** What an explanation that wants `addresses` adds to its document. */
+function wanting(...addresses: string[]): { wanted_accounts: { address: string; reason: string }[] } {
+    return { wanted_accounts: addresses.map((address) => ({ address, reason: 'what it holds would explain more' })) };
+}
+
+/** The `accounts` of each API call so far. */
+function accountsSent(): unknown[] {
+    return server.apiCalls.map((call) => (call.body as { accounts?: unknown }).accounts);
+}
+
+test('the accounts an explanation wants are read over the RPC and the API asked again with them, twice at most', async () => {
+    const drift = fixture('legacy_squads_drift_approve_execute');
+    server.know(drift);
+    const [proposal, stored] = drift.accounts;
+    assert.ok(proposal && stored);
+    server.answerApi(
+        explanation('block', wanting(proposal.address)),
+        // The vault transaction's address comes from the proposal's index: wanted once the proposal is read.
+        explanation('block', wanting(proposal.address, stored.address)),
+        explanation('block', { summary: 'Approve proposal #7 (per your RPC)', ...wanting(BOB.address) }),
+    );
+    const entry = await explainTransactions({ ...PAGE, transactions: [drift.base64] }, config({ lookupAccounts: true }), [], []);
+    // Each read once, and no third round for what the last answer wants.
+    assert.deepEqual(
+        server.calls.map((call) => call.params?.[0]),
+        [[proposal.address], [stored.address]],
+    );
+    assert.deepEqual(accountsSent(), [undefined, [proposal], [proposal, stored]]);
+    const row = rowOf(entry, 'explained');
+    assert.equal(row.summary, 'Approve proposal #7 (per your RPC)');
+    assert.deepEqual(row.accounts, [proposal.address, stored.address]);
+    // Saved as `signlens explain --read-accounts` reads it.
+    assert.ok(row.capture.includes(`\n# account: ${proposal.address} ${proposal.owner} ${proposal.slot} ${proposal.data}\n`));
+});
+
+test('an account the RPC does not have, or cannot give, leaves the explanation as it was', async () => {
+    const drift = fixture('legacy_squads_drift_approve_execute');
+    const first = explanation('block', wanting(BOB.address));
+    server.answerApi(first);
+    const missing = rowOf(
+        await explainTransactions({ ...PAGE, transactions: [drift.base64] }, config({ lookupAccounts: true }), [], []),
+        'explained',
+    );
+    assert.equal(server.calls.length, 1);
+    assert.equal(server.apiCalls.length, 1, 'asked again with nothing');
+    assert.equal(missing.accounts, undefined);
+    server.know(drift);
+    server.refuse('getMultipleAccounts', 503, 'down');
+    const refused = rowOf(
+        await explainTransactions({ ...PAGE, transactions: [drift.base64] }, config({ lookupAccounts: true }), [], []),
+        'explained',
+    );
+    assert.equal(server.apiCalls.length, 2);
+    assert.equal(refused.accounts, undefined);
+    assert.ok(!refused.capture.includes('# account:'));
+});
+
+test('if asking again with the accounts fails, the explanation before stands', async () => {
+    const drift = fixture('legacy_squads_drift_approve_execute');
+    server.know(drift);
+    server.answerApi(explanation('block', { summary: 'Approve proposal #7', ...wanting(drift.accounts[0]?.address ?? '') }), {
+        schema: 'signlens-api-error/1',
+        error: { code: 'busy', message: 'every worker is busy' },
+    });
+    const row = rowOf(
+        await explainTransactions({ ...PAGE, transactions: [drift.base64] }, config({ lookupAccounts: true }), [], []),
+        'explained',
+    );
+    assert.equal(server.apiCalls.length, 2);
+    assert.equal(row.summary, 'Approve proposal #7');
+    assert.equal(row.accounts, undefined);
+});
+
+test('with account lookup off, nothing is read and the API is asked once', async () => {
+    const drift = fixture('legacy_squads_drift_approve_execute');
+    server.know(drift);
+    server.answerApi(explanation('block', wanting(drift.accounts[0]?.address ?? '')));
+    const row = rowOf(await explainTransactions({ ...PAGE, transactions: [drift.base64] }, config(), [], []), 'explained');
+    assert.deepEqual(server.calls, []);
+    assert.equal(server.apiCalls.length, 1);
+    assert.equal(row.accounts, undefined);
+});
+
+test('the names of unlisted tokens are asked for with the accounts read', async () => {
+    const drift = fixture('legacy_squads_drift_approve_execute');
+    server.know(drift);
+    server.knowMint(PUMP_MINT, 'HMYD', 6);
+    const [proposal] = drift.accounts;
+    assert.ok(proposal);
+    // Any explanation with an unnamed token will do: the API's answers are scripted.
+    const unnamed = recorded('swap__sol_from_wallet.tables_read');
+    server.answerApi({ ...unnamed, ...wanting(proposal.address) }, unnamed, recorded('swap__sol_from_wallet.named_by_hint'));
+    const row = rowOf(
+        await explainTransactions({ ...PAGE, transactions: [drift.base64] }, config({ lookupAccounts: true, lookupTokens: true }), [], []),
+        'explained',
+    );
+    assert.deepEqual(accountsSent(), [undefined, [proposal], [proposal]]);
+    assert.ok((server.apiCalls[2]?.body as { token_hints?: unknown } | undefined)?.token_hints);
+    assert.deepEqual(row.hints, ['HMYD']);
+    assert.deepEqual(row.accounts, [proposal.address]);
 });
 
 test("the API's error, or an explanation that does not hold together, is an error row that keeps the tables and the capture", async () => {

@@ -93,7 +93,7 @@
                     </div>
 
                     <div class="field">
-                        <label for="rpcUrl">RPC for lookup tables, mints and simulation</label>
+                        <label for="rpcUrl">RPC for lookup tables, accounts, mints and simulation</label>
                         <input id="rpcUrl" type="text" name="rpcUrl" aria-describedby="rpcUrl-hint" spellcheck="false" />
                         <small id="rpcUrl-hint"></small>
                     </div>
@@ -101,6 +101,11 @@
                     <label class="choice">
                         <input type="checkbox" name="simulate" aria-labelledby="simulate-name" aria-describedby="simulate-more" />
                         <span><strong id="simulate-name">Simulate over the RPC</strong> <span id="simulate-more">and hold the balance changes against the explanation, as an unverified claim; sends the whole transaction to the RPC</span></span>
+                    </label>
+
+                    <label class="choice">
+                        <input type="checkbox" name="lookupAccounts" aria-labelledby="accounts-name" aria-describedby="accounts-more" />
+                        <span><strong id="accounts-name">Read the accounts an explanation needs</strong> <span id="accounts-more">such as a multisig proposal's stored transaction or a DAO proposal's options, from the RPC, as unverified claims; sends their addresses to the RPC</span></span>
                     </label>
 
                     <label class="choice">

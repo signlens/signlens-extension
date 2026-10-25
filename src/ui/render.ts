@@ -561,6 +561,9 @@ function explainedNode(body: HTMLDivElement, row: ExplainedRow, options: RenderO
     if (row.sections.length > 0) body.append(instructionsNode(row, options));
     body.append(...readNotes(row));
     if (row.simulation !== null) body.append(element('p', 'tables', `Simulation: ${row.simulation}`));
+    if (row.accounts?.length) {
+        body.append(element('p', 'tables', `Accounts read from the RPC, unverified: ${row.accounts.join(', ')}`));
+    }
     if (row.hints.length) {
         body.append(element('p', 'tables', `Unlisted tokens named from the RPC and the token list, unverified: ${row.hints.join(', ')}`));
     }

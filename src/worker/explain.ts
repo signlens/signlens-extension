@@ -1,8 +1,9 @@
 // What a page asked, explained: each transaction with what the worker read
-// itself (its lookup tables, a simulation, names for unlisted tokens) sent
-// to the SignLens API, and the answer kept as a row for the window and the
-// popup; a message to sign, shown as it is. Needs `fetch` and nothing of
-// the browser's, so it runs in Node under test as it does in the worker.
+// itself (its lookup tables, a simulation, the accounts the explanation
+// names, names for unlisted tokens) sent to the SignLens API, and the
+// answer kept as a row for the window and the popup; a message to sign,
+// shown as it is. Needs `fetch` and nothing of the browser's, so it runs
+// in Node under test as it does in the worker.
 
 import {
     type ExplainPayload,
@@ -16,8 +17,9 @@ import {
 import { type Entry, failure, type Row } from '../shared/model.ts';
 import type { Settings } from '../shared/settings.ts';
 import { printable, withoutControls } from '../shared/text.ts';
-import { type Contact, type EngineAnswer, type EngineRequest, isError, type TokenHint } from '../shared/types.ts';
+import { type AccountData, type Contact, type EngineAnswer, type EngineRequest, isError, type TokenHint } from '../shared/types.ts';
 import { verdictOf } from '../shared/verdict.ts';
+import { withAccounts } from './accounts.ts';
 import { explainRemotely } from './api.ts';
 import { tokenHints, unknownMints } from './hints.ts';
 import { type SimulationResult, simulate } from './simulation.ts';
@@ -31,8 +33,8 @@ interface Meta {
     accounts: string[];
 }
 
-/** A transaction as `signlens census` and `signlens explain` read it: comment lines, then the bytes. */
-function captureOf(transaction: string, meta: Meta, loaded?: LoadedAddresses): string {
+/** A transaction as `signlens census` and `signlens explain --read-accounts` read it: comment lines, then the bytes. */
+function captureOf(transaction: string, meta: Meta, loaded?: LoadedAddresses, read: AccountData[] = []): string {
     const lines = [
         '# Captured by the SignLens extension before signing.',
         `# origin: ${meta.origin}`,
@@ -40,6 +42,7 @@ function captureOf(transaction: string, meta: Meta, loaded?: LoadedAddresses): s
         `# captured: ${new Date().toISOString()}`,
         ...meta.accounts.map((account) => `# signer: ${account}`),
         ...(loaded ? [`# loaded-writable: ${loaded.writable.join(' ')}`, `# loaded-readonly: ${loaded.readonly.join(' ')}`] : []),
+        ...read.map((account) => `# account: ${account.address} ${account.owner} ${account.slot} ${account.data}`),
     ];
     for (let i = 0; i < transaction.length; i += 76) lines.push(transaction.slice(i, i + 76));
     return `${lines.join('\n')}\n`;
@@ -102,7 +105,6 @@ export async function explainTransactions(
         const chain = chains[i];
         const claimed = typeof chain === 'string' && chain !== 'solana:mainnet' ? withoutControls(chain).slice(0, 40) : null;
         const { loaded, note } = await resolveTables(bytes, config.rpcUrl, stop);
-        const capture = captureOf(transaction, meta, loaded);
         let simulation: SimulationResult = null;
         let simulationNote: string | null = null;
         if (config.simulate) {
@@ -121,19 +123,25 @@ export async function explainTransactions(
             render: true,
         };
         let document: EngineAnswer = await explainRemotely(config.apiUrl, bytes, request, stop);
+        let read: AccountData[] = [];
+        if (!isError(document) && config.lookupAccounts) {
+            ({ document, accounts: read } = await withAccounts(config.apiUrl, config.rpcUrl, bytes, request, document, stop));
+        }
         let hints: TokenHint[] = [];
         if (!isError(document) && config.lookupTokens) {
             const mints = unknownMints(document);
             if (mints.length > 0) hints = await tokenHints(mints, config, stop);
             if (hints.length > 0) {
-                // The names are a nicety: if asking again fails, the first explanation stands without them.
-                const named = await explainRemotely(config.apiUrl, bytes, { ...request, token_hints: hints }, stop);
+                // The names are a nicety: if asking again fails, the explanation before stands without them.
+                const asked = read.length > 0 ? { ...request, accounts: read } : request;
+                const named = await explainRemotely(config.apiUrl, bytes, { ...asked, token_hints: hints }, stop);
                 if (isError(named)) hints = [];
                 else document = named;
             }
         }
         // A call given up because the page went is not the API's failure.
         if (stop?.aborted) return failure(`not explained: ${String(stop.reason)}`);
+        const capture = captureOf(transaction, meta, loaded, read);
         results.push(
             isError(document)
                 ? {
@@ -153,6 +161,7 @@ export async function explainTransactions(
                       simulation: simulationNote,
                       capture,
                       hints: hints.map((h) => h.symbol),
+                      ...(read.length > 0 ? { accounts: read.map((account) => account.address) } : {}),
                       summary: document.summary,
                       findings: document.findings,
                       effects: document.effects,
