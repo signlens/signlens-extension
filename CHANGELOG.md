@@ -6,6 +6,12 @@ uses [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-10-25
+
+Explanations that read the accounts a transaction names, for multisig
+approvals and DAO votes, and the Firefox build ready for
+addons.mozilla.org.
+
 ### Added
 
 - **Accounts an explanation names.** Approving a multisig proposal made
@@ -140,5 +146,6 @@ before it, so everything below is new.
   A release runs every test, the live API included, and carries a build
   provenance attestation.
 
-[Unreleased]: https://github.com/signlens/signlens-extension/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/signlens/signlens-extension/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/signlens/signlens-extension/releases/tag/v0.2.0
 [0.1.0]: https://github.com/signlens/signlens-extension/releases/tag/v0.1.0
