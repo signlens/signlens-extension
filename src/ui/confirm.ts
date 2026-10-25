@@ -3,7 +3,7 @@
 // the explanation. The verdict and the one-line summary stay at the top
 // and the buttons at the bottom; the explanation scrolls between them.
 
-import { askForSite, asksForSite } from '../shared/consent.ts';
+import { askBeforeRating, asksBeforeRating } from '../shared/consent.ts';
 import { MAX_COMMENT, send } from '../shared/messages.ts';
 import type { Decision, ExplainedRow, Row, VerdictWord } from '../shared/model.ts';
 import { base64Bytes, instructionPrograms } from '../shared/programs.ts';
@@ -101,9 +101,9 @@ function feedbackStrip(list: Row[], page: { origin?: string; method?: string }):
     comment.maxLength = MAX_COMMENT;
     const note = byId('feedback-note');
     const ratings = [...strip.querySelectorAll<HTMLButtonElement>('button[data-rating]')];
-    if (asksForSite()) {
+    if (asksBeforeRating()) {
         byId('feedback-what').textContent =
-            'A rating sends SignLens the site, once you allow it when Firefox asks, what this window shows (the verdict, the findings and the programs called) and your comment. The transaction itself goes only if you tick the box below.';
+            "A rating sends SignLens what this window shows (the verdict, the findings and the programs called) and your comment, and the site and SignLens's version once you allow them when Firefox asks. The transaction itself goes only if you tick the box below.";
     }
     (cover.querySelector('span') as HTMLElement).textContent =
         explained.length > 1
@@ -111,15 +111,15 @@ function feedbackStrip(list: Row[], page: { origin?: string; method?: string }):
             : 'Send this transaction to SignLens so it can be looked into';
     let rating: Rating | null = null;
     let sent = false;
-    // Firefox asks once whether a rating may carry the site; until storage
-    // says it has not asked yet, a click asks nothing.
-    let siteAskedBefore = true;
+    // Firefox asks once whether a rating may carry the site and the
+    // version; until storage says it has not asked yet, a click asks nothing.
+    let askedBefore = true;
     local
-        .get('siteAsked')
-        .then(({ siteAsked }) => {
-            siteAskedBefore = siteAsked === true;
+        .get('ratingAsked')
+        .then(({ ratingAsked }) => {
+            askedBefore = ratingAsked === true;
         })
-        .catch(logged('read whether Firefox asked about the site'));
+        .catch(logged('read whether Firefox asked about what a rating carries'));
     sendFeedback = () => {
         if (!rating || sent) return;
         sent = true;
@@ -147,8 +147,8 @@ function feedbackStrip(list: Row[], page: { origin?: string; method?: string }):
         button.addEventListener('click', () => {
             if (sent) return;
             // First, in the click itself, as Firefox asks only from one.
-            const answered = askForSite(siteAskedBefore);
-            siteAskedBefore = true;
+            const answered = askBeforeRating(askedBefore);
+            askedBefore = true;
             rating = button.dataset.rating as Rating;
             for (const other of ratings) {
                 other.classList.toggle('primary', other === button);

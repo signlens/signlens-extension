@@ -13,10 +13,10 @@ import type { WalletList } from './messages.ts';
 import type { AddressRequest, Approval, ConnectRequest, HistoryEntry, VerdictWord } from './model.ts';
 import type { Settings } from './settings.ts';
 
-/** What local storage holds, by key: the settings (settings.ts), the sites allowed to see the watched address (sites.ts), and whether Firefox asked if ratings may carry the site (consent.ts). */
+/** What local storage holds, by key: the settings (settings.ts), the sites allowed to see the watched address (sites.ts), and whether Firefox asked if ratings may carry the site and the version (consent.ts). */
 export interface LocalItems extends Settings {
     watchSites: Approval[];
-    siteAsked: boolean;
+    ratingAsked: boolean;
 }
 
 /** What a window shows, by the page it is: an explanation to decide on, a site asking to see the watched address, or an address the page names as yours. */

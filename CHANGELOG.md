@@ -6,6 +6,12 @@ uses [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-10-25
+
+Explanations that read the accounts a transaction names, for multisig
+approvals and DAO votes, and the Firefox build ready for
+addons.mozilla.org.
+
 ### Added
 
 - **Accounts an explanation names.** Approving a multisig proposal made
@@ -18,6 +24,15 @@ uses [Semantic Versioning](https://semver.org/).
   RPC's claim and never lowers a finding. On by default; "Read the
   accounts an explanation needs" in the settings turns it off. A saved
   transaction carries the accounts read with it.
+
+### Changed
+
+- **Firefox 140 or later.** It is the first Firefox to ask you about the
+  data an add-on sends, which addons.mozilla.org requires; an earlier one
+  would install SignLens without asking.
+- **A rating's version, in Firefox, only once you allow it.** Firefox
+  asks, the first time you rate, whether a rating may carry the site and
+  SignLens's version, in one question; each goes only once allowed.
 
 ## [0.1.0] - 2026-10-24
 
@@ -131,5 +146,6 @@ before it, so everything below is new.
   A release runs every test, the live API included, and carries a build
   provenance attestation.
 
-[Unreleased]: https://github.com/signlens/signlens-extension/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/signlens/signlens-extension/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/signlens/signlens-extension/releases/tag/v0.2.0
 [0.1.0]: https://github.com/signlens/signlens-extension/releases/tag/v0.1.0

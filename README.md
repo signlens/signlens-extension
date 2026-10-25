@@ -161,7 +161,7 @@ check it as [Verifying a package](#verifying-a-package) says.
 - Chromium browsers (Chrome, Brave, Edge, 111 or later): unzip it, open
   `chrome://extensions`, turn on "Developer mode", choose "Load unpacked"
   and pick the unzipped folder.
-- Firefox (128 or later): open `about:debugging#/runtime/this-firefox`,
+- Firefox (140 or later): open `about:debugging#/runtime/this-firefox`,
   choose "Load Temporary Add-on…" and pick the zip. Firefox keeps an
   add-on loaded this way only until it restarts; one that stays installed
   comes from addons.mozilla.org, once SignLens is there.
@@ -319,10 +319,10 @@ The feedback strip sends nothing until you rate an explanation, and says
 what a rating sends before you give one. A rating sends, for each
 transaction explained: the rating, your comment (up to 2,000 characters,
 the same for each), the explanation's digest (a hash of the transaction's
-message), the site's host (in Firefox only once you allow it: Firefox
-asks the first time you rate, and "Permissions and data" in its add-on
-manager changes the answer), the wallet method it called, the extension's
-version, and what the window showed you: the verdict, the one-line
+message), the site's host and the extension's version (in Firefox only
+once you allow them: Firefox asks the first time you rate, and
+"Permissions and data" in its add-on manager changes the answer), the
+wallet method it called, and what the window showed you: the verdict, the one-line
 summary, the findings by code and severity, and the program each
 instruction calls, read from the transaction in the extension. The
 transaction itself, with the addresses its lookup tables loaded, goes only

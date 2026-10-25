@@ -14,14 +14,25 @@ export interface Manifest {
 }
 
 /**
- * What leaves the device, in Firefox's terms: the transactions and the
- * wallet's addresses (financial), and the names in the address book
- * (personally identifying), sent to the SignLens API, and the transactions
- * to the RPC, none of it optional to what the add-on does; and the site a
- * rating was given on (browsing activity), which a rating carries only
- * once the user allowed it when Firefox asked (src/shared/consent.ts).
+ * What leaves the device, in Firefox's terms: the transactions, the
+ * wallet's addresses and the accounts an explanation names (financial),
+ * and the names in the address book (personally identifying), sent to the
+ * SignLens API, and the transactions and those accounts' addresses to the
+ * RPC, none of it optional to what the add-on does; and the site a rating
+ * was given on (browsing activity) and the add-on's version (technical),
+ * which a rating carries only once the user allowed them when Firefox
+ * asked (src/shared/consent.ts).
  */
-const DATA_COLLECTION = { required: ['financialAndPaymentInfo', 'personallyIdentifyingInfo'], optional: ['browsingActivity'] };
+const DATA_COLLECTION = {
+    required: ['financialAndPaymentInfo', 'personallyIdentifyingInfo'],
+    optional: ['browsingActivity', 'technicalAndInteraction'],
+};
+
+/**
+ * Firefox 140 is the first to ask the user about an add-on's data, which
+ * Mozilla requires: an earlier one would install SignLens without asking.
+ */
+const MIN_FIREFOX = '140.0';
 
 /** The Chrome manifest's Firefox counterpart. */
 export function firefoxManifest(chrome: Manifest): Manifest {
@@ -31,7 +42,7 @@ export function firefoxManifest(chrome: Manifest): Manifest {
         ...rest,
         background: { ...background, scripts: [worker] } as Manifest['background'],
         browser_specific_settings: {
-            gecko: { id: 'extension@signlens.dev', strict_min_version: '128.0', data_collection_permissions: DATA_COLLECTION },
+            gecko: { id: 'extension@signlens.dev', strict_min_version: MIN_FIREFOX, data_collection_permissions: DATA_COLLECTION },
         },
     };
 }

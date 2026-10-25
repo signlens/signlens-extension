@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "SignLens (beta)",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "See what a Solana transaction does before you sign it. Explains every signing request, then hands it unchanged to your own wallet. Beta: the explanation is computed by SignLens's server.",
   "minimum_chrome_version": "111",
   "icons": {
