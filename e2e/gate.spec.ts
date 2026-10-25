@@ -138,7 +138,9 @@ test('the window puts the verdict and what the transaction does first, with the 
 
     // The effects as sentences, the signer's own accounts marked.
     const effects = gate.locator('.effects li');
-    await expect(effects.first()).toContainText('You send 0.996423 USDC (verified) from Your token account (Ffz5…piwg) (verified) to DV3B');
+    await expect(effects.first()).toContainText(
+        "You send 0.996423 USDC (verified) from Your token account (Ffz5…piwg) (verified) to BNgs…TT1Z's USDC account (DV3B…L7Qp)",
+    );
     await expect(effects.first().locator('.address.self')).toHaveCount(1);
     await expect(effects).toContainText([/You send/, /Create/, /You pay a fee of 0.000012218 SOL/, /Valid FOREVER until nonce account/]);
 
