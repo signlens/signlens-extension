@@ -195,20 +195,35 @@ export async function fetchLookupTables(url: string, addresses: string[], stop?:
 /** How many accounts one `getMultipleAccounts` asks for: public endpoints block longer lists. */
 export const ACCOUNTS_PER_CALL = 10;
 
+/** How many `getMultipleAccounts` calls go out at once: forty accounts in one round trip, without a burst a public endpoint would limit. */
+export const CALLS_AT_ONCE = 4;
+
 /**
  * The accounts at `addresses` over the RPC, in order, `null` where there
  * is none: one `getMultipleAccounts` per ten, since public endpoints such
  * as publicnode refuse a longer list outright (HTTP 403, "Request
- * blocked"). The data is base64 at the confirmed commitment.
+ * blocked"), {@link CALLS_AT_ONCE} of them at a time. The first call that
+ * fails fails the read and stops the others. The data is base64 at the
+ * confirmed commitment.
  */
 export async function multipleAccounts(url: string, addresses: string[], stop?: AbortSignal): Promise<(RpcAccount | null)[]> {
-    const accounts: (RpcAccount | null)[] = [];
-    for (let at = 0; at < addresses.length; at += ACCOUNTS_PER_CALL) {
-        const batch = addresses.slice(at, at + ACCOUNTS_PER_CALL);
+    const batches: string[][] = [];
+    for (let at = 0; at < addresses.length; at += ACCOUNTS_PER_CALL) batches.push(addresses.slice(at, at + ACCOUNTS_PER_CALL));
+    const failed = new AbortController();
+    if (stop?.aborted) failed.abort(stop.reason);
+    stop?.addEventListener('abort', () => failed.abort(stop.reason), { once: true });
+    const call = (batch: string[]) => {
         const read = (result: unknown) => readAccountList(objectFields(result)?.value, batch.length);
-        accounts.push(
-            ...(await rpcCall(url, 'getMultipleAccounts', [batch, { encoding: 'base64', commitment: 'confirmed' }], read, 10_000, stop)),
-        );
+        return rpcCall(url, 'getMultipleAccounts', [batch, { encoding: 'base64', commitment: 'confirmed' }], read, 10_000, failed.signal);
+    };
+    const accounts: (RpcAccount | null)[] = [];
+    try {
+        for (let at = 0; at < batches.length; at += CALLS_AT_ONCE) {
+            for (const read of await Promise.all(batches.slice(at, at + CALLS_AT_ONCE).map(call))) accounts.push(...read);
+        }
+    } catch (error) {
+        failed.abort(error);
+        throw error;
     }
     return accounts;
 }
