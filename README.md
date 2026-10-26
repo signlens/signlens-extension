@@ -200,7 +200,9 @@ pages. No page is told the watched address otherwise, whatever the mode.
 
 The explanation calls "you" only addresses you gave SignLens: in
 pass-through mode the ones under "Your addresses" in the settings, in
-watch-only mode the watched one. The page says which address signs a
+watch-only mode the watched one. A request carries at most 8 of yours,
+past that those the page names first, and the first 64 contacts of the
+address book: each costs the API work, and it refuses more. The page says which address signs a
 transaction, and a page can name its own, so that sending to it would
 read as a move between your accounts. Before a transaction is explained,
 SignLens checks the address the page names: in pass-through mode, one

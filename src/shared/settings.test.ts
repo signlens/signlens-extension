@@ -3,7 +3,17 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { endpointProblem } from './endpoint.ts';
-import { addressBytes, DEFAULTS, ENDPOINTS, pageConfig, parseContacts, watched } from './settings.ts';
+import {
+    addressBytes,
+    DEFAULTS,
+    ENDPOINTS,
+    MAX_CONTACTS,
+    MAX_OWN_KEYS,
+    ownKeysFor,
+    pageConfig,
+    parseContacts,
+    watched,
+} from './settings.ts';
 
 test('the address book keeps valid lines and names the others by number', () => {
     const { contacts, bad } = parseContacts(
@@ -14,6 +24,26 @@ test('the address book keeps valid lines and names the others by number', () => 
         { name: 'Carol', address: 'TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA' },
     ]);
     assert.deepEqual(bad, [3, 4]);
+});
+
+test('the address book sends its first 64 contacts and names the lines past them', () => {
+    const line = (i: number) => `Contact ${i} = EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v`;
+    const text = ['nope', ...Array.from({ length: MAX_CONTACTS + 2 }, (_, i) => line(i))].join('\n');
+    const { contacts, bad, over } = parseContacts(text);
+    assert.equal(contacts.length, MAX_CONTACTS);
+    assert.equal(contacts.at(-1)?.name, `Contact ${MAX_CONTACTS - 1}`);
+    assert.deepEqual(bad, [1]);
+    assert.deepEqual(over, [MAX_CONTACTS + 2, MAX_CONTACTS + 3]);
+});
+
+test('a request carries your addresses, eight at most, those the page names first past that', () => {
+    assert.deepEqual(ownKeysFor(['mine1'], ['mine0', 'mine1', 'mine0']), ['mine0', 'mine1']);
+    const mine = Array.from({ length: 10 }, (_, i) => `mine${i}`);
+    assert.deepEqual(ownKeysFor([], mine), mine.slice(0, MAX_OWN_KEYS));
+    const sent = ownKeysFor(['mine9', 'theirs'], mine);
+    assert.equal(sent.length, MAX_OWN_KEYS);
+    assert.deepEqual(sent.slice(0, 2), ['mine9', 'mine0']);
+    assert.ok(!sent.includes('theirs'));
 });
 
 test('every page gets the mode and the wallet to pass to, and never the watched address', () => {

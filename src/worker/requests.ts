@@ -6,7 +6,7 @@
 
 import type { ConnectReply, ExplainPayload, MessagePayload, Reply, WaitingMessage } from '../shared/messages.ts';
 import { type Entry, failure, type HistoryEntry, type Outcome, requestError } from '../shared/model.ts';
-import { addAddresses, parseAddresses, parseContacts, type Settings, settings, watched } from '../shared/settings.ts';
+import { addAddresses, ownKeysFor, parseAddresses, parseContacts, type Settings, settings, watched } from '../shared/settings.ts';
 import { session } from '../shared/store.ts';
 import { describe, logged, printable } from '../shared/text.ts';
 import { worstVerdict } from '../shared/verdict.ts';
@@ -79,7 +79,7 @@ async function yours(
     const mine = parseAddresses(config.myAddresses).addresses;
     const others = claimed.filter((account) => !mine.includes(account));
     const [other] = others;
-    if (other === undefined) return { ownKeys: mine };
+    if (other === undefined) return { ownKeys: ownKeysFor(claimed, mine) };
     // One yes is one address: a page that puts your own address beside its
     // own would otherwise have both made yours by the same click.
     if (others.length > 1) {
@@ -109,7 +109,7 @@ async function yours(
         const refused = `could not keep your address: ${describe(error)}`;
         return refuse({ decision: 'reject', refused }, others, { decision: 'reject', refused });
     }
-    return { ownKeys: [...mine, other] };
+    return { ownKeys: ownKeysFor(claimed, [...mine, other]) };
 }
 
 /**

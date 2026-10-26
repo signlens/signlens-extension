@@ -67,13 +67,20 @@ export function addressBytes(text: unknown): number[] | null {
     return bytes ? Array.from(bytes) : null;
 }
 
+/** The most contacts the API takes with a request: each costs it work. */
+export const MAX_CONTACTS = 64;
+/** The most of your addresses the API takes with a request. */
+export const MAX_OWN_KEYS = 8;
+
 /**
- * The address book as the engine takes it: the valid `Name = address`
- * lines of `text`, and the line numbers of the others.
+ * The address book as the engine takes it: the first {@link MAX_CONTACTS}
+ * valid `Name = address` lines of `text`, the line numbers of the lines
+ * that are not one, and those of the valid lines past the limit.
  */
-export function parseContacts(text: string): { contacts: Contact[]; bad: number[] } {
+export function parseContacts(text: string): { contacts: Contact[]; bad: number[]; over: number[] } {
     const contacts: Contact[] = [];
     const bad: number[] = [];
+    const over: number[] = [];
     text.split('\n').forEach((line, i) => {
         const trimmed = line.trim();
         if (trimmed === '') return;
@@ -84,9 +91,22 @@ export function parseContacts(text: string): { contacts: Contact[]; bad: number[
             bad.push(i + 1);
             return;
         }
-        contacts.push({ name, address });
+        if (contacts.length < MAX_CONTACTS) contacts.push({ name, address });
+        else over.push(i + 1);
     });
-    return { contacts, bad };
+    return { contacts, bad, over };
+}
+
+/**
+ * Your addresses a request carries: `mine`, in order, while they are at
+ * most {@link MAX_OWN_KEYS}; past that, those the page names first, since
+ * they sign, then the rest of `mine` up to the limit.
+ */
+export function ownKeysFor(claimed: string[], mine: string[]): string[] {
+    const keys = [...new Set(mine)];
+    if (keys.length <= MAX_OWN_KEYS) return keys;
+    const named = claimed.filter((address) => keys.includes(address));
+    return [...new Set([...named, ...keys])].slice(0, MAX_OWN_KEYS);
 }
 
 /** Your addresses as the settings hold them: the valid lines of `text`, once each, and the line numbers of the others. */

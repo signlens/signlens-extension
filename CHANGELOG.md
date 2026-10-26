@@ -6,6 +6,14 @@ uses [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Changed
+
+- **At most 8 of your addresses and 64 contacts a request.** The API now
+  refuses more, since each costs it work and memory. Past 8, a request
+  carries the addresses the page names first, then the first in your
+  settings; past 64, the first contacts of the address book. The
+  settings say when some go unused.
+
 ## [0.2.0] - 2026-10-25
 
 Explanations that read the accounts a transaction names, for multisig
