@@ -6,8 +6,10 @@ import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
 import { startTestServer } from '../../test/server.ts';
 import {
+    ACCOUNTS_PER_CALL,
     base58Decode,
     base58Encode,
+    CALLS_AT_ONCE,
     fromBase64,
     isAddress,
     loadedAddresses,
@@ -180,5 +182,64 @@ test('an RPC answer that is not what was asked for is an error, never taken for 
         assert.deepEqual(await multipleAccounts(server.rpc, [address]), [null]);
     } finally {
         await server.close();
+    }
+});
+
+/**
+ * `fetch` replaced by an RPC that answers `getMultipleAccounts` after
+ * `ms`, each account with as many lamports as its place in `addresses`,
+ * or with a 503 for the batch that starts at `failAt`; what was asked,
+ * and the most calls open at once.
+ */
+function batchedRpc(addresses: string[], ms: number, failAt?: number) {
+    const seen = { batches: [] as string[][], signals: [] as AbortSignal[], open: 0, most: 0 };
+    const real = globalThis.fetch;
+    globalThis.fetch = (async (_url: string | URL | Request, init?: RequestInit) => {
+        const batch = (JSON.parse(String(init?.body)) as { params: [string[]] }).params[0];
+        seen.batches.push(batch);
+        if (init?.signal) seen.signals.push(init.signal);
+        if (batch[0] === addresses[failAt ?? -1]) return new Response('down', { status: 503 });
+        seen.open += 1;
+        seen.most = Math.max(seen.most, seen.open);
+        await new Promise((resolve) => setTimeout(resolve, ms));
+        seen.open -= 1;
+        const value = batch.map((address) => ({
+            owner: '11111111111111111111111111111111',
+            lamports: addresses.indexOf(address),
+            data: ['', 'base64'],
+        }));
+        return new Response(JSON.stringify({ jsonrpc: '2.0', id: 1, result: { context: { slot: 1 }, value } }));
+    }) as typeof fetch;
+    return { seen, restore: () => (globalThis.fetch = real) };
+}
+
+const many = (count: number) => Array.from({ length: count }, (_, i) => base58Encode(new Uint8Array(32).fill(i + 1)));
+
+test('more than ten accounts are read four calls at a time, and come back in order', async () => {
+    const addresses = many(45);
+    const { seen, restore } = batchedRpc(addresses, 20);
+    try {
+        const read = await multipleAccounts('https://rpc.example/', addresses);
+        assert.deepEqual(
+            read.map((account) => account?.lamports),
+            addresses.map((_, i) => i),
+        );
+        assert.equal(seen.batches.length, Math.ceil(addresses.length / ACCOUNTS_PER_CALL));
+        assert.ok(seen.batches.every((batch) => batch.length <= ACCOUNTS_PER_CALL));
+        assert.equal(seen.most, CALLS_AT_ONCE);
+    } finally {
+        restore();
+    }
+});
+
+test('a call that fails fails the read, stops the calls beside it and starts no more', async () => {
+    const addresses = many(45);
+    const { seen, restore } = batchedRpc(addresses, 200, ACCOUNTS_PER_CALL);
+    try {
+        await assert.rejects(multipleAccounts('https://rpc.example/', addresses), /503/);
+        assert.equal(seen.batches.length, CALLS_AT_ONCE, 'the fifth batch is never asked');
+        assert.ok(seen.signals.every((signal) => signal.aborted));
+    } finally {
+        restore();
     }
 });

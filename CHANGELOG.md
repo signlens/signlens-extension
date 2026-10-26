@@ -8,6 +8,12 @@ uses [Semantic Versioning](https://semver.org/).
 
 ### Changed
 
+- **Account reads four at a time.** Public RPCs take ten accounts a
+  call, so a transaction with more than ten writable accounts, its lookup
+  tables and its tokens' decimals each took one round trip per ten. Up to
+  four of those calls now go out together: one round trip for up to forty
+  accounts, about 60 ms less on such a transaction.
+
 - **At most 8 of your addresses and 64 contacts a request.** The API now
   refuses more, since each costs it work and memory. Past 8, a request
   carries the addresses the page names first, then the first in your
