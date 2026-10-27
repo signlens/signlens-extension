@@ -258,6 +258,7 @@ export interface TestServer {
     /** The API calls the live API's rate limit refused, answered from their recordings instead: reported by e2e/support/drift.ts, never failing. */
     apiLimited: string[];
     know(fixture: Fixture): void;
+    knowTable(table: string, data: Uint8Array): void;
     knowMint(mint: string, symbol: string, decimals: number): void;
     wallet(address: string, before: number, after: number): void;
     tokenAccount(address: string, owner: string, mint: string, before: number | bigint, after: number | bigint): void;
@@ -488,6 +489,10 @@ export async function startTestServer(): Promise<TestServer> {
         url: `http://localhost:${port}`,
         rpc: `http://127.0.0.1:${port}/rpc`,
         calls,
+        /** Makes the RPC answer `table` with `data`, as it is now: shorter than a fixture's, say, as before its last extension. */
+        knowTable(table: string, data: Uint8Array) {
+            tables.set(table, data);
+        },
         know(fixture: Fixture) {
             for (const [table, data] of tablesOf(fixture)) tables.set(table, data);
             for (const account of fixture.accounts) {

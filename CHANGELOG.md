@@ -36,6 +36,10 @@ uses [Semantic Versioning](https://semver.org/).
   its own. A request of more than 32 transactions is refused as such, not
   as a list that is not one.
 
+- **Lookup tables extended since they were read.** A table is kept for
+  five minutes once read, and a transaction that used an address added to
+  it since could not be read until then. Such a table is now read again.
+
 ## [0.2.0] - 2026-10-25
 
 Explanations that read the accounts a transaction names, for multisig
