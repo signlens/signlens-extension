@@ -49,7 +49,7 @@ test('Reject stops the request before the wallet sees it', async ({ configure, c
     const { signing, gate } = await askToSign(context, dapp, transfer.base64);
     await clickToClose(gate.getByRole('button', { name: 'Reject' }));
     const answer = await signing;
-    expect(answer.error).toContain('rejected in SignLens');
+    expect(answer.error).toContain('User rejected the request in SignLens');
     expect(await dapp.evaluate(() => window.fakeCalls)).toEqual([]);
 
     await popup.reload();
@@ -63,7 +63,7 @@ test('closing the window is a rejection', async ({ configure, context, dapp }) =
     const { signing, gate } = await askToSign(context, dapp, transfer.base64);
     await gate.close();
     const answer = await signing;
-    expect(answer.error).toContain('rejected in SignLens');
+    expect(answer.error).toContain('User rejected the request in SignLens');
     expect(await dapp.evaluate(() => window.fakeCalls)).toEqual([]);
 });
 
@@ -116,7 +116,7 @@ test('with the window off, a request SignLens would block still waits for the us
     await expect(gate.locator('#band')).toHaveClass(/blocked/);
     await expect(gate.getByRole('button', { name: /Continue anyway/ })).not.toHaveClass(/primary/);
     await clickToClose(gate.getByRole('button', { name: 'Reject' }));
-    expect((await signing).error).toContain('rejected in SignLens');
+    expect((await signing).error).toContain('User rejected the request in SignLens');
     expect(await dapp.evaluate(() => window.fakeCalls)).toEqual([]);
 });
 

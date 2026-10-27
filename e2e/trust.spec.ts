@@ -29,7 +29,7 @@ test('an address the page signs with that is not one of yours is asked about fir
     await expect(ask.getByRole('list', { name: 'Your addresses in SignLens:' })).toHaveText(FAKE_ACCOUNT);
     await expect(ask.getByRole('button', { name: 'Reject' })).toBeFocused();
     await closing(ask, () => ask.keyboard.press('Enter'));
-    expect((await signing).error).toBe('SignLens: rejected in SignLens. The request is in the SignLens popup.');
+    expect((await signing).error).toBe('User rejected the request in SignLens. The request is in the SignLens popup.');
     // Nothing was sent anywhere, nor signed.
     expect(server.apiCalls).toEqual([]);
     expect(await dapp.evaluate(() => window.fakeCalls)).toEqual([]);
@@ -100,7 +100,7 @@ test('a page cannot forge a decision or a setting over the window', async ({ con
     await expect(gate.locator('#band-summary')).toContainText('0.996423 USDC');
     expect(await dapp.evaluate(() => window.fakeCalls)).toEqual([]);
     await clickToClose(gate.getByRole('button', { name: 'Reject' }));
-    expect((await signing).error).toContain('rejected in SignLens');
+    expect((await signing).error).toContain('User rejected the request in SignLens');
     expect(await dapp.evaluate(() => window.fakeCalls)).toEqual([]);
 });
 
@@ -158,7 +158,7 @@ test('the page learns neither the verdict nor the explanation, since both depend
     await expect(gate.locator('#rows')).toContainText('To: Bob (DV3B…L7Qp)');
     await clickToClose(gate.getByRole('button', { name: 'Reject' }));
     const answer = await signing;
-    expect(answer.error).toContain('rejected in SignLens');
+    expect(answer.error).toContain('User rejected the request in SignLens');
     expect(`${answer.error}\n${logged.join('\n')}`).not.toMatch(/warning|Bob|USDC|DV3B/);
 });
 
@@ -215,7 +215,7 @@ test('a second request while the first is open is refused, not stacked behind it
     expect(context.pages().filter((page) => !page.isClosed() && page.url().includes('confirm.html'))).toHaveLength(1);
     expect(server.apiCalls.filter((call) => call.path === '/v1/explain')).toHaveLength(1);
     await clickToClose(gate.getByRole('button', { name: 'Reject' }));
-    expect((await first).error).toContain('rejected in SignLens');
+    expect((await first).error).toContain('User rejected the request in SignLens');
 });
 
 test('closing the page refuses its request and closes the window', async ({ configure, context, dapp, popup, server }) => {
@@ -259,7 +259,7 @@ test('a page that reloads has its request refused and its window closed, and may
     const again = sign();
     const second = await liveGate(context);
     await clickToClose(second.getByRole('button', { name: 'Reject' }));
-    expect((await again).error).toContain('rejected in SignLens');
+    expect((await again).error).toContain('User rejected the request in SignLens');
     // The first request is kept as refused by SignLens, and why; the second as the user's rejection.
     await popup.reload();
     await expect(popup.locator('#history > li').nth(0).locator('.decision')).toHaveText('rejected');
@@ -292,7 +292,7 @@ test('a page that reloads while its request is still being explained may ask aga
     const again = sign();
     const gate = await liveGate(context);
     await clickToClose(gate.getByRole('button', { name: 'Reject' }));
-    expect((await again).error).toContain('rejected in SignLens');
+    expect((await again).error).toContain('User rejected the request in SignLens');
     // Only the second one got a window, and only it is kept: the first was withdrawn before anything was shown.
     expect(server.apiCalls.filter((call) => call.path === '/v1/explain')).toHaveLength(2);
     await popup.reload();
@@ -330,7 +330,7 @@ test('a page that disables the port after connecting gets refusals, not a pass',
     const gate = await liveGate(context);
     await expect(gate.locator('#band-summary')).toContainText('0.996423 USDC');
     await clickToClose(gate.getByRole('button', { name: 'Reject' }));
-    expect((await signing).error).toContain('rejected in SignLens');
+    expect((await signing).error).toContain('User rejected the request in SignLens');
     expect(await dapp.evaluate(() => window.fakeCalls)).toEqual([]);
 });
 
@@ -368,6 +368,6 @@ test('a page that patches built-ins to catch the port never sees it', async ({ c
     });
     const gate = await liveGate(context);
     await clickToClose(gate.getByRole('button', { name: 'Reject' }));
-    expect((await signing).error).toContain('rejected in SignLens');
+    expect((await signing).error).toContain('User rejected the request in SignLens');
     expect(await dapp.evaluate(() => (window as unknown as { seen: unknown[] }).seen.length)).toBe(0);
 });

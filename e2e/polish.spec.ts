@@ -30,7 +30,7 @@ test('a request SignLens would refuse offers "Continue anyway", not the primary 
     await expect(gate.locator('#reject')).toBeFocused();
     // The window closes on the keydown, before the keyup a press waits for.
     await closing(gate, () => gate.keyboard.press('Escape'));
-    expect((await signing).error).toContain('rejected in SignLens');
+    expect((await signing).error).toContain('User rejected the request in SignLens');
     await expect.poll(() => gate.isClosed()).toBe(true);
 });
 

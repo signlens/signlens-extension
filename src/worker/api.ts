@@ -21,6 +21,8 @@ const RETRY_STATUSES = new Set([502, 503, 530]);
 /** The pause before that try without a `Retry-After`, and the longest with one. */
 const RETRY_PAUSE_MS = 500;
 const MAX_RETRY_PAUSE_MS = 2_000;
+/** The code of the error document for a call the API refused for its limit, whatever the API's own code: the calls after it would be refused too. */
+export const LIMITED = 'limited';
 
 /** `apiUrl` without a trailing slash. */
 function root(apiUrl: string): string {
@@ -111,8 +113,10 @@ export async function explainRemotely(
     } catch (error) {
         return errorDocument('api', `the SignLens API at ${base} did not answer (${describe(error)})`);
     }
+    // Refused for its limit, in the API's words or not: the calls after it would be refused too.
+    const code = response.status === 429 ? LIMITED : 'api';
     const notAnExplanation = errorDocument(
-        'api',
+        code,
         `the SignLens API answered HTTP ${response.status} with something that is not an explanation`,
     );
     if (Number(response.headers.get('content-length')) > MAX_DOCUMENT) return notAnExplanation;
@@ -122,10 +126,10 @@ export async function explainRemotely(
         if (body.length > MAX_DOCUMENT) return notAnExplanation;
         document = JSON.parse(body);
     } catch {
-        return errorDocument('api', `the SignLens API answered HTTP ${response.status} without a document`);
+        return errorDocument(code, `the SignLens API answered HTTP ${response.status} without a document`);
     }
     if (typeof document !== 'object' || document === null) return notAnExplanation;
-    if (isError(document)) return passedOn(document);
+    if (isError(document)) return code === LIMITED ? errorDocument(LIMITED, passedOn(document).error.message) : passedOn(document);
     if (!response.ok || (document as { schema?: unknown }).schema !== EXPLANATION_SCHEMA) return notAnExplanation;
     try {
         return parseExplanation(document);

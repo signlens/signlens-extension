@@ -258,6 +258,7 @@ export interface TestServer {
     /** The API calls the live API's rate limit refused, answered from their recordings instead: reported by e2e/support/drift.ts, never failing. */
     apiLimited: string[];
     know(fixture: Fixture): void;
+    knowTable(table: string, data: Uint8Array): void;
     knowMint(mint: string, symbol: string, decimals: number): void;
     wallet(address: string, before: number, after: number): void;
     tokenAccount(address: string, owner: string, mint: string, before: number | bigint, after: number | bigint): void;
@@ -267,6 +268,7 @@ export interface TestServer {
     refuseApi(status: number, body?: string): void;
     delayApi(ms: number): void;
     answerApi(...documents: unknown[]): void;
+    limitApi(...documents: unknown[]): void;
     expireBlockhash(): void;
     close(): Promise<void>;
 }
@@ -487,6 +489,10 @@ export async function startTestServer(): Promise<TestServer> {
         url: `http://localhost:${port}`,
         rpc: `http://127.0.0.1:${port}/rpc`,
         calls,
+        /** Makes the RPC answer `table` with `data`, as it is now: shorter than a fixture's, say, as before its last extension. */
+        knowTable(table: string, data: Uint8Array) {
+            tables.set(table, data);
+        },
         know(fixture: Fixture) {
             for (const [table, data] of tablesOf(fixture)) tables.set(table, data);
             for (const account of fixture.accounts) {
@@ -559,6 +565,16 @@ export async function startTestServer(): Promise<TestServer> {
         /** Makes the relay answer the API calls with these documents in turn, the last for every call after, as the API would with HTTP 200. */
         answerApi(...documents: unknown[]) {
             api.answers = documents.map((document) => ({ status: 200, body: JSON.stringify(document) }));
+        },
+        /** Makes the relay answer these documents in turn, as `answerApi` does, and every call after with a 429, as the API does past its limit. */
+        limitApi(...documents: unknown[]) {
+            api.answers = [
+                ...documents.map((document) => ({ status: 200, body: JSON.stringify(document) })),
+                {
+                    status: 429,
+                    body: '{"schema":"signlens-api-error/1","error":{"code":"rate","message":"too many explanations; try again later"}}',
+                },
+            ];
         },
         close: () => {
             // The browser keeps connections alive; close waits for them otherwise.

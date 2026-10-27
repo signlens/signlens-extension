@@ -31,7 +31,7 @@ test('an API that refuses leaves the request unexplained, with a verdict that ca
     await expect(gate.getByRole('button', { name: /Continue anyway/ })).not.toHaveClass(/primary/);
     expect(await worker.evaluate(() => chrome.action.getBadgeText({}))).toBe('?');
     await clickToClose(gate.getByRole('button', { name: 'Reject' }));
-    expect((await signing).error).toContain('rejected in SignLens');
+    expect((await signing).error).toContain('User rejected the request in SignLens');
 });
 
 test('with the window off, a request the API could not explain still waits for the user', async ({ configure, context, dapp, popup }) => {
@@ -82,7 +82,7 @@ test('a rating left in the window goes when the window is closed by its frame, a
     await gate.getByRole('textbox', { name: 'What was unclear or wrong? (optional)' }).fill('Closed before deciding');
     // Closed by the window's own close button: no Reject was pressed.
     await gate.close();
-    expect((await signing).error).toContain('rejected in SignLens');
+    expect((await signing).error).toContain('User rejected the request in SignLens');
     await expect.poll(() => server.apiCalls.filter((c) => c.path === '/v1/feedback').length).toBe(1);
     expect(server.apiCalls.find((c) => c.path === '/v1/feedback')?.body).toMatchObject({
         rating: 'unclear',
@@ -219,7 +219,7 @@ test('an API that answers an error without a message is an error, never a messag
     await expect(gate.locator('#band-summary')).toContainText('not an explanation');
     await expect(gate.getByRole('button', { name: /Continue anyway/ })).not.toHaveClass(/primary/);
     await clickToClose(gate.getByRole('button', { name: 'Reject' }));
-    expect((await signing).error).toContain('rejected in SignLens');
+    expect((await signing).error).toContain('User rejected the request in SignLens');
 });
 
 test('a verdict this version does not know is an error, never a pass', async ({ configure, context, dapp, server, worker }) => {
@@ -238,7 +238,7 @@ test('a verdict this version does not know is an error, never a pass', async ({ 
     // The badge says the same as the window.
     expect(await worker.evaluate(() => chrome.action.getBadgeText({}))).toBe('?');
     await clickToClose(gate.getByRole('button', { name: 'Reject' }));
-    expect((await signing).error).toContain('rejected in SignLens');
+    expect((await signing).error).toContain('User rejected the request in SignLens');
 });
 
 test('an effect this version does not know is shown as one, not left out', async ({ configure, context, dapp, server }) => {
@@ -254,5 +254,5 @@ test('an effect this version does not know is shown as one, not left out', async
     await expect(gate.locator('#band')).toHaveClass(/warning/);
     await expect(gate.locator('.effects')).toContainText('Something this version cannot show (drain); the full text below has it');
     await clickToClose(gate.getByRole('button', { name: 'Reject' }));
-    expect((await signing).error).toContain('rejected in SignLens');
+    expect((await signing).error).toContain('User rejected the request in SignLens');
 });

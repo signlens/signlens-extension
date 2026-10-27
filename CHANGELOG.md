@@ -20,6 +20,31 @@ uses [Semantic Versioning](https://semver.org/).
   settings; past 64, the first contacts of the address book. The
   settings say when some go unused.
 
+### Fixed
+
+- **The wallet the window names is the one that signs.** Choosing
+  another wallet in the settings while a site was connected left the site
+  connected to the one before: the window said "Continue to Backpack" and
+  Continue handed the request to Phantom. The site is now disconnected,
+  and connects again to the wallet chosen. A request whose site
+  disconnected while its window was open says so, rather than that
+  SignLens holds no keys.
+
+- **A Reject reads as one to the site.** A request rejected in SignLens
+  is refused as wallets refuse one, with code 4001 and "User rejected the
+  request in SignLens", so a site tells it from a failure; Kamino, for
+  one, looks for those words before it shows an error.
+
+- **Requests past the API's limit.** Once the API refuses a transaction
+  of a request for its limit, the ones after it are not asked for: each
+  says so, and to ask again in a minute, rather than meeting a refusal of
+  its own. A request of more than 32 transactions is refused as such, not
+  as a list that is not one.
+
+- **Lookup tables extended since they were read.** A table is kept for
+  five minutes once read, and a transaction that used an address added to
+  it since could not be read until then. Such a table is now read again.
+
 ## [0.2.0] - 2026-10-25
 
 Explanations that read the accounts a transaction names, for multisig
