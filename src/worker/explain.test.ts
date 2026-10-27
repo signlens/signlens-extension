@@ -58,21 +58,38 @@ test("the stub's fee payer is the transaction's, legacy, v0 or v1, as the engine
 });
 
 test('a request that is not a list of base64 transactions within bounds is refused before anyone is asked', async () => {
-    const refused: unknown[] = [
-        undefined,
-        'AQID',
-        [],
-        ['not base64!'],
-        [7],
-        Array(MAX_TRANSACTIONS + 1).fill('AQID'),
-        ['A'.repeat(MAX_TRANSACTION_BASE64 + 4)],
-    ];
+    const refused: unknown[] = [undefined, 'AQID', [], ['not base64!'], [7], ['A'.repeat(MAX_TRANSACTION_BASE64 + 4)]];
     for (const transactions of refused) {
         const entry = await explainTransactions({ ...PAGE, transactions }, config({ simulate: true, lookupTokens: true }), [], []);
         assert.match(requestError(entry) ?? '', /transactions must be|longer than 4096 bytes/);
     }
+    // Too many is said as such, not as a list that is not one.
+    const many = await explainTransactions({ ...PAGE, transactions: Array(MAX_TRANSACTIONS + 1).fill('AQID') }, config(), [], []);
+    assert.equal(requestError(many), `33 transactions in one request; SignLens explains at most ${MAX_TRANSACTIONS}`);
     assert.deepEqual(server.calls, []);
     assert.deepEqual(server.apiCalls, []);
+});
+
+test('past the API limit, the transactions after the one refused are not asked for, and each says why', async () => {
+    const transfer = fixture('legacy_durable_nonce_token_transfer');
+    server.know(transfer);
+    server.limitApi(explanation('ok'), explanation('ok'));
+    const entry = await explainTransactions({ ...PAGE, transactions: Array(5).fill(transfer.base64) }, config({ simulate: true }), [], []);
+    assert.deepEqual(
+        entry.rows.map((row) => row.kind),
+        ['explained', 'explained', 'failed', 'failed', 'failed'],
+    );
+    // The API asked three times: two explained, the third refused; nothing read for the two after.
+    assert.equal(server.apiCalls.length, 3);
+    const simulated = server.calls.filter((call) => call.method === 'simulateTransaction').length;
+    assert.equal(simulated, 3);
+    const [refused, skipped] = entry.rows.slice(2) as Extract<Row, { kind: 'failed' }>[];
+    assert.equal(refused?.error, 'too many explanations; try again later');
+    assert.equal(
+        skipped?.error,
+        'not explained: the SignLens API took no more explanations for now, from transaction 3 of 5 on; ask the site again in a minute',
+    );
+    assert.ok(skipped?.capture, 'a transaction not explained can still be saved');
 });
 
 test('as many transactions as the limit are each explained, and as many of your addresses as the engine takes are sent', async () => {

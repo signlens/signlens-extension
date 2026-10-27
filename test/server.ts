@@ -267,6 +267,7 @@ export interface TestServer {
     refuseApi(status: number, body?: string): void;
     delayApi(ms: number): void;
     answerApi(...documents: unknown[]): void;
+    limitApi(...documents: unknown[]): void;
     expireBlockhash(): void;
     close(): Promise<void>;
 }
@@ -559,6 +560,16 @@ export async function startTestServer(): Promise<TestServer> {
         /** Makes the relay answer the API calls with these documents in turn, the last for every call after, as the API would with HTTP 200. */
         answerApi(...documents: unknown[]) {
             api.answers = documents.map((document) => ({ status: 200, body: JSON.stringify(document) }));
+        },
+        /** Makes the relay answer these documents in turn, as `answerApi` does, and every call after with a 429, as the API does past its limit. */
+        limitApi(...documents: unknown[]) {
+            api.answers = [
+                ...documents.map((document) => ({ status: 200, body: JSON.stringify(document) })),
+                {
+                    status: 429,
+                    body: '{"schema":"signlens-api-error/1","error":{"code":"rate","message":"too many explanations; try again later"}}',
+                },
+            ];
         },
         close: () => {
             // The browser keeps connections alive; close waits for them otherwise.

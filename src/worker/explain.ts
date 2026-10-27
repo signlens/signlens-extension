@@ -20,7 +20,7 @@ import { printable, withoutControls } from '../shared/text.ts';
 import { type AccountData, type Contact, type EngineAnswer, type EngineRequest, isError, type TokenHint } from '../shared/types.ts';
 import { verdictOf } from '../shared/verdict.ts';
 import { withAccounts } from './accounts.ts';
-import { explainRemotely } from './api.ts';
+import { explainRemotely, LIMITED } from './api.ts';
 import { tokenHints, unknownMints } from './hints.ts';
 import { type SimulationResult, simulate } from './simulation.ts';
 import { fromBase64, isAddress, type LoadedAddresses } from './solana.ts';
@@ -56,6 +56,9 @@ function decodedLength(base64: string): number {
 /** The transactions of a request, or why it is refused before anything is asked of anyone. */
 function transactionsOf(payload: ExplainPayload): string[] | string {
     const transactions = payload.transactions;
+    if (Array.isArray(transactions) && transactions.length > MAX_TRANSACTIONS) {
+        return `${transactions.length} transactions in one request; SignLens explains at most ${MAX_TRANSACTIONS}`;
+    }
     if (
         !Array.isArray(transactions) ||
         transactions.length === 0 ||
@@ -94,8 +97,19 @@ export async function explainTransactions(
     };
     const chains = Array.isArray(payload.chains) ? payload.chains : [];
     const results: Row[] = [];
+    // The transaction the API first refused for its limit: it would refuse the ones after it too, so they are not asked for.
+    let limitedAt: number | null = null;
     for (const [i, transaction] of transactions.entries()) {
         if (stop?.aborted) return failure(`not explained: ${String(stop.reason)}`);
+        if (limitedAt !== null) {
+            results.push({
+                kind: 'failed',
+                scope: 'transaction',
+                error: `not explained: the SignLens API took no more explanations for now, from transaction ${limitedAt} of ${transactions.length} on; ask the site again in a minute`,
+                capture: captureOf(transaction, meta),
+            });
+            continue;
+        }
         const bytes = fromBase64(transaction);
         // The chain is the page's word, so it switches nothing off: a page
         // that called a mainnet drain "devnet" would otherwise keep the
@@ -123,6 +137,7 @@ export async function explainTransactions(
             render: true,
         };
         let document: EngineAnswer = await explainRemotely(config.apiUrl, bytes, request, stop);
+        if (isError(document) && document.error.code === LIMITED) limitedAt = i + 1;
         let read: AccountData[] = [];
         if (!isError(document) && config.lookupAccounts) {
             ({ document, accounts: read } = await withAccounts(config.apiUrl, config.rpcUrl, bytes, request, document, stop));

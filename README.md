@@ -261,8 +261,10 @@ The verdict is one of four:
   `Retry-After` asks for up to two, before it counts. The API explains
   ten transactions a minute for each address it is asked from (a request
   of several counts each), and refuses more, which shows as an error
-  until a few seconds have passed. Nothing is known about the
-  transaction, so it is treated as blocked, never as a pass.
+  until a few seconds have passed; in a request of several, the ones
+  after the first refused are not asked for, and say so. Nothing is
+  known about the transaction, so it is treated as blocked, never as a
+  pass. A request holds 32 transactions at most.
 
 An effect or a value of a kind this version does not know is shown as one,
 not left out. Closing the window, or the dapp's page, refuses the request.

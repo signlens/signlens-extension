@@ -30,6 +30,12 @@ uses [Semantic Versioning](https://semver.org/).
   disconnected while its window was open says so, rather than that
   SignLens holds no keys.
 
+- **Requests past the API's limit.** Once the API refuses a transaction
+  of a request for its limit, the ones after it are not asked for: each
+  says so, and to ask again in a minute, rather than meeting a refusal of
+  its own. A request of more than 32 transactions is refused as such, not
+  as a list that is not one.
+
 ## [0.2.0] - 2026-10-25
 
 Explanations that read the accounts a transaction names, for multisig

@@ -5,8 +5,8 @@
 import assert from 'node:assert/strict';
 import { createServer } from 'node:http';
 import { test } from 'node:test';
-import type { Explanation } from '../shared/types.ts';
-import { apiStatus, explainRemotely, sendFeedback } from './api.ts';
+import { type Explanation, isError } from '../shared/types.ts';
+import { apiStatus, explainRemotely, LIMITED, sendFeedback } from './api.ts';
 
 const EXPLANATION: Explanation = {
     schema: 'signlens-explanation/1',
@@ -321,6 +321,22 @@ test('a deploy, a restart or a busy server is tried once more, after a pause the
         assert.ok(!('error' in answer), JSON.stringify(answer));
     } finally {
         await status.close();
+    }
+});
+
+test("a refusal for the API's limit is named as one, in the API's words or not", async () => {
+    for (const [answer, message] of [
+        [{ status: 429, body: { schema: 'signlens-api-error/1', error: { code: 'rate', message: 'too many' } } }, 'too many'],
+        [{ status: 429, raw: 'Too Many Requests' }, 'the SignLens API answered HTTP 429 without a document'],
+    ] as const) {
+        const limited = await stub({ explain: answer });
+        try {
+            const document = await explainRemotely(limited.url, new Uint8Array([1]), {});
+            assert.ok(isError(document));
+            assert.deepEqual(document.error, { code: LIMITED, message });
+        } finally {
+            await limited.close();
+        }
     }
 });
 
