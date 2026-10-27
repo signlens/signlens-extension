@@ -75,6 +75,9 @@ test('the window for several transactions, and for a request gone', async ({ con
     const rows: ExplainedRow[] = [transferRow(), { ...transferRow(), verdict: 'blocked' }, { ...transferRow(), verdict: 'ok' }];
     const several = await windowFor(context, worker, request({ rows }));
     expect(await violations(several)).toEqual([]);
+    // And with the question "Continue anyway" asks open over it.
+    await several.getByRole('button', { name: /^Continue anyway/ }).click();
+    expect(await violations(several)).toEqual([]);
     const stale = await windowFor(context, worker, null);
     expect(await violations(stale)).toEqual([]);
 });

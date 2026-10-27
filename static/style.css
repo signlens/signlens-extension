@@ -16,6 +16,8 @@
     --ok: #1a7f4b;
     --warning: #a15c00;
     --blocked: #b3261e;
+    /* Behind a question that must be answered before the window goes on, at half strength (#anyway::backdrop): the text's navy. */
+    --scrim: #14213d;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -34,6 +36,7 @@
         --ok: #5fd39a;
         --warning: #fcb94a;
         --blocked: #ff8a80;
+        --scrim: #000000;
     }
 }
 
@@ -661,6 +664,46 @@ body.confirm footer #buttons {
 #buttons button {
     max-width: 100%;
     overflow-wrap: anywhere;
+}
+
+/* The question "Continue anyway" asks: mid-window, away from the button that opened it. */
+#anyway {
+    width: min(28em, calc(100vw - 32px));
+    padding: 14px 16px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--ground);
+    color: var(--text);
+}
+
+#anyway::backdrop {
+    background: var(--scrim);
+    opacity: 0.5;
+}
+
+#anyway-title {
+    margin: 0 0 8px;
+    font-size: 15px;
+}
+
+#anyway-why {
+    margin: 0;
+    overflow-wrap: anywhere;
+}
+
+#anyway .dialog-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: flex-end;
+    margin-top: 14px;
+}
+
+/* Going on past a refusal: the blocked colour, on a button that does not invite. */
+button.danger {
+    border-color: var(--blocked);
+    color: var(--blocked);
+    font-weight: 600;
 }
 
 /* A window too short to hold the header, the explanation and the buttons

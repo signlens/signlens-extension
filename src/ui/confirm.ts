@@ -10,7 +10,7 @@ import { base64Bytes, instructionPrograms } from '../shared/programs.ts';
 import { settings } from '../shared/settings.ts';
 import { getPending, local } from '../shared/store.ts';
 import { logged, methodName, withoutScheme } from '../shared/text.ts';
-import type { Rating, Seen } from '../shared/types.ts';
+import { type Rating, SEVERITIES, type Seen } from '../shared/types.ts';
 import { rowVerdictWord, summaryOf, worstVerdict } from '../shared/verdict.ts';
 import { byId } from './dom.ts';
 import { element, originNode, renderRow } from './render.ts';
@@ -162,14 +162,48 @@ function feedbackStrip(list: Row[], page: { origin?: string; method?: string }):
     }
 }
 
+/** Why SignLens would refuse `row`, in a sentence: its most serious finding, or that nothing is known of it. */
+function refusalOf(row: Row | undefined): string {
+    if (row?.kind !== 'explained') return 'SignLens could not explain this, so nothing is known of what it does.';
+    let worst: ExplainedRow['findings'][number] | undefined;
+    for (const finding of row.findings) {
+        if (!worst || SEVERITIES.indexOf(finding.severity) > SEVERITIES.indexOf(worst.severity)) worst = finding;
+    }
+    return `SignLens blocks it. ${worst?.message ?? row.summary}`;
+}
+
+/**
+ * The question "Continue anyway" asks on a request SignLens would refuse,
+ * with why, before anything is passed on: one press is not enough to hand
+ * on what was blocked, or what nothing is known of. Going back has the
+ * focus, so an Enter goes back, and Escape closes the question, not the
+ * window. Going back is the filled button, going on the one in the
+ * blocked colour; the yes sits mid-window, away from where Continue was
+ * pressed, so a double click does not reach it. Returns what opens it.
+ */
+function question(proceed: HTMLButtonElement, why: string): () => void {
+    const dialog = byId('anyway', HTMLDialogElement);
+    byId('anyway-why').textContent = why;
+    const go = byId('anyway-go', HTMLButtonElement);
+    byId('anyway-back').addEventListener('click', () => dialog.close());
+    go.addEventListener('click', () => {
+        dialog.close();
+        decide('continue');
+    });
+    // Back where it was asked from, however it closed.
+    dialog.addEventListener('close', () => proceed.focus());
+    return () => dialog.showModal();
+}
+
 /**
  * Escape rejects, as closing the window does, unless it has something
  * nearer to close: an open help term, toggle or run of bytes the focus is
  * on closes, and a box being typed in keeps the request, so a key pressed
- * to leave the box does not refuse it.
+ * to leave the box does not refuse it. With the question "Continue anyway"
+ * asks open, Escape closes only that.
  */
 function onEscape(event: KeyboardEvent): void {
-    if (event.key !== 'Escape') return;
+    if (event.key !== 'Escape' || byId('anyway', HTMLDialogElement).open) return;
     const at = event.target;
     if (at instanceof HTMLTextAreaElement || (at instanceof HTMLInputElement && at.type === 'text')) return;
     if (at instanceof HTMLElement && at.matches(':is(.term, .toggle, .more-bytes)[aria-expanded="true"]')) {
@@ -251,6 +285,7 @@ async function start(): Promise<void> {
     window.addEventListener('pagehide', () => sendFeedback());
 
     const stopped = worst === 'blocked' || worst === 'error';
+    let ask: (() => void) | null = null;
     if (entry.mode === 'passthrough') {
         // The button names only what SignLens knows: the wallet in the
         // settings. With none named the page picks the first it has, and what
@@ -269,14 +304,18 @@ async function start(): Promise<void> {
               ? `SignLens would refuse this. Continuing hands it unchanged all the same to ${to} which asks for its own approval.`
               : `“Show the explanation and ask first” is off, but SignLens still asks before passing on what it would refuse. Continuing hands this unchanged to ${to} which asks for its own approval.`;
         proceed.textContent = stopped ? `Continue anyway to ${wallet}` : `Continue to ${wallet}`;
-        // A refused request gets no inviting button.
+        // A refused request gets no inviting button, and one that asks again first.
         proceed.classList.toggle('primary', !stopped);
+        if (stopped) {
+            const why = refusalOf(lead);
+            ask = question(proceed, many ? `${why} (transaction ${at + 1} of ${list.length})` : why);
+        }
     } else {
         note.textContent = 'This wallet holds no keys: the request is refused either way.';
         proceed.hidden = true;
         reject.textContent = 'Close';
     }
-    proceed.addEventListener('click', () => decide('continue'));
+    proceed.addEventListener('click', () => (ask ? ask() : decide('continue')));
     reject.addEventListener('click', () => decide('reject'));
     document.addEventListener('keydown', onEscape);
     // Rejecting is the safe default: it has focus, so Enter cannot approve.

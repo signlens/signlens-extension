@@ -252,7 +252,8 @@ The verdict is one of four:
 - **Warning**: findings to read before you approve, shown first.
 - **Blocked**: the engine found something critical, or a part of the
   transaction it cannot explain (an unknown program, say), and will not
-  call it safe. SignLens refuses it unless you choose "Continue anyway".
+  call it safe. SignLens refuses it unless you choose "Continue anyway",
+  then answer yes when it asks again, saying why.
 - **Error**: SignLens has no explanation to show. The API was away or
   refused, or answered with something that does not hold together, or with
   a verdict this version does not know. No answer at all, or a 502, 503 or

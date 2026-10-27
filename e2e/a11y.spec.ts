@@ -249,6 +249,12 @@ test('a window 256 pixels high (400% zoom) still shows every part of it, as the 
         expect(await reachable(target), String(target)).toBe(true);
     }
     expect(await overflows(gate)).toBe(false);
+    // The question "Continue anyway" asks fits too, and each of its buttons can be reached.
+    await gate.getByRole('button', { name: `Continue anyway to ${LONG_WALLET}` }).click();
+    for (const button of await gate.getByRole('dialog').getByRole('button').all()) expect(await reachable(button), 'question').toBe(true);
+    expect(await overflows(gate)).toBe(false);
+    await gate.keyboard.press('Escape');
+    await expect(gate.getByRole('dialog')).toBeHidden();
     // Zoomed less, the explanation still has room: at 200% (260 by 340), or 320 by 480, the page scrolls as one rather
     // than leave it a sliver between the header and the buttons; at the size it opens, it has its own pane, a fair share.
     for (const [width, height] of [

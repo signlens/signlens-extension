@@ -56,7 +56,9 @@ test('with the window off, a request the API could not explain still waits for t
     await expect(gate.locator('#note')).toHaveText(
         '“Show the explanation and ask first” is off, but SignLens still asks before passing on what it would refuse. Continuing hands this unchanged to Fake Wallet, which asks for its own approval.',
     );
-    await clickToClose(gate.getByRole('button', { name: /Continue anyway/ }));
+    await gate.getByRole('button', { name: /Continue anyway/ }).click();
+    await expect(gate.getByRole('dialog')).toContainText('SignLens could not explain this, so nothing is known of what it does.');
+    await clickToClose(gate.getByRole('dialog').getByRole('button', { name: 'Continue anyway' }));
     expect((await signing).signed).toBe(1);
     await popup.reload();
     await expect(popup.locator('#engine-status')).toHaveText(/SignLens API not reachable/);

@@ -169,4 +169,10 @@ export function clickToClose(button: Locator): Promise<void> {
     return closing(button.page(), () => button.click());
 }
 
+/** Presses "Continue anyway" on a request SignLens would refuse, then the yes of the question it asks, which closes the window. */
+export async function continueAnyway(gate: Page): Promise<void> {
+    await gate.getByRole('button', { name: /^Continue anyway/ }).click();
+    await clickToClose(gate.getByRole('dialog').getByRole('button', { name: 'Continue anyway' }));
+}
+
 export { expect };
