@@ -466,6 +466,55 @@ test('the extension is told which wallet a request goes to, by the name it regis
     await asking;
 });
 
+test('another wallet chosen in the settings ends the session with the one before: the dapp connects again, to the one the window names', async () => {
+    const handed: string[] = [];
+    const chosen = {
+        ...upstream,
+        name: 'Chosen Wallet',
+        features: {
+            ...upstream.features,
+            [SIGN]: {
+                version: '1.0.0',
+                async signTransaction(...inputs: { transaction: Uint8Array }[]) {
+                    for (const input of inputs) handed.push(Buffer.from(input.transaction).toString('hex'));
+                    return inputs.map((input) => ({ signedTransaction: input.transaction }));
+                },
+            },
+        },
+    };
+    let unregister = () => {};
+    page.dispatchEvent(
+        detailEvent('wallet-standard:register-wallet', (api: { register(w: unknown): () => void }) => {
+            unregister = api.register(chosen);
+        }),
+    );
+    const changeTo = (upstream: string) => {
+        pageConfig = { mode: 'passthrough', upstream };
+        realPost.call(port, { type: 'config-changed', config: pageConfig });
+    };
+    try {
+        // Connected to the first wallet found; then another is chosen.
+        assert.deepEqual(accountsNow(), [account.address]);
+        changeTo('chosen wallet ');
+        await until(() => accountsNow().length === 0);
+        await connect();
+        const signing = sign({ account, transaction: BENIGN() });
+        (await nextRequest()).reply(CONTINUE);
+        assert.equal((await signing).error, undefined);
+        assert.deepEqual([signed.length, handed.length], [0, 1]);
+        // The settings naming no wallet keep the session: any is the first found.
+        changeTo('');
+        changeTo('Chosen Wallet');
+        await new Promise((resolve) => setTimeout(resolve, 20));
+        assert.deepEqual(accountsNow(), [account.address]);
+    } finally {
+        unregister();
+        changeTo('Real Wallet');
+        await until(() => accountsNow().length === 0);
+        settingsChange('passthrough');
+    }
+});
+
 test('the real wallet is called as a method of its feature', async () => {
     signed.length = 0;
     const signing = sign({ account, transaction: BENIGN() });
@@ -501,6 +550,15 @@ test('only a decision to continue passes a request on, and the dapp is told who 
         assert.equal(signed.length, refusal === null ? 1 : 0, JSON.stringify(answer));
         assert.equal(outcome.error, refusal ?? undefined, JSON.stringify(answer));
     }
+});
+
+test('a session that ended while the window was open passes nothing on, and says so', async () => {
+    const signing = sign({ account, transaction: BENIGN() });
+    const request = await nextRequest();
+    await disconnect();
+    request.reply(CONTINUE);
+    assert.deepEqual(await signing, { error: 'SignLens: disconnected while the request waited; nothing was signed. Connect again.' });
+    assert.equal(signed.length, 0);
 });
 
 test('what the page puts on Object.prototype is not taken for a decision', async () => {

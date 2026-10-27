@@ -289,10 +289,17 @@
         return (mode === 'passthrough' || mode === 'watch') && typeof upstream === 'string' ? { mode, upstream } : null;
     }
 
+    /** Whether `wallet` is the one the settings name to pass requests to; with none named, any is. */
+    function chosen(wallet: Wallet): boolean {
+        const wanted = config.upstream.trim().toLowerCase();
+        return !wanted || (typeof wallet.name === 'string' && wallet.name.toLowerCase() === wanted);
+    }
+
     function applyConfig(next: SignLensPage.Config): void {
         config = next;
-        // The dapp connected to a different kind of wallet; make it reconnect.
-        if (session && session.mode !== config.mode) endSession();
+        // The dapp connected to a different kind of wallet, or to another
+        // wallet than the window would name; make it reconnect.
+        if (session && (session.mode !== config.mode || (session.mode === 'passthrough' && !chosen(session.upstream)))) endSession();
     }
 
     /**
@@ -330,11 +337,11 @@
                 wallet.features?.[CONNECT] &&
                 (wallet.features[SIGN_TRANSACTION] || wallet.features[SIGN_AND_SEND_TRANSACTION]),
         );
-        const wanted = config.upstream.trim().toLowerCase();
-        const found = wanted ? usable.find((wallet) => wallet.name.toLowerCase() === wanted) : usable[0];
+        const found = usable.find(chosen);
         if (found) return found;
         const names = usable.map((wallet) => wallet.name);
-        const message = `no wallet${wanted ? ` named "${config.upstream.trim()}"` : ''} to pass requests to (found: ${names.join(', ') || 'none'})`;
+        const wanted = config.upstream.trim();
+        const message = `no wallet${wanted ? ` named "${wanted}"` : ''} to pass requests to (found: ${names.join(', ') || 'none'})`;
         notify('connect-failed', { wallets: names });
         throw new Error(`${NAME}: ${message}`);
     }
@@ -494,13 +501,15 @@
 
     /** Hands the copies to the real wallet, or refuses them, saying once who refused and why. */
     async function finish(method: string, name: string, copies: SignInput[], shown: Shown): Promise<unknown> {
-        if (session?.mode !== 'passthrough') {
+        if (session?.mode === 'watch') {
             const why = shown.passOn ? '' : shown.by === 'signlens' ? ` Refused by SignLens (${shown.why}).` : ` ${shown.why}`;
             throw new Error(`${NAME} holds no keys: nothing was signed.${why}`);
         }
         if (!shown.passOn) {
             throw new Error(shown.by === 'signlens' ? `${NAME}: refused (${shown.why}).` : `${NAME}: rejected in SignLens. ${shown.why}`);
         }
+        // The dapp disconnected, or the settings changed, while the window was open.
+        if (!session) throw new Error(`${NAME}: disconnected while the request waited; nothing was signed. Connect again.`);
         const upstream = session.upstream;
         const current = await reconnected(upstream);
         const feature = upstream.features[method];

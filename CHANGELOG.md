@@ -20,6 +20,16 @@ uses [Semantic Versioning](https://semver.org/).
   settings; past 64, the first contacts of the address book. The
   settings say when some go unused.
 
+### Fixed
+
+- **The wallet the window names is the one that signs.** Choosing
+  another wallet in the settings while a site was connected left the site
+  connected to the one before: the window said "Continue to Backpack" and
+  Continue handed the request to Phantom. The site is now disconnected,
+  and connects again to the wallet chosen. A request whose site
+  disconnected while its window was open says so, rather than that
+  SignLens holds no keys.
+
 ## [0.2.0] - 2026-10-25
 
 Explanations that read the accounts a transaction names, for multisig
