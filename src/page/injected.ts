@@ -499,15 +499,24 @@
         return out;
     }
 
+    /**
+     * The user's refusal as a wallet makes one, so a dapp tells it from a
+     * failure: EIP-1193's code 4001, which Solana wallets keep, and "User
+     * rejected" in the message, which is what many dapps look for.
+     */
+    function rejection(why: string): Error {
+        const error = new Error(`User rejected the request in ${NAME}. ${why}`);
+        put(error, 'code', 4001);
+        return error;
+    }
+
     /** Hands the copies to the real wallet, or refuses them, saying once who refused and why. */
     async function finish(method: string, name: string, copies: SignInput[], shown: Shown): Promise<unknown> {
         if (session?.mode === 'watch') {
             const why = shown.passOn ? '' : shown.by === 'signlens' ? ` Refused by SignLens (${shown.why}).` : ` ${shown.why}`;
             throw new Error(`${NAME} holds no keys: nothing was signed.${why}`);
         }
-        if (!shown.passOn) {
-            throw new Error(shown.by === 'signlens' ? `${NAME}: refused (${shown.why}).` : `${NAME}: rejected in SignLens. ${shown.why}`);
-        }
+        if (!shown.passOn) throw shown.by === 'signlens' ? new Error(`${NAME}: refused (${shown.why}).`) : rejection(shown.why);
         // The dapp disconnected, or the settings changed, while the window was open.
         if (!session) throw new Error(`${NAME}: disconnected while the request waited; nothing was signed. Connect again.`);
         const upstream = session.upstream;

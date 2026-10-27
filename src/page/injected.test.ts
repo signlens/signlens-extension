@@ -383,7 +383,7 @@ for (const field of ['transaction', 'message'] as const) {
 test('a message refused is not signed, nor any of the same request: the wallet signs them together', async () => {
     const one = signMessage({ account, message: BENIGN() });
     (await nextRequest()).reply({ decision: 'reject' });
-    assert.equal((await one).error, 'SignLens: rejected in SignLens. The message is in the SignLens popup.');
+    assert.equal((await one).error, 'User rejected the request in SignLens. The message is in the SignLens popup.');
     // The first goes on, the second is refused: neither is signed.
     const two = signMessage({ account, message: BENIGN() }, { account, message: EVIL() });
     (await nextRequest()).reply(CONTINUE);
@@ -398,7 +398,7 @@ test('once a message is refused, the ones after it in the request are not asked 
     // Whichever comes first: the refusal, or the second message asked about.
     const next = await Promise.race([asking.then(() => 'refused'), nextRequest().then(() => 'asked again')]);
     assert.equal(next, 'refused');
-    assert.match((await asking).error ?? '', /rejected in SignLens/);
+    assert.match((await asking).error ?? '', /^User rejected the request in SignLens/);
     assert.deepEqual(signedMessages, []);
 });
 
@@ -526,10 +526,10 @@ test('the real wallet is called as a method of its feature', async () => {
 test('only a decision to continue passes a request on, and the dapp is told who refused it and why, once', async () => {
     const answers: [unknown, string | null][] = [
         [CONTINUE, null],
-        [{ decision: 'reject' }, 'SignLens: rejected in SignLens. The request is in the SignLens popup.'],
+        [{ decision: 'reject' }, 'User rejected the request in SignLens. The request is in the SignLens popup.'],
         [
             { decision: 'reject', error: 'the API is down' },
-            'SignLens: rejected in SignLens. SignLens could not explain it: the API is down',
+            'User rejected the request in SignLens. SignLens could not explain it: the API is down',
         ],
         [
             { decision: 'reject', refused: 'the SignLens window could not open: no display' },
@@ -550,6 +550,33 @@ test('only a decision to continue passes a request on, and the dapp is told who 
         assert.equal(signed.length, refusal === null ? 1 : 0, JSON.stringify(answer));
         assert.equal(outcome.error, refusal ?? undefined, JSON.stringify(answer));
     }
+});
+
+test('a request the user rejected is refused as a wallet refuses one, so a dapp tells it from a failure', async () => {
+    const outcome = async (feature: string, method: string, input: unknown, answer: unknown): Promise<Error & { code?: unknown }> => {
+        const asking = call(feature, method, input).then(
+            () => new Error('passed on'),
+            (error: unknown) => error as Error & { code?: unknown },
+        );
+        (await nextRequest()).reply(answer);
+        return asking;
+    };
+    // EIP-1193's code, which Solana wallets keep, and the words dapps look for.
+    const rejected = await outcome(SIGN, 'signTransaction', { account, transaction: BENIGN() }, { decision: 'reject' });
+    assert.equal(rejected.code, 4001);
+    assert.match(rejected.message, /^User rejected the request in SignLens\. /);
+    const message = await outcome('solana:signMessage', 'signMessage', { account, message: BENIGN() }, { decision: 'reject' });
+    assert.equal(message.code, 4001);
+    // Refused by SignLens, not the user: a failure, said as one.
+    const refused = await outcome(
+        SIGN,
+        'signTransaction',
+        { account, transaction: BENIGN() },
+        { decision: 'reject', refused: 'no display' },
+    );
+    assert.equal(refused.code, undefined);
+    assert.equal(refused.message, 'SignLens: refused (no display).');
+    assert.equal(signed.length, 0);
 });
 
 test('a session that ended while the window was open passes nothing on, and says so', async () => {

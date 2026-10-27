@@ -30,6 +30,11 @@ uses [Semantic Versioning](https://semver.org/).
   disconnected while its window was open says so, rather than that
   SignLens holds no keys.
 
+- **A Reject reads as one to the site.** A request rejected in SignLens
+  is refused as wallets refuse one, with code 4001 and "User rejected the
+  request in SignLens", so a site tells it from a failure; Kamino, for
+  one, looks for those words before it shows an error.
+
 - **Requests past the API's limit.** Once the API refuses a transaction
   of a request for its limit, the ones after it are not asked for: each
   says so, and to ask again in a minute, rather than meeting a refusal of
