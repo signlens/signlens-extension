@@ -4,7 +4,7 @@
 // request through on silence.
 
 import { fixture } from '../test/server.ts';
-import { clickToClose, closing, expect, FAKE_ACCOUNT, liveGate, test } from './support/extension.ts';
+import { clickToClose, closing, continueAnyway, expect, FAKE_ACCOUNT, liveGate, test } from './support/extension.ts';
 
 const WALLET = 'SignLens';
 const RECIPIENT = 'DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp';
@@ -119,7 +119,7 @@ test('no answer from SignLens runs page code inside its port message, so window.
         base64: transfer.base64,
     });
     const gate = await liveGate(context);
-    await clickToClose(gate.getByRole('button', { name: /Continue anyway/ }));
+    await continueAnyway(gate);
     expect((await signing).signed).toBe(1);
     // A settings change ends the session from the port's message; a watch connect is answered over it.
     await configure({ mode: 'watch', address: RECIPIENT });
@@ -179,7 +179,7 @@ for (const trick of ['mutate', 'getter'] as const) {
             { wallet: WALLET, base64: transfer.base64, trick },
         );
         const gate = await liveGate(context);
-        await clickToClose(gate.getByRole('button', { name: /Continue anyway/ }));
+        await continueAnyway(gate);
         expect(await signing).toEqual({ signed: true });
         const explained = server.apiCalls.find((call) => call.path === '/v1/explain')?.body as { transaction: string };
         expect(explained.transaction).toBe(transfer.base64);
@@ -310,7 +310,7 @@ test('a dapp changing its route while the window is open keeps its request', asy
     });
     const gate = await liveGate(context);
     await dapp.evaluate(() => history.pushState({}, '', '/dapp.html?route=swap'));
-    await clickToClose(gate.getByRole('button', { name: /Continue anyway/ }));
+    await continueAnyway(gate);
     expect((await signing).signed).toBe(1);
 });
 

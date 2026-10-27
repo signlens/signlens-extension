@@ -40,6 +40,16 @@
             </div>
         </footer>
 
+        <!-- What "Continue anyway" asks first, on a request SignLens would refuse: going back has the focus. -->
+        <dialog id="anyway" aria-labelledby="anyway-title" aria-describedby="anyway-why">
+            <h2 id="anyway-title">Pass this request on anyway?</h2>
+            <p id="anyway-why"></p>
+            <div class="dialog-buttons">
+                <button id="anyway-back" type="button" class="primary" autofocus>Go back</button>
+                <button id="anyway-go" type="button" class="danger">Continue anyway</button>
+            </div>
+        </dialog>
+
         <script type="module" src="ui/confirm.js"></script>
     </body>
 </html>

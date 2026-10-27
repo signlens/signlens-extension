@@ -8,6 +8,14 @@ uses [Semantic Versioning](https://semver.org/).
 
 ### Changed
 
+- **"Continue anyway" asks again.** On a request SignLens would
+  refuse, blocked or not explained, one press of "Continue anyway"
+  handed it to your wallet. It now asks "Pass this request on anyway?"
+  first, with why: the most serious finding, or that nothing is known of
+  what the request does. "Go back" is the filled button and has the
+  focus, so Enter and Escape leave the request waiting; only the
+  question's own "Continue anyway", in the blocked colour, passes it on.
+
 - **Account reads four at a time.** Public RPCs take ten accounts a
   call, so a transaction with more than ten writable accounts, its lookup
   tables and its tokens' decimals each took one round trip per ten. Up to
