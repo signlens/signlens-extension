@@ -41,6 +41,19 @@ uses [Semantic Versioning](https://semver.org/).
 
 ### Changed
 
+- **Your contacts' names stay in your browser.** The address book went to
+  the SignLens API names and all, with each transaction, though the
+  engine uses a name only to write it into what it says. Now each
+  contact's address goes with a random stand-in for its name, new for
+  each request, which says nothing of the name, and the extension puts
+  the names back in the explanation before the window shows it; it reads
+  as before, with the same verdicts and findings. A transaction cannot
+  make the window print a contact's name, since it cannot know the
+  stand-in, and the stand-ins tie no two requests together. A rating
+  reports a summary with each contact in it as "a contact". Firefox no
+  longer lists personally identifying information among what SignLens
+  collects.
+
 - **Your addresses are a list.** One row each, in full to hold against
   your wallet's, with Remove, and a field that adds one, or several
   pasted at once, and takes nothing that is not a Solana address, saying

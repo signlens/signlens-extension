@@ -56,7 +56,7 @@ test('the Firefox manifest runs the same worker as a background script, with the
     // Required by addons.mozilla.org for new add-ons since November 2025;
     // the site and the version a rating carries are asked for (consent.ts).
     assert.deepEqual(gecko?.data_collection_permissions, {
-        required: ['financialAndPaymentInfo', 'personallyIdentifyingInfo'],
+        required: ['financialAndPaymentInfo'],
         optional: ['browsingActivity', 'technicalAndInteraction'],
     });
     assert.equal(firefox.minimum_chrome_version, undefined);

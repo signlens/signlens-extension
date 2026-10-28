@@ -42,6 +42,8 @@ export interface ExplainedRow {
     capture: string;
     /** The explanation's digest, which feedback names it by. */
     digest: string | null;
+    /** The summary as a rating reports it: each contact as "a contact", as no name leaves the browser (contacts.ts). */
+    reportedSummary: string;
     /** The transaction, base64, sent with feedback only when the user asks. */
     transaction: string;
 }

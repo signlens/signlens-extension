@@ -1,7 +1,8 @@
 // What a page asked, explained: each transaction with what the worker read
 // itself (its lookup tables, a simulation, the accounts the explanation
-// names, names for unlisted tokens) sent to the SignLens API, and the
-// answer kept as a row for the window and the popup; a message to sign,
+// names, names for unlisted tokens) sent to the SignLens API, your contacts
+// with stand-ins for their names (contacts.ts), and the answer, the names
+// put back, kept as a row for the window and the popup; a message to sign,
 // shown as it is. Needs `fetch` and nothing of the browser's, so it runs
 // in Node under test as it does in the worker.
 
@@ -21,6 +22,7 @@ import { type AccountData, type Contact, type EngineAnswer, type EngineRequest, 
 import { verdictOf } from '../shared/verdict.ts';
 import { withAccounts } from './accounts.ts';
 import { explainRemotely, LIMITED } from './api.ts';
+import { eachString, standIns } from './contacts.ts';
 import { tokenHints, unknownMints } from './hints.ts';
 import { type SimulationResult, simulate } from './simulation.ts';
 import { fromBase64, isAddress, type LoadedAddresses } from './solana.ts';
@@ -96,6 +98,8 @@ export async function explainTransactions(
         accounts,
     };
     const chains = Array.isArray(payload.chains) ? payload.chains : [];
+    // One tag for the request: each call of it, for each transaction, has the same stand-ins.
+    const book = standIns(contacts);
     const results: Row[] = [];
     // The transaction the API first refused for its limit: it would refuse the ones after it too, so they are not asked for.
     let limitedAt: number | null = null;
@@ -132,7 +136,7 @@ export async function explainTransactions(
         const request: EngineRequest = {
             own_keys: accounts,
             ...(loaded ? { loaded_writable: loaded.writable, loaded_readonly: loaded.readonly } : {}),
-            contacts,
+            contacts: book.sent,
             ...(simulation ? { simulation: { failure: simulation.failure, units: simulation.units, changes: simulation.changes } } : {}),
             render: true,
         };
@@ -157,35 +161,38 @@ export async function explainTransactions(
         // A call given up because the page went is not the API's failure.
         if (stop?.aborted) return failure(`not explained: ${String(stop.reason)}`);
         const capture = captureOf(transaction, meta, loaded, read);
-        results.push(
-            isError(document)
-                ? {
-                      kind: 'failed',
-                      scope: 'transaction',
-                      error: withoutControls(document.error.message) || 'the SignLens API answered an error without a message',
-                      ...(note ? { tables: note } : {}),
-                      ...(claimed ? { chain: claimed } : {}),
-                      capture,
-                  }
-                : {
-                      kind: 'explained',
-                      verdict: verdictOf(document),
-                      text: withoutControls(document.text),
-                      tables: note,
-                      ...(claimed ? { chain: claimed } : {}),
-                      simulation: simulationNote,
-                      capture,
-                      hints: hints.map((h) => h.symbol),
-                      ...(read.length > 0 ? { accounts: read.map((account) => account.address) } : {}),
-                      summary: document.summary,
-                      findings: document.findings,
-                      effects: document.effects,
-                      sections: document.sections,
-                      // For the feedback strip: what to name and, if the user asks, what to send.
-                      digest: document.raw?.digest ?? null,
-                      transaction,
-                  },
-        );
+        if (isError(document)) {
+            results.push({
+                kind: 'failed',
+                scope: 'transaction',
+                error: withoutControls(document.error.message) || 'the SignLens API answered an error without a message',
+                ...(note ? { tables: note } : {}),
+                ...(claimed ? { chain: claimed } : {}),
+                capture,
+            });
+            continue;
+        }
+        // The window and the history have the names; a rating reports none.
+        const said = eachString(document, book.named);
+        results.push({
+            kind: 'explained',
+            verdict: verdictOf(said),
+            text: withoutControls(said.text),
+            tables: note,
+            ...(claimed ? { chain: claimed } : {}),
+            simulation: simulationNote,
+            capture,
+            hints: hints.map((h) => h.symbol),
+            ...(read.length > 0 ? { accounts: read.map((account) => account.address) } : {}),
+            summary: said.summary,
+            findings: said.findings,
+            effects: said.effects,
+            sections: said.sections,
+            // For the feedback strip: what to name, what to report and, if the user asks, what to send.
+            digest: said.raw?.digest ?? null,
+            reportedSummary: book.unnamed(document.summary),
+            transaction,
+        });
     }
     return { rows: results };
 }
