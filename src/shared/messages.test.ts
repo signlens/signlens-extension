@@ -12,7 +12,7 @@ const PAGE = { id: SELF.id, url: 'https://dapp.example/swap' };
 const WINDOW = { id: SELF.id, url: 'chrome-extension://abcdefghijklmnop/confirm.html?id=1-1' };
 
 test('a page may ask, and nothing else, whatever the worker takes', () => {
-    const asks = ['config', 'connect', 'explain', 'message', 'wallets', 'connect-failed'];
+    const asks = ['config', 'connect', 'explain', 'message', 'wallets', 'connect-failed', 'choose'];
     for (const type of MESSAGE_TYPES) assert.equal(accepts(type, PAGE, SELF), asks.includes(type), type);
     assert.ok(MESSAGE_TYPES.includes('decision') && MESSAGE_TYPES.includes('revoke') && MESSAGE_TYPES.includes('retry'));
 });

@@ -106,7 +106,7 @@ test('the setup page', async ({ context, extensionId }) => {
     expect(await violations(setup)).toEqual([]);
 });
 
-test('the consent window and the address window', async ({ context, worker }) => {
+test('the consent window, the address window and the wallet window', async ({ context, worker }) => {
     const consent = await windowFor(context, worker, { origin: 'https://jup.ag', address: WATCHED }, 'connect.html');
     expect(await violations(consent)).toEqual([]);
     const address = await windowFor(
@@ -116,4 +116,14 @@ test('the consent window and the address window', async ({ context, worker }) =>
         'address.html',
     );
     expect(await violations(address)).toEqual([]);
+    const wallets = await windowFor(
+        context,
+        worker,
+        {
+            origin: 'https://jup.ag',
+            wallets: [{ name: 'Phantom', icon: 'data:image/svg+xml;base64,PHN2Zy8+' }, { name: 'Backpack' }, { name: 'MetaMask' }],
+        },
+        'wallet.html',
+    );
+    expect(await violations(wallets)).toEqual([]);
 });

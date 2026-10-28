@@ -1116,3 +1116,43 @@ input.yours-input {
 .yours-status.bad {
     color: var(--blocked);
 }
+
+/* The wallet window: each wallet a button of its own, as wide as the window. */
+.wallet-choices {
+    margin: 8px 0 10px;
+    padding: 0;
+    list-style: none;
+}
+
+.wallet-choice {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    margin: 0 0 6px;
+    padding: 8px 12px;
+    font-weight: 600;
+    text-align: left;
+}
+
+/* The wallet's icon, or its initial in a tile of the same size where it gave none to show. */
+.wallet-icon {
+    flex: none;
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    object-fit: contain;
+}
+
+span.wallet-icon {
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--line);
+    background: var(--ground);
+    color: var(--muted);
+}
+
+.wallet-name {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}

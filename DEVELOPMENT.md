@@ -117,7 +117,7 @@ browser APIs and rules. Each module's Node test sits beside it.
 | | `solana.ts`: the little of Solana's wire format the worker needs |
 | `src/ui/` | the extension's own pages |
 | | `popup.ts`, `pages.ts`: the popup; the pages SignLens runs on, and what the popup says over one it does not |
-| | `confirm.ts`, `connect.ts`, `address.ts`, `windows.ts`, `dom.ts`: the window, the window that asks to show a site the watched address, the one that asks whether an address is yours, and what they share |
+| | `confirm.ts`, `connect.ts`, `address.ts`, `wallet.ts`, `windows.ts`, `dom.ts`: the window, the window that asks to show a site the watched address, the one that asks whether an address is yours, the one that asks which wallet signs, and what they share |
 | | `render.ts`: one row of a request as the window and the popup show it |
 | | `welcome.ts`, `access.ts`, `yours.ts`: the setup page a new install opens; the access to sites the settings need, which the popup and the setup page ask for; your addresses as a list, in both |
 | `src/shared/` | what the worker and the pages both use, and nothing of either |

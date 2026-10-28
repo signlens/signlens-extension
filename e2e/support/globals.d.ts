@@ -13,6 +13,10 @@ interface Window {
     fakeCalls: { method: string; count: number }[];
     /** The transactions the fake wallet was handed, base64. */
     fakeSigned: string[];
+    /** Registers another wallet under `name`, with the fake one's icon or `icon`, as a second extension would. */
+    addWallet(name: string, icon?: string): void;
+    /** What the wallets `addWallet` registered were asked to sign. */
+    otherCalls: { wallet: string; count: number }[];
     /** Where the page's code ran on an answer from SignLens, and what `window.event` was there. */
     eventsSeen: string[];
 }

@@ -4,8 +4,17 @@
 // kept for the popup (history.ts). Apart from the worker's listeners
 // (background.ts), so that it runs in Node under test.
 
-import type { ConnectReply, ExplainPayload, MessagePayload, Reply, WaitingMessage } from '../shared/messages.ts';
-import { type Entry, failure, type HistoryEntry, type Outcome, requestError } from '../shared/model.ts';
+import { objectFields } from '../shared/json.ts';
+import type {
+    ChooseReply,
+    ConnectReply,
+    ExplainPayload,
+    MessagePayload,
+    Reply,
+    WaitingMessage,
+    WalletsPayload,
+} from '../shared/messages.ts';
+import { type Entry, failure, type HistoryEntry, type Outcome, requestError, type WalletChoice } from '../shared/model.ts';
 import { addAddresses, ownKeysFor, parseAddresses, parseContacts, type Settings, settings, watched } from '../shared/settings.ts';
 import { session } from '../shared/store.ts';
 import { describe, logged, printable } from '../shared/text.ts';
@@ -175,8 +184,62 @@ async function answer(type: 'explain' | 'message', payload: ExplainPayload & Mes
     return { ...outcome, ...(error !== undefined ? { error } : {}) };
 }
 
-/** Answers a page's request that may wait on the user: a connect in watch mode, or something to explain and decide on, from the tab `tabId`. */
-export async function answerRequest(message: WaitingMessage, tabId: number): Promise<Reply | ConnectReply> {
+/** A wallet icon as Wallet Standard has one: an image of one of these types, in a base64 data URL. */
+const ICON = /^data:image\/(?:svg\+xml|webp|png|gif);base64,[A-Za-z0-9+/]+={0,2}$/;
+/** An icon's size at most, in characters: far more than one needs, and the window's request stays small. */
+const MAX_ICON = 128 * 1024;
+
+/** `icon`, if it is one the wallet window may show: an image, never an address to fetch, nor a page. */
+function walletIcon(icon: unknown): string | undefined {
+    return typeof icon === 'string' && icon.length <= MAX_ICON && ICON.test(icon) ? icon : undefined;
+}
+
+/**
+ * The wallets a page has, as the wallet window lists them: by name, in plain
+ * ASCII, as the window says nothing in the page's words otherwise, once each
+ * with the first's icon, as the page connects the first of a name; a few at
+ * most.
+ */
+function walletChoices(payload: WalletsPayload): WalletChoice[] {
+    const given = Array.isArray(payload.wallets) ? payload.wallets : [];
+    const choices = new Map<string, WalletChoice>();
+    for (const wallet of given) {
+        const { name, icon } = objectFields(wallet) ?? {};
+        const plain = typeof name === 'string' ? printable(name, 60).trim() : '';
+        if (!plain || choices.has(plain)) continue;
+        const shown = walletIcon(icon);
+        choices.set(plain, shown === undefined ? { name: plain } : { name: plain, icon: shown });
+    }
+    return [...choices.values()].slice(0, 16);
+}
+
+/**
+ * Which wallet SignLens passes requests to, asked in a window of its own
+ * when a page that has several connects with none chosen (injected.ts). The
+ * window keeps the choice in the settings, as the popup would; the answer is
+ * that name, if it is one the page had, so the page connects to it.
+ */
+async function chooseWallet(payload: WalletsPayload, tabId: number): Promise<ChooseReply> {
+    const wallets = walletChoices(payload);
+    if (wallets.length < 2) return { error: 'fewer than two wallets to choose from' };
+    // One request per tab at a time, as any that opens a window.
+    const flight = gate.begin(tabId);
+    if (!flight) return { error: gate.BUSY };
+    try {
+        const outcome = await gate.ask('wallet.html', { origin: payload.origin, wallets }, flight);
+        if (outcome.decision !== 'continue') return { error: 'no wallet was chosen' };
+        const { upstream } = await settings();
+        return wallets.some((wallet) => wallet.name === upstream) ? { wallet: upstream } : { error: 'no wallet was chosen' };
+    } catch (error) {
+        return { error: `the SignLens window failed: ${describe(error)}` };
+    } finally {
+        gate.end(tabId, flight);
+    }
+}
+
+/** Answers a page's request that may wait on the user: a connect in watch mode, the wallet to pass requests to, or something to explain and decide on, from the tab `tabId`. */
+export async function answerRequest(message: WaitingMessage, tabId: number): Promise<Reply | ConnectReply | ChooseReply> {
+    if (message.type === 'choose') return chooseWallet(message.payload, tabId);
     if (message.type === 'connect') {
         try {
             return await connectWatch(message.payload, tabId, await settings());

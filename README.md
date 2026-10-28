@@ -184,14 +184,20 @@ settings: one row each, in full, with Remove, and a field that adds only
 a Solana address. While pass-through mode has none, the popup's requests
 ask for one inline; its settings open the setup page again.
 
-In a dapp, connect "SignLens". By default it connects to the first other
-wallet it finds in the page and passes every request on after explaining
-it; the popup's settings pick the wallet from the ones found in the current
-tab, switch to watch-only mode (connect as any address, explain, refuse),
-turn off "Show the explanation and ask first" (in pass-through mode the
-window still opens for what SignLens would refuse), list your own
-addresses, keep an address book, and point the extension at another RPC
-or API (https, or plain http to this machine only). A connect that finds
+In a dapp, connect "SignLens". It connects through your wallet and
+passes every request on to it after explaining it. Until you have chosen
+one, a page with a single wallet gets that one; a page with several asks,
+the first time you connect, which one in a window of its own that lists
+them with their icons, and keeps your choice (a dapp reconnecting as it
+loads asks nothing, and gets the first found). Another SignLens, such as
+a store build beside one built from the sources, is never the wallet
+behind it. The popup's settings change the wallet, from the ones found
+in the current tab, switch to watch-only mode (connect as any address,
+explain, refuse), turn off "Show the explanation and ask first" (in
+pass-through mode the window still opens for what SignLens would
+refuse), list your own addresses, keep an address book, and point the
+extension at another RPC or API (https, or plain http to this machine
+only). A connect that finds
 no wallet to pass to is refused and shown in the popup's requests, with
 the wallets that were there. A dapp has to connect before it can ask for
 anything, and asks one thing at a time: a second request while the first is

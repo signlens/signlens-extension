@@ -14,7 +14,7 @@ declare namespace SignLensPage {
     }
 
     /** What a page may ask the extension, through the content script. */
-    type Request = 'config' | 'connect' | 'explain' | 'message' | 'wallets' | 'connect-failed';
+    type Request = 'config' | 'connect' | 'explain' | 'message' | 'wallets' | 'connect-failed' | 'choose';
 
     /** The window message the wallet offers its port in: the one message of the two scripts the page could see (it does not: content.ts stops it). */
     interface Offer {
