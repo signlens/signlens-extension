@@ -65,6 +65,7 @@ function large(time: number, size: number): HistoryEntry {
                 hints: [],
                 capture: 'AQ==',
                 digest: null,
+                reportedSummary: 'Send 1 SOL',
                 transaction: 'AQ==',
             },
         ],

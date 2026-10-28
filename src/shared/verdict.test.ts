@@ -22,6 +22,7 @@ function explained(verdict: TransactionVerdict): ExplainedRow {
         hints: [],
         capture: '',
         digest: null,
+        reportedSummary: `A ${verdict} transaction`,
         transaction: 'AQ==',
     };
 }

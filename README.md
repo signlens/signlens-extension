@@ -305,14 +305,17 @@ lowers a finding.
 Each request to explain a transaction sends the SignLens API the
 transaction, the addresses its lookup tables load, the outcome of the
 simulation if it ran, your addresses from the settings (in watch-only
-mode the watched one, so the explanation can say "you"), and your
-address book, names and
-addresses, so contacts can be named. When the explanation names accounts
-it would read and account lookup is on, it asks again with those accounts
-as the RPC returned them, up to twice; when it leaves tokens unnamed and
-token lookup is on, it asks again with their symbols. This
-happens when the dapp asks, before the window opens, and also when "Show
-the explanation and ask first" is off.
+mode the watched one, so the explanation can say "you"), and the
+addresses in your address book, so it can tell a contact from an address
+that only looks like one. The names in your address book stay in your
+browser: each goes as a random stand-in, new for each request, which
+says nothing of the name and which the extension replaces with the name
+in what it shows you. When the explanation names accounts it would read
+and account lookup is on, it asks again with those accounts as the RPC
+returned them, up to twice; when it leaves tokens unnamed and token
+lookup is on, it asks again with their symbols. This happens when the
+dapp asks, before the window opens, and also when "Show the explanation
+and ask first" is off.
 
 Every request reaches the API through Cloudflare, which sees your IP
 address, as it does for any site it serves. The API takes the address
@@ -344,8 +347,9 @@ the same for each), the explanation's digest (a hash of the transaction's
 message), the site's host and the extension's version (in Firefox only
 once you allow them: Firefox asks the first time you rate, and
 "Permissions and data" in its add-on manager changes the answer), the
-wallet method it called, and what the window showed you: the verdict, the one-line
-summary, the findings by code and severity, and the program each
+wallet method it called, and what the window showed you: the verdict,
+the one-line summary, with each of your contacts in it as "a contact",
+the findings by code and severity, and the program each
 instruction calls, read from the transaction in the extension. The
 transaction itself, with the addresses its lookup tables loaded, goes only
 if you ticked "Send this transaction to SignLens so it can be looked

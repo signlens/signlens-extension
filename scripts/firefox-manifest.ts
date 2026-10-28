@@ -15,16 +15,16 @@ export interface Manifest {
 
 /**
  * What leaves the device, in Firefox's terms: the transactions, the
- * wallet's addresses and the accounts an explanation names (financial),
- * and the names in the address book (personally identifying), sent to the
- * SignLens API, and the transactions and those accounts' addresses to the
- * RPC, none of it optional to what the add-on does; and the site a rating
- * was given on (browsing activity) and the add-on's version (technical),
- * which a rating carries only once the user allowed them when Firefox
- * asked (src/shared/consent.ts).
+ * wallet's addresses, the address book's and the accounts an explanation
+ * names (financial), sent to the SignLens API, and the transactions and
+ * those accounts' addresses to the RPC, none of it optional to what the
+ * add-on does (the address book's names stay: src/worker/contacts.ts);
+ * and the site a rating was given on (browsing activity) and the add-on's
+ * version (technical), which a rating carries only once the user allowed
+ * them when Firefox asked (src/shared/consent.ts).
  */
 const DATA_COLLECTION = {
-    required: ['financialAndPaymentInfo', 'personallyIdentifyingInfo'],
+    required: ['financialAndPaymentInfo'],
     optional: ['browsingActivity', 'technicalAndInteraction'],
 };
 

@@ -15,6 +15,11 @@
 // `SIGNLENS_RECORD=1` as well, each answer is kept instead
 // (`npm run test:e2e:record`). Feedback is never sent anywhere: it is a
 // write, answered here as the API would. Nothing else touches the network.
+//
+// The stand-ins for contacts' names carry a tag drawn for each request
+// (src/worker/contacts.ts): a call is looked up and kept with
+// `STAND_IN_TAG` in its place, and an answer, recorded or the tests' own,
+// is given back with the request's, as the engine echoes what it is sent.
 
 import { createHash } from 'node:crypto';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
@@ -36,6 +41,11 @@ export interface Fixture {
     /** Its `# account: <address> <owner> <slot> <base64>` lines: accounts as an RPC returned them. */
     accounts: { address: string; owner: string; slot: number; data: string }[];
 }
+
+/** The tag of the stand-ins for contacts' names as recordings and the tests' answers have it, in place of a request's own. */
+export const STAND_IN_TAG = '0000000000000000';
+/** A stand-in for a contact's name, its tag apart. */
+const STAND_IN = /(\[\[contact-\d+-)([0-9a-f]{16})(\]\])/g;
 
 /** An API call and the answer it got, as kept under test/fixtures/api/. */
 interface Recording {
@@ -325,6 +335,14 @@ export async function startTestServer(): Promise<TestServer> {
                 const path = pathname.slice(4);
                 const sent: unknown = body ? JSON.parse(body) : null;
                 api.calls.push({ method: request.method, path, body: sent });
+                const tag = new RegExp(STAND_IN.source).exec(body)?.[2];
+                /** `text` with the stand-ins' tags as recorded. */
+                const untagged = (text: string) => text.replace(STAND_IN, `$1${STAND_IN_TAG}$3`);
+                /** `text` with the recorded tag as the request's, as the engine would have echoed it. */
+                const tagged = (text: string) =>
+                    text.replace(STAND_IN, (whole, head: string, at: string, tail: string) =>
+                        tag && at === STAND_IN_TAG ? `${head}${tag}${tail}` : whole,
+                    );
                 const reply = (status: number, text: string) => {
                     setTimeout(() => {
                         response.writeHead(status, { 'content-type': 'application/json' });
@@ -332,10 +350,11 @@ export async function startTestServer(): Promise<TestServer> {
                     }, api.delay);
                 };
                 const answer = api.answers.length > 1 ? api.answers.shift() : api.answers[0];
-                if (answer) return reply(answer.status, answer.body);
+                if (answer) return reply(answer.status, tagged(answer.body));
                 // Feedback is a write: the tests never send it to an API, live or not.
                 if (method === 'POST' && path === '/v1/feedback') return reply(204, '');
-                const file = recordingOf(method, path, sent);
+                const asKept: unknown = body ? JSON.parse(untagged(body)) : null;
+                const file = recordingOf(method, path, asKept);
                 const name = file.pathname.split('/').pop();
                 if (!LIVE) {
                     if (!existsSync(file)) {
@@ -346,7 +365,7 @@ export async function startTestServer(): Promise<TestServer> {
                         );
                     }
                     const kept = JSON.parse(readFileSync(file, 'utf8')) as Recording;
-                    return reply(kept.response.status, recordedText(kept));
+                    return reply(kept.response.status, tagged(recordedText(kept)));
                 }
                 // Relayed to the real API, body and all, so the tests see what a user sees.
                 let status: number;
@@ -370,22 +389,22 @@ export async function startTestServer(): Promise<TestServer> {
                 // fails its test, as any unrecorded call does.
                 if (status === 429 && kept) {
                     api.limited.push(`${method} ${path} (${name})`);
-                    return reply(kept.response.status, recordedText(kept));
+                    return reply(kept.response.status, tagged(recordedText(kept)));
                 }
                 if (!RECORD) {
                     // Live: the answer held against its recording, so the recordings are known to hold.
-                    const departed = kept ? drift(kept, status, text) : 'nothing recorded';
+                    const departed = kept ? drift(kept, status, untagged(text)) : 'nothing recorded';
                     if (departed) api.drifted.push(`${method} ${path}: ${departed} (${name})`);
                 }
                 // A refusal is not an answer worth keeping.
                 if (RECORD && status !== 429) {
                     let answered: Recording['response'];
                     try {
-                        answered = { status, body: text ? JSON.parse(text) : null };
+                        answered = { status, body: text ? JSON.parse(untagged(text)) : null };
                     } catch {
-                        answered = { status, body: null, text };
+                        answered = { status, body: null, text: untagged(text) };
                     }
-                    const recording: Recording = { request: { method, path, body: sent }, response: answered };
+                    const recording: Recording = { request: { method, path, body: asKept }, response: answered };
                     mkdirSync(RECORDINGS, { recursive: true });
                     writeFileSync(file, `${JSON.stringify(recording, null, 2)}\n`);
                 }

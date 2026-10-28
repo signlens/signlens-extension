@@ -6,7 +6,7 @@
 import assert from 'node:assert/strict';
 import { afterEach, beforeEach, test } from 'node:test';
 import { until } from '../../test/chrome.fake.ts';
-import { explanation, feePayer, fixture, recorded, startTestServer, type TestServer } from '../../test/server.ts';
+import { explanation, feePayer, fixture, recorded, STAND_IN_TAG, startTestServer, type TestServer } from '../../test/server.ts';
 import { MAX_TRANSACTION_BASE64, MAX_TRANSACTIONS } from '../shared/messages.ts';
 import { type Entry, failure, type Row, requestError } from '../shared/model.ts';
 import { DEFAULTS, type Settings } from '../shared/settings.ts';
@@ -17,6 +17,7 @@ const USDC = 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v';
 const SOURCE = 'Ffz5kwUjkUNw7hV4r6iCJnUoXXsAPFHkCMCmKKDypiwg';
 const PUMP_MINT = 'HMYd9tosnUXuNHmq7pXmoePRVBLBBjA3JBfydq6upump';
 const BOB = { name: 'Bob', address: 'DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp' };
+const OTHER_CONTACT = 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v';
 /** Where a request comes from, as the extension states it for every page request. */
 const PAGE = { origin: 'https://dapp.example' };
 
@@ -125,14 +126,22 @@ test('a transaction is explained with its lookup tables, the signer and the cont
         server.calls.map((c) => c.method),
         ['getMultipleAccounts'],
     );
-    assert.deepEqual(server.apiCalls[0]?.body, {
+    const [call] = server.apiCalls;
+    assert.ok(call);
+    const { contacts, ...sent } = call.body as { contacts: { name: string; address: string }[] };
+    assert.deepEqual(sent, {
         transaction: swap.base64,
         own_keys: [payer],
         loaded_writable: swap.writable,
         loaded_readonly: swap.readonly,
-        contacts: [BOB],
         render: true,
     });
+    // The contact's address, its name a stand-in (contacts.ts).
+    assert.deepEqual(
+        contacts.map((contact) => contact.address),
+        [BOB.address],
+    );
+    assert.match(contacts[0]?.name ?? '', /^\[\[contact-1-[0-9a-f]{16}\]\]$/);
     const row = rowOf(entry, 'explained');
     assert.equal(row?.verdict, 'blocked');
     assert.equal(row?.summary, document.summary);
@@ -142,6 +151,47 @@ test('a transaction is explained with its lookup tables, the signer and the cont
     assert.equal(row?.simulation, null);
     assert.match(row?.capture ?? '', /^# Captured by the SignLens extension before signing\.\n# origin: https:\/\/dapp\.example\n/);
     assert.match(row?.capture ?? '', new RegExp(`# signer: ${payer}\n# loaded-writable: ${swap.writable.join(' ')}\n`));
+});
+
+test('no name in the address book leaves the browser: each call of a request has the same stand-ins, and the names are put back in what the window shows', async () => {
+    const drift = fixture('legacy_squads_drift_approve_execute');
+    server.know(drift);
+    const [proposal] = drift.accounts;
+    assert.ok(proposal);
+    // The engine writes a name as it was sent wherever it speaks of the address, as the stub writes this request's stand-in.
+    const bob = `[[contact-1-${STAND_IN_TAG}]]`;
+    const said = {
+        summary: `Send 1 SOL to ${bob} (DV3B…L7Qp)`,
+        findings: [{ severity: 'high', code: 'LOOKALIKE_ADDRESS', message: `The recipient looks like ${bob} (DV3B…L7Qp)`, instruction: 0 }],
+        effects: [
+            {
+                type: 'revoke',
+                value: { subject: { address: BOB.address, label: `${bob}'s USDC account`, label_trust: 'verified', is_self: false } },
+            },
+        ],
+        text: `To: ${bob} (DV3B…L7Qp) (verified)`,
+    };
+    server.answerApi(explanation('warn', { ...said, ...wanting(proposal.address) }), explanation('warn', said));
+    const alice = { name: 'Alice', address: OTHER_CONTACT };
+    const entry = await explainTransactions({ ...PAGE, transactions: [drift.base64] }, config({ lookupAccounts: true }), [BOB, alice], []);
+    assert.equal(server.apiCalls.length, 2);
+    const books = server.apiCalls.map((call) => (call.body as { contacts: { name: string; address: string }[] }).contacts);
+    for (const call of server.apiCalls) assert.ok(!/Bob|Alice/.test(JSON.stringify(call.body)), 'a name went to the API');
+    assert.deepEqual(books[1], books[0]);
+    assert.deepEqual(
+        books[0]?.map((contact) => contact.address),
+        [BOB.address, OTHER_CONTACT],
+    );
+    const row = rowOf(entry, 'explained');
+    assert.equal(row.summary, 'Send 1 SOL to Bob (DV3B…L7Qp)');
+    assert.equal(row.findings[0]?.message, 'The recipient looks like Bob (DV3B…L7Qp)');
+    assert.deepEqual(row.effects[0], {
+        type: 'revoke',
+        value: { subject: { address: BOB.address, label: "Bob's USDC account", label_trust: 'verified', is_self: false } },
+    });
+    assert.equal(row.text, 'To: Bob (DV3B…L7Qp) (verified)');
+    // A rating reports the summary without the name.
+    assert.equal(row.reportedSummary, 'Send 1 SOL to a contact (DV3B…L7Qp)');
 });
 
 test('the simulation goes with the request, as the balance changes of the accounts it may write', async () => {

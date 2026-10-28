@@ -108,7 +108,7 @@ browser APIs and rules. Each module's Node test sits beside it.
 | `src/worker/` | the background service worker |
 | | `background.ts`, `alive.ts`: keeps the wallets each page has and routes the messages; stays up while it holds a request |
 | | `requests.ts`: a page's request answered: explained, shown, decided on, kept |
-| | `explain.ts`, `tables.ts`, `simulation.ts`, `hints.ts`: what a request is explained with: the lookup tables and the simulation over your RPC, names for unlisted tokens, and the API's answer as rows |
+| | `explain.ts`, `tables.ts`, `simulation.ts`, `hints.ts`, `contacts.ts`: what a request is explained with: the lookup tables and the simulation over your RPC, names for unlisted tokens, the address book with stand-ins for its names, and the API's answer as rows, the names put back |
 | | `api.ts`, `explanation.ts`: the API client, and the explanation document as this version reads it, checked field by field or refused with where it fails |
 | | `gate.ts`, `history.ts`: the window and the user's decision; the popup's history and the badge |
 | | `sites.ts`: in watch-only mode, the sites allowed to see the watched address, and the window that asks |

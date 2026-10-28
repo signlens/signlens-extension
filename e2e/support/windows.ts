@@ -22,6 +22,7 @@ export function transferRow(): ExplainedRow {
         effects: document.effects,
         sections: document.sections,
         digest: document.raw?.digest ?? null,
+        reportedSummary: document.summary,
         transaction: transfer.base64,
         tables: null,
         simulation: null,

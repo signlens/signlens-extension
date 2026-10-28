@@ -66,7 +66,7 @@ function seenOf(row: ExplainedRow): Seen {
     }
     return {
         verdict: ENGINE_VERDICT[row.verdict],
-        summary: row.summary,
+        summary: row.reportedSummary,
         findings: row.findings.map((f) => ({ code: f.code, severity: f.severity, instruction: f.instruction })),
         instructions: programs.map((program, index) => ({ program, title: titles.get(index) ?? null })),
     };

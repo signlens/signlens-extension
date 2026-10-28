@@ -9,7 +9,7 @@
       ],
       "contacts": [
         {
-          "name": "Bob",
+          "name": "[[contact-1-0000000000000000]]",
           "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp"
         }
       ],
@@ -44,7 +44,7 @@
             "to": {
               "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp",
               "is_self": false,
-              "label": "Bob",
+              "label": "[[contact-1-0000000000000000]]",
               "label_trust": "verified"
             }
           }
@@ -55,7 +55,7 @@
             "account": {
               "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp",
               "is_self": false,
-              "label": "Bob",
+              "label": "[[contact-1-0000000000000000]]",
               "label_trust": "verified"
             },
             "deposit": {
@@ -180,7 +180,7 @@
                 "value": {
                   "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp",
                   "is_self": false,
-                  "label": "Bob",
+                  "label": "[[contact-1-0000000000000000]]",
                   "label_trust": "verified"
                 }
               }
@@ -263,7 +263,7 @@
                 "value": {
                   "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp",
                   "is_self": false,
-                  "label": "Bob",
+                  "label": "[[contact-1-0000000000000000]]",
                   "label_trust": "verified"
                 }
               }
@@ -507,7 +507,7 @@
         }
       ],
       "summary": "Transfer 0.996423 USDC (verified) from Ffz5…piwg to DV3B…L7Qp",
-      "text": "Transfer 0.996423 USDC (verified) from Ffz5…piwg to DV3B…L7Qp\nWARNING: review the findings before approving\n\nFindings:\n  [HIGH] This signature never expires; anyone holding the signed transaction can submit it at any later time until the nonce is advanced\n  [INFO] The fee is paid by 8Kvy…p1fa, not by you\n\n== Transfer tokens | Token program (verified)\n  Amount: 0.996423 USDC (verified)\n  From: Ffz5kwUjkUNw7hV4r6iCJnUoXXsAPFHkCMCmKKDypiwg\n  To: Bob (DV3B…L7Qp) (verified)\n  Authorized by: 8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa\n  Mint: USDC mint (EPjF…Dt1v) (verified)\n\n== Also [collapsed]\n  Advance durable nonce: Nonce account: AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw\n  Advance durable nonce: Authority: EbsUZEFAU23Z2SgAymFtU2hADLiyNLzaPLKiJfvpKnE7\n  Create token account if missing: Token account: Bob (DV3B…L7Qp) (verified)\n  Create token account if missing: Owner: BNgsxo3eHqQLNTaKy4juhAUJ8DyewcJNEcYdMuSmTT1Z\n  Create token account if missing: Mint: USDC mint (EPjF…Dt1v) (verified)\n  Create token account if missing: Rent paid by: 8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa\n  Create token account if missing: Token program: Token program (Toke…Q5DA) (verified)\n  Compute unit limit: 20728\n  Compute unit price: 107000 micro-lamports per unit\n\n== Signers\n  Fee payer: 8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa\n  Signer: EbsUZEFAU23Z2SgAymFtU2hADLiyNLzaPLKiJfvpKnE7\n\n== Fee\n  Total: 0.000012218 SOL\n  Base: 0.00001 SOL\n  Priority: 0.000002218 SOL\n  Priority basis: 107000 micro-lamports per unit × 20728 units requested\n  Rent deposits: up to 0.00148844 SOL if the accounts it creates only when missing do not exist yet; returned when the accounts are closed\n\n== Validity\n  Expires: never, until the nonce account is advanced\n  Nonce account: AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw\n\nEffects:\n  - transfer 0.996423 USDC (verified) from Ffz5kwUjkUNw7hV4r6iCJnUoXXsAPFHkCMCmKKDypiwg to Bob (DV3B…L7Qp) (verified)\n  - create Bob (DV3B…L7Qp) (verified) owned by Token program (Toke…Q5DA) (verified), depositing 0.00148844 SOL unless it already exists\n  - 8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa pays a fee of 0.000012218 SOL\n  - valid FOREVER until nonce account AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw is advanced (durable nonce)\n\nRaw: solana legacy (511 bytes)\n  digest: 05d51e61e33bad79d124089e71be7988c37cccf1f9268ee6e338e439f5ec582f\n",
+      "text": "Transfer 0.996423 USDC (verified) from Ffz5…piwg to DV3B…L7Qp\nWARNING: review the findings before approving\n\nFindings:\n  [HIGH] This signature never expires; anyone holding the signed transaction can submit it at any later time until the nonce is advanced\n  [INFO] The fee is paid by 8Kvy…p1fa, not by you\n\n== Transfer tokens | Token program (verified)\n  Amount: 0.996423 USDC (verified)\n  From: Ffz5kwUjkUNw7hV4r6iCJnUoXXsAPFHkCMCmKKDypiwg\n  To: [[contact-1-0000000000000000]] (DV3B…L7Qp) (verified)\n  Authorized by: 8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa\n  Mint: USDC mint (EPjF…Dt1v) (verified)\n\n== Also [collapsed]\n  Advance durable nonce: Nonce account: AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw\n  Advance durable nonce: Authority: EbsUZEFAU23Z2SgAymFtU2hADLiyNLzaPLKiJfvpKnE7\n  Create token account if missing: Token account: [[contact-1-0000000000000000]] (DV3B…L7Qp) (verified)\n  Create token account if missing: Owner: BNgsxo3eHqQLNTaKy4juhAUJ8DyewcJNEcYdMuSmTT1Z\n  Create token account if missing: Mint: USDC mint (EPjF…Dt1v) (verified)\n  Create token account if missing: Rent paid by: 8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa\n  Create token account if missing: Token program: Token program (Toke…Q5DA) (verified)\n  Compute unit limit: 20728\n  Compute unit price: 107000 micro-lamports per unit\n\n== Signers\n  Fee payer: 8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa\n  Signer: EbsUZEFAU23Z2SgAymFtU2hADLiyNLzaPLKiJfvpKnE7\n\n== Fee\n  Total: 0.000012218 SOL\n  Base: 0.00001 SOL\n  Priority: 0.000002218 SOL\n  Priority basis: 107000 micro-lamports per unit × 20728 units requested\n  Rent deposits: up to 0.00148844 SOL if the accounts it creates only when missing do not exist yet; returned when the accounts are closed\n\n== Validity\n  Expires: never, until the nonce account is advanced\n  Nonce account: AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw\n\nEffects:\n  - transfer 0.996423 USDC (verified) from Ffz5kwUjkUNw7hV4r6iCJnUoXXsAPFHkCMCmKKDypiwg to [[contact-1-0000000000000000]] (DV3B…L7Qp) (verified)\n  - create [[contact-1-0000000000000000]] (DV3B…L7Qp) (verified) owned by Token program (Toke…Q5DA) (verified), depositing 0.00148844 SOL unless it already exists\n  - 8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa pays a fee of 0.000012218 SOL\n  - valid FOREVER until nonce account AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw is advanced (durable nonce)\n\nRaw: solana legacy (511 bytes)\n  digest: 05d51e61e33bad79d124089e71be7988c37cccf1f9268ee6e338e439f5ec582f\n",
       "verdict": "warn"
     }
   }
