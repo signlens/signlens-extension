@@ -176,11 +176,23 @@ test('a transaction SignLens could not explain says that nothing is known of it,
     );
     const row = gate.locator('#rows .explanation');
     await expect(row.locator('p, pre')).toHaveText([
-        'SignLens could not explain this transaction: nothing is known of what it does. To try again, Reject and ask the site again.',
+        'SignLens could not explain this transaction: nothing is known of what it does.',
         'the SignLens API answered HTTP 503 with something that is not an explanation',
         'Chain: the page says solana:devnet; read and simulated on the RPC in the settings all the same',
         'Lookup tables: 1 loaded (2 accounts)',
     ]);
+    // The window asks again itself, rather than send the user back to the site; only the first failure holds the button.
+    await expect(row.getByRole('button', { name: 'Try again' })).toBeVisible();
+    const several = await windowFor(context, worker, request({ rows: [failed, failed] }));
+    await expect(several.getByRole('button', { name: 'Try again' })).toHaveCount(1);
+    // A request that was refused as a whole, as too long a list, say, would be refused again: no button.
+    const whole = await windowFor(
+        context,
+        worker,
+        request({ rows: [{ kind: 'failed', scope: 'request', error: '33 transactions in one request; SignLens explains at most 32' }] }),
+    );
+    await expect(whole.locator('#rows pre')).toHaveText('33 transactions in one request; SignLens explains at most 32');
+    await expect(whole.getByRole('button', { name: 'Try again' })).toHaveCount(0);
     const save = row.getByRole('link', { name: 'Save the transaction' });
     await expect(save).toHaveAttribute('download', /^20261019T120000-jup\.ag\.b64$/);
     await expect(save).toHaveAttribute('href', `data:text/plain;charset=utf-8,${encodeURIComponent(failed.capture)}`);

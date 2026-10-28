@@ -6,6 +6,17 @@ uses [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Added
+
+- **Try again.** When SignLens could not explain a transaction (the API
+  away, busy or past its limit), the window offers "Try again": SignLens
+  asks once more while the request waits, with the settings as they are
+  then, and the same window shows what comes back, the decision still
+  yours.
+  Before, the only way was to reject and ask the site again. A request
+  refused as a whole, as too many transactions, say, offers no button,
+  since it would be refused again.
+
 ### Changed
 
 - **"Continue anyway" asks again.** On a request SignLens would

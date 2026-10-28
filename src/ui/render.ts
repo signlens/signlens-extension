@@ -454,6 +454,12 @@ interface RenderOptions {
     site?: string;
     /** Which of several transactions of a request this is, from 1: its save link and file are numbered by it. */
     part?: number;
+    /**
+     * In the window, which explains a request again itself: a transaction
+     * SignLens could not explain says so without sending the user back to
+     * the site, and holds this, its "Try again", when it is one.
+     */
+    again?: HTMLElement | true;
 }
 
 /**
@@ -469,15 +475,15 @@ export function renderRow(row: Row, options: RenderOptions = {}): HTMLDivElement
     switch (row.kind) {
         case 'failed':
             if (row.scope === 'transaction') {
+                const how = options.again ? '' : ' To try again, Reject and ask the site again.';
                 body.append(
-                    element(
-                        'p',
-                        'not-checked',
-                        'SignLens could not explain this transaction: nothing is known of what it does. To try again, Reject and ask the site again.',
-                    ),
+                    element('p', 'not-checked', `SignLens could not explain this transaction: nothing is known of what it does.${how}`),
                 );
             }
-            body.append(element('pre', '', row.error), ...readNotes(row));
+            // What went wrong, then what can be done about it.
+            body.append(element('pre', '', row.error));
+            if (row.scope === 'transaction' && options.again instanceof HTMLElement) body.append(options.again);
+            body.append(...readNotes(row));
             if (row.capture) body.append(saveLink(row.capture, options));
             return body;
         case 'message':

@@ -87,6 +87,33 @@ test('what SignLens would refuse waits for the user, the window off or not; thei
     assert.equal(fake.badge, '?');
 });
 
+test(
+    '"Try again" explains a waiting request anew, with the settings as they are now, in the same window; the user decides on that',
+    BOUNDED,
+    async () => {
+        // An API that is not there; the user points the settings at one that is, and tries again.
+        await configure({ askFirst: true, apiUrl: 'http://127.0.0.1:1' });
+        const asking = sign();
+        const id = await windowId();
+        const shown = () => (fake.session[pendingKey('confirm.html', id)] as HistoryEntry | undefined)?.rows[0]?.kind;
+        assert.equal(shown(), 'failed');
+        await chrome.storage.local.set({ apiUrl: server.api });
+        server.answerApi(explanation('ok'));
+        assert.equal(await gate.retry(id), true);
+        assert.equal(shown(), 'explained');
+        assert.equal(fake.opened, 1);
+        // The badge keeps the worst the popup has not shown: opening the popup lowers it, not a better second try.
+        assert.equal(fake.badge, '?');
+        gate.decide(id, 'continue');
+        assert.deepEqual(await asking, { decision: 'continue' });
+        assert.equal(history()[0]?.rows[0]?.kind, 'explained');
+        // Decided, it is explained no more.
+        const calls = server.apiCalls.length;
+        assert.equal(await gate.retry(id), false);
+        assert.equal(server.apiCalls.length, calls);
+    },
+);
+
 test('a request that cannot be explained at all says why once, and the user decides', BOUNDED, async () => {
     await configure({ askFirst: true });
     const asking = answerRequest({ type: 'explain', payload: { origin: 'https://dapp.example', transactions: 'not a list' } }, tab);

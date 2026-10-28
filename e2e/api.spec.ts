@@ -7,6 +7,31 @@ import { clickToClose, expect, liveGate, test } from './support/extension.ts';
 
 const WALLET = 'SignLens';
 
+test('"Try again" asks the API again while the request waits, and the same window shows the answer', async ({
+    configure,
+    context,
+    dapp,
+    server,
+}) => {
+    const transfer = fixture('legacy_durable_nonce_token_transfer');
+    await configure({ lookupTokens: false, simulate: false, mode: 'passthrough', upstream: 'Fake Wallet' });
+    server.refuseApi(500);
+    const signing = dapp.evaluate(({ wallet, base64 }: { wallet: string; base64: string }) => window.sign(wallet, base64), {
+        wallet: WALLET,
+        base64: transfer.base64,
+    });
+    const gate = await liveGate(context);
+    await expect(gate.locator('#band')).toHaveClass(/error/);
+    server.answerApi(explanation('ok'));
+    await gate.getByRole('button', { name: 'Try again' }).click();
+    await expect(gate.locator('#band')).toHaveClass(/ok/);
+    await expect(gate.getByRole('button', { name: 'Try again' })).toHaveCount(0);
+    // The request waited all along: the user decides on what the window shows now.
+    await expect(gate.getByRole('button', { name: 'Reject' })).toBeFocused();
+    await clickToClose(gate.getByRole('button', { name: 'Continue to Fake Wallet' }));
+    expect((await signing).signed).toBe(1);
+});
+
 test('an API that refuses leaves the request unexplained, with a verdict that cannot pass', async ({
     configure,
     context,

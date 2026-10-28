@@ -105,7 +105,7 @@ export async function explainTransactions(
             results.push({
                 kind: 'failed',
                 scope: 'transaction',
-                error: `not explained: the SignLens API took no more explanations for now, from transaction ${limitedAt} of ${transactions.length} on; ask the site again in a minute`,
+                error: `not explained: the SignLens API took no more explanations for now, from transaction ${limitedAt} of ${transactions.length} on; try again in a minute`,
                 capture: captureOf(transaction, meta),
             });
             continue;

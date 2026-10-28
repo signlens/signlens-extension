@@ -50,6 +50,8 @@ const inFlight = new Map<number, InFlight>();
 const stops = new WeakMap<InFlight, AbortController>();
 /** Decisions awaited, by the id the window knows its request by. */
 const decisions = new Map<string, (outcome: Outcome) => void>();
+/** What "Try again" does for a request waiting in its window, by id; out of the map while it runs, so one runs at a time. */
+const retries = new Map<string, () => Promise<boolean>>();
 let nextRequest = 0;
 
 /**
@@ -108,9 +110,26 @@ export function decide(id: string, decision: Decision): boolean {
     return waiting !== undefined;
 }
 
-/** Shows `entry` in the explanation's window: see `ask`. */
-export function askUser(entry: HistoryEntry, flight: InFlight): Promise<Outcome> {
-    return ask('confirm.html', entry, flight);
+/**
+ * "Try again" in the window of request `id`: what it shows is explained
+ * anew and put in its place, the request waiting all the while. Whether it
+ * was: not for a request no longer waiting, or one already being explained
+ * again.
+ */
+export async function retry(id: string): Promise<boolean> {
+    const run = retries.get(id);
+    if (!run) return false;
+    retries.delete(id);
+    try {
+        return await run();
+    } finally {
+        if (decisions.has(id)) retries.set(id, run);
+    }
+}
+
+/** Shows `entry` in the explanation's window, which `again` explains anew on "Try again": see `ask`. */
+export function askUser(entry: HistoryEntry, flight: InFlight, again?: () => Promise<HistoryEntry>): Promise<Outcome> {
+    return ask('confirm.html', entry, flight, again);
 }
 
 /**
@@ -119,8 +138,15 @@ export function askUser(entry: HistoryEntry, flight: InFlight): Promise<Outcome>
  * when the user rejects or closes the window. Otherwise it is a refusal,
  * with why: the page's tab closed, the page stopped waiting, the window
  * could not open. A request whose page is already gone gets no window.
+ * `again`, if given, is what the window shows made anew, for "Try again"
+ * (`retry`); what it makes is shown only while the request still waits.
  */
-export async function ask<P extends keyof Pending>(page: P, pending: Pending[P], flight: InFlight): Promise<Outcome> {
+export async function ask<P extends keyof Pending>(
+    page: P,
+    pending: Pending[P],
+    flight: InFlight,
+    again?: () => Promise<Pending[P]>,
+): Promise<Outcome> {
     if (flight.abandoned) return GONE;
     const left = flight.deadline - Date.now();
     if (left <= 0) return { decision: 'reject', refused: 'the page stopped waiting' };
@@ -131,9 +157,18 @@ export async function ask<P extends keyof Pending>(page: P, pending: Pending[P],
         decisions.set(id, resolve);
         flight.decide = resolve;
     });
+    if (again) {
+        retries.set(id, async () => {
+            const next = await again();
+            if (!decisions.has(id)) return false;
+            await putPending(page, id, next);
+            return true;
+        });
+    }
     // The page may have gone while the request was stored, before it could be told.
     if (flight.abandoned) {
         decisions.delete(id);
+        retries.delete(id);
         await dropPending(page, id);
         return GONE;
     }
@@ -151,6 +186,7 @@ export async function ask<P extends keyof Pending>(page: P, pending: Pending[P],
     } catch (error) {
         clearTimeout(timer);
         decisions.delete(id);
+        retries.delete(id);
         await dropPending(page, id);
         return { decision: 'reject', refused: `the SignLens window could not open: ${describe(error)}` };
     }
@@ -162,6 +198,7 @@ export async function ask<P extends keyof Pending>(page: P, pending: Pending[P],
     chrome.windows.onRemoved.removeListener(closed);
     clearTimeout(timer);
     decisions.delete(id);
+    retries.delete(id);
     await dropPending(page, id);
     // The window may have closed itself already, or been closed by the user.
     if (windowId !== undefined) chrome.windows.remove(windowId).catch(() => {});

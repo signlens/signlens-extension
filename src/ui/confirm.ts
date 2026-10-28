@@ -14,7 +14,7 @@ import { type Rating, SEVERITIES, type Seen } from '../shared/types.ts';
 import { rowVerdictWord, summaryOf, worstVerdict } from '../shared/verdict.ts';
 import { byId } from './dom.ts';
 import { element, originNode, renderRow } from './render.ts';
-import { goneAtOpen, requestId, sendDecision } from './windows.ts';
+import { goneAtOpen, noLongerPending, requestId, sendDecision } from './windows.ts';
 
 /** Remembers whether the reader keeps the instructions open, for the next window and the popup. */
 function onShowInstructions(shown: boolean): void {
@@ -196,6 +196,42 @@ function question(proceed: HTMLButtonElement, why: string): () => void {
 }
 
 /**
+ * "Try again", for a request with a transaction SignLens could not
+ * explain: the worker explains it anew while it waits, with the settings
+ * as they are now, and the window shows what that made, the decision still
+ * to take. Pressed again while it works, it does nothing; a request no
+ * longer waiting says so instead.
+ */
+function tryAgain(proceed: HTMLButtonElement, reject: HTMLButtonElement): HTMLElement {
+    const holder = element('div', 'again');
+    const button = element('button', 'primary', 'Try again');
+    button.type = 'button';
+    const status = element('span', 'note');
+    status.setAttribute('role', 'status');
+    holder.append(button, ' ', status);
+    button.addEventListener('click', () => {
+        if (button.getAttribute('aria-disabled') === 'true') return;
+        button.setAttribute('aria-disabled', 'true');
+        status.textContent = 'Asking again, with the settings as they are now…';
+        send({ type: 'retry', id: requestId })
+            .catch(() => false)
+            .then((again) => {
+                // What the worker made is in the request's place: shown as the window opened on it.
+                if (again) window.location.reload();
+                else {
+                    status.textContent = '';
+                    noLongerPending(
+                        'This request is no longer pending, so it was not explained again. Ask the site again if you still mean to sign.',
+                        proceed,
+                        reject,
+                    );
+                }
+            });
+    });
+    return holder;
+}
+
+/**
  * Escape rejects, as closing the window does, unless it has something
  * nearer to close: an open help term, toggle or run of bytes the focus is
  * on closes, and a box being typed in keeps the request, so a key pressed
@@ -253,6 +289,9 @@ async function start(): Promise<void> {
     const summary = lead ? summaryOf(lead) : '';
     byId('band-summary').textContent = many ? `${summary} (transaction ${at + 1} of ${list.length}; each is below)` : summary;
 
+    // What the API or the RPC could not explain may be explained on a second try; a request refused as a whole would be refused again.
+    const firstFailed = list.findIndex((row) => row.kind === 'failed' && row.scope === 'transaction');
+    const again = firstFailed >= 0 ? tryAgain(proceed, reject) : null;
     const container = byId('rows', HTMLOListElement);
     // One transaction's summary is the band's; of several, each has its own, under its heading.
     container.classList.toggle('single', !many);
@@ -276,6 +315,7 @@ async function start(): Promise<void> {
                 capturedAt: entry.time,
                 site: withoutScheme(entry.origin),
                 ...(many ? { part: i + 1 } : {}),
+                ...(again ? { again: i === firstFailed ? again : (true as const) } : {}),
             }),
         );
         container.append(item);
