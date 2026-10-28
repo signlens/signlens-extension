@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Set up SignLens</title>
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body class="welcome">
+        <header>
+            <h1><img src="icons/icon-128.png" width="40" height="40" alt="" /> Set up SignLens <span>beta</span></h1>
+            <p id="intro">
+                SignLens shows what a Solana transaction does before your wallet asks you to sign it. It holds no keys: your wallet
+                still signs, and asks you as it always has.
+            </p>
+        </header>
+
+        <main>
+            <section id="access" aria-labelledby="access-title" hidden>
+                <h2 id="access-title">First, let SignLens reach the API and your RPC</h2>
+                <p>This browser has not let SignLens reach them yet, and without them nothing can be explained.</p>
+                <button id="allow" type="button" class="primary">Allow https access</button>
+            </section>
+
+            <section aria-labelledby="addresses-title">
+                <h2 id="addresses-title">1. Your wallet addresses</h2>
+                <p>
+                    SignLens calls only these addresses “you” in its explanations, so a site cannot pass off its own address as
+                    yours. Copy them from your wallet (Phantom, Solflare, Backpack, …).
+                </p>
+                <div id="my-addresses"></div>
+                <p id="myAddresses-note" class="note">
+                    An address you leave out is asked about the first time a site signs with it. You can change them any time in
+                    SignLens's settings.
+                </p>
+            </section>
+
+            <section aria-labelledby="use-title">
+                <h2 id="use-title">2. Use it in a dapp</h2>
+                <ol id="steps">
+                    <li>
+                        In the dapp's list of wallets, choose <strong>SignLens</strong> rather than your wallet. SignLens connects
+                        through your wallet, which asks you as usual.
+                    </li>
+                    <li>Each request then opens SignLens's window first. Read what the transaction does, then continue to your wallet, or reject.</li>
+                </ol>
+                <p class="note">
+                    Dapps reconnect the wallet you used last. Where one connects your wallet directly, SignLens is skipped: disconnect it
+                    there, and choose SignLens.
+                </p>
+                <p class="note">
+                    Using more than one wallet? Choose which one SignLens passes requests to in its popup while you are on a dapp: it
+                    lists the wallets it finds there.
+                </p>
+            </section>
+
+            <section aria-labelledby="pin-title">
+                <h2 id="pin-title">3. Pin SignLens to the toolbar</h2>
+                <p id="pin-status" role="status"></p>
+            </section>
+
+            <section aria-labelledby="privacy-title">
+                <h2 id="privacy-title">What leaves your browser</h2>
+                <p>
+                    In this beta, each transaction you are asked to sign is sent to SignLens's API to be explained, with your addresses
+                    and your address book, so the explanation can say “you” and name your contacts. The server keeps verdicts and
+                    finding codes, not the transaction, unless you choose to send it with a rating. Lookup tables, accounts and a
+                    simulation are read from the RPC in the settings.
+                </p>
+            </section>
+        </main>
+
+        <footer>
+            <p class="note">All of this, and more, is in the settings in SignLens's popup.</p>
+            <button id="done" type="button" class="primary">Done</button>
+        </footer>
+
+        <script type="module" src="ui/welcome.js"></script>
+    </body>
+</html>

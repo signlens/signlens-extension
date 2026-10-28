@@ -132,6 +132,15 @@ export function addAddresses(more: string[]): Promise<void> {
     });
 }
 
+/** Takes `address` out of your addresses in the settings, in turn with any other write that reads first; the other lines stay as they are. */
+export function removeAddress(address: string): Promise<void> {
+    return inTurn(async () => {
+        const { myAddresses = '' } = await local.get('myAddresses');
+        const kept = myAddresses.split('\n').filter((line) => line.trim() !== address);
+        if (kept.length < myAddresses.split('\n').length) await local.set({ myAddresses: kept.join('\n') });
+    });
+}
+
 /**
  * The settings the wallet in the page needs, as the worker answers a
  * `config` message. Never the watched address: every page asks for this,

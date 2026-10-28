@@ -13,6 +13,10 @@
                 This browser has not let the extension reach the API, the RPC and the token list yet.
                 <button id="allow" type="button" class="small">Allow https access</button>
             </p>
+            <div id="setup" hidden>
+                <p id="setup-ask">Add the address your wallet shows, so SignLens need not ask which is yours.</p>
+                <div id="setup-add"></div>
+            </div>
         </header>
 
         <main>
@@ -55,9 +59,8 @@
                     </div>
 
                     <div id="my-addresses-field" class="field">
-                        <label for="myAddresses">Your addresses, one per line</label>
-                        <textarea id="myAddresses" name="myAddresses" aria-describedby="myAddresses-hint myAddresses-note" rows="2" spellcheck="false" placeholder="7s3s…"></textarea>
-                        <small id="myAddresses-hint"></small>
+                        <p class="field-title">Your addresses</p>
+                        <div id="my-addresses"></div>
                         <small id="myAddresses-note" class="note">The only addresses SignLens calls “you”. When a site names another as yours, SignLens asks before explaining anything, or, with “Show the explanation and ask first” off, refuses it; copy them from your wallet.</small>
                     </div>
 
@@ -120,6 +123,7 @@
                         <small id="tokenApiUrl-note" class="note">The mints of unlisted tokens are sent to the RPC and to this list.</small>
                     </div>
                 </form>
+                <p class="setup-again"><button id="setup-again" type="button" class="small">Open the setup page</button></p>
             </section>
         </main>
 

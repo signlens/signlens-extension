@@ -2,6 +2,8 @@
 
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
+import { installFakeChrome } from '../../test/chrome.fake.ts';
+import { base58Encode } from './base58.ts';
 import { endpointProblem } from './endpoint.ts';
 import {
     addressBytes,
@@ -12,6 +14,7 @@ import {
     ownKeysFor,
     pageConfig,
     parseContacts,
+    removeAddress,
     watched,
 } from './settings.ts';
 
@@ -44,6 +47,17 @@ test('a request carries your addresses, eight at most, those the page names firs
     assert.equal(sent.length, MAX_OWN_KEYS);
     assert.deepEqual(sent.slice(0, 2), ['mine9', 'mine0']);
     assert.ok(!sent.includes('theirs'));
+});
+
+test('an address taken out of yours goes alone: the others stay, in their order', async () => {
+    installFakeChrome();
+    const key = (i: number) => base58Encode(new Uint8Array(32).fill(i));
+    const [a, b, c] = [key(1), key(2), key(3)];
+    await chrome.storage.local.set({ myAddresses: `${a}\n${b}\n${c}` });
+    await removeAddress(b);
+    assert.deepEqual(await chrome.storage.local.get('myAddresses'), { myAddresses: `${a}\n${c}` });
+    await removeAddress(b);
+    assert.deepEqual(await chrome.storage.local.get('myAddresses'), { myAddresses: `${a}\n${c}` });
 });
 
 test('every page gets the mode and the wallet to pass to, and never the watched address', () => {

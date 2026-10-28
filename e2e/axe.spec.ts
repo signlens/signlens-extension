@@ -61,6 +61,16 @@ test('the popup, its requests and its settings', async ({ popup, worker }) => {
     await popup.getByRole('tab', { name: 'Settings' }).click();
     await expect(popup.locator('#apiUrl-hint')).toHaveText(/^Not used/);
     expect(await violations(popup)).toEqual([]);
+    // Pass-through: your addresses listed in the settings; with none, the requests ask for one.
+    await worker.evaluate((address) => chrome.storage.local.set({ mode: 'passthrough', myAddresses: address }), WATCHED);
+    await popup.reload();
+    await popup.getByRole('tab', { name: 'Settings' }).click();
+    await expect(popup.getByRole('list', { name: 'Your addresses' }).getByRole('listitem')).toHaveCount(1);
+    expect(await violations(popup)).toEqual([]);
+    await worker.evaluate(() => chrome.storage.local.set({ myAddresses: '' }));
+    await popup.getByRole('tab', { name: 'Requests' }).click();
+    await expect(popup.locator('#setup')).toBeVisible();
+    expect(await violations(popup)).toEqual([]);
 });
 
 test('the window, with what a reader opens in it', async ({ context, worker }) => {
@@ -80,6 +90,20 @@ test('the window for several transactions, and for a request gone', async ({ con
     expect(await violations(several)).toEqual([]);
     const stale = await windowFor(context, worker, null);
     expect(await violations(stale)).toEqual([]);
+});
+
+test('the setup page', async ({ context, extensionId }) => {
+    const setup = await context.newPage();
+    await setup.goto(`chrome-extension://${extensionId}/welcome.html`);
+    await expect(setup.locator('#my-addresses')).toHaveAttribute('data-ready', 'true');
+    // A row to remove, and a refusal said.
+    const add = setup.getByRole('textbox', { name: 'Add an address' });
+    await add.fill('EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v');
+    await add.press('Enter');
+    await add.fill('nope');
+    await add.press('Enter');
+    await expect(setup.locator('#my-addresses .yours-status')).toHaveText('Not a Solana address: nope.');
+    expect(await violations(setup)).toEqual([]);
 });
 
 test('the consent window and the address window', async ({ context, worker }) => {
