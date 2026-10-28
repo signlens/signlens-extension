@@ -134,25 +134,35 @@ async function answer(type: 'explain' | 'message', payload: ExplainPayload & Mes
         if ('reply' in who) return who.reply;
         ownKeys = who.ownKeys;
     }
-    let result: Entry;
-    try {
-        result =
-            type === 'message'
+    const explain = async (using: Settings): Promise<Entry> => {
+        try {
+            return type === 'message'
                 ? showMessage(payload)
-                : await explainTransactions(payload, config, parseContacts(config.contacts).contacts, ownKeys, flight.signal);
-    } catch (error) {
-        result = failure(describe(error));
-    }
+                : await explainTransactions(payload, using, parseContacts(using.contacts).contacts, ownKeys, flight.signal);
+        } catch (error) {
+            return failure(describe(error));
+        }
+    };
+    let result = await explain(config);
     // A request its page withdrew before anything was shown is not worth keeping or flagging; no one is left to answer.
     if (gate.withdrawn(flight)) return { ...gate.GONE };
     const worst = worstVerdict(result.rows);
     await showBadge(worst).catch(logged('show the badge'));
-    const entry: HistoryEntry = { ...about(payload, config), rows: result.rows };
+    let entry: HistoryEntry = { ...about(payload, config), rows: result.rows };
+    // "Try again" in the window: explained anew with the settings as they
+    // are now (an RPC changed since, say), for the same "you"; where it goes
+    // and how it is decided on stay as they were when it arrived.
+    const again = async (): Promise<HistoryEntry> => {
+        result = await explain(await settings().catch(() => config));
+        await showBadge(worstVerdict(result.rows)).catch(logged('show the badge'));
+        entry = { ...entry, rows: result.rows };
+        return entry;
+    };
     const asked = gate.mustAsk(config.askFirst, config.mode, worst);
     let outcome: Outcome = { decision: config.mode === 'passthrough' ? 'continue' : 'reject' };
     if (asked) {
         try {
-            outcome = await gate.askUser(entry, flight);
+            outcome = await gate.askUser(entry, flight, again);
         } catch (error) {
             outcome = { decision: 'reject', refused: `the SignLens window failed: ${describe(error)}` };
         }

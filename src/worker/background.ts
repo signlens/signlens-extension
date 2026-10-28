@@ -146,6 +146,7 @@ const ANSWERS: { [T in Answered]: Answer<T> } = {
     },
     // Whether the request was still waiting, so the window can say so rather than close on a Continue that went nowhere.
     decision: { reply: ({ id, decision }) => gate.decide(id, decision), failed: () => false },
+    retry: { reply: ({ id }) => gate.retry(id), failed: () => false },
     revoke: {
         reply: async ({ origin, address }) => {
             await revoke(origin, address);

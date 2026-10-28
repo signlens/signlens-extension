@@ -393,6 +393,19 @@ small.note {
     color: var(--muted);
 }
 
+/* "Try again", under the line that says a transaction could not be explained, and what it is doing beside it. */
+.again {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    margin: 0 0 10px;
+}
+
+.again .note {
+    color: var(--muted);
+}
+
 /* The settings the browser would not keep, said once at the top. Empty, it takes no room, but stays in the page, so what it says is announced. */
 .save-status {
     margin: 0 0 8px;

@@ -14,7 +14,7 @@ const WINDOW = { id: SELF.id, url: 'chrome-extension://abcdefghijklmnop/confirm.
 test('a page may ask, and nothing else, whatever the worker takes', () => {
     const asks = ['config', 'connect', 'explain', 'message', 'wallets', 'connect-failed'];
     for (const type of MESSAGE_TYPES) assert.equal(accepts(type, PAGE, SELF), asks.includes(type), type);
-    assert.ok(MESSAGE_TYPES.includes('decision') && MESSAGE_TYPES.includes('revoke'));
+    assert.ok(MESSAGE_TYPES.includes('decision') && MESSAGE_TYPES.includes('revoke') && MESSAGE_TYPES.includes('retry'));
 });
 
 test("the extension's own pages may send anything the worker takes", () => {
@@ -33,7 +33,17 @@ test('another extension, or a page that only looks like ours, is a page or nothi
 test('a message is read into one the worker knows, or none: a page payload with the origin as text, a decision either way', () => {
     // A type the worker does not know is no message, however close: a ping is the popup asking a tab's content script, never the worker.
     const types = ['unknown', 'Explain', '', 'ping', 7, {}, 'toString', '__proto__'].map((type) => ({ type }));
-    for (const odd of [null, 'explain', 7, [], {}, ...types, { type: 'decision' }, { type: 'decision', id: '' }]) {
+    for (const odd of [
+        null,
+        'explain',
+        7,
+        [],
+        {},
+        ...types,
+        { type: 'decision' },
+        { type: 'decision', id: '' },
+        { type: 'retry', id: 7 },
+    ]) {
         assert.equal(readMessage(odd), null, JSON.stringify(odd));
     }
     assert.deepEqual(readMessage({ type: 'status', payload: 'ignored' }), { type: 'status' });
@@ -53,6 +63,7 @@ test('a message is read into one the worker knows, or none: a page payload with 
         id: '1-1',
         decision: 'reject',
     });
+    assert.deepEqual(readMessage({ type: 'retry', id: '1-1', decision: 'continue' }), { type: 'retry', id: '1-1' });
     assert.deepEqual(readMessage({ type: 'wallet-list', tabId: '3' }), { type: 'wallet-list', tabId: null });
     assert.deepEqual(readMessage({ type: 'wallet-list', tabId: 3 }), { type: 'wallet-list', tabId: 3 });
 });
