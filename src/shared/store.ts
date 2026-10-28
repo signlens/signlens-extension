@@ -10,7 +10,7 @@
 // endpoint, an address) is checked again where it is used.
 
 import type { WalletList } from './messages.ts';
-import type { AddressRequest, Approval, ConnectRequest, HistoryEntry, VerdictWord } from './model.ts';
+import type { AddressRequest, Approval, ConnectRequest, HistoryEntry, VerdictWord, WalletRequest } from './model.ts';
 import type { Settings } from './settings.ts';
 
 /** What local storage holds, by key: the settings (settings.ts), the sites allowed to see the watched address (sites.ts), and whether Firefox asked if ratings may carry the site and the version (consent.ts). */
@@ -24,6 +24,7 @@ export interface Pending {
     'confirm.html': HistoryEntry;
     'connect.html': ConnectRequest;
     'address.html': AddressRequest;
+    'wallet.html': WalletRequest;
 }
 
 /** What session storage holds, by key. */

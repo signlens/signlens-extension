@@ -64,10 +64,13 @@ export interface ConnectPayload extends FromPage {
 /** What a connect in watch mode gets: the watched address once the user allowed the site, or a refusal. */
 export type ConnectReply = { approved: true; address: string; publicKey: number[] } | { approved: false; error?: string };
 
-/** The wallets a page has, or the connect that found none to pass to. */
+/** The wallets a page has, or the connect that found none to pass to, or, with several and none chosen, the ones to choose from. */
 export interface WalletsPayload extends FromPage {
     wallets?: unknown;
 }
+
+/** Which wallet SignLens passes requests to, as the user chose it in the wallet window, or why none was. */
+export type ChooseReply = { wallet: string } | { error: string };
 
 /** The wallets a page announced, as the popup asks for them. */
 export interface WalletList {
@@ -113,11 +116,12 @@ const PAGE: Readonly<Record<SignLensPage.Request, true>> = {
     message: true,
     wallets: true,
     'connect-failed': true,
+    choose: true,
 };
 export const PAGE_REQUESTS = Object.keys(PAGE) as readonly SignLensPage.Request[];
 
 /** The page's requests that may wait on the user, each over a port of its own named `REQUEST_PORT` (content.ts). */
-export const WAITING_REQUESTS: readonly SignLensPage.Request[] = ['connect', 'explain', 'message'];
+export const WAITING_REQUESTS: readonly SignLensPage.Request[] = ['connect', 'explain', 'message', 'choose'];
 export const REQUEST_PORT = 'request';
 
 /** What each page request carries, by its type: a request a page may make with no payload here does not compile. */
@@ -127,6 +131,7 @@ export interface PagePayloads extends Record<Exclude<SignLensPage.Request, 'conf
     message: MessagePayload;
     wallets: WalletsPayload;
     'connect-failed': WalletsPayload;
+    choose: WalletsPayload;
 }
 
 /** A page's request of each type, with its own payload. */
@@ -151,7 +156,7 @@ export type Message =
 export type MessageType = Message['type'];
 
 /** A page's request that may wait on the user. */
-export type WaitingMessage = Extract<Message, { type: 'connect' | 'explain' | 'message' }>;
+export type WaitingMessage = Extract<Message, { type: 'connect' | 'explain' | 'message' | 'choose' }>;
 
 export function isWaiting(message: Message): message is WaitingMessage {
     return (WAITING_REQUESTS as readonly string[]).includes(message.type);
@@ -165,6 +170,7 @@ export interface Replies {
     message: Reply;
     wallets: true;
     'connect-failed': boolean;
+    choose: ChooseReply;
     status: ApiStatus | { error: string };
     'wallet-list': WalletList | null;
     seen: true;
@@ -203,6 +209,7 @@ const READERS: { [T in MessageType]: Reader<T> } = {
     message: pageRequest('message'),
     wallets: pageRequest('wallets'),
     'connect-failed': pageRequest('connect-failed'),
+    choose: pageRequest('choose'),
     feedback: ({ payload }) => ({ type: 'feedback', payload: fields(payload) }),
     'wallet-list': ({ tabId }) => ({ type: 'wallet-list', tabId: typeof tabId === 'number' ? tabId : null }),
     decision: ({ id, decision }) =>

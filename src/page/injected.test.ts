@@ -13,7 +13,7 @@ const SIGN = 'solana:signTransaction';
 /** A request the wallet sent the extension, and how to answer it. */
 interface Asked {
     type: string;
-    payload: { transactions?: string[]; message?: string; wallet?: string; accounts?: string[] };
+    payload: { transactions?: string[]; message?: string; wallet?: string; wallets?: unknown[]; accounts?: string[] };
     reply(result: unknown): void;
     /** Answers with an error in place of a result, as the content script does when the worker cannot be reached. */
     fail(error: string): void;
@@ -515,6 +515,66 @@ test('another wallet chosen in the settings ends the session with the one before
     }
 });
 
+test('with several wallets and none named, a connect the user makes asks which, and requests go to it; a silent one asks nothing', async () => {
+    const handed: string[] = [];
+    const other = {
+        ...upstream,
+        name: 'Other Wallet',
+        icon: 'data:image/svg+xml;base64,PHN2Zy8+',
+        features: {
+            ...upstream.features,
+            [SIGN]: {
+                version: '1.0.0',
+                async signTransaction(...inputs: { transaction: Uint8Array }[]) {
+                    for (const input of inputs) handed.push(Buffer.from(input.transaction).toString('hex'));
+                    return inputs.map((input) => ({ signedTransaction: input.transaction }));
+                },
+            },
+        },
+    };
+    // Another copy of SignLens (the store's beside a developer's) is never the wallet behind this one.
+    const copy = { ...upstream, name: 'SignLens' };
+    // An icon that is not text goes as none: the request still goes.
+    const odd = { ...upstream, name: 'Odd Wallet', icon: () => 'an icon' };
+    let unregister = () => {};
+    page.dispatchEvent(
+        detailEvent('wallet-standard:register-wallet', (api: { register(...w: unknown[]): () => void }) => {
+            unregister = api.register(other, copy, odd);
+        }),
+    );
+    try {
+        await disconnect();
+        const connecting = connect();
+        const question = await nextRequest();
+        assert.equal(question.type, 'choose');
+        assert.deepEqual(question.payload.wallets, [
+            { name: 'Real Wallet', icon: 'data:,' },
+            { name: 'Other Wallet', icon: 'data:image/svg+xml;base64,PHN2Zy8+' },
+            { name: 'Odd Wallet', icon: '' },
+        ]);
+        question.reply({ wallet: 'Other Wallet' });
+        await connecting;
+        const signing = sign({ account, transaction: BENIGN() });
+        (await nextRequest()).reply(CONTINUE);
+        assert.equal((await signing).error, undefined);
+        assert.deepEqual([signed.length, handed.length], [0, 1]);
+        // A dapp reconnecting as it loads opens no window: the first found, as before.
+        await disconnect();
+        await call('standard:connect', 'connect', { silent: true });
+        assert.deepEqual(accountsNow(), [account.address]);
+        assert.equal(asked.length, 0);
+        // Nothing chosen: the connect is refused, saying so.
+        await disconnect();
+        const refused = connect();
+        (await nextRequest()).reply({ error: 'no wallet was chosen' });
+        await assert.rejects(refused, /SignLens: no wallet was chosen/);
+        assert.deepEqual(accountsNow(), []);
+    } finally {
+        unregister();
+        await disconnect();
+    }
+});
+
 test('the real wallet is called as a method of its feature', async () => {
     signed.length = 0;
     const signing = sign({ account, transaction: BENIGN() });
@@ -622,13 +682,15 @@ test('the page cannot get hold of the port', async () => {
             return Reflect.apply(data.get as () => unknown, this, []);
         },
     });
+    // Taken back after, as a page whose wallets stayed would have a connect ask which one signs.
+    let unregister = () => {};
     try {
         // A wallet registering makes the wallet tell the extension; a request goes out and its answer comes back.
         page.dispatchEvent(detailEvent('wallet-standard:register-wallet', () => {}));
         page.dispatchEvent(
-            detailEvent('wallet-standard:register-wallet', (api: { register(w: unknown): void }) =>
-                api.register({ ...upstream, name: 'Another' }),
-            ),
+            detailEvent('wallet-standard:register-wallet', (api: { register(w: unknown): () => void }) => {
+                unregister = api.register({ ...upstream, name: 'Another' });
+            }),
         );
         const signing = sign({ account, transaction: BENIGN() });
         (await nextRequest()).reply(CONTINUE);
@@ -637,6 +699,7 @@ test('the page cannot get hold of the port', async () => {
         MessagePort.prototype.postMessage = originalPost;
         Function.prototype.call = originalCall;
         Object.defineProperty(MessageEvent.prototype, 'data', data);
+        unregister();
     }
     // The harness's own end of the channel is the only port the patches may have seen.
     assert.ok(caught.every((seen) => seen === port));

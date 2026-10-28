@@ -21,8 +21,8 @@
     // What a page may ask, and which of it may wait on the user, in a
     // window, over a port of its own named REQUEST_PORT: as messages.ts has
     // them (protocol.test.ts holds the two to each other).
-    const REQUESTS: readonly SignLensPage.Request[] = ['config', 'connect', 'explain', 'message', 'wallets', 'connect-failed'];
-    const WAITING: readonly SignLensPage.Request[] = ['connect', 'explain', 'message'];
+    const REQUESTS: readonly SignLensPage.Request[] = ['config', 'connect', 'explain', 'message', 'wallets', 'connect-failed', 'choose'];
+    const WAITING: readonly SignLensPage.Request[] = ['connect', 'explain', 'message', 'choose'];
     const REQUEST_PORT = 'request';
 
     /**

@@ -83,6 +83,21 @@
             // In case SignLens announced itself first and is listening as an app.
             window.addEventListener('wallet-standard:app-ready', (event) => event.detail.register(fake));
 
+            /** Registers another wallet under `name`, with the fake one's icon or `icon`, as a second extension would: it connects as the fake one does, and what it signs is in `otherCalls`. */
+            window.otherCalls = [];
+            window.addWallet = (name, icon = fake.icon) => {
+                const signing = {
+                    version: '1.0.0',
+                    supportedTransactionVersions: ['legacy', 0],
+                    signTransaction: async (...inputs) => {
+                        window.otherCalls.push({ wallet: name, count: inputs.length });
+                        return inputs.map((input) => ({ signedTransaction: input.transaction }));
+                    },
+                };
+                const other = { ...fake, name, icon, features: { ...fake.features, 'solana:signTransaction': signing } };
+                window.dispatchEvent(new CustomEvent('wallet-standard:register-wallet', { detail: (api) => api.register(other) }));
+            };
+
             function fromBase64(text) {
                 const binary = atob(text);
                 const bytes = new Uint8Array(binary.length);

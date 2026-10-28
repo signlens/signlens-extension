@@ -127,6 +127,19 @@ export interface AddressRequest {
     mine: string[];
 }
 
+/** A wallet as the wallet window offers it: the name it gave itself, in plain text, and its icon, if it gave one the window may show. */
+export interface WalletChoice {
+    name: string;
+    /** An image's data URL, as Wallet Standard has a wallet's icon. */
+    icon?: string;
+}
+
+/** What the wallet window shows: the wallets a page has, to choose the one that signs. */
+export interface WalletRequest {
+    origin: string;
+    wallets: WalletChoice[];
+}
+
 /** An answer that is a failure of the request as a whole. */
 export function failure(error: string): Entry {
     return { rows: [{ kind: 'failed', scope: 'request', error }] };

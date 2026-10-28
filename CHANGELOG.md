@@ -8,6 +8,20 @@ uses [Semantic Versioning](https://semver.org/).
 
 ### Added
 
+- **Which wallet signs, asked once.** With "First one found" in the
+  settings, SignLens passed requests to whichever wallet announced itself
+  first in the page: MetaMask, Brave or OKX, say, for someone who signs
+  with Phantom. Now a page with several wallets asks, the first time you
+  connect, which one in a window of its own that lists them with their
+  icons, and keeps your choice in the settings; closing it refuses the
+  connect. An icon is shown only if it is an image as Wallet Standard has
+  one (a data URL of SVG, WebP, PNG or GIF), never an address to fetch,
+  and the wallet's initial in its place otherwise. A dapp
+  reconnecting as it loads asks nothing and gets the first found, as
+  before, and a page with one wallet gets that one. Another SignLens (a
+  store build beside one built from the sources) is never the wallet
+  behind it, where the two passed requests to each other.
+
 - **A setup page.** A new install opens one in a tab of its own: your
   wallet addresses go there, so the first site that signs with one is
   not asked about first; how to use SignLens (choose SignLens in the

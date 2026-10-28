@@ -114,6 +114,94 @@ test(
     },
 );
 
+const SVG = 'data:image/svg+xml;base64,PHN2Zy8+';
+const PNG = 'data:image/png;base64,iVBORw0KGgo=';
+
+/** Asks which wallet signs, as the page does when it has several and the settings name none. */
+function choose(wallets: unknown) {
+    return answerRequest({ type: 'choose', payload: { origin: 'https://dapp.example', wallets } }, tab);
+}
+
+test(
+    'which wallet signs: the window lists the names the page has, plain and once each; the answer is the one it kept',
+    BOUNDED,
+    async () => {
+        await configure({ upstream: '' });
+        const asking = choose([
+            { name: 'Phantom', icon: SVG },
+            { name: 'Back\u0007pack', icon: PNG },
+            { name: ' Phantom ', icon: PNG },
+            { name: 7, icon: SVG },
+            'Solflare',
+        ]);
+        const id = await windowId('wallet.html');
+        // A name's icon is the first's of that name, as the page connects the first.
+        assert.deepEqual(fake.session[pendingKey('wallet.html', id)], {
+            origin: 'https://dapp.example',
+            wallets: [
+                { name: 'Phantom', icon: SVG },
+                { name: 'Back?pack', icon: PNG },
+            ],
+        });
+        // As the window does: the choice goes in the settings, then the decision.
+        await chrome.storage.local.set({ upstream: 'Phantom' });
+        gate.decide(id, 'continue');
+        assert.deepEqual(await asking, { wallet: 'Phantom' });
+    },
+);
+
+test(
+    'which wallet signs: an icon is shown only if it is an image as Wallet Standard has one, of a size an icon needs',
+    BOUNDED,
+    async () => {
+        await configure({ upstream: '' });
+        const icons: unknown[] = [
+            SVG,
+            PNG,
+            'data:image/webp;base64,UklGRg==',
+            'data:image/gif;base64,R0lGODlh',
+            // Not one the window shows: an address to fetch, a page, an image not in base64, one not all base64, one too big, none.
+            'https://wallet.example/icon.png',
+            'data:text/html;base64,PHNjcmlwdD4=',
+            'data:image/svg+xml,<svg onload="alert(1)"/>',
+            'data:image/png;base64,iVBORw0KGgo="><script>',
+            `data:image/png;base64,${'A'.repeat(200_000)}`,
+            42,
+        ];
+        const asking = choose(icons.map((icon, at) => ({ name: `Wallet ${at}`, icon })));
+        const id = await windowId('wallet.html');
+        const { wallets } = fake.session[pendingKey('wallet.html', id)] as { wallets: { name: string; icon?: string }[] };
+        assert.deepEqual(
+            wallets.map((wallet) => wallet.icon ?? null),
+            [...icons.slice(0, 4), null, null, null, null, null, null],
+        );
+        assert.ok(wallets.slice(4).every((wallet) => !('icon' in wallet)));
+        gate.decide(id, 'reject');
+        await asking;
+    },
+);
+
+test('which wallet signs: closed, or kept as one the page did not have, it is none', BOUNDED, async () => {
+    await configure({ upstream: '' });
+    const closed = choose([{ name: 'Phantom' }, { name: 'Backpack' }]);
+    gate.decide(await windowId('wallet.html'), 'reject');
+    assert.deepEqual(await closed, { error: 'no wallet was chosen' });
+    assert.equal((await chrome.storage.local.get('upstream')).upstream, '');
+    tab += 1;
+    const odd = choose([{ name: 'Phantom' }, { name: 'Backpack' }]);
+    const id = await windowId('wallet.html');
+    await chrome.storage.local.set({ upstream: 'Evil Wallet' });
+    gate.decide(id, 'continue');
+    assert.deepEqual(await odd, { error: 'no wallet was chosen' });
+});
+
+test('which wallet signs: with fewer than two to choose from, nothing is asked', BOUNDED, async () => {
+    await configure({ upstream: '' });
+    assert.deepEqual(await choose([{ name: 'Phantom' }, { name: 'Phantom' }]), { error: 'fewer than two wallets to choose from' });
+    assert.deepEqual(await choose('Phantom'), { error: 'fewer than two wallets to choose from' });
+    assert.equal(fake.opened, 0);
+});
+
 test('a request that cannot be explained at all says why once, and the user decides', BOUNDED, async () => {
     await configure({ askFirst: true });
     const asking = answerRequest({ type: 'explain', payload: { origin: 'https://dapp.example', transactions: 'not a list' } }, tab);

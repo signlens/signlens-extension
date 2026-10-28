@@ -329,14 +329,38 @@
         else if (account.address !== accounts[0]?.address) setAccounts([account]);
     }
 
-    /** The wallet requests are passed to in pass-through mode. */
-    function upstreamWallet(): Wallet {
+    /**
+     * The wallet requests are passed to in pass-through mode: the one the
+     * settings name; with none named, the user's choice, asked in a window of
+     * the extension's when the page has several and the connect is the
+     * user's (`silent` is a dapp reconnecting as it loads, which opens no
+     * window), else the first found. Another SignLens (the store's beside a
+     * developer's copy) is never one: the two would pass requests to each
+     * other.
+     */
+    async function upstreamWallet(silent: boolean): Promise<Wallet> {
         const usable = [...otherWallets].filter(
             (wallet) =>
                 typeof wallet.name === 'string' &&
+                wallet.name !== NAME &&
                 wallet.features?.[CONNECT] &&
                 (wallet.features[SIGN_TRANSACTION] || wallet.features[SIGN_AND_SEND_TRANSACTION]),
         );
+        const distinct = [...new Set(usable.map((wallet) => wallet.name))];
+        if (!config.upstream.trim() && distinct.length > 1 && !silent) {
+            // Each with the icon of the first of its name, the one a choice connects; one that is not text goes as none.
+            const wallets = distinct.map((name) => {
+                const icon = usable.find((wallet) => wallet.name === name)?.icon;
+                return { name, icon: typeof icon === 'string' ? icon : '' };
+            });
+            const answer = await request('choose', { wallets });
+            const name = own(answer, 'wallet');
+            const error = own(answer, 'error');
+            // The first of that name: a page cannot put its own ahead of the wallet it imitates.
+            const picked = typeof name === 'string' ? usable.find((wallet) => wallet.name === name) : undefined;
+            if (picked) return picked;
+            throw new Error(`${NAME}: ${typeof error === 'string' ? error : 'no wallet was chosen'}`);
+        }
         const found = usable.find(chosen);
         if (found) return found;
         const names = usable.map((wallet) => wallet.name);
@@ -585,7 +609,7 @@
         if (!settings) throw new Error(`${NAME}: the extension did not answer with its settings; reload the page`);
         applyConfig(settings);
         if (config.mode === 'passthrough') {
-            const upstream = upstreamWallet();
+            const upstream = await upstreamWallet(own(input, 'silent') === true);
             const granted = await (upstream.features[CONNECT] as ConnectFeature).connect(input);
             if (session?.mode === 'passthrough') session.stopWatching?.();
             const stopWatching = (upstream.features[EVENTS] as EventsFeature | undefined)?.on('change', (properties) => {
