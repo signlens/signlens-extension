@@ -113,12 +113,13 @@ browser APIs and rules. Each module's Node test sits beside it.
 | | `gate.ts`, `history.ts`: the window and the user's decision; the popup's history and the badge |
 | | `sites.ts`: in watch-only mode, the sites allowed to see the watched address, and the window that asks |
 | | `feedback.ts`: the feedback records |
+| | `welcome.ts`: which installs open the setup page |
 | | `solana.ts`: the little of Solana's wire format the worker needs |
 | `src/ui/` | the extension's own pages |
 | | `popup.ts`, `pages.ts`: the popup; the pages SignLens runs on, and what the popup says over one it does not |
 | | `confirm.ts`, `connect.ts`, `address.ts`, `windows.ts`, `dom.ts`: the window, the window that asks to show a site the watched address, the one that asks whether an address is yours, and what they share |
 | | `render.ts`: one row of a request as the window and the popup show it |
-| | `yours.ts`: your addresses as a list, in the popup's settings |
+| | `welcome.ts`, `access.ts`, `yours.ts`: the setup page a new install opens; the access to sites the settings need, which the popup and the setup page ask for; your addresses as a list, in both |
 | `src/shared/` | what the worker and the pages both use, and nothing of either |
 | | `types.ts`: the contract: the explanation document, the request, the feedback record, the API's status |
 | | `programs.ts`: the program each instruction of a transaction calls, which a report says, read from its bytes |

@@ -8,6 +8,14 @@ uses [Semantic Versioning](https://semver.org/).
 
 ### Added
 
+- **A setup page.** A new install opens one in a tab of its own: your
+  wallet addresses go there, so the first site that signs with one is
+  not asked about first; how to use SignLens (choose SignLens in the
+  dapp's list of wallets, not your wallet); how to pin it, ticked off
+  once it is pinned where the browser can tell; and what leaves your
+  browser. In Firefox, where the access to sites can be turned off, it
+  asks for that too. Updates do not open it; the popup's settings do.
+
 - **Try again.** When SignLens could not explain a transaction (the API
   away, busy or past its limit), the window offers "Try again": SignLens
   asks once more while the request waits, with the settings as they are
@@ -22,8 +30,9 @@ uses [Semantic Versioning](https://semver.org/).
 - **Your addresses are a list.** One row each, in full to hold against
   your wallet's, with Remove, and a field that adds one, or several
   pasted at once, and takes nothing that is not a Solana address, saying
-  why; before, a box of one address per line. While pass-through mode
-  has none, the popup's requests ask for one inline.
+  why; before, a box of one address per line. The same list is in the
+  popup's settings and on the setup page. While pass-through mode has
+  none, the popup's requests ask for one inline.
 
 - **"Continue anyway" asks again.** On a request SignLens would
   refuse, blocked or not explained, one press of "Continue anyway"

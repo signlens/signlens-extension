@@ -26,6 +26,7 @@ import * as gate from './gate.ts';
 import { clearHistory, markSeen } from './history.ts';
 import { answerRequest, connectFailed } from './requests.ts';
 import { revoke } from './sites.ts';
+import { opensSetup } from './welcome.ts';
 
 // ---- The page's wallets ----
 
@@ -51,6 +52,12 @@ async function rememberWallets(tabId: number | undefined, payload: WalletsPayloa
 // A worker that stopped took the requests it had waiting with it: what they
 // left in storage would only take room. In turn before any new request is kept.
 dropStalePending().catch(logged('drop the requests left waiting'));
+
+// A new install opens the setup page (welcome.ts). At the top, as every
+// listener: the browser fires the event as the worker first starts.
+chrome.runtime.onInstalled.addListener((details) => {
+    if (opensSetup(details)) chrome.tabs.create({ url: chrome.runtime.getURL('welcome.html') }).catch(logged('open the setup page'));
+});
 
 // A closed tab's wallets go with it, and its request is refused: no one is
 // left to pass it to.

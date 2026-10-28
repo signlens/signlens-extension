@@ -92,6 +92,20 @@ test('the window for several transactions, and for a request gone', async ({ con
     expect(await violations(stale)).toEqual([]);
 });
 
+test('the setup page', async ({ context, extensionId }) => {
+    const setup = await context.newPage();
+    await setup.goto(`chrome-extension://${extensionId}/welcome.html`);
+    await expect(setup.locator('#my-addresses')).toHaveAttribute('data-ready', 'true');
+    // A row to remove, and a refusal said.
+    const add = setup.getByRole('textbox', { name: 'Add an address' });
+    await add.fill('EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v');
+    await add.press('Enter');
+    await add.fill('nope');
+    await add.press('Enter');
+    await expect(setup.locator('#my-addresses .yours-status')).toHaveText('Not a Solana address: nope.');
+    expect(await violations(setup)).toEqual([]);
+});
+
 test('the consent window and the address window', async ({ context, worker }) => {
     const consent = await windowFor(context, worker, { origin: 'https://jup.ag', address: WATCHED }, 'connect.html');
     expect(await violations(consent)).toEqual([]);

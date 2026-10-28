@@ -169,15 +169,20 @@ check it as [Verifying a package](#verifying-a-package) says.
 From the sources: [`DEVELOPMENT.md`](DEVELOPMENT.md) says how to build
 both and load them.
 
-Firefox lets you withhold an add-on's access to sites: if the popup says
-the browser has not let the extension reach the API, the RPC and the token
-list, press "Allow https access" there, or nothing can be explained.
+Firefox lets you withhold an add-on's access to sites: if the popup or the
+setup page says the browser has not let the extension reach the API, the
+RPC and the token list, press "Allow https access" there, or nothing can
+be explained.
 
 ## Using it
 
-Your addresses are a list in the popup's settings: one row each, in
-full, with Remove, and a field that adds only a Solana address. While
-pass-through mode has none, the popup's requests ask for one inline.
+A new install opens a setup page in a tab of its own: your wallet
+addresses go there, so no site has to be asked about first, with how to
+use SignLens, how to pin it, and what leaves your browser. An update does
+not open it. Your addresses are a list, there and in the popup's
+settings: one row each, in full, with Remove, and a field that adds only
+a Solana address. While pass-through mode has none, the popup's requests
+ask for one inline; its settings open the setup page again.
 
 In a dapp, connect "SignLens". By default it connects to the first other
 wallet it finds in the page and passes every request on after explaining

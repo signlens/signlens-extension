@@ -992,6 +992,79 @@ code.bytes.clamped {
     margin: 0 0 6px;
 }
 
+/* Under the settings, the way back to the setup page. */
+.setup-again {
+    margin: 4px 0 0;
+}
+
+/* The setup page: a tab of its own, a column of reading width. */
+body.welcome {
+    width: auto;
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 28px 20px 32px;
+    font-size: 14px;
+}
+
+body.welcome h1 {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    font-size: 22px;
+}
+
+#intro {
+    margin: 10px 0 0;
+    color: var(--muted);
+}
+
+body.welcome section {
+    margin-top: 22px;
+}
+
+body.welcome section > h2 {
+    margin: 0 0 6px;
+    font-size: 16px;
+}
+
+body.welcome section > p {
+    margin: 0 0 8px;
+}
+
+body.welcome section > .note {
+    color: var(--muted);
+}
+
+#steps {
+    margin: 0 0 8px;
+    padding-left: 1.4em;
+    list-style: decimal;
+}
+
+#steps > li {
+    margin: 4px 0;
+}
+
+#pin-status.done {
+    color: var(--ok);
+}
+
+body.welcome footer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 28px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+}
+
+body.welcome footer .note {
+    margin: 0;
+    color: var(--muted);
+}
+
 /* Your addresses (yours.ts): each in full, to hold against your wallet's, with Remove; and the field that adds one. */
 .yours-list {
     margin: 4px 0 6px;

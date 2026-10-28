@@ -18,6 +18,7 @@ import { local, onChange, session } from '../shared/store.ts';
 import { describe, methodName, short, withoutScheme } from '../shared/text.ts';
 import type { ApiStatus } from '../shared/types.ts';
 import { rowVerdictWord, summaryOf } from '../shared/verdict.ts';
+import { access } from './access.ts';
 import { byId } from './dom.ts';
 import { noWalletHint, runsOn } from './pages.ts';
 import { element, renderRow } from './render.ts';
@@ -447,29 +448,26 @@ function renderHistory(history: HistoryEntry[]): void {
 }
 
 /**
- * The host permissions the settings need (endpoint.ts): every https site,
- * and this machine only for an endpoint on it. Chrome grants the
- * manifest's whole list at install; Firefox asks, and is asked for these
- * only. Kept current as the endpoints change, since the button that asks
- * must ask at once, in its click.
+ * The access the settings need (access.ts). Kept current as the endpoints
+ * change, since the button that asks must ask at once, in its click.
  */
 let hosts = { origins: hostsNeeded([]) };
 
 async function checkPermissions(): Promise<void> {
-    const config = await settings();
-    hosts = { origins: hostsNeeded(ENDPOINTS.map((name) => config[name])) };
-    byId('allow').textContent = hosts.origins.length > 1 ? 'Allow https and local access' : 'Allow https access';
-    let granted = true;
-    try {
-        granted = await chrome.permissions.contains(hosts);
-    } catch {
-        // No permissions API: nothing to ask for.
-    }
+    const needed = await access();
+    hosts = needed.hosts;
+    byId('allow').textContent = needed.label;
+    const granted = needed.granted;
     const ask = byId('permissions');
     const hadFocus = ask.contains(document.activeElement);
     ask.hidden = granted;
     // Its button goes once it has done its part: the focus goes to the view's tab, not to nowhere.
     if (granted && hadFocus) document.querySelector<HTMLElement>('.tab[aria-selected="true"]')?.focus();
+}
+
+/** Opens the setup page in a tab of its own; the popup closes as the tab takes the focus. */
+function openSetup(): void {
+    chrome.tabs.create({ url: chrome.runtime.getURL('welcome.html') }).catch(() => {});
 }
 
 /** Whether an address was just added from the requests' own field: it says so there, until the popup closes. */
@@ -530,6 +528,7 @@ async function start(): Promise<void> {
     }
     form.addEventListener('submit', (event) => event.preventDefault());
 
+    byId('setup-again').addEventListener('click', openSetup);
     void checkPermissions();
     byId('allow').addEventListener('click', async () => {
         try {
