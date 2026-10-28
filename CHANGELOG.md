@@ -19,6 +19,12 @@ uses [Semantic Versioning](https://semver.org/).
 
 ### Changed
 
+- **Your addresses are a list.** One row each, in full to hold against
+  your wallet's, with Remove, and a field that adds one, or several
+  pasted at once, and takes nothing that is not a Solana address, saying
+  why; before, a box of one address per line. While pass-through mode
+  has none, the popup's requests ask for one inline.
+
 - **"Continue anyway" asks again.** On a request SignLens would
   refuse, blocked or not explained, one press of "Continue anyway"
   handed it to your wallet. It now asks "Pass this request on anyway?"

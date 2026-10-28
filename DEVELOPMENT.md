@@ -118,6 +118,7 @@ browser APIs and rules. Each module's Node test sits beside it.
 | | `popup.ts`, `pages.ts`: the popup; the pages SignLens runs on, and what the popup says over one it does not |
 | | `confirm.ts`, `connect.ts`, `address.ts`, `windows.ts`, `dom.ts`: the window, the window that asks to show a site the watched address, the one that asks whether an address is yours, and what they share |
 | | `render.ts`: one row of a request as the window and the popup show it |
+| | `yours.ts`: your addresses as a list, in the popup's settings |
 | `src/shared/` | what the worker and the pages both use, and nothing of either |
 | | `types.ts`: the contract: the explanation document, the request, the feedback record, the API's status |
 | | `programs.ts`: the program each instruction of a transaction calls, which a report says, read from its bytes |

@@ -175,6 +175,10 @@ list, press "Allow https access" there, or nothing can be explained.
 
 ## Using it
 
+Your addresses are a list in the popup's settings: one row each, in
+full, with Remove, and a field that adds only a Solana address. While
+pass-through mode has none, the popup's requests ask for one inline.
+
 In a dapp, connect "SignLens". By default it connects to the first other
 wallet it finds in the page and passes every request on after explaining
 it; the popup's settings pick the wallet from the ones found in the current

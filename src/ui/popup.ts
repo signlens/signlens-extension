@@ -9,7 +9,6 @@ import {
     DEFAULTS,
     ENDPOINTS,
     MAX_CONTACTS,
-    MAX_OWN_KEYS,
     parseAddresses,
     parseContacts,
     type Settings,
@@ -22,12 +21,12 @@ import { rowVerdictWord, summaryOf } from '../shared/verdict.ts';
 import { byId } from './dom.ts';
 import { noWalletHint, runsOn } from './pages.ts';
 import { element, renderRow } from './render.ts';
+import { yourAddresses } from './yours.ts';
 
 const form = byId('settings', HTMLFormElement);
 const engineStatus = byId('engine-status');
 const addressHint = byId('address-hint');
 const contactsHint = byId('contacts-hint');
-const myAddressesHint = byId('myAddresses-hint');
 const historyList = byId('history', HTMLOListElement);
 const empty = byId('empty');
 
@@ -108,6 +107,7 @@ function showView(view: string, remember = false): void {
     }
     // Which view was open is a convenience: not worth a word when it is not kept.
     if (remember) session.set({ view }).catch(() => {});
+    void showSetup();
 }
 
 /** Left and Right (and Home and End) move to the next tab and show its view, as tabs do. */
@@ -153,16 +153,6 @@ function checkAddress(): void {
         .filter(Boolean)
         .join(' ');
     field('contacts').setAttribute('aria-invalid', String(bad.length > 0));
-    const { addresses, bad: notMine } = parseAddresses(field('myAddresses').value);
-    myAddressesHint.textContent = [
-        notMine.length ? `Line${notMine.length === 1 ? '' : 's'} ${notMine.join(', ')} not read: not a Solana address.` : '',
-        addresses.length > MAX_OWN_KEYS
-            ? `A request carries ${MAX_OWN_KEYS} of these: those the site names, then the first in the list.`
-            : '',
-    ]
-        .filter(Boolean)
-        .join(' ');
-    field('myAddresses').setAttribute('aria-invalid', String(notMine.length > 0));
 }
 
 let statusCheck = 0;
@@ -205,7 +195,6 @@ function save(): void {
         upstream: (form.elements.namedItem('upstream') as HTMLSelectElement).value.trim(),
         askFirst: field('askFirst').checked,
         contacts: field('contacts').value,
-        myAddresses: field('myAddresses').value,
         lookupTokens: field('lookupTokens').checked,
         simulate: field('simulate').checked,
         lookupAccounts: field('lookupAccounts').checked,
@@ -483,8 +472,33 @@ async function checkPermissions(): Promise<void> {
     if (granted && hadFocus) document.querySelector<HTMLElement>('.tab[aria-selected="true"]')?.focus();
 }
 
+/** Whether an address was just added from the requests' own field: it says so there, until the popup closes. */
+let addedHere = false;
+
+/**
+ * The requests' own field for your address, while pass-through mode has
+ * none: until then, the first request asks which is yours. Not over the
+ * settings, which list them.
+ */
+async function showSetup(): Promise<void> {
+    const { mode, myAddresses } = await settings();
+    const missing = parseAddresses(myAddresses).addresses.length === 0;
+    const onSettings = byId('tab-settings').getAttribute('aria-selected') === 'true';
+    byId('setup').hidden = onSettings || mode !== 'passthrough' || !(missing || addedHere);
+}
+
 async function start(): Promise<void> {
     const config = await settings();
+    yourAddresses(byId('my-addresses'));
+    yourAddresses(byId('setup-add'), {
+        list: false,
+        onAdded: () => {
+            addedHere = true;
+            byId('setup-ask').textContent = 'Added. SignLens calls it “you” from now on; your addresses are in the settings.';
+            byId('setup-add').hidden = true;
+            void showSetup();
+        },
+    });
     showInstructions = config.showInstructions;
     field('mode').value = config.mode;
     field('address').value = config.address;
@@ -492,7 +506,6 @@ async function start(): Promise<void> {
     void showWallets(config.upstream);
     field('askFirst').checked = config.askFirst;
     field('contacts').value = config.contacts;
-    field('myAddresses').value = config.myAddresses;
     field('apiUrl').value = config.apiUrl;
     field('rpcUrl').value = config.rpcUrl;
     field('lookupTokens').checked = config.lookupTokens;
@@ -547,12 +560,7 @@ async function start(): Promise<void> {
     onChange('local', (changes) => {
         if ('showInstructions' in changes) showInstructions = Boolean(changes.showInstructions);
         if ('watchSites' in changes || 'address' in changes) void showSites();
-        // An address added from the address window, unless it is being typed in here.
-        const mine = field('myAddresses');
-        if (changes.myAddresses !== undefined && document.activeElement !== mine) {
-            mine.value = changes.myAddresses;
-            checkAddress();
-        }
+        if ('mode' in changes || 'myAddresses' in changes) void showSetup();
     });
     onChange('session', (changes) => {
         if ('history' in changes) renderHistory(changes.history ?? []);
