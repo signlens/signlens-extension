@@ -41,6 +41,10 @@ uses [Semantic Versioning](https://semver.org/).
 
 ### Changed
 
+- **Raw units grouped.** A token's amount in raw units groups its digits
+  ("20,998,877,118 raw units") as the engine now does, where it was
+  written unbroken.
+
 - **"An unknown amount of".** An amount fixed only when the transaction
   runs reads "an unknown amount of SOL", with the article the engine now
   writes, where it read "unknown amount of SOL".

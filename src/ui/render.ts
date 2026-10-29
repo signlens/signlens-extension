@@ -204,7 +204,7 @@ function group(digits: string): string {
     return digits.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
 
-/** An amount's quantity as the engine writes it: scaled by the asset's decimals, or raw units. */
+/** An amount's quantity as the engine writes it: scaled by the asset's decimals, or raw units, grouped either way. */
 export function quantity(amount: Amount): string {
     const decimals = amount.asset.decimals;
     let units: bigint;
@@ -213,7 +213,7 @@ export function quantity(amount: Amount): string {
     } catch {
         return `${amount.units} raw units`;
     }
-    if (decimals === null || decimals === undefined) return `${units} raw units`;
+    if (decimals === null || decimals === undefined) return `${group(units.toString())} raw units`;
     const sign = units < 0n ? '-' : '';
     const magnitude = units < 0n ? -units : units;
     const scale = 10n ** BigInt(decimals);

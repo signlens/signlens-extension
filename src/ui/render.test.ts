@@ -16,6 +16,7 @@ test('a quantity is scaled by its decimals, grouped by thousands, and signed', (
     assert.equal(quantity(amount('-1500', 3)), '-1.5');
     assert.equal(quantity(amount('-1', 0)), '-1');
     assert.equal(quantity(amount('42', null)), '42 raw units');
+    assert.equal(quantity(amount('20998877118', null)), '20,998,877,118 raw units');
     assert.equal(quantity(amount('not a number', 2)), 'not a number raw units');
 });
 
