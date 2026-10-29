@@ -618,8 +618,23 @@ export function captureName(site: string | undefined, at: number, part?: number)
 }
 
 function explainedNode(body: HTMLDivElement, row: ExplainedRow, options: RenderOptions): HTMLDivElement {
-    // The summary and the findings are read as lines of text; the effects lay out what they name.
-    body.append(element('p', 'summary-line', row.summary.text));
+    // The summary, its actions and the findings lay out what they name, as the effects do.
+    const actions = row.actions ?? [];
+    if (actions.length > 1) {
+        // Several actions are one line each, under their count, where the summary runs them together.
+        body.append(element('p', 'summary-line', `${actions.length} actions`));
+        const list = element('ol', 'actions');
+        for (const action of actions) {
+            const item = element('li');
+            item.append(messageNode(action.summary));
+            list.append(item);
+        }
+        body.append(list);
+    } else {
+        const line = element('p', 'summary-line');
+        line.append(messageNode(row.summary));
+        body.append(line);
+    }
     if (row.findings.length) {
         body.append(element(options.heading ?? 'h3', 'effects-title', 'What SignLens found'));
         const list = element('ul', 'findings');
@@ -628,7 +643,7 @@ function explainedNode(body: HTMLDivElement, row: ExplainedRow, options: RenderO
             const item = element('li', finding.severity);
             // Shown as a word with a capital (High); the document's value is lowercase.
             const severity = finding.severity.charAt(0).toUpperCase() + finding.severity.slice(1);
-            item.append(element('span', `severity ${finding.severity}`, severity), ' ', finding.message.text);
+            item.append(element('span', `severity ${finding.severity}`, severity), ' ', messageNode(finding.message));
             list.append(item);
         }
         body.append(list);

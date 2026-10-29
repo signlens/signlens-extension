@@ -34,7 +34,11 @@ test('a pump token is named from the RPC and the token list, marked unverified',
     const row = popup.locator('#history li').first();
     await expect(row.locator('.verdict')).toHaveText('ok');
     await row.locator('summary').click();
-    await expect(row.locator('.summary-line')).toContainText('≥ 142,243.976392 HMYD (claimed, unverified)');
+    await expect(row.locator('.summary-line')).toHaveText('3 actions');
+    await expect(row.locator('ol.actions li')).toHaveCount(3);
+    await expect(row.locator('ol.actions')).toContainText('≥ 142,243.976392 HMYD (claimed, unverified)');
+    // The claim keeps its words, in the warning's style.
+    await expect(row.locator('ol.actions .term.unverified')).toHaveText('(claimed, unverified)');
     await expect(row.locator('.tables').nth(1)).toHaveText(/Unlisted tokens named .*: HMYD/);
     await expect(row.locator('pre')).toContainText('HMYD mint (HMYd…pump) (claimed, unverified)');
 });
@@ -64,7 +68,7 @@ test('a token nothing names stays in raw units, and the lookup is remembered', a
     await popup.reload();
     const row = popup.locator('#history li').first();
     await row.locator('summary').click();
-    await expect(row.locator('.summary-line')).toContainText('raw units of unverified token HMYd…pump');
+    await expect(row.locator('ol.actions')).toContainText('raw units of unverified token HMYd…pump');
 });
 
 test('with the lookup off nothing leaves for the token list', async ({ configure, dapp, server }) => {

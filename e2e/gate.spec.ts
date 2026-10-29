@@ -17,6 +17,30 @@ async function askToSign(context: BrowserContext, dapp: Page, base64: string, me
     return { signing, gate };
 }
 
+test('several actions are one line each under their count, their values laid out as the effects are', async ({
+    configure,
+    context,
+    dapp,
+    server,
+}) => {
+    const swap = fixture('swap__sol_from_wallet.b64');
+    server.know(swap);
+    await configure({ lookupTokens: false, simulate: false, mode: 'passthrough', upstream: 'Fake Wallet', rpcUrl: server.rpc });
+
+    const { signing, gate } = await askToSign(context, dapp, swap.base64);
+    // The band counts them; the list below says each, where the summary ran them together.
+    await expect(gate.locator('#band-summary')).toHaveText('3 actions');
+    const actions = gate.locator('ol.actions li');
+    await expect(actions).toHaveCount(3);
+    await expect(actions.nth(0)).toHaveText(/^Transfer 0\.0005 SOL from /);
+    await expect(actions.nth(2)).toContainText('raw units of unverified token HMYd…pump');
+    // The wrap is a descriptor's summary, its values parts of their own: its account is laid out as an address.
+    await expect(actions.nth(1)).toContainText('Wrap 0.0495 SOL into wrapped SOL account');
+    await expect(actions.nth(1).locator('.address')).toHaveCount(1);
+    await clickToClose(gate.getByRole('button', { name: 'Reject' }));
+    expect((await signing).error).toContain('User rejected the request in SignLens');
+});
+
 test('in pass-through mode the window shows the explanation and Continue hands the request on', async ({
     configure,
     context,

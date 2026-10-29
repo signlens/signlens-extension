@@ -286,7 +286,7 @@ async function start(): Promise<void> {
         list.findIndex((row) => rowVerdictWord(row) === worst),
     );
     const lead = list[at];
-    const summary = lead ? summaryOf(lead) : '';
+    const summary = lead ? bandLine(lead) : '';
     byId('band-summary').textContent = many ? `${summary} (transaction ${at + 1} of ${list.length}; each is below)` : summary;
 
     // What the API or the RPC could not explain may be explained on a second try; a request refused as a whole would be refused again.
@@ -363,3 +363,9 @@ async function start(): Promise<void> {
 }
 
 void start();
+
+/** The band's line for a transaction: several actions by their count, which heads their list below; otherwise its summary. */
+function bandLine(row: Row): string {
+    const actions = row.kind === 'explained' ? (row.actions ?? []) : [];
+    return actions.length > 1 ? `${actions.length} actions` : summaryOf(row);
+}

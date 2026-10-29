@@ -274,6 +274,13 @@ pre {
     font-weight: 600;
 }
 
+/* A transaction's actions, one per line under their count. */
+.explanation ol.actions {
+    margin: 0 0 6px;
+    padding-left: 20px;
+    font-weight: 600;
+}
+
 .findings {
     margin: 0 0 6px;
     padding: 0;
@@ -937,8 +944,9 @@ summary .refused {
     font-size: 12px;
 }
 
-/* The row's head already carries the summary line. */
-#history .summary-line {
+/* The row's head already carries the summary line, and the actions it names. */
+#history .summary-line,
+#history ol.actions {
     display: none;
 }
 

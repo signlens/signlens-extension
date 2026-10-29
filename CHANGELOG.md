@@ -41,6 +41,14 @@ uses [Semantic Versioning](https://semver.org/).
 
 ### Changed
 
+- **Each action on its own line.** A transaction that does several things
+  shows their count in the window's band ("3 actions") and each one on a
+  line of its own below, where the summary ran them together with
+  semicolons and named only the first three. The summary, its actions and
+  the findings lay out the amounts and addresses they name as "What this
+  does" does: a verified token or account name has its badge, a claim its
+  warning, and a short address its full form.
+
 - **A badge for what SignLens verified.** A token or account name that
   SignLens verified shows a small check in a ring after it, where it was
   followed by the word "(verified)": up to three in one line read as if
