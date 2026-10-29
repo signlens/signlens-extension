@@ -268,7 +268,12 @@ test('a verdict this version does not know is an error, never a pass', async ({ 
     expect((await signing).error).toContain('User rejected the request in SignLens');
 });
 
-test('an effect this version does not know is shown as one, not left out', async ({ configure, context, dapp, server }) => {
+test("an effect of a type this version does not know is shown in the engine's words, not left out", async ({
+    configure,
+    context,
+    dapp,
+    server,
+}) => {
     const transfer = fixture('legacy_durable_nonce_token_transfer');
     await configure({ lookupTokens: false, simulate: false, mode: 'passthrough', upstream: 'Fake Wallet' });
     server.answerApi(
@@ -281,7 +286,8 @@ test('an effect this version does not know is shown as one, not left out', async
     });
     const gate = await liveGate(context);
     await expect(gate.locator('#band')).toHaveClass(/warning/);
-    await expect(gate.locator('.effects')).toContainText('Something this version cannot show (drain); the full text below has it');
+    // The engine words an effect of any type, so one this version does not know is shown in its words.
+    await expect(gate.locator('.effects')).toContainText('Drain everything');
     await clickToClose(gate.getByRole('button', { name: 'Reject' }));
     expect((await signing).error).toContain('User rejected the request in SignLens');
 });

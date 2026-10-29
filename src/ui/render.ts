@@ -6,7 +6,7 @@
 
 import type { ExplainedRow, Row } from '../shared/model.ts';
 import { short } from '../shared/text.ts';
-import type { Address, Amount, Bound, Effect, Field, Message, Section, Trust, Value } from '../shared/types.ts';
+import type { Address, Amount, Bound, Field, Message, Section, Trust, Value, WordedEffect } from '../shared/types.ts';
 
 export function element<K extends keyof HTMLElementTagNameMap>(tag: K, className?: string, text?: string): HTMLElementTagNameMap[K] {
     const node = document.createElement(tag);
@@ -280,76 +280,16 @@ function bytesNode(hex: string): HTMLElement {
     return node;
 }
 
-/** Appends `parts` to `node`: strings as text, nodes as they are. */
-function append<T extends HTMLElement>(node: T, ...parts: (string | Node)[]): T {
-    for (const part of parts) node.append(part);
-    return node;
-}
-
-/** One effect as a sentence, in the second person where the signer is the one it happens to. */
-function effectNode(effect: Effect): HTMLLIElement {
+/**
+ * One effect, as the engine words it: in the second person where the signer
+ * is the one it happens to, with the amounts and addresses it names laid out
+ * as the fields lay them out. An effect of a type this version does not know
+ * is shown by its words too.
+ */
+function effectNode(effect: WordedEffect): HTMLLIElement {
     const li = element('li', `effect ${effect.type.toLowerCase()}`);
-    switch (effect.type) {
-        case 'transfer': {
-            const v = effect.value;
-            if (v.from.is_self && !v.to.is_self)
-                return append(li, 'You send ', amountNode(v.amount), ' from ', addressNode(v.from), ' to ', addressNode(v.to));
-            if (v.to.is_self && !v.from.is_self)
-                return append(li, 'You receive ', amountNode(v.amount), ' into ', addressNode(v.to), ' from ', addressNode(v.from));
-            return append(li, 'Transfer ', amountNode(v.amount), ' from ', addressNode(v.from), ' to ', addressNode(v.to));
-        }
-        case 'burn': {
-            const v = effect.value;
-            return append(li, v.account.is_self ? 'You burn ' : 'Burn ', amountNode(v.amount), ' from ', addressNode(v.account));
-        }
-        case 'authority_change': {
-            const v = effect.value;
-            return v.new_authority
-                ? append(li, `Give the ${v.authority.text} authority over `, addressNode(v.subject), ' to ', addressNode(v.new_authority))
-                : append(li, `Permanently remove the ${v.authority.text} authority over `, addressNode(v.subject));
-        }
-        case 'delegate': {
-            const v = effect.value;
-            return append(li, 'Allow ', addressNode(v.delegate), ' to spend ', amountNode(v.amount), ' from ', addressNode(v.subject));
-        }
-        case 'revoke': {
-            const v = effect.value;
-            return append(li, 'Revoke the delegate on ', addressNode(v.subject));
-        }
-        case 'create': {
-            const v = effect.value;
-            append(li, 'Create ', addressNode(v.account), ' owned by ', addressNode(v.owner));
-            if (v.deposit) append(li, ', depositing ', amountNode(v.deposit));
-            if (v.if_missing) li.append(' unless it already exists');
-            return li;
-        }
-        case 'close': {
-            const v = effect.value;
-            return append(li, 'Close ', addressNode(v.account), ' and send its balance to ', addressNode(v.destination));
-        }
-        case 'fee': {
-            const v = effect.value;
-            return v.payer.is_self
-                ? append(li, 'You pay a fee of ', amountNode(v.amount))
-                : append(li, addressNode(v.payer), ' pays a fee of ', amountNode(v.amount));
-        }
-        case 'lifetime': {
-            const v = effect.value;
-            return v.type === 'durable_nonce'
-                ? append(li, 'Valid FOREVER until nonce account ', addressNode(v.value.nonce_account), ' is advanced (durable nonce)')
-                : append(li, 'Valid for about a minute (recent blockhash)');
-        }
-        case 'proposed': {
-            const inner = effectNode(effect.value.effect);
-            inner.className = 'effect proposed';
-            inner.prepend('Once approved, ', addressNode(effect.value.by), ' would: ');
-            return inner;
-        }
-        case 'other':
-            return append(li, messageNode(effect.value.description));
-        case 'Unrecognized':
-            return append(li, unrecognized('Something', effect.value.type));
-    }
+    li.append(messageNode(effect.message));
+    return li;
 }
 
 /**

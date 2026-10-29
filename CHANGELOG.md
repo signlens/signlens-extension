@@ -41,6 +41,13 @@ uses [Semantic Versioning](https://semver.org/).
 
 ### Changed
 
+- **What a transaction does, in the engine's words.** Each line under
+  "What this does" is the sentence the SignLens engine words for it, its
+  amounts and addresses laid out as before, where the window wrote its
+  own; the lines read the same. An effect of a type this version does
+  not know is now shown in those words, where the window said it could
+  not show it.
+
 - **An update starts the history afresh.** The answers the popup kept,
   and their count on the badge, are forgotten when SignLens updates: an
   earlier version's may be in a shape the new one does not read, and
