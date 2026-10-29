@@ -213,7 +213,7 @@ export function quantity(amount: Amount): string {
     } catch {
         return `${amount.units} raw units`;
     }
-    if (decimals === null || decimals === undefined) return `${group(units.toString())} raw units`;
+    if (decimals === null || decimals === undefined) return units === 1n ? '1 raw unit' : `${group(units.toString())} raw units`;
     const sign = units < 0n ? '-' : '';
     const magnitude = units < 0n ? -units : units;
     const scale = 10n ** BigInt(decimals);

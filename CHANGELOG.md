@@ -41,6 +41,9 @@ uses [Semantic Versioning](https://semver.org/).
 
 ### Changed
 
+- **"1 raw unit".** One raw unit reads in the singular, as the engine now
+  writes it, where it read "1 raw units".
+
 - **A token without a symbol, named in place.** An amount of a token
   SignLens does not list names it after "of", as the engine now does:
   "raw units of unverified token E7T1…pump", "of the token held in
