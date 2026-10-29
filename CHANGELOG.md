@@ -41,6 +41,13 @@ uses [Semantic Versioning](https://semver.org/).
 
 ### Changed
 
+- **A token without a symbol, named in place.** An amount of a token
+  SignLens does not list names it after "of", as the engine now does:
+  "raw units of unverified token E7T1…pump", "of the token held in
+  DKag…7hzh", "of the token at lookup table CpST…Swey[62]", where it
+  read "of an unverified token" with the token in brackets after any
+  note, the mint written in full.
+
 - **Raw units grouped.** A token's amount in raw units groups its digits
   ("20,998,877,118 raw units") as the engine now does, where it was
   written unbroken.

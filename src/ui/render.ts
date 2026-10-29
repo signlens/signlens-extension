@@ -235,15 +235,16 @@ function amountNode(amount: Amount): HTMLSpanElement {
     const node = element('span', 'amount');
     const prefix = PREFIX[amount.bound];
     const asset = amount.asset;
+    // A token without a symbol is named after "of": by its description when
+    // its mint is not known, or by its mint, shortened.
+    const token = () => (asset.description ? messageNode(asset.description) : `unverified token ${short(asset.id ?? '')}`);
     if ((amount.bound === 'unlimited' || amount.bound === 'unknown') && asset.symbol) node.append(`${prefix}${asset.symbol}`);
-    else if (amount.bound === 'unlimited') node.append('UNLIMITED unverified token');
-    else if (amount.bound === 'unknown') node.append('an unknown amount of an unverified token');
+    else if (amount.bound === 'unlimited') node.append('an UNLIMITED amount of ', token());
+    else if (amount.bound === 'unknown') node.append('an unknown amount of ', token());
     else if (asset.symbol) node.append(`${prefix}${quantity(amount)} ${asset.symbol}`);
-    else node.append(`${prefix}${quantity(amount)} of an unverified token`);
+    else node.append(`${prefix}${quantity(amount)} of `, token());
     mark(node, asset.trust);
     if (amount.note) node.append(' (', messageNode(amount.note), ')');
-    // A token whose mint is not known is described, where its mint would be.
-    if (!asset.symbol) node.append(' (', asset.description ? messageNode(asset.description) : (asset.id ?? ''), ')');
     return node;
 }
 

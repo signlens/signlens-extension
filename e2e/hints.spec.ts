@@ -64,9 +64,7 @@ test('a token nothing names stays in raw units, and the lookup is remembered', a
     await popup.reload();
     const row = popup.locator('#history li').first();
     await row.locator('summary').click();
-    await expect(row.locator('.summary-line')).toContainText(
-        'raw units of an unverified token (HMYd9tosnUXuNHmq7pXmoePRVBLBBjA3JBfydq6upump)',
-    );
+    await expect(row.locator('.summary-line')).toContainText('raw units of unverified token HMYd…pump');
 });
 
 test('with the lookup off nothing leaves for the token list', async ({ configure, dapp, server }) => {
