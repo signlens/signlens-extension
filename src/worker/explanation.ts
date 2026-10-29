@@ -14,6 +14,7 @@
 import { isAddress } from '../shared/base58.ts';
 import { withoutControls } from '../shared/text.ts';
 import {
+    type Action,
     type Address,
     type Amount,
     type Asset,
@@ -387,6 +388,14 @@ const wordedEffect: Read<WordedEffect> = (input, path) => ({
     message: new Fields(input, path).read('message', messageAt(0)),
 });
 
+const action: Read<Action> = (value, path) => {
+    const o = new Fields(value, path);
+    return {
+        instruction: o.read('instruction', index),
+        summary: o.read('summary', messageAt(0, 2_000)),
+    };
+};
+
 const finding: Read<Finding> = (value, path) => {
     const o = new Fields(value, path);
     return {
@@ -427,6 +436,8 @@ export function parseExplanation(document: unknown): Explanation {
         schema: EXPLANATION_SCHEMA,
         chain: o.read('chain', text(100)),
         summary: o.read('summary', messageAt(0, 2_000)),
+        // An engine before 0.3 lists none; the summary then stands alone.
+        actions: o.read('actions', (v, p) => (v === undefined ? [] : list(action)(v, p))),
         verdict: o.read('verdict', oneOf(VERDICTS, 'a verdict')),
         findings: o.read('findings', list(finding)),
         sections: o.read('sections', list(section)),

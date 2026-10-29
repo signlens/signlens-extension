@@ -1,4 +1,39 @@
 {
+  "actions": [
+    {
+      "instruction": 7,
+      "summary": {
+        "id": null,
+        "parts": [
+          {
+            "text": "Deposit "
+          },
+          {
+            "text": "4,635.28675 USDC",
+            "value": {
+              "type": "amount",
+              "value": {
+                "asset": {
+                  "decimals": 6,
+                  "description": null,
+                  "id": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+                  "symbol": "USDC",
+                  "trust": "verified"
+                },
+                "bound": "exact",
+                "note": null,
+                "units": "4635286750"
+              }
+            }
+          },
+          {
+            "text": " into Kamino Lend as collateral"
+          }
+        ],
+        "text": "Deposit 4,635.28675 USDC into Kamino Lend as collateral"
+      }
+    }
+  ],
   "chain": "solana",
   "effects": [
     {
@@ -9,7 +44,7 @@
             "text": "You send "
           },
           {
-            "text": "4,635.28675 USDC (verified)",
+            "text": "4,635.28675 USDC",
             "value": {
               "type": "amount",
               "value": {
@@ -30,7 +65,7 @@
             "text": " from "
           },
           {
-            "text": "Your wallet (2P5t…sPxW) (verified)",
+            "text": "Your wallet (2P5t…sPxW)",
             "value": {
               "type": "address",
               "value": {
@@ -54,7 +89,7 @@
             "text": " to "
           },
           {
-            "text": "Kamino Lend (KLen…gmjD) (verified)",
+            "text": "Kamino Lend (KLen…gmjD)",
             "value": {
               "type": "address",
               "value": {
@@ -79,7 +114,7 @@
             }
           }
         ],
-        "text": "You send 4,635.28675 USDC (verified) from Your wallet (2P5t…sPxW) (verified) to Kamino Lend (KLen…gmjD) (verified)"
+        "text": "You send 4,635.28675 USDC from Your wallet (2P5t…sPxW) to Kamino Lend (KLen…gmjD)"
       },
       "type": "transfer",
       "value": {
@@ -136,10 +171,10 @@
         "id": null,
         "parts": [
           {
-            "text": "Credits the deposit to the obligation as collateral"
+            "text": "Credit the deposit to the obligation as collateral"
           }
         ],
-        "text": "Credits the deposit to the obligation as collateral"
+        "text": "Credit the deposit to the obligation as collateral"
       },
       "type": "other",
       "value": {
@@ -147,10 +182,10 @@
           "id": null,
           "parts": [
             {
-              "text": "Credits the deposit to the obligation as collateral"
+              "text": "Credit the deposit to the obligation as collateral"
             }
           ],
-          "text": "Credits the deposit to the obligation as collateral"
+          "text": "Credit the deposit to the obligation as collateral"
         }
       }
     },
@@ -162,7 +197,7 @@
             "text": "Create "
           },
           {
-            "text": "Your USDC account (4Pus…gpZ8) (verified)",
+            "text": "Your USDC account (4Pus…gpZ8)",
             "value": {
               "type": "address",
               "value": {
@@ -193,10 +228,10 @@
             }
           },
           {
-            "text": " owned by "
+            "text": ", managed by "
           },
           {
-            "text": "Token program (Toke…Q5DA) (verified)",
+            "text": "Token program (Toke…Q5DA)",
             "value": {
               "type": "address",
               "value": {
@@ -245,7 +280,7 @@
             "text": " unless it already exists"
           }
         ],
-        "text": "Create Your USDC account (4Pus…gpZ8) (verified) owned by Token program (Toke…Q5DA) (verified), depositing 0.00148844 SOL unless it already exists"
+        "text": "Create Your USDC account (4Pus…gpZ8), managed by Token program (Toke…Q5DA), depositing 0.00148844 SOL unless it already exists"
       },
       "type": "create",
       "value": {
@@ -313,10 +348,10 @@
         "id": null,
         "parts": [
           {
-            "text": "Updates the reserve's oracle prices and accrued interest; moves no tokens"
+            "text": "Update the reserve's oracle prices and accrued interest; no tokens move"
           }
         ],
-        "text": "Updates the reserve's oracle prices and accrued interest; moves no tokens"
+        "text": "Update the reserve's oracle prices and accrued interest; no tokens move"
       },
       "type": "other",
       "value": {
@@ -324,10 +359,10 @@
           "id": null,
           "parts": [
             {
-              "text": "Updates the reserve's oracle prices and accrued interest; moves no tokens"
+              "text": "Update the reserve's oracle prices and accrued interest; no tokens move"
             }
           ],
-          "text": "Updates the reserve's oracle prices and accrued interest; moves no tokens"
+          "text": "Update the reserve's oracle prices and accrued interest; no tokens move"
         }
       }
     },
@@ -336,10 +371,10 @@
         "id": null,
         "parts": [
           {
-            "text": "Updates the reserve's oracle prices and accrued interest; moves no tokens"
+            "text": "Update the reserve's oracle prices and accrued interest; no tokens move"
           }
         ],
-        "text": "Updates the reserve's oracle prices and accrued interest; moves no tokens"
+        "text": "Update the reserve's oracle prices and accrued interest; no tokens move"
       },
       "type": "other",
       "value": {
@@ -347,10 +382,10 @@
           "id": null,
           "parts": [
             {
-              "text": "Updates the reserve's oracle prices and accrued interest; moves no tokens"
+              "text": "Update the reserve's oracle prices and accrued interest; no tokens move"
             }
           ],
-          "text": "Updates the reserve's oracle prices and accrued interest; moves no tokens"
+          "text": "Update the reserve's oracle prices and accrued interest; no tokens move"
         }
       }
     },
@@ -359,10 +394,10 @@
         "id": null,
         "parts": [
           {
-            "text": "Updates the reserve's oracle prices and accrued interest; moves no tokens"
+            "text": "Update the reserve's oracle prices and accrued interest; no tokens move"
           }
         ],
-        "text": "Updates the reserve's oracle prices and accrued interest; moves no tokens"
+        "text": "Update the reserve's oracle prices and accrued interest; no tokens move"
       },
       "type": "other",
       "value": {
@@ -370,10 +405,10 @@
           "id": null,
           "parts": [
             {
-              "text": "Updates the reserve's oracle prices and accrued interest; moves no tokens"
+              "text": "Update the reserve's oracle prices and accrued interest; no tokens move"
             }
           ],
-          "text": "Updates the reserve's oracle prices and accrued interest; moves no tokens"
+          "text": "Update the reserve's oracle prices and accrued interest; no tokens move"
         }
       }
     },
@@ -382,10 +417,10 @@
         "id": null,
         "parts": [
           {
-            "text": "Recomputes the obligation's collateral and debt values; moves no tokens"
+            "text": "Recompute the obligation's collateral and debt values; no tokens move"
           }
         ],
-        "text": "Recomputes the obligation's collateral and debt values; moves no tokens"
+        "text": "Recompute the obligation's collateral and debt values; no tokens move"
       },
       "type": "other",
       "value": {
@@ -393,10 +428,10 @@
           "id": null,
           "parts": [
             {
-              "text": "Recomputes the obligation's collateral and debt values; moves no tokens"
+              "text": "Recompute the obligation's collateral and debt values; no tokens move"
             }
           ],
-          "text": "Recomputes the obligation's collateral and debt values; moves no tokens"
+          "text": "Recompute the obligation's collateral and debt values; no tokens move"
         }
       }
     },
@@ -1304,10 +1339,10 @@
                   }
                 },
                 {
-                  "text": " if the accounts it creates only when missing do not exist yet; returned when the accounts are closed"
+                  "text": ", if the account this transaction creates when missing does not exist yet; refunded to whoever closes the account"
                 }
               ],
-              "text": "up to 0.00148844 SOL if the accounts it creates only when missing do not exist yet; returned when the accounts are closed"
+              "text": "up to 0.00148844 SOL, if the account this transaction creates when missing does not exist yet; refunded to whoever closes the account"
             }
           }
         }
@@ -1374,11 +1409,32 @@
     "id": null,
     "parts": [
       {
-        "text": "Deposit 4,635.28675 USDC (verified) into Kamino Lend as collateral"
+        "text": "Deposit "
+      },
+      {
+        "text": "4,635.28675 USDC",
+        "value": {
+          "type": "amount",
+          "value": {
+            "asset": {
+              "decimals": 6,
+              "description": null,
+              "id": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+              "symbol": "USDC",
+              "trust": "verified"
+            },
+            "bound": "exact",
+            "note": null,
+            "units": "4635286750"
+          }
+        }
+      },
+      {
+        "text": " into Kamino Lend as collateral"
       }
     ],
-    "text": "Deposit 4,635.28675 USDC (verified) into Kamino Lend as collateral"
+    "text": "Deposit 4,635.28675 USDC into Kamino Lend as collateral"
   },
-  "text": "Deposit 4,635.28675 USDC (verified) into Kamino Lend as collateral\nOK\n\n== Deposit collateral | Kamino Lend (descriptor reviewed 2026-09-29, upgradeable by GzFg…kzkW)\n  Deposit: 4,635.28675 USDC (verified)\n  Obligation: 5iLEgayZ19eL6vGLEtELtCpYrGxZYGL4xEBsxMaYAfFz\n  Reserve: D6q6wuQSrifJKZYpR1M8R4YawnLDtDsMmWM1NbBmgJ59\n  From account: Your USDC account (4Pus…gpZ8) (verified)\n\n== Also [collapsed]\n  Compute unit limit: 213727\n  Compute unit price: 70182 micro-lamports per unit\n  Create token account if missing: Token account: Your USDC account (4Pus…gpZ8) (verified)\n  Create token account if missing: Owner: Your wallet (2P5t…sPxW) (verified)\n  Create token account if missing: Mint: USDC mint (EPjF…Dt1v) (verified)\n  Create token account if missing: Rent paid by: Your wallet (2P5t…sPxW) (verified)\n  Create token account if missing: Token program: Token program (Toke…Q5DA) (verified)\n  Refresh reserve: Reserve: 37Jk2zkz23vkAYBT66HM2gaqJuNg2nYLsCreQAVt5MWK\n  Refresh reserve: Reserve: d4A2prbA2whesmvHaL88BH6Ewn5N4bTSU2Ze8P6Bc4Q\n  Refresh reserve: Reserve: D6q6wuQSrifJKZYpR1M8R4YawnLDtDsMmWM1NbBmgJ59\n  Refresh obligation: Obligation: 5iLEgayZ19eL6vGLEtELtCpYrGxZYGL4xEBsxMaYAfFz\n  Refresh obligation: Additional accounts: 3, not named by this descriptor\n\n== Signers\n  Fee payer: Your wallet (2P5t…sPxW) (verified)\n\n== Fee\n  Total: 0.00002 SOL\n  Base: 0.000005 SOL\n  Priority: 0.000015 SOL\n  Priority basis: 70182 micro-lamports per unit × 213727 units requested\n  Rent deposits: up to 0.00148844 SOL if the accounts it creates only when missing do not exist yet; returned when the accounts are closed\n\n== Validity\n  Expires: in about a minute (recent blockhash)\n\nEffects:\n  - You send 4,635.28675 USDC (verified) from Your wallet (2P5t…sPxW) (verified) to Kamino Lend (KLen…gmjD) (verified)\n  - Credits the deposit to the obligation as collateral\n  - Create Your USDC account (4Pus…gpZ8) (verified) owned by Token program (Toke…Q5DA) (verified), depositing 0.00148844 SOL unless it already exists\n  - Updates the reserve's oracle prices and accrued interest; moves no tokens\n  - Updates the reserve's oracle prices and accrued interest; moves no tokens\n  - Updates the reserve's oracle prices and accrued interest; moves no tokens\n  - Recomputes the obligation's collateral and debt values; moves no tokens\n  - You pay a fee of 0.00002 SOL\n  - Valid for about a minute (recent blockhash)\n\nRaw: solana v0 (507 bytes)\n  digest: 00aceb9aa518bff00dfe2464dfe370cd22dc63e59126a1521d38557ae97a3612\n",
+  "text": "Deposit 4,635.28675 USDC into Kamino Lend as collateral\nOK\n\n== Deposit collateral | Kamino Lend (descriptor reviewed 2026-09-29, upgradeable by GzFg…kzkW)\n  Deposit: 4,635.28675 USDC\n  Obligation: 5iLEgayZ19eL6vGLEtELtCpYrGxZYGL4xEBsxMaYAfFz\n  Reserve: D6q6wuQSrifJKZYpR1M8R4YawnLDtDsMmWM1NbBmgJ59\n  From account: Your USDC account (4Pus…gpZ8)\n\n== Also [collapsed]\n  Compute unit limit: 213727\n  Compute unit price: 70182 micro-lamports per unit\n  Create token account if missing: Token account: Your USDC account (4Pus…gpZ8)\n  Create token account if missing: Owner: Your wallet (2P5t…sPxW)\n  Create token account if missing: Mint: USDC mint (EPjF…Dt1v)\n  Create token account if missing: Rent paid by: Your wallet (2P5t…sPxW)\n  Create token account if missing: Token program: Token program (Toke…Q5DA)\n  Refresh reserve: Reserve: 37Jk2zkz23vkAYBT66HM2gaqJuNg2nYLsCreQAVt5MWK\n  Refresh reserve: Reserve: d4A2prbA2whesmvHaL88BH6Ewn5N4bTSU2Ze8P6Bc4Q\n  Refresh reserve: Reserve: D6q6wuQSrifJKZYpR1M8R4YawnLDtDsMmWM1NbBmgJ59\n  Refresh obligation: Obligation: 5iLEgayZ19eL6vGLEtELtCpYrGxZYGL4xEBsxMaYAfFz\n  Refresh obligation: Additional accounts: 3, not named by this descriptor\n\n== Signers\n  Fee payer: Your wallet (2P5t…sPxW)\n\n== Fee\n  Total: 0.00002 SOL\n  Base: 0.000005 SOL\n  Priority: 0.000015 SOL\n  Priority basis: 70182 micro-lamports per unit × 213727 units requested\n  Rent deposits: up to 0.00148844 SOL, if the account this transaction creates when missing does not exist yet; refunded to whoever closes the account\n\n== Validity\n  Expires: in about a minute (recent blockhash)\n\nEffects:\n  - You send 4,635.28675 USDC from Your wallet (2P5t…sPxW) to Kamino Lend (KLen…gmjD)\n  - Credit the deposit to the obligation as collateral\n  - Create Your USDC account (4Pus…gpZ8), managed by Token program (Toke…Q5DA), depositing 0.00148844 SOL unless it already exists\n  - Update the reserve's oracle prices and accrued interest; no tokens move\n  - Update the reserve's oracle prices and accrued interest; no tokens move\n  - Update the reserve's oracle prices and accrued interest; no tokens move\n  - Recompute the obligation's collateral and debt values; no tokens move\n  - You pay a fee of 0.00002 SOL\n  - Valid for about a minute (recent blockhash)\n\nRaw: solana v0 (507 bytes)\n  digest: 00aceb9aa518bff00dfe2464dfe370cd22dc63e59126a1521d38557ae97a3612\n",
   "verdict": "ok"
 }

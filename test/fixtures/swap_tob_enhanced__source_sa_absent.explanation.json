@@ -1,4 +1,186 @@
 {
+  "actions": [
+    {
+      "instruction": 3,
+      "summary": {
+        "id": "system-transfer-summary",
+        "parts": [
+          {
+            "text": "Transfer "
+          },
+          {
+            "text": "0.001855569 SOL",
+            "value": {
+              "type": "amount",
+              "value": {
+                "asset": {
+                  "decimals": 9,
+                  "description": null,
+                  "id": "native",
+                  "symbol": "SOL",
+                  "trust": "fact"
+                },
+                "bound": "exact",
+                "note": null,
+                "units": "1855569"
+              }
+            }
+          },
+          {
+            "text": " from "
+          },
+          {
+            "short": {
+              "address": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR",
+              "is_self": false,
+              "label": null,
+              "label_trust": "fact",
+              "stand_in": null
+            },
+            "text": "CVJ6…Q3bR"
+          },
+          {
+            "text": " to "
+          },
+          {
+            "short": {
+              "address": "91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD",
+              "is_self": false,
+              "label": null,
+              "label_trust": "fact",
+              "stand_in": null
+            },
+            "text": "91rj…BXHD"
+          }
+        ],
+        "text": "Transfer 0.001855569 SOL from CVJ6…Q3bR to 91rj…BXHD"
+      }
+    },
+    {
+      "instruction": 5,
+      "summary": {
+        "id": null,
+        "parts": [
+          {
+            "text": "Swap "
+          },
+          {
+            "text": "151,360,479,993 raw units of the token at lookup table 6vgy…uwpB[3]",
+            "value": {
+              "type": "amount",
+              "value": {
+                "asset": {
+                  "decimals": null,
+                  "description": {
+                    "id": "accounts-lookup-table-token",
+                    "parts": [
+                      {
+                        "text": "the token at lookup table "
+                      },
+                      {
+                        "short": {
+                          "address": "6vgyKgTfmNrAfFK5in8Je8pt8Fy2csyKWAafv6dKuwpB",
+                          "is_self": false,
+                          "label": null,
+                          "label_trust": "fact",
+                          "stand_in": null
+                        },
+                        "text": "6vgy…uwpB"
+                      },
+                      {
+                        "text": "["
+                      },
+                      {
+                        "text": "3",
+                        "value": {
+                          "type": "integer",
+                          "value": "3"
+                        }
+                      },
+                      {
+                        "text": "]"
+                      }
+                    ],
+                    "text": "the token at lookup table 6vgy…uwpB[3]"
+                  },
+                  "id": null,
+                  "symbol": null,
+                  "trust": "fact"
+                },
+                "bound": "exact",
+                "note": null,
+                "units": "151360479993"
+              }
+            }
+          },
+          {
+            "text": " for "
+          },
+          {
+            "text": "≥ 80,334,153 raw units of the token at lookup table GP57…1gPy[60] (before any transfer fee)",
+            "value": {
+              "type": "amount",
+              "value": {
+                "asset": {
+                  "decimals": null,
+                  "description": {
+                    "id": "accounts-lookup-table-token",
+                    "parts": [
+                      {
+                        "text": "the token at lookup table "
+                      },
+                      {
+                        "short": {
+                          "address": "GP57a1T8vJjeAnF2zfKT1bnZysNwVprLaw6Mjw2d1gPy",
+                          "is_self": false,
+                          "label": null,
+                          "label_trust": "fact",
+                          "stand_in": null
+                        },
+                        "text": "GP57…1gPy"
+                      },
+                      {
+                        "text": "["
+                      },
+                      {
+                        "text": "60",
+                        "value": {
+                          "type": "integer",
+                          "value": "60"
+                        }
+                      },
+                      {
+                        "text": "]"
+                      }
+                    ],
+                    "text": "the token at lookup table GP57…1gPy[60]"
+                  },
+                  "id": null,
+                  "symbol": null,
+                  "trust": "fact"
+                },
+                "bound": "at_least",
+                "note": {
+                  "id": "descriptor-before-fee",
+                  "parts": [
+                    {
+                      "text": "before any transfer fee"
+                    }
+                  ],
+                  "text": "before any transfer fee"
+                },
+                "units": "80334153"
+              }
+            }
+          },
+          {
+            "text": " via OKX"
+          }
+        ],
+        "text": "Swap 151,360,479,993 raw units of the token at lookup table 6vgy…uwpB[3] for ≥ 80,334,153 raw units of the token at lookup table GP57…1gPy[60] (before any transfer fee) via OKX"
+      }
+    }
+  ],
   "chain": "solana",
   "effects": [
     {
@@ -99,17 +281,17 @@
             "text": "Transfer "
           },
           {
-            "text": "≤ 151360479993 raw units of an unverified token (before any transfer fee) (lookup table 6vgy…uwpB[3])",
+            "text": "≤ 151,360,479,993 raw units of the token at lookup table 6vgy…uwpB[3] (before any transfer fee)",
             "value": {
               "type": "amount",
               "value": {
                 "asset": {
                   "decimals": null,
                   "description": {
-                    "id": "accounts-lookup-table-slot",
+                    "id": "accounts-lookup-table-token",
                     "parts": [
                       {
-                        "text": "lookup table "
+                        "text": "the token at lookup table "
                       },
                       {
                         "short": {
@@ -135,7 +317,7 @@
                         "text": "]"
                       }
                     ],
-                    "text": "lookup table 6vgy…uwpB[3]"
+                    "text": "the token at lookup table 6vgy…uwpB[3]"
                   },
                   "id": null,
                   "symbol": null,
@@ -175,7 +357,7 @@
             "text": " to "
           },
           {
-            "text": "OKX DEX Router (proV…CX3u) (verified)",
+            "text": "OKX DEX Router (proV…CX3u)",
             "value": {
               "type": "address",
               "value": {
@@ -200,7 +382,7 @@
             }
           }
         ],
-        "text": "Transfer ≤ 151360479993 raw units of an unverified token (before any transfer fee) (lookup table 6vgy…uwpB[3]) from CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR to OKX DEX Router (proV…CX3u) (verified)"
+        "text": "Transfer ≤ 151,360,479,993 raw units of the token at lookup table 6vgy…uwpB[3] (before any transfer fee) from CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR to OKX DEX Router (proV…CX3u)"
       },
       "type": "transfer",
       "value": {
@@ -208,10 +390,10 @@
           "asset": {
             "decimals": null,
             "description": {
-              "id": "accounts-lookup-table-slot",
+              "id": "accounts-lookup-table-token",
               "parts": [
                 {
-                  "text": "lookup table "
+                  "text": "the token at lookup table "
                 },
                 {
                   "short": {
@@ -237,7 +419,7 @@
                   "text": "]"
                 }
               ],
-              "text": "lookup table 6vgy…uwpB[3]"
+              "text": "the token at lookup table 6vgy…uwpB[3]"
             },
             "id": null,
             "symbol": null,
@@ -291,17 +473,17 @@
             "text": "Transfer "
           },
           {
-            "text": "unknown amount of an unverified token (at least 80334153 raw units before a transfer fee the signer cannot know) (lookup table GP57…1gPy[60])",
+            "text": "an unknown amount of the token at lookup table GP57…1gPy[60] (at least 80,334,153 raw units, before a transfer fee SignLens cannot check)",
             "value": {
               "type": "amount",
               "value": {
                 "asset": {
                   "decimals": null,
                   "description": {
-                    "id": "accounts-lookup-table-slot",
+                    "id": "accounts-lookup-table-token",
                     "parts": [
                       {
-                        "text": "lookup table "
+                        "text": "the token at lookup table "
                       },
                       {
                         "short": {
@@ -327,7 +509,7 @@
                         "text": "]"
                       }
                     ],
-                    "text": "lookup table GP57…1gPy[60]"
+                    "text": "the token at lookup table GP57…1gPy[60]"
                   },
                   "id": null,
                   "symbol": null,
@@ -341,17 +523,17 @@
                       "text": "at least "
                     },
                     {
-                      "text": "80334153 raw units",
+                      "text": "80,334,153 raw units",
                       "value": {
                         "type": "text",
-                        "value": "80334153 raw units"
+                        "value": "80,334,153 raw units"
                       }
                     },
                     {
-                      "text": " before a transfer fee the signer cannot know"
+                      "text": ", before a transfer fee SignLens cannot check"
                     }
                   ],
-                  "text": "at least 80334153 raw units before a transfer fee the signer cannot know"
+                  "text": "at least 80,334,153 raw units, before a transfer fee SignLens cannot check"
                 },
                 "units": "0"
               }
@@ -361,7 +543,7 @@
             "text": " from "
           },
           {
-            "text": "OKX DEX Router (proV…CX3u) (verified)",
+            "text": "OKX DEX Router (proV…CX3u)",
             "value": {
               "type": "address",
               "value": {
@@ -402,7 +584,7 @@
             }
           }
         ],
-        "text": "Transfer unknown amount of an unverified token (at least 80334153 raw units before a transfer fee the signer cannot know) (lookup table GP57…1gPy[60]) from OKX DEX Router (proV…CX3u) (verified) to CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR"
+        "text": "Transfer an unknown amount of the token at lookup table GP57…1gPy[60] (at least 80,334,153 raw units, before a transfer fee SignLens cannot check) from OKX DEX Router (proV…CX3u) to CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR"
       },
       "type": "transfer",
       "value": {
@@ -410,10 +592,10 @@
           "asset": {
             "decimals": null,
             "description": {
-              "id": "accounts-lookup-table-slot",
+              "id": "accounts-lookup-table-token",
               "parts": [
                 {
-                  "text": "lookup table "
+                  "text": "the token at lookup table "
                 },
                 {
                   "short": {
@@ -439,7 +621,7 @@
                   "text": "]"
                 }
               ],
-              "text": "lookup table GP57…1gPy[60]"
+              "text": "the token at lookup table GP57…1gPy[60]"
             },
             "id": null,
             "symbol": null,
@@ -453,17 +635,17 @@
                 "text": "at least "
               },
               {
-                "text": "80334153 raw units",
+                "text": "80,334,153 raw units",
                 "value": {
                   "type": "text",
-                  "value": "80334153 raw units"
+                  "value": "80,334,153 raw units"
                 }
               },
               {
-                "text": " before a transfer fee the signer cannot know"
+                "text": ", before a transfer fee SignLens cannot check"
               }
             ],
-            "text": "at least 80334153 raw units before a transfer fee the signer cannot know"
+            "text": "at least 80,334,153 raw units, before a transfer fee SignLens cannot check"
           },
           "units": "0"
         },
@@ -516,10 +698,10 @@
             }
           },
           {
-            "text": " owned by "
+            "text": ", managed by "
           },
           {
-            "text": "lookup table GP57…1gPy[65]",
+            "text": "the account at lookup table GP57…1gPy[65]",
             "value": {
               "type": "address",
               "value": {
@@ -531,7 +713,7 @@
                   "id": "accounts-lookup-table-slot",
                   "parts": [
                     {
-                      "text": "lookup table "
+                      "text": "the account at lookup table "
                     },
                     {
                       "short": {
@@ -557,7 +739,7 @@
                       "text": "]"
                     }
                   ],
-                  "text": "lookup table GP57…1gPy[65]"
+                  "text": "the account at lookup table GP57…1gPy[65]"
                 }
               }
             }
@@ -584,7 +766,7 @@
             }
           }
         ],
-        "text": "Create 91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD owned by lookup table GP57…1gPy[65], depositing 0.00148844 SOL"
+        "text": "Create 91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD, managed by the account at lookup table GP57…1gPy[65], depositing 0.00148844 SOL"
       },
       "type": "create",
       "value": {
@@ -617,7 +799,7 @@
             "id": "accounts-lookup-table-slot",
             "parts": [
               {
-                "text": "lookup table "
+                "text": "the account at lookup table "
               },
               {
                 "short": {
@@ -643,7 +825,7 @@
                 "text": "]"
               }
             ],
-            "text": "lookup table GP57…1gPy[65]"
+            "text": "the account at lookup table GP57…1gPy[65]"
           }
         }
       }
@@ -750,10 +932,10 @@
         "id": null,
         "parts": [
           {
-            "text": "The destination token account is not one of your accounts for a verified token; the signer cannot prove who owns it"
+            "text": "The destination token account is not one of your accounts for a verified token; SignLens cannot confirm who owns it"
           }
         ],
-        "text": "The destination token account is not one of your accounts for a verified token; the signer cannot prove who owns it"
+        "text": "The destination token account is not one of your accounts for a verified token; SignLens cannot confirm who owns it"
       },
       "severity": "info"
     },
@@ -878,12 +1060,9 @@
               "type": "text",
               "value": "System program"
             }
-          },
-          {
-            "text": " (verified)"
           }
         ],
-        "text": "System program (verified)"
+        "text": "System program"
       },
       "title": {
         "id": "system-transfer-title",
@@ -924,10 +1103,10 @@
               "asset": {
                 "decimals": null,
                 "description": {
-                  "id": "accounts-lookup-table-slot",
+                  "id": "accounts-lookup-table-token",
                   "parts": [
                     {
-                      "text": "lookup table "
+                      "text": "the token at lookup table "
                     },
                     {
                       "short": {
@@ -953,7 +1132,7 @@
                       "text": "]"
                     }
                   ],
-                  "text": "lookup table 6vgy…uwpB[3]"
+                  "text": "the token at lookup table 6vgy…uwpB[3]"
                 },
                 "id": null,
                 "symbol": null,
@@ -991,10 +1170,10 @@
               "asset": {
                 "decimals": null,
                 "description": {
-                  "id": "accounts-lookup-table-slot",
+                  "id": "accounts-lookup-table-token",
                   "parts": [
                     {
-                      "text": "lookup table "
+                      "text": "the token at lookup table "
                     },
                     {
                       "short": {
@@ -1020,7 +1199,7 @@
                       "text": "]"
                     }
                   ],
-                  "text": "lookup table GP57…1gPy[60]"
+                  "text": "the token at lookup table GP57…1gPy[60]"
                 },
                 "id": null,
                 "symbol": null,
@@ -1066,10 +1245,10 @@
               "asset": {
                 "decimals": null,
                 "description": {
-                  "id": "accounts-lookup-table-slot",
+                  "id": "accounts-lookup-table-token",
                   "parts": [
                     {
-                      "text": "lookup table "
+                      "text": "the token at lookup table "
                     },
                     {
                       "short": {
@@ -1095,7 +1274,7 @@
                       "text": "]"
                     }
                   ],
-                  "text": "lookup table GP57…1gPy[60]"
+                  "text": "the token at lookup table GP57…1gPy[60]"
                 },
                 "id": null,
                 "symbol": null,
@@ -1287,20 +1466,160 @@
             "type": "list",
             "value": [
               {
-                "type": "text",
-                "value": "RaydiumClmmSwapV2 (weight 2790, leg 1)"
+                "type": "words",
+                "value": {
+                  "id": null,
+                  "parts": [
+                    {
+                      "text": "RaydiumClmmSwapV2",
+                      "value": {
+                        "type": "text",
+                        "value": "RaydiumClmmSwapV2"
+                      }
+                    },
+                    {
+                      "text": " (weight "
+                    },
+                    {
+                      "text": "2790",
+                      "value": {
+                        "type": "integer",
+                        "value": "2790"
+                      }
+                    },
+                    {
+                      "text": ", leg "
+                    },
+                    {
+                      "text": "1",
+                      "value": {
+                        "type": "integer",
+                        "value": "1"
+                      }
+                    },
+                    {
+                      "text": ")"
+                    }
+                  ],
+                  "text": "RaydiumClmmSwapV2 (weight 2790, leg 1)"
+                }
               },
               {
-                "type": "text",
-                "value": "MeteoraDlmmSwap2 (weight 310, leg 1)"
+                "type": "words",
+                "value": {
+                  "id": null,
+                  "parts": [
+                    {
+                      "text": "MeteoraDlmmSwap2",
+                      "value": {
+                        "type": "text",
+                        "value": "MeteoraDlmmSwap2"
+                      }
+                    },
+                    {
+                      "text": " (weight "
+                    },
+                    {
+                      "text": "310",
+                      "value": {
+                        "type": "integer",
+                        "value": "310"
+                      }
+                    },
+                    {
+                      "text": ", leg "
+                    },
+                    {
+                      "text": "1",
+                      "value": {
+                        "type": "integer",
+                        "value": "1"
+                      }
+                    },
+                    {
+                      "text": ")"
+                    }
+                  ],
+                  "text": "MeteoraDlmmSwap2 (weight 310, leg 1)"
+                }
               },
               {
-                "type": "text",
-                "value": "RaydiumClmmSwapV2 (weight 6900, leg 2)"
+                "type": "words",
+                "value": {
+                  "id": null,
+                  "parts": [
+                    {
+                      "text": "RaydiumClmmSwapV2",
+                      "value": {
+                        "type": "text",
+                        "value": "RaydiumClmmSwapV2"
+                      }
+                    },
+                    {
+                      "text": " (weight "
+                    },
+                    {
+                      "text": "6900",
+                      "value": {
+                        "type": "integer",
+                        "value": "6900"
+                      }
+                    },
+                    {
+                      "text": ", leg "
+                    },
+                    {
+                      "text": "2",
+                      "value": {
+                        "type": "integer",
+                        "value": "2"
+                      }
+                    },
+                    {
+                      "text": ")"
+                    }
+                  ],
+                  "text": "RaydiumClmmSwapV2 (weight 6900, leg 2)"
+                }
               },
               {
-                "type": "text",
-                "value": "ByrealClmm3 (weight 10000, leg 18)"
+                "type": "words",
+                "value": {
+                  "id": null,
+                  "parts": [
+                    {
+                      "text": "ByrealClmm3",
+                      "value": {
+                        "type": "text",
+                        "value": "ByrealClmm3"
+                      }
+                    },
+                    {
+                      "text": " (weight "
+                    },
+                    {
+                      "text": "10000",
+                      "value": {
+                        "type": "integer",
+                        "value": "10000"
+                      }
+                    },
+                    {
+                      "text": ", leg "
+                    },
+                    {
+                      "text": "18",
+                      "value": {
+                        "type": "integer",
+                        "value": "18"
+                      }
+                    },
+                    {
+                      "text": ")"
+                    }
+                  ],
+                  "text": "ByrealClmm3 (weight 10000, leg 18)"
+                }
               }
             ]
           }
@@ -1632,7 +1951,7 @@
                 "id": "accounts-lookup-table-slot",
                 "parts": [
                   {
-                    "text": "lookup table "
+                    "text": "the account at lookup table "
                   },
                   {
                     "short": {
@@ -1658,7 +1977,7 @@
                     "text": "]"
                   }
                 ],
-                "text": "lookup table GP57…1gPy[60]"
+                "text": "the account at lookup table GP57…1gPy[60]"
               }
             }
           }
@@ -1725,7 +2044,7 @@
                 "id": "accounts-lookup-table-slot",
                 "parts": [
                   {
-                    "text": "lookup table "
+                    "text": "the account at lookup table "
                   },
                   {
                     "short": {
@@ -1751,7 +2070,7 @@
                     "text": "]"
                   }
                 ],
-                "text": "lookup table GP57…1gPy[65]"
+                "text": "the account at lookup table GP57…1gPy[65]"
               }
             }
           }
@@ -1977,10 +2296,10 @@
                   }
                 },
                 {
-                  "text": "; returned when the accounts are closed"
+                  "text": "; refunded to whoever closes the account"
                 }
               ],
-              "text": "0.00148844 SOL; returned when the accounts are closed"
+              "text": "0.00148844 SOL; refunded to whoever closes the account"
             }
           }
         }
@@ -2101,11 +2420,123 @@
         "text": "91rj…BXHD"
       },
       {
-        "text": "; Swap 151360479993 raw units of an unverified token (lookup table 6vgy…uwpB[3]) for ≥ 80334153 raw units of an unverified token (before any transfer fee) (lookup table GP57…1gPy[60]) via OKX"
+        "text": "; Swap "
+      },
+      {
+        "text": "151,360,479,993 raw units of the token at lookup table 6vgy…uwpB[3]",
+        "value": {
+          "type": "amount",
+          "value": {
+            "asset": {
+              "decimals": null,
+              "description": {
+                "id": "accounts-lookup-table-token",
+                "parts": [
+                  {
+                    "text": "the token at lookup table "
+                  },
+                  {
+                    "short": {
+                      "address": "6vgyKgTfmNrAfFK5in8Je8pt8Fy2csyKWAafv6dKuwpB",
+                      "is_self": false,
+                      "label": null,
+                      "label_trust": "fact",
+                      "stand_in": null
+                    },
+                    "text": "6vgy…uwpB"
+                  },
+                  {
+                    "text": "["
+                  },
+                  {
+                    "text": "3",
+                    "value": {
+                      "type": "integer",
+                      "value": "3"
+                    }
+                  },
+                  {
+                    "text": "]"
+                  }
+                ],
+                "text": "the token at lookup table 6vgy…uwpB[3]"
+              },
+              "id": null,
+              "symbol": null,
+              "trust": "fact"
+            },
+            "bound": "exact",
+            "note": null,
+            "units": "151360479993"
+          }
+        }
+      },
+      {
+        "text": " for "
+      },
+      {
+        "text": "≥ 80,334,153 raw units of the token at lookup table GP57…1gPy[60] (before any transfer fee)",
+        "value": {
+          "type": "amount",
+          "value": {
+            "asset": {
+              "decimals": null,
+              "description": {
+                "id": "accounts-lookup-table-token",
+                "parts": [
+                  {
+                    "text": "the token at lookup table "
+                  },
+                  {
+                    "short": {
+                      "address": "GP57a1T8vJjeAnF2zfKT1bnZysNwVprLaw6Mjw2d1gPy",
+                      "is_self": false,
+                      "label": null,
+                      "label_trust": "fact",
+                      "stand_in": null
+                    },
+                    "text": "GP57…1gPy"
+                  },
+                  {
+                    "text": "["
+                  },
+                  {
+                    "text": "60",
+                    "value": {
+                      "type": "integer",
+                      "value": "60"
+                    }
+                  },
+                  {
+                    "text": "]"
+                  }
+                ],
+                "text": "the token at lookup table GP57…1gPy[60]"
+              },
+              "id": null,
+              "symbol": null,
+              "trust": "fact"
+            },
+            "bound": "at_least",
+            "note": {
+              "id": "descriptor-before-fee",
+              "parts": [
+                {
+                  "text": "before any transfer fee"
+                }
+              ],
+              "text": "before any transfer fee"
+            },
+            "units": "80334153"
+          }
+        }
+      },
+      {
+        "text": " via OKX"
       }
     ],
-    "text": "2 actions: Transfer 0.001855569 SOL from CVJ6…Q3bR to 91rj…BXHD; Swap 151360479993 raw units of an unverified token (lookup table 6vgy…uwpB[3]) for ≥ 80334153 raw units of an unverified token (before any transfer fee) (lookup table GP57…1gPy[60]) via OKX"
+    "text": "2 actions: Transfer 0.001855569 SOL from CVJ6…Q3bR to 91rj…BXHD; Swap 151,360,479,993 raw units of the token at lookup table 6vgy…uwpB[3] for ≥ 80,334,153 raw units of the token at lookup table GP57…1gPy[60] (before any transfer fee) via OKX"
   },
-  "text": "2 actions: Transfer 0.001855569 SOL from CVJ6…Q3bR to 91rj…BXHD; Swap 151360479993 raw units of an unverified token (lookup table 6vgy…uwpB[3]) for ≥ 80334153 raw units of an unverified token (before any transfer fee) (lookup table GP57…1gPy[60]) via OKX\nWARNING: review the findings before approving\n\nFindings:\n  [HIGH] The swap spends from a token account you do not control (instruction 5)\n  [INFO] The destination token account is not one of your accounts for a verified token; the signer cannot prove who owns it (instruction 5)\n  [INFO] 4 bytes after this compute budget value are ignored; the runtime reads only the value, as shown (instruction 1)\n\n== Transfer | System program (verified)\n  Amount: 0.001855569 SOL\n  From: CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR\n  To: 91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD\n\n== Swap | OKX DEX Router (descriptor reviewed 2026-10-27, upgradeable by CjoV…N1Mj)\n  Send: 151360479993 raw units of an unverified token (lookup table 6vgy…uwpB[3])\n  Receive: ≥ 80334153 raw units of an unverified token (before any transfer fee) (lookup table GP57…1gPy[60])\n  Quoted: 80737843 raw units of an unverified token (lookup table GP57…1gPy[60])\n  Max slippage: 0.50%\n  Commission: 0.81%\n  Commission account: BEochrdGhm5pcKVF73DURYrGo1DLzxq6bBcUBphQR64d\n  Trim rate (program units): 100\n  Charge rate (program units): 500\n  Closes the temporary token account afterwards (flag): 1\n  Route:\n    - RaydiumClmmSwapV2 (weight 2790, leg 1)\n    - MeteoraDlmmSwap2 (weight 310, leg 1)\n    - RaydiumClmmSwapV2 (weight 6900, leg 2)\n    - ByrealClmm3 (weight 10000, leg 18)\n  From account: H51r5KPyahCGiGCQ9jZr5r5bukcXFaRDFtPFZBUyiHfo\n  To account: 91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD\n  Additional accounts: 80, not named by this descriptor\n\n== Also [collapsed]\n  Compute unit limit: 1251656\n  Heap size: 65536 bytes\n  Compute unit price: 1676 micro-lamports per unit\n  Create token account: Token account: 91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD\n  Create token account: Owner: CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR\n  Create token account: Mint: lookup table GP57…1gPy[60]\n  Create token account: Rent paid by: CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR\n  Create token account: Token program: lookup table GP57…1gPy[65]\n\n== Signers\n  Fee payer: CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR\n\n== Fee\n  Total: 0.000007098 SOL\n  Base: 0.000005 SOL\n  Priority: 0.000002098 SOL\n  Priority basis: 1676 micro-lamports per unit × 1251656 units requested\n  Rent deposits: 0.00148844 SOL; returned when the accounts are closed\n\n== Validity\n  Expires: in about a minute (recent blockhash)\n\nEffects:\n  - Transfer 0.001855569 SOL from CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR to 91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD\n  - Transfer ≤ 151360479993 raw units of an unverified token (before any transfer fee) (lookup table 6vgy…uwpB[3]) from CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR to OKX DEX Router (proV…CX3u) (verified)\n  - Transfer unknown amount of an unverified token (at least 80334153 raw units before a transfer fee the signer cannot know) (lookup table GP57…1gPy[60]) from OKX DEX Router (proV…CX3u) (verified) to CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR\n  - Create 91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD owned by lookup table GP57…1gPy[65], depositing 0.00148844 SOL\n  - CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR pays a fee of 0.000007098 SOL\n  - Valid for about a minute (recent blockhash)\n\nRaw: solana v0 (804 bytes)\n  digest: 9f46f53cb1549cfb1d859dc7109c80f65b636658c9999b7f227a133aad7823a2\n",
+  "text": "2 actions: Transfer 0.001855569 SOL from CVJ6…Q3bR to 91rj…BXHD; Swap 151,360,479,993 raw units of the token at lookup table 6vgy…uwpB[3] for ≥ 80,334,153 raw units of the token at lookup table GP57…1gPy[60] (before any transfer fee) via OKX\nWARNING: review the findings before approving\n\nFindings:\n  [HIGH] The swap spends from a token account you do not control (instruction 6)\n  [INFO] The destination token account is not one of your accounts for a verified token; SignLens cannot confirm who owns it (instruction 6)\n  [INFO] 4 bytes after this compute budget value are ignored; the runtime reads only the value, as shown (instruction 2)\n\n== Transfer | System program\n  Amount: 0.001855569 SOL\n  From: CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR\n  To: 91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD\n\n== Swap | OKX DEX Router (descriptor reviewed 2026-10-27, upgradeable by CjoV…N1Mj)\n  Send: 151,360,479,993 raw units of the token at lookup table 6vgy…uwpB[3]\n  Receive: ≥ 80,334,153 raw units of the token at lookup table GP57…1gPy[60] (before any transfer fee)\n  Quoted: 80,737,843 raw units of the token at lookup table GP57…1gPy[60]\n  Max slippage: 0.50%\n  Commission: 0.81%\n  Commission account: BEochrdGhm5pcKVF73DURYrGo1DLzxq6bBcUBphQR64d\n  Trim rate (program units): 100\n  Charge rate (program units): 500\n  Closes the temporary token account afterwards (flag): 1\n  Route:\n    - RaydiumClmmSwapV2 (weight 2790, leg 1)\n    - MeteoraDlmmSwap2 (weight 310, leg 1)\n    - RaydiumClmmSwapV2 (weight 6900, leg 2)\n    - ByrealClmm3 (weight 10000, leg 18)\n  From account: H51r5KPyahCGiGCQ9jZr5r5bukcXFaRDFtPFZBUyiHfo\n  To account: 91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD\n  Additional accounts: 80, not named by this descriptor\n\n== Also [collapsed]\n  Compute unit limit: 1251656\n  Heap size: 65536 bytes\n  Compute unit price: 1676 micro-lamports per unit\n  Create token account: Token account: 91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD\n  Create token account: Owner: CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR\n  Create token account: Mint: the account at lookup table GP57…1gPy[60]\n  Create token account: Rent paid by: CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR\n  Create token account: Token program: the account at lookup table GP57…1gPy[65]\n\n== Signers\n  Fee payer: CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR\n\n== Fee\n  Total: 0.000007098 SOL\n  Base: 0.000005 SOL\n  Priority: 0.000002098 SOL\n  Priority basis: 1676 micro-lamports per unit × 1251656 units requested\n  Rent deposits: 0.00148844 SOL; refunded to whoever closes the account\n\n== Validity\n  Expires: in about a minute (recent blockhash)\n\nEffects:\n  - Transfer 0.001855569 SOL from CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR to 91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD\n  - Transfer ≤ 151,360,479,993 raw units of the token at lookup table 6vgy…uwpB[3] (before any transfer fee) from CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR to OKX DEX Router (proV…CX3u)\n  - Transfer an unknown amount of the token at lookup table GP57…1gPy[60] (at least 80,334,153 raw units, before a transfer fee SignLens cannot check) from OKX DEX Router (proV…CX3u) to CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR\n  - Create 91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD, managed by the account at lookup table GP57…1gPy[65], depositing 0.00148844 SOL\n  - CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR pays a fee of 0.000007098 SOL\n  - Valid for about a minute (recent blockhash)\n\nRaw: solana v0 (804 bytes)\n  digest: 9f46f53cb1549cfb1d859dc7109c80f65b636658c9999b7f227a133aad7823a2\n",
   "verdict": "warn"
 }

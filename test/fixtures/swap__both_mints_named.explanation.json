@@ -1,4 +1,18 @@
 {
+  "actions": [
+    {
+      "instruction": 2,
+      "summary": {
+        "id": "dflow-unresolved-summary",
+        "parts": [
+          {
+            "text": "DFlow swap whose route cannot be resolved"
+          }
+        ],
+        "text": "DFlow swap whose route cannot be resolved"
+      }
+    }
+  ],
   "chain": "solana",
   "effects": [
     {
@@ -89,10 +103,10 @@
         "id": "dflow-prefix-unresolved",
         "parts": [
           {
-            "text": "The accounts that fix the route's layout are loaded from lookup tables the signer cannot read"
+            "text": "The accounts that fix the route's layout are loaded from lookup tables SignLens did not read"
           }
         ],
-        "text": "The accounts that fix the route's layout are loaded from lookup tables the signer cannot read"
+        "text": "The accounts that fix the route's layout are loaded from lookup tables SignLens did not read"
       },
       "severity": "critical"
     }
@@ -156,12 +170,9 @@
               "type": "text",
               "value": "DFlow Aggregator"
             }
-          },
-          {
-            "text": " (verified)"
           }
         ],
-        "text": "DFlow Aggregator (verified)"
+        "text": "DFlow Aggregator"
       },
       "title": {
         "id": "dflow-unresolved-title",
@@ -478,6 +489,6 @@
     ],
     "text": "DFlow swap whose route cannot be resolved"
   },
-  "text": "DFlow swap whose route cannot be resolved\nBLOCKED BY DEFAULT (1 critical finding)\n\nFindings:\n  [CRITICAL] The accounts that fix the route's layout are loaded from lookup tables the signer cannot read (instruction 2)\n\n== DFlow swap | DFlow Aggregator (verified)\n  Accounts: 41\n  Data: 0xf8c69e91e17587c803000000259225095578ca432074e549a4fc7c5341fb546063977884832a84c218597c29d51d187223569b43192c511256021bcd8dcc2766cc6c4a56cb3f5149a78bc9690481bbe81a0000ae411e0300001964923300000000000181191ec41c000000000001012b314000000000002c010000\n\n== Also [collapsed]\n  Compute unit limit: 197941\n  Compute unit price: 2701 micro-lamports per unit\n\n== Signers\n  Fee payer: 5yLgQQwD42seAkce1heScsh2spYgNA3q43SPhZBn8Ldc\n\n== Fee\n  Total: 0.000005535 SOL\n  Base: 0.000005 SOL\n  Priority: 0.000000535 SOL\n  Priority basis: 2701 micro-lamports per unit × 197941 units requested\n\n== Validity\n  Expires: in about a minute (recent blockhash)\n\nEffects:\n  - 5yLgQQwD42seAkce1heScsh2spYgNA3q43SPhZBn8Ldc pays a fee of 0.000005535 SOL\n  - Valid for about a minute (recent blockhash)\n\nRaw: solana v0 (574 bytes)\n  digest: 9bdd08c0fa2a6a063bcab6cc1581b881a5fbc0a5eefa3c4ee59dc380cdb66876\n",
+  "text": "DFlow swap whose route cannot be resolved\nBLOCKED BY DEFAULT (1 critical finding)\n\nFindings:\n  [CRITICAL] The accounts that fix the route's layout are loaded from lookup tables SignLens did not read (instruction 3)\n\n== DFlow swap | DFlow Aggregator\n  Accounts: 41\n  Data: 0xf8c69e91e17587c803000000259225095578ca432074e549a4fc7c5341fb546063977884832a84c218597c29d51d187223569b43192c511256021bcd8dcc2766cc6c4a56cb3f5149a78bc9690481bbe81a0000ae411e0300001964923300000000000181191ec41c000000000001012b314000000000002c010000\n\n== Also [collapsed]\n  Compute unit limit: 197941\n  Compute unit price: 2701 micro-lamports per unit\n\n== Signers\n  Fee payer: 5yLgQQwD42seAkce1heScsh2spYgNA3q43SPhZBn8Ldc\n\n== Fee\n  Total: 0.000005535 SOL\n  Base: 0.000005 SOL\n  Priority: 0.000000535 SOL\n  Priority basis: 2701 micro-lamports per unit × 197941 units requested\n\n== Validity\n  Expires: in about a minute (recent blockhash)\n\nEffects:\n  - 5yLgQQwD42seAkce1heScsh2spYgNA3q43SPhZBn8Ldc pays a fee of 0.000005535 SOL\n  - Valid for about a minute (recent blockhash)\n\nRaw: solana v0 (574 bytes)\n  digest: 9bdd08c0fa2a6a063bcab6cc1581b881a5fbc0a5eefa3c4ee59dc380cdb66876\n",
   "verdict": "block"
 }

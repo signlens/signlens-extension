@@ -185,6 +185,7 @@ export async function explainTransactions(
             hints: hints.map((h) => h.symbol),
             ...(read.length > 0 ? { accounts: read.map((account) => account.address) } : {}),
             summary: said.summary,
+            actions: said.actions,
             findings: said.findings,
             effects: said.effects,
             sections: said.sections,
