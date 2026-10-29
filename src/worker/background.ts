@@ -23,7 +23,7 @@ import { keepingAlive } from './alive.ts';
 import { apiStatus } from './api.ts';
 import { sendRating } from './feedback.ts';
 import * as gate from './gate.ts';
-import { clearHistory, markSeen } from './history.ts';
+import { clearHistory, forgetEarlierAnswers, markSeen } from './history.ts';
 import { answerRequest, connectFailed } from './requests.ts';
 import { revoke } from './sites.ts';
 import { opensSetup } from './welcome.ts';
@@ -53,10 +53,12 @@ async function rememberWallets(tabId: number | undefined, payload: WalletsPayloa
 // left in storage would only take room. In turn before any new request is kept.
 dropStalePending().catch(logged('drop the requests left waiting'));
 
-// A new install opens the setup page (welcome.ts). At the top, as every
-// listener: the browser fires the event as the worker first starts.
+// A new install opens the setup page (welcome.ts), and an update forgets the
+// answers the version before kept. At the top, as every listener: the
+// browser fires the event as the worker first starts.
 chrome.runtime.onInstalled.addListener((details) => {
     if (opensSetup(details)) chrome.tabs.create({ url: chrome.runtime.getURL('welcome.html') }).catch(logged('open the setup page'));
+    if (details.reason === 'update') forgetEarlierAnswers().catch(logged('forget the answers kept before the update'));
 });
 
 // A closed tab's wallets go with it, and its request is refused: no one is

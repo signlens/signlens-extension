@@ -41,6 +41,11 @@ uses [Semantic Versioning](https://semver.org/).
 
 ### Changed
 
+- **An update starts the history afresh.** The answers the popup kept,
+  and their count on the badge, are forgotten when SignLens updates: an
+  earlier version's may be in a shape the new one does not read, and
+  some browsers keep them across an update.
+
 - **The explanation from the API's `/v2`.** SignLens asks the SignLens
   API for `/v2/explain`, where the engine says every word as a message:
   its words and the amounts and addresses they name, which the window

@@ -122,3 +122,16 @@ export function markSeen(): Promise<void> {
 export function clearHistory(): Promise<void> {
     return inTurn(() => session.set({ history: [] }));
 }
+
+/**
+ * Forgets the answers an earlier version kept, and their count on the
+ * badge: their rows may be of a shape this version does not read, as the
+ * explanation's changed with `/v2`. Session storage outlives an update in
+ * some browsers.
+ */
+export function forgetEarlierAnswers(): Promise<void> {
+    return inTurn(async () => {
+        await session.set({ history: [], unseen: 0, unseenWorst: null });
+        await chrome.action.setBadgeText({ text: '' });
+    });
+}

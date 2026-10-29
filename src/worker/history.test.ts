@@ -8,7 +8,16 @@ import { type FakeChrome, installFakeChrome } from '../../test/chrome.fake.ts';
 import type { HistoryEntry } from '../shared/model.ts';
 import { inTurn } from '../shared/store.ts';
 import type { Message } from '../shared/types.ts';
-import { clearHistory, ENTRY_BYTES, HISTORY_BYTES, HISTORY_LENGTH, markSeen, remember, showBadge } from './history.ts';
+import {
+    clearHistory,
+    ENTRY_BYTES,
+    forgetEarlierAnswers,
+    HISTORY_BYTES,
+    HISTORY_LENGTH,
+    markSeen,
+    remember,
+    showBadge,
+} from './history.ts';
 
 /** `text` as the engine's words, with no identifier. */
 const words = (text: string): Message => ({ id: null, parts: [{ text }], text });
@@ -39,6 +48,15 @@ test('the history keeps the newest answers only', async () => {
     assert.equal(kept[0]?.time, HISTORY_LENGTH + 4);
     await clearHistory();
     assert.deepEqual(fake.session.history, []);
+});
+
+test('an update forgets the answers the version before kept, and their count on the badge', async () => {
+    await Promise.all([remember(entry(1)), remember(entry(2)), showBadge('blocked')]);
+    await forgetEarlierAnswers();
+    assert.deepEqual(fake.session.history, []);
+    assert.equal(fake.session.unseen, 0);
+    assert.equal(fake.session.unseenWorst, null);
+    assert.equal(fake.badge, '');
 });
 
 test('"seen" clears the badge even right after an answer, and the next answer starts afresh', async () => {
