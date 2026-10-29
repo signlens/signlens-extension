@@ -80,7 +80,7 @@
             "id": "effect-durable-nonce",
             "parts": [
               {
-                "text": "Valid FOREVER until nonce account "
+                "text": "Valid until nonce account "
               },
               {
                 "text": "EmYEryTDXtuVCxrjNqJXbiwr4hfiJajd4g5P58vvhQnc",
@@ -96,10 +96,10 @@
                 }
               },
               {
-                "text": " is advanced (durable nonce)"
+                "text": " is advanced, with NO TIME LIMIT (durable nonce)"
               }
             ],
-            "text": "Valid FOREVER until nonce account EmYEryTDXtuVCxrjNqJXbiwr4hfiJajd4g5P58vvhQnc is advanced (durable nonce)"
+            "text": "Valid until nonce account EmYEryTDXtuVCxrjNqJXbiwr4hfiJajd4g5P58vvhQnc is advanced, with NO TIME LIMIT (durable nonce)"
           },
           "type": "lifetime",
           "value": {
@@ -124,10 +124,10 @@
             "id": "squads-not-shown",
             "parts": [
               {
-                "text": "This would approve a multisig proposal whose content is on chain, not in the signed bytes; the signer cannot show what it does"
+                "text": "This would approve a multisig proposal whose content is on chain, not in the signed bytes; SignLens cannot show what it does"
               }
             ],
-            "text": "This would approve a multisig proposal whose content is on chain, not in the signed bytes; the signer cannot show what it does"
+            "text": "This would approve a multisig proposal whose content is on chain, not in the signed bytes; SignLens cannot show what it does"
           },
           "severity": "high"
         },
@@ -138,10 +138,10 @@
             "id": "squads-not-shown",
             "parts": [
               {
-                "text": "This would execute a multisig proposal whose content is on chain, not in the signed bytes; the signer cannot show what it does"
+                "text": "This would execute a multisig proposal whose content is on chain, not in the signed bytes; SignLens cannot show what it does"
               }
             ],
-            "text": "This would execute a multisig proposal whose content is on chain, not in the signed bytes; the signer cannot show what it does"
+            "text": "This would execute a multisig proposal whose content is on chain, not in the signed bytes; SignLens cannot show what it does"
           },
           "severity": "high"
         },
@@ -152,10 +152,10 @@
             "id": "explain-durable-nonce",
             "parts": [
               {
-                "text": "This signature never expires; anyone holding the signed transaction can submit it at any later time until the nonce is advanced"
+                "text": "This signature has no time limit: anyone holding the signed transaction can submit it at any later time, until the nonce account is advanced"
               }
             ],
-            "text": "This signature never expires; anyone holding the signed transaction can submit it at any later time until the nonce is advanced"
+            "text": "This signature has no time limit: anyone holding the signed transaction can submit it at any later time, until the nonce account is advanced"
           },
           "severity": "high"
         }
@@ -287,12 +287,9 @@
                   "type": "text",
                   "value": "Squads multisig v4"
                 }
-              },
-              {
-                "text": " (verified)"
               }
             ],
-            "text": "Squads multisig v4 (verified)"
+            "text": "Squads multisig v4"
           },
           "title": {
             "id": "squads-approve-title",
@@ -425,12 +422,9 @@
                   "type": "text",
                   "value": "Squads multisig v4"
                 }
-              },
-              {
-                "text": " (verified)"
               }
             ],
-            "text": "Squads multisig v4 (verified)"
+            "text": "Squads multisig v4"
           },
           "title": {
             "id": "squads-execute-title",
@@ -658,10 +652,10 @@
                   "id": "explain-expires-never",
                   "parts": [
                     {
-                      "text": "never, until the nonce account is advanced"
+                      "text": "when the nonce account is advanced, with no time limit"
                     }
                   ],
-                  "text": "never, until the nonce account is advanced"
+                  "text": "when the nonce account is advanced, with no time limit"
                 }
               }
             },
@@ -743,7 +737,7 @@
         ],
         "text": "2 actions: Approve proposal J1w1…xti8; Execute proposal J1w1…xti8"
       },
-      "text": "2 actions: Approve proposal J1w1…xti8; Execute proposal J1w1…xti8\nWARNING: review the findings before approving\n\nFindings:\n  [HIGH] This would approve a multisig proposal whose content is on chain, not in the signed bytes; the signer cannot show what it does (instruction 1)\n  [HIGH] This would execute a multisig proposal whose content is on chain, not in the signed bytes; the signer cannot show what it does (instruction 2)\n  [HIGH] This signature never expires; anyone holding the signed transaction can submit it at any later time until the nonce is advanced\n\n== Approve proposal | Squads multisig v4 (verified)\n  Multisig: 2LW6PSEjp81xSEttWwXDB6Etb1eKdhYPbFEojYbyhx88\n  Proposal: J1w1U5BB9W4Tnf2NhrcnTmV5t6iZugXSkujYKadwxti8\n  Content: on chain, not in these bytes\n  Member: Your wallet (6UJb…u924) (verified)\n\n== Execute vault transaction | Squads multisig v4 (verified)\n  Multisig: 2LW6PSEjp81xSEttWwXDB6Etb1eKdhYPbFEojYbyhx88\n  Proposal: J1w1U5BB9W4Tnf2NhrcnTmV5t6iZugXSkujYKadwxti8\n  Content: on chain, not in these bytes\n  Member: Your wallet (6UJb…u924) (verified)\n\n== Also [collapsed]\n  Advance durable nonce: Nonce account: EmYEryTDXtuVCxrjNqJXbiwr4hfiJajd4g5P58vvhQnc\n  Advance durable nonce: Authority: Your wallet (6UJb…u924) (verified)\n\n== Signers\n  Fee payer: Your wallet (6UJb…u924) (verified)\n\n== Fee\n  Total: 0.000005 SOL\n  Base: 0.000005 SOL\n\n== Validity\n  Expires: never, until the nonce account is advanced\n  Nonce account: EmYEryTDXtuVCxrjNqJXbiwr4hfiJajd4g5P58vvhQnc\n\nEffects:\n  - You pay a fee of 0.000005 SOL\n  - Valid FOREVER until nonce account EmYEryTDXtuVCxrjNqJXbiwr4hfiJajd4g5P58vvhQnc is advanced (durable nonce)\n\nWould read, to explain more:\n  - J1w1U5BB9W4Tnf2NhrcnTmV5t6iZugXSkujYKadwxti8: the proposal: its index names the transaction it runs\n  - 2QmMUBZYv2Ssm6ED73Gapt8cgn9u1HQbPaJtfYdDDAwc: the transaction the proposal runs\n\nRaw: solana legacy (432 bytes)\n  digest: ee7706555a2bed3f52dde729942482697f4aef89b2e733ee1e75b78b037a2af5\n",
+      "text": "2 actions: Approve proposal J1w1…xti8; Execute proposal J1w1…xti8\nWARNING: review the findings before approving\n\nFindings:\n  [HIGH] This would approve a multisig proposal whose content is on chain, not in the signed bytes; SignLens cannot show what it does (instruction 2)\n  [HIGH] This would execute a multisig proposal whose content is on chain, not in the signed bytes; SignLens cannot show what it does (instruction 3)\n  [HIGH] This signature has no time limit: anyone holding the signed transaction can submit it at any later time, until the nonce account is advanced\n\n== Approve proposal | Squads multisig v4\n  Multisig: 2LW6PSEjp81xSEttWwXDB6Etb1eKdhYPbFEojYbyhx88\n  Proposal: J1w1U5BB9W4Tnf2NhrcnTmV5t6iZugXSkujYKadwxti8\n  Content: on chain, not in these bytes\n  Member: Your wallet (6UJb…u924)\n\n== Execute vault transaction | Squads multisig v4\n  Multisig: 2LW6PSEjp81xSEttWwXDB6Etb1eKdhYPbFEojYbyhx88\n  Proposal: J1w1U5BB9W4Tnf2NhrcnTmV5t6iZugXSkujYKadwxti8\n  Content: on chain, not in these bytes\n  Member: Your wallet (6UJb…u924)\n\n== Also [collapsed]\n  Advance durable nonce: Nonce account: EmYEryTDXtuVCxrjNqJXbiwr4hfiJajd4g5P58vvhQnc\n  Advance durable nonce: Authority: Your wallet (6UJb…u924)\n\n== Signers\n  Fee payer: Your wallet (6UJb…u924)\n\n== Fee\n  Total: 0.000005 SOL\n  Base: 0.000005 SOL\n\n== Validity\n  Expires: when the nonce account is advanced, with no time limit\n  Nonce account: EmYEryTDXtuVCxrjNqJXbiwr4hfiJajd4g5P58vvhQnc\n\nEffects:\n  - You pay a fee of 0.000005 SOL\n  - Valid until nonce account EmYEryTDXtuVCxrjNqJXbiwr4hfiJajd4g5P58vvhQnc is advanced, with NO TIME LIMIT (durable nonce)\n\nWould read, to explain more:\n  - J1w1U5BB9W4Tnf2NhrcnTmV5t6iZugXSkujYKadwxti8: the proposal: its index names the transaction it runs\n  - 2QmMUBZYv2Ssm6ED73Gapt8cgn9u1HQbPaJtfYdDDAwc: the transaction the proposal runs\n\nRaw: solana legacy (432 bytes)\n  digest: ee7706555a2bed3f52dde729942482697f4aef89b2e733ee1e75b78b037a2af5\n",
       "verdict": "warn",
       "wanted_accounts": [
         {

@@ -31,7 +31,7 @@ test('in pass-through mode the window shows the explanation and Continue hands t
     await expect(gate.locator('#where')).toContainText('localhost');
     await expect(gate.locator('.verdict').first()).toHaveText('warning');
     await expect(gate.locator('.summary-line')).toContainText('Transfer 0.996423 USDC (verified)');
-    await expect(gate.locator('.findings')).toContainText('This signature never expires');
+    await expect(gate.locator('.findings')).toContainText('This signature has no time limit');
     await expect(gate.locator('#note')).toContainText('hands the request unchanged to Fake Wallet');
     expect(await worker.evaluate(() => chrome.action.getBadgeText({}))).toBe('WARN');
 
@@ -142,7 +142,12 @@ test('the window puts the verdict and what the transaction does first, with the 
         "You send 0.996423 USDC (verified) from Your token account (Ffz5…piwg) (verified) to BNgs…TT1Z's USDC account (DV3B…L7Qp)",
     );
     await expect(effects.first().locator('.address.self')).toHaveCount(1);
-    await expect(effects).toContainText([/You send/, /Create/, /You pay a fee of 0.000012218 SOL/, /Valid FOREVER until nonce account/]);
+    await expect(effects).toContainText([
+        /You send/,
+        /Create/,
+        /You pay a fee of 0.000012218 SOL/,
+        /Valid until nonce account .* NO TIME LIMIT/,
+    ]);
 
     // The instructions and the details behind one toggle, closed until the
     // reader opens it, which is remembered.

@@ -24,7 +24,7 @@ test('a nonce transfer is explained for the connected address and refused', asyn
     await expect(row.locator('.where')).toContainText('signTransaction');
     await row.locator('summary').click();
     await expect(row.locator('.summary-line')).toHaveText(/^Send 0\.996423 USDC \(verified\) to/);
-    await expect(row.locator('.findings')).toContainText('This signature never expires');
+    await expect(row.locator('.findings')).toContainText('This signature has no time limit');
     await expect(row.locator('.severity').first()).toHaveText('High');
     await expect(row.locator('pre')).toContainText('== Transfer tokens | Token program');
 });

@@ -272,7 +272,7 @@ test('several transactions are each saved under a name of their own, and offered
 
 test('a finding wraps under its own text, not under its severity', async ({ context, worker }) => {
     const long =
-        'This signature never expires; anyone holding the signed transaction can submit it at any later time until the nonce is advanced';
+        'This signature has no time limit: anyone holding the signed transaction can submit it at any later time, until the nonce account is advanced';
     const gate = await windowFor(
         context,
         worker,

@@ -50,7 +50,7 @@
                 "text": "You send "
               },
               {
-                "text": "≤ 0.005265026 tSpaceX (verified)",
+                "text": "≤ 0.005265026 tSpaceX",
                 "value": {
                   "type": "amount",
                   "value": {
@@ -71,7 +71,7 @@
                 "text": " from "
               },
               {
-                "text": "Your wallet (5yLg…8Ldc) (verified)",
+                "text": "Your wallet (5yLg…8Ldc)",
                 "value": {
                   "type": "address",
                   "value": {
@@ -95,7 +95,7 @@
                 "text": " to "
               },
               {
-                "text": "DFlow Aggregator (DF1o…7QBH) (verified)",
+                "text": "DFlow Aggregator (DF1o…7QBH)",
                 "value": {
                   "type": "address",
                   "value": {
@@ -120,7 +120,7 @@
                 }
               }
             ],
-            "text": "You send ≤ 0.005265026 tSpaceX (verified) from Your wallet (5yLg…8Ldc) (verified) to DFlow Aggregator (DF1o…7QBH) (verified)"
+            "text": "You send ≤ 0.005265026 tSpaceX from Your wallet (5yLg…8Ldc) to DFlow Aggregator (DF1o…7QBH)"
           },
           "type": "transfer",
           "value": {
@@ -180,7 +180,7 @@
                 "text": "You receive "
               },
               {
-                "text": "≥ 0.004080684 tKalshi (verified)",
+                "text": "≥ 0.004080684 tKalshi",
                 "value": {
                   "type": "amount",
                   "value": {
@@ -201,7 +201,7 @@
                 "text": " into "
               },
               {
-                "text": "Your token account (2n1w…SJBw) (verified)",
+                "text": "Your token account (2n1w…SJBw)",
                 "value": {
                   "type": "address",
                   "value": {
@@ -225,7 +225,7 @@
                 "text": " from "
               },
               {
-                "text": "DFlow Aggregator (DF1o…7QBH) (verified)",
+                "text": "DFlow Aggregator (DF1o…7QBH)",
                 "value": {
                   "type": "address",
                   "value": {
@@ -250,7 +250,7 @@
                 }
               }
             ],
-            "text": "You receive ≥ 0.004080684 tKalshi (verified) into Your token account (2n1w…SJBw) (verified) from DFlow Aggregator (DF1o…7QBH) (verified)"
+            "text": "You receive ≥ 0.004080684 tKalshi into Your token account (2n1w…SJBw) from DFlow Aggregator (DF1o…7QBH)"
           },
           "type": "transfer",
           "value": {
@@ -519,17 +519,17 @@
                           "text": " ("
                         },
                         {
-                          "text": "3379812",
+                          "text": "3,379,812",
                           "value": {
-                            "type": "integer",
-                            "value": "3379812"
+                            "type": "text",
+                            "value": "3,379,812"
                           }
                         },
                         {
-                          "text": " base units)"
+                          "text": " raw units)"
                         }
                       ],
-                      "text": "MeteoraDlmmSwapV2 (3379812 base units)"
+                      "text": "MeteoraDlmmSwapV2 (3,379,812 raw units)"
                     }
                   },
                   {
@@ -548,17 +548,17 @@
                           "text": " ("
                         },
                         {
-                          "text": "1885214",
+                          "text": "1,885,214",
                           "value": {
-                            "type": "integer",
-                            "value": "1885214"
+                            "type": "text",
+                            "value": "1,885,214"
                           }
                         },
                         {
-                          "text": " base units)"
+                          "text": " raw units)"
                         }
                       ],
-                      "text": "MeteoraDlmmSwapV2 (1885214 base units)"
+                      "text": "MeteoraDlmmSwapV2 (1,885,214 raw units)"
                     }
                   }
                 ]
@@ -659,12 +659,9 @@
                   "type": "text",
                   "value": "DFlow Aggregator"
                 }
-              },
-              {
-                "text": " (verified)"
               }
             ],
-            "text": "DFlow Aggregator (verified)"
+            "text": "DFlow Aggregator"
           },
           "title": {
             "id": "swap-title",
@@ -987,7 +984,7 @@
             "text": "Swap "
           },
           {
-            "text": "≤ 0.005265026 tSpaceX (verified)",
+            "text": "≤ 0.005265026 tSpaceX",
             "value": {
               "type": "amount",
               "value": {
@@ -1008,7 +1005,7 @@
             "text": " for "
           },
           {
-            "text": "≥ 0.004080684 tKalshi (verified)",
+            "text": "≥ 0.004080684 tKalshi",
             "value": {
               "type": "amount",
               "value": {
@@ -1036,9 +1033,9 @@
             }
           }
         ],
-        "text": "Swap ≤ 0.005265026 tSpaceX (verified) for ≥ 0.004080684 tKalshi (verified) via DFlow"
+        "text": "Swap ≤ 0.005265026 tSpaceX for ≥ 0.004080684 tKalshi via DFlow"
       },
-      "text": "Swap ≤ 0.005265026 tSpaceX (verified) for ≥ 0.004080684 tKalshi (verified) via DFlow\nOK\n\n== Swap | DFlow Aggregator (verified)\n  Send: ≤ 0.005265026 tSpaceX (verified)\n  Receive: ≥ 0.004080684 tKalshi (verified)\n  Quoted: 0.004206891 tKalshi (verified)\n  Max slippage: 3.00%\n  Route:\n    - MeteoraDlmmSwapV2 (3379812 base units)\n    - MeteoraDlmmSwapV2 (1885214 base units)\n  From account: Your token account (FfxP…C7ft) (verified)\n  To account: Your token account (2n1w…SJBw) (verified)\n  Instruction: swap\n\n== Also [collapsed]\n  Compute unit limit: 197941\n  Compute unit price: 2701 micro-lamports per unit\n\n== Signers\n  Fee payer: Your wallet (5yLg…8Ldc) (verified)\n\n== Fee\n  Total: 0.000005535 SOL\n  Base: 0.000005 SOL\n  Priority: 0.000000535 SOL\n  Priority basis: 2701 micro-lamports per unit × 197941 units requested\n\n== Validity\n  Expires: in about a minute (recent blockhash)\n\nEffects:\n  - You send ≤ 0.005265026 tSpaceX (verified) from Your wallet (5yLg…8Ldc) (verified) to DFlow Aggregator (DF1o…7QBH) (verified)\n  - You receive ≥ 0.004080684 tKalshi (verified) into Your token account (2n1w…SJBw) (verified) from DFlow Aggregator (DF1o…7QBH) (verified)\n  - You pay a fee of 0.000005535 SOL\n  - Valid for about a minute (recent blockhash)\n\nRaw: solana v0 (574 bytes)\n  digest: 9bdd08c0fa2a6a063bcab6cc1581b881a5fbc0a5eefa3c4ee59dc380cdb66876\n",
+      "text": "Swap ≤ 0.005265026 tSpaceX for ≥ 0.004080684 tKalshi via DFlow\nOK\n\n== Swap | DFlow Aggregator\n  Send: ≤ 0.005265026 tSpaceX\n  Receive: ≥ 0.004080684 tKalshi\n  Quoted: 0.004206891 tKalshi\n  Max slippage: 3.00%\n  Route:\n    - MeteoraDlmmSwapV2 (3,379,812 raw units)\n    - MeteoraDlmmSwapV2 (1,885,214 raw units)\n  From account: Your token account (FfxP…C7ft)\n  To account: Your token account (2n1w…SJBw)\n  Instruction: swap\n\n== Also [collapsed]\n  Compute unit limit: 197941\n  Compute unit price: 2701 micro-lamports per unit\n\n== Signers\n  Fee payer: Your wallet (5yLg…8Ldc)\n\n== Fee\n  Total: 0.000005535 SOL\n  Base: 0.000005 SOL\n  Priority: 0.000000535 SOL\n  Priority basis: 2701 micro-lamports per unit × 197941 units requested\n\n== Validity\n  Expires: in about a minute (recent blockhash)\n\nEffects:\n  - You send ≤ 0.005265026 tSpaceX from Your wallet (5yLg…8Ldc) to DFlow Aggregator (DF1o…7QBH)\n  - You receive ≥ 0.004080684 tKalshi into Your token account (2n1w…SJBw) from DFlow Aggregator (DF1o…7QBH)\n  - You pay a fee of 0.000005535 SOL\n  - Valid for about a minute (recent blockhash)\n\nRaw: solana v0 (574 bytes)\n  digest: 9bdd08c0fa2a6a063bcab6cc1581b881a5fbc0a5eefa3c4ee59dc380cdb66876\n",
       "verdict": "ok"
     }
   }

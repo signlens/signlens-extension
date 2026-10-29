@@ -40,7 +40,7 @@
                 "text": "You send "
               },
               {
-                "text": "0.996423 USDC (verified)",
+                "text": "0.996423 USDC",
                 "value": {
                   "type": "amount",
                   "value": {
@@ -61,7 +61,7 @@
                 "text": " from "
               },
               {
-                "text": "Your token account (Ffz5…piwg) (verified)",
+                "text": "Your token account (Ffz5…piwg)",
                 "value": {
                   "type": "address",
                   "value": {
@@ -85,7 +85,7 @@
                 "text": " to "
               },
               {
-                "text": "BNgs…TT1Z's USDC account (DV3B…L7Qp) (verified)",
+                "text": "BNgs…TT1Z's USDC account (DV3B…L7Qp)",
                 "value": {
                   "type": "address",
                   "value": {
@@ -126,7 +126,7 @@
                 }
               }
             ],
-            "text": "You send 0.996423 USDC (verified) from Your token account (Ffz5…piwg) (verified) to BNgs…TT1Z's USDC account (DV3B…L7Qp) (verified)"
+            "text": "You send 0.996423 USDC from Your token account (Ffz5…piwg) to BNgs…TT1Z's USDC account (DV3B…L7Qp)"
           },
           "type": "transfer",
           "value": {
@@ -202,7 +202,7 @@
                 "text": "Create "
               },
               {
-                "text": "BNgs…TT1Z's USDC account (DV3B…L7Qp) (verified)",
+                "text": "BNgs…TT1Z's USDC account (DV3B…L7Qp)",
                 "value": {
                   "type": "address",
                   "value": {
@@ -243,10 +243,10 @@
                 }
               },
               {
-                "text": " owned by "
+                "text": ", managed by "
               },
               {
-                "text": "Token program (Toke…Q5DA) (verified)",
+                "text": "Token program (Toke…Q5DA)",
                 "value": {
                   "type": "address",
                   "value": {
@@ -295,7 +295,7 @@
                 "text": " unless it already exists"
               }
             ],
-            "text": "Create BNgs…TT1Z's USDC account (DV3B…L7Qp) (verified) owned by Token program (Toke…Q5DA) (verified), depositing 0.00148844 SOL unless it already exists"
+            "text": "Create BNgs…TT1Z's USDC account (DV3B…L7Qp), managed by Token program (Toke…Q5DA), depositing 0.00148844 SOL unless it already exists"
           },
           "type": "create",
           "value": {
@@ -432,7 +432,7 @@
             "id": "effect-durable-nonce",
             "parts": [
               {
-                "text": "Valid FOREVER until nonce account "
+                "text": "Valid until nonce account "
               },
               {
                 "text": "AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw",
@@ -448,10 +448,10 @@
                 }
               },
               {
-                "text": " is advanced (durable nonce)"
+                "text": " is advanced, with NO TIME LIMIT (durable nonce)"
               }
             ],
-            "text": "Valid FOREVER until nonce account AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw is advanced (durable nonce)"
+            "text": "Valid until nonce account AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw is advanced, with NO TIME LIMIT (durable nonce)"
           },
           "type": "lifetime",
           "value": {
@@ -476,10 +476,10 @@
             "id": "explain-durable-nonce",
             "parts": [
               {
-                "text": "This signature never expires; anyone holding the signed transaction can submit it at any later time until the nonce is advanced"
+                "text": "This signature has no time limit: anyone holding the signed transaction can submit it at any later time, until the nonce account is advanced"
               }
             ],
-            "text": "This signature never expires; anyone holding the signed transaction can submit it at any later time until the nonce is advanced"
+            "text": "This signature has no time limit: anyone holding the signed transaction can submit it at any later time, until the nonce account is advanced"
           },
           "severity": "high"
         },
@@ -702,12 +702,9 @@
                   "type": "text",
                   "value": "Token program"
                 }
-              },
-              {
-                "text": " (verified)"
               }
             ],
-            "text": "Token program (verified)"
+            "text": "Token program"
           },
           "title": {
             "id": "token-transfer-title",
@@ -1250,10 +1247,10 @@
                       }
                     },
                     {
-                      "text": " if the accounts it creates only when missing do not exist yet; returned when the accounts are closed"
+                      "text": ", if the account this transaction creates when missing does not exist yet; refunded to whoever closes the account"
                     }
                   ],
-                  "text": "up to 0.00148844 SOL if the accounts it creates only when missing do not exist yet; returned when the accounts are closed"
+                  "text": "up to 0.00148844 SOL, if the account this transaction creates when missing does not exist yet; refunded to whoever closes the account"
                 }
               }
             }
@@ -1293,10 +1290,10 @@
                   "id": "explain-expires-never",
                   "parts": [
                     {
-                      "text": "never, until the nonce account is advanced"
+                      "text": "when the nonce account is advanced, with no time limit"
                     }
                   ],
-                  "text": "never, until the nonce account is advanced"
+                  "text": "when the nonce account is advanced, with no time limit"
                 }
               }
             },
@@ -1411,7 +1408,7 @@
                       "text": "−"
                     },
                     {
-                      "text": "0.996423 USDC (verified)",
+                      "text": "0.996423 USDC",
                       "value": {
                         "type": "amount",
                         "value": {
@@ -1429,7 +1426,7 @@
                       }
                     }
                   ],
-                  "text": "−0.996423 USDC (verified)"
+                  "text": "−0.996423 USDC"
                 }
               }
             },
@@ -1514,7 +1511,7 @@
             "text": "Send "
           },
           {
-            "text": "0.996423 USDC (verified)",
+            "text": "0.996423 USDC",
             "value": {
               "type": "amount",
               "value": {
@@ -1573,9 +1570,9 @@
             "text": "DV3B…L7Qp"
           }
         ],
-        "text": "Send 0.996423 USDC (verified) to DV3B…L7Qp"
+        "text": "Send 0.996423 USDC to DV3B…L7Qp"
       },
-      "text": "Send 0.996423 USDC (verified) to DV3B…L7Qp\nWARNING: review the findings before approving\n\nFindings:\n  [HIGH] This signature never expires; anyone holding the signed transaction can submit it at any later time until the nonce is advanced\n  [INFO] The host's simulation agrees with the instructions' effects on your balances\n\n== Transfer tokens | Token program (verified)\n  Amount: 0.996423 USDC (verified)\n  From: Your token account (Ffz5…piwg) (verified)\n  To: BNgs…TT1Z's USDC account (DV3B…L7Qp) (verified)\n  Authorized by: Your wallet (8Kvy…p1fa) (verified)\n  Mint: USDC mint (EPjF…Dt1v) (verified)\n\n== Also [collapsed]\n  Advance durable nonce: Nonce account: AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw\n  Advance durable nonce: Authority: EbsUZEFAU23Z2SgAymFtU2hADLiyNLzaPLKiJfvpKnE7\n  Create token account if missing: Token account: BNgs…TT1Z's USDC account (DV3B…L7Qp) (verified)\n  Create token account if missing: Owner: BNgsxo3eHqQLNTaKy4juhAUJ8DyewcJNEcYdMuSmTT1Z\n  Create token account if missing: Mint: USDC mint (EPjF…Dt1v) (verified)\n  Create token account if missing: Rent paid by: Your wallet (8Kvy…p1fa) (verified)\n  Create token account if missing: Token program: Token program (Toke…Q5DA) (verified)\n  Compute unit limit: 20728\n  Compute unit price: 107000 micro-lamports per unit\n\n== Signers\n  Fee payer: Your wallet (8Kvy…p1fa) (verified)\n  Signer: EbsUZEFAU23Z2SgAymFtU2hADLiyNLzaPLKiJfvpKnE7\n\n== Fee\n  Total: 0.000012218 SOL\n  Base: 0.00001 SOL\n  Priority: 0.000002218 SOL\n  Priority basis: 107000 micro-lamports per unit × 20728 units requested\n  Rent deposits: up to 0.00148844 SOL if the accounts it creates only when missing do not exist yet; returned when the accounts are closed\n\n== Validity\n  Expires: never, until the nonce account is advanced\n  Nonce account: AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw\n\n== Simulated outcome | the host's simulation (claimed, unverified)\n  Result: would succeed\n  Compute units: 4200\n  Your USDC: −0.996423 USDC (verified)\n  Your SOL: −0.000012218 SOL\n\nEffects:\n  - You send 0.996423 USDC (verified) from Your token account (Ffz5…piwg) (verified) to BNgs…TT1Z's USDC account (DV3B…L7Qp) (verified)\n  - Create BNgs…TT1Z's USDC account (DV3B…L7Qp) (verified) owned by Token program (Toke…Q5DA) (verified), depositing 0.00148844 SOL unless it already exists\n  - You pay a fee of 0.000012218 SOL\n  - Valid FOREVER until nonce account AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw is advanced (durable nonce)\n\nRaw: solana legacy (511 bytes)\n  digest: 05d51e61e33bad79d124089e71be7988c37cccf1f9268ee6e338e439f5ec582f\n",
+      "text": "Send 0.996423 USDC to DV3B…L7Qp\nWARNING: review the findings before approving\n\nFindings:\n  [HIGH] This signature has no time limit: anyone holding the signed transaction can submit it at any later time, until the nonce account is advanced\n  [INFO] The host's simulation agrees with the instructions' effects on your balances\n\n== Transfer tokens | Token program\n  Amount: 0.996423 USDC\n  From: Your token account (Ffz5…piwg)\n  To: BNgs…TT1Z's USDC account (DV3B…L7Qp)\n  Authorized by: Your wallet (8Kvy…p1fa)\n  Mint: USDC mint (EPjF…Dt1v)\n\n== Also [collapsed]\n  Advance durable nonce: Nonce account: AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw\n  Advance durable nonce: Authority: EbsUZEFAU23Z2SgAymFtU2hADLiyNLzaPLKiJfvpKnE7\n  Create token account if missing: Token account: BNgs…TT1Z's USDC account (DV3B…L7Qp)\n  Create token account if missing: Owner: BNgsxo3eHqQLNTaKy4juhAUJ8DyewcJNEcYdMuSmTT1Z\n  Create token account if missing: Mint: USDC mint (EPjF…Dt1v)\n  Create token account if missing: Rent paid by: Your wallet (8Kvy…p1fa)\n  Create token account if missing: Token program: Token program (Toke…Q5DA)\n  Compute unit limit: 20728\n  Compute unit price: 107000 micro-lamports per unit\n\n== Signers\n  Fee payer: Your wallet (8Kvy…p1fa)\n  Signer: EbsUZEFAU23Z2SgAymFtU2hADLiyNLzaPLKiJfvpKnE7\n\n== Fee\n  Total: 0.000012218 SOL\n  Base: 0.00001 SOL\n  Priority: 0.000002218 SOL\n  Priority basis: 107000 micro-lamports per unit × 20728 units requested\n  Rent deposits: up to 0.00148844 SOL, if the account this transaction creates when missing does not exist yet; refunded to whoever closes the account\n\n== Validity\n  Expires: when the nonce account is advanced, with no time limit\n  Nonce account: AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw\n\n== Simulated outcome | the host's simulation (claimed, unverified)\n  Result: would succeed\n  Compute units: 4200\n  Your USDC: −0.996423 USDC\n  Your SOL: −0.000012218 SOL\n\nEffects:\n  - You send 0.996423 USDC from Your token account (Ffz5…piwg) to BNgs…TT1Z's USDC account (DV3B…L7Qp)\n  - Create BNgs…TT1Z's USDC account (DV3B…L7Qp), managed by Token program (Toke…Q5DA), depositing 0.00148844 SOL unless it already exists\n  - You pay a fee of 0.000012218 SOL\n  - Valid until nonce account AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw is advanced, with NO TIME LIMIT (durable nonce)\n\nRaw: solana legacy (511 bytes)\n  digest: 05d51e61e33bad79d124089e71be7988c37cccf1f9268ee6e338e439f5ec582f\n",
       "verdict": "warn"
     }
   }

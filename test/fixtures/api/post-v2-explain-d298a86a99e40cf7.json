@@ -45,7 +45,7 @@
                 "text": " from "
               },
               {
-                "text": "Your wallet (G93M…pAnU) (verified)",
+                "text": "Your wallet (G93M…pAnU)",
                 "value": {
                   "type": "address",
                   "value": {
@@ -69,7 +69,7 @@
                 "text": " to "
               },
               {
-                "text": "Pump.fun (6EF8…wF6P) (verified)",
+                "text": "Pump.fun (6EF8…wF6P)",
                 "value": {
                   "type": "address",
                   "value": {
@@ -94,7 +94,7 @@
                 }
               }
             ],
-            "text": "You send ≤ 0.000235478 SOL from Your wallet (G93M…pAnU) (verified) to Pump.fun (6EF8…wF6P) (verified)"
+            "text": "You send ≤ 0.000235478 SOL from Your wallet (G93M…pAnU) to Pump.fun (6EF8…wF6P)"
           },
           "type": "transfer",
           "value": {
@@ -148,13 +148,13 @@
         },
         {
           "message": {
-            "id": "effect-transfer",
+            "id": "effect-receive",
             "parts": [
               {
-                "text": "Transfer "
+                "text": "You receive "
               },
               {
-                "text": "unknown amount of an unverified token (at least 3731969312 raw units before a transfer fee the signer cannot know) (9sVJwhNTEtoq8PWeZJigJKNbRMZW7CoByosnxV2Cpump)",
+                "text": "an unknown amount of unverified token 9sVJ…pump (at least 3,731,969,312 raw units, before a transfer fee SignLens cannot check)",
                 "value": {
                   "type": "amount",
                   "value": {
@@ -173,19 +173,43 @@
                           "text": "at least "
                         },
                         {
-                          "text": "3731969312 raw units",
+                          "text": "3,731,969,312 raw units",
                           "value": {
                             "type": "text",
-                            "value": "3731969312 raw units"
+                            "value": "3,731,969,312 raw units"
                           }
                         },
                         {
-                          "text": " before a transfer fee the signer cannot know"
+                          "text": ", before a transfer fee SignLens cannot check"
                         }
                       ],
-                      "text": "at least 3731969312 raw units before a transfer fee the signer cannot know"
+                      "text": "at least 3,731,969,312 raw units, before a transfer fee SignLens cannot check"
                     },
                     "units": "0"
+                  }
+                }
+              },
+              {
+                "text": " into "
+              },
+              {
+                "text": "Your token account (7oT8…mjKW)",
+                "value": {
+                  "type": "address",
+                  "value": {
+                    "address": "7oT8RSgMTph8WNqvxXUSapzvVjKSNqFgSADDfCnpmjKW",
+                    "is_self": true,
+                    "label": {
+                      "id": "accounts-your-unnamed-token",
+                      "parts": [
+                        {
+                          "text": "Your token account"
+                        }
+                      ],
+                      "text": "Your token account"
+                    },
+                    "label_trust": "verified",
+                    "stand_in": null
                   }
                 }
               },
@@ -193,7 +217,7 @@
                 "text": " from "
               },
               {
-                "text": "Pump.fun (6EF8…wF6P) (verified)",
+                "text": "Pump.fun (6EF8…wF6P)",
                 "value": {
                   "type": "address",
                   "value": {
@@ -216,25 +240,9 @@
                     "stand_in": null
                   }
                 }
-              },
-              {
-                "text": " to "
-              },
-              {
-                "text": "7oT8RSgMTph8WNqvxXUSapzvVjKSNqFgSADDfCnpmjKW",
-                "value": {
-                  "type": "address",
-                  "value": {
-                    "address": "7oT8RSgMTph8WNqvxXUSapzvVjKSNqFgSADDfCnpmjKW",
-                    "is_self": false,
-                    "label": null,
-                    "label_trust": "fact",
-                    "stand_in": null
-                  }
-                }
               }
             ],
-            "text": "Transfer unknown amount of an unverified token (at least 3731969312 raw units before a transfer fee the signer cannot know) (9sVJwhNTEtoq8PWeZJigJKNbRMZW7CoByosnxV2Cpump) from Pump.fun (6EF8…wF6P) (verified) to 7oT8RSgMTph8WNqvxXUSapzvVjKSNqFgSADDfCnpmjKW"
+            "text": "You receive an unknown amount of unverified token 9sVJ…pump (at least 3,731,969,312 raw units, before a transfer fee SignLens cannot check) into Your token account (7oT8…mjKW) from Pump.fun (6EF8…wF6P)"
           },
           "type": "transfer",
           "value": {
@@ -254,17 +262,17 @@
                     "text": "at least "
                   },
                   {
-                    "text": "3731969312 raw units",
+                    "text": "3,731,969,312 raw units",
                     "value": {
                       "type": "text",
-                      "value": "3731969312 raw units"
+                      "value": "3,731,969,312 raw units"
                     }
                   },
                   {
-                    "text": " before a transfer fee the signer cannot know"
+                    "text": ", before a transfer fee SignLens cannot check"
                   }
                 ],
-                "text": "at least 3731969312 raw units before a transfer fee the signer cannot know"
+                "text": "at least 3,731,969,312 raw units, before a transfer fee SignLens cannot check"
               },
               "units": "0"
             },
@@ -289,9 +297,17 @@
             },
             "to": {
               "address": "7oT8RSgMTph8WNqvxXUSapzvVjKSNqFgSADDfCnpmjKW",
-              "is_self": false,
-              "label": null,
-              "label_trust": "fact",
+              "is_self": true,
+              "label": {
+                "id": "accounts-your-unnamed-token",
+                "parts": [
+                  {
+                    "text": "Your token account"
+                  }
+                ],
+                "text": "Your token account"
+              },
+              "label_trust": "verified",
               "stand_in": null
             }
           }
@@ -304,23 +320,31 @@
                 "text": "Create "
               },
               {
-                "text": "7oT8RSgMTph8WNqvxXUSapzvVjKSNqFgSADDfCnpmjKW",
+                "text": "Your token account (7oT8…mjKW)",
                 "value": {
                   "type": "address",
                   "value": {
                     "address": "7oT8RSgMTph8WNqvxXUSapzvVjKSNqFgSADDfCnpmjKW",
-                    "is_self": false,
-                    "label": null,
-                    "label_trust": "fact",
+                    "is_self": true,
+                    "label": {
+                      "id": "accounts-your-unnamed-token",
+                      "parts": [
+                        {
+                          "text": "Your token account"
+                        }
+                      ],
+                      "text": "Your token account"
+                    },
+                    "label_trust": "verified",
                     "stand_in": null
                   }
                 }
               },
               {
-                "text": " owned by "
+                "text": ", managed by "
               },
               {
-                "text": "Token-2022 program (Toke…xuEb) (verified)",
+                "text": "Token-2022 program (Toke…xuEb)",
                 "value": {
                   "type": "address",
                   "value": {
@@ -369,15 +393,23 @@
                 "text": " unless it already exists"
               }
             ],
-            "text": "Create 7oT8RSgMTph8WNqvxXUSapzvVjKSNqFgSADDfCnpmjKW owned by Token-2022 program (Toke…xuEb) (verified), depositing 0.00151384 SOL unless it already exists"
+            "text": "Create Your token account (7oT8…mjKW), managed by Token-2022 program (Toke…xuEb), depositing 0.00151384 SOL unless it already exists"
           },
           "type": "create",
           "value": {
             "account": {
               "address": "7oT8RSgMTph8WNqvxXUSapzvVjKSNqFgSADDfCnpmjKW",
-              "is_self": false,
-              "label": null,
-              "label_trust": "fact",
+              "is_self": true,
+              "label": {
+                "id": "accounts-your-unnamed-token",
+                "parts": [
+                  {
+                    "text": "Your token account"
+                  }
+                ],
+                "text": "Your token account"
+              },
+              "label_trust": "verified",
               "stand_in": null
             },
             "deposit": {
@@ -497,10 +529,10 @@
             "id": null,
             "parts": [
               {
-                "text": "The destination token account is not one of your accounts for a verified token; the signer cannot prove who owns it"
+                "text": "The destination token account is not one of your accounts for a verified token; SignLens cannot confirm who owns it"
               }
             ],
-            "text": "The destination token account is not one of your accounts for a verified token; the signer cannot prove who owns it"
+            "text": "The destination token account is not one of your accounts for a verified token; SignLens cannot confirm who owns it"
           },
           "severity": "info"
         }
@@ -688,9 +720,17 @@
                 "type": "address",
                 "value": {
                   "address": "7oT8RSgMTph8WNqvxXUSapzvVjKSNqFgSADDfCnpmjKW",
-                  "is_self": false,
-                  "label": null,
-                  "label_trust": "fact",
+                  "is_self": true,
+                  "label": {
+                    "id": "accounts-your-unnamed-token",
+                    "parts": [
+                      {
+                        "text": "Your token account"
+                      }
+                    ],
+                    "text": "Your token account"
+                  },
+                  "label_trust": "verified",
                   "stand_in": null
                 }
               }
@@ -851,9 +891,17 @@
                 "type": "address",
                 "value": {
                   "address": "7oT8RSgMTph8WNqvxXUSapzvVjKSNqFgSADDfCnpmjKW",
-                  "is_self": false,
-                  "label": null,
-                  "label_trust": "fact",
+                  "is_self": true,
+                  "label": {
+                    "id": "accounts-your-unnamed-token",
+                    "parts": [
+                      {
+                        "text": "Your token account"
+                      }
+                    ],
+                    "text": "Your token account"
+                  },
+                  "label_trust": "verified",
                   "stand_in": null
                 }
               }
@@ -1210,10 +1258,10 @@
                       }
                     },
                     {
-                      "text": " if the accounts it creates only when missing do not exist yet; returned when the accounts are closed"
+                      "text": ", if the account this transaction creates when missing does not exist yet; refunded to whoever closes the account"
                     }
                   ],
-                  "text": "up to 0.00151384 SOL if the accounts it creates only when missing do not exist yet; returned when the accounts are closed"
+                  "text": "up to 0.00151384 SOL, if the account this transaction creates when missing does not exist yet; refunded to whoever closes the account"
                 }
               }
             }
@@ -1280,12 +1328,12 @@
         "id": null,
         "parts": [
           {
-            "text": "Buy ≥ 3731969312 raw units of an unverified token (before any transfer fee) (9sVJwhNTEtoq8PWeZJigJKNbRMZW7CoByosnxV2Cpump) for ≤ 0.000235478 SOL via Pump.fun"
+            "text": "Buy ≥ 3,731,969,312 raw units of unverified token 9sVJ…pump (before any transfer fee) for ≤ 0.000235478 SOL via Pump.fun"
           }
         ],
-        "text": "Buy ≥ 3731969312 raw units of an unverified token (before any transfer fee) (9sVJwhNTEtoq8PWeZJigJKNbRMZW7CoByosnxV2Cpump) for ≤ 0.000235478 SOL via Pump.fun"
+        "text": "Buy ≥ 3,731,969,312 raw units of unverified token 9sVJ…pump (before any transfer fee) for ≤ 0.000235478 SOL via Pump.fun"
       },
-      "text": "Buy ≥ 3731969312 raw units of an unverified token (before any transfer fee) (9sVJwhNTEtoq8PWeZJigJKNbRMZW7CoByosnxV2Cpump) for ≤ 0.000235478 SOL via Pump.fun\nOK\n\nFindings:\n  [INFO] The destination token account is not one of your accounts for a verified token; the signer cannot prove who owns it (instruction 3)\n\n== Buy | Pump.fun (descriptor reviewed 2026-10-18, upgradeable by 7gZu…jFr8)\n  Pay up to: ≤ 0.000235478 SOL\n  Receive: ≥ 3731969312 raw units of an unverified token (before any transfer fee) (9sVJwhNTEtoq8PWeZJigJKNbRMZW7CoByosnxV2Cpump)\n  Token: 9sVJwhNTEtoq8PWeZJigJKNbRMZW7CoByosnxV2Cpump\n  Bonding curve: Pump.fun bonding curve for this token (Dmbs…yUbo) (verified)\n  Token account: 7oT8RSgMTph8WNqvxXUSapzvVjKSNqFgSADDfCnpmjKW\n  Additional accounts: 2, not named by this descriptor\n\n== Also [collapsed]\n  Compute unit limit: 400000\n  Compute unit price: 200000 micro-lamports per unit\n  Create token account if missing: Token account: 7oT8RSgMTph8WNqvxXUSapzvVjKSNqFgSADDfCnpmjKW\n  Create token account if missing: Owner: Your wallet (G93M…pAnU) (verified)\n  Create token account if missing: Mint: 9sVJwhNTEtoq8PWeZJigJKNbRMZW7CoByosnxV2Cpump\n  Create token account if missing: Rent paid by: Your wallet (G93M…pAnU) (verified)\n  Create token account if missing: Token program: Token-2022 program (Toke…xuEb) (verified)\n\n== Signers\n  Fee payer: Your wallet (G93M…pAnU) (verified)\n\n== Fee\n  Total: 0.000085 SOL\n  Base: 0.000005 SOL\n  Priority: 0.00008 SOL\n  Priority basis: 200000 micro-lamports per unit × 400000 units requested\n  Rent deposits: up to 0.00151384 SOL if the accounts it creates only when missing do not exist yet; returned when the accounts are closed\n\n== Validity\n  Expires: in about a minute (recent blockhash)\n\nEffects:\n  - You send ≤ 0.000235478 SOL from Your wallet (G93M…pAnU) (verified) to Pump.fun (6EF8…wF6P) (verified)\n  - Transfer unknown amount of an unverified token (at least 3731969312 raw units before a transfer fee the signer cannot know) (9sVJwhNTEtoq8PWeZJigJKNbRMZW7CoByosnxV2Cpump) from Pump.fun (6EF8…wF6P) (verified) to 7oT8RSgMTph8WNqvxXUSapzvVjKSNqFgSADDfCnpmjKW\n  - Create 7oT8RSgMTph8WNqvxXUSapzvVjKSNqFgSADDfCnpmjKW owned by Token-2022 program (Toke…xuEb) (verified), depositing 0.00151384 SOL unless it already exists\n  - You pay a fee of 0.000085 SOL\n  - Valid for about a minute (recent blockhash)\n\nRaw: solana legacy (753 bytes)\n  digest: 7c86bc9defeee8a6705f7abc498275f845a7db2db2756be47af036c4fab29cf2\n",
+      "text": "Buy ≥ 3,731,969,312 raw units of unverified token 9sVJ…pump (before any transfer fee) for ≤ 0.000235478 SOL via Pump.fun\nOK\n\nFindings:\n  [INFO] The destination token account is not one of your accounts for a verified token; SignLens cannot confirm who owns it (instruction 4)\n\n== Buy | Pump.fun (descriptor reviewed 2026-10-18, upgradeable by 7gZu…jFr8)\n  Pay up to: ≤ 0.000235478 SOL\n  Receive: ≥ 3,731,969,312 raw units of unverified token 9sVJ…pump (before any transfer fee)\n  Token: 9sVJwhNTEtoq8PWeZJigJKNbRMZW7CoByosnxV2Cpump\n  Bonding curve: Pump.fun bonding curve for this token (Dmbs…yUbo)\n  Token account: Your token account (7oT8…mjKW)\n  Additional accounts: 2, not named by this descriptor\n\n== Also [collapsed]\n  Compute unit limit: 400000\n  Compute unit price: 200000 micro-lamports per unit\n  Create token account if missing: Token account: Your token account (7oT8…mjKW)\n  Create token account if missing: Owner: Your wallet (G93M…pAnU)\n  Create token account if missing: Mint: 9sVJwhNTEtoq8PWeZJigJKNbRMZW7CoByosnxV2Cpump\n  Create token account if missing: Rent paid by: Your wallet (G93M…pAnU)\n  Create token account if missing: Token program: Token-2022 program (Toke…xuEb)\n\n== Signers\n  Fee payer: Your wallet (G93M…pAnU)\n\n== Fee\n  Total: 0.000085 SOL\n  Base: 0.000005 SOL\n  Priority: 0.00008 SOL\n  Priority basis: 200000 micro-lamports per unit × 400000 units requested\n  Rent deposits: up to 0.00151384 SOL, if the account this transaction creates when missing does not exist yet; refunded to whoever closes the account\n\n== Validity\n  Expires: in about a minute (recent blockhash)\n\nEffects:\n  - You send ≤ 0.000235478 SOL from Your wallet (G93M…pAnU) to Pump.fun (6EF8…wF6P)\n  - You receive an unknown amount of unverified token 9sVJ…pump (at least 3,731,969,312 raw units, before a transfer fee SignLens cannot check) into Your token account (7oT8…mjKW) from Pump.fun (6EF8…wF6P)\n  - Create Your token account (7oT8…mjKW), managed by Token-2022 program (Toke…xuEb), depositing 0.00151384 SOL unless it already exists\n  - You pay a fee of 0.000085 SOL\n  - Valid for about a minute (recent blockhash)\n\nRaw: solana legacy (753 bytes)\n  digest: 7c86bc9defeee8a6705f7abc498275f845a7db2db2756be47af036c4fab29cf2\n",
       "verdict": "ok"
     }
   }
