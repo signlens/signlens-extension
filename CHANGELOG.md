@@ -60,7 +60,8 @@ uses [Semantic Versioning](https://semver.org/).
   token the engine does not know. It reads that document
   (`signlens-explanation/2`) as strictly as the last, and the window
   reads as it did. An API that does not serve `/v2` yet cannot explain
-  for this version.
+  for this version, and the window says that it needs an update, or the
+  default API in the settings.
 
 - **Your contacts' names stay in your browser.** The address book went to
   the SignLens API names and all, with each transaction, though the

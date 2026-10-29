@@ -113,6 +113,25 @@ test('the request carries the transaction as base64 beside the engine request, a
     }
 });
 
+test('an API that does not serve /v2 is said to need an update, not passed on in its words', async () => {
+    // As the API answered before /v2.
+    const older = await stub({
+        explain: {
+            status: 404,
+            body: { schema: 'signlens-api-error/1', error: { code: 'path', message: 'no such path; the API lives under /v1' } },
+        },
+    });
+    try {
+        const document = await explainRemotely(older.url, new Uint8Array([1]), {});
+        assert.ok('error' in document);
+        assert.equal(document.error.code, 'api');
+        assert.match(document.error.message, /does not serve \/v2\/explain, which this version needs/);
+        assert.equal(older.calls.length, 1, 'a missing path is not tried again');
+    } finally {
+        await older.close();
+    }
+});
+
 test("the API's error document is passed through, and anything else is an error document too", async () => {
     const engineError = await stub({
         explain: {

@@ -113,6 +113,13 @@ export async function explainRemotely(
     } catch (error) {
         return errorDocument('api', `the SignLens API at ${base} did not answer (${describe(error)})`);
     }
+    // An API from before /v2 has no such path, and would say the API lives under /v1.
+    if (response.status === 404) {
+        return errorDocument(
+            'api',
+            `the SignLens API at ${base} does not serve /v2/explain, which this version needs: update it, or use the default API in the settings`,
+        );
+    }
     // Refused for its limit, in the API's words or not: the calls after it would be refused too.
     const code = response.status === 429 ? LIMITED : 'api';
     const notAnExplanation = errorDocument(
