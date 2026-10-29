@@ -1,0 +1,2058 @@
+{
+  "request": {
+    "method": "POST",
+    "path": "/v2/explain",
+    "body": {
+      "transaction": "AS2uutPxpxlee+eAaL6Zy9cqCysUhRaNwaRUP4c2MqrKTtLfHyif2mJVmT+/QAOgkeN5SGlEViAIVQFDOkHASAeAAQAFCqqwI/5W6dWiye2ocweN62KGQMxyK9pgfrMIX0Tn/jPMdxW4goL+J2qtGBRUyq+kSb9blzOP+BZujneNLNdD7KTuwkVQb9Tebb+rDe6MkC97bfVmU4bqhET5f5yObdhjUpgeINHEcyC0NnAWRUv7Y9wNGqJANGYt2FZM6DHu3UN2Hnux2yFhc3ms3ARWJVpsMz9zcSqx4OmKWijl7blcu6wDBkZv5SEXMv/srbpyw5vnvIzlu8X3EmssQ5s6QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADEKb18GPUPgVbZr8HN3nLfZo2as77K9rVw1XZmRa2chgMUcENA3t3zcf1CRyFI8kjp0abRpesqw6zYt/1dayQ76TmoMJ9WQHGH//MKxUsWlJi+mfbY4b/UJEaAzU99Hict2tEAV1lYdOUfDoH/VBKLlUpPFX86E23cFNAhTVag8GBQAFAkgZEwAFAAkBAAABAAAAAAAFAAkDjAYAAAAAAAAGAgABDAIAAABRUBwAAAAAAAcGAAABKywGCZPxe2T0hK52/QdgAAIBNCsDBwoHCy0sLgYvBzcAAgwbHB0eHywtMDQxICEiIzUAAgwVNRYXNDEYNS0sMDYZGgY3AAILJCUmJygsLTA0KykqBgYyCgwLMw0ODxAsLTAxKxESExQyMjIICQMEP76cqbCVmqFsvkW7OwAAAAD5osk9IwAAADP2zwQAAAAAMgAEAAAAC+YKAS42AQEL9BoCiRAnEqCYe0AAAGT0AQXkhruJ6z0cc5JZMl4PsUgoXDyie7itCjOaApQPRYbiEAMBAgMHPEFAQnBrPYB57FalGJaWAPlvicYQjan2r5DUzYCFycr71wj+Rw5cCAsQHiAJe31+AgEIWAtpttOd+gC3Xnkfp0jzLEBwKhzGOHNPLs+7W7lCbcgGAA0BBQ4IAwMHCtXmJ8wElt2gjcvbK/JveVJX+jn823A/VE49l+zziM1JCQQCCAYJDwESEAEF5Ps6PHxRJ+JP4XlwQNcyr2PlGQIVlISMsooK5/xPBuwHCQABCwwFCAA=",
+      "own_keys": [
+        "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR"
+      ],
+      "loaded_writable": [
+        "ARu4n5mFdZogZAravu7CcizaojWnS6oqka37gdLT5SZn",
+        "DT2krA8vSP96D68nH86eAztZHVM18YB5i4gDXjLBDXm7",
+        "8XrtGP8RG33AnrN2yJ6H3gnXPNQ3dYXKqM72bpzhcsd6",
+        "9GTj99g9tbz9U6UYDsX6YeRTgUnkYG6GTnHv3qLa5aXq",
+        "HL8turx8hJEEPVH4ivxzxwfdxVA1PH3LeYbSmh3hYfzz",
+        "5BzogZvHNEuwstR4iwTWdd7jknFBZqJQWVjxPsDfEUD6",
+        "3T6qNbQqWYDfSTew1ifsNedtoeDP8LRuCegmUH27ykEZ",
+        "GuDQwyNv6g6jtZg13VNcDnK9mb6q8pTj534BDehqvtzF",
+        "F8Q4AuinoR4zd3g7dhqncySeJ2FZTJP7WJFu5Xtipt7C",
+        "Hfi3S6QAF9spfibDKiAyy2bJ4JPgqAL3pLb3nX7BnMdj",
+        "Hkr8rWGx5eKBRT6S6Vv7i8sMgx2axf169NyzG4dZ4CJM",
+        "5jtE2xeX3zj5YMMReLZ9K5wi1CvoGwpek19NniCyTUjq",
+        "GUPSZbGFbAPP3T5nASz639tUyqZZLsKp1MiQfGY51C2C",
+        "CK4DVz262WumJRBAMz9E6EnzRVdcWrfw6HXSVhYfHbQX",
+        "GMHY2p1EVcFWGiL5haFuLWPR5F5Yx51DwSVQdgTabGMo",
+        "E9nosQN1bjuPYYGjeonFCL6kXG4A7LYhMyyntiH48KNn",
+        "8UETFUVDvpoM9GLtRaVrkBsBSufSCcYQhVzJrF5FyCvm",
+        "Y6YhgJbt9FRk3JVjwdZtsioVCJwCKhy1hum8HMDYyB1",
+        "CZt61djgJ6ggjA1aCfYskFViBQxcprA9HT3nE7PZdE1X",
+        "36yskKDMc8fonVifSDKYCDeurrRpecDZw55cej18nyxJ",
+        "Be76qZre4bLB5LsEZQVLumvCn3qcPuVeFNbnMGLEZr8L",
+        "4xHqh1YhNx93goHCReDAydyebUo9Dm5F3snQpotdkpkg",
+        "3FjJ9JXzeuy4P1ZKCZB1DDYee8uFMUH72pZb1qaGrfyj",
+        "DMYaseBBCVzV5CfqEVoVzC1VXdpKcNQoGQYJ2ziiNNue",
+        "EF6JJiC12jXHamzaFH4synchzAiN17SYuhsCqWs5FaPf",
+        "5rZmHX3TZb1eafuf8yvntBoDB5MgQ8H44CAcb5vEPf6F",
+        "E64NGkDLLCdQ2yFNPcavaKptrEgmiQaNykUuLC1Qgwyp",
+        "GXAGyhtBGwRDRG7nX2skSiHNUhDuXTdTFgJMUhE67nBU",
+        "7Tndxg6ZoZNfvQ3C4LwLqcguq4KCWMUpnyCQWqys2Uja",
+        "GkMv4HeHaBbkwsHKbn4h2Mwi94n2iPbWhiczkMS7xMhR",
+        "FKruhyCo2x7uDAk2vDNpfr6GJZrhpha7b2aia299GDBL",
+        "6LVaeSqMQyWjQqJP31cp2MAyLjVUQEUbCJp3rXakShn9",
+        "3W2fY3iUMSUrWuBt48qK8VELvffecBiCFrg3ArurTmAv"
+      ],
+      "loaded_readonly": [
+        "So11111111111111111111111111111111111111112",
+        "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+        "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+        "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+        "Ag3hiK9svNixH9Vu5sD2CmK5fyDWrx9a1iVSbZW22bUS",
+        "MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr",
+        "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+        "REALQqNEomY6cQGZJUGwywTBD2UmDT32rZcNnfxQ5N2",
+        "4E6xP73xzTs4aCvY92hbXRwWkYptNwvViPZmLcZEBUk4",
+        "HcRLc9VDgjLeK154xDawfb1dmVJ98DoSqcwTHGqiDeJR",
+        "LBUZKhRxPF3XUpBCjp4YzTKgLccjZhTSDM9YuVaPwxo",
+        "D1ZN9Wj1fRSUQfCjhvnu1hqDMT7hzjzBBpi12nVniYD6",
+        "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK"
+      ],
+      "contacts": [],
+      "simulation": {
+        "failure": null,
+        "units": 4200,
+        "changes": []
+      },
+      "render": true
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "chain": "solana",
+      "effects": [
+        {
+          "message": {
+            "id": "effect-send",
+            "parts": [
+              {
+                "text": "You send "
+              },
+              {
+                "text": "0.001855569 SOL",
+                "value": {
+                  "type": "amount",
+                  "value": {
+                    "asset": {
+                      "decimals": 9,
+                      "description": null,
+                      "id": "native",
+                      "symbol": "SOL",
+                      "trust": "fact"
+                    },
+                    "bound": "exact",
+                    "note": null,
+                    "units": "1855569"
+                  }
+                }
+              },
+              {
+                "text": " from "
+              },
+              {
+                "text": "Your wallet (CVJ6…Q3bR) (verified)",
+                "value": {
+                  "type": "address",
+                  "value": {
+                    "address": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR",
+                    "is_self": true,
+                    "label": {
+                      "id": "accounts-your-wallet",
+                      "parts": [
+                        {
+                          "text": "Your wallet"
+                        }
+                      ],
+                      "text": "Your wallet"
+                    },
+                    "label_trust": "verified",
+                    "stand_in": null
+                  }
+                }
+              },
+              {
+                "text": " to "
+              },
+              {
+                "text": "91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD",
+                "value": {
+                  "type": "address",
+                  "value": {
+                    "address": "91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD",
+                    "is_self": false,
+                    "label": null,
+                    "label_trust": "fact",
+                    "stand_in": null
+                  }
+                }
+              }
+            ],
+            "text": "You send 0.001855569 SOL from Your wallet (CVJ6…Q3bR) (verified) to 91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD"
+          },
+          "type": "transfer",
+          "value": {
+            "amount": {
+              "asset": {
+                "decimals": 9,
+                "description": null,
+                "id": "native",
+                "symbol": "SOL",
+                "trust": "fact"
+              },
+              "bound": "exact",
+              "note": null,
+              "units": "1855569"
+            },
+            "from": {
+              "address": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR",
+              "is_self": true,
+              "label": {
+                "id": "accounts-your-wallet",
+                "parts": [
+                  {
+                    "text": "Your wallet"
+                  }
+                ],
+                "text": "Your wallet"
+              },
+              "label_trust": "verified",
+              "stand_in": null
+            },
+            "to": {
+              "address": "91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD",
+              "is_self": false,
+              "label": null,
+              "label_trust": "fact",
+              "stand_in": null
+            }
+          }
+        },
+        {
+          "message": {
+            "id": "effect-send",
+            "parts": [
+              {
+                "text": "You send "
+              },
+              {
+                "text": "151.360479993 ZCAT (verified)",
+                "value": {
+                  "type": "amount",
+                  "value": {
+                    "asset": {
+                      "decimals": 9,
+                      "description": null,
+                      "id": "HcRLc9VDgjLeK154xDawfb1dmVJ98DoSqcwTHGqiDeJR",
+                      "symbol": "ZCAT",
+                      "trust": "verified"
+                    },
+                    "bound": "exact",
+                    "note": null,
+                    "units": "151360479993"
+                  }
+                }
+              },
+              {
+                "text": " from "
+              },
+              {
+                "text": "Your wallet (CVJ6…Q3bR) (verified)",
+                "value": {
+                  "type": "address",
+                  "value": {
+                    "address": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR",
+                    "is_self": true,
+                    "label": {
+                      "id": "accounts-your-wallet",
+                      "parts": [
+                        {
+                          "text": "Your wallet"
+                        }
+                      ],
+                      "text": "Your wallet"
+                    },
+                    "label_trust": "verified",
+                    "stand_in": null
+                  }
+                }
+              },
+              {
+                "text": " to "
+              },
+              {
+                "text": "OKX DEX Router (proV…CX3u) (verified)",
+                "value": {
+                  "type": "address",
+                  "value": {
+                    "address": "proVF4pMXVaYqmy4NjniPh4pqKNfMmsihgd4wdkCX3u",
+                    "is_self": false,
+                    "label": {
+                      "id": "accounts-name",
+                      "parts": [
+                        {
+                          "text": "OKX DEX Router",
+                          "value": {
+                            "type": "text",
+                            "value": "OKX DEX Router"
+                          }
+                        }
+                      ],
+                      "text": "OKX DEX Router"
+                    },
+                    "label_trust": "verified",
+                    "stand_in": null
+                  }
+                }
+              }
+            ],
+            "text": "You send 151.360479993 ZCAT (verified) from Your wallet (CVJ6…Q3bR) (verified) to OKX DEX Router (proV…CX3u) (verified)"
+          },
+          "type": "transfer",
+          "value": {
+            "amount": {
+              "asset": {
+                "decimals": 9,
+                "description": null,
+                "id": "HcRLc9VDgjLeK154xDawfb1dmVJ98DoSqcwTHGqiDeJR",
+                "symbol": "ZCAT",
+                "trust": "verified"
+              },
+              "bound": "exact",
+              "note": null,
+              "units": "151360479993"
+            },
+            "from": {
+              "address": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR",
+              "is_self": true,
+              "label": {
+                "id": "accounts-your-wallet",
+                "parts": [
+                  {
+                    "text": "Your wallet"
+                  }
+                ],
+                "text": "Your wallet"
+              },
+              "label_trust": "verified",
+              "stand_in": null
+            },
+            "to": {
+              "address": "proVF4pMXVaYqmy4NjniPh4pqKNfMmsihgd4wdkCX3u",
+              "is_self": false,
+              "label": {
+                "id": "accounts-name",
+                "parts": [
+                  {
+                    "text": "OKX DEX Router",
+                    "value": {
+                      "type": "text",
+                      "value": "OKX DEX Router"
+                    }
+                  }
+                ],
+                "text": "OKX DEX Router"
+              },
+              "label_trust": "verified",
+              "stand_in": null
+            }
+          }
+        },
+        {
+          "message": {
+            "id": "effect-receive",
+            "parts": [
+              {
+                "text": "You receive "
+              },
+              {
+                "text": "≥ 0.080334153 SOL (verified)",
+                "value": {
+                  "type": "amount",
+                  "value": {
+                    "asset": {
+                      "decimals": 9,
+                      "description": null,
+                      "id": "So11111111111111111111111111111111111111112",
+                      "symbol": "SOL",
+                      "trust": "verified"
+                    },
+                    "bound": "at_least",
+                    "note": null,
+                    "units": "80334153"
+                  }
+                }
+              },
+              {
+                "text": " into "
+              },
+              {
+                "text": "Your wallet (CVJ6…Q3bR) (verified)",
+                "value": {
+                  "type": "address",
+                  "value": {
+                    "address": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR",
+                    "is_self": true,
+                    "label": {
+                      "id": "accounts-your-wallet",
+                      "parts": [
+                        {
+                          "text": "Your wallet"
+                        }
+                      ],
+                      "text": "Your wallet"
+                    },
+                    "label_trust": "verified",
+                    "stand_in": null
+                  }
+                }
+              },
+              {
+                "text": " from "
+              },
+              {
+                "text": "OKX DEX Router (proV…CX3u) (verified)",
+                "value": {
+                  "type": "address",
+                  "value": {
+                    "address": "proVF4pMXVaYqmy4NjniPh4pqKNfMmsihgd4wdkCX3u",
+                    "is_self": false,
+                    "label": {
+                      "id": "accounts-name",
+                      "parts": [
+                        {
+                          "text": "OKX DEX Router",
+                          "value": {
+                            "type": "text",
+                            "value": "OKX DEX Router"
+                          }
+                        }
+                      ],
+                      "text": "OKX DEX Router"
+                    },
+                    "label_trust": "verified",
+                    "stand_in": null
+                  }
+                }
+              }
+            ],
+            "text": "You receive ≥ 0.080334153 SOL (verified) into Your wallet (CVJ6…Q3bR) (verified) from OKX DEX Router (proV…CX3u) (verified)"
+          },
+          "type": "transfer",
+          "value": {
+            "amount": {
+              "asset": {
+                "decimals": 9,
+                "description": null,
+                "id": "So11111111111111111111111111111111111111112",
+                "symbol": "SOL",
+                "trust": "verified"
+              },
+              "bound": "at_least",
+              "note": null,
+              "units": "80334153"
+            },
+            "from": {
+              "address": "proVF4pMXVaYqmy4NjniPh4pqKNfMmsihgd4wdkCX3u",
+              "is_self": false,
+              "label": {
+                "id": "accounts-name",
+                "parts": [
+                  {
+                    "text": "OKX DEX Router",
+                    "value": {
+                      "type": "text",
+                      "value": "OKX DEX Router"
+                    }
+                  }
+                ],
+                "text": "OKX DEX Router"
+              },
+              "label_trust": "verified",
+              "stand_in": null
+            },
+            "to": {
+              "address": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR",
+              "is_self": true,
+              "label": {
+                "id": "accounts-your-wallet",
+                "parts": [
+                  {
+                    "text": "Your wallet"
+                  }
+                ],
+                "text": "Your wallet"
+              },
+              "label_trust": "verified",
+              "stand_in": null
+            }
+          }
+        },
+        {
+          "message": {
+            "id": "effect-create-deposit",
+            "parts": [
+              {
+                "text": "Create "
+              },
+              {
+                "text": "91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD",
+                "value": {
+                  "type": "address",
+                  "value": {
+                    "address": "91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD",
+                    "is_self": false,
+                    "label": null,
+                    "label_trust": "fact",
+                    "stand_in": null
+                  }
+                }
+              },
+              {
+                "text": " owned by "
+              },
+              {
+                "text": "Token program (Toke…Q5DA) (verified)",
+                "value": {
+                  "type": "address",
+                  "value": {
+                    "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+                    "is_self": false,
+                    "label": {
+                      "id": "accounts-name",
+                      "parts": [
+                        {
+                          "text": "Token program",
+                          "value": {
+                            "type": "text",
+                            "value": "Token program"
+                          }
+                        }
+                      ],
+                      "text": "Token program"
+                    },
+                    "label_trust": "verified",
+                    "stand_in": null
+                  }
+                }
+              },
+              {
+                "text": ", depositing "
+              },
+              {
+                "text": "0.00148844 SOL",
+                "value": {
+                  "type": "amount",
+                  "value": {
+                    "asset": {
+                      "decimals": 9,
+                      "description": null,
+                      "id": "native",
+                      "symbol": "SOL",
+                      "trust": "fact"
+                    },
+                    "bound": "exact",
+                    "note": null,
+                    "units": "1488440"
+                  }
+                }
+              }
+            ],
+            "text": "Create 91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD owned by Token program (Toke…Q5DA) (verified), depositing 0.00148844 SOL"
+          },
+          "type": "create",
+          "value": {
+            "account": {
+              "address": "91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD",
+              "is_self": false,
+              "label": null,
+              "label_trust": "fact",
+              "stand_in": null
+            },
+            "deposit": {
+              "asset": {
+                "decimals": 9,
+                "description": null,
+                "id": "native",
+                "symbol": "SOL",
+                "trust": "fact"
+              },
+              "bound": "exact",
+              "note": null,
+              "units": "1488440"
+            },
+            "if_missing": false,
+            "owner": {
+              "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "is_self": false,
+              "label": {
+                "id": "accounts-name",
+                "parts": [
+                  {
+                    "text": "Token program",
+                    "value": {
+                      "type": "text",
+                      "value": "Token program"
+                    }
+                  }
+                ],
+                "text": "Token program"
+              },
+              "label_trust": "verified",
+              "stand_in": null
+            }
+          }
+        },
+        {
+          "message": {
+            "id": "effect-fee-own",
+            "parts": [
+              {
+                "text": "You pay a fee of "
+              },
+              {
+                "text": "0.000007098 SOL",
+                "value": {
+                  "type": "amount",
+                  "value": {
+                    "asset": {
+                      "decimals": 9,
+                      "description": null,
+                      "id": "native",
+                      "symbol": "SOL",
+                      "trust": "fact"
+                    },
+                    "bound": "exact",
+                    "note": null,
+                    "units": "7098"
+                  }
+                }
+              }
+            ],
+            "text": "You pay a fee of 0.000007098 SOL"
+          },
+          "type": "fee",
+          "value": {
+            "amount": {
+              "asset": {
+                "decimals": 9,
+                "description": null,
+                "id": "native",
+                "symbol": "SOL",
+                "trust": "fact"
+              },
+              "bound": "exact",
+              "note": null,
+              "units": "7098"
+            },
+            "payer": {
+              "address": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR",
+              "is_self": true,
+              "label": {
+                "id": "accounts-your-wallet",
+                "parts": [
+                  {
+                    "text": "Your wallet"
+                  }
+                ],
+                "text": "Your wallet"
+              },
+              "label_trust": "verified",
+              "stand_in": null
+            }
+          }
+        },
+        {
+          "message": {
+            "id": "effect-recent-blockhash",
+            "parts": [
+              {
+                "text": "Valid for about a minute (recent blockhash)"
+              }
+            ],
+            "text": "Valid for about a minute (recent blockhash)"
+          },
+          "type": "lifetime",
+          "value": {
+            "type": "recent_blockhash"
+          }
+        }
+      ],
+      "findings": [
+        {
+          "code": "SIMULATION_DISAGREES",
+          "instruction": null,
+          "message": {
+            "id": "simulation-less-in",
+            "parts": [
+              {
+                "text": "The simulation credits your accounts with "
+              },
+              {
+                "text": "0 SOL",
+                "value": {
+                  "type": "amount",
+                  "value": {
+                    "asset": {
+                      "decimals": 9,
+                      "description": null,
+                      "id": "native",
+                      "symbol": "SOL",
+                      "trust": "fact"
+                    },
+                    "bound": "exact",
+                    "note": null,
+                    "units": "0"
+                  }
+                }
+              },
+              {
+                "text": " of "
+              },
+              {
+                "text": "SOL",
+                "value": {
+                  "type": "text",
+                  "value": "SOL"
+                }
+              },
+              {
+                "text": ", less than the "
+              },
+              {
+                "text": "0.080334153 SOL",
+                "value": {
+                  "type": "amount",
+                  "value": {
+                    "asset": {
+                      "decimals": 9,
+                      "description": null,
+                      "id": "native",
+                      "symbol": "SOL",
+                      "trust": "fact"
+                    },
+                    "bound": "exact",
+                    "note": null,
+                    "units": "80334153"
+                  }
+                }
+              },
+              {
+                "text": " the instructions guarantee"
+              }
+            ],
+            "text": "The simulation credits your accounts with 0 SOL of SOL, less than the 0.080334153 SOL the instructions guarantee"
+          },
+          "severity": "high"
+        },
+        {
+          "code": "DESTINATION_NOT_VERIFIED",
+          "instruction": 5,
+          "message": {
+            "id": null,
+            "parts": [
+              {
+                "text": "The destination token account is not one of your accounts for a verified token; the signer cannot prove who owns it"
+              }
+            ],
+            "text": "The destination token account is not one of your accounts for a verified token; the signer cannot prove who owns it"
+          },
+          "severity": "info"
+        },
+        {
+          "code": "IGNORED_TRAILING_BYTES",
+          "instruction": 1,
+          "message": {
+            "id": "compute-budget-trailing-bytes",
+            "parts": [
+              {
+                "text": "4",
+                "value": {
+                  "type": "integer",
+                  "value": "4"
+                }
+              },
+              {
+                "text": " byte(s) after this compute budget value are ignored; the runtime reads only the value, as shown"
+              }
+            ],
+            "text": "4 byte(s) after this compute budget value are ignored; the runtime reads only the value, as shown"
+          },
+          "severity": "info"
+        }
+      ],
+      "raw": {
+        "digest": "9f46f53cb1549cfb1d859dc7109c80f65b636658c9999b7f227a133aad7823a2",
+        "format": "solana v0"
+      },
+      "schema": "signlens-explanation/2",
+      "sections": [
+        {
+          "collapsed": false,
+          "fields": [
+            {
+              "help": null,
+              "label": {
+                "id": "label-amount",
+                "parts": [
+                  {
+                    "text": "Amount"
+                  }
+                ],
+                "text": "Amount"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "amount",
+                "value": {
+                  "asset": {
+                    "decimals": 9,
+                    "description": null,
+                    "id": "native",
+                    "symbol": "SOL",
+                    "trust": "fact"
+                  },
+                  "bound": "exact",
+                  "note": null,
+                  "units": "1855569"
+                }
+              }
+            },
+            {
+              "help": null,
+              "label": {
+                "id": "label-from",
+                "parts": [
+                  {
+                    "text": "From"
+                  }
+                ],
+                "text": "From"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR",
+                  "is_self": true,
+                  "label": {
+                    "id": "accounts-your-wallet",
+                    "parts": [
+                      {
+                        "text": "Your wallet"
+                      }
+                    ],
+                    "text": "Your wallet"
+                  },
+                  "label_trust": "verified",
+                  "stand_in": null
+                }
+              }
+            },
+            {
+              "help": null,
+              "label": {
+                "id": "label-to",
+                "parts": [
+                  {
+                    "text": "To"
+                  }
+                ],
+                "text": "To"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "fact",
+                  "stand_in": null
+                }
+              }
+            }
+          ],
+          "kind": {
+            "type": "instruction",
+            "value": {
+              "index": 3
+            }
+          },
+          "subtitle": {
+            "id": "decode-program-verified",
+            "parts": [
+              {
+                "text": "System program",
+                "value": {
+                  "type": "text",
+                  "value": "System program"
+                }
+              },
+              {
+                "text": " (verified)"
+              }
+            ],
+            "text": "System program (verified)"
+          },
+          "title": {
+            "id": "system-transfer-title",
+            "parts": [
+              {
+                "text": "Transfer"
+              }
+            ],
+            "text": "Transfer"
+          }
+        },
+        {
+          "collapsed": false,
+          "fields": [
+            {
+              "help": {
+                "id": null,
+                "parts": [
+                  {
+                    "text": "What is swapped, after the commission is taken."
+                  }
+                ],
+                "text": "What is swapped, after the commission is taken."
+              },
+              "label": {
+                "id": null,
+                "parts": [
+                  {
+                    "text": "Send"
+                  }
+                ],
+                "text": "Send"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "amount",
+                "value": {
+                  "asset": {
+                    "decimals": 9,
+                    "description": null,
+                    "id": "HcRLc9VDgjLeK154xDawfb1dmVJ98DoSqcwTHGqiDeJR",
+                    "symbol": "ZCAT",
+                    "trust": "verified"
+                  },
+                  "bound": "exact",
+                  "note": null,
+                  "units": "151360479993"
+                }
+              }
+            },
+            {
+              "help": {
+                "id": null,
+                "parts": [
+                  {
+                    "text": "What comes back to you. Shown as at least when the program only guarantees a floor and fails below it."
+                  }
+                ],
+                "text": "What comes back to you. Shown as at least when the program only guarantees a floor and fails below it."
+              },
+              "label": {
+                "id": null,
+                "parts": [
+                  {
+                    "text": "Receive"
+                  }
+                ],
+                "text": "Receive"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "amount",
+                "value": {
+                  "asset": {
+                    "decimals": 9,
+                    "description": null,
+                    "id": "So11111111111111111111111111111111111111112",
+                    "symbol": "SOL",
+                    "trust": "verified"
+                  },
+                  "bound": "at_least",
+                  "note": null,
+                  "units": "80334153"
+                }
+              }
+            },
+            {
+              "help": {
+                "id": null,
+                "parts": [
+                  {
+                    "text": "What the site expected when it built the transaction. The Receive floor is this less the slippage allowance."
+                  }
+                ],
+                "text": "What the site expected when it built the transaction. The Receive floor is this less the slippage allowance."
+              },
+              "label": {
+                "id": null,
+                "parts": [
+                  {
+                    "text": "Quoted"
+                  }
+                ],
+                "text": "Quoted"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "amount",
+                "value": {
+                  "asset": {
+                    "decimals": 9,
+                    "description": null,
+                    "id": "So11111111111111111111111111111111111111112",
+                    "symbol": "SOL",
+                    "trust": "verified"
+                  },
+                  "bound": "exact",
+                  "note": null,
+                  "units": "80737843"
+                }
+              }
+            },
+            {
+              "help": {
+                "id": null,
+                "parts": [
+                  {
+                    "text": "How far the executed price may move against you before the swap fails, as a percentage of the quote."
+                  }
+                ],
+                "text": "How far the executed price may move against you before the swap fails, as a percentage of the quote."
+              },
+              "label": {
+                "id": null,
+                "parts": [
+                  {
+                    "text": "Max slippage"
+                  }
+                ],
+                "text": "Max slippage"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "basis_points",
+                "value": 50
+              }
+            },
+            {
+              "help": {
+                "id": null,
+                "parts": [
+                  {
+                    "text": "The cut the site takes, as a percentage of the swap."
+                  }
+                ],
+                "text": "The cut the site takes, as a percentage of the swap."
+              },
+              "label": {
+                "id": null,
+                "parts": [
+                  {
+                    "text": "Commission"
+                  }
+                ],
+                "text": "Commission"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "basis_points",
+                "value": 81
+              }
+            },
+            {
+              "help": {
+                "id": null,
+                "parts": [
+                  {
+                    "text": "Where the commission goes: an account of the site that built this transaction."
+                  }
+                ],
+                "text": "Where the commission goes: an account of the site that built this transaction."
+              },
+              "label": {
+                "id": null,
+                "parts": [
+                  {
+                    "text": "Commission account"
+                  }
+                ],
+                "text": "Commission account"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "BEochrdGhm5pcKVF73DURYrGo1DLzxq6bBcUBphQR64d",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "fact",
+                  "stand_in": null
+                }
+              }
+            },
+            {
+              "help": {
+                "id": null,
+                "parts": [
+                  {
+                    "text": "A share of any surplus over the quote the router keeps, in its own units."
+                  }
+                ],
+                "text": "A share of any surplus over the quote the router keeps, in its own units."
+              },
+              "label": {
+                "id": null,
+                "parts": [
+                  {
+                    "text": "Trim rate (program units)"
+                  }
+                ],
+                "text": "Trim rate (program units)"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "integer",
+                "value": "100"
+              }
+            },
+            {
+              "help": {
+                "id": null,
+                "parts": [
+                  {
+                    "text": "A further fee rate the router applies, in its own units."
+                  }
+                ],
+                "text": "A further fee rate the router applies, in its own units."
+              },
+              "label": {
+                "id": null,
+                "parts": [
+                  {
+                    "text": "Charge rate (program units)"
+                  }
+                ],
+                "text": "Charge rate (program units)"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "integer",
+                "value": "500"
+              }
+            },
+            {
+              "help": {
+                "id": null,
+                "parts": [
+                  {
+                    "text": "When set, the router closes the temporary token account it used and returns its rent."
+                  }
+                ],
+                "text": "When set, the router closes the temporary token account it used and returns its rent."
+              },
+              "label": {
+                "id": null,
+                "parts": [
+                  {
+                    "text": "Closes the temporary token account afterwards (flag)"
+                  }
+                ],
+                "text": "Closes the temporary token account afterwards (flag)"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "integer",
+                "value": "1"
+              }
+            },
+            {
+              "help": {
+                "id": null,
+                "parts": [
+                  {
+                    "text": "The path the swap takes: which markets, and what share of the amount goes through each."
+                  }
+                ],
+                "text": "The path the swap takes: which markets, and what share of the amount goes through each."
+              },
+              "label": {
+                "id": null,
+                "parts": [
+                  {
+                    "text": "Route"
+                  }
+                ],
+                "text": "Route"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "list",
+                "value": [
+                  {
+                    "type": "text",
+                    "value": "RaydiumClmmSwapV2 (weight 2790, leg 1)"
+                  },
+                  {
+                    "type": "text",
+                    "value": "MeteoraDlmmSwap2 (weight 310, leg 1)"
+                  },
+                  {
+                    "type": "text",
+                    "value": "RaydiumClmmSwapV2 (weight 6900, leg 2)"
+                  },
+                  {
+                    "type": "text",
+                    "value": "ByrealClmm3 (weight 10000, leg 18)"
+                  }
+                ]
+              }
+            },
+            {
+              "help": {
+                "id": null,
+                "parts": [
+                  {
+                    "text": "The token account the tokens leave. It should be one of yours."
+                  }
+                ],
+                "text": "The token account the tokens leave. It should be one of yours."
+              },
+              "label": {
+                "id": null,
+                "parts": [
+                  {
+                    "text": "From account"
+                  }
+                ],
+                "text": "From account"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "H51r5KPyahCGiGCQ9jZr5r5bukcXFaRDFtPFZBUyiHfo",
+                  "is_self": true,
+                  "label": {
+                    "id": "accounts-your-token",
+                    "parts": [
+                      {
+                        "text": "Your "
+                      },
+                      {
+                        "text": "ZCAT",
+                        "value": {
+                          "type": "text",
+                          "value": "ZCAT"
+                        }
+                      },
+                      {
+                        "text": " account"
+                      }
+                    ],
+                    "text": "Your ZCAT account"
+                  },
+                  "label_trust": "verified",
+                  "stand_in": null
+                }
+              }
+            },
+            {
+              "help": {
+                "id": null,
+                "parts": [
+                  {
+                    "text": "The token account that receives the tokens. Check it is yours, unless you mean to pay someone else."
+                  }
+                ],
+                "text": "The token account that receives the tokens. Check it is yours, unless you mean to pay someone else."
+              },
+              "label": {
+                "id": null,
+                "parts": [
+                  {
+                    "text": "To account"
+                  }
+                ],
+                "text": "To account"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "fact",
+                  "stand_in": null
+                }
+              }
+            },
+            {
+              "help": null,
+              "label": {
+                "id": "label-additional-accounts",
+                "parts": [
+                  {
+                    "text": "Additional accounts"
+                  }
+                ],
+                "text": "Additional accounts"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "words",
+                "value": {
+                  "id": "descriptor-additional-accounts",
+                  "parts": [
+                    {
+                      "text": "80",
+                      "value": {
+                        "type": "integer",
+                        "value": "80"
+                      }
+                    },
+                    {
+                      "text": ", not named by this descriptor"
+                    }
+                  ],
+                  "text": "80, not named by this descriptor"
+                }
+              }
+            }
+          ],
+          "kind": {
+            "type": "instruction",
+            "value": {
+              "index": 5
+            }
+          },
+          "subtitle": {
+            "id": "descriptor-subtitle",
+            "parts": [
+              {
+                "text": "OKX DEX Router",
+                "value": {
+                  "type": "text",
+                  "value": "OKX DEX Router"
+                }
+              },
+              {
+                "text": " (descriptor reviewed "
+              },
+              {
+                "text": "2026-10-27",
+                "value": {
+                  "type": "text",
+                  "value": "2026-10-27"
+                }
+              },
+              {
+                "text": ", upgradeable by "
+              },
+              {
+                "short": {
+                  "address": "CjoV5B96reuCfPh2rRK11G1QptG97jZdyZArTn3EN1Mj",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "fact",
+                  "stand_in": null
+                },
+                "text": "CjoV…N1Mj"
+              },
+              {
+                "text": ")"
+              }
+            ],
+            "text": "OKX DEX Router (descriptor reviewed 2026-10-27, upgradeable by CjoV…N1Mj)"
+          },
+          "title": {
+            "id": null,
+            "parts": [
+              {
+                "text": "Swap"
+              }
+            ],
+            "text": "Swap"
+          }
+        },
+        {
+          "collapsed": true,
+          "fields": [
+            {
+              "help": null,
+              "label": {
+                "id": "label-compute-unit-limit",
+                "parts": [
+                  {
+                    "text": "Compute unit limit"
+                  }
+                ],
+                "text": "Compute unit limit"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "integer",
+                "value": "1251656"
+              }
+            },
+            {
+              "help": null,
+              "label": {
+                "id": "label-heap-size",
+                "parts": [
+                  {
+                    "text": "Heap size"
+                  }
+                ],
+                "text": "Heap size"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "words",
+                "value": {
+                  "id": "decode-bytes",
+                  "parts": [
+                    {
+                      "text": "65536",
+                      "value": {
+                        "type": "integer",
+                        "value": "65536"
+                      }
+                    },
+                    {
+                      "text": " bytes"
+                    }
+                  ],
+                  "text": "65536 bytes"
+                }
+              }
+            },
+            {
+              "help": null,
+              "label": {
+                "id": "label-compute-unit-price",
+                "parts": [
+                  {
+                    "text": "Compute unit price"
+                  }
+                ],
+                "text": "Compute unit price"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "words",
+                "value": {
+                  "id": "compute-budget-price",
+                  "parts": [
+                    {
+                      "text": "1676",
+                      "value": {
+                        "type": "integer",
+                        "value": "1676"
+                      }
+                    },
+                    {
+                      "text": " micro-lamports per unit"
+                    }
+                  ],
+                  "text": "1676 micro-lamports per unit"
+                }
+              }
+            },
+            {
+              "help": {
+                "id": null,
+                "parts": [
+                  {
+                    "text": "An account that holds one token for one wallet."
+                  }
+                ],
+                "text": "An account that holds one token for one wallet."
+              },
+              "label": {
+                "id": "explain-housekeeping-label",
+                "parts": [
+                  {
+                    "text": "Create token account: Token account"
+                  }
+                ],
+                "text": "Create token account: Token account"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "fact",
+                  "stand_in": null
+                }
+              }
+            },
+            {
+              "help": {
+                "id": null,
+                "parts": [
+                  {
+                    "text": "The wallet that controls the account."
+                  }
+                ],
+                "text": "The wallet that controls the account."
+              },
+              "label": {
+                "id": "explain-housekeeping-label",
+                "parts": [
+                  {
+                    "text": "Create token account: Owner"
+                  }
+                ],
+                "text": "Create token account: Owner"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR",
+                  "is_self": true,
+                  "label": {
+                    "id": "accounts-your-wallet",
+                    "parts": [
+                      {
+                        "text": "Your wallet"
+                      }
+                    ],
+                    "text": "Your wallet"
+                  },
+                  "label_trust": "verified",
+                  "stand_in": null
+                }
+              }
+            },
+            {
+              "help": {
+                "id": null,
+                "parts": [
+                  {
+                    "text": "The address that identifies the token itself, as opposed to an account holding some of it."
+                  }
+                ],
+                "text": "The address that identifies the token itself, as opposed to an account holding some of it."
+              },
+              "label": {
+                "id": "explain-housekeeping-label",
+                "parts": [
+                  {
+                    "text": "Create token account: Mint"
+                  }
+                ],
+                "text": "Create token account: Mint"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "So11111111111111111111111111111111111111112",
+                  "is_self": false,
+                  "label": {
+                    "id": "accounts-mint",
+                    "parts": [
+                      {
+                        "text": "SOL",
+                        "value": {
+                          "type": "text",
+                          "value": "SOL"
+                        }
+                      },
+                      {
+                        "text": " mint"
+                      }
+                    ],
+                    "text": "SOL mint"
+                  },
+                  "label_trust": "verified",
+                  "stand_in": null
+                }
+              }
+            },
+            {
+              "help": {
+                "id": null,
+                "parts": [
+                  {
+                    "text": "Who pays the small deposit that keeps a new account alive on chain. It comes back when the account is closed."
+                  }
+                ],
+                "text": "Who pays the small deposit that keeps a new account alive on chain. It comes back when the account is closed."
+              },
+              "label": {
+                "id": "explain-housekeeping-label",
+                "parts": [
+                  {
+                    "text": "Create token account: Rent paid by"
+                  }
+                ],
+                "text": "Create token account: Rent paid by"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR",
+                  "is_self": true,
+                  "label": {
+                    "id": "accounts-your-wallet",
+                    "parts": [
+                      {
+                        "text": "Your wallet"
+                      }
+                    ],
+                    "text": "Your wallet"
+                  },
+                  "label_trust": "verified",
+                  "stand_in": null
+                }
+              }
+            },
+            {
+              "help": {
+                "id": null,
+                "parts": [
+                  {
+                    "text": "The program that manages this token: SPL Token or Token-2022."
+                  }
+                ],
+                "text": "The program that manages this token: SPL Token or Token-2022."
+              },
+              "label": {
+                "id": "explain-housekeeping-label",
+                "parts": [
+                  {
+                    "text": "Create token account: Token program"
+                  }
+                ],
+                "text": "Create token account: Token program"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+                  "is_self": false,
+                  "label": {
+                    "id": "accounts-name",
+                    "parts": [
+                      {
+                        "text": "Token program",
+                        "value": {
+                          "type": "text",
+                          "value": "Token program"
+                        }
+                      }
+                    ],
+                    "text": "Token program"
+                  },
+                  "label_trust": "verified",
+                  "stand_in": null
+                }
+              }
+            }
+          ],
+          "kind": {
+            "type": "housekeeping"
+          },
+          "subtitle": null,
+          "title": {
+            "id": "explain-also",
+            "parts": [
+              {
+                "text": "Also"
+              }
+            ],
+            "text": "Also"
+          }
+        },
+        {
+          "collapsed": false,
+          "fields": [
+            {
+              "help": null,
+              "label": {
+                "id": "label-fee-payer",
+                "parts": [
+                  {
+                    "text": "Fee payer"
+                  }
+                ],
+                "text": "Fee payer"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR",
+                  "is_self": true,
+                  "label": {
+                    "id": "accounts-your-wallet",
+                    "parts": [
+                      {
+                        "text": "Your wallet"
+                      }
+                    ],
+                    "text": "Your wallet"
+                  },
+                  "label_trust": "verified",
+                  "stand_in": null
+                }
+              }
+            }
+          ],
+          "kind": {
+            "type": "signers"
+          },
+          "subtitle": null,
+          "title": {
+            "id": "explain-signers",
+            "parts": [
+              {
+                "text": "Signers"
+              }
+            ],
+            "text": "Signers"
+          }
+        },
+        {
+          "collapsed": false,
+          "fields": [
+            {
+              "help": null,
+              "label": {
+                "id": "label-total",
+                "parts": [
+                  {
+                    "text": "Total"
+                  }
+                ],
+                "text": "Total"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "amount",
+                "value": {
+                  "asset": {
+                    "decimals": 9,
+                    "description": null,
+                    "id": "native",
+                    "symbol": "SOL",
+                    "trust": "fact"
+                  },
+                  "bound": "exact",
+                  "note": null,
+                  "units": "7098"
+                }
+              }
+            },
+            {
+              "help": null,
+              "label": {
+                "id": "label-base",
+                "parts": [
+                  {
+                    "text": "Base"
+                  }
+                ],
+                "text": "Base"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "amount",
+                "value": {
+                  "asset": {
+                    "decimals": 9,
+                    "description": null,
+                    "id": "native",
+                    "symbol": "SOL",
+                    "trust": "fact"
+                  },
+                  "bound": "exact",
+                  "note": null,
+                  "units": "5000"
+                }
+              }
+            },
+            {
+              "help": null,
+              "label": {
+                "id": "label-priority",
+                "parts": [
+                  {
+                    "text": "Priority"
+                  }
+                ],
+                "text": "Priority"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "amount",
+                "value": {
+                  "asset": {
+                    "decimals": 9,
+                    "description": null,
+                    "id": "native",
+                    "symbol": "SOL",
+                    "trust": "fact"
+                  },
+                  "bound": "exact",
+                  "note": null,
+                  "units": "2098"
+                }
+              }
+            },
+            {
+              "help": null,
+              "label": {
+                "id": "label-priority-basis",
+                "parts": [
+                  {
+                    "text": "Priority basis"
+                  }
+                ],
+                "text": "Priority basis"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "words",
+                "value": {
+                  "id": "explain-priority-basis",
+                  "parts": [
+                    {
+                      "text": "1676",
+                      "value": {
+                        "type": "integer",
+                        "value": "1676"
+                      }
+                    },
+                    {
+                      "text": " micro-lamports per unit × "
+                    },
+                    {
+                      "text": "1251656",
+                      "value": {
+                        "type": "integer",
+                        "value": "1251656"
+                      }
+                    },
+                    {
+                      "text": " units requested"
+                    }
+                  ],
+                  "text": "1676 micro-lamports per unit × 1251656 units requested"
+                }
+              }
+            },
+            {
+              "help": null,
+              "label": {
+                "id": "label-rent-deposits",
+                "parts": [
+                  {
+                    "text": "Rent deposits"
+                  }
+                ],
+                "text": "Rent deposits"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "words",
+                "value": {
+                  "id": "explain-rent",
+                  "parts": [
+                    {
+                      "text": "0.00148844 SOL",
+                      "value": {
+                        "type": "amount",
+                        "value": {
+                          "asset": {
+                            "decimals": 9,
+                            "description": null,
+                            "id": "native",
+                            "symbol": "SOL",
+                            "trust": "fact"
+                          },
+                          "bound": "exact",
+                          "note": null,
+                          "units": "1488440"
+                        }
+                      }
+                    },
+                    {
+                      "text": "; returned when the accounts are closed"
+                    }
+                  ],
+                  "text": "0.00148844 SOL; returned when the accounts are closed"
+                }
+              }
+            }
+          ],
+          "kind": {
+            "type": "fees"
+          },
+          "subtitle": null,
+          "title": {
+            "id": "explain-fee",
+            "parts": [
+              {
+                "text": "Fee"
+              }
+            ],
+            "text": "Fee"
+          }
+        },
+        {
+          "collapsed": false,
+          "fields": [
+            {
+              "help": null,
+              "label": {
+                "id": "label-expires",
+                "parts": [
+                  {
+                    "text": "Expires"
+                  }
+                ],
+                "text": "Expires"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "words",
+                "value": {
+                  "id": "explain-expires-soon",
+                  "parts": [
+                    {
+                      "text": "in about a minute (recent blockhash)"
+                    }
+                  ],
+                  "text": "in about a minute (recent blockhash)"
+                }
+              }
+            }
+          ],
+          "kind": {
+            "type": "lifetime"
+          },
+          "subtitle": null,
+          "title": {
+            "id": "explain-validity",
+            "parts": [
+              {
+                "text": "Validity"
+              }
+            ],
+            "text": "Validity"
+          }
+        },
+        {
+          "collapsed": false,
+          "fields": [
+            {
+              "help": null,
+              "label": {
+                "id": "label-result",
+                "parts": [
+                  {
+                    "text": "Result"
+                  }
+                ],
+                "text": "Result"
+              },
+              "trust": "claimed",
+              "value": {
+                "type": "words",
+                "value": {
+                  "id": "simulation-would-succeed",
+                  "parts": [
+                    {
+                      "text": "would succeed"
+                    }
+                  ],
+                  "text": "would succeed"
+                }
+              }
+            },
+            {
+              "help": null,
+              "label": {
+                "id": "label-compute-units",
+                "parts": [
+                  {
+                    "text": "Compute units"
+                  }
+                ],
+                "text": "Compute units"
+              },
+              "trust": "claimed",
+              "value": {
+                "type": "integer",
+                "value": "4200"
+              }
+            },
+            {
+              "help": null,
+              "label": {
+                "id": "label-your-balances",
+                "parts": [
+                  {
+                    "text": "Your balances"
+                  }
+                ],
+                "text": "Your balances"
+              },
+              "trust": "claimed",
+              "value": {
+                "type": "words",
+                "value": {
+                  "id": "simulation-unchanged",
+                  "parts": [
+                    {
+                      "text": "unchanged"
+                    }
+                  ],
+                  "text": "unchanged"
+                }
+              }
+            }
+          ],
+          "kind": {
+            "type": "claims"
+          },
+          "subtitle": {
+            "id": "simulation-subtitle",
+            "parts": [
+              {
+                "text": "the host's simulation"
+              }
+            ],
+            "text": "the host's simulation"
+          },
+          "title": {
+            "id": "simulation-title",
+            "parts": [
+              {
+                "text": "Simulated outcome"
+              }
+            ],
+            "text": "Simulated outcome"
+          }
+        }
+      ],
+      "summary": {
+        "id": "explain-actions",
+        "parts": [
+          {
+            "text": "2",
+            "value": {
+              "type": "integer",
+              "value": "2"
+            }
+          },
+          {
+            "text": " actions: Send "
+          },
+          {
+            "text": "0.001855569 SOL",
+            "value": {
+              "type": "amount",
+              "value": {
+                "asset": {
+                  "decimals": 9,
+                  "description": null,
+                  "id": "native",
+                  "symbol": "SOL",
+                  "trust": "fact"
+                },
+                "bound": "exact",
+                "note": null,
+                "units": "1855569"
+              }
+            }
+          },
+          {
+            "text": " to "
+          },
+          {
+            "short": {
+              "address": "91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD",
+              "is_self": false,
+              "label": null,
+              "label_trust": "fact",
+              "stand_in": null
+            },
+            "text": "91rj…BXHD"
+          },
+          {
+            "text": "; Swap 151.360479993 ZCAT (verified) for ≥ 0.080334153 SOL (verified) via OKX"
+          }
+        ],
+        "text": "2 actions: Send 0.001855569 SOL to 91rj…BXHD; Swap 151.360479993 ZCAT (verified) for ≥ 0.080334153 SOL (verified) via OKX"
+      },
+      "text": "2 actions: Send 0.001855569 SOL to 91rj…BXHD; Swap 151.360479993 ZCAT (verified) for ≥ 0.080334153 SOL (verified) via OKX\nWARNING: review the findings before approving\n\nFindings:\n  [HIGH] The simulation credits your accounts with 0 SOL of SOL, less than the 0.080334153 SOL the instructions guarantee\n  [INFO] The destination token account is not one of your accounts for a verified token; the signer cannot prove who owns it (instruction 5)\n  [INFO] 4 byte(s) after this compute budget value are ignored; the runtime reads only the value, as shown (instruction 1)\n\n== Transfer | System program (verified)\n  Amount: 0.001855569 SOL\n  From: Your wallet (CVJ6…Q3bR) (verified)\n  To: 91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD\n\n== Swap | OKX DEX Router (descriptor reviewed 2026-10-27, upgradeable by CjoV…N1Mj)\n  Send: 151.360479993 ZCAT (verified)\n  Receive: ≥ 0.080334153 SOL (verified)\n  Quoted: 0.080737843 SOL (verified)\n  Max slippage: 0.50%\n  Commission: 0.81%\n  Commission account: BEochrdGhm5pcKVF73DURYrGo1DLzxq6bBcUBphQR64d\n  Trim rate (program units): 100\n  Charge rate (program units): 500\n  Closes the temporary token account afterwards (flag): 1\n  Route:\n    - RaydiumClmmSwapV2 (weight 2790, leg 1)\n    - MeteoraDlmmSwap2 (weight 310, leg 1)\n    - RaydiumClmmSwapV2 (weight 6900, leg 2)\n    - ByrealClmm3 (weight 10000, leg 18)\n  From account: Your ZCAT account (H51r…iHfo) (verified)\n  To account: 91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD\n  Additional accounts: 80, not named by this descriptor\n\n== Also [collapsed]\n  Compute unit limit: 1251656\n  Heap size: 65536 bytes\n  Compute unit price: 1676 micro-lamports per unit\n  Create token account: Token account: 91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD\n  Create token account: Owner: Your wallet (CVJ6…Q3bR) (verified)\n  Create token account: Mint: SOL mint (So11…1112) (verified)\n  Create token account: Rent paid by: Your wallet (CVJ6…Q3bR) (verified)\n  Create token account: Token program: Token program (Toke…Q5DA) (verified)\n\n== Signers\n  Fee payer: Your wallet (CVJ6…Q3bR) (verified)\n\n== Fee\n  Total: 0.000007098 SOL\n  Base: 0.000005 SOL\n  Priority: 0.000002098 SOL\n  Priority basis: 1676 micro-lamports per unit × 1251656 units requested\n  Rent deposits: 0.00148844 SOL; returned when the accounts are closed\n\n== Validity\n  Expires: in about a minute (recent blockhash)\n\n== Simulated outcome | the host's simulation (claimed, unverified)\n  Result: would succeed\n  Compute units: 4200\n  Your balances: unchanged\n\nEffects:\n  - You send 0.001855569 SOL from Your wallet (CVJ6…Q3bR) (verified) to 91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD\n  - You send 151.360479993 ZCAT (verified) from Your wallet (CVJ6…Q3bR) (verified) to OKX DEX Router (proV…CX3u) (verified)\n  - You receive ≥ 0.080334153 SOL (verified) into Your wallet (CVJ6…Q3bR) (verified) from OKX DEX Router (proV…CX3u) (verified)\n  - Create 91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD owned by Token program (Toke…Q5DA) (verified), depositing 0.00148844 SOL\n  - You pay a fee of 0.000007098 SOL\n  - Valid for about a minute (recent blockhash)\n\nRaw: solana v0 (804 bytes)\n  digest: 9f46f53cb1549cfb1d859dc7109c80f65b636658c9999b7f227a133aad7823a2\n",
+      "verdict": "warn"
+    }
+  }
+}

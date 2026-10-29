@@ -7,7 +7,11 @@ import { beforeEach, test } from 'node:test';
 import { type FakeChrome, installFakeChrome } from '../../test/chrome.fake.ts';
 import type { HistoryEntry } from '../shared/model.ts';
 import { inTurn } from '../shared/store.ts';
+import type { Message } from '../shared/types.ts';
 import { clearHistory, ENTRY_BYTES, HISTORY_BYTES, HISTORY_LENGTH, markSeen, remember, showBadge } from './history.ts';
+
+/** `text` as the engine's words, with no identifier. */
+const words = (text: string): Message => ({ id: null, parts: [{ text }], text });
 
 let fake: FakeChrome;
 beforeEach(() => {
@@ -55,7 +59,7 @@ function large(time: number, size: number): HistoryEntry {
             {
                 kind: 'explained',
                 verdict: 'ok',
-                summary: 'Send 1 SOL',
+                summary: words('Send 1 SOL'),
                 findings: [],
                 effects: [],
                 sections: [],
@@ -104,7 +108,7 @@ test('an answer over its share is slimmed, and pushes none of the others out', a
     const captures = kept.slice(0, 2).map((e) => (e.rows[0]?.kind === 'explained' ? e.rows[0].capture : undefined));
     assert.deepEqual(captures, ['AQ==', 'AQ==']);
     assert.equal(textOf(kept[2] as HistoryEntry)?.length, 100_000);
-    assert.equal(kept[0]?.rows[0]?.kind === 'explained' && kept[0].rows[0].summary, 'Send 1 SOL');
+    assert.equal(kept[0]?.rows[0]?.kind === 'explained' && kept[0].rows[0].summary.text, 'Send 1 SOL');
 });
 
 test('a write the browser refuses for room drops the oldest answers until it fits, and the newest last of all', async () => {

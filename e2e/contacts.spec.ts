@@ -4,7 +4,7 @@
 // The names stay in the browser: the API is sent stand-ins for them.
 
 import { base58Decode } from '../src/worker/solana.ts';
-import { explanation, feePayer, fixture, STAND_IN_TAG } from '../test/server.ts';
+import { explanation, feePayer, fixture, STAND_IN_TAG, words } from '../test/server.ts';
 import { clickToClose, expect, liveGate, test } from './support/extension.ts';
 
 const WALLET = 'SignLens';
@@ -41,7 +41,7 @@ test('a lookalike of a contact is flagged', async ({ configure, dapp, popup, ser
     await expect(row.locator('.findings')).toContainText(`looks like Bob`);
     await expect(row.locator('.findings')).toContainText('only its first and last characters match');
     await expect(popup.locator('#contacts-hint')).toHaveText('Line 2 not read: expected Name = address.');
-    expect(server.apiCalls.filter((call) => call.path === '/v1/explain')).toHaveLength(1);
+    expect(server.apiCalls.filter((call) => call.path === '/v2/explain')).toHaveLength(1);
     expect(JSON.stringify(server.apiCalls)).not.toContain('Bob');
 });
 
@@ -82,7 +82,7 @@ test('a summary that names a contact shows the name, and a rating reports it as 
     // As a program's summary may name an account: the engine writes what it was sent, the request's stand-in.
     server.answerApi(
         explanation('warn', {
-            summary: `Lock 5 USDC for [[contact-1-${STAND_IN_TAG}]] (DV3B…L7Qp)`,
+            summary: words(`Lock 5 USDC for [[contact-1-${STAND_IN_TAG}]] (DV3B…L7Qp)`),
             raw: { format: 'legacy', digest: 'a'.repeat(64) },
         }),
     );

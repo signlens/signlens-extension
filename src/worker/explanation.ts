@@ -7,7 +7,9 @@
 // it cannot show; an unknown verdict, trust, severity or bound is refused,
 // since the window would have to guess what it means. Text comes through
 // without what would hide or reorder it (text.ts): it can carry what a
-// transaction says of itself, a memo or a token's name.
+// transaction says of itself, a memo or a token's name. A message is read
+// as strictly: its identifier, each part's words and the value or address
+// it names, and its text.
 
 import { isAddress } from '../shared/base58.ts';
 import { withoutControls } from '../shared/text.ts';
@@ -21,6 +23,8 @@ import {
     type Field,
     type Finding,
     type Lifetime,
+    type Message,
+    type Part,
     type Raw,
     SEVERITIES,
     type Section,
@@ -29,12 +33,17 @@ import {
     type Value,
     VERDICTS,
     type WantedAccount,
+    type WordedEffect,
 } from '../shared/types.ts';
 
-export const EXPLANATION_SCHEMA = 'signlens-explanation/1';
+export const EXPLANATION_SCHEMA = 'signlens-explanation/2';
 
-/** How deep lists and proposed effects may nest. */
-const MAX_DEPTH = 8;
+/** How deep messages, lists and proposed effects may nest. */
+const MAX_DEPTH = 16;
+/** How many parts a message may hold. */
+const MAX_PARTS = 200;
+/** A message's identifier, as the engine's Fluent files name it (`effect-send`, `label-total`). */
+const MESSAGE_ID = /^[a-z][a-z0-9-]*(?:\.[a-z][a-z0-9-]*)?$/;
 /** How many items a list of findings, sections, fields or effects may hold. */
 const MAX_ITEMS = 500;
 /** The longest string, other than the full text. */
@@ -140,36 +149,82 @@ function variant(value: unknown, path: string): { type: string; fields: Fields }
 
 const unrecognized = (type: string) => ({ type: 'Unrecognized' as const, value: { type } });
 
-const address: Read<Address> = (value, path) => {
-    const o = new Fields(value, path);
-    return {
-        address: o.read('address', text(100)),
-        label: o.read('label', nullable(text(200))),
-        label_trust: o.read('label_trust', oneOf(TRUSTS, 'a trust')),
-        is_self: o.read('is_self', flag),
+/** A message, `max` the longest its text may be: an identifier or null, its parts and their text. */
+function messageAt(depth: number, max = MAX_TEXT): Read<Message> {
+    return (value, path) => {
+        if (depth >= MAX_DEPTH) fail(path, 'is nested too deep');
+        const o = new Fields(value, path);
+        const id = o.read('id', nullable(text(100)));
+        if (id !== null && !MESSAGE_ID.test(id)) fail(`${path}.id`, `${quote(id)} is not a message identifier`);
+        return {
+            id,
+            parts: o.read('parts', list(partAt(depth + 1, max), MAX_PARTS)),
+            text: o.read('text', text(max)),
+        };
     };
-};
+}
 
-const asset: Read<Asset> = (value, path) => {
-    const o = new Fields(value, path);
-    return {
-        id: o.read('id', text(100)),
-        symbol: o.read('symbol', nullable(text(100))),
-        // A mint keeps its decimals in one byte.
-        decimals: o.read('decimals', nullable(integer(0, 255))),
-        trust: o.read('trust', oneOf(TRUSTS, 'a trust')),
+/** A part of a message: words, and the value or the short address it names, never both. */
+function partAt(depth: number, max: number): Read<Part> {
+    return (value, path) => {
+        const o = new Fields(value, path);
+        const part: Part = { text: o.read('text', text(max)) };
+        const named = o.read('value', (v, p) => (v === undefined ? undefined : valueAt(depth)(v, p)));
+        const short = o.read('short', (v, p) => (v === undefined ? undefined : addressAt(depth)(v, p)));
+        if (named !== undefined && short !== undefined) fail(path, 'names both a value and an address');
+        if (named !== undefined) part.value = named;
+        if (short !== undefined) part.short = short;
+        return part;
     };
-};
+}
 
-const amount: Read<Amount> = (value, path) => {
-    const o = new Fields(value, path);
-    return {
-        units: o.read('units', decimal),
-        asset: o.read('asset', asset),
-        bound: o.read('bound', oneOf(BOUNDS, 'a bound')),
-        note: o.read('note', nullable(text(500))),
+/** An address, or the words that stand in for one the engine does not know: never neither. */
+function addressAt(depth: number): Read<Address> {
+    return (value, path) => {
+        const o = new Fields(value, path);
+        const address: Address = {
+            address: o.read('address', nullable(text(100))),
+            label: o.read('label', nullable(messageAt(depth, 200))),
+            label_trust: o.read('label_trust', oneOf(TRUSTS, 'a trust')),
+            is_self: o.read('is_self', flag),
+            stand_in: o.read('stand_in', nullable(messageAt(depth, 200))),
+        };
+        if (address.address === null && address.stand_in === null) fail(`${path}.address`, 'is null, and nothing stands in for it');
+        return address;
     };
-};
+}
+
+/** A token, by its id or, when its mint is not known, by its description: never neither. */
+function assetAt(depth: number): Read<Asset> {
+    return (value, path) => {
+        const o = new Fields(value, path);
+        const asset: Asset = {
+            id: o.read('id', nullable(text(100))),
+            symbol: o.read('symbol', nullable(text(100))),
+            // A mint keeps its decimals in one byte.
+            decimals: o.read('decimals', nullable(integer(0, 255))),
+            trust: o.read('trust', oneOf(TRUSTS, 'a trust')),
+            description: o.read('description', nullable(messageAt(depth, 200))),
+        };
+        if (asset.id === null && asset.description === null) fail(`${path}.id`, 'is null, and nothing describes the token');
+        return asset;
+    };
+}
+
+function amountAt(depth: number): Read<Amount> {
+    return (value, path) => {
+        const o = new Fields(value, path);
+        return {
+            units: o.read('units', decimal),
+            asset: o.read('asset', assetAt(depth)),
+            bound: o.read('bound', oneOf(BOUNDS, 'a bound')),
+            note: o.read('note', nullable(messageAt(depth, 500))),
+        };
+    };
+}
+
+const address = addressAt(0);
+const amount = amountAt(0);
 
 function valueAt(depth: number): Read<Value> {
     return (input, path) => {
@@ -177,10 +232,12 @@ function valueAt(depth: number): Read<Value> {
         switch (type) {
             case 'text':
                 return { type, value: o.read('value', text()) };
+            case 'words':
+                return { type, value: o.read('value', messageAt(depth)) };
             case 'amount':
-                return { type, value: o.read('value', amount) };
+                return { type, value: o.read('value', amountAt(depth)) };
             case 'address':
-                return { type, value: o.read('value', address) };
+                return { type, value: o.read('value', addressAt(depth)) };
             case 'integer':
                 return { type, value: o.read('value', decimal) };
             case 'basis_points':
@@ -203,10 +260,10 @@ function valueAt(depth: number): Read<Value> {
 const field: Read<Field> = (value, path) => {
     const o = new Fields(value, path);
     return {
-        label: o.read('label', text(200)),
+        label: o.read('label', messageAt(0, 200)),
         value: o.read('value', valueAt(0)),
         trust: o.read('trust', oneOf(TRUSTS, 'a trust')),
-        help: o.read('help', nullable(text(2_000))),
+        help: o.read('help', nullable(messageAt(0, 2_000))),
     };
 };
 
@@ -242,8 +299,8 @@ const section: Read<Section> = (value, path) => {
     const o = new Fields(value, path);
     return {
         kind: o.read('kind', sectionKind),
-        title: o.read('title', text(200)),
-        subtitle: o.read('subtitle', nullable(text(500))),
+        title: o.read('title', messageAt(0, 200)),
+        subtitle: o.read('subtitle', nullable(messageAt(0, 500))),
         fields: o.read('fields', list(field)),
         collapsed: o.read('collapsed', flag),
     };
@@ -279,7 +336,7 @@ function effectAt(depth: number): Read<Effect> {
                     type,
                     value: value((v) => ({
                         subject: v.read('subject', address),
-                        authority: v.read('authority', text(100)),
+                        authority: v.read('authority', messageAt(depth, 100)),
                         new_authority: v.read('new_authority', nullable(address)),
                     })),
                 };
@@ -317,19 +374,25 @@ function effectAt(depth: number): Read<Effect> {
                 if (depth >= MAX_DEPTH) fail(path, 'is nested too deep');
                 return { type, value: value((v) => ({ by: v.read('by', address), effect: v.read('effect', effectAt(depth + 1)) })) };
             case 'other':
-                return { type, value: value((v) => ({ description: v.read('description', text()) })) };
+                return { type, value: value((v) => ({ description: v.read('description', messageAt(depth)) })) };
             default:
                 return unrecognized(type);
         }
     };
 }
 
+/** An effect as the explanation lists it, with the message that words it; one of a type this version does not know keeps its message too. */
+const wordedEffect: Read<WordedEffect> = (input, path) => ({
+    ...effectAt(0)(input, path),
+    message: new Fields(input, path).read('message', messageAt(0)),
+});
+
 const finding: Read<Finding> = (value, path) => {
     const o = new Fields(value, path);
     return {
         severity: o.read('severity', oneOf(SEVERITIES, 'a severity')),
         code: o.read('code', text(100)),
-        message: o.read('message', text()),
+        message: o.read('message', messageAt(0)),
         instruction: o.read('instruction', nullable(index)),
     };
 };
@@ -347,7 +410,7 @@ const wanted: Read<WantedAccount> = (value, path) => {
     const o = new Fields(value, path);
     const at = o.read('address', text(100));
     if (!isAddress(at)) fail(`${path}.address`, 'is not an address');
-    return { address: at, reason: o.read('reason', text(500)) };
+    return { address: at, reason: o.read('reason', messageAt(0, 500)) };
 };
 
 /**
@@ -363,11 +426,11 @@ export function parseExplanation(document: unknown): Explanation {
     const explanation: Explanation = {
         schema: EXPLANATION_SCHEMA,
         chain: o.read('chain', text(100)),
-        summary: o.read('summary', text(2_000)),
+        summary: o.read('summary', messageAt(0, 2_000)),
         verdict: o.read('verdict', oneOf(VERDICTS, 'a verdict')),
         findings: o.read('findings', list(finding)),
         sections: o.read('sections', list(section)),
-        effects: o.read('effects', list(effectAt(0))),
+        effects: o.read('effects', list(wordedEffect)),
         raw: o.read('raw', nullable(raw)),
     };
     const full = o.read('text', (v, p) => (v === undefined ? undefined : text(MAX_FULL_TEXT)(v, p)));

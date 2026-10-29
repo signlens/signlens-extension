@@ -2,11 +2,83 @@
   "chain": "solana",
   "effects": [
     {
+      "message": {
+        "id": "effect-transfer",
+        "parts": [
+          {
+            "text": "Transfer "
+          },
+          {
+            "text": "≤ 0.000235478 SOL",
+            "value": {
+              "type": "amount",
+              "value": {
+                "asset": {
+                  "decimals": 9,
+                  "description": null,
+                  "id": "native",
+                  "symbol": "SOL",
+                  "trust": "fact"
+                },
+                "bound": "at_most",
+                "note": null,
+                "units": "235478"
+              }
+            }
+          },
+          {
+            "text": " from "
+          },
+          {
+            "text": "G93MH3589G8Wj16suqKCU7e846WXPzhKsT5suf4vpAnU",
+            "value": {
+              "type": "address",
+              "value": {
+                "address": "G93MH3589G8Wj16suqKCU7e846WXPzhKsT5suf4vpAnU",
+                "is_self": false,
+                "label": null,
+                "label_trust": "fact",
+                "stand_in": null
+              }
+            }
+          },
+          {
+            "text": " to "
+          },
+          {
+            "text": "Pump.fun (6EF8…wF6P) (verified)",
+            "value": {
+              "type": "address",
+              "value": {
+                "address": "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P",
+                "is_self": false,
+                "label": {
+                  "id": "accounts-name",
+                  "parts": [
+                    {
+                      "text": "Pump.fun",
+                      "value": {
+                        "type": "text",
+                        "value": "Pump.fun"
+                      }
+                    }
+                  ],
+                  "text": "Pump.fun"
+                },
+                "label_trust": "verified",
+                "stand_in": null
+              }
+            }
+          }
+        ],
+        "text": "Transfer ≤ 0.000235478 SOL from G93MH3589G8Wj16suqKCU7e846WXPzhKsT5suf4vpAnU to Pump.fun (6EF8…wF6P) (verified)"
+      },
       "type": "transfer",
       "value": {
         "amount": {
           "asset": {
             "decimals": 9,
+            "description": null,
             "id": "native",
             "symbol": "SOL",
             "trust": "fact"
@@ -19,56 +91,340 @@
           "address": "G93MH3589G8Wj16suqKCU7e846WXPzhKsT5suf4vpAnU",
           "is_self": false,
           "label": null,
-          "label_trust": "fact"
+          "label_trust": "fact",
+          "stand_in": null
         },
         "to": {
           "address": "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P",
           "is_self": false,
-          "label": "Pump.fun",
-          "label_trust": "verified"
+          "label": {
+            "id": "accounts-name",
+            "parts": [
+              {
+                "text": "Pump.fun",
+                "value": {
+                  "type": "text",
+                  "value": "Pump.fun"
+                }
+              }
+            ],
+            "text": "Pump.fun"
+          },
+          "label_trust": "verified",
+          "stand_in": null
         }
       }
     },
     {
+      "message": {
+        "id": "effect-transfer",
+        "parts": [
+          {
+            "text": "Transfer "
+          },
+          {
+            "text": "unknown amount of an unverified token (at least 3731969312 raw units before a transfer fee the signer cannot know) (9sVJwhNTEtoq8PWeZJigJKNbRMZW7CoByosnxV2Cpump)",
+            "value": {
+              "type": "amount",
+              "value": {
+                "asset": {
+                  "decimals": null,
+                  "description": null,
+                  "id": "9sVJwhNTEtoq8PWeZJigJKNbRMZW7CoByosnxV2Cpump",
+                  "symbol": null,
+                  "trust": "fact"
+                },
+                "bound": "unknown",
+                "note": {
+                  "id": "descriptor-floor-before-fee-unnamed",
+                  "parts": [
+                    {
+                      "text": "at least "
+                    },
+                    {
+                      "text": "3731969312 raw units",
+                      "value": {
+                        "type": "text",
+                        "value": "3731969312 raw units"
+                      }
+                    },
+                    {
+                      "text": " before a transfer fee the signer cannot know"
+                    }
+                  ],
+                  "text": "at least 3731969312 raw units before a transfer fee the signer cannot know"
+                },
+                "units": "0"
+              }
+            }
+          },
+          {
+            "text": " from "
+          },
+          {
+            "text": "Pump.fun (6EF8…wF6P) (verified)",
+            "value": {
+              "type": "address",
+              "value": {
+                "address": "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P",
+                "is_self": false,
+                "label": {
+                  "id": "accounts-name",
+                  "parts": [
+                    {
+                      "text": "Pump.fun",
+                      "value": {
+                        "type": "text",
+                        "value": "Pump.fun"
+                      }
+                    }
+                  ],
+                  "text": "Pump.fun"
+                },
+                "label_trust": "verified",
+                "stand_in": null
+              }
+            }
+          },
+          {
+            "text": " to "
+          },
+          {
+            "text": "G93M…pAnU's token account (7oT8…mjKW) (verified)",
+            "value": {
+              "type": "address",
+              "value": {
+                "address": "7oT8RSgMTph8WNqvxXUSapzvVjKSNqFgSADDfCnpmjKW",
+                "is_self": false,
+                "label": {
+                  "id": "accounts-others-unnamed-token",
+                  "parts": [
+                    {
+                      "short": {
+                        "address": "G93MH3589G8Wj16suqKCU7e846WXPzhKsT5suf4vpAnU",
+                        "is_self": false,
+                        "label": null,
+                        "label_trust": "fact",
+                        "stand_in": null
+                      },
+                      "text": "G93M…pAnU"
+                    },
+                    {
+                      "text": "'s token account"
+                    }
+                  ],
+                  "text": "G93M…pAnU's token account"
+                },
+                "label_trust": "verified",
+                "stand_in": null
+              }
+            }
+          }
+        ],
+        "text": "Transfer unknown amount of an unverified token (at least 3731969312 raw units before a transfer fee the signer cannot know) (9sVJwhNTEtoq8PWeZJigJKNbRMZW7CoByosnxV2Cpump) from Pump.fun (6EF8…wF6P) (verified) to G93M…pAnU's token account (7oT8…mjKW) (verified)"
+      },
       "type": "transfer",
       "value": {
         "amount": {
           "asset": {
             "decimals": null,
+            "description": null,
             "id": "9sVJwhNTEtoq8PWeZJigJKNbRMZW7CoByosnxV2Cpump",
             "symbol": null,
             "trust": "fact"
           },
           "bound": "unknown",
-          "note": "at least 3731969312 raw units before a transfer fee the signer cannot know",
+          "note": {
+            "id": "descriptor-floor-before-fee-unnamed",
+            "parts": [
+              {
+                "text": "at least "
+              },
+              {
+                "text": "3731969312 raw units",
+                "value": {
+                  "type": "text",
+                  "value": "3731969312 raw units"
+                }
+              },
+              {
+                "text": " before a transfer fee the signer cannot know"
+              }
+            ],
+            "text": "at least 3731969312 raw units before a transfer fee the signer cannot know"
+          },
           "units": "0"
         },
         "from": {
           "address": "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P",
           "is_self": false,
-          "label": "Pump.fun",
-          "label_trust": "verified"
+          "label": {
+            "id": "accounts-name",
+            "parts": [
+              {
+                "text": "Pump.fun",
+                "value": {
+                  "type": "text",
+                  "value": "Pump.fun"
+                }
+              }
+            ],
+            "text": "Pump.fun"
+          },
+          "label_trust": "verified",
+          "stand_in": null
         },
         "to": {
           "address": "7oT8RSgMTph8WNqvxXUSapzvVjKSNqFgSADDfCnpmjKW",
           "is_self": false,
-          "label": null,
-          "label_trust": "fact"
+          "label": {
+            "id": "accounts-others-unnamed-token",
+            "parts": [
+              {
+                "short": {
+                  "address": "G93MH3589G8Wj16suqKCU7e846WXPzhKsT5suf4vpAnU",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "fact",
+                  "stand_in": null
+                },
+                "text": "G93M…pAnU"
+              },
+              {
+                "text": "'s token account"
+              }
+            ],
+            "text": "G93M…pAnU's token account"
+          },
+          "label_trust": "verified",
+          "stand_in": null
         }
       }
     },
     {
+      "message": {
+        "id": "effect-create-deposit-if-missing",
+        "parts": [
+          {
+            "text": "Create "
+          },
+          {
+            "text": "G93M…pAnU's token account (7oT8…mjKW) (verified)",
+            "value": {
+              "type": "address",
+              "value": {
+                "address": "7oT8RSgMTph8WNqvxXUSapzvVjKSNqFgSADDfCnpmjKW",
+                "is_self": false,
+                "label": {
+                  "id": "accounts-others-unnamed-token",
+                  "parts": [
+                    {
+                      "short": {
+                        "address": "G93MH3589G8Wj16suqKCU7e846WXPzhKsT5suf4vpAnU",
+                        "is_self": false,
+                        "label": null,
+                        "label_trust": "fact",
+                        "stand_in": null
+                      },
+                      "text": "G93M…pAnU"
+                    },
+                    {
+                      "text": "'s token account"
+                    }
+                  ],
+                  "text": "G93M…pAnU's token account"
+                },
+                "label_trust": "verified",
+                "stand_in": null
+              }
+            }
+          },
+          {
+            "text": " owned by "
+          },
+          {
+            "text": "Token-2022 program (Toke…xuEb) (verified)",
+            "value": {
+              "type": "address",
+              "value": {
+                "address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+                "is_self": false,
+                "label": {
+                  "id": "accounts-name",
+                  "parts": [
+                    {
+                      "text": "Token-2022 program",
+                      "value": {
+                        "type": "text",
+                        "value": "Token-2022 program"
+                      }
+                    }
+                  ],
+                  "text": "Token-2022 program"
+                },
+                "label_trust": "verified",
+                "stand_in": null
+              }
+            }
+          },
+          {
+            "text": ", depositing "
+          },
+          {
+            "text": "0.00151384 SOL",
+            "value": {
+              "type": "amount",
+              "value": {
+                "asset": {
+                  "decimals": 9,
+                  "description": null,
+                  "id": "native",
+                  "symbol": "SOL",
+                  "trust": "fact"
+                },
+                "bound": "exact",
+                "note": null,
+                "units": "1513840"
+              }
+            }
+          },
+          {
+            "text": " unless it already exists"
+          }
+        ],
+        "text": "Create G93M…pAnU's token account (7oT8…mjKW) (verified) owned by Token-2022 program (Toke…xuEb) (verified), depositing 0.00151384 SOL unless it already exists"
+      },
       "type": "create",
       "value": {
         "account": {
           "address": "7oT8RSgMTph8WNqvxXUSapzvVjKSNqFgSADDfCnpmjKW",
           "is_self": false,
-          "label": null,
-          "label_trust": "fact"
+          "label": {
+            "id": "accounts-others-unnamed-token",
+            "parts": [
+              {
+                "short": {
+                  "address": "G93MH3589G8Wj16suqKCU7e846WXPzhKsT5suf4vpAnU",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "fact",
+                  "stand_in": null
+                },
+                "text": "G93M…pAnU"
+              },
+              {
+                "text": "'s token account"
+              }
+            ],
+            "text": "G93M…pAnU's token account"
+          },
+          "label_trust": "verified",
+          "stand_in": null
         },
         "deposit": {
           "asset": {
             "decimals": 9,
+            "description": null,
             "id": "native",
             "symbol": "SOL",
             "trust": "fact"
@@ -81,17 +437,71 @@
         "owner": {
           "address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
           "is_self": false,
-          "label": "Token-2022 program",
-          "label_trust": "verified"
+          "label": {
+            "id": "accounts-name",
+            "parts": [
+              {
+                "text": "Token-2022 program",
+                "value": {
+                  "type": "text",
+                  "value": "Token-2022 program"
+                }
+              }
+            ],
+            "text": "Token-2022 program"
+          },
+          "label_trust": "verified",
+          "stand_in": null
         }
       }
     },
     {
+      "message": {
+        "id": "effect-fee",
+        "parts": [
+          {
+            "text": "G93MH3589G8Wj16suqKCU7e846WXPzhKsT5suf4vpAnU",
+            "value": {
+              "type": "address",
+              "value": {
+                "address": "G93MH3589G8Wj16suqKCU7e846WXPzhKsT5suf4vpAnU",
+                "is_self": false,
+                "label": null,
+                "label_trust": "fact",
+                "stand_in": null
+              }
+            }
+          },
+          {
+            "text": " pays a fee of "
+          },
+          {
+            "text": "0.000085 SOL",
+            "value": {
+              "type": "amount",
+              "value": {
+                "asset": {
+                  "decimals": 9,
+                  "description": null,
+                  "id": "native",
+                  "symbol": "SOL",
+                  "trust": "fact"
+                },
+                "bound": "exact",
+                "note": null,
+                "units": "85000"
+              }
+            }
+          }
+        ],
+        "text": "G93MH3589G8Wj16suqKCU7e846WXPzhKsT5suf4vpAnU pays a fee of 0.000085 SOL"
+      },
       "type": "fee",
       "value": {
         "amount": {
           "asset": {
             "decimals": 9,
+            "description": null,
             "id": "native",
             "symbol": "SOL",
             "trust": "fact"
@@ -104,11 +514,21 @@
           "address": "G93MH3589G8Wj16suqKCU7e846WXPzhKsT5suf4vpAnU",
           "is_self": false,
           "label": null,
-          "label_trust": "fact"
+          "label_trust": "fact",
+          "stand_in": null
         }
       }
     },
     {
+      "message": {
+        "id": "effect-recent-blockhash",
+        "parts": [
+          {
+            "text": "Valid for about a minute (recent blockhash)"
+          }
+        ],
+        "text": "Valid for about a minute (recent blockhash)"
+      },
       "type": "lifetime",
       "value": {
         "type": "recent_blockhash"
@@ -119,34 +539,111 @@
     {
       "code": "TRADER_NOT_YOU",
       "instruction": 3,
-      "message": "The trade is signed for and paid by a key that is not yours",
+      "message": {
+        "id": null,
+        "parts": [
+          {
+            "text": "The trade is signed for and paid by a key that is not yours"
+          }
+        ],
+        "text": "The trade is signed for and paid by a key that is not yours"
+      },
       "severity": "high"
     },
     {
-      "code": "DESTINATION_NOT_VERIFIED",
+      "code": "TOKEN_ACCOUNT_NOT_YOURS",
       "instruction": 3,
-      "message": "The destination token account is not one of your accounts for a verified token; the signer cannot prove who owns it",
-      "severity": "info"
+      "message": {
+        "id": "descriptor-not-yours-named",
+        "parts": [
+          {
+            "text": "The destination token account is "
+          },
+          {
+            "short": {
+              "address": "G93MH3589G8Wj16suqKCU7e846WXPzhKsT5suf4vpAnU",
+              "is_self": false,
+              "label": null,
+              "label_trust": "fact",
+              "stand_in": null
+            },
+            "text": "G93M…pAnU"
+          },
+          {
+            "text": "'s token account ("
+          },
+          {
+            "short": {
+              "address": "7oT8RSgMTph8WNqvxXUSapzvVjKSNqFgSADDfCnpmjKW",
+              "is_self": false,
+              "label": {
+                "id": "accounts-others-unnamed-token",
+                "parts": [
+                  {
+                    "short": {
+                      "address": "G93MH3589G8Wj16suqKCU7e846WXPzhKsT5suf4vpAnU",
+                      "is_self": false,
+                      "label": null,
+                      "label_trust": "fact",
+                      "stand_in": null
+                    },
+                    "text": "G93M…pAnU"
+                  },
+                  {
+                    "text": "'s token account"
+                  }
+                ],
+                "text": "G93M…pAnU's token account"
+              },
+              "label_trust": "verified",
+              "stand_in": null
+            },
+            "text": "7oT8…mjKW"
+          },
+          {
+            "text": "), not one of yours"
+          }
+        ],
+        "text": "The destination token account is G93M…pAnU's token account (7oT8…mjKW), not one of yours"
+      },
+      "severity": "high"
     }
   ],
   "raw": {
     "digest": "7c86bc9defeee8a6705f7abc498275f845a7db2db2756be47af036c4fab29cf2",
     "format": "solana legacy"
   },
-  "schema": "signlens-explanation/1",
+  "schema": "signlens-explanation/2",
   "sections": [
     {
       "collapsed": false,
       "fields": [
         {
-          "help": "The budget: the program spends up to this much to buy what it can at the current price.",
-          "label": "Pay up to",
+          "help": {
+            "id": null,
+            "parts": [
+              {
+                "text": "The budget: the program spends up to this much to buy what it can at the current price."
+              }
+            ],
+            "text": "The budget: the program spends up to this much to buy what it can at the current price."
+          },
+          "label": {
+            "id": null,
+            "parts": [
+              {
+                "text": "Pay up to"
+              }
+            ],
+            "text": "Pay up to"
+          },
           "trust": "fact",
           "value": {
             "type": "amount",
             "value": {
               "asset": {
                 "decimals": 9,
+                "description": null,
                 "id": "native",
                 "symbol": "SOL",
                 "trust": "fact"
@@ -158,27 +655,68 @@
           }
         },
         {
-          "help": "What comes back to you. Shown as at least when the program only guarantees a floor and fails below it.",
-          "label": "Receive",
+          "help": {
+            "id": null,
+            "parts": [
+              {
+                "text": "What comes back to you. Shown as at least when the program only guarantees a floor and fails below it."
+              }
+            ],
+            "text": "What comes back to you. Shown as at least when the program only guarantees a floor and fails below it."
+          },
+          "label": {
+            "id": null,
+            "parts": [
+              {
+                "text": "Receive"
+              }
+            ],
+            "text": "Receive"
+          },
           "trust": "fact",
           "value": {
             "type": "amount",
             "value": {
               "asset": {
                 "decimals": null,
+                "description": null,
                 "id": "9sVJwhNTEtoq8PWeZJigJKNbRMZW7CoByosnxV2Cpump",
                 "symbol": null,
                 "trust": "fact"
               },
               "bound": "at_least",
-              "note": "before any transfer fee",
+              "note": {
+                "id": "descriptor-before-fee",
+                "parts": [
+                  {
+                    "text": "before any transfer fee"
+                  }
+                ],
+                "text": "before any transfer fee"
+              },
               "units": "3731969312"
             }
           }
         },
         {
-          "help": "The token being bought or sold.",
-          "label": "Token",
+          "help": {
+            "id": null,
+            "parts": [
+              {
+                "text": "The token being bought or sold."
+              }
+            ],
+            "text": "The token being bought or sold."
+          },
+          "label": {
+            "id": null,
+            "parts": [
+              {
+                "text": "Token"
+              }
+            ],
+            "text": "Token"
+          },
           "trust": "fact",
           "value": {
             "type": "address",
@@ -186,45 +724,129 @@
               "address": "9sVJwhNTEtoq8PWeZJigJKNbRMZW7CoByosnxV2Cpump",
               "is_self": false,
               "label": null,
-              "label_trust": "fact"
+              "label_trust": "fact",
+              "stand_in": null
             }
           }
         },
         {
-          "help": "The market for a token that has not graduated to a pool yet. Its price rises with every buy along a fixed curve.",
-          "label": "Bonding curve",
+          "help": {
+            "id": null,
+            "parts": [
+              {
+                "text": "The market for a token that has not graduated to a pool yet. Its price rises with every buy along a fixed curve."
+              }
+            ],
+            "text": "The market for a token that has not graduated to a pool yet. Its price rises with every buy along a fixed curve."
+          },
+          "label": {
+            "id": null,
+            "parts": [
+              {
+                "text": "Bonding curve"
+              }
+            ],
+            "text": "Bonding curve"
+          },
           "trust": "fact",
           "value": {
             "type": "address",
             "value": {
               "address": "DmbshQGYgnRnC7XQtQeZ5doBfR2opB15FWKWNUEpyUbo",
               "is_self": false,
-              "label": "Pump.fun bonding curve for this token",
-              "label_trust": "verified"
+              "label": {
+                "id": null,
+                "parts": [
+                  {
+                    "text": "Pump.fun bonding curve for this token"
+                  }
+                ],
+                "text": "Pump.fun bonding curve for this token"
+              },
+              "label_trust": "verified",
+              "stand_in": null
             }
           }
         },
         {
-          "help": "Your account for this token.",
-          "label": "Token account",
+          "help": {
+            "id": null,
+            "parts": [
+              {
+                "text": "Your account for this token."
+              }
+            ],
+            "text": "Your account for this token."
+          },
+          "label": {
+            "id": null,
+            "parts": [
+              {
+                "text": "Token account"
+              }
+            ],
+            "text": "Token account"
+          },
           "trust": "fact",
           "value": {
             "type": "address",
             "value": {
               "address": "7oT8RSgMTph8WNqvxXUSapzvVjKSNqFgSADDfCnpmjKW",
               "is_self": false,
-              "label": null,
-              "label_trust": "fact"
+              "label": {
+                "id": "accounts-others-unnamed-token",
+                "parts": [
+                  {
+                    "short": {
+                      "address": "G93MH3589G8Wj16suqKCU7e846WXPzhKsT5suf4vpAnU",
+                      "is_self": false,
+                      "label": null,
+                      "label_trust": "fact",
+                      "stand_in": null
+                    },
+                    "text": "G93M…pAnU"
+                  },
+                  {
+                    "text": "'s token account"
+                  }
+                ],
+                "text": "G93M…pAnU's token account"
+              },
+              "label_trust": "verified",
+              "stand_in": null
             }
           }
         },
         {
           "help": null,
-          "label": "Additional accounts",
+          "label": {
+            "id": "label-additional-accounts",
+            "parts": [
+              {
+                "text": "Additional accounts"
+              }
+            ],
+            "text": "Additional accounts"
+          },
           "trust": "fact",
           "value": {
-            "type": "text",
-            "value": "2, not named by this descriptor"
+            "type": "words",
+            "value": {
+              "id": "descriptor-additional-accounts",
+              "parts": [
+                {
+                  "text": "2",
+                  "value": {
+                    "type": "integer",
+                    "value": "2"
+                  }
+                },
+                {
+                  "text": ", not named by this descriptor"
+                }
+              ],
+              "text": "2, not named by this descriptor"
+            }
           }
         }
       ],
@@ -234,15 +856,69 @@
           "index": 3
         }
       },
-      "subtitle": "Pump.fun (descriptor reviewed 2026-10-18, upgradeable by 7gZu…jFr8)",
-      "title": "Buy"
+      "subtitle": {
+        "id": "descriptor-subtitle",
+        "parts": [
+          {
+            "text": "Pump.fun",
+            "value": {
+              "type": "text",
+              "value": "Pump.fun"
+            }
+          },
+          {
+            "text": " (descriptor reviewed "
+          },
+          {
+            "text": "2026-10-18",
+            "value": {
+              "type": "text",
+              "value": "2026-10-18"
+            }
+          },
+          {
+            "text": ", upgradeable by "
+          },
+          {
+            "short": {
+              "address": "7gZufwwAo17y5kg8FMyJy2phgpvv9RSdzWtdXiWHjFr8",
+              "is_self": false,
+              "label": null,
+              "label_trust": "fact",
+              "stand_in": null
+            },
+            "text": "7gZu…jFr8"
+          },
+          {
+            "text": ")"
+          }
+        ],
+        "text": "Pump.fun (descriptor reviewed 2026-10-18, upgradeable by 7gZu…jFr8)"
+      },
+      "title": {
+        "id": null,
+        "parts": [
+          {
+            "text": "Buy"
+          }
+        ],
+        "text": "Buy"
+      }
     },
     {
       "collapsed": true,
       "fields": [
         {
           "help": null,
-          "label": "Compute unit limit",
+          "label": {
+            "id": "label-compute-unit-limit",
+            "parts": [
+              {
+                "text": "Compute unit limit"
+              }
+            ],
+            "text": "Compute unit limit"
+          },
           "trust": "fact",
           "value": {
             "type": "integer",
@@ -251,30 +927,88 @@
         },
         {
           "help": null,
-          "label": "Compute unit price",
+          "label": {
+            "id": "label-compute-unit-price",
+            "parts": [
+              {
+                "text": "Compute unit price"
+              }
+            ],
+            "text": "Compute unit price"
+          },
           "trust": "fact",
           "value": {
-            "type": "text",
-            "value": "200000 micro-lamports per unit"
+            "type": "words",
+            "value": {
+              "id": "compute-budget-price",
+              "parts": [
+                {
+                  "text": "200000",
+                  "value": {
+                    "type": "integer",
+                    "value": "200000"
+                  }
+                },
+                {
+                  "text": " micro-lamports per unit"
+                }
+              ],
+              "text": "200000 micro-lamports per unit"
+            }
           }
         },
         {
           "help": null,
-          "label": "Create token account if missing: Token account",
+          "label": {
+            "id": "explain-housekeeping-label",
+            "parts": [
+              {
+                "text": "Create token account if missing: Token account"
+              }
+            ],
+            "text": "Create token account if missing: Token account"
+          },
           "trust": "fact",
           "value": {
             "type": "address",
             "value": {
               "address": "7oT8RSgMTph8WNqvxXUSapzvVjKSNqFgSADDfCnpmjKW",
               "is_self": false,
-              "label": null,
-              "label_trust": "fact"
+              "label": {
+                "id": "accounts-others-unnamed-token",
+                "parts": [
+                  {
+                    "short": {
+                      "address": "G93MH3589G8Wj16suqKCU7e846WXPzhKsT5suf4vpAnU",
+                      "is_self": false,
+                      "label": null,
+                      "label_trust": "fact",
+                      "stand_in": null
+                    },
+                    "text": "G93M…pAnU"
+                  },
+                  {
+                    "text": "'s token account"
+                  }
+                ],
+                "text": "G93M…pAnU's token account"
+              },
+              "label_trust": "verified",
+              "stand_in": null
             }
           }
         },
         {
           "help": null,
-          "label": "Create token account if missing: Owner",
+          "label": {
+            "id": "explain-housekeeping-label",
+            "parts": [
+              {
+                "text": "Create token account if missing: Owner"
+              }
+            ],
+            "text": "Create token account if missing: Owner"
+          },
           "trust": "fact",
           "value": {
             "type": "address",
@@ -282,13 +1016,22 @@
               "address": "G93MH3589G8Wj16suqKCU7e846WXPzhKsT5suf4vpAnU",
               "is_self": false,
               "label": null,
-              "label_trust": "fact"
+              "label_trust": "fact",
+              "stand_in": null
             }
           }
         },
         {
           "help": null,
-          "label": "Create token account if missing: Mint",
+          "label": {
+            "id": "explain-housekeeping-label",
+            "parts": [
+              {
+                "text": "Create token account if missing: Mint"
+              }
+            ],
+            "text": "Create token account if missing: Mint"
+          },
           "trust": "fact",
           "value": {
             "type": "address",
@@ -296,13 +1039,22 @@
               "address": "9sVJwhNTEtoq8PWeZJigJKNbRMZW7CoByosnxV2Cpump",
               "is_self": false,
               "label": null,
-              "label_trust": "fact"
+              "label_trust": "fact",
+              "stand_in": null
             }
           }
         },
         {
           "help": null,
-          "label": "Create token account if missing: Rent paid by",
+          "label": {
+            "id": "explain-housekeeping-label",
+            "parts": [
+              {
+                "text": "Create token account if missing: Rent paid by"
+              }
+            ],
+            "text": "Create token account if missing: Rent paid by"
+          },
           "trust": "fact",
           "value": {
             "type": "address",
@@ -310,21 +1062,43 @@
               "address": "G93MH3589G8Wj16suqKCU7e846WXPzhKsT5suf4vpAnU",
               "is_self": false,
               "label": null,
-              "label_trust": "fact"
+              "label_trust": "fact",
+              "stand_in": null
             }
           }
         },
         {
           "help": null,
-          "label": "Create token account if missing: Token program",
+          "label": {
+            "id": "explain-housekeeping-label",
+            "parts": [
+              {
+                "text": "Create token account if missing: Token program"
+              }
+            ],
+            "text": "Create token account if missing: Token program"
+          },
           "trust": "fact",
           "value": {
             "type": "address",
             "value": {
               "address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
               "is_self": false,
-              "label": "Token-2022 program",
-              "label_trust": "verified"
+              "label": {
+                "id": "accounts-name",
+                "parts": [
+                  {
+                    "text": "Token-2022 program",
+                    "value": {
+                      "type": "text",
+                      "value": "Token-2022 program"
+                    }
+                  }
+                ],
+                "text": "Token-2022 program"
+              },
+              "label_trust": "verified",
+              "stand_in": null
             }
           }
         }
@@ -333,14 +1107,30 @@
         "type": "housekeeping"
       },
       "subtitle": null,
-      "title": "Also"
+      "title": {
+        "id": "explain-also",
+        "parts": [
+          {
+            "text": "Also"
+          }
+        ],
+        "text": "Also"
+      }
     },
     {
       "collapsed": false,
       "fields": [
         {
           "help": null,
-          "label": "Fee payer",
+          "label": {
+            "id": "label-fee-payer",
+            "parts": [
+              {
+                "text": "Fee payer"
+              }
+            ],
+            "text": "Fee payer"
+          },
           "trust": "fact",
           "value": {
             "type": "address",
@@ -348,7 +1138,8 @@
               "address": "G93MH3589G8Wj16suqKCU7e846WXPzhKsT5suf4vpAnU",
               "is_self": false,
               "label": null,
-              "label_trust": "fact"
+              "label_trust": "fact",
+              "stand_in": null
             }
           }
         }
@@ -357,20 +1148,37 @@
         "type": "signers"
       },
       "subtitle": null,
-      "title": "Signers"
+      "title": {
+        "id": "explain-signers",
+        "parts": [
+          {
+            "text": "Signers"
+          }
+        ],
+        "text": "Signers"
+      }
     },
     {
       "collapsed": false,
       "fields": [
         {
           "help": null,
-          "label": "Total",
+          "label": {
+            "id": "label-total",
+            "parts": [
+              {
+                "text": "Total"
+              }
+            ],
+            "text": "Total"
+          },
           "trust": "fact",
           "value": {
             "type": "amount",
             "value": {
               "asset": {
                 "decimals": 9,
+                "description": null,
                 "id": "native",
                 "symbol": "SOL",
                 "trust": "fact"
@@ -383,13 +1191,22 @@
         },
         {
           "help": null,
-          "label": "Base",
+          "label": {
+            "id": "label-base",
+            "parts": [
+              {
+                "text": "Base"
+              }
+            ],
+            "text": "Base"
+          },
           "trust": "fact",
           "value": {
             "type": "amount",
             "value": {
               "asset": {
                 "decimals": 9,
+                "description": null,
                 "id": "native",
                 "symbol": "SOL",
                 "trust": "fact"
@@ -402,13 +1219,22 @@
         },
         {
           "help": null,
-          "label": "Priority",
+          "label": {
+            "id": "label-priority",
+            "parts": [
+              {
+                "text": "Priority"
+              }
+            ],
+            "text": "Priority"
+          },
           "trust": "fact",
           "value": {
             "type": "amount",
             "value": {
               "asset": {
                 "decimals": 9,
+                "description": null,
                 "id": "native",
                 "symbol": "SOL",
                 "trust": "fact"
@@ -421,20 +1247,90 @@
         },
         {
           "help": null,
-          "label": "Priority basis",
+          "label": {
+            "id": "label-priority-basis",
+            "parts": [
+              {
+                "text": "Priority basis"
+              }
+            ],
+            "text": "Priority basis"
+          },
           "trust": "fact",
           "value": {
-            "type": "text",
-            "value": "200000 micro-lamports per unit × 400000 units requested"
+            "type": "words",
+            "value": {
+              "id": "explain-priority-basis",
+              "parts": [
+                {
+                  "text": "200000",
+                  "value": {
+                    "type": "integer",
+                    "value": "200000"
+                  }
+                },
+                {
+                  "text": " micro-lamports per unit × "
+                },
+                {
+                  "text": "400000",
+                  "value": {
+                    "type": "integer",
+                    "value": "400000"
+                  }
+                },
+                {
+                  "text": " units requested"
+                }
+              ],
+              "text": "200000 micro-lamports per unit × 400000 units requested"
+            }
           }
         },
         {
           "help": null,
-          "label": "Rent deposits",
+          "label": {
+            "id": "label-rent-deposits",
+            "parts": [
+              {
+                "text": "Rent deposits"
+              }
+            ],
+            "text": "Rent deposits"
+          },
           "trust": "fact",
           "value": {
-            "type": "text",
-            "value": "up to 0.00151384 SOL if the accounts it creates only when missing do not exist yet; returned when the accounts are closed"
+            "type": "words",
+            "value": {
+              "id": "explain-rent",
+              "parts": [
+                {
+                  "text": "up to "
+                },
+                {
+                  "text": "0.00151384 SOL",
+                  "value": {
+                    "type": "amount",
+                    "value": {
+                      "asset": {
+                        "decimals": 9,
+                        "description": null,
+                        "id": "native",
+                        "symbol": "SOL",
+                        "trust": "fact"
+                      },
+                      "bound": "exact",
+                      "note": null,
+                      "units": "1513840"
+                    }
+                  }
+                },
+                {
+                  "text": " if the accounts it creates only when missing do not exist yet; returned when the accounts are closed"
+                }
+              ],
+              "text": "up to 0.00151384 SOL if the accounts it creates only when missing do not exist yet; returned when the accounts are closed"
+            }
           }
         }
       ],
@@ -442,18 +1338,42 @@
         "type": "fees"
       },
       "subtitle": null,
-      "title": "Fee"
+      "title": {
+        "id": "explain-fee",
+        "parts": [
+          {
+            "text": "Fee"
+          }
+        ],
+        "text": "Fee"
+      }
     },
     {
       "collapsed": false,
       "fields": [
         {
           "help": null,
-          "label": "Expires",
+          "label": {
+            "id": "label-expires",
+            "parts": [
+              {
+                "text": "Expires"
+              }
+            ],
+            "text": "Expires"
+          },
           "trust": "fact",
           "value": {
-            "type": "text",
-            "value": "in about a minute (recent blockhash)"
+            "type": "words",
+            "value": {
+              "id": "explain-expires-soon",
+              "parts": [
+                {
+                  "text": "in about a minute (recent blockhash)"
+                }
+              ],
+              "text": "in about a minute (recent blockhash)"
+            }
           }
         }
       ],
@@ -461,10 +1381,26 @@
         "type": "lifetime"
       },
       "subtitle": null,
-      "title": "Validity"
+      "title": {
+        "id": "explain-validity",
+        "parts": [
+          {
+            "text": "Validity"
+          }
+        ],
+        "text": "Validity"
+      }
     }
   ],
-  "summary": "Buy ≥ 3731969312 raw units of an unverified token (before any transfer fee) (9sVJwhNTEtoq8PWeZJigJKNbRMZW7CoByosnxV2Cpump) for ≤ 0.000235478 SOL via Pump.fun",
-  "text": "Buy ≥ 3731969312 raw units of an unverified token (before any transfer fee) (9sVJwhNTEtoq8PWeZJigJKNbRMZW7CoByosnxV2Cpump) for ≤ 0.000235478 SOL via Pump.fun\nWARNING: review the findings before approving\n\nFindings:\n  [HIGH] The trade is signed for and paid by a key that is not yours (instruction 3)\n  [INFO] The destination token account is not one of your accounts for a verified token; the signer cannot prove who owns it (instruction 3)\n\n== Buy | Pump.fun (descriptor reviewed 2026-10-18, upgradeable by 7gZu…jFr8)\n  Pay up to: ≤ 0.000235478 SOL\n  Receive: ≥ 3731969312 raw units of an unverified token (before any transfer fee) (9sVJwhNTEtoq8PWeZJigJKNbRMZW7CoByosnxV2Cpump)\n  Token: 9sVJwhNTEtoq8PWeZJigJKNbRMZW7CoByosnxV2Cpump\n  Bonding curve: Pump.fun bonding curve for this token (Dmbs…yUbo) (verified)\n  Token account: 7oT8RSgMTph8WNqvxXUSapzvVjKSNqFgSADDfCnpmjKW\n  Additional accounts: 2, not named by this descriptor\n\n== Also [collapsed]\n  Compute unit limit: 400000\n  Compute unit price: 200000 micro-lamports per unit\n  Create token account if missing: Token account: 7oT8RSgMTph8WNqvxXUSapzvVjKSNqFgSADDfCnpmjKW\n  Create token account if missing: Owner: G93MH3589G8Wj16suqKCU7e846WXPzhKsT5suf4vpAnU\n  Create token account if missing: Mint: 9sVJwhNTEtoq8PWeZJigJKNbRMZW7CoByosnxV2Cpump\n  Create token account if missing: Rent paid by: G93MH3589G8Wj16suqKCU7e846WXPzhKsT5suf4vpAnU\n  Create token account if missing: Token program: Token-2022 program (Toke…xuEb) (verified)\n\n== Signers\n  Fee payer: G93MH3589G8Wj16suqKCU7e846WXPzhKsT5suf4vpAnU\n\n== Fee\n  Total: 0.000085 SOL\n  Base: 0.000005 SOL\n  Priority: 0.00008 SOL\n  Priority basis: 200000 micro-lamports per unit × 400000 units requested\n  Rent deposits: up to 0.00151384 SOL if the accounts it creates only when missing do not exist yet; returned when the accounts are closed\n\n== Validity\n  Expires: in about a minute (recent blockhash)\n\nEffects:\n  - transfer ≤ 0.000235478 SOL from G93MH3589G8Wj16suqKCU7e846WXPzhKsT5suf4vpAnU to Pump.fun (6EF8…wF6P) (verified)\n  - transfer unknown amount of an unverified token (at least 3731969312 raw units before a transfer fee the signer cannot know) (9sVJwhNTEtoq8PWeZJigJKNbRMZW7CoByosnxV2Cpump) from Pump.fun (6EF8…wF6P) (verified) to 7oT8RSgMTph8WNqvxXUSapzvVjKSNqFgSADDfCnpmjKW\n  - create 7oT8RSgMTph8WNqvxXUSapzvVjKSNqFgSADDfCnpmjKW owned by Token-2022 program (Toke…xuEb) (verified), depositing 0.00151384 SOL unless it already exists\n  - G93MH3589G8Wj16suqKCU7e846WXPzhKsT5suf4vpAnU pays a fee of 0.000085 SOL\n  - valid for about a minute (recent blockhash)\n\nRaw: solana legacy (753 bytes)\n  digest: 7c86bc9defeee8a6705f7abc498275f845a7db2db2756be47af036c4fab29cf2\n",
+  "summary": {
+    "id": null,
+    "parts": [
+      {
+        "text": "Buy ≥ 3731969312 raw units of an unverified token (before any transfer fee) (9sVJwhNTEtoq8PWeZJigJKNbRMZW7CoByosnxV2Cpump) for ≤ 0.000235478 SOL via Pump.fun"
+      }
+    ],
+    "text": "Buy ≥ 3731969312 raw units of an unverified token (before any transfer fee) (9sVJwhNTEtoq8PWeZJigJKNbRMZW7CoByosnxV2Cpump) for ≤ 0.000235478 SOL via Pump.fun"
+  },
+  "text": "Buy ≥ 3731969312 raw units of an unverified token (before any transfer fee) (9sVJwhNTEtoq8PWeZJigJKNbRMZW7CoByosnxV2Cpump) for ≤ 0.000235478 SOL via Pump.fun\nWARNING: review the findings before approving\n\nFindings:\n  [HIGH] The trade is signed for and paid by a key that is not yours (instruction 3)\n  [HIGH] The destination token account is G93M…pAnU's token account (7oT8…mjKW), not one of yours (instruction 3)\n\n== Buy | Pump.fun (descriptor reviewed 2026-10-18, upgradeable by 7gZu…jFr8)\n  Pay up to: ≤ 0.000235478 SOL\n  Receive: ≥ 3731969312 raw units of an unverified token (before any transfer fee) (9sVJwhNTEtoq8PWeZJigJKNbRMZW7CoByosnxV2Cpump)\n  Token: 9sVJwhNTEtoq8PWeZJigJKNbRMZW7CoByosnxV2Cpump\n  Bonding curve: Pump.fun bonding curve for this token (Dmbs…yUbo) (verified)\n  Token account: G93M…pAnU's token account (7oT8…mjKW) (verified)\n  Additional accounts: 2, not named by this descriptor\n\n== Also [collapsed]\n  Compute unit limit: 400000\n  Compute unit price: 200000 micro-lamports per unit\n  Create token account if missing: Token account: G93M…pAnU's token account (7oT8…mjKW) (verified)\n  Create token account if missing: Owner: G93MH3589G8Wj16suqKCU7e846WXPzhKsT5suf4vpAnU\n  Create token account if missing: Mint: 9sVJwhNTEtoq8PWeZJigJKNbRMZW7CoByosnxV2Cpump\n  Create token account if missing: Rent paid by: G93MH3589G8Wj16suqKCU7e846WXPzhKsT5suf4vpAnU\n  Create token account if missing: Token program: Token-2022 program (Toke…xuEb) (verified)\n\n== Signers\n  Fee payer: G93MH3589G8Wj16suqKCU7e846WXPzhKsT5suf4vpAnU\n\n== Fee\n  Total: 0.000085 SOL\n  Base: 0.000005 SOL\n  Priority: 0.00008 SOL\n  Priority basis: 200000 micro-lamports per unit × 400000 units requested\n  Rent deposits: up to 0.00151384 SOL if the accounts it creates only when missing do not exist yet; returned when the accounts are closed\n\n== Validity\n  Expires: in about a minute (recent blockhash)\n\nEffects:\n  - Transfer ≤ 0.000235478 SOL from G93MH3589G8Wj16suqKCU7e846WXPzhKsT5suf4vpAnU to Pump.fun (6EF8…wF6P) (verified)\n  - Transfer unknown amount of an unverified token (at least 3731969312 raw units before a transfer fee the signer cannot know) (9sVJwhNTEtoq8PWeZJigJKNbRMZW7CoByosnxV2Cpump) from Pump.fun (6EF8…wF6P) (verified) to G93M…pAnU's token account (7oT8…mjKW) (verified)\n  - Create G93M…pAnU's token account (7oT8…mjKW) (verified) owned by Token-2022 program (Toke…xuEb) (verified), depositing 0.00151384 SOL unless it already exists\n  - G93MH3589G8Wj16suqKCU7e846WXPzhKsT5suf4vpAnU pays a fee of 0.000085 SOL\n  - Valid for about a minute (recent blockhash)\n\nRaw: solana legacy (753 bytes)\n  digest: 7c86bc9defeee8a6705f7abc498275f845a7db2db2756be47af036c4fab29cf2\n",
   "verdict": "warn"
 }

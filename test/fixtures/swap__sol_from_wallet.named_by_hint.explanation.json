@@ -2,11 +2,79 @@
   "chain": "solana",
   "effects": [
     {
+      "message": {
+        "id": "effect-send",
+        "parts": [
+          {
+            "text": "You send "
+          },
+          {
+            "text": "0.0005 SOL",
+            "value": {
+              "type": "amount",
+              "value": {
+                "asset": {
+                  "decimals": 9,
+                  "description": null,
+                  "id": "native",
+                  "symbol": "SOL",
+                  "trust": "fact"
+                },
+                "bound": "exact",
+                "note": null,
+                "units": "500000"
+              }
+            }
+          },
+          {
+            "text": " from "
+          },
+          {
+            "text": "Your wallet (8Aet…tiTo) (verified)",
+            "value": {
+              "type": "address",
+              "value": {
+                "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+                "is_self": true,
+                "label": {
+                  "id": "accounts-your-wallet",
+                  "parts": [
+                    {
+                      "text": "Your wallet"
+                    }
+                  ],
+                  "text": "Your wallet"
+                },
+                "label_trust": "verified",
+                "stand_in": null
+              }
+            }
+          },
+          {
+            "text": " to "
+          },
+          {
+            "text": "879ArayuxbYjBhpUe4QCx8nqaAKjiwCG1hFiJo6zMGsA",
+            "value": {
+              "type": "address",
+              "value": {
+                "address": "879ArayuxbYjBhpUe4QCx8nqaAKjiwCG1hFiJo6zMGsA",
+                "is_self": false,
+                "label": null,
+                "label_trust": "fact",
+                "stand_in": null
+              }
+            }
+          }
+        ],
+        "text": "You send 0.0005 SOL from Your wallet (8Aet…tiTo) (verified) to 879ArayuxbYjBhpUe4QCx8nqaAKjiwCG1hFiJo6zMGsA"
+      },
       "type": "transfer",
       "value": {
         "amount": {
           "asset": {
             "decimals": 9,
+            "description": null,
             "id": "native",
             "symbol": "SOL",
             "trust": "fact"
@@ -18,23 +86,119 @@
         "from": {
           "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
           "is_self": true,
-          "label": "Your wallet",
-          "label_trust": "verified"
+          "label": {
+            "id": "accounts-your-wallet",
+            "parts": [
+              {
+                "text": "Your wallet"
+              }
+            ],
+            "text": "Your wallet"
+          },
+          "label_trust": "verified",
+          "stand_in": null
         },
         "to": {
           "address": "879ArayuxbYjBhpUe4QCx8nqaAKjiwCG1hFiJo6zMGsA",
           "is_self": false,
           "label": null,
-          "label_trust": "fact"
+          "label_trust": "fact",
+          "stand_in": null
         }
       }
     },
     {
+      "message": {
+        "id": "effect-transfer",
+        "parts": [
+          {
+            "text": "Transfer "
+          },
+          {
+            "text": "0.0495 SOL",
+            "value": {
+              "type": "amount",
+              "value": {
+                "asset": {
+                  "decimals": 9,
+                  "description": null,
+                  "id": "native",
+                  "symbol": "SOL",
+                  "trust": "fact"
+                },
+                "bound": "exact",
+                "note": null,
+                "units": "49500000"
+              }
+            }
+          },
+          {
+            "text": " from "
+          },
+          {
+            "text": "Your wallet (8Aet…tiTo) (verified)",
+            "value": {
+              "type": "address",
+              "value": {
+                "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+                "is_self": true,
+                "label": {
+                  "id": "accounts-your-wallet",
+                  "parts": [
+                    {
+                      "text": "Your wallet"
+                    }
+                  ],
+                  "text": "Your wallet"
+                },
+                "label_trust": "verified",
+                "stand_in": null
+              }
+            }
+          },
+          {
+            "text": " to "
+          },
+          {
+            "text": "Your SOL account (4hJn…VH6R) (verified)",
+            "value": {
+              "type": "address",
+              "value": {
+                "address": "4hJnan1NC4BuwPSn41WAQ7yG3zMK5JfXzDiq8jw2VH6R",
+                "is_self": true,
+                "label": {
+                  "id": "accounts-your-token",
+                  "parts": [
+                    {
+                      "text": "Your "
+                    },
+                    {
+                      "text": "SOL",
+                      "value": {
+                        "type": "text",
+                        "value": "SOL"
+                      }
+                    },
+                    {
+                      "text": " account"
+                    }
+                  ],
+                  "text": "Your SOL account"
+                },
+                "label_trust": "verified",
+                "stand_in": null
+              }
+            }
+          }
+        ],
+        "text": "Transfer 0.0495 SOL from Your wallet (8Aet…tiTo) (verified) to Your SOL account (4hJn…VH6R) (verified)"
+      },
       "type": "transfer",
       "value": {
         "amount": {
           "asset": {
             "decimals": 9,
+            "description": null,
             "id": "native",
             "symbol": "SOL",
             "trust": "fact"
@@ -46,29 +210,154 @@
         "from": {
           "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
           "is_self": true,
-          "label": "Your wallet",
-          "label_trust": "verified"
+          "label": {
+            "id": "accounts-your-wallet",
+            "parts": [
+              {
+                "text": "Your wallet"
+              }
+            ],
+            "text": "Your wallet"
+          },
+          "label_trust": "verified",
+          "stand_in": null
         },
         "to": {
           "address": "4hJnan1NC4BuwPSn41WAQ7yG3zMK5JfXzDiq8jw2VH6R",
           "is_self": true,
-          "label": "Your SOL account",
-          "label_trust": "verified"
+          "label": {
+            "id": "accounts-your-token",
+            "parts": [
+              {
+                "text": "Your "
+              },
+              {
+                "text": "SOL",
+                "value": {
+                  "type": "text",
+                  "value": "SOL"
+                }
+              },
+              {
+                "text": " account"
+              }
+            ],
+            "text": "Your SOL account"
+          },
+          "label_trust": "verified",
+          "stand_in": null
         }
       }
     },
     {
+      "message": {
+        "id": null,
+        "parts": [
+          {
+            "text": "creates the wrapped SOL account first if it does not exist, as the sender's associated token account and at the sender's cost; the program's source is not public, and this is what its mainnet transactions show"
+          }
+        ],
+        "text": "creates the wrapped SOL account first if it does not exist, as the sender's associated token account and at the sender's cost; the program's source is not public, and this is what its mainnet transactions show"
+      },
       "type": "other",
       "value": {
-        "description": "creates the wrapped SOL account first if it does not exist, as the sender's associated token account and at the sender's cost; the program's source is not public, and this is what its mainnet transactions show"
+        "description": {
+          "id": null,
+          "parts": [
+            {
+              "text": "creates the wrapped SOL account first if it does not exist, as the sender's associated token account and at the sender's cost; the program's source is not public, and this is what its mainnet transactions show"
+            }
+          ],
+          "text": "creates the wrapped SOL account first if it does not exist, as the sender's associated token account and at the sender's cost; the program's source is not public, and this is what its mainnet transactions show"
+        }
       }
     },
     {
+      "message": {
+        "id": "effect-send",
+        "parts": [
+          {
+            "text": "You send "
+          },
+          {
+            "text": "≤ 0.0495 SOL",
+            "value": {
+              "type": "amount",
+              "value": {
+                "asset": {
+                  "decimals": 9,
+                  "description": null,
+                  "id": "native",
+                  "symbol": "SOL",
+                  "trust": "fact"
+                },
+                "bound": "at_most",
+                "note": null,
+                "units": "49500000"
+              }
+            }
+          },
+          {
+            "text": " from "
+          },
+          {
+            "text": "Your wallet (8Aet…tiTo) (verified)",
+            "value": {
+              "type": "address",
+              "value": {
+                "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+                "is_self": true,
+                "label": {
+                  "id": "accounts-your-wallet",
+                  "parts": [
+                    {
+                      "text": "Your wallet"
+                    }
+                  ],
+                  "text": "Your wallet"
+                },
+                "label_trust": "verified",
+                "stand_in": null
+              }
+            }
+          },
+          {
+            "text": " to "
+          },
+          {
+            "text": "DFlow Aggregator (DF1o…7QBH) (verified)",
+            "value": {
+              "type": "address",
+              "value": {
+                "address": "DF1ow4tspfHX9JwWJsAb9epbkA8hmpSEAtxXy1V27QBH",
+                "is_self": false,
+                "label": {
+                  "id": "accounts-name",
+                  "parts": [
+                    {
+                      "text": "DFlow Aggregator",
+                      "value": {
+                        "type": "text",
+                        "value": "DFlow Aggregator"
+                      }
+                    }
+                  ],
+                  "text": "DFlow Aggregator"
+                },
+                "label_trust": "verified",
+                "stand_in": null
+              }
+            }
+          }
+        ],
+        "text": "You send ≤ 0.0495 SOL from Your wallet (8Aet…tiTo) (verified) to DFlow Aggregator (DF1o…7QBH) (verified)"
+      },
       "type": "transfer",
       "value": {
         "amount": {
           "asset": {
             "decimals": 9,
+            "description": null,
             "id": "native",
             "symbol": "SOL",
             "trust": "fact"
@@ -80,23 +369,125 @@
         "from": {
           "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
           "is_self": true,
-          "label": "Your wallet",
-          "label_trust": "verified"
+          "label": {
+            "id": "accounts-your-wallet",
+            "parts": [
+              {
+                "text": "Your wallet"
+              }
+            ],
+            "text": "Your wallet"
+          },
+          "label_trust": "verified",
+          "stand_in": null
         },
         "to": {
           "address": "DF1ow4tspfHX9JwWJsAb9epbkA8hmpSEAtxXy1V27QBH",
           "is_self": false,
-          "label": "DFlow Aggregator",
-          "label_trust": "verified"
+          "label": {
+            "id": "accounts-name",
+            "parts": [
+              {
+                "text": "DFlow Aggregator",
+                "value": {
+                  "type": "text",
+                  "value": "DFlow Aggregator"
+                }
+              }
+            ],
+            "text": "DFlow Aggregator"
+          },
+          "label_trust": "verified",
+          "stand_in": null
         }
       }
     },
     {
+      "message": {
+        "id": "effect-receive",
+        "parts": [
+          {
+            "text": "You receive "
+          },
+          {
+            "text": "≥ 142,243.976392 HMYD (claimed, unverified)",
+            "value": {
+              "type": "amount",
+              "value": {
+                "asset": {
+                  "decimals": 6,
+                  "description": null,
+                  "id": "HMYd9tosnUXuNHmq7pXmoePRVBLBBjA3JBfydq6upump",
+                  "symbol": "HMYD",
+                  "trust": "claimed"
+                },
+                "bound": "at_least",
+                "note": null,
+                "units": "142243976392"
+              }
+            }
+          },
+          {
+            "text": " into "
+          },
+          {
+            "text": "Your token account (9SQZ…GxVU) (verified)",
+            "value": {
+              "type": "address",
+              "value": {
+                "address": "9SQZUTsLbv469tCRm9BFo64vpUiWToZukM4WeNdDGxVU",
+                "is_self": true,
+                "label": {
+                  "id": "swap-your-token-account",
+                  "parts": [
+                    {
+                      "text": "Your token account"
+                    }
+                  ],
+                  "text": "Your token account"
+                },
+                "label_trust": "verified",
+                "stand_in": null
+              }
+            }
+          },
+          {
+            "text": " from "
+          },
+          {
+            "text": "DFlow Aggregator (DF1o…7QBH) (verified)",
+            "value": {
+              "type": "address",
+              "value": {
+                "address": "DF1ow4tspfHX9JwWJsAb9epbkA8hmpSEAtxXy1V27QBH",
+                "is_self": false,
+                "label": {
+                  "id": "accounts-name",
+                  "parts": [
+                    {
+                      "text": "DFlow Aggregator",
+                      "value": {
+                        "type": "text",
+                        "value": "DFlow Aggregator"
+                      }
+                    }
+                  ],
+                  "text": "DFlow Aggregator"
+                },
+                "label_trust": "verified",
+                "stand_in": null
+              }
+            }
+          }
+        ],
+        "text": "You receive ≥ 142,243.976392 HMYD (claimed, unverified) into Your token account (9SQZ…GxVU) (verified) from DFlow Aggregator (DF1o…7QBH) (verified)"
+      },
       "type": "transfer",
       "value": {
         "amount": {
           "asset": {
             "decimals": 6,
+            "description": null,
             "id": "HMYd9tosnUXuNHmq7pXmoePRVBLBBjA3JBfydq6upump",
             "symbol": "HMYD",
             "trust": "claimed"
@@ -108,29 +499,127 @@
         "from": {
           "address": "DF1ow4tspfHX9JwWJsAb9epbkA8hmpSEAtxXy1V27QBH",
           "is_self": false,
-          "label": "DFlow Aggregator",
-          "label_trust": "verified"
+          "label": {
+            "id": "accounts-name",
+            "parts": [
+              {
+                "text": "DFlow Aggregator",
+                "value": {
+                  "type": "text",
+                  "value": "DFlow Aggregator"
+                }
+              }
+            ],
+            "text": "DFlow Aggregator"
+          },
+          "label_trust": "verified",
+          "stand_in": null
         },
         "to": {
           "address": "9SQZUTsLbv469tCRm9BFo64vpUiWToZukM4WeNdDGxVU",
           "is_self": true,
-          "label": "Your token account",
-          "label_trust": "verified"
+          "label": {
+            "id": "swap-your-token-account",
+            "parts": [
+              {
+                "text": "Your token account"
+              }
+            ],
+            "text": "Your token account"
+          },
+          "label_trust": "verified",
+          "stand_in": null
         }
       }
     },
     {
+      "message": {
+        "id": "effect-create-deposit-if-missing",
+        "parts": [
+          {
+            "text": "Create "
+          },
+          {
+            "text": "9SQZUTsLbv469tCRm9BFo64vpUiWToZukM4WeNdDGxVU",
+            "value": {
+              "type": "address",
+              "value": {
+                "address": "9SQZUTsLbv469tCRm9BFo64vpUiWToZukM4WeNdDGxVU",
+                "is_self": false,
+                "label": null,
+                "label_trust": "fact",
+                "stand_in": null
+              }
+            }
+          },
+          {
+            "text": " owned by "
+          },
+          {
+            "text": "Token-2022 program (Toke…xuEb) (verified)",
+            "value": {
+              "type": "address",
+              "value": {
+                "address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+                "is_self": false,
+                "label": {
+                  "id": "accounts-name",
+                  "parts": [
+                    {
+                      "text": "Token-2022 program",
+                      "value": {
+                        "type": "text",
+                        "value": "Token-2022 program"
+                      }
+                    }
+                  ],
+                  "text": "Token-2022 program"
+                },
+                "label_trust": "verified",
+                "stand_in": null
+              }
+            }
+          },
+          {
+            "text": ", depositing "
+          },
+          {
+            "text": "0.00151384 SOL",
+            "value": {
+              "type": "amount",
+              "value": {
+                "asset": {
+                  "decimals": 9,
+                  "description": null,
+                  "id": "native",
+                  "symbol": "SOL",
+                  "trust": "fact"
+                },
+                "bound": "exact",
+                "note": null,
+                "units": "1513840"
+              }
+            }
+          },
+          {
+            "text": " unless it already exists"
+          }
+        ],
+        "text": "Create 9SQZUTsLbv469tCRm9BFo64vpUiWToZukM4WeNdDGxVU owned by Token-2022 program (Toke…xuEb) (verified), depositing 0.00151384 SOL unless it already exists"
+      },
       "type": "create",
       "value": {
         "account": {
           "address": "9SQZUTsLbv469tCRm9BFo64vpUiWToZukM4WeNdDGxVU",
           "is_self": false,
           "label": null,
-          "label_trust": "fact"
+          "label_trust": "fact",
+          "stand_in": null
         },
         "deposit": {
           "asset": {
             "decimals": 9,
+            "description": null,
             "id": "native",
             "symbol": "SOL",
             "trust": "fact"
@@ -143,17 +632,106 @@
         "owner": {
           "address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
           "is_self": false,
-          "label": "Token-2022 program",
-          "label_trust": "verified"
+          "label": {
+            "id": "accounts-name",
+            "parts": [
+              {
+                "text": "Token-2022 program",
+                "value": {
+                  "type": "text",
+                  "value": "Token-2022 program"
+                }
+              }
+            ],
+            "text": "Token-2022 program"
+          },
+          "label_trust": "verified",
+          "stand_in": null
         }
       }
     },
     {
+      "message": {
+        "id": "effect-send",
+        "parts": [
+          {
+            "text": "You send "
+          },
+          {
+            "text": "0.000122053 SOL",
+            "value": {
+              "type": "amount",
+              "value": {
+                "asset": {
+                  "decimals": 9,
+                  "description": null,
+                  "id": "native",
+                  "symbol": "SOL",
+                  "trust": "fact"
+                },
+                "bound": "exact",
+                "note": null,
+                "units": "122053"
+              }
+            }
+          },
+          {
+            "text": " from "
+          },
+          {
+            "text": "Your wallet (8Aet…tiTo) (verified)",
+            "value": {
+              "type": "address",
+              "value": {
+                "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+                "is_self": true,
+                "label": {
+                  "id": "accounts-your-wallet",
+                  "parts": [
+                    {
+                      "text": "Your wallet"
+                    }
+                  ],
+                  "text": "Your wallet"
+                },
+                "label_trust": "verified",
+                "stand_in": null
+              }
+            }
+          },
+          {
+            "text": " to "
+          },
+          {
+            "text": "Jito tip account (96gY…rZU5) (verified)",
+            "value": {
+              "type": "address",
+              "value": {
+                "address": "96gYZGLnJYVFmbjzopPSU6QiEV5fGqZNyN9nmNhvrZU5",
+                "is_self": false,
+                "label": {
+                  "id": "accounts-jito-tip",
+                  "parts": [
+                    {
+                      "text": "Jito tip account"
+                    }
+                  ],
+                  "text": "Jito tip account"
+                },
+                "label_trust": "verified",
+                "stand_in": null
+              }
+            }
+          }
+        ],
+        "text": "You send 0.000122053 SOL from Your wallet (8Aet…tiTo) (verified) to Jito tip account (96gY…rZU5) (verified)"
+      },
       "type": "transfer",
       "value": {
         "amount": {
           "asset": {
             "decimals": 9,
+            "description": null,
             "id": "native",
             "symbol": "SOL",
             "trust": "fact"
@@ -165,23 +743,69 @@
         "from": {
           "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
           "is_self": true,
-          "label": "Your wallet",
-          "label_trust": "verified"
+          "label": {
+            "id": "accounts-your-wallet",
+            "parts": [
+              {
+                "text": "Your wallet"
+              }
+            ],
+            "text": "Your wallet"
+          },
+          "label_trust": "verified",
+          "stand_in": null
         },
         "to": {
           "address": "96gYZGLnJYVFmbjzopPSU6QiEV5fGqZNyN9nmNhvrZU5",
           "is_self": false,
-          "label": "Jito tip account",
-          "label_trust": "verified"
+          "label": {
+            "id": "accounts-jito-tip",
+            "parts": [
+              {
+                "text": "Jito tip account"
+              }
+            ],
+            "text": "Jito tip account"
+          },
+          "label_trust": "verified",
+          "stand_in": null
         }
       }
     },
     {
+      "message": {
+        "id": "effect-fee-own",
+        "parts": [
+          {
+            "text": "You pay a fee of "
+          },
+          {
+            "text": "0.000079993 SOL",
+            "value": {
+              "type": "amount",
+              "value": {
+                "asset": {
+                  "decimals": 9,
+                  "description": null,
+                  "id": "native",
+                  "symbol": "SOL",
+                  "trust": "fact"
+                },
+                "bound": "exact",
+                "note": null,
+                "units": "79993"
+              }
+            }
+          }
+        ],
+        "text": "You pay a fee of 0.000079993 SOL"
+      },
       "type": "fee",
       "value": {
         "amount": {
           "asset": {
             "decimals": 9,
+            "description": null,
             "id": "native",
             "symbol": "SOL",
             "trust": "fact"
@@ -193,12 +817,30 @@
         "payer": {
           "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
           "is_self": true,
-          "label": "Your wallet",
-          "label_trust": "verified"
+          "label": {
+            "id": "accounts-your-wallet",
+            "parts": [
+              {
+                "text": "Your wallet"
+              }
+            ],
+            "text": "Your wallet"
+          },
+          "label_trust": "verified",
+          "stand_in": null
         }
       }
     },
     {
+      "message": {
+        "id": "effect-recent-blockhash",
+        "parts": [
+          {
+            "text": "Valid for about a minute (recent blockhash)"
+          }
+        ],
+        "text": "Valid for about a minute (recent blockhash)"
+      },
       "type": "lifetime",
       "value": {
         "type": "recent_blockhash"
@@ -210,20 +852,29 @@
     "digest": "b892642d9d9599ea782feb6bffdc9939bf6aa2c699eb2c67b6e5d3463baa7682",
     "format": "solana v0"
   },
-  "schema": "signlens-explanation/1",
+  "schema": "signlens-explanation/2",
   "sections": [
     {
       "collapsed": false,
       "fields": [
         {
           "help": null,
-          "label": "Amount",
+          "label": {
+            "id": "label-amount",
+            "parts": [
+              {
+                "text": "Amount"
+              }
+            ],
+            "text": "Amount"
+          },
           "trust": "fact",
           "value": {
             "type": "amount",
             "value": {
               "asset": {
                 "decimals": 9,
+                "description": null,
                 "id": "native",
                 "symbol": "SOL",
                 "trust": "fact"
@@ -236,21 +887,46 @@
         },
         {
           "help": null,
-          "label": "From",
+          "label": {
+            "id": "label-from",
+            "parts": [
+              {
+                "text": "From"
+              }
+            ],
+            "text": "From"
+          },
           "trust": "fact",
           "value": {
             "type": "address",
             "value": {
               "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
               "is_self": true,
-              "label": "Your wallet",
-              "label_trust": "verified"
+              "label": {
+                "id": "accounts-your-wallet",
+                "parts": [
+                  {
+                    "text": "Your wallet"
+                  }
+                ],
+                "text": "Your wallet"
+              },
+              "label_trust": "verified",
+              "stand_in": null
             }
           }
         },
         {
           "help": null,
-          "label": "To",
+          "label": {
+            "id": "label-to",
+            "parts": [
+              {
+                "text": "To"
+              }
+            ],
+            "text": "To"
+          },
           "trust": "fact",
           "value": {
             "type": "address",
@@ -258,7 +934,8 @@
               "address": "879ArayuxbYjBhpUe4QCx8nqaAKjiwCG1hFiJo6zMGsA",
               "is_self": false,
               "label": null,
-              "label_trust": "fact"
+              "label_trust": "fact",
+              "stand_in": null
             }
           }
         }
@@ -269,21 +946,61 @@
           "index": 3
         }
       },
-      "subtitle": "System program (verified)",
-      "title": "Transfer"
+      "subtitle": {
+        "id": "decode-program-verified",
+        "parts": [
+          {
+            "text": "System program",
+            "value": {
+              "type": "text",
+              "value": "System program"
+            }
+          },
+          {
+            "text": " (verified)"
+          }
+        ],
+        "text": "System program (verified)"
+      },
+      "title": {
+        "id": "system-transfer-title",
+        "parts": [
+          {
+            "text": "Transfer"
+          }
+        ],
+        "text": "Transfer"
+      }
     },
     {
       "collapsed": false,
       "fields": [
         {
-          "help": "What moves.",
-          "label": "Amount",
+          "help": {
+            "id": null,
+            "parts": [
+              {
+                "text": "What moves."
+              }
+            ],
+            "text": "What moves."
+          },
+          "label": {
+            "id": null,
+            "parts": [
+              {
+                "text": "Amount"
+              }
+            ],
+            "text": "Amount"
+          },
           "trust": "fact",
           "value": {
             "type": "amount",
             "value": {
               "asset": {
                 "decimals": 9,
+                "description": null,
                 "id": "native",
                 "symbol": "SOL",
                 "trust": "fact"
@@ -295,30 +1012,90 @@
           }
         },
         {
-          "help": "The wallet the SOL leaves.",
-          "label": "From",
+          "help": {
+            "id": null,
+            "parts": [
+              {
+                "text": "The wallet the SOL leaves."
+              }
+            ],
+            "text": "The wallet the SOL leaves."
+          },
+          "label": {
+            "id": null,
+            "parts": [
+              {
+                "text": "From"
+              }
+            ],
+            "text": "From"
+          },
           "trust": "fact",
           "value": {
             "type": "address",
             "value": {
               "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
               "is_self": true,
-              "label": "Your wallet",
-              "label_trust": "verified"
+              "label": {
+                "id": "accounts-your-wallet",
+                "parts": [
+                  {
+                    "text": "Your wallet"
+                  }
+                ],
+                "text": "Your wallet"
+              },
+              "label_trust": "verified",
+              "stand_in": null
             }
           }
         },
         {
-          "help": "A token account holding SOL as a token (wSOL), so programs can treat it like any other token.",
-          "label": "Wrapped SOL account",
+          "help": {
+            "id": null,
+            "parts": [
+              {
+                "text": "A token account holding SOL as a token (wSOL), so programs can treat it like any other token."
+              }
+            ],
+            "text": "A token account holding SOL as a token (wSOL), so programs can treat it like any other token."
+          },
+          "label": {
+            "id": null,
+            "parts": [
+              {
+                "text": "Wrapped SOL account"
+              }
+            ],
+            "text": "Wrapped SOL account"
+          },
           "trust": "fact",
           "value": {
             "type": "address",
             "value": {
               "address": "4hJnan1NC4BuwPSn41WAQ7yG3zMK5JfXzDiq8jw2VH6R",
               "is_self": true,
-              "label": "Your SOL account",
-              "label_trust": "verified"
+              "label": {
+                "id": "accounts-your-token",
+                "parts": [
+                  {
+                    "text": "Your "
+                  },
+                  {
+                    "text": "SOL",
+                    "value": {
+                      "type": "text",
+                      "value": "SOL"
+                    }
+                  },
+                  {
+                    "text": " account"
+                  }
+                ],
+                "text": "Your SOL account"
+              },
+              "label_trust": "verified",
+              "stand_in": null
             }
           }
         }
@@ -329,21 +1106,76 @@
           "index": 4
         }
       },
-      "subtitle": "DFlow Aggregator (descriptor reviewed 2026-10-17, upgradeable by 9uo2…wgsh)",
-      "title": "Wrap SOL"
+      "subtitle": {
+        "id": "descriptor-subtitle",
+        "parts": [
+          {
+            "text": "DFlow Aggregator",
+            "value": {
+              "type": "text",
+              "value": "DFlow Aggregator"
+            }
+          },
+          {
+            "text": " (descriptor reviewed "
+          },
+          {
+            "text": "2026-10-17",
+            "value": {
+              "type": "text",
+              "value": "2026-10-17"
+            }
+          },
+          {
+            "text": ", upgradeable by "
+          },
+          {
+            "short": {
+              "address": "9uo2iJKJkmiYwy5MrkrbGQXbPqwHXqvQaUqxhCkowgsh",
+              "is_self": false,
+              "label": null,
+              "label_trust": "fact",
+              "stand_in": null
+            },
+            "text": "9uo2…wgsh"
+          },
+          {
+            "text": ")"
+          }
+        ],
+        "text": "DFlow Aggregator (descriptor reviewed 2026-10-17, upgradeable by 9uo2…wgsh)"
+      },
+      "title": {
+        "id": null,
+        "parts": [
+          {
+            "text": "Wrap SOL"
+          }
+        ],
+        "text": "Wrap SOL"
+      }
     },
     {
       "collapsed": false,
       "fields": [
         {
           "help": null,
-          "label": "Send",
+          "label": {
+            "id": "label-send",
+            "parts": [
+              {
+                "text": "Send"
+              }
+            ],
+            "text": "Send"
+          },
           "trust": "fact",
           "value": {
             "type": "amount",
             "value": {
               "asset": {
                 "decimals": 9,
+                "description": null,
                 "id": "native",
                 "symbol": "SOL",
                 "trust": "fact"
@@ -356,13 +1188,22 @@
         },
         {
           "help": null,
-          "label": "Receive",
+          "label": {
+            "id": "label-receive",
+            "parts": [
+              {
+                "text": "Receive"
+              }
+            ],
+            "text": "Receive"
+          },
           "trust": "fact",
           "value": {
             "type": "amount",
             "value": {
               "asset": {
                 "decimals": 6,
+                "description": null,
                 "id": "HMYd9tosnUXuNHmq7pXmoePRVBLBBjA3JBfydq6upump",
                 "symbol": "HMYD",
                 "trust": "claimed"
@@ -375,13 +1216,22 @@
         },
         {
           "help": null,
-          "label": "Quoted",
+          "label": {
+            "id": "label-quoted",
+            "parts": [
+              {
+                "text": "Quoted"
+              }
+            ],
+            "text": "Quoted"
+          },
           "trust": "fact",
           "value": {
             "type": "amount",
             "value": {
               "asset": {
                 "decimals": 6,
+                "description": null,
                 "id": "HMYd9tosnUXuNHmq7pXmoePRVBLBBjA3JBfydq6upump",
                 "symbol": "HMYD",
                 "trust": "claimed"
@@ -394,7 +1244,15 @@
         },
         {
           "help": null,
-          "label": "Max slippage",
+          "label": {
+            "id": "label-max-slippage",
+            "parts": [
+              {
+                "text": "Max slippage"
+              }
+            ],
+            "text": "Max slippage"
+          },
           "trust": "fact",
           "value": {
             "type": "basis_points",
@@ -403,35 +1261,93 @@
         },
         {
           "help": null,
-          "label": "Route",
+          "label": {
+            "id": "label-route",
+            "parts": [
+              {
+                "text": "Route"
+              }
+            ],
+            "text": "Route"
+          },
           "trust": "fact",
           "value": {
             "type": "list",
             "value": [
               {
-                "type": "text",
-                "value": "PumpFunBuy (49500000 base units)"
+                "type": "words",
+                "value": {
+                  "id": "dflow-route-leg",
+                  "parts": [
+                    {
+                      "text": "PumpFunBuy",
+                      "value": {
+                        "type": "text",
+                        "value": "PumpFunBuy"
+                      }
+                    },
+                    {
+                      "text": " ("
+                    },
+                    {
+                      "text": "49500000",
+                      "value": {
+                        "type": "integer",
+                        "value": "49500000"
+                      }
+                    },
+                    {
+                      "text": " base units)"
+                    }
+                  ],
+                  "text": "PumpFunBuy (49500000 base units)"
+                }
               }
             ]
           }
         },
         {
           "help": null,
-          "label": "To account",
+          "label": {
+            "id": "label-to-account",
+            "parts": [
+              {
+                "text": "To account"
+              }
+            ],
+            "text": "To account"
+          },
           "trust": "fact",
           "value": {
             "type": "address",
             "value": {
               "address": "9SQZUTsLbv469tCRm9BFo64vpUiWToZukM4WeNdDGxVU",
               "is_self": true,
-              "label": "Your token account",
-              "label_trust": "verified"
+              "label": {
+                "id": "swap-your-token-account",
+                "parts": [
+                  {
+                    "text": "Your token account"
+                  }
+                ],
+                "text": "Your token account"
+              },
+              "label_trust": "verified",
+              "stand_in": null
             }
           }
         },
         {
           "help": null,
-          "label": "Instruction",
+          "label": {
+            "id": "label-instruction",
+            "parts": [
+              {
+                "text": "Instruction"
+              }
+            ],
+            "text": "Instruction"
+          },
           "trust": "fact",
           "value": {
             "type": "text",
@@ -445,15 +1361,46 @@
           "index": 5
         }
       },
-      "subtitle": "DFlow Aggregator (verified)",
-      "title": "Swap"
+      "subtitle": {
+        "id": "decode-program-verified",
+        "parts": [
+          {
+            "text": "DFlow Aggregator",
+            "value": {
+              "type": "text",
+              "value": "DFlow Aggregator"
+            }
+          },
+          {
+            "text": " (verified)"
+          }
+        ],
+        "text": "DFlow Aggregator (verified)"
+      },
+      "title": {
+        "id": "swap-title",
+        "parts": [
+          {
+            "text": "Swap"
+          }
+        ],
+        "text": "Swap"
+      }
     },
     {
       "collapsed": true,
       "fields": [
         {
           "help": null,
-          "label": "Compute unit limit",
+          "label": {
+            "id": "label-compute-unit-limit",
+            "parts": [
+              {
+                "text": "Compute unit limit"
+              }
+            ],
+            "text": "Compute unit limit"
+          },
           "trust": "fact",
           "value": {
             "type": "integer",
@@ -462,16 +1409,47 @@
         },
         {
           "help": null,
-          "label": "Compute unit price",
+          "label": {
+            "id": "label-compute-unit-price",
+            "parts": [
+              {
+                "text": "Compute unit price"
+              }
+            ],
+            "text": "Compute unit price"
+          },
           "trust": "fact",
           "value": {
-            "type": "text",
-            "value": "149986 micro-lamports per unit"
+            "type": "words",
+            "value": {
+              "id": "compute-budget-price",
+              "parts": [
+                {
+                  "text": "149986",
+                  "value": {
+                    "type": "integer",
+                    "value": "149986"
+                  }
+                },
+                {
+                  "text": " micro-lamports per unit"
+                }
+              ],
+              "text": "149986 micro-lamports per unit"
+            }
           }
         },
         {
           "help": null,
-          "label": "Create token account if missing: Token account",
+          "label": {
+            "id": "explain-housekeeping-label",
+            "parts": [
+              {
+                "text": "Create token account if missing: Token account"
+              }
+            ],
+            "text": "Create token account if missing: Token account"
+          },
           "trust": "fact",
           "value": {
             "type": "address",
@@ -479,75 +1457,164 @@
               "address": "9SQZUTsLbv469tCRm9BFo64vpUiWToZukM4WeNdDGxVU",
               "is_self": false,
               "label": null,
-              "label_trust": "fact"
+              "label_trust": "fact",
+              "stand_in": null
             }
           }
         },
         {
           "help": null,
-          "label": "Create token account if missing: Owner",
+          "label": {
+            "id": "explain-housekeeping-label",
+            "parts": [
+              {
+                "text": "Create token account if missing: Owner"
+              }
+            ],
+            "text": "Create token account if missing: Owner"
+          },
           "trust": "fact",
           "value": {
             "type": "address",
             "value": {
               "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
               "is_self": true,
-              "label": "Your wallet",
-              "label_trust": "verified"
+              "label": {
+                "id": "accounts-your-wallet",
+                "parts": [
+                  {
+                    "text": "Your wallet"
+                  }
+                ],
+                "text": "Your wallet"
+              },
+              "label_trust": "verified",
+              "stand_in": null
             }
           }
         },
         {
           "help": null,
-          "label": "Create token account if missing: Mint",
+          "label": {
+            "id": "explain-housekeeping-label",
+            "parts": [
+              {
+                "text": "Create token account if missing: Mint"
+              }
+            ],
+            "text": "Create token account if missing: Mint"
+          },
           "trust": "fact",
           "value": {
             "type": "address",
             "value": {
               "address": "HMYd9tosnUXuNHmq7pXmoePRVBLBBjA3JBfydq6upump",
               "is_self": false,
-              "label": "HMYD mint",
-              "label_trust": "claimed"
+              "label": {
+                "id": "accounts-mint",
+                "parts": [
+                  {
+                    "text": "HMYD",
+                    "value": {
+                      "type": "text",
+                      "value": "HMYD"
+                    }
+                  },
+                  {
+                    "text": " mint"
+                  }
+                ],
+                "text": "HMYD mint"
+              },
+              "label_trust": "claimed",
+              "stand_in": null
             }
           }
         },
         {
           "help": null,
-          "label": "Create token account if missing: Rent paid by",
+          "label": {
+            "id": "explain-housekeeping-label",
+            "parts": [
+              {
+                "text": "Create token account if missing: Rent paid by"
+              }
+            ],
+            "text": "Create token account if missing: Rent paid by"
+          },
           "trust": "fact",
           "value": {
             "type": "address",
             "value": {
               "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
               "is_self": true,
-              "label": "Your wallet",
-              "label_trust": "verified"
+              "label": {
+                "id": "accounts-your-wallet",
+                "parts": [
+                  {
+                    "text": "Your wallet"
+                  }
+                ],
+                "text": "Your wallet"
+              },
+              "label_trust": "verified",
+              "stand_in": null
             }
           }
         },
         {
           "help": null,
-          "label": "Create token account if missing: Token program",
+          "label": {
+            "id": "explain-housekeeping-label",
+            "parts": [
+              {
+                "text": "Create token account if missing: Token program"
+              }
+            ],
+            "text": "Create token account if missing: Token program"
+          },
           "trust": "fact",
           "value": {
             "type": "address",
             "value": {
               "address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
               "is_self": false,
-              "label": "Token-2022 program",
-              "label_trust": "verified"
+              "label": {
+                "id": "accounts-name",
+                "parts": [
+                  {
+                    "text": "Token-2022 program",
+                    "value": {
+                      "type": "text",
+                      "value": "Token-2022 program"
+                    }
+                  }
+                ],
+                "text": "Token-2022 program"
+              },
+              "label_trust": "verified",
+              "stand_in": null
             }
           }
         },
         {
           "help": null,
-          "label": "Jito tip: Amount",
+          "label": {
+            "id": "explain-housekeeping-label",
+            "parts": [
+              {
+                "text": "Jito tip: Amount"
+              }
+            ],
+            "text": "Jito tip: Amount"
+          },
           "trust": "fact",
           "value": {
             "type": "amount",
             "value": {
               "asset": {
                 "decimals": 9,
+                "description": null,
                 "id": "native",
                 "symbol": "SOL",
                 "trust": "fact"
@@ -560,29 +1627,63 @@
         },
         {
           "help": null,
-          "label": "Jito tip: From",
+          "label": {
+            "id": "explain-housekeeping-label",
+            "parts": [
+              {
+                "text": "Jito tip: From"
+              }
+            ],
+            "text": "Jito tip: From"
+          },
           "trust": "fact",
           "value": {
             "type": "address",
             "value": {
               "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
               "is_self": true,
-              "label": "Your wallet",
-              "label_trust": "verified"
+              "label": {
+                "id": "accounts-your-wallet",
+                "parts": [
+                  {
+                    "text": "Your wallet"
+                  }
+                ],
+                "text": "Your wallet"
+              },
+              "label_trust": "verified",
+              "stand_in": null
             }
           }
         },
         {
           "help": null,
-          "label": "Jito tip: To",
+          "label": {
+            "id": "explain-housekeeping-label",
+            "parts": [
+              {
+                "text": "Jito tip: To"
+              }
+            ],
+            "text": "Jito tip: To"
+          },
           "trust": "fact",
           "value": {
             "type": "address",
             "value": {
               "address": "96gYZGLnJYVFmbjzopPSU6QiEV5fGqZNyN9nmNhvrZU5",
               "is_self": false,
-              "label": "Jito tip account",
-              "label_trust": "verified"
+              "label": {
+                "id": "accounts-jito-tip",
+                "parts": [
+                  {
+                    "text": "Jito tip account"
+                  }
+                ],
+                "text": "Jito tip account"
+              },
+              "label_trust": "verified",
+              "stand_in": null
             }
           }
         }
@@ -591,22 +1692,47 @@
         "type": "housekeeping"
       },
       "subtitle": null,
-      "title": "Also"
+      "title": {
+        "id": "explain-also",
+        "parts": [
+          {
+            "text": "Also"
+          }
+        ],
+        "text": "Also"
+      }
     },
     {
       "collapsed": false,
       "fields": [
         {
           "help": null,
-          "label": "Fee payer",
+          "label": {
+            "id": "label-fee-payer",
+            "parts": [
+              {
+                "text": "Fee payer"
+              }
+            ],
+            "text": "Fee payer"
+          },
           "trust": "fact",
           "value": {
             "type": "address",
             "value": {
               "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
               "is_self": true,
-              "label": "Your wallet",
-              "label_trust": "verified"
+              "label": {
+                "id": "accounts-your-wallet",
+                "parts": [
+                  {
+                    "text": "Your wallet"
+                  }
+                ],
+                "text": "Your wallet"
+              },
+              "label_trust": "verified",
+              "stand_in": null
             }
           }
         }
@@ -615,20 +1741,37 @@
         "type": "signers"
       },
       "subtitle": null,
-      "title": "Signers"
+      "title": {
+        "id": "explain-signers",
+        "parts": [
+          {
+            "text": "Signers"
+          }
+        ],
+        "text": "Signers"
+      }
     },
     {
       "collapsed": false,
       "fields": [
         {
           "help": null,
-          "label": "Total",
+          "label": {
+            "id": "label-total",
+            "parts": [
+              {
+                "text": "Total"
+              }
+            ],
+            "text": "Total"
+          },
           "trust": "fact",
           "value": {
             "type": "amount",
             "value": {
               "asset": {
                 "decimals": 9,
+                "description": null,
                 "id": "native",
                 "symbol": "SOL",
                 "trust": "fact"
@@ -641,13 +1784,22 @@
         },
         {
           "help": null,
-          "label": "Base",
+          "label": {
+            "id": "label-base",
+            "parts": [
+              {
+                "text": "Base"
+              }
+            ],
+            "text": "Base"
+          },
           "trust": "fact",
           "value": {
             "type": "amount",
             "value": {
               "asset": {
                 "decimals": 9,
+                "description": null,
                 "id": "native",
                 "symbol": "SOL",
                 "trust": "fact"
@@ -660,13 +1812,22 @@
         },
         {
           "help": null,
-          "label": "Priority",
+          "label": {
+            "id": "label-priority",
+            "parts": [
+              {
+                "text": "Priority"
+              }
+            ],
+            "text": "Priority"
+          },
           "trust": "fact",
           "value": {
             "type": "amount",
             "value": {
               "asset": {
                 "decimals": 9,
+                "description": null,
                 "id": "native",
                 "symbol": "SOL",
                 "trust": "fact"
@@ -679,20 +1840,90 @@
         },
         {
           "help": null,
-          "label": "Priority basis",
+          "label": {
+            "id": "label-priority-basis",
+            "parts": [
+              {
+                "text": "Priority basis"
+              }
+            ],
+            "text": "Priority basis"
+          },
           "trust": "fact",
           "value": {
-            "type": "text",
-            "value": "149986 micro-lamports per unit × 500000 units requested"
+            "type": "words",
+            "value": {
+              "id": "explain-priority-basis",
+              "parts": [
+                {
+                  "text": "149986",
+                  "value": {
+                    "type": "integer",
+                    "value": "149986"
+                  }
+                },
+                {
+                  "text": " micro-lamports per unit × "
+                },
+                {
+                  "text": "500000",
+                  "value": {
+                    "type": "integer",
+                    "value": "500000"
+                  }
+                },
+                {
+                  "text": " units requested"
+                }
+              ],
+              "text": "149986 micro-lamports per unit × 500000 units requested"
+            }
           }
         },
         {
           "help": null,
-          "label": "Rent deposits",
+          "label": {
+            "id": "label-rent-deposits",
+            "parts": [
+              {
+                "text": "Rent deposits"
+              }
+            ],
+            "text": "Rent deposits"
+          },
           "trust": "fact",
           "value": {
-            "type": "text",
-            "value": "up to 0.00151384 SOL if the accounts it creates only when missing do not exist yet; returned when the accounts are closed"
+            "type": "words",
+            "value": {
+              "id": "explain-rent",
+              "parts": [
+                {
+                  "text": "up to "
+                },
+                {
+                  "text": "0.00151384 SOL",
+                  "value": {
+                    "type": "amount",
+                    "value": {
+                      "asset": {
+                        "decimals": 9,
+                        "description": null,
+                        "id": "native",
+                        "symbol": "SOL",
+                        "trust": "fact"
+                      },
+                      "bound": "exact",
+                      "note": null,
+                      "units": "1513840"
+                    }
+                  }
+                },
+                {
+                  "text": " if the accounts it creates only when missing do not exist yet; returned when the accounts are closed"
+                }
+              ],
+              "text": "up to 0.00151384 SOL if the accounts it creates only when missing do not exist yet; returned when the accounts are closed"
+            }
           }
         }
       ],
@@ -700,18 +1931,42 @@
         "type": "fees"
       },
       "subtitle": null,
-      "title": "Fee"
+      "title": {
+        "id": "explain-fee",
+        "parts": [
+          {
+            "text": "Fee"
+          }
+        ],
+        "text": "Fee"
+      }
     },
     {
       "collapsed": false,
       "fields": [
         {
           "help": null,
-          "label": "Expires",
+          "label": {
+            "id": "label-expires",
+            "parts": [
+              {
+                "text": "Expires"
+              }
+            ],
+            "text": "Expires"
+          },
           "trust": "fact",
           "value": {
-            "type": "text",
-            "value": "in about a minute (recent blockhash)"
+            "type": "words",
+            "value": {
+              "id": "explain-expires-soon",
+              "parts": [
+                {
+                  "text": "in about a minute (recent blockhash)"
+                }
+              ],
+              "text": "in about a minute (recent blockhash)"
+            }
           }
         }
       ],
@@ -719,10 +1974,116 @@
         "type": "lifetime"
       },
       "subtitle": null,
-      "title": "Validity"
+      "title": {
+        "id": "explain-validity",
+        "parts": [
+          {
+            "text": "Validity"
+          }
+        ],
+        "text": "Validity"
+      }
     }
   ],
-  "summary": "3 actions: Send 0.0005 SOL to 879A…MGsA; Wrap 0.0495 SOL into wrapped SOL account Your SOL account (4hJn…VH6R) (verified) via DFlow; Swap ≤ 0.0495 SOL for ≥ 142,243.976392 HMYD (claimed, unverified) via DFlow",
-  "text": "3 actions: Send 0.0005 SOL to 879A…MGsA; Wrap 0.0495 SOL into wrapped SOL account Your SOL account (4hJn…VH6R) (verified) via DFlow; Swap ≤ 0.0495 SOL for ≥ 142,243.976392 HMYD (claimed, unverified) via DFlow\nOK\n\n== Transfer | System program (verified)\n  Amount: 0.0005 SOL\n  From: Your wallet (8Aet…tiTo) (verified)\n  To: 879ArayuxbYjBhpUe4QCx8nqaAKjiwCG1hFiJo6zMGsA\n\n== Wrap SOL | DFlow Aggregator (descriptor reviewed 2026-10-17, upgradeable by 9uo2…wgsh)\n  Amount: 0.0495 SOL\n  From: Your wallet (8Aet…tiTo) (verified)\n  Wrapped SOL account: Your SOL account (4hJn…VH6R) (verified)\n\n== Swap | DFlow Aggregator (verified)\n  Send: ≤ 0.0495 SOL\n  Receive: ≥ 142,243.976392 HMYD (claimed, unverified)\n  Quoted: 158,048.862658 HMYD (claimed, unverified)\n  Max slippage: 10.00%\n  Route:\n    - PumpFunBuy (49500000 base units)\n  To account: Your token account (9SQZ…GxVU) (verified)\n  Instruction: swap\n\n== Also [collapsed]\n  Compute unit limit: 500000\n  Compute unit price: 149986 micro-lamports per unit\n  Create token account if missing: Token account: 9SQZUTsLbv469tCRm9BFo64vpUiWToZukM4WeNdDGxVU\n  Create token account if missing: Owner: Your wallet (8Aet…tiTo) (verified)\n  Create token account if missing: Mint: HMYD mint (HMYd…pump) (claimed, unverified)\n  Create token account if missing: Rent paid by: Your wallet (8Aet…tiTo) (verified)\n  Create token account if missing: Token program: Token-2022 program (Toke…xuEb) (verified)\n  Jito tip: Amount: 0.000122053 SOL\n  Jito tip: From: Your wallet (8Aet…tiTo) (verified)\n  Jito tip: To: Jito tip account (96gY…rZU5) (verified)\n\n== Signers\n  Fee payer: Your wallet (8Aet…tiTo) (verified)\n\n== Fee\n  Total: 0.000079993 SOL\n  Base: 0.000005 SOL\n  Priority: 0.000074993 SOL\n  Priority basis: 149986 micro-lamports per unit × 500000 units requested\n  Rent deposits: up to 0.00151384 SOL if the accounts it creates only when missing do not exist yet; returned when the accounts are closed\n\n== Validity\n  Expires: in about a minute (recent blockhash)\n\nEffects:\n  - send 0.0005 SOL from Your wallet (8Aet…tiTo) (verified) to 879ArayuxbYjBhpUe4QCx8nqaAKjiwCG1hFiJo6zMGsA\n  - transfer 0.0495 SOL from Your wallet (8Aet…tiTo) (verified) to Your SOL account (4hJn…VH6R) (verified)\n  - creates the wrapped SOL account first if it does not exist, as the sender's associated token account and at the sender's cost; the program's source is not public, and this is what its mainnet transactions show\n  - send ≤ 0.0495 SOL from Your wallet (8Aet…tiTo) (verified) to DFlow Aggregator (DF1o…7QBH) (verified)\n  - receive ≥ 142,243.976392 HMYD (claimed, unverified) into Your token account (9SQZ…GxVU) (verified) from DFlow Aggregator (DF1o…7QBH) (verified)\n  - create 9SQZUTsLbv469tCRm9BFo64vpUiWToZukM4WeNdDGxVU owned by Token-2022 program (Toke…xuEb) (verified), depositing 0.00151384 SOL unless it already exists\n  - send 0.000122053 SOL from Your wallet (8Aet…tiTo) (verified) to Jito tip account (96gY…rZU5) (verified)\n  - Your wallet (8Aet…tiTo) (verified) pays a fee of 0.000079993 SOL\n  - valid for about a minute (recent blockhash)\n\nRaw: solana v0 (798 bytes)\n  digest: b892642d9d9599ea782feb6bffdc9939bf6aa2c699eb2c67b6e5d3463baa7682\n",
+  "summary": {
+    "id": "explain-actions",
+    "parts": [
+      {
+        "text": "3",
+        "value": {
+          "type": "integer",
+          "value": "3"
+        }
+      },
+      {
+        "text": " actions: Send "
+      },
+      {
+        "text": "0.0005 SOL",
+        "value": {
+          "type": "amount",
+          "value": {
+            "asset": {
+              "decimals": 9,
+              "description": null,
+              "id": "native",
+              "symbol": "SOL",
+              "trust": "fact"
+            },
+            "bound": "exact",
+            "note": null,
+            "units": "500000"
+          }
+        }
+      },
+      {
+        "text": " to "
+      },
+      {
+        "short": {
+          "address": "879ArayuxbYjBhpUe4QCx8nqaAKjiwCG1hFiJo6zMGsA",
+          "is_self": false,
+          "label": null,
+          "label_trust": "fact",
+          "stand_in": null
+        },
+        "text": "879A…MGsA"
+      },
+      {
+        "text": "; Wrap 0.0495 SOL into wrapped SOL account Your SOL account (4hJn…VH6R) (verified) via DFlow; Swap "
+      },
+      {
+        "text": "≤ 0.0495 SOL",
+        "value": {
+          "type": "amount",
+          "value": {
+            "asset": {
+              "decimals": 9,
+              "description": null,
+              "id": "native",
+              "symbol": "SOL",
+              "trust": "fact"
+            },
+            "bound": "at_most",
+            "note": null,
+            "units": "49500000"
+          }
+        }
+      },
+      {
+        "text": " for "
+      },
+      {
+        "text": "≥ 142,243.976392 HMYD (claimed, unverified)",
+        "value": {
+          "type": "amount",
+          "value": {
+            "asset": {
+              "decimals": 6,
+              "description": null,
+              "id": "HMYd9tosnUXuNHmq7pXmoePRVBLBBjA3JBfydq6upump",
+              "symbol": "HMYD",
+              "trust": "claimed"
+            },
+            "bound": "at_least",
+            "note": null,
+            "units": "142243976392"
+          }
+        }
+      },
+      {
+        "text": " via "
+      },
+      {
+        "text": "DFlow",
+        "value": {
+          "type": "text",
+          "value": "DFlow"
+        }
+      }
+    ],
+    "text": "3 actions: Send 0.0005 SOL to 879A…MGsA; Wrap 0.0495 SOL into wrapped SOL account Your SOL account (4hJn…VH6R) (verified) via DFlow; Swap ≤ 0.0495 SOL for ≥ 142,243.976392 HMYD (claimed, unverified) via DFlow"
+  },
+  "text": "3 actions: Send 0.0005 SOL to 879A…MGsA; Wrap 0.0495 SOL into wrapped SOL account Your SOL account (4hJn…VH6R) (verified) via DFlow; Swap ≤ 0.0495 SOL for ≥ 142,243.976392 HMYD (claimed, unverified) via DFlow\nOK\n\n== Transfer | System program (verified)\n  Amount: 0.0005 SOL\n  From: Your wallet (8Aet…tiTo) (verified)\n  To: 879ArayuxbYjBhpUe4QCx8nqaAKjiwCG1hFiJo6zMGsA\n\n== Wrap SOL | DFlow Aggregator (descriptor reviewed 2026-10-17, upgradeable by 9uo2…wgsh)\n  Amount: 0.0495 SOL\n  From: Your wallet (8Aet…tiTo) (verified)\n  Wrapped SOL account: Your SOL account (4hJn…VH6R) (verified)\n\n== Swap | DFlow Aggregator (verified)\n  Send: ≤ 0.0495 SOL\n  Receive: ≥ 142,243.976392 HMYD (claimed, unverified)\n  Quoted: 158,048.862658 HMYD (claimed, unverified)\n  Max slippage: 10.00%\n  Route:\n    - PumpFunBuy (49500000 base units)\n  To account: Your token account (9SQZ…GxVU) (verified)\n  Instruction: swap\n\n== Also [collapsed]\n  Compute unit limit: 500000\n  Compute unit price: 149986 micro-lamports per unit\n  Create token account if missing: Token account: 9SQZUTsLbv469tCRm9BFo64vpUiWToZukM4WeNdDGxVU\n  Create token account if missing: Owner: Your wallet (8Aet…tiTo) (verified)\n  Create token account if missing: Mint: HMYD mint (HMYd…pump) (claimed, unverified)\n  Create token account if missing: Rent paid by: Your wallet (8Aet…tiTo) (verified)\n  Create token account if missing: Token program: Token-2022 program (Toke…xuEb) (verified)\n  Jito tip: Amount: 0.000122053 SOL\n  Jito tip: From: Your wallet (8Aet…tiTo) (verified)\n  Jito tip: To: Jito tip account (96gY…rZU5) (verified)\n\n== Signers\n  Fee payer: Your wallet (8Aet…tiTo) (verified)\n\n== Fee\n  Total: 0.000079993 SOL\n  Base: 0.000005 SOL\n  Priority: 0.000074993 SOL\n  Priority basis: 149986 micro-lamports per unit × 500000 units requested\n  Rent deposits: up to 0.00151384 SOL if the accounts it creates only when missing do not exist yet; returned when the accounts are closed\n\n== Validity\n  Expires: in about a minute (recent blockhash)\n\nEffects:\n  - You send 0.0005 SOL from Your wallet (8Aet…tiTo) (verified) to 879ArayuxbYjBhpUe4QCx8nqaAKjiwCG1hFiJo6zMGsA\n  - Transfer 0.0495 SOL from Your wallet (8Aet…tiTo) (verified) to Your SOL account (4hJn…VH6R) (verified)\n  - creates the wrapped SOL account first if it does not exist, as the sender's associated token account and at the sender's cost; the program's source is not public, and this is what its mainnet transactions show\n  - You send ≤ 0.0495 SOL from Your wallet (8Aet…tiTo) (verified) to DFlow Aggregator (DF1o…7QBH) (verified)\n  - You receive ≥ 142,243.976392 HMYD (claimed, unverified) into Your token account (9SQZ…GxVU) (verified) from DFlow Aggregator (DF1o…7QBH) (verified)\n  - Create 9SQZUTsLbv469tCRm9BFo64vpUiWToZukM4WeNdDGxVU owned by Token-2022 program (Toke…xuEb) (verified), depositing 0.00151384 SOL unless it already exists\n  - You send 0.000122053 SOL from Your wallet (8Aet…tiTo) (verified) to Jito tip account (96gY…rZU5) (verified)\n  - You pay a fee of 0.000079993 SOL\n  - Valid for about a minute (recent blockhash)\n\nRaw: solana v0 (798 bytes)\n  digest: b892642d9d9599ea782feb6bffdc9939bf6aa2c699eb2c67b6e5d3463baa7682\n",
   "verdict": "ok"
 }

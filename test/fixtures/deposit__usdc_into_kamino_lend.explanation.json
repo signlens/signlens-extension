@@ -2,11 +2,91 @@
   "chain": "solana",
   "effects": [
     {
+      "message": {
+        "id": "effect-send",
+        "parts": [
+          {
+            "text": "You send "
+          },
+          {
+            "text": "4,635.28675 USDC (verified)",
+            "value": {
+              "type": "amount",
+              "value": {
+                "asset": {
+                  "decimals": 6,
+                  "description": null,
+                  "id": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+                  "symbol": "USDC",
+                  "trust": "verified"
+                },
+                "bound": "exact",
+                "note": null,
+                "units": "4635286750"
+              }
+            }
+          },
+          {
+            "text": " from "
+          },
+          {
+            "text": "Your wallet (2P5t…sPxW) (verified)",
+            "value": {
+              "type": "address",
+              "value": {
+                "address": "2P5tkJVpceLPdnejvc5DBGd4RxkmtouYfNkb9KKPsPxW",
+                "is_self": true,
+                "label": {
+                  "id": "accounts-your-wallet",
+                  "parts": [
+                    {
+                      "text": "Your wallet"
+                    }
+                  ],
+                  "text": "Your wallet"
+                },
+                "label_trust": "verified",
+                "stand_in": null
+              }
+            }
+          },
+          {
+            "text": " to "
+          },
+          {
+            "text": "Kamino Lend (KLen…gmjD) (verified)",
+            "value": {
+              "type": "address",
+              "value": {
+                "address": "KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD",
+                "is_self": false,
+                "label": {
+                  "id": "accounts-name",
+                  "parts": [
+                    {
+                      "text": "Kamino Lend",
+                      "value": {
+                        "type": "text",
+                        "value": "Kamino Lend"
+                      }
+                    }
+                  ],
+                  "text": "Kamino Lend"
+                },
+                "label_trust": "verified",
+                "stand_in": null
+              }
+            }
+          }
+        ],
+        "text": "You send 4,635.28675 USDC (verified) from Your wallet (2P5t…sPxW) (verified) to Kamino Lend (KLen…gmjD) (verified)"
+      },
       "type": "transfer",
       "value": {
         "amount": {
           "asset": {
             "decimals": 6,
+            "description": null,
             "id": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
             "symbol": "USDC",
             "trust": "verified"
@@ -18,35 +98,186 @@
         "from": {
           "address": "2P5tkJVpceLPdnejvc5DBGd4RxkmtouYfNkb9KKPsPxW",
           "is_self": true,
-          "label": "Your wallet",
-          "label_trust": "verified"
+          "label": {
+            "id": "accounts-your-wallet",
+            "parts": [
+              {
+                "text": "Your wallet"
+              }
+            ],
+            "text": "Your wallet"
+          },
+          "label_trust": "verified",
+          "stand_in": null
         },
         "to": {
           "address": "KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD",
           "is_self": false,
-          "label": "Kamino Lend",
-          "label_trust": "verified"
+          "label": {
+            "id": "accounts-name",
+            "parts": [
+              {
+                "text": "Kamino Lend",
+                "value": {
+                  "type": "text",
+                  "value": "Kamino Lend"
+                }
+              }
+            ],
+            "text": "Kamino Lend"
+          },
+          "label_trust": "verified",
+          "stand_in": null
         }
       }
     },
     {
+      "message": {
+        "id": null,
+        "parts": [
+          {
+            "text": "credits the deposit to the obligation as collateral"
+          }
+        ],
+        "text": "credits the deposit to the obligation as collateral"
+      },
       "type": "other",
       "value": {
-        "description": "credits the deposit to the obligation as collateral"
+        "description": {
+          "id": null,
+          "parts": [
+            {
+              "text": "credits the deposit to the obligation as collateral"
+            }
+          ],
+          "text": "credits the deposit to the obligation as collateral"
+        }
       }
     },
     {
+      "message": {
+        "id": "effect-create-deposit-if-missing",
+        "parts": [
+          {
+            "text": "Create "
+          },
+          {
+            "text": "Your USDC account (4Pus…gpZ8) (verified)",
+            "value": {
+              "type": "address",
+              "value": {
+                "address": "4PusLnTYexjqGnHofx85uCymgdGc4QYmNhzKwtJjgpZ8",
+                "is_self": true,
+                "label": {
+                  "id": "accounts-your-token",
+                  "parts": [
+                    {
+                      "text": "Your "
+                    },
+                    {
+                      "text": "USDC",
+                      "value": {
+                        "type": "text",
+                        "value": "USDC"
+                      }
+                    },
+                    {
+                      "text": " account"
+                    }
+                  ],
+                  "text": "Your USDC account"
+                },
+                "label_trust": "verified",
+                "stand_in": null
+              }
+            }
+          },
+          {
+            "text": " owned by "
+          },
+          {
+            "text": "Token program (Toke…Q5DA) (verified)",
+            "value": {
+              "type": "address",
+              "value": {
+                "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+                "is_self": false,
+                "label": {
+                  "id": "accounts-name",
+                  "parts": [
+                    {
+                      "text": "Token program",
+                      "value": {
+                        "type": "text",
+                        "value": "Token program"
+                      }
+                    }
+                  ],
+                  "text": "Token program"
+                },
+                "label_trust": "verified",
+                "stand_in": null
+              }
+            }
+          },
+          {
+            "text": ", depositing "
+          },
+          {
+            "text": "0.00148844 SOL",
+            "value": {
+              "type": "amount",
+              "value": {
+                "asset": {
+                  "decimals": 9,
+                  "description": null,
+                  "id": "native",
+                  "symbol": "SOL",
+                  "trust": "fact"
+                },
+                "bound": "exact",
+                "note": null,
+                "units": "1488440"
+              }
+            }
+          },
+          {
+            "text": " unless it already exists"
+          }
+        ],
+        "text": "Create Your USDC account (4Pus…gpZ8) (verified) owned by Token program (Toke…Q5DA) (verified), depositing 0.00148844 SOL unless it already exists"
+      },
       "type": "create",
       "value": {
         "account": {
           "address": "4PusLnTYexjqGnHofx85uCymgdGc4QYmNhzKwtJjgpZ8",
           "is_self": true,
-          "label": "Your USDC account",
-          "label_trust": "verified"
+          "label": {
+            "id": "accounts-your-token",
+            "parts": [
+              {
+                "text": "Your "
+              },
+              {
+                "text": "USDC",
+                "value": {
+                  "type": "text",
+                  "value": "USDC"
+                }
+              },
+              {
+                "text": " account"
+              }
+            ],
+            "text": "Your USDC account"
+          },
+          "label_trust": "verified",
+          "stand_in": null
         },
         "deposit": {
           "asset": {
             "decimals": 9,
+            "description": null,
             "id": "native",
             "symbol": "SOL",
             "trust": "fact"
@@ -59,41 +290,150 @@
         "owner": {
           "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
           "is_self": false,
-          "label": "Token program",
-          "label_trust": "verified"
+          "label": {
+            "id": "accounts-name",
+            "parts": [
+              {
+                "text": "Token program",
+                "value": {
+                  "type": "text",
+                  "value": "Token program"
+                }
+              }
+            ],
+            "text": "Token program"
+          },
+          "label_trust": "verified",
+          "stand_in": null
         }
       }
     },
     {
+      "message": {
+        "id": null,
+        "parts": [
+          {
+            "text": "updates the reserve's oracle prices and accrued interest; moves no tokens"
+          }
+        ],
+        "text": "updates the reserve's oracle prices and accrued interest; moves no tokens"
+      },
       "type": "other",
       "value": {
-        "description": "updates the reserve's oracle prices and accrued interest; moves no tokens"
+        "description": {
+          "id": null,
+          "parts": [
+            {
+              "text": "updates the reserve's oracle prices and accrued interest; moves no tokens"
+            }
+          ],
+          "text": "updates the reserve's oracle prices and accrued interest; moves no tokens"
+        }
       }
     },
     {
+      "message": {
+        "id": null,
+        "parts": [
+          {
+            "text": "updates the reserve's oracle prices and accrued interest; moves no tokens"
+          }
+        ],
+        "text": "updates the reserve's oracle prices and accrued interest; moves no tokens"
+      },
       "type": "other",
       "value": {
-        "description": "updates the reserve's oracle prices and accrued interest; moves no tokens"
+        "description": {
+          "id": null,
+          "parts": [
+            {
+              "text": "updates the reserve's oracle prices and accrued interest; moves no tokens"
+            }
+          ],
+          "text": "updates the reserve's oracle prices and accrued interest; moves no tokens"
+        }
       }
     },
     {
+      "message": {
+        "id": null,
+        "parts": [
+          {
+            "text": "updates the reserve's oracle prices and accrued interest; moves no tokens"
+          }
+        ],
+        "text": "updates the reserve's oracle prices and accrued interest; moves no tokens"
+      },
       "type": "other",
       "value": {
-        "description": "updates the reserve's oracle prices and accrued interest; moves no tokens"
+        "description": {
+          "id": null,
+          "parts": [
+            {
+              "text": "updates the reserve's oracle prices and accrued interest; moves no tokens"
+            }
+          ],
+          "text": "updates the reserve's oracle prices and accrued interest; moves no tokens"
+        }
       }
     },
     {
+      "message": {
+        "id": null,
+        "parts": [
+          {
+            "text": "recomputes the obligation's collateral and debt values; moves no tokens"
+          }
+        ],
+        "text": "recomputes the obligation's collateral and debt values; moves no tokens"
+      },
       "type": "other",
       "value": {
-        "description": "recomputes the obligation's collateral and debt values; moves no tokens"
+        "description": {
+          "id": null,
+          "parts": [
+            {
+              "text": "recomputes the obligation's collateral and debt values; moves no tokens"
+            }
+          ],
+          "text": "recomputes the obligation's collateral and debt values; moves no tokens"
+        }
       }
     },
     {
+      "message": {
+        "id": "effect-fee-own",
+        "parts": [
+          {
+            "text": "You pay a fee of "
+          },
+          {
+            "text": "0.00002 SOL",
+            "value": {
+              "type": "amount",
+              "value": {
+                "asset": {
+                  "decimals": 9,
+                  "description": null,
+                  "id": "native",
+                  "symbol": "SOL",
+                  "trust": "fact"
+                },
+                "bound": "exact",
+                "note": null,
+                "units": "20000"
+              }
+            }
+          }
+        ],
+        "text": "You pay a fee of 0.00002 SOL"
+      },
       "type": "fee",
       "value": {
         "amount": {
           "asset": {
             "decimals": 9,
+            "description": null,
             "id": "native",
             "symbol": "SOL",
             "trust": "fact"
@@ -105,12 +445,30 @@
         "payer": {
           "address": "2P5tkJVpceLPdnejvc5DBGd4RxkmtouYfNkb9KKPsPxW",
           "is_self": true,
-          "label": "Your wallet",
-          "label_trust": "verified"
+          "label": {
+            "id": "accounts-your-wallet",
+            "parts": [
+              {
+                "text": "Your wallet"
+              }
+            ],
+            "text": "Your wallet"
+          },
+          "label_trust": "verified",
+          "stand_in": null
         }
       }
     },
     {
+      "message": {
+        "id": "effect-recent-blockhash",
+        "parts": [
+          {
+            "text": "Valid for about a minute (recent blockhash)"
+          }
+        ],
+        "text": "Valid for about a minute (recent blockhash)"
+      },
       "type": "lifetime",
       "value": {
         "type": "recent_blockhash"
@@ -122,20 +480,37 @@
     "digest": "00aceb9aa518bff00dfe2464dfe370cd22dc63e59126a1521d38557ae97a3612",
     "format": "solana v0"
   },
-  "schema": "signlens-explanation/1",
+  "schema": "signlens-explanation/2",
   "sections": [
     {
       "collapsed": false,
       "fields": [
         {
-          "help": "What you put into the reserve. It earns interest and backs what you borrow.",
-          "label": "Deposit",
+          "help": {
+            "id": null,
+            "parts": [
+              {
+                "text": "What you put into the reserve. It earns interest and backs what you borrow."
+              }
+            ],
+            "text": "What you put into the reserve. It earns interest and backs what you borrow."
+          },
+          "label": {
+            "id": null,
+            "parts": [
+              {
+                "text": "Deposit"
+              }
+            ],
+            "text": "Deposit"
+          },
           "trust": "fact",
           "value": {
             "type": "amount",
             "value": {
               "asset": {
                 "decimals": 6,
+                "description": null,
                 "id": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
                 "symbol": "USDC",
                 "trust": "verified"
@@ -147,8 +522,24 @@
           }
         },
         {
-          "help": "Your account with Kamino Lend: what you have deposited and what you owe.",
-          "label": "Obligation",
+          "help": {
+            "id": null,
+            "parts": [
+              {
+                "text": "Your account with Kamino Lend: what you have deposited and what you owe."
+              }
+            ],
+            "text": "Your account with Kamino Lend: what you have deposited and what you owe."
+          },
+          "label": {
+            "id": null,
+            "parts": [
+              {
+                "text": "Obligation"
+              }
+            ],
+            "text": "Obligation"
+          },
           "trust": "fact",
           "value": {
             "type": "address",
@@ -156,13 +547,30 @@
               "address": "5iLEgayZ19eL6vGLEtELtCpYrGxZYGL4xEBsxMaYAfFz",
               "is_self": false,
               "label": null,
-              "label_trust": "fact"
+              "label_trust": "fact",
+              "stand_in": null
             }
           }
         },
         {
-          "help": "The pool for one token in the market. Deposits go in, loans come out.",
-          "label": "Reserve",
+          "help": {
+            "id": null,
+            "parts": [
+              {
+                "text": "The pool for one token in the market. Deposits go in, loans come out."
+              }
+            ],
+            "text": "The pool for one token in the market. Deposits go in, loans come out."
+          },
+          "label": {
+            "id": null,
+            "parts": [
+              {
+                "text": "Reserve"
+              }
+            ],
+            "text": "Reserve"
+          },
           "trust": "fact",
           "value": {
             "type": "address",
@@ -170,21 +578,57 @@
               "address": "D6q6wuQSrifJKZYpR1M8R4YawnLDtDsMmWM1NbBmgJ59",
               "is_self": false,
               "label": null,
-              "label_trust": "fact"
+              "label_trust": "fact",
+              "stand_in": null
             }
           }
         },
         {
-          "help": "The token account the tokens leave. It should be one of yours.",
-          "label": "From account",
+          "help": {
+            "id": null,
+            "parts": [
+              {
+                "text": "The token account the tokens leave. It should be one of yours."
+              }
+            ],
+            "text": "The token account the tokens leave. It should be one of yours."
+          },
+          "label": {
+            "id": null,
+            "parts": [
+              {
+                "text": "From account"
+              }
+            ],
+            "text": "From account"
+          },
           "trust": "fact",
           "value": {
             "type": "address",
             "value": {
               "address": "4PusLnTYexjqGnHofx85uCymgdGc4QYmNhzKwtJjgpZ8",
               "is_self": true,
-              "label": "Your USDC account",
-              "label_trust": "verified"
+              "label": {
+                "id": "accounts-your-token",
+                "parts": [
+                  {
+                    "text": "Your "
+                  },
+                  {
+                    "text": "USDC",
+                    "value": {
+                      "type": "text",
+                      "value": "USDC"
+                    }
+                  },
+                  {
+                    "text": " account"
+                  }
+                ],
+                "text": "Your USDC account"
+              },
+              "label_trust": "verified",
+              "stand_in": null
             }
           }
         }
@@ -195,15 +639,69 @@
           "index": 7
         }
       },
-      "subtitle": "Kamino Lend (descriptor reviewed 2026-09-29, upgradeable by GzFg\u2026kzkW)",
-      "title": "Deposit collateral"
+      "subtitle": {
+        "id": "descriptor-subtitle",
+        "parts": [
+          {
+            "text": "Kamino Lend",
+            "value": {
+              "type": "text",
+              "value": "Kamino Lend"
+            }
+          },
+          {
+            "text": " (descriptor reviewed "
+          },
+          {
+            "text": "2026-09-29",
+            "value": {
+              "type": "text",
+              "value": "2026-09-29"
+            }
+          },
+          {
+            "text": ", upgradeable by "
+          },
+          {
+            "short": {
+              "address": "GzFgdRJXmawPhGeBsyRCDLx4jAKPsvbUqoqitzppkzkW",
+              "is_self": false,
+              "label": null,
+              "label_trust": "fact",
+              "stand_in": null
+            },
+            "text": "GzFg…kzkW"
+          },
+          {
+            "text": ")"
+          }
+        ],
+        "text": "Kamino Lend (descriptor reviewed 2026-09-29, upgradeable by GzFg…kzkW)"
+      },
+      "title": {
+        "id": null,
+        "parts": [
+          {
+            "text": "Deposit collateral"
+          }
+        ],
+        "text": "Deposit collateral"
+      }
     },
     {
       "collapsed": true,
       "fields": [
         {
           "help": null,
-          "label": "Compute unit limit",
+          "label": {
+            "id": "label-compute-unit-limit",
+            "parts": [
+              {
+                "text": "Compute unit limit"
+              }
+            ],
+            "text": "Compute unit limit"
+          },
           "trust": "fact",
           "value": {
             "type": "integer",
@@ -212,86 +710,231 @@
         },
         {
           "help": null,
-          "label": "Compute unit price",
+          "label": {
+            "id": "label-compute-unit-price",
+            "parts": [
+              {
+                "text": "Compute unit price"
+              }
+            ],
+            "text": "Compute unit price"
+          },
           "trust": "fact",
           "value": {
-            "type": "text",
-            "value": "70182 micro-lamports per unit"
+            "type": "words",
+            "value": {
+              "id": "compute-budget-price",
+              "parts": [
+                {
+                  "text": "70182",
+                  "value": {
+                    "type": "integer",
+                    "value": "70182"
+                  }
+                },
+                {
+                  "text": " micro-lamports per unit"
+                }
+              ],
+              "text": "70182 micro-lamports per unit"
+            }
           }
         },
         {
           "help": null,
-          "label": "Create token account if missing: Token account",
+          "label": {
+            "id": "explain-housekeeping-label",
+            "parts": [
+              {
+                "text": "Create token account if missing: Token account"
+              }
+            ],
+            "text": "Create token account if missing: Token account"
+          },
           "trust": "fact",
           "value": {
             "type": "address",
             "value": {
               "address": "4PusLnTYexjqGnHofx85uCymgdGc4QYmNhzKwtJjgpZ8",
               "is_self": true,
-              "label": "Your USDC account",
-              "label_trust": "verified"
+              "label": {
+                "id": "accounts-your-token",
+                "parts": [
+                  {
+                    "text": "Your "
+                  },
+                  {
+                    "text": "USDC",
+                    "value": {
+                      "type": "text",
+                      "value": "USDC"
+                    }
+                  },
+                  {
+                    "text": " account"
+                  }
+                ],
+                "text": "Your USDC account"
+              },
+              "label_trust": "verified",
+              "stand_in": null
             }
           }
         },
         {
           "help": null,
-          "label": "Create token account if missing: Owner",
+          "label": {
+            "id": "explain-housekeeping-label",
+            "parts": [
+              {
+                "text": "Create token account if missing: Owner"
+              }
+            ],
+            "text": "Create token account if missing: Owner"
+          },
           "trust": "fact",
           "value": {
             "type": "address",
             "value": {
               "address": "2P5tkJVpceLPdnejvc5DBGd4RxkmtouYfNkb9KKPsPxW",
               "is_self": true,
-              "label": "Your wallet",
-              "label_trust": "verified"
+              "label": {
+                "id": "accounts-your-wallet",
+                "parts": [
+                  {
+                    "text": "Your wallet"
+                  }
+                ],
+                "text": "Your wallet"
+              },
+              "label_trust": "verified",
+              "stand_in": null
             }
           }
         },
         {
           "help": null,
-          "label": "Create token account if missing: Mint",
+          "label": {
+            "id": "explain-housekeeping-label",
+            "parts": [
+              {
+                "text": "Create token account if missing: Mint"
+              }
+            ],
+            "text": "Create token account if missing: Mint"
+          },
           "trust": "fact",
           "value": {
             "type": "address",
             "value": {
               "address": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
               "is_self": false,
-              "label": "USDC mint",
-              "label_trust": "verified"
+              "label": {
+                "id": "accounts-mint",
+                "parts": [
+                  {
+                    "text": "USDC",
+                    "value": {
+                      "type": "text",
+                      "value": "USDC"
+                    }
+                  },
+                  {
+                    "text": " mint"
+                  }
+                ],
+                "text": "USDC mint"
+              },
+              "label_trust": "verified",
+              "stand_in": null
             }
           }
         },
         {
           "help": null,
-          "label": "Create token account if missing: Rent paid by",
+          "label": {
+            "id": "explain-housekeeping-label",
+            "parts": [
+              {
+                "text": "Create token account if missing: Rent paid by"
+              }
+            ],
+            "text": "Create token account if missing: Rent paid by"
+          },
           "trust": "fact",
           "value": {
             "type": "address",
             "value": {
               "address": "2P5tkJVpceLPdnejvc5DBGd4RxkmtouYfNkb9KKPsPxW",
               "is_self": true,
-              "label": "Your wallet",
-              "label_trust": "verified"
+              "label": {
+                "id": "accounts-your-wallet",
+                "parts": [
+                  {
+                    "text": "Your wallet"
+                  }
+                ],
+                "text": "Your wallet"
+              },
+              "label_trust": "verified",
+              "stand_in": null
             }
           }
         },
         {
           "help": null,
-          "label": "Create token account if missing: Token program",
+          "label": {
+            "id": "explain-housekeeping-label",
+            "parts": [
+              {
+                "text": "Create token account if missing: Token program"
+              }
+            ],
+            "text": "Create token account if missing: Token program"
+          },
           "trust": "fact",
           "value": {
             "type": "address",
             "value": {
               "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
               "is_self": false,
-              "label": "Token program",
-              "label_trust": "verified"
+              "label": {
+                "id": "accounts-name",
+                "parts": [
+                  {
+                    "text": "Token program",
+                    "value": {
+                      "type": "text",
+                      "value": "Token program"
+                    }
+                  }
+                ],
+                "text": "Token program"
+              },
+              "label_trust": "verified",
+              "stand_in": null
             }
           }
         },
         {
-          "help": "The pool for one token in the market. Deposits go in, loans come out.",
-          "label": "Refresh reserve: Reserve",
+          "help": {
+            "id": null,
+            "parts": [
+              {
+                "text": "The pool for one token in the market. Deposits go in, loans come out."
+              }
+            ],
+            "text": "The pool for one token in the market. Deposits go in, loans come out."
+          },
+          "label": {
+            "id": "explain-housekeeping-label",
+            "parts": [
+              {
+                "text": "Refresh reserve: Reserve"
+              }
+            ],
+            "text": "Refresh reserve: Reserve"
+          },
           "trust": "fact",
           "value": {
             "type": "address",
@@ -299,13 +942,30 @@
               "address": "37Jk2zkz23vkAYBT66HM2gaqJuNg2nYLsCreQAVt5MWK",
               "is_self": false,
               "label": null,
-              "label_trust": "fact"
+              "label_trust": "fact",
+              "stand_in": null
             }
           }
         },
         {
-          "help": "The pool for one token in the market. Deposits go in, loans come out.",
-          "label": "Refresh reserve: Reserve",
+          "help": {
+            "id": null,
+            "parts": [
+              {
+                "text": "The pool for one token in the market. Deposits go in, loans come out."
+              }
+            ],
+            "text": "The pool for one token in the market. Deposits go in, loans come out."
+          },
+          "label": {
+            "id": "explain-housekeeping-label",
+            "parts": [
+              {
+                "text": "Refresh reserve: Reserve"
+              }
+            ],
+            "text": "Refresh reserve: Reserve"
+          },
           "trust": "fact",
           "value": {
             "type": "address",
@@ -313,13 +973,30 @@
               "address": "d4A2prbA2whesmvHaL88BH6Ewn5N4bTSU2Ze8P6Bc4Q",
               "is_self": false,
               "label": null,
-              "label_trust": "fact"
+              "label_trust": "fact",
+              "stand_in": null
             }
           }
         },
         {
-          "help": "The pool for one token in the market. Deposits go in, loans come out.",
-          "label": "Refresh reserve: Reserve",
+          "help": {
+            "id": null,
+            "parts": [
+              {
+                "text": "The pool for one token in the market. Deposits go in, loans come out."
+              }
+            ],
+            "text": "The pool for one token in the market. Deposits go in, loans come out."
+          },
+          "label": {
+            "id": "explain-housekeeping-label",
+            "parts": [
+              {
+                "text": "Refresh reserve: Reserve"
+              }
+            ],
+            "text": "Refresh reserve: Reserve"
+          },
           "trust": "fact",
           "value": {
             "type": "address",
@@ -327,13 +1004,30 @@
               "address": "D6q6wuQSrifJKZYpR1M8R4YawnLDtDsMmWM1NbBmgJ59",
               "is_self": false,
               "label": null,
-              "label_trust": "fact"
+              "label_trust": "fact",
+              "stand_in": null
             }
           }
         },
         {
-          "help": "Your account with Kamino Lend: what you have deposited and what you owe.",
-          "label": "Refresh obligation: Obligation",
+          "help": {
+            "id": null,
+            "parts": [
+              {
+                "text": "Your account with Kamino Lend: what you have deposited and what you owe."
+              }
+            ],
+            "text": "Your account with Kamino Lend: what you have deposited and what you owe."
+          },
+          "label": {
+            "id": "explain-housekeeping-label",
+            "parts": [
+              {
+                "text": "Refresh obligation: Obligation"
+              }
+            ],
+            "text": "Refresh obligation: Obligation"
+          },
           "trust": "fact",
           "value": {
             "type": "address",
@@ -341,17 +1035,41 @@
               "address": "5iLEgayZ19eL6vGLEtELtCpYrGxZYGL4xEBsxMaYAfFz",
               "is_self": false,
               "label": null,
-              "label_trust": "fact"
+              "label_trust": "fact",
+              "stand_in": null
             }
           }
         },
         {
           "help": null,
-          "label": "Refresh obligation: Additional accounts",
+          "label": {
+            "id": "explain-housekeeping-label",
+            "parts": [
+              {
+                "text": "Refresh obligation: Additional accounts"
+              }
+            ],
+            "text": "Refresh obligation: Additional accounts"
+          },
           "trust": "fact",
           "value": {
-            "type": "text",
-            "value": "3, not named by this descriptor"
+            "type": "words",
+            "value": {
+              "id": "descriptor-additional-accounts",
+              "parts": [
+                {
+                  "text": "3",
+                  "value": {
+                    "type": "integer",
+                    "value": "3"
+                  }
+                },
+                {
+                  "text": ", not named by this descriptor"
+                }
+              ],
+              "text": "3, not named by this descriptor"
+            }
           }
         }
       ],
@@ -359,22 +1077,47 @@
         "type": "housekeeping"
       },
       "subtitle": null,
-      "title": "Also"
+      "title": {
+        "id": "explain-also",
+        "parts": [
+          {
+            "text": "Also"
+          }
+        ],
+        "text": "Also"
+      }
     },
     {
       "collapsed": false,
       "fields": [
         {
           "help": null,
-          "label": "Fee payer",
+          "label": {
+            "id": "label-fee-payer",
+            "parts": [
+              {
+                "text": "Fee payer"
+              }
+            ],
+            "text": "Fee payer"
+          },
           "trust": "fact",
           "value": {
             "type": "address",
             "value": {
               "address": "2P5tkJVpceLPdnejvc5DBGd4RxkmtouYfNkb9KKPsPxW",
               "is_self": true,
-              "label": "Your wallet",
-              "label_trust": "verified"
+              "label": {
+                "id": "accounts-your-wallet",
+                "parts": [
+                  {
+                    "text": "Your wallet"
+                  }
+                ],
+                "text": "Your wallet"
+              },
+              "label_trust": "verified",
+              "stand_in": null
             }
           }
         }
@@ -383,20 +1126,37 @@
         "type": "signers"
       },
       "subtitle": null,
-      "title": "Signers"
+      "title": {
+        "id": "explain-signers",
+        "parts": [
+          {
+            "text": "Signers"
+          }
+        ],
+        "text": "Signers"
+      }
     },
     {
       "collapsed": false,
       "fields": [
         {
           "help": null,
-          "label": "Total",
+          "label": {
+            "id": "label-total",
+            "parts": [
+              {
+                "text": "Total"
+              }
+            ],
+            "text": "Total"
+          },
           "trust": "fact",
           "value": {
             "type": "amount",
             "value": {
               "asset": {
                 "decimals": 9,
+                "description": null,
                 "id": "native",
                 "symbol": "SOL",
                 "trust": "fact"
@@ -409,13 +1169,22 @@
         },
         {
           "help": null,
-          "label": "Base",
+          "label": {
+            "id": "label-base",
+            "parts": [
+              {
+                "text": "Base"
+              }
+            ],
+            "text": "Base"
+          },
           "trust": "fact",
           "value": {
             "type": "amount",
             "value": {
               "asset": {
                 "decimals": 9,
+                "description": null,
                 "id": "native",
                 "symbol": "SOL",
                 "trust": "fact"
@@ -428,13 +1197,22 @@
         },
         {
           "help": null,
-          "label": "Priority",
+          "label": {
+            "id": "label-priority",
+            "parts": [
+              {
+                "text": "Priority"
+              }
+            ],
+            "text": "Priority"
+          },
           "trust": "fact",
           "value": {
             "type": "amount",
             "value": {
               "asset": {
                 "decimals": 9,
+                "description": null,
                 "id": "native",
                 "symbol": "SOL",
                 "trust": "fact"
@@ -447,20 +1225,90 @@
         },
         {
           "help": null,
-          "label": "Priority basis",
+          "label": {
+            "id": "label-priority-basis",
+            "parts": [
+              {
+                "text": "Priority basis"
+              }
+            ],
+            "text": "Priority basis"
+          },
           "trust": "fact",
           "value": {
-            "type": "text",
-            "value": "70182 micro-lamports per unit \u00d7 213727 units requested"
+            "type": "words",
+            "value": {
+              "id": "explain-priority-basis",
+              "parts": [
+                {
+                  "text": "70182",
+                  "value": {
+                    "type": "integer",
+                    "value": "70182"
+                  }
+                },
+                {
+                  "text": " micro-lamports per unit × "
+                },
+                {
+                  "text": "213727",
+                  "value": {
+                    "type": "integer",
+                    "value": "213727"
+                  }
+                },
+                {
+                  "text": " units requested"
+                }
+              ],
+              "text": "70182 micro-lamports per unit × 213727 units requested"
+            }
           }
         },
         {
           "help": null,
-          "label": "Rent deposits",
+          "label": {
+            "id": "label-rent-deposits",
+            "parts": [
+              {
+                "text": "Rent deposits"
+              }
+            ],
+            "text": "Rent deposits"
+          },
           "trust": "fact",
           "value": {
-            "type": "text",
-            "value": "up to 0.00148844 SOL if the accounts it creates only when missing do not exist yet; returned when the accounts are closed"
+            "type": "words",
+            "value": {
+              "id": "explain-rent",
+              "parts": [
+                {
+                  "text": "up to "
+                },
+                {
+                  "text": "0.00148844 SOL",
+                  "value": {
+                    "type": "amount",
+                    "value": {
+                      "asset": {
+                        "decimals": 9,
+                        "description": null,
+                        "id": "native",
+                        "symbol": "SOL",
+                        "trust": "fact"
+                      },
+                      "bound": "exact",
+                      "note": null,
+                      "units": "1488440"
+                    }
+                  }
+                },
+                {
+                  "text": " if the accounts it creates only when missing do not exist yet; returned when the accounts are closed"
+                }
+              ],
+              "text": "up to 0.00148844 SOL if the accounts it creates only when missing do not exist yet; returned when the accounts are closed"
+            }
           }
         }
       ],
@@ -468,18 +1316,42 @@
         "type": "fees"
       },
       "subtitle": null,
-      "title": "Fee"
+      "title": {
+        "id": "explain-fee",
+        "parts": [
+          {
+            "text": "Fee"
+          }
+        ],
+        "text": "Fee"
+      }
     },
     {
       "collapsed": false,
       "fields": [
         {
           "help": null,
-          "label": "Expires",
+          "label": {
+            "id": "label-expires",
+            "parts": [
+              {
+                "text": "Expires"
+              }
+            ],
+            "text": "Expires"
+          },
           "trust": "fact",
           "value": {
-            "type": "text",
-            "value": "in about a minute (recent blockhash)"
+            "type": "words",
+            "value": {
+              "id": "explain-expires-soon",
+              "parts": [
+                {
+                  "text": "in about a minute (recent blockhash)"
+                }
+              ],
+              "text": "in about a minute (recent blockhash)"
+            }
           }
         }
       ],
@@ -487,10 +1359,26 @@
         "type": "lifetime"
       },
       "subtitle": null,
-      "title": "Validity"
+      "title": {
+        "id": "explain-validity",
+        "parts": [
+          {
+            "text": "Validity"
+          }
+        ],
+        "text": "Validity"
+      }
     }
   ],
-  "summary": "Deposit 4,635.28675 USDC (verified) into Kamino Lend as collateral",
-  "text": "Deposit 4,635.28675 USDC (verified) into Kamino Lend as collateral\nOK\n\n== Deposit collateral | Kamino Lend (descriptor reviewed 2026-09-29, upgradeable by GzFg\u2026kzkW)\n  Deposit: 4,635.28675 USDC (verified)\n  Obligation: 5iLEgayZ19eL6vGLEtELtCpYrGxZYGL4xEBsxMaYAfFz\n  Reserve: D6q6wuQSrifJKZYpR1M8R4YawnLDtDsMmWM1NbBmgJ59\n  From account: Your USDC account (4Pus\u2026gpZ8) (verified)\n\n== Also [collapsed]\n  Compute unit limit: 213727\n  Compute unit price: 70182 micro-lamports per unit\n  Create token account if missing: Token account: Your USDC account (4Pus\u2026gpZ8) (verified)\n  Create token account if missing: Owner: Your wallet (2P5t\u2026sPxW) (verified)\n  Create token account if missing: Mint: USDC mint (EPjF\u2026Dt1v) (verified)\n  Create token account if missing: Rent paid by: Your wallet (2P5t\u2026sPxW) (verified)\n  Create token account if missing: Token program: Token program (Toke\u2026Q5DA) (verified)\n  Refresh reserve: Reserve: 37Jk2zkz23vkAYBT66HM2gaqJuNg2nYLsCreQAVt5MWK\n  Refresh reserve: Reserve: d4A2prbA2whesmvHaL88BH6Ewn5N4bTSU2Ze8P6Bc4Q\n  Refresh reserve: Reserve: D6q6wuQSrifJKZYpR1M8R4YawnLDtDsMmWM1NbBmgJ59\n  Refresh obligation: Obligation: 5iLEgayZ19eL6vGLEtELtCpYrGxZYGL4xEBsxMaYAfFz\n  Refresh obligation: Additional accounts: 3, not named by this descriptor\n\n== Signers\n  Fee payer: Your wallet (2P5t\u2026sPxW) (verified)\n\n== Fee\n  Total: 0.00002 SOL\n  Base: 0.000005 SOL\n  Priority: 0.000015 SOL\n  Priority basis: 70182 micro-lamports per unit \u00d7 213727 units requested\n  Rent deposits: up to 0.00148844 SOL if the accounts it creates only when missing do not exist yet; returned when the accounts are closed\n\n== Validity\n  Expires: in about a minute (recent blockhash)\n\nEffects:\n  - send 4,635.28675 USDC (verified) from Your wallet (2P5t\u2026sPxW) (verified) to Kamino Lend (KLen\u2026gmjD) (verified)\n  - credits the deposit to the obligation as collateral\n  - create Your USDC account (4Pus\u2026gpZ8) (verified) owned by Token program (Toke\u2026Q5DA) (verified), depositing 0.00148844 SOL unless it already exists\n  - updates the reserve's oracle prices and accrued interest; moves no tokens\n  - updates the reserve's oracle prices and accrued interest; moves no tokens\n  - updates the reserve's oracle prices and accrued interest; moves no tokens\n  - recomputes the obligation's collateral and debt values; moves no tokens\n  - Your wallet (2P5t\u2026sPxW) (verified) pays a fee of 0.00002 SOL\n  - valid for about a minute (recent blockhash)\n\nRaw: solana v0 (507 bytes)\n  digest: 00aceb9aa518bff00dfe2464dfe370cd22dc63e59126a1521d38557ae97a3612\n",
+  "summary": {
+    "id": null,
+    "parts": [
+      {
+        "text": "Deposit 4,635.28675 USDC (verified) into Kamino Lend as collateral"
+      }
+    ],
+    "text": "Deposit 4,635.28675 USDC (verified) into Kamino Lend as collateral"
+  },
+  "text": "Deposit 4,635.28675 USDC (verified) into Kamino Lend as collateral\nOK\n\n== Deposit collateral | Kamino Lend (descriptor reviewed 2026-09-29, upgradeable by GzFg…kzkW)\n  Deposit: 4,635.28675 USDC (verified)\n  Obligation: 5iLEgayZ19eL6vGLEtELtCpYrGxZYGL4xEBsxMaYAfFz\n  Reserve: D6q6wuQSrifJKZYpR1M8R4YawnLDtDsMmWM1NbBmgJ59\n  From account: Your USDC account (4Pus…gpZ8) (verified)\n\n== Also [collapsed]\n  Compute unit limit: 213727\n  Compute unit price: 70182 micro-lamports per unit\n  Create token account if missing: Token account: Your USDC account (4Pus…gpZ8) (verified)\n  Create token account if missing: Owner: Your wallet (2P5t…sPxW) (verified)\n  Create token account if missing: Mint: USDC mint (EPjF…Dt1v) (verified)\n  Create token account if missing: Rent paid by: Your wallet (2P5t…sPxW) (verified)\n  Create token account if missing: Token program: Token program (Toke…Q5DA) (verified)\n  Refresh reserve: Reserve: 37Jk2zkz23vkAYBT66HM2gaqJuNg2nYLsCreQAVt5MWK\n  Refresh reserve: Reserve: d4A2prbA2whesmvHaL88BH6Ewn5N4bTSU2Ze8P6Bc4Q\n  Refresh reserve: Reserve: D6q6wuQSrifJKZYpR1M8R4YawnLDtDsMmWM1NbBmgJ59\n  Refresh obligation: Obligation: 5iLEgayZ19eL6vGLEtELtCpYrGxZYGL4xEBsxMaYAfFz\n  Refresh obligation: Additional accounts: 3, not named by this descriptor\n\n== Signers\n  Fee payer: Your wallet (2P5t…sPxW) (verified)\n\n== Fee\n  Total: 0.00002 SOL\n  Base: 0.000005 SOL\n  Priority: 0.000015 SOL\n  Priority basis: 70182 micro-lamports per unit × 213727 units requested\n  Rent deposits: up to 0.00148844 SOL if the accounts it creates only when missing do not exist yet; returned when the accounts are closed\n\n== Validity\n  Expires: in about a minute (recent blockhash)\n\nEffects:\n  - You send 4,635.28675 USDC (verified) from Your wallet (2P5t…sPxW) (verified) to Kamino Lend (KLen…gmjD) (verified)\n  - credits the deposit to the obligation as collateral\n  - Create Your USDC account (4Pus…gpZ8) (verified) owned by Token program (Toke…Q5DA) (verified), depositing 0.00148844 SOL unless it already exists\n  - updates the reserve's oracle prices and accrued interest; moves no tokens\n  - updates the reserve's oracle prices and accrued interest; moves no tokens\n  - updates the reserve's oracle prices and accrued interest; moves no tokens\n  - recomputes the obligation's collateral and debt values; moves no tokens\n  - You pay a fee of 0.00002 SOL\n  - Valid for about a minute (recent blockhash)\n\nRaw: solana v0 (507 bytes)\n  digest: 00aceb9aa518bff00dfe2464dfe370cd22dc63e59126a1521d38557ae97a3612\n",
   "verdict": "ok"
 }

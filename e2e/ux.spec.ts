@@ -6,15 +6,15 @@
 import type { ExplainedRow } from '../src/shared/model.ts';
 import { fixture } from '../test/server.ts';
 import { clickToClose, expect, liveGate, test } from './support/extension.ts';
-import { request, transferRow, windowFor } from './support/windows.ts';
+import { request, transferRow, windowFor, words } from './support/windows.ts';
 
 const WALLET = 'SignLens';
 
 test('each transaction of a request has its heading and summary, and the band names the most serious', async ({ context, worker }) => {
     const rows: ExplainedRow[] = [
-        { ...transferRow(), verdict: 'ok', summary: 'First, harmless' },
-        { ...transferRow(), verdict: 'blocked', summary: 'Second, drains the wallet' },
-        { ...transferRow(), verdict: 'warning', summary: 'Third, a warning' },
+        { ...transferRow(), verdict: 'ok', summary: words('First, harmless') },
+        { ...transferRow(), verdict: 'blocked', summary: words('Second, drains the wallet') },
+        { ...transferRow(), verdict: 'warning', summary: words('Third, a warning') },
     ];
     const gate = await windowFor(context, worker, request({ rows }));
     await expect(gate.locator('#title')).toHaveText('Sign 3 transactions');
@@ -114,21 +114,27 @@ test('over a page SignLens does not run on, the popup says so rather than to rel
 });
 
 test('a step whose instruction is not in the explanation is shown all the same, not left out', async ({ context, worker }) => {
-    const field = { label: 'Amount', value: { type: 'text', value: '1 SOL' }, trust: 'fact', help: null } as const;
+    const field = { label: words('Amount'), value: { type: 'text', value: '1 SOL' }, trust: 'fact', help: null } as const;
     const row: ExplainedRow = {
         ...transferRow(),
         sections: [
-            { kind: { type: 'instruction', value: { index: 0 } }, title: 'Transfer', subtitle: null, fields: [field], collapsed: false },
+            {
+                kind: { type: 'instruction', value: { index: 0 } },
+                title: words('Transfer'),
+                subtitle: null,
+                fields: [field],
+                collapsed: false,
+            },
             {
                 kind: { type: 'nested', value: { parent: 0, index: 1 } },
-                title: 'Inner transfer',
+                title: words('Inner transfer'),
                 subtitle: null,
                 fields: [field],
                 collapsed: false,
             },
             {
                 kind: { type: 'nested', value: { parent: 7, index: 2 } },
-                title: 'Stray step',
+                title: words('Stray step'),
                 subtitle: null,
                 fields: [field],
                 collapsed: false,
@@ -270,7 +276,7 @@ test('a finding wraps under its own text, not under its severity', async ({ cont
     const gate = await windowFor(
         context,
         worker,
-        request({ rows: [{ ...transferRow(), findings: [{ severity: 'high', code: 'x', message: long, instruction: null }] }] }),
+        request({ rows: [{ ...transferRow(), findings: [{ severity: 'high', code: 'x', message: words(long), instruction: null }] }] }),
     );
     await gate.setViewportSize({ width: 360, height: 680 });
     const lefts = await gate

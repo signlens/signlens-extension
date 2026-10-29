@@ -56,7 +56,7 @@ const ENGINE_VERDICT = { ok: 'ok', warning: 'warn', blocked: 'block' } as const;
 function seenOf(row: ExplainedRow): Seen {
     const titles = new Map<number, string>();
     for (const section of row.sections) {
-        if (section.kind.type === 'instruction') titles.set(section.kind.value.index, section.title);
+        if (section.kind.type === 'instruction') titles.set(section.kind.value.index, section.title.text);
     }
     let programs: string[] = [];
     try {
@@ -169,7 +169,7 @@ function refusalOf(row: Row | undefined): string {
     for (const finding of row.findings) {
         if (!worst || SEVERITIES.indexOf(finding.severity) > SEVERITIES.indexOf(worst.severity)) worst = finding;
     }
-    return `SignLens blocks it. ${worst?.message ?? row.summary}`;
+    return `SignLens blocks it. ${(worst?.message ?? row.summary).text}`;
 }
 
 /**

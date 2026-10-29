@@ -5,14 +5,17 @@
 import assert from 'node:assert/strict';
 import { createServer } from 'node:http';
 import { test } from 'node:test';
-import { type Explanation, isError } from '../shared/types.ts';
+import { type Explanation, isError, type Message } from '../shared/types.ts';
 import { apiStatus, explainRemotely, LIMITED, sendFeedback } from './api.ts';
 
+/** `text` as the engine's words, with no identifier. */
+const words = (text: string): Message => ({ id: null, parts: [{ text }], text });
+
 const EXPLANATION: Explanation = {
-    schema: 'signlens-explanation/1',
+    schema: 'signlens-explanation/2',
     chain: 'solana',
     verdict: 'ok',
-    summary: 'Send 1 SOL',
+    summary: words('Send 1 SOL'),
     findings: [],
     effects: [],
     sections: [],
@@ -35,7 +38,7 @@ interface Call {
 }
 
 /**
- * A stub API: answers `/v1/explain` with `explain`, `/v1/packs` with
+ * A stub API: answers `/v2/explain` with `explain`, `/v1/packs` with
  * `packs`, `/v1/feedback` with 204; records calls. A list of answers is
  * given in turn, the last repeated.
  */
@@ -69,7 +72,7 @@ async function stub({
         request.on('end', () => {
             calls.push({ method: request.method, path: request.url, body: body ? JSON.parse(body) : null });
             const answer: Answer =
-                request.url === '/v1/explain'
+                request.url === '/v2/explain'
                     ? next(explain)
                     : request.url === '/v1/packs'
                       ? next(packs)
@@ -101,7 +104,7 @@ test('the request carries the transaction as base64 beside the engine request, a
         assert.deepEqual(document, EXPLANATION);
         assert.deepEqual(api.calls[0], {
             method: 'POST',
-            path: '/v1/explain',
+            path: '/v2/explain',
             body: { transaction: 'AQID', own_keys: ['A'], loaded_writable: [], render: true },
         });
         assert.ok(!('error' in document) && document.verdict === 'ok');

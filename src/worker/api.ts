@@ -107,7 +107,7 @@ export async function explainRemotely(
         // An explanation changes nothing on the server, so a deploy or a
         // restart between two tries is no harm.
         response = await withOneRetry(
-            () => fetch(`${base}/v1/explain`, { method: 'POST', headers: { 'content-type': 'application/json' }, body, signal }),
+            () => fetch(`${base}/v2/explain`, { method: 'POST', headers: { 'content-type': 'application/json' }, body, signal }),
             signal,
         );
     } catch (error) {

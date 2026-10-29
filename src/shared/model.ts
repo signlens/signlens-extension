@@ -4,7 +4,7 @@
 // history keeps it, with where it came from and what became of it. Shared
 // by the worker, the window and the popup: no DOM, no `chrome`.
 
-import type { Effect, Finding, Section } from './types.ts';
+import type { Finding, Message, Section, WordedEffect } from './types.ts';
 
 /** What became of a request: passed on (for a site's asking, allowed), or not. */
 export type Decision = 'continue' | 'reject';
@@ -22,9 +22,9 @@ export type TransactionVerdict = Extract<VerdictWord, 'ok' | 'warning' | 'blocke
 export interface ExplainedRow {
     kind: 'explained';
     verdict: TransactionVerdict;
-    summary: string;
+    summary: Message;
     findings: Finding[];
-    effects: Effect[];
+    effects: WordedEffect[];
     sections: Section[];
     /** The engine's full text. */
     text: string;

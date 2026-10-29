@@ -181,7 +181,7 @@ for (const trick of ['mutate', 'getter'] as const) {
         const gate = await liveGate(context);
         await continueAnyway(gate);
         expect(await signing).toEqual({ signed: true });
-        const explained = server.apiCalls.find((call) => call.path === '/v1/explain')?.body as { transaction: string };
+        const explained = server.apiCalls.find((call) => call.path === '/v2/explain')?.body as { transaction: string };
         expect(explained.transaction).toBe(transfer.base64);
         expect(await dapp.evaluate(() => window.fakeSigned)).toEqual([transfer.base64]);
     });
@@ -213,7 +213,7 @@ test('a second request while the first is open is refused, not stacked behind it
     const second = await sign();
     expect(second.error).toBe('SignLens: refused (still busy with an earlier request from this page).');
     expect(context.pages().filter((page) => !page.isClosed() && page.url().includes('confirm.html'))).toHaveLength(1);
-    expect(server.apiCalls.filter((call) => call.path === '/v1/explain')).toHaveLength(1);
+    expect(server.apiCalls.filter((call) => call.path === '/v2/explain')).toHaveLength(1);
     await clickToClose(gate.getByRole('button', { name: 'Reject' }));
     expect((await first).error).toContain('User rejected the request in SignLens');
 });
@@ -294,7 +294,7 @@ test('a page that reloads while its request is still being explained may ask aga
     await clickToClose(gate.getByRole('button', { name: 'Reject' }));
     expect((await again).error).toContain('User rejected the request in SignLens');
     // Only the second one got a window, and only it is kept: the first was withdrawn before anything was shown.
-    expect(server.apiCalls.filter((call) => call.path === '/v1/explain')).toHaveLength(2);
+    expect(server.apiCalls.filter((call) => call.path === '/v2/explain')).toHaveLength(2);
     await popup.reload();
     await expect(popup.locator('#history > li')).toHaveCount(1);
     await expect(popup.locator('#history > li .decision')).toHaveText('rejected');

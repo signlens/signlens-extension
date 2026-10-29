@@ -6,7 +6,7 @@
 import assert from 'node:assert/strict';
 import { afterEach, beforeEach, test } from 'node:test';
 import { until } from '../../test/chrome.fake.ts';
-import { explanation, feePayer, fixture, recorded, STAND_IN_TAG, startTestServer, type TestServer } from '../../test/server.ts';
+import { explanation, feePayer, fixture, recorded, STAND_IN_TAG, startTestServer, type TestServer, words } from '../../test/server.ts';
 import { MAX_TRANSACTION_BASE64, MAX_TRANSACTIONS } from '../shared/messages.ts';
 import { type Entry, failure, type Row, requestError } from '../shared/model.ts';
 import { DEFAULTS, type Settings } from '../shared/settings.ts';
@@ -144,7 +144,7 @@ test('a transaction is explained with its lookup tables, the signer and the cont
     assert.match(contacts[0]?.name ?? '', /^\[\[contact-1-[0-9a-f]{16}\]\]$/);
     const row = rowOf(entry, 'explained');
     assert.equal(row?.verdict, 'blocked');
-    assert.equal(row?.summary, document.summary);
+    assert.deepEqual(row?.summary, document.summary);
     assert.equal(row?.digest, document.raw.digest);
     assert.equal(row?.transaction, swap.base64);
     assert.match(row?.tables ?? '', /^\d lookup tables? read over RPC, unverified$/);
@@ -161,12 +161,23 @@ test('no name in the address book leaves the browser: each call of a request has
     // The engine writes a name as it was sent wherever it speaks of the address, as the stub writes this request's stand-in.
     const bob = `[[contact-1-${STAND_IN_TAG}]]`;
     const said = {
-        summary: `Send 1 SOL to ${bob} (DV3B…L7Qp)`,
-        findings: [{ severity: 'high', code: 'LOOKALIKE_ADDRESS', message: `The recipient looks like ${bob} (DV3B…L7Qp)`, instruction: 0 }],
+        summary: words(`Send 1 SOL to ${bob} (DV3B…L7Qp)`),
+        findings: [
+            { severity: 'high', code: 'LOOKALIKE_ADDRESS', message: words(`The recipient looks like ${bob} (DV3B…L7Qp)`), instruction: 0 },
+        ],
         effects: [
             {
                 type: 'revoke',
-                value: { subject: { address: BOB.address, label: `${bob}'s USDC account`, label_trust: 'verified', is_self: false } },
+                value: {
+                    subject: {
+                        address: BOB.address,
+                        label: words(`${bob}'s USDC account`),
+                        label_trust: 'verified',
+                        is_self: false,
+                        stand_in: null,
+                    },
+                },
+                message: words(`Revoke the delegate on ${bob}'s USDC account (DV3B…L7Qp) (verified)`),
             },
         ],
         text: `To: ${bob} (DV3B…L7Qp) (verified)`,
@@ -183,11 +194,14 @@ test('no name in the address book leaves the browser: each call of a request has
         [BOB.address, OTHER_CONTACT],
     );
     const row = rowOf(entry, 'explained');
-    assert.equal(row.summary, 'Send 1 SOL to Bob (DV3B…L7Qp)');
-    assert.equal(row.findings[0]?.message, 'The recipient looks like Bob (DV3B…L7Qp)');
+    assert.equal(row.summary.text, 'Send 1 SOL to Bob (DV3B…L7Qp)');
+    assert.equal(row.findings[0]?.message.text, 'The recipient looks like Bob (DV3B…L7Qp)');
     assert.deepEqual(row.effects[0], {
         type: 'revoke',
-        value: { subject: { address: BOB.address, label: "Bob's USDC account", label_trust: 'verified', is_self: false } },
+        value: {
+            subject: { address: BOB.address, label: words("Bob's USDC account"), label_trust: 'verified', is_self: false, stand_in: null },
+        },
+        message: words("Revoke the delegate on Bob's USDC account (DV3B…L7Qp) (verified)"),
     });
     assert.equal(row.text, 'To: Bob (DV3B…L7Qp) (verified)');
     // A rating reports the summary without the name.
@@ -254,7 +268,7 @@ test('an unlisted token is named from the RPC and the token list, and the explan
     assert.deepEqual(named?.token_hints, [{ mint: PUMP_MINT, symbol: 'HMYD', decimals: 6 }]);
     const row = rowOf(entry, 'explained');
     assert.deepEqual(row?.hints, ['HMYD']);
-    assert.equal(row?.summary, (recorded('swap__sol_from_wallet.named_by_hint') as { summary: string }).summary);
+    assert.deepEqual(row?.summary, (recorded('swap__sol_from_wallet.named_by_hint') as { summary: unknown }).summary);
 });
 
 test('an RPC or token list the settings would refuse is not asked, even when storage holds one', async () => {
@@ -304,13 +318,13 @@ test('if asking again with the names fails, the first explanation stands', async
         'explained',
     );
     assert.equal(server.apiCalls.length, 2, 'asked again with the name');
-    assert.equal(row.summary, first.summary);
+    assert.deepEqual(row.summary, first.summary);
     assert.deepEqual(row?.hints, []);
 });
 
 /** What an explanation that wants `addresses` adds to its document. */
-function wanting(...addresses: string[]): { wanted_accounts: { address: string; reason: string }[] } {
-    return { wanted_accounts: addresses.map((address) => ({ address, reason: 'what it holds would explain more' })) };
+function wanting(...addresses: string[]): { wanted_accounts: { address: string; reason: ReturnType<typeof words> }[] } {
+    return { wanted_accounts: addresses.map((address) => ({ address, reason: words('what it holds would explain more') })) };
 }
 
 /** The `accounts` of each API call so far. */
@@ -327,7 +341,7 @@ test('the accounts an explanation wants are read over the RPC and the API asked 
         explanation('block', wanting(proposal.address)),
         // The vault transaction's address comes from the proposal's index: wanted once the proposal is read.
         explanation('block', wanting(proposal.address, stored.address)),
-        explanation('block', { summary: 'Approve proposal #7 (per your RPC)', ...wanting(BOB.address) }),
+        explanation('block', { summary: words('Approve proposal #7 (per your RPC)'), ...wanting(BOB.address) }),
     );
     const entry = await explainTransactions({ ...PAGE, transactions: [drift.base64] }, config({ lookupAccounts: true }), [], []);
     // Each read once, and no third round for what the last answer wants.
@@ -337,7 +351,7 @@ test('the accounts an explanation wants are read over the RPC and the API asked 
     );
     assert.deepEqual(accountsSent(), [undefined, [proposal], [proposal, stored]]);
     const row = rowOf(entry, 'explained');
-    assert.equal(row.summary, 'Approve proposal #7 (per your RPC)');
+    assert.equal(row.summary.text, 'Approve proposal #7 (per your RPC)');
     assert.deepEqual(row.accounts, [proposal.address, stored.address]);
     // Saved as `signlens explain --read-accounts` reads it.
     assert.ok(row.capture.includes(`\n# account: ${proposal.address} ${proposal.owner} ${proposal.slot} ${proposal.data}\n`));
@@ -368,7 +382,7 @@ test('an account the RPC does not have, or cannot give, leaves the explanation a
 test('if asking again with the accounts fails, the explanation before stands', async () => {
     const drift = fixture('legacy_squads_drift_approve_execute');
     server.know(drift);
-    server.answerApi(explanation('block', { summary: 'Approve proposal #7', ...wanting(drift.accounts[0]?.address ?? '') }), {
+    server.answerApi(explanation('block', { summary: words('Approve proposal #7'), ...wanting(drift.accounts[0]?.address ?? '') }), {
         schema: 'signlens-api-error/1',
         error: { code: 'busy', message: 'every worker is busy' },
     });
@@ -377,7 +391,7 @@ test('if asking again with the accounts fails, the explanation before stands', a
         'explained',
     );
     assert.equal(server.apiCalls.length, 2);
-    assert.equal(row.summary, 'Approve proposal #7');
+    assert.equal(row.summary.text, 'Approve proposal #7');
     assert.equal(row.accounts, undefined);
 });
 

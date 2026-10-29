@@ -50,7 +50,7 @@ export function worstVerdict(list: readonly Row[]): VerdictWord {
 export function summaryOf(row: Row): string {
     switch (row.kind) {
         case 'explained':
-            return row.summary;
+            return row.summary.text;
         case 'failed':
             // A line leads with a capital, whatever the failure's own words (which the page is told as they are).
             return row.scope === 'transaction' ? `Not explained: ${row.error}` : row.error.charAt(0).toUpperCase() + row.error.slice(1);

@@ -2,11 +2,71 @@
   "chain": "solana",
   "effects": [
     {
+      "message": {
+        "id": "effect-transfer",
+        "parts": [
+          {
+            "text": "Transfer "
+          },
+          {
+            "text": "0.001855569 SOL",
+            "value": {
+              "type": "amount",
+              "value": {
+                "asset": {
+                  "decimals": 9,
+                  "description": null,
+                  "id": "native",
+                  "symbol": "SOL",
+                  "trust": "fact"
+                },
+                "bound": "exact",
+                "note": null,
+                "units": "1855569"
+              }
+            }
+          },
+          {
+            "text": " from "
+          },
+          {
+            "text": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR",
+            "value": {
+              "type": "address",
+              "value": {
+                "address": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR",
+                "is_self": false,
+                "label": null,
+                "label_trust": "fact",
+                "stand_in": null
+              }
+            }
+          },
+          {
+            "text": " to "
+          },
+          {
+            "text": "91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD",
+            "value": {
+              "type": "address",
+              "value": {
+                "address": "91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD",
+                "is_self": false,
+                "label": null,
+                "label_trust": "fact",
+                "stand_in": null
+              }
+            }
+          }
+        ],
+        "text": "Transfer 0.001855569 SOL from CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR to 91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD"
+      },
       "type": "transfer",
       "value": {
         "amount": {
           "asset": {
             "decimals": 9,
+            "description": null,
             "id": "native",
             "symbol": "SOL",
             "trust": "fact"
@@ -19,84 +79,534 @@
           "address": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR",
           "is_self": false,
           "label": null,
-          "label_trust": "fact"
+          "label_trust": "fact",
+          "stand_in": null
         },
         "to": {
           "address": "91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD",
           "is_self": false,
           "label": null,
-          "label_trust": "fact"
+          "label_trust": "fact",
+          "stand_in": null
         }
       }
     },
     {
+      "message": {
+        "id": "effect-transfer",
+        "parts": [
+          {
+            "text": "Transfer "
+          },
+          {
+            "text": "≤ 151360479993 raw units of an unverified token (before any transfer fee) (lookup table 6vgy…uwpB[3])",
+            "value": {
+              "type": "amount",
+              "value": {
+                "asset": {
+                  "decimals": null,
+                  "description": {
+                    "id": "accounts-lookup-table-slot",
+                    "parts": [
+                      {
+                        "text": "lookup table "
+                      },
+                      {
+                        "short": {
+                          "address": "6vgyKgTfmNrAfFK5in8Je8pt8Fy2csyKWAafv6dKuwpB",
+                          "is_self": false,
+                          "label": null,
+                          "label_trust": "fact",
+                          "stand_in": null
+                        },
+                        "text": "6vgy…uwpB"
+                      },
+                      {
+                        "text": "["
+                      },
+                      {
+                        "text": "3",
+                        "value": {
+                          "type": "integer",
+                          "value": "3"
+                        }
+                      },
+                      {
+                        "text": "]"
+                      }
+                    ],
+                    "text": "lookup table 6vgy…uwpB[3]"
+                  },
+                  "id": null,
+                  "symbol": null,
+                  "trust": "fact"
+                },
+                "bound": "at_most",
+                "note": {
+                  "id": "descriptor-before-fee",
+                  "parts": [
+                    {
+                      "text": "before any transfer fee"
+                    }
+                  ],
+                  "text": "before any transfer fee"
+                },
+                "units": "151360479993"
+              }
+            }
+          },
+          {
+            "text": " from "
+          },
+          {
+            "text": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR",
+            "value": {
+              "type": "address",
+              "value": {
+                "address": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR",
+                "is_self": false,
+                "label": null,
+                "label_trust": "fact",
+                "stand_in": null
+              }
+            }
+          },
+          {
+            "text": " to "
+          },
+          {
+            "text": "OKX DEX Router (proV…CX3u) (verified)",
+            "value": {
+              "type": "address",
+              "value": {
+                "address": "proVF4pMXVaYqmy4NjniPh4pqKNfMmsihgd4wdkCX3u",
+                "is_self": false,
+                "label": {
+                  "id": "accounts-name",
+                  "parts": [
+                    {
+                      "text": "OKX DEX Router",
+                      "value": {
+                        "type": "text",
+                        "value": "OKX DEX Router"
+                      }
+                    }
+                  ],
+                  "text": "OKX DEX Router"
+                },
+                "label_trust": "verified",
+                "stand_in": null
+              }
+            }
+          }
+        ],
+        "text": "Transfer ≤ 151360479993 raw units of an unverified token (before any transfer fee) (lookup table 6vgy…uwpB[3]) from CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR to OKX DEX Router (proV…CX3u) (verified)"
+      },
       "type": "transfer",
       "value": {
         "amount": {
           "asset": {
             "decimals": null,
-            "id": "lookup table 6vgy…uwpB[3]",
+            "description": {
+              "id": "accounts-lookup-table-slot",
+              "parts": [
+                {
+                  "text": "lookup table "
+                },
+                {
+                  "short": {
+                    "address": "6vgyKgTfmNrAfFK5in8Je8pt8Fy2csyKWAafv6dKuwpB",
+                    "is_self": false,
+                    "label": null,
+                    "label_trust": "fact",
+                    "stand_in": null
+                  },
+                  "text": "6vgy…uwpB"
+                },
+                {
+                  "text": "["
+                },
+                {
+                  "text": "3",
+                  "value": {
+                    "type": "integer",
+                    "value": "3"
+                  }
+                },
+                {
+                  "text": "]"
+                }
+              ],
+              "text": "lookup table 6vgy…uwpB[3]"
+            },
+            "id": null,
             "symbol": null,
             "trust": "fact"
           },
           "bound": "at_most",
-          "note": "before any transfer fee",
+          "note": {
+            "id": "descriptor-before-fee",
+            "parts": [
+              {
+                "text": "before any transfer fee"
+              }
+            ],
+            "text": "before any transfer fee"
+          },
           "units": "151360479993"
         },
         "from": {
           "address": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR",
           "is_self": false,
           "label": null,
-          "label_trust": "fact"
+          "label_trust": "fact",
+          "stand_in": null
         },
         "to": {
           "address": "proVF4pMXVaYqmy4NjniPh4pqKNfMmsihgd4wdkCX3u",
           "is_self": false,
-          "label": "OKX DEX Router",
-          "label_trust": "verified"
+          "label": {
+            "id": "accounts-name",
+            "parts": [
+              {
+                "text": "OKX DEX Router",
+                "value": {
+                  "type": "text",
+                  "value": "OKX DEX Router"
+                }
+              }
+            ],
+            "text": "OKX DEX Router"
+          },
+          "label_trust": "verified",
+          "stand_in": null
         }
       }
     },
     {
+      "message": {
+        "id": "effect-transfer",
+        "parts": [
+          {
+            "text": "Transfer "
+          },
+          {
+            "text": "unknown amount of an unverified token (at least 80334153 raw units before a transfer fee the signer cannot know) (lookup table GP57…1gPy[60])",
+            "value": {
+              "type": "amount",
+              "value": {
+                "asset": {
+                  "decimals": null,
+                  "description": {
+                    "id": "accounts-lookup-table-slot",
+                    "parts": [
+                      {
+                        "text": "lookup table "
+                      },
+                      {
+                        "short": {
+                          "address": "GP57a1T8vJjeAnF2zfKT1bnZysNwVprLaw6Mjw2d1gPy",
+                          "is_self": false,
+                          "label": null,
+                          "label_trust": "fact",
+                          "stand_in": null
+                        },
+                        "text": "GP57…1gPy"
+                      },
+                      {
+                        "text": "["
+                      },
+                      {
+                        "text": "60",
+                        "value": {
+                          "type": "integer",
+                          "value": "60"
+                        }
+                      },
+                      {
+                        "text": "]"
+                      }
+                    ],
+                    "text": "lookup table GP57…1gPy[60]"
+                  },
+                  "id": null,
+                  "symbol": null,
+                  "trust": "fact"
+                },
+                "bound": "unknown",
+                "note": {
+                  "id": "descriptor-floor-before-fee-unnamed",
+                  "parts": [
+                    {
+                      "text": "at least "
+                    },
+                    {
+                      "text": "80334153 raw units",
+                      "value": {
+                        "type": "text",
+                        "value": "80334153 raw units"
+                      }
+                    },
+                    {
+                      "text": " before a transfer fee the signer cannot know"
+                    }
+                  ],
+                  "text": "at least 80334153 raw units before a transfer fee the signer cannot know"
+                },
+                "units": "0"
+              }
+            }
+          },
+          {
+            "text": " from "
+          },
+          {
+            "text": "OKX DEX Router (proV…CX3u) (verified)",
+            "value": {
+              "type": "address",
+              "value": {
+                "address": "proVF4pMXVaYqmy4NjniPh4pqKNfMmsihgd4wdkCX3u",
+                "is_self": false,
+                "label": {
+                  "id": "accounts-name",
+                  "parts": [
+                    {
+                      "text": "OKX DEX Router",
+                      "value": {
+                        "type": "text",
+                        "value": "OKX DEX Router"
+                      }
+                    }
+                  ],
+                  "text": "OKX DEX Router"
+                },
+                "label_trust": "verified",
+                "stand_in": null
+              }
+            }
+          },
+          {
+            "text": " to "
+          },
+          {
+            "text": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR",
+            "value": {
+              "type": "address",
+              "value": {
+                "address": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR",
+                "is_self": false,
+                "label": null,
+                "label_trust": "fact",
+                "stand_in": null
+              }
+            }
+          }
+        ],
+        "text": "Transfer unknown amount of an unverified token (at least 80334153 raw units before a transfer fee the signer cannot know) (lookup table GP57…1gPy[60]) from OKX DEX Router (proV…CX3u) (verified) to CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR"
+      },
       "type": "transfer",
       "value": {
         "amount": {
           "asset": {
             "decimals": null,
-            "id": "lookup table GP57…1gPy[60]",
+            "description": {
+              "id": "accounts-lookup-table-slot",
+              "parts": [
+                {
+                  "text": "lookup table "
+                },
+                {
+                  "short": {
+                    "address": "GP57a1T8vJjeAnF2zfKT1bnZysNwVprLaw6Mjw2d1gPy",
+                    "is_self": false,
+                    "label": null,
+                    "label_trust": "fact",
+                    "stand_in": null
+                  },
+                  "text": "GP57…1gPy"
+                },
+                {
+                  "text": "["
+                },
+                {
+                  "text": "60",
+                  "value": {
+                    "type": "integer",
+                    "value": "60"
+                  }
+                },
+                {
+                  "text": "]"
+                }
+              ],
+              "text": "lookup table GP57…1gPy[60]"
+            },
+            "id": null,
             "symbol": null,
             "trust": "fact"
           },
           "bound": "unknown",
-          "note": "at least 80334153 raw units before a transfer fee the signer cannot know",
+          "note": {
+            "id": "descriptor-floor-before-fee-unnamed",
+            "parts": [
+              {
+                "text": "at least "
+              },
+              {
+                "text": "80334153 raw units",
+                "value": {
+                  "type": "text",
+                  "value": "80334153 raw units"
+                }
+              },
+              {
+                "text": " before a transfer fee the signer cannot know"
+              }
+            ],
+            "text": "at least 80334153 raw units before a transfer fee the signer cannot know"
+          },
           "units": "0"
         },
         "from": {
           "address": "proVF4pMXVaYqmy4NjniPh4pqKNfMmsihgd4wdkCX3u",
           "is_self": false,
-          "label": "OKX DEX Router",
-          "label_trust": "verified"
+          "label": {
+            "id": "accounts-name",
+            "parts": [
+              {
+                "text": "OKX DEX Router",
+                "value": {
+                  "type": "text",
+                  "value": "OKX DEX Router"
+                }
+              }
+            ],
+            "text": "OKX DEX Router"
+          },
+          "label_trust": "verified",
+          "stand_in": null
         },
         "to": {
           "address": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR",
           "is_self": false,
           "label": null,
-          "label_trust": "fact"
+          "label_trust": "fact",
+          "stand_in": null
         }
       }
     },
     {
+      "message": {
+        "id": "effect-create-deposit",
+        "parts": [
+          {
+            "text": "Create "
+          },
+          {
+            "text": "91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD",
+            "value": {
+              "type": "address",
+              "value": {
+                "address": "91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD",
+                "is_self": false,
+                "label": null,
+                "label_trust": "fact",
+                "stand_in": null
+              }
+            }
+          },
+          {
+            "text": " owned by "
+          },
+          {
+            "text": "not read (lookup table GP57…1gPy[65])",
+            "value": {
+              "type": "address",
+              "value": {
+                "address": null,
+                "is_self": false,
+                "label": {
+                  "id": "accounts-not-read",
+                  "parts": [
+                    {
+                      "text": "not read"
+                    }
+                  ],
+                  "text": "not read"
+                },
+                "label_trust": "fact",
+                "stand_in": {
+                  "id": "accounts-lookup-table-slot",
+                  "parts": [
+                    {
+                      "text": "lookup table "
+                    },
+                    {
+                      "short": {
+                        "address": "GP57a1T8vJjeAnF2zfKT1bnZysNwVprLaw6Mjw2d1gPy",
+                        "is_self": false,
+                        "label": null,
+                        "label_trust": "fact",
+                        "stand_in": null
+                      },
+                      "text": "GP57…1gPy"
+                    },
+                    {
+                      "text": "["
+                    },
+                    {
+                      "text": "65",
+                      "value": {
+                        "type": "integer",
+                        "value": "65"
+                      }
+                    },
+                    {
+                      "text": "]"
+                    }
+                  ],
+                  "text": "lookup table GP57…1gPy[65]"
+                }
+              }
+            }
+          },
+          {
+            "text": ", depositing "
+          },
+          {
+            "text": "0.00148844 SOL",
+            "value": {
+              "type": "amount",
+              "value": {
+                "asset": {
+                  "decimals": 9,
+                  "description": null,
+                  "id": "native",
+                  "symbol": "SOL",
+                  "trust": "fact"
+                },
+                "bound": "exact",
+                "note": null,
+                "units": "1488440"
+              }
+            }
+          }
+        ],
+        "text": "Create 91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD owned by not read (lookup table GP57…1gPy[65]), depositing 0.00148844 SOL"
+      },
       "type": "create",
       "value": {
         "account": {
           "address": "91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD",
           "is_self": false,
           "label": null,
-          "label_trust": "fact"
+          "label_trust": "fact",
+          "stand_in": null
         },
         "deposit": {
           "asset": {
             "decimals": 9,
+            "description": null,
             "id": "native",
             "symbol": "SOL",
             "trust": "fact"
@@ -107,19 +617,100 @@
         },
         "if_missing": false,
         "owner": {
-          "address": "lookup table GP57…1gPy[65]",
+          "address": null,
           "is_self": false,
-          "label": "not read",
-          "label_trust": "fact"
+          "label": {
+            "id": "accounts-not-read",
+            "parts": [
+              {
+                "text": "not read"
+              }
+            ],
+            "text": "not read"
+          },
+          "label_trust": "fact",
+          "stand_in": {
+            "id": "accounts-lookup-table-slot",
+            "parts": [
+              {
+                "text": "lookup table "
+              },
+              {
+                "short": {
+                  "address": "GP57a1T8vJjeAnF2zfKT1bnZysNwVprLaw6Mjw2d1gPy",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "fact",
+                  "stand_in": null
+                },
+                "text": "GP57…1gPy"
+              },
+              {
+                "text": "["
+              },
+              {
+                "text": "65",
+                "value": {
+                  "type": "integer",
+                  "value": "65"
+                }
+              },
+              {
+                "text": "]"
+              }
+            ],
+            "text": "lookup table GP57…1gPy[65]"
+          }
         }
       }
     },
     {
+      "message": {
+        "id": "effect-fee",
+        "parts": [
+          {
+            "text": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR",
+            "value": {
+              "type": "address",
+              "value": {
+                "address": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR",
+                "is_self": false,
+                "label": null,
+                "label_trust": "fact",
+                "stand_in": null
+              }
+            }
+          },
+          {
+            "text": " pays a fee of "
+          },
+          {
+            "text": "0.000007098 SOL",
+            "value": {
+              "type": "amount",
+              "value": {
+                "asset": {
+                  "decimals": 9,
+                  "description": null,
+                  "id": "native",
+                  "symbol": "SOL",
+                  "trust": "fact"
+                },
+                "bound": "exact",
+                "note": null,
+                "units": "7098"
+              }
+            }
+          }
+        ],
+        "text": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR pays a fee of 0.000007098 SOL"
+      },
       "type": "fee",
       "value": {
         "amount": {
           "asset": {
             "decimals": 9,
+            "description": null,
             "id": "native",
             "symbol": "SOL",
             "trust": "fact"
@@ -132,11 +723,21 @@
           "address": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR",
           "is_self": false,
           "label": null,
-          "label_trust": "fact"
+          "label_trust": "fact",
+          "stand_in": null
         }
       }
     },
     {
+      "message": {
+        "id": "effect-recent-blockhash",
+        "parts": [
+          {
+            "text": "Valid for about a minute (recent blockhash)"
+          }
+        ],
+        "text": "Valid for about a minute (recent blockhash)"
+      },
       "type": "lifetime",
       "value": {
         "type": "recent_blockhash"
@@ -147,19 +748,50 @@
     {
       "code": "SWAP_AUTHORITY_NOT_YOU",
       "instruction": 5,
-      "message": "The swap spends from a token account you do not control",
+      "message": {
+        "id": null,
+        "parts": [
+          {
+            "text": "The swap spends from a token account you do not control"
+          }
+        ],
+        "text": "The swap spends from a token account you do not control"
+      },
       "severity": "high"
     },
     {
       "code": "DESTINATION_NOT_VERIFIED",
       "instruction": 5,
-      "message": "The destination token account is not one of your accounts for a verified token; the signer cannot prove who owns it",
+      "message": {
+        "id": null,
+        "parts": [
+          {
+            "text": "The destination token account is not one of your accounts for a verified token; the signer cannot prove who owns it"
+          }
+        ],
+        "text": "The destination token account is not one of your accounts for a verified token; the signer cannot prove who owns it"
+      },
       "severity": "info"
     },
     {
       "code": "IGNORED_TRAILING_BYTES",
       "instruction": 1,
-      "message": "4 byte(s) after this compute budget value are ignored; the runtime reads only the value, as shown",
+      "message": {
+        "id": "compute-budget-trailing-bytes",
+        "parts": [
+          {
+            "text": "4",
+            "value": {
+              "type": "integer",
+              "value": "4"
+            }
+          },
+          {
+            "text": " byte(s) after this compute budget value are ignored; the runtime reads only the value, as shown"
+          }
+        ],
+        "text": "4 byte(s) after this compute budget value are ignored; the runtime reads only the value, as shown"
+      },
       "severity": "info"
     }
   ],
@@ -167,20 +799,29 @@
     "digest": "9f46f53cb1549cfb1d859dc7109c80f65b636658c9999b7f227a133aad7823a2",
     "format": "solana v0"
   },
-  "schema": "signlens-explanation/1",
+  "schema": "signlens-explanation/2",
   "sections": [
     {
       "collapsed": false,
       "fields": [
         {
           "help": null,
-          "label": "Amount",
+          "label": {
+            "id": "label-amount",
+            "parts": [
+              {
+                "text": "Amount"
+              }
+            ],
+            "text": "Amount"
+          },
           "trust": "fact",
           "value": {
             "type": "amount",
             "value": {
               "asset": {
                 "decimals": 9,
+                "description": null,
                 "id": "native",
                 "symbol": "SOL",
                 "trust": "fact"
@@ -193,7 +834,15 @@
         },
         {
           "help": null,
-          "label": "From",
+          "label": {
+            "id": "label-from",
+            "parts": [
+              {
+                "text": "From"
+              }
+            ],
+            "text": "From"
+          },
           "trust": "fact",
           "value": {
             "type": "address",
@@ -201,13 +850,22 @@
               "address": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR",
               "is_self": false,
               "label": null,
-              "label_trust": "fact"
+              "label_trust": "fact",
+              "stand_in": null
             }
           }
         },
         {
           "help": null,
-          "label": "To",
+          "label": {
+            "id": "label-to",
+            "parts": [
+              {
+                "text": "To"
+              }
+            ],
+            "text": "To"
+          },
           "trust": "fact",
           "value": {
             "type": "address",
@@ -215,7 +873,8 @@
               "address": "91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD",
               "is_self": false,
               "label": null,
-              "label_trust": "fact"
+              "label_trust": "fact",
+              "stand_in": null
             }
           }
         }
@@ -226,22 +885,93 @@
           "index": 3
         }
       },
-      "subtitle": "System program (verified)",
-      "title": "Transfer"
+      "subtitle": {
+        "id": "decode-program-verified",
+        "parts": [
+          {
+            "text": "System program",
+            "value": {
+              "type": "text",
+              "value": "System program"
+            }
+          },
+          {
+            "text": " (verified)"
+          }
+        ],
+        "text": "System program (verified)"
+      },
+      "title": {
+        "id": "system-transfer-title",
+        "parts": [
+          {
+            "text": "Transfer"
+          }
+        ],
+        "text": "Transfer"
+      }
     },
     {
       "collapsed": false,
       "fields": [
         {
-          "help": "What is swapped, after the commission is taken.",
-          "label": "Send",
+          "help": {
+            "id": null,
+            "parts": [
+              {
+                "text": "What is swapped, after the commission is taken."
+              }
+            ],
+            "text": "What is swapped, after the commission is taken."
+          },
+          "label": {
+            "id": null,
+            "parts": [
+              {
+                "text": "Send"
+              }
+            ],
+            "text": "Send"
+          },
           "trust": "fact",
           "value": {
             "type": "amount",
             "value": {
               "asset": {
                 "decimals": null,
-                "id": "lookup table 6vgy…uwpB[3]",
+                "description": {
+                  "id": "accounts-lookup-table-slot",
+                  "parts": [
+                    {
+                      "text": "lookup table "
+                    },
+                    {
+                      "short": {
+                        "address": "6vgyKgTfmNrAfFK5in8Je8pt8Fy2csyKWAafv6dKuwpB",
+                        "is_self": false,
+                        "label": null,
+                        "label_trust": "fact",
+                        "stand_in": null
+                      },
+                      "text": "6vgy…uwpB"
+                    },
+                    {
+                      "text": "["
+                    },
+                    {
+                      "text": "3",
+                      "value": {
+                        "type": "integer",
+                        "value": "3"
+                      }
+                    },
+                    {
+                      "text": "]"
+                    }
+                  ],
+                  "text": "lookup table 6vgy…uwpB[3]"
+                },
+                "id": null,
                 "symbol": null,
                 "trust": "fact"
               },
@@ -252,34 +982,138 @@
           }
         },
         {
-          "help": "What comes back to you. Shown as at least when the program only guarantees a floor and fails below it.",
-          "label": "Receive",
+          "help": {
+            "id": null,
+            "parts": [
+              {
+                "text": "What comes back to you. Shown as at least when the program only guarantees a floor and fails below it."
+              }
+            ],
+            "text": "What comes back to you. Shown as at least when the program only guarantees a floor and fails below it."
+          },
+          "label": {
+            "id": null,
+            "parts": [
+              {
+                "text": "Receive"
+              }
+            ],
+            "text": "Receive"
+          },
           "trust": "fact",
           "value": {
             "type": "amount",
             "value": {
               "asset": {
                 "decimals": null,
-                "id": "lookup table GP57…1gPy[60]",
+                "description": {
+                  "id": "accounts-lookup-table-slot",
+                  "parts": [
+                    {
+                      "text": "lookup table "
+                    },
+                    {
+                      "short": {
+                        "address": "GP57a1T8vJjeAnF2zfKT1bnZysNwVprLaw6Mjw2d1gPy",
+                        "is_self": false,
+                        "label": null,
+                        "label_trust": "fact",
+                        "stand_in": null
+                      },
+                      "text": "GP57…1gPy"
+                    },
+                    {
+                      "text": "["
+                    },
+                    {
+                      "text": "60",
+                      "value": {
+                        "type": "integer",
+                        "value": "60"
+                      }
+                    },
+                    {
+                      "text": "]"
+                    }
+                  ],
+                  "text": "lookup table GP57…1gPy[60]"
+                },
+                "id": null,
                 "symbol": null,
                 "trust": "fact"
               },
               "bound": "at_least",
-              "note": "before any transfer fee",
+              "note": {
+                "id": "descriptor-before-fee",
+                "parts": [
+                  {
+                    "text": "before any transfer fee"
+                  }
+                ],
+                "text": "before any transfer fee"
+              },
               "units": "80334153"
             }
           }
         },
         {
-          "help": "What the site expected when it built the transaction. The Receive floor is this less the slippage allowance.",
-          "label": "Quoted",
+          "help": {
+            "id": null,
+            "parts": [
+              {
+                "text": "What the site expected when it built the transaction. The Receive floor is this less the slippage allowance."
+              }
+            ],
+            "text": "What the site expected when it built the transaction. The Receive floor is this less the slippage allowance."
+          },
+          "label": {
+            "id": null,
+            "parts": [
+              {
+                "text": "Quoted"
+              }
+            ],
+            "text": "Quoted"
+          },
           "trust": "fact",
           "value": {
             "type": "amount",
             "value": {
               "asset": {
                 "decimals": null,
-                "id": "lookup table GP57…1gPy[60]",
+                "description": {
+                  "id": "accounts-lookup-table-slot",
+                  "parts": [
+                    {
+                      "text": "lookup table "
+                    },
+                    {
+                      "short": {
+                        "address": "GP57a1T8vJjeAnF2zfKT1bnZysNwVprLaw6Mjw2d1gPy",
+                        "is_self": false,
+                        "label": null,
+                        "label_trust": "fact",
+                        "stand_in": null
+                      },
+                      "text": "GP57…1gPy"
+                    },
+                    {
+                      "text": "["
+                    },
+                    {
+                      "text": "60",
+                      "value": {
+                        "type": "integer",
+                        "value": "60"
+                      }
+                    },
+                    {
+                      "text": "]"
+                    }
+                  ],
+                  "text": "lookup table GP57…1gPy[60]"
+                },
+                "id": null,
                 "symbol": null,
                 "trust": "fact"
               },
@@ -290,8 +1124,24 @@
           }
         },
         {
-          "help": "How far the executed price may move against you before the swap fails, as a percentage of the quote.",
-          "label": "Max slippage",
+          "help": {
+            "id": null,
+            "parts": [
+              {
+                "text": "How far the executed price may move against you before the swap fails, as a percentage of the quote."
+              }
+            ],
+            "text": "How far the executed price may move against you before the swap fails, as a percentage of the quote."
+          },
+          "label": {
+            "id": null,
+            "parts": [
+              {
+                "text": "Max slippage"
+              }
+            ],
+            "text": "Max slippage"
+          },
           "trust": "fact",
           "value": {
             "type": "basis_points",
@@ -299,8 +1149,24 @@
           }
         },
         {
-          "help": "The cut the site takes, as a percentage of the swap.",
-          "label": "Commission",
+          "help": {
+            "id": null,
+            "parts": [
+              {
+                "text": "The cut the site takes, as a percentage of the swap."
+              }
+            ],
+            "text": "The cut the site takes, as a percentage of the swap."
+          },
+          "label": {
+            "id": null,
+            "parts": [
+              {
+                "text": "Commission"
+              }
+            ],
+            "text": "Commission"
+          },
           "trust": "fact",
           "value": {
             "type": "basis_points",
@@ -308,8 +1174,24 @@
           }
         },
         {
-          "help": "Where the commission goes: an account of the site that built this transaction.",
-          "label": "Commission account",
+          "help": {
+            "id": null,
+            "parts": [
+              {
+                "text": "Where the commission goes: an account of the site that built this transaction."
+              }
+            ],
+            "text": "Where the commission goes: an account of the site that built this transaction."
+          },
+          "label": {
+            "id": null,
+            "parts": [
+              {
+                "text": "Commission account"
+              }
+            ],
+            "text": "Commission account"
+          },
           "trust": "fact",
           "value": {
             "type": "address",
@@ -317,13 +1199,30 @@
               "address": "BEochrdGhm5pcKVF73DURYrGo1DLzxq6bBcUBphQR64d",
               "is_self": false,
               "label": null,
-              "label_trust": "fact"
+              "label_trust": "fact",
+              "stand_in": null
             }
           }
         },
         {
-          "help": "A share of any surplus over the quote the router keeps, in its own units.",
-          "label": "Trim rate (program units)",
+          "help": {
+            "id": null,
+            "parts": [
+              {
+                "text": "A share of any surplus over the quote the router keeps, in its own units."
+              }
+            ],
+            "text": "A share of any surplus over the quote the router keeps, in its own units."
+          },
+          "label": {
+            "id": null,
+            "parts": [
+              {
+                "text": "Trim rate (program units)"
+              }
+            ],
+            "text": "Trim rate (program units)"
+          },
           "trust": "fact",
           "value": {
             "type": "integer",
@@ -331,8 +1230,24 @@
           }
         },
         {
-          "help": "A further fee rate the router applies, in its own units.",
-          "label": "Charge rate (program units)",
+          "help": {
+            "id": null,
+            "parts": [
+              {
+                "text": "A further fee rate the router applies, in its own units."
+              }
+            ],
+            "text": "A further fee rate the router applies, in its own units."
+          },
+          "label": {
+            "id": null,
+            "parts": [
+              {
+                "text": "Charge rate (program units)"
+              }
+            ],
+            "text": "Charge rate (program units)"
+          },
           "trust": "fact",
           "value": {
             "type": "integer",
@@ -340,8 +1255,24 @@
           }
         },
         {
-          "help": "When set, the router closes the temporary token account it used and returns its rent.",
-          "label": "Closes the temporary token account afterwards (flag)",
+          "help": {
+            "id": null,
+            "parts": [
+              {
+                "text": "When set, the router closes the temporary token account it used and returns its rent."
+              }
+            ],
+            "text": "When set, the router closes the temporary token account it used and returns its rent."
+          },
+          "label": {
+            "id": null,
+            "parts": [
+              {
+                "text": "Closes the temporary token account afterwards (flag)"
+              }
+            ],
+            "text": "Closes the temporary token account afterwards (flag)"
+          },
           "trust": "fact",
           "value": {
             "type": "integer",
@@ -349,8 +1280,24 @@
           }
         },
         {
-          "help": "The path the swap takes: which markets, and what share of the amount goes through each.",
-          "label": "Route",
+          "help": {
+            "id": null,
+            "parts": [
+              {
+                "text": "The path the swap takes: which markets, and what share of the amount goes through each."
+              }
+            ],
+            "text": "The path the swap takes: which markets, and what share of the amount goes through each."
+          },
+          "label": {
+            "id": null,
+            "parts": [
+              {
+                "text": "Route"
+              }
+            ],
+            "text": "Route"
+          },
           "trust": "fact",
           "value": {
             "type": "list",
@@ -375,8 +1322,24 @@
           }
         },
         {
-          "help": "The token account the tokens leave. It should be one of yours.",
-          "label": "From account",
+          "help": {
+            "id": null,
+            "parts": [
+              {
+                "text": "The token account the tokens leave. It should be one of yours."
+              }
+            ],
+            "text": "The token account the tokens leave. It should be one of yours."
+          },
+          "label": {
+            "id": null,
+            "parts": [
+              {
+                "text": "From account"
+              }
+            ],
+            "text": "From account"
+          },
           "trust": "fact",
           "value": {
             "type": "address",
@@ -384,13 +1347,30 @@
               "address": "H51r5KPyahCGiGCQ9jZr5r5bukcXFaRDFtPFZBUyiHfo",
               "is_self": false,
               "label": null,
-              "label_trust": "fact"
+              "label_trust": "fact",
+              "stand_in": null
             }
           }
         },
         {
-          "help": "The token account that receives the tokens. Check it is yours, unless you mean to pay someone else.",
-          "label": "To account",
+          "help": {
+            "id": null,
+            "parts": [
+              {
+                "text": "The token account that receives the tokens. Check it is yours, unless you mean to pay someone else."
+              }
+            ],
+            "text": "The token account that receives the tokens. Check it is yours, unless you mean to pay someone else."
+          },
+          "label": {
+            "id": null,
+            "parts": [
+              {
+                "text": "To account"
+              }
+            ],
+            "text": "To account"
+          },
           "trust": "fact",
           "value": {
             "type": "address",
@@ -398,17 +1378,41 @@
               "address": "91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD",
               "is_self": false,
               "label": null,
-              "label_trust": "fact"
+              "label_trust": "fact",
+              "stand_in": null
             }
           }
         },
         {
           "help": null,
-          "label": "Additional accounts",
+          "label": {
+            "id": "label-additional-accounts",
+            "parts": [
+              {
+                "text": "Additional accounts"
+              }
+            ],
+            "text": "Additional accounts"
+          },
           "trust": "fact",
           "value": {
-            "type": "text",
-            "value": "80, not named by this descriptor"
+            "type": "words",
+            "value": {
+              "id": "descriptor-additional-accounts",
+              "parts": [
+                {
+                  "text": "80",
+                  "value": {
+                    "type": "integer",
+                    "value": "80"
+                  }
+                },
+                {
+                  "text": ", not named by this descriptor"
+                }
+              ],
+              "text": "80, not named by this descriptor"
+            }
           }
         }
       ],
@@ -418,15 +1422,69 @@
           "index": 5
         }
       },
-      "subtitle": "OKX DEX Router (descriptor reviewed 2026-10-06, upgradeable by CjoV…N1Mj)",
-      "title": "Swap"
+      "subtitle": {
+        "id": "descriptor-subtitle",
+        "parts": [
+          {
+            "text": "OKX DEX Router",
+            "value": {
+              "type": "text",
+              "value": "OKX DEX Router"
+            }
+          },
+          {
+            "text": " (descriptor reviewed "
+          },
+          {
+            "text": "2026-10-27",
+            "value": {
+              "type": "text",
+              "value": "2026-10-27"
+            }
+          },
+          {
+            "text": ", upgradeable by "
+          },
+          {
+            "short": {
+              "address": "CjoV5B96reuCfPh2rRK11G1QptG97jZdyZArTn3EN1Mj",
+              "is_self": false,
+              "label": null,
+              "label_trust": "fact",
+              "stand_in": null
+            },
+            "text": "CjoV…N1Mj"
+          },
+          {
+            "text": ")"
+          }
+        ],
+        "text": "OKX DEX Router (descriptor reviewed 2026-10-27, upgradeable by CjoV…N1Mj)"
+      },
+      "title": {
+        "id": null,
+        "parts": [
+          {
+            "text": "Swap"
+          }
+        ],
+        "text": "Swap"
+      }
     },
     {
       "collapsed": true,
       "fields": [
         {
           "help": null,
-          "label": "Compute unit limit",
+          "label": {
+            "id": "label-compute-unit-limit",
+            "parts": [
+              {
+                "text": "Compute unit limit"
+              }
+            ],
+            "text": "Compute unit limit"
+          },
           "trust": "fact",
           "value": {
             "type": "integer",
@@ -435,25 +1493,87 @@
         },
         {
           "help": null,
-          "label": "Heap size",
+          "label": {
+            "id": "label-heap-size",
+            "parts": [
+              {
+                "text": "Heap size"
+              }
+            ],
+            "text": "Heap size"
+          },
           "trust": "fact",
           "value": {
-            "type": "text",
-            "value": "65536 bytes"
+            "type": "words",
+            "value": {
+              "id": "decode-bytes",
+              "parts": [
+                {
+                  "text": "65536",
+                  "value": {
+                    "type": "integer",
+                    "value": "65536"
+                  }
+                },
+                {
+                  "text": " bytes"
+                }
+              ],
+              "text": "65536 bytes"
+            }
           }
         },
         {
           "help": null,
-          "label": "Compute unit price",
+          "label": {
+            "id": "label-compute-unit-price",
+            "parts": [
+              {
+                "text": "Compute unit price"
+              }
+            ],
+            "text": "Compute unit price"
+          },
           "trust": "fact",
           "value": {
-            "type": "text",
-            "value": "1676 micro-lamports per unit"
+            "type": "words",
+            "value": {
+              "id": "compute-budget-price",
+              "parts": [
+                {
+                  "text": "1676",
+                  "value": {
+                    "type": "integer",
+                    "value": "1676"
+                  }
+                },
+                {
+                  "text": " micro-lamports per unit"
+                }
+              ],
+              "text": "1676 micro-lamports per unit"
+            }
           }
         },
         {
-          "help": "An account that holds one token for one wallet.",
-          "label": "Create token account: Token account",
+          "help": {
+            "id": null,
+            "parts": [
+              {
+                "text": "An account that holds one token for one wallet."
+              }
+            ],
+            "text": "An account that holds one token for one wallet."
+          },
+          "label": {
+            "id": "explain-housekeeping-label",
+            "parts": [
+              {
+                "text": "Create token account: Token account"
+              }
+            ],
+            "text": "Create token account: Token account"
+          },
           "trust": "fact",
           "value": {
             "type": "address",
@@ -461,13 +1581,30 @@
               "address": "91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD",
               "is_self": false,
               "label": null,
-              "label_trust": "fact"
+              "label_trust": "fact",
+              "stand_in": null
             }
           }
         },
         {
-          "help": "The wallet that controls the account.",
-          "label": "Create token account: Owner",
+          "help": {
+            "id": null,
+            "parts": [
+              {
+                "text": "The wallet that controls the account."
+              }
+            ],
+            "text": "The wallet that controls the account."
+          },
+          "label": {
+            "id": "explain-housekeeping-label",
+            "parts": [
+              {
+                "text": "Create token account: Owner"
+              }
+            ],
+            "text": "Create token account: Owner"
+          },
           "trust": "fact",
           "value": {
             "type": "address",
@@ -475,27 +1612,100 @@
               "address": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR",
               "is_self": false,
               "label": null,
-              "label_trust": "fact"
+              "label_trust": "fact",
+              "stand_in": null
             }
           }
         },
         {
-          "help": "The address that identifies the token itself, as opposed to an account holding some of it.",
-          "label": "Create token account: Mint",
+          "help": {
+            "id": null,
+            "parts": [
+              {
+                "text": "The address that identifies the token itself, as opposed to an account holding some of it."
+              }
+            ],
+            "text": "The address that identifies the token itself, as opposed to an account holding some of it."
+          },
+          "label": {
+            "id": "explain-housekeeping-label",
+            "parts": [
+              {
+                "text": "Create token account: Mint"
+              }
+            ],
+            "text": "Create token account: Mint"
+          },
           "trust": "fact",
           "value": {
             "type": "address",
             "value": {
-              "address": "lookup table GP57…1gPy[60]",
+              "address": null,
               "is_self": false,
-              "label": "not read",
-              "label_trust": "fact"
+              "label": {
+                "id": "accounts-not-read",
+                "parts": [
+                  {
+                    "text": "not read"
+                  }
+                ],
+                "text": "not read"
+              },
+              "label_trust": "fact",
+              "stand_in": {
+                "id": "accounts-lookup-table-slot",
+                "parts": [
+                  {
+                    "text": "lookup table "
+                  },
+                  {
+                    "short": {
+                      "address": "GP57a1T8vJjeAnF2zfKT1bnZysNwVprLaw6Mjw2d1gPy",
+                      "is_self": false,
+                      "label": null,
+                      "label_trust": "fact",
+                      "stand_in": null
+                    },
+                    "text": "GP57…1gPy"
+                  },
+                  {
+                    "text": "["
+                  },
+                  {
+                    "text": "60",
+                    "value": {
+                      "type": "integer",
+                      "value": "60"
+                    }
+                  },
+                  {
+                    "text": "]"
+                  }
+                ],
+                "text": "lookup table GP57…1gPy[60]"
+              }
             }
           }
         },
         {
-          "help": "Who pays the small deposit that keeps a new account alive on chain. It comes back when the account is closed.",
-          "label": "Create token account: Rent paid by",
+          "help": {
+            "id": null,
+            "parts": [
+              {
+                "text": "Who pays the small deposit that keeps a new account alive on chain. It comes back when the account is closed."
+              }
+            ],
+            "text": "Who pays the small deposit that keeps a new account alive on chain. It comes back when the account is closed."
+          },
+          "label": {
+            "id": "explain-housekeeping-label",
+            "parts": [
+              {
+                "text": "Create token account: Rent paid by"
+              }
+            ],
+            "text": "Create token account: Rent paid by"
+          },
           "trust": "fact",
           "value": {
             "type": "address",
@@ -503,21 +1713,78 @@
               "address": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR",
               "is_self": false,
               "label": null,
-              "label_trust": "fact"
+              "label_trust": "fact",
+              "stand_in": null
             }
           }
         },
         {
-          "help": "The program that manages this token: SPL Token or Token-2022.",
-          "label": "Create token account: Token program",
+          "help": {
+            "id": null,
+            "parts": [
+              {
+                "text": "The program that manages this token: SPL Token or Token-2022."
+              }
+            ],
+            "text": "The program that manages this token: SPL Token or Token-2022."
+          },
+          "label": {
+            "id": "explain-housekeeping-label",
+            "parts": [
+              {
+                "text": "Create token account: Token program"
+              }
+            ],
+            "text": "Create token account: Token program"
+          },
           "trust": "fact",
           "value": {
             "type": "address",
             "value": {
-              "address": "lookup table GP57…1gPy[65]",
+              "address": null,
               "is_self": false,
-              "label": "not read",
-              "label_trust": "fact"
+              "label": {
+                "id": "accounts-not-read",
+                "parts": [
+                  {
+                    "text": "not read"
+                  }
+                ],
+                "text": "not read"
+              },
+              "label_trust": "fact",
+              "stand_in": {
+                "id": "accounts-lookup-table-slot",
+                "parts": [
+                  {
+                    "text": "lookup table "
+                  },
+                  {
+                    "short": {
+                      "address": "GP57a1T8vJjeAnF2zfKT1bnZysNwVprLaw6Mjw2d1gPy",
+                      "is_self": false,
+                      "label": null,
+                      "label_trust": "fact",
+                      "stand_in": null
+                    },
+                    "text": "GP57…1gPy"
+                  },
+                  {
+                    "text": "["
+                  },
+                  {
+                    "text": "65",
+                    "value": {
+                      "type": "integer",
+                      "value": "65"
+                    }
+                  },
+                  {
+                    "text": "]"
+                  }
+                ],
+                "text": "lookup table GP57…1gPy[65]"
+              }
             }
           }
         }
@@ -526,14 +1793,30 @@
         "type": "housekeeping"
       },
       "subtitle": null,
-      "title": "Also"
+      "title": {
+        "id": "explain-also",
+        "parts": [
+          {
+            "text": "Also"
+          }
+        ],
+        "text": "Also"
+      }
     },
     {
       "collapsed": false,
       "fields": [
         {
           "help": null,
-          "label": "Fee payer",
+          "label": {
+            "id": "label-fee-payer",
+            "parts": [
+              {
+                "text": "Fee payer"
+              }
+            ],
+            "text": "Fee payer"
+          },
           "trust": "fact",
           "value": {
             "type": "address",
@@ -541,7 +1824,8 @@
               "address": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR",
               "is_self": false,
               "label": null,
-              "label_trust": "fact"
+              "label_trust": "fact",
+              "stand_in": null
             }
           }
         }
@@ -550,20 +1834,37 @@
         "type": "signers"
       },
       "subtitle": null,
-      "title": "Signers"
+      "title": {
+        "id": "explain-signers",
+        "parts": [
+          {
+            "text": "Signers"
+          }
+        ],
+        "text": "Signers"
+      }
     },
     {
       "collapsed": false,
       "fields": [
         {
           "help": null,
-          "label": "Total",
+          "label": {
+            "id": "label-total",
+            "parts": [
+              {
+                "text": "Total"
+              }
+            ],
+            "text": "Total"
+          },
           "trust": "fact",
           "value": {
             "type": "amount",
             "value": {
               "asset": {
                 "decimals": 9,
+                "description": null,
                 "id": "native",
                 "symbol": "SOL",
                 "trust": "fact"
@@ -576,13 +1877,22 @@
         },
         {
           "help": null,
-          "label": "Base",
+          "label": {
+            "id": "label-base",
+            "parts": [
+              {
+                "text": "Base"
+              }
+            ],
+            "text": "Base"
+          },
           "trust": "fact",
           "value": {
             "type": "amount",
             "value": {
               "asset": {
                 "decimals": 9,
+                "description": null,
                 "id": "native",
                 "symbol": "SOL",
                 "trust": "fact"
@@ -595,13 +1905,22 @@
         },
         {
           "help": null,
-          "label": "Priority",
+          "label": {
+            "id": "label-priority",
+            "parts": [
+              {
+                "text": "Priority"
+              }
+            ],
+            "text": "Priority"
+          },
           "trust": "fact",
           "value": {
             "type": "amount",
             "value": {
               "asset": {
                 "decimals": 9,
+                "description": null,
                 "id": "native",
                 "symbol": "SOL",
                 "trust": "fact"
@@ -614,20 +1933,87 @@
         },
         {
           "help": null,
-          "label": "Priority basis",
+          "label": {
+            "id": "label-priority-basis",
+            "parts": [
+              {
+                "text": "Priority basis"
+              }
+            ],
+            "text": "Priority basis"
+          },
           "trust": "fact",
           "value": {
-            "type": "text",
-            "value": "1676 micro-lamports per unit × 1251656 units requested"
+            "type": "words",
+            "value": {
+              "id": "explain-priority-basis",
+              "parts": [
+                {
+                  "text": "1676",
+                  "value": {
+                    "type": "integer",
+                    "value": "1676"
+                  }
+                },
+                {
+                  "text": " micro-lamports per unit × "
+                },
+                {
+                  "text": "1251656",
+                  "value": {
+                    "type": "integer",
+                    "value": "1251656"
+                  }
+                },
+                {
+                  "text": " units requested"
+                }
+              ],
+              "text": "1676 micro-lamports per unit × 1251656 units requested"
+            }
           }
         },
         {
           "help": null,
-          "label": "Rent deposits",
+          "label": {
+            "id": "label-rent-deposits",
+            "parts": [
+              {
+                "text": "Rent deposits"
+              }
+            ],
+            "text": "Rent deposits"
+          },
           "trust": "fact",
           "value": {
-            "type": "text",
-            "value": "0.00148844 SOL; returned when the accounts are closed"
+            "type": "words",
+            "value": {
+              "id": "explain-rent",
+              "parts": [
+                {
+                  "text": "0.00148844 SOL",
+                  "value": {
+                    "type": "amount",
+                    "value": {
+                      "asset": {
+                        "decimals": 9,
+                        "description": null,
+                        "id": "native",
+                        "symbol": "SOL",
+                        "trust": "fact"
+                      },
+                      "bound": "exact",
+                      "note": null,
+                      "units": "1488440"
+                    }
+                  }
+                },
+                {
+                  "text": "; returned when the accounts are closed"
+                }
+              ],
+              "text": "0.00148844 SOL; returned when the accounts are closed"
+            }
           }
         }
       ],
@@ -635,18 +2021,42 @@
         "type": "fees"
       },
       "subtitle": null,
-      "title": "Fee"
+      "title": {
+        "id": "explain-fee",
+        "parts": [
+          {
+            "text": "Fee"
+          }
+        ],
+        "text": "Fee"
+      }
     },
     {
       "collapsed": false,
       "fields": [
         {
           "help": null,
-          "label": "Expires",
+          "label": {
+            "id": "label-expires",
+            "parts": [
+              {
+                "text": "Expires"
+              }
+            ],
+            "text": "Expires"
+          },
           "trust": "fact",
           "value": {
-            "type": "text",
-            "value": "in about a minute (recent blockhash)"
+            "type": "words",
+            "value": {
+              "id": "explain-expires-soon",
+              "parts": [
+                {
+                  "text": "in about a minute (recent blockhash)"
+                }
+              ],
+              "text": "in about a minute (recent blockhash)"
+            }
           }
         }
       ],
@@ -654,10 +2064,80 @@
         "type": "lifetime"
       },
       "subtitle": null,
-      "title": "Validity"
+      "title": {
+        "id": "explain-validity",
+        "parts": [
+          {
+            "text": "Validity"
+          }
+        ],
+        "text": "Validity"
+      }
     }
   ],
-  "summary": "2 actions: Transfer 0.001855569 SOL from CVJ6…Q3bR to 91rj…BXHD; Swap 151360479993 raw units of an unverified token (lookup table 6vgy…uwpB[3]) for ≥ 80334153 raw units of an unverified token (before any transfer fee) (lookup table GP57…1gPy[60]) via OKX",
-  "text": "2 actions: Transfer 0.001855569 SOL from CVJ6…Q3bR to 91rj…BXHD; Swap 151360479993 raw units of an unverified token (lookup table 6vgy…uwpB[3]) for ≥ 80334153 raw units of an unverified token (before any transfer fee) (lookup table GP57…1gPy[60]) via OKX\nWARNING: review the findings before approving\n\nFindings:\n  [HIGH] The swap spends from a token account you do not control (instruction 5)\n  [INFO] The destination token account is not one of your accounts for a verified token; the signer cannot prove who owns it (instruction 5)\n  [INFO] 4 byte(s) after this compute budget value are ignored; the runtime reads only the value, as shown (instruction 1)\n\n== Transfer | System program (verified)\n  Amount: 0.001855569 SOL\n  From: CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR\n  To: 91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD\n\n== Swap | OKX DEX Router (descriptor reviewed 2026-10-06, upgradeable by CjoV…N1Mj)\n  Send: 151360479993 raw units of an unverified token (lookup table 6vgy…uwpB[3])\n  Receive: ≥ 80334153 raw units of an unverified token (before any transfer fee) (lookup table GP57…1gPy[60])\n  Quoted: 80737843 raw units of an unverified token (lookup table GP57…1gPy[60])\n  Max slippage: 0.50%\n  Commission: 0.81%\n  Commission account: BEochrdGhm5pcKVF73DURYrGo1DLzxq6bBcUBphQR64d\n  Trim rate (program units): 100\n  Charge rate (program units): 500\n  Closes the temporary token account afterwards (flag): 1\n  Route:\n    - RaydiumClmmSwapV2 (weight 2790, leg 1)\n    - MeteoraDlmmSwap2 (weight 310, leg 1)\n    - RaydiumClmmSwapV2 (weight 6900, leg 2)\n    - ByrealClmm3 (weight 10000, leg 18)\n  From account: H51r5KPyahCGiGCQ9jZr5r5bukcXFaRDFtPFZBUyiHfo\n  To account: 91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD\n  Additional accounts: 80, not named by this descriptor\n\n== Also [collapsed]\n  Compute unit limit: 1251656\n  Heap size: 65536 bytes\n  Compute unit price: 1676 micro-lamports per unit\n  Create token account: Token account: 91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD\n  Create token account: Owner: CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR\n  Create token account: Mint: not read (lookup table GP57…1gPy[60])\n  Create token account: Rent paid by: CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR\n  Create token account: Token program: not read (lookup table GP57…1gPy[65])\n\n== Signers\n  Fee payer: CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR\n\n== Fee\n  Total: 0.000007098 SOL\n  Base: 0.000005 SOL\n  Priority: 0.000002098 SOL\n  Priority basis: 1676 micro-lamports per unit × 1251656 units requested\n  Rent deposits: 0.00148844 SOL; returned when the accounts are closed\n\n== Validity\n  Expires: in about a minute (recent blockhash)\n\nEffects:\n  - transfer 0.001855569 SOL from CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR to 91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD\n  - transfer ≤ 151360479993 raw units of an unverified token (before any transfer fee) (lookup table 6vgy…uwpB[3]) from CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR to OKX DEX Router (proV…CX3u) (verified)\n  - transfer unknown amount of an unverified token (at least 80334153 raw units before a transfer fee the signer cannot know) (lookup table GP57…1gPy[60]) from OKX DEX Router (proV…CX3u) (verified) to CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR\n  - create 91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD owned by not read (lookup table GP57…1gPy[65]), depositing 0.00148844 SOL\n  - CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR pays a fee of 0.000007098 SOL\n  - valid for about a minute (recent blockhash)\n\nRaw: solana v0 (804 bytes)\n  digest: 9f46f53cb1549cfb1d859dc7109c80f65b636658c9999b7f227a133aad7823a2\n",
+  "summary": {
+    "id": "explain-actions",
+    "parts": [
+      {
+        "text": "2",
+        "value": {
+          "type": "integer",
+          "value": "2"
+        }
+      },
+      {
+        "text": " actions: Transfer "
+      },
+      {
+        "text": "0.001855569 SOL",
+        "value": {
+          "type": "amount",
+          "value": {
+            "asset": {
+              "decimals": 9,
+              "description": null,
+              "id": "native",
+              "symbol": "SOL",
+              "trust": "fact"
+            },
+            "bound": "exact",
+            "note": null,
+            "units": "1855569"
+          }
+        }
+      },
+      {
+        "text": " from "
+      },
+      {
+        "short": {
+          "address": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR",
+          "is_self": false,
+          "label": null,
+          "label_trust": "fact",
+          "stand_in": null
+        },
+        "text": "CVJ6…Q3bR"
+      },
+      {
+        "text": " to "
+      },
+      {
+        "short": {
+          "address": "91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD",
+          "is_self": false,
+          "label": null,
+          "label_trust": "fact",
+          "stand_in": null
+        },
+        "text": "91rj…BXHD"
+      },
+      {
+        "text": "; Swap 151360479993 raw units of an unverified token (lookup table 6vgy…uwpB[3]) for ≥ 80334153 raw units of an unverified token (before any transfer fee) (lookup table GP57…1gPy[60]) via OKX"
+      }
+    ],
+    "text": "2 actions: Transfer 0.001855569 SOL from CVJ6…Q3bR to 91rj…BXHD; Swap 151360479993 raw units of an unverified token (lookup table 6vgy…uwpB[3]) for ≥ 80334153 raw units of an unverified token (before any transfer fee) (lookup table GP57…1gPy[60]) via OKX"
+  },
+  "text": "2 actions: Transfer 0.001855569 SOL from CVJ6…Q3bR to 91rj…BXHD; Swap 151360479993 raw units of an unverified token (lookup table 6vgy…uwpB[3]) for ≥ 80334153 raw units of an unverified token (before any transfer fee) (lookup table GP57…1gPy[60]) via OKX\nWARNING: review the findings before approving\n\nFindings:\n  [HIGH] The swap spends from a token account you do not control (instruction 5)\n  [INFO] The destination token account is not one of your accounts for a verified token; the signer cannot prove who owns it (instruction 5)\n  [INFO] 4 byte(s) after this compute budget value are ignored; the runtime reads only the value, as shown (instruction 1)\n\n== Transfer | System program (verified)\n  Amount: 0.001855569 SOL\n  From: CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR\n  To: 91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD\n\n== Swap | OKX DEX Router (descriptor reviewed 2026-10-27, upgradeable by CjoV…N1Mj)\n  Send: 151360479993 raw units of an unverified token (lookup table 6vgy…uwpB[3])\n  Receive: ≥ 80334153 raw units of an unverified token (before any transfer fee) (lookup table GP57…1gPy[60])\n  Quoted: 80737843 raw units of an unverified token (lookup table GP57…1gPy[60])\n  Max slippage: 0.50%\n  Commission: 0.81%\n  Commission account: BEochrdGhm5pcKVF73DURYrGo1DLzxq6bBcUBphQR64d\n  Trim rate (program units): 100\n  Charge rate (program units): 500\n  Closes the temporary token account afterwards (flag): 1\n  Route:\n    - RaydiumClmmSwapV2 (weight 2790, leg 1)\n    - MeteoraDlmmSwap2 (weight 310, leg 1)\n    - RaydiumClmmSwapV2 (weight 6900, leg 2)\n    - ByrealClmm3 (weight 10000, leg 18)\n  From account: H51r5KPyahCGiGCQ9jZr5r5bukcXFaRDFtPFZBUyiHfo\n  To account: 91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD\n  Additional accounts: 80, not named by this descriptor\n\n== Also [collapsed]\n  Compute unit limit: 1251656\n  Heap size: 65536 bytes\n  Compute unit price: 1676 micro-lamports per unit\n  Create token account: Token account: 91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD\n  Create token account: Owner: CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR\n  Create token account: Mint: not read (lookup table GP57…1gPy[60])\n  Create token account: Rent paid by: CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR\n  Create token account: Token program: not read (lookup table GP57…1gPy[65])\n\n== Signers\n  Fee payer: CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR\n\n== Fee\n  Total: 0.000007098 SOL\n  Base: 0.000005 SOL\n  Priority: 0.000002098 SOL\n  Priority basis: 1676 micro-lamports per unit × 1251656 units requested\n  Rent deposits: 0.00148844 SOL; returned when the accounts are closed\n\n== Validity\n  Expires: in about a minute (recent blockhash)\n\nEffects:\n  - Transfer 0.001855569 SOL from CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR to 91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD\n  - Transfer ≤ 151360479993 raw units of an unverified token (before any transfer fee) (lookup table 6vgy…uwpB[3]) from CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR to OKX DEX Router (proV…CX3u) (verified)\n  - Transfer unknown amount of an unverified token (at least 80334153 raw units before a transfer fee the signer cannot know) (lookup table GP57…1gPy[60]) from OKX DEX Router (proV…CX3u) (verified) to CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR\n  - Create 91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD owned by not read (lookup table GP57…1gPy[65]), depositing 0.00148844 SOL\n  - CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR pays a fee of 0.000007098 SOL\n  - Valid for about a minute (recent blockhash)\n\nRaw: solana v0 (804 bytes)\n  digest: 9f46f53cb1549cfb1d859dc7109c80f65b636658c9999b7f227a133aad7823a2\n",
   "verdict": "warn"
 }

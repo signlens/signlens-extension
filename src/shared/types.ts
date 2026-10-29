@@ -1,7 +1,9 @@
 // The contract between the extension and the engine, as the SignLens API
 // serves it and the WebAssembly module will: the explanation document
-// (`signlens-explanation/1`, specified with the engine), the engine's
-// request, and the feedback record. Keys are the Rust field names
+// (`signlens-explanation/2`, specified with the engine), the engine's
+// request, and the feedback record. Every word the engine says is a
+// `Message`: its words and the values they name, which the window lays out
+// with the nodes it has for amounts and addresses, and their text. Keys are the Rust field names
 // (`own_keys`, `label_trust`), enum variants the Rust names in snake_case
 // ("block", "at_least", "authority_change"); 128-bit integers are decimal
 // strings; bytes are lowercase hex.
@@ -27,19 +29,41 @@ export interface Unrecognized {
     value: { type: string };
 }
 
+/**
+ * One part of a message: words, with `value` a value they name or `short`
+ * an address they name shortened; `text` is how the engine writes the part.
+ */
+export interface Part {
+    text: string;
+    value?: Value;
+    short?: Address;
+}
+
+/** Something the engine says: its identifier (`null` for a descriptor's words), its parts and their text. */
+export interface Message {
+    id: string | null;
+    parts: Part[];
+    text: string;
+}
+
 export interface Address {
-    address: string;
-    label: string | null;
+    /** The address, or `null` when words stand in for one the engine does not know. */
+    address: string | null;
+    label: Message | null;
     label_trust: Trust;
     is_self: boolean;
+    /** What stands in for an address the engine does not know, such as an account a lookup table loads that was not read. */
+    stand_in: Message | null;
 }
 
 export interface Asset {
-    /** `"native"` for SOL, else the mint. */
-    id: string;
+    /** `"native"` for SOL, else the mint, or `null` for a token known only by its description. */
+    id: string | null;
     symbol: string | null;
     decimals: number | null;
     trust: Trust;
+    /** What the token is when its mint is not known, such as the token an account holds. */
+    description: Message | null;
 }
 
 export interface Amount {
@@ -47,11 +71,12 @@ export interface Amount {
     units: string;
     asset: Asset;
     bound: Bound;
-    note: string | null;
+    note: Message | null;
 }
 
 export type Value =
     | { type: 'text'; value: string }
+    | { type: 'words'; value: Message }
     | { type: 'amount'; value: Amount }
     | { type: 'address'; value: Address }
     | { type: 'integer'; value: string }
@@ -64,11 +89,11 @@ export type Value =
     | Unrecognized;
 
 export interface Field {
-    label: string;
+    label: Message;
     value: Value;
     trust: Trust;
     /** What the label means, from the reviewed descriptor. */
-    help: string | null;
+    help: Message | null;
 }
 
 export type SectionKind =
@@ -85,8 +110,8 @@ export type SectionKind =
 
 export interface Section {
     kind: SectionKind;
-    title: string;
-    subtitle: string | null;
+    title: Message;
+    subtitle: Message | null;
     fields: Field[];
     collapsed: boolean;
 }
@@ -96,7 +121,7 @@ export type Lifetime = { type: 'recent_blockhash' } | { type: 'durable_nonce'; v
 export type Effect =
     | { type: 'transfer'; value: { from: Address; to: Address; amount: Amount } }
     | { type: 'burn'; value: { account: Address; amount: Amount } }
-    | { type: 'authority_change'; value: { subject: Address; authority: string; new_authority: Address | null } }
+    | { type: 'authority_change'; value: { subject: Address; authority: Message; new_authority: Address | null } }
     | { type: 'delegate'; value: { subject: Address; delegate: Address; amount: Amount } }
     | { type: 'revoke'; value: { subject: Address } }
     | { type: 'create'; value: { account: Address; owner: Address; deposit: Amount | null; if_missing: boolean } }
@@ -104,13 +129,16 @@ export type Effect =
     | { type: 'fee'; value: { payer: Address; amount: Amount } }
     | { type: 'lifetime'; value: Lifetime }
     | { type: 'proposed'; value: { by: Address; effect: Effect } }
-    | { type: 'other'; value: { description: string } }
+    | { type: 'other'; value: { description: Message } }
     | Unrecognized;
+
+/** An effect as the explanation lists it, with the message that words it. A proposed effect's inner one has none. */
+export type WordedEffect = Effect & { message: Message };
 
 export interface Finding {
     severity: Severity;
     code: string;
-    message: string;
+    message: Message;
     instruction: number | null;
 }
 
@@ -124,15 +152,15 @@ export interface Raw {
     digest: string | null;
 }
 
-/** The explanation document, `"schema": "signlens-explanation/1"`. */
+/** The explanation document, `"schema": "signlens-explanation/2"`. */
 export interface Explanation {
-    schema: 'signlens-explanation/1';
+    schema: 'signlens-explanation/2';
     chain: string;
-    summary: string;
+    summary: Message;
     verdict: Verdict;
     findings: Finding[];
     sections: Section[];
-    effects: Effect[];
+    effects: WordedEffect[];
     raw: Raw | null;
     /** The text rendering, when the request asked for it (`render: true`). */
     text?: string;
@@ -143,7 +171,7 @@ export interface Explanation {
 /** An account an explanation would read: its address and what its contents would show. */
 export interface WantedAccount {
     address: string;
-    reason: string;
+    reason: Message;
 }
 
 /** An account as the RPC returned it, which the engine checks before it uses it and shows as a claim. */

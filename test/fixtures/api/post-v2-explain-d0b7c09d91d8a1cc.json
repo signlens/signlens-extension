@@ -1,0 +1,1563 @@
+{
+  "request": {
+    "method": "POST",
+    "path": "/v2/explain",
+    "body": {
+      "transaction": "AZ7x68WfdgL92E6FOpudAaUd22P0MgIu9+VyvApksJRx0iZ6AS0HZ+wxpqsiuV437NZP3uL6EINL5gJK1Udi6QoBAAYLUUkEz7FfLaJjygMX5cDGGgvNfu9lTnGt5EUq42wAKo1KPu9LA8gqcVmeoHoW7kvPbc4xNX2EYLKsG9TDqYYMnZBPyJU9z8nztReYk+4S/JxEXK2ImpV9Yc+428wXL2pPzJDOxGOxYgUeKqXn+B9ykwj35IqmqnNj79y+Fl67ZQH8076t9/m/97Bb74GUNE6z/PJdKB9WR+buAYgPE8T4NQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAE9qeIs7eYan3uJJdRDfdKOm+7rHHKIhq+mqnybJuqBkU8jIOHbEcooVIeOwm6I7YyvlYnAX8S5nsUFsORx0VgwlU276eyWDJinopP+ITNpZv4YDRUa5LgXlWH4mFSlP2BoHEzkfiI2i4sVVeyIevCS78fvu2bKP1L79o1Kyct6gGp9UXGSxWjuCKhF9z0peIzwNcMUWyGrNE2AYuqUAAAM4akCj91T+pyjf3uPgYecSepeQVNwg7z9tO/Usf8OuYAwUDAwoABAQAAAAJAwYABAmQJaSIvNgq+AAJBwYEBwACAQgIwgihV5mkGas=",
+      "own_keys": [
+        "6UJbu9ut5VAsFYQFgPEa5xPfoyF5bB5oi4EknFPvu924"
+      ],
+      "contacts": [],
+      "render": true,
+      "accounts": [
+        {
+          "address": "J1w1U5BB9W4Tnf2NhrcnTmV5t6iZugXSkujYKadwxti8",
+          "owner": "SQDS4ep65T869zMMBKyuUq6aD6EgTu8psMjkvj52pCf",
+          "data": "Gl69u3SINSET2p4izt5hqfe4kl1EN90o6b7usccoiGr6aqfJsm6oGQcAAAAAAAAABT9CzWkAAAAA/wIAAAAf2FgStXheKQ+oF1Kv8HgcChmf4Ok/9XDqYxqlkBSly1FJBM+xXy2iY8oDF+XAxhoLzX7vZU5xreRFKuNsACqNAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+          "slot": 461256036
+        },
+        {
+          "address": "2QmMUBZYv2Ssm6ED73Gapt8cgn9u1HQbPaJtfYdDDAwc",
+          "owner": "SQDS4ep65T869zMMBKyuUq6aD6EgTu8psMjkvj52pCf",
+          "data": "qPqiZFEOos8T2p4izt5hqfe4kl1EN90o6b7usccoiGr6aqfJsm6oGR/YWBK1eF4pD6gXUq/weBwKGZ/g6T/1cOpjGqWQFKXLBwAAAAAAAAD+AP8AAAAAAQEBAwAAAJBPyJU9z8nztReYk+4S/JxEXK2ImpV9Yc+428wXL2pPSj7vSwPIKnFZnqB6Fu5Lz23OMTV9hGCyrBvUw6mGDJ0JVNu+nslgyYp6KT/iEzaWb+GA0VGuS4F5Vh+JhUpT9gEAAAACAgAAAAABKAAAAKGwKNU8uLPk714n4JYVRqrUZ0mswJLgPBqMfBGH6IfMJF25zyvKmpkAAAAA",
+          "slot": 461256036
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "chain": "solana",
+      "effects": [
+        {
+          "message": {
+            "id": "effect-proposed",
+            "parts": [
+              {
+                "text": "Once approved, "
+              },
+              {
+                "text": "Vault 0 of multisig 2LW6…hx88 (AiLG…PKrW) (verified)",
+                "value": {
+                  "type": "address",
+                  "value": {
+                    "address": "AiLGdNitMjv8n5HMS7HAdV2kaeJZZFd4jdfn5xp1PKrW",
+                    "is_self": false,
+                    "label": {
+                      "id": "accounts-name",
+                      "parts": [
+                        {
+                          "text": "Vault "
+                        },
+                        {
+                          "text": "0",
+                          "value": {
+                            "type": "integer",
+                            "value": "0"
+                          }
+                        },
+                        {
+                          "text": " of multisig "
+                        },
+                        {
+                          "short": {
+                            "address": "2LW6PSEjp81xSEttWwXDB6Etb1eKdhYPbFEojYbyhx88",
+                            "is_self": false,
+                            "label": null,
+                            "label_trust": "fact",
+                            "stand_in": null
+                          },
+                          "text": "2LW6…hx88"
+                        }
+                      ],
+                      "text": "Vault 0 of multisig 2LW6…hx88"
+                    },
+                    "label_trust": "verified",
+                    "stand_in": null
+                  }
+                }
+              },
+              {
+                "text": " would: Give the admin authority over "
+              },
+              {
+                "text": "5zpq7DvB6UdFFvpmBPspGPNfUGoBRRCE2HHg5u3gxcsN",
+                "value": {
+                  "type": "address",
+                  "value": {
+                    "address": "5zpq7DvB6UdFFvpmBPspGPNfUGoBRRCE2HHg5u3gxcsN",
+                    "is_self": false,
+                    "label": null,
+                    "label_trust": "fact",
+                    "stand_in": null
+                  }
+                }
+              },
+              {
+                "text": " to "
+              },
+              {
+                "text": "H7PiGqqUaanBovwKgEtreJbKmQe6dbq6VTrw6guy7ZgL",
+                "value": {
+                  "type": "address",
+                  "value": {
+                    "address": "H7PiGqqUaanBovwKgEtreJbKmQe6dbq6VTrw6guy7ZgL",
+                    "is_self": false,
+                    "label": null,
+                    "label_trust": "fact",
+                    "stand_in": null
+                  }
+                }
+              }
+            ],
+            "text": "Once approved, Vault 0 of multisig 2LW6…hx88 (AiLG…PKrW) (verified) would: Give the admin authority over 5zpq7DvB6UdFFvpmBPspGPNfUGoBRRCE2HHg5u3gxcsN to H7PiGqqUaanBovwKgEtreJbKmQe6dbq6VTrw6guy7ZgL"
+          },
+          "type": "proposed",
+          "value": {
+            "by": {
+              "address": "AiLGdNitMjv8n5HMS7HAdV2kaeJZZFd4jdfn5xp1PKrW",
+              "is_self": false,
+              "label": {
+                "id": "accounts-name",
+                "parts": [
+                  {
+                    "text": "Vault "
+                  },
+                  {
+                    "text": "0",
+                    "value": {
+                      "type": "integer",
+                      "value": "0"
+                    }
+                  },
+                  {
+                    "text": " of multisig "
+                  },
+                  {
+                    "short": {
+                      "address": "2LW6PSEjp81xSEttWwXDB6Etb1eKdhYPbFEojYbyhx88",
+                      "is_self": false,
+                      "label": null,
+                      "label_trust": "fact",
+                      "stand_in": null
+                    },
+                    "text": "2LW6…hx88"
+                  }
+                ],
+                "text": "Vault 0 of multisig 2LW6…hx88"
+              },
+              "label_trust": "verified",
+              "stand_in": null
+            },
+            "effect": {
+              "type": "authority_change",
+              "value": {
+                "authority": {
+                  "id": null,
+                  "parts": [
+                    {
+                      "text": "admin"
+                    }
+                  ],
+                  "text": "admin"
+                },
+                "new_authority": {
+                  "address": "H7PiGqqUaanBovwKgEtreJbKmQe6dbq6VTrw6guy7ZgL",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "fact",
+                  "stand_in": null
+                },
+                "subject": {
+                  "address": "5zpq7DvB6UdFFvpmBPspGPNfUGoBRRCE2HHg5u3gxcsN",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "fact",
+                  "stand_in": null
+                }
+              }
+            }
+          }
+        },
+        {
+          "message": {
+            "id": "effect-authority-give",
+            "parts": [
+              {
+                "text": "Give the admin authority over "
+              },
+              {
+                "text": "5zpq7DvB6UdFFvpmBPspGPNfUGoBRRCE2HHg5u3gxcsN",
+                "value": {
+                  "type": "address",
+                  "value": {
+                    "address": "5zpq7DvB6UdFFvpmBPspGPNfUGoBRRCE2HHg5u3gxcsN",
+                    "is_self": false,
+                    "label": null,
+                    "label_trust": "fact",
+                    "stand_in": null
+                  }
+                }
+              },
+              {
+                "text": " to "
+              },
+              {
+                "text": "H7PiGqqUaanBovwKgEtreJbKmQe6dbq6VTrw6guy7ZgL",
+                "value": {
+                  "type": "address",
+                  "value": {
+                    "address": "H7PiGqqUaanBovwKgEtreJbKmQe6dbq6VTrw6guy7ZgL",
+                    "is_self": false,
+                    "label": null,
+                    "label_trust": "fact",
+                    "stand_in": null
+                  }
+                }
+              }
+            ],
+            "text": "Give the admin authority over 5zpq7DvB6UdFFvpmBPspGPNfUGoBRRCE2HHg5u3gxcsN to H7PiGqqUaanBovwKgEtreJbKmQe6dbq6VTrw6guy7ZgL"
+          },
+          "type": "authority_change",
+          "value": {
+            "authority": {
+              "id": null,
+              "parts": [
+                {
+                  "text": "admin"
+                }
+              ],
+              "text": "admin"
+            },
+            "new_authority": {
+              "address": "H7PiGqqUaanBovwKgEtreJbKmQe6dbq6VTrw6guy7ZgL",
+              "is_self": false,
+              "label": null,
+              "label_trust": "fact",
+              "stand_in": null
+            },
+            "subject": {
+              "address": "5zpq7DvB6UdFFvpmBPspGPNfUGoBRRCE2HHg5u3gxcsN",
+              "is_self": false,
+              "label": null,
+              "label_trust": "fact",
+              "stand_in": null
+            }
+          }
+        },
+        {
+          "message": {
+            "id": "effect-fee-own",
+            "parts": [
+              {
+                "text": "You pay a fee of "
+              },
+              {
+                "text": "0.000005 SOL",
+                "value": {
+                  "type": "amount",
+                  "value": {
+                    "asset": {
+                      "decimals": 9,
+                      "description": null,
+                      "id": "native",
+                      "symbol": "SOL",
+                      "trust": "fact"
+                    },
+                    "bound": "exact",
+                    "note": null,
+                    "units": "5000"
+                  }
+                }
+              }
+            ],
+            "text": "You pay a fee of 0.000005 SOL"
+          },
+          "type": "fee",
+          "value": {
+            "amount": {
+              "asset": {
+                "decimals": 9,
+                "description": null,
+                "id": "native",
+                "symbol": "SOL",
+                "trust": "fact"
+              },
+              "bound": "exact",
+              "note": null,
+              "units": "5000"
+            },
+            "payer": {
+              "address": "6UJbu9ut5VAsFYQFgPEa5xPfoyF5bB5oi4EknFPvu924",
+              "is_self": true,
+              "label": {
+                "id": "accounts-your-wallet",
+                "parts": [
+                  {
+                    "text": "Your wallet"
+                  }
+                ],
+                "text": "Your wallet"
+              },
+              "label_trust": "verified",
+              "stand_in": null
+            }
+          }
+        },
+        {
+          "message": {
+            "id": "effect-durable-nonce",
+            "parts": [
+              {
+                "text": "Valid FOREVER until nonce account "
+              },
+              {
+                "text": "EmYEryTDXtuVCxrjNqJXbiwr4hfiJajd4g5P58vvhQnc",
+                "value": {
+                  "type": "address",
+                  "value": {
+                    "address": "EmYEryTDXtuVCxrjNqJXbiwr4hfiJajd4g5P58vvhQnc",
+                    "is_self": false,
+                    "label": null,
+                    "label_trust": "fact",
+                    "stand_in": null
+                  }
+                }
+              },
+              {
+                "text": " is advanced (durable nonce)"
+              }
+            ],
+            "text": "Valid FOREVER until nonce account EmYEryTDXtuVCxrjNqJXbiwr4hfiJajd4g5P58vvhQnc is advanced (durable nonce)"
+          },
+          "type": "lifetime",
+          "value": {
+            "type": "durable_nonce",
+            "value": {
+              "nonce_account": {
+                "address": "EmYEryTDXtuVCxrjNqJXbiwr4hfiJajd4g5P58vvhQnc",
+                "is_self": false,
+                "label": null,
+                "label_trust": "fact",
+                "stand_in": null
+              }
+            }
+          }
+        }
+      ],
+      "findings": [
+        {
+          "code": "DRIFT_ADMIN_CHANGE",
+          "instruction": 1,
+          "message": {
+            "id": "squads-step-finding",
+            "parts": [
+              {
+                "text": "Proposal step "
+              },
+              {
+                "text": "1",
+                "value": {
+                  "type": "integer",
+                  "value": "1"
+                }
+              },
+              {
+                "text": ": Hands the admin of the whole Drift protocol to an account that is not yours: the admin can add markets, set their oracles and collateral weights, and raise withdrawal limits, over every user's deposits"
+              }
+            ],
+            "text": "Proposal step 1: Hands the admin of the whole Drift protocol to an account that is not yours: the admin can add markets, set their oracles and collateral weights, and raise withdrawal limits, over every user's deposits"
+          },
+          "severity": "high"
+        },
+        {
+          "code": "PROPOSAL_CONTENT_FROM_RPC",
+          "instruction": 1,
+          "message": {
+            "id": "squads-shown-from-rpc",
+            "parts": [
+              {
+                "text": "This would approve a multisig proposal whose content is on chain, not in the signed bytes; its steps are shown from the transaction account as your RPC returned it, which the signed bytes cannot confirm"
+              }
+            ],
+            "text": "This would approve a multisig proposal whose content is on chain, not in the signed bytes; its steps are shown from the transaction account as your RPC returned it, which the signed bytes cannot confirm"
+          },
+          "severity": "high"
+        },
+        {
+          "code": "DRIFT_ADMIN_CHANGE",
+          "instruction": 2,
+          "message": {
+            "id": "squads-step-finding",
+            "parts": [
+              {
+                "text": "Proposal step "
+              },
+              {
+                "text": "1",
+                "value": {
+                  "type": "integer",
+                  "value": "1"
+                }
+              },
+              {
+                "text": ": Hands the admin of the whole Drift protocol to an account that is not yours: the admin can add markets, set their oracles and collateral weights, and raise withdrawal limits, over every user's deposits"
+              }
+            ],
+            "text": "Proposal step 1: Hands the admin of the whole Drift protocol to an account that is not yours: the admin can add markets, set their oracles and collateral weights, and raise withdrawal limits, over every user's deposits"
+          },
+          "severity": "high"
+        },
+        {
+          "code": "PROPOSAL_CONTENT_FROM_RPC",
+          "instruction": 2,
+          "message": {
+            "id": "squads-shown-from-rpc",
+            "parts": [
+              {
+                "text": "This would execute a multisig proposal whose content is on chain, not in the signed bytes; its steps are shown from the transaction account as your RPC returned it, which the signed bytes cannot confirm"
+              }
+            ],
+            "text": "This would execute a multisig proposal whose content is on chain, not in the signed bytes; its steps are shown from the transaction account as your RPC returned it, which the signed bytes cannot confirm"
+          },
+          "severity": "high"
+        },
+        {
+          "code": "DURABLE_NONCE",
+          "instruction": null,
+          "message": {
+            "id": "explain-durable-nonce",
+            "parts": [
+              {
+                "text": "This signature never expires; anyone holding the signed transaction can submit it at any later time until the nonce is advanced"
+              }
+            ],
+            "text": "This signature never expires; anyone holding the signed transaction can submit it at any later time until the nonce is advanced"
+          },
+          "severity": "high"
+        }
+      ],
+      "raw": {
+        "digest": "ee7706555a2bed3f52dde729942482697f4aef89b2e733ee1e75b78b037a2af5",
+        "format": "solana legacy"
+      },
+      "schema": "signlens-explanation/2",
+      "sections": [
+        {
+          "collapsed": false,
+          "fields": [
+            {
+              "help": null,
+              "label": {
+                "id": "label-multisig",
+                "parts": [
+                  {
+                    "text": "Multisig"
+                  }
+                ],
+                "text": "Multisig"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "2LW6PSEjp81xSEttWwXDB6Etb1eKdhYPbFEojYbyhx88",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "fact",
+                  "stand_in": null
+                }
+              }
+            },
+            {
+              "help": null,
+              "label": {
+                "id": "label-proposal",
+                "parts": [
+                  {
+                    "text": "Proposal"
+                  }
+                ],
+                "text": "Proposal"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "J1w1U5BB9W4Tnf2NhrcnTmV5t6iZugXSkujYKadwxti8",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "fact",
+                  "stand_in": null
+                }
+              }
+            },
+            {
+              "help": null,
+              "label": {
+                "id": "label-content",
+                "parts": [
+                  {
+                    "text": "Content"
+                  }
+                ],
+                "text": "Content"
+              },
+              "trust": "claimed",
+              "value": {
+                "type": "words",
+                "value": {
+                  "id": "squads-content-from-rpc",
+                  "parts": [
+                    {
+                      "text": "transaction #"
+                    },
+                    {
+                      "text": "7",
+                      "value": {
+                        "type": "integer",
+                        "value": "7"
+                      }
+                    },
+                    {
+                      "text": " of this multisig, from its account as your RPC returned it at slot "
+                    },
+                    {
+                      "text": "461256036",
+                      "value": {
+                        "type": "integer",
+                        "value": "461256036"
+                      }
+                    },
+                    {
+                      "text": "; the signed bytes do not hold it"
+                    }
+                  ],
+                  "text": "transaction #7 of this multisig, from its account as your RPC returned it at slot 461256036; the signed bytes do not hold it"
+                }
+              }
+            },
+            {
+              "help": null,
+              "label": {
+                "id": "label-vault",
+                "parts": [
+                  {
+                    "text": "Vault"
+                  }
+                ],
+                "text": "Vault"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "AiLGdNitMjv8n5HMS7HAdV2kaeJZZFd4jdfn5xp1PKrW",
+                  "is_self": false,
+                  "label": {
+                    "id": "accounts-name",
+                    "parts": [
+                      {
+                        "text": "Vault "
+                      },
+                      {
+                        "text": "0",
+                        "value": {
+                          "type": "integer",
+                          "value": "0"
+                        }
+                      },
+                      {
+                        "text": " of multisig "
+                      },
+                      {
+                        "short": {
+                          "address": "2LW6PSEjp81xSEttWwXDB6Etb1eKdhYPbFEojYbyhx88",
+                          "is_self": false,
+                          "label": null,
+                          "label_trust": "fact",
+                          "stand_in": null
+                        },
+                        "text": "2LW6…hx88"
+                      }
+                    ],
+                    "text": "Vault 0 of multisig 2LW6…hx88"
+                  },
+                  "label_trust": "verified",
+                  "stand_in": null
+                }
+              }
+            },
+            {
+              "help": null,
+              "label": {
+                "id": "label-member",
+                "parts": [
+                  {
+                    "text": "Member"
+                  }
+                ],
+                "text": "Member"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "6UJbu9ut5VAsFYQFgPEa5xPfoyF5bB5oi4EknFPvu924",
+                  "is_self": true,
+                  "label": {
+                    "id": "accounts-your-wallet",
+                    "parts": [
+                      {
+                        "text": "Your wallet"
+                      }
+                    ],
+                    "text": "Your wallet"
+                  },
+                  "label_trust": "verified",
+                  "stand_in": null
+                }
+              }
+            },
+            {
+              "help": null,
+              "label": {
+                "id": "label-steps",
+                "parts": [
+                  {
+                    "text": "Steps"
+                  }
+                ],
+                "text": "Steps"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "integer",
+                "value": "1"
+              }
+            }
+          ],
+          "kind": {
+            "type": "instruction",
+            "value": {
+              "index": 1
+            }
+          },
+          "subtitle": {
+            "id": "decode-program-verified",
+            "parts": [
+              {
+                "text": "Squads multisig v4",
+                "value": {
+                  "type": "text",
+                  "value": "Squads multisig v4"
+                }
+              },
+              {
+                "text": " (verified)"
+              }
+            ],
+            "text": "Squads multisig v4 (verified)"
+          },
+          "title": {
+            "id": "squads-approve-title",
+            "parts": [
+              {
+                "text": "Approve proposal"
+              }
+            ],
+            "text": "Approve proposal"
+          }
+        },
+        {
+          "collapsed": false,
+          "fields": [
+            {
+              "help": {
+                "id": null,
+                "parts": [
+                  {
+                    "text": "The account that becomes Drift's admin. The admin can add markets, set their oracles and collateral weights, and raise the limits on withdrawals, over every user's deposits."
+                  }
+                ],
+                "text": "The account that becomes Drift's admin. The admin can add markets, set their oracles and collateral weights, and raise the limits on withdrawals, over every user's deposits."
+              },
+              "label": {
+                "id": null,
+                "parts": [
+                  {
+                    "text": "New admin"
+                  }
+                ],
+                "text": "New admin"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "H7PiGqqUaanBovwKgEtreJbKmQe6dbq6VTrw6guy7ZgL",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "fact",
+                  "stand_in": null
+                }
+              }
+            },
+            {
+              "help": {
+                "id": null,
+                "parts": [
+                  {
+                    "text": "The account that is Drift's admin until this hands it over; for Drift, a multisig vault."
+                  }
+                ],
+                "text": "The account that is Drift's admin until this hands it over; for Drift, a multisig vault."
+              },
+              "label": {
+                "id": null,
+                "parts": [
+                  {
+                    "text": "Current admin"
+                  }
+                ],
+                "text": "Current admin"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "AiLGdNitMjv8n5HMS7HAdV2kaeJZZFd4jdfn5xp1PKrW",
+                  "is_self": false,
+                  "label": {
+                    "id": "accounts-name",
+                    "parts": [
+                      {
+                        "text": "Vault "
+                      },
+                      {
+                        "text": "0",
+                        "value": {
+                          "type": "integer",
+                          "value": "0"
+                        }
+                      },
+                      {
+                        "text": " of multisig "
+                      },
+                      {
+                        "short": {
+                          "address": "2LW6PSEjp81xSEttWwXDB6Etb1eKdhYPbFEojYbyhx88",
+                          "is_self": false,
+                          "label": null,
+                          "label_trust": "fact",
+                          "stand_in": null
+                        },
+                        "text": "2LW6…hx88"
+                      }
+                    ],
+                    "text": "Vault 0 of multisig 2LW6…hx88"
+                  },
+                  "label_trust": "verified",
+                  "stand_in": null
+                }
+              }
+            },
+            {
+              "help": {
+                "id": null,
+                "parts": [
+                  {
+                    "text": "The account that holds Drift's protocol-wide settings, the admin among them."
+                  }
+                ],
+                "text": "The account that holds Drift's protocol-wide settings, the admin among them."
+              },
+              "label": {
+                "id": null,
+                "parts": [
+                  {
+                    "text": "Drift state"
+                  }
+                ],
+                "text": "Drift state"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "5zpq7DvB6UdFFvpmBPspGPNfUGoBRRCE2HHg5u3gxcsN",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "fact",
+                  "stand_in": null
+                }
+              }
+            }
+          ],
+          "kind": {
+            "type": "nested",
+            "value": {
+              "index": 0,
+              "parent": 1
+            }
+          },
+          "subtitle": {
+            "id": "descriptor-subtitle",
+            "parts": [
+              {
+                "text": "Drift Protocol v2",
+                "value": {
+                  "type": "text",
+                  "value": "Drift Protocol v2"
+                }
+              },
+              {
+                "text": " (descriptor reviewed "
+              },
+              {
+                "text": "2026-10-25",
+                "value": {
+                  "type": "text",
+                  "value": "2026-10-25"
+                }
+              },
+              {
+                "text": ", upgradeable by "
+              },
+              {
+                "short": {
+                  "address": "8jj7zJgdr5bDndc7evM74FMGwzLPmd4u4QxNzFi1BMai",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "fact",
+                  "stand_in": null
+                },
+                "text": "8jj7…BMai"
+              },
+              {
+                "text": ")"
+              }
+            ],
+            "text": "Drift Protocol v2 (descriptor reviewed 2026-10-25, upgradeable by 8jj7…BMai)"
+          },
+          "title": {
+            "id": null,
+            "parts": [
+              {
+                "text": "Change the protocol admin"
+              }
+            ],
+            "text": "Change the protocol admin"
+          }
+        },
+        {
+          "collapsed": false,
+          "fields": [
+            {
+              "help": null,
+              "label": {
+                "id": "label-multisig",
+                "parts": [
+                  {
+                    "text": "Multisig"
+                  }
+                ],
+                "text": "Multisig"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "2LW6PSEjp81xSEttWwXDB6Etb1eKdhYPbFEojYbyhx88",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "fact",
+                  "stand_in": null
+                }
+              }
+            },
+            {
+              "help": null,
+              "label": {
+                "id": "label-proposal",
+                "parts": [
+                  {
+                    "text": "Proposal"
+                  }
+                ],
+                "text": "Proposal"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "J1w1U5BB9W4Tnf2NhrcnTmV5t6iZugXSkujYKadwxti8",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "fact",
+                  "stand_in": null
+                }
+              }
+            },
+            {
+              "help": null,
+              "label": {
+                "id": "label-content",
+                "parts": [
+                  {
+                    "text": "Content"
+                  }
+                ],
+                "text": "Content"
+              },
+              "trust": "claimed",
+              "value": {
+                "type": "words",
+                "value": {
+                  "id": "squads-content-from-rpc",
+                  "parts": [
+                    {
+                      "text": "transaction #"
+                    },
+                    {
+                      "text": "7",
+                      "value": {
+                        "type": "integer",
+                        "value": "7"
+                      }
+                    },
+                    {
+                      "text": " of this multisig, from its account as your RPC returned it at slot "
+                    },
+                    {
+                      "text": "461256036",
+                      "value": {
+                        "type": "integer",
+                        "value": "461256036"
+                      }
+                    },
+                    {
+                      "text": "; the signed bytes do not hold it"
+                    }
+                  ],
+                  "text": "transaction #7 of this multisig, from its account as your RPC returned it at slot 461256036; the signed bytes do not hold it"
+                }
+              }
+            },
+            {
+              "help": null,
+              "label": {
+                "id": "label-vault",
+                "parts": [
+                  {
+                    "text": "Vault"
+                  }
+                ],
+                "text": "Vault"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "AiLGdNitMjv8n5HMS7HAdV2kaeJZZFd4jdfn5xp1PKrW",
+                  "is_self": false,
+                  "label": {
+                    "id": "accounts-name",
+                    "parts": [
+                      {
+                        "text": "Vault "
+                      },
+                      {
+                        "text": "0",
+                        "value": {
+                          "type": "integer",
+                          "value": "0"
+                        }
+                      },
+                      {
+                        "text": " of multisig "
+                      },
+                      {
+                        "short": {
+                          "address": "2LW6PSEjp81xSEttWwXDB6Etb1eKdhYPbFEojYbyhx88",
+                          "is_self": false,
+                          "label": null,
+                          "label_trust": "fact",
+                          "stand_in": null
+                        },
+                        "text": "2LW6…hx88"
+                      }
+                    ],
+                    "text": "Vault 0 of multisig 2LW6…hx88"
+                  },
+                  "label_trust": "verified",
+                  "stand_in": null
+                }
+              }
+            },
+            {
+              "help": null,
+              "label": {
+                "id": "label-member",
+                "parts": [
+                  {
+                    "text": "Member"
+                  }
+                ],
+                "text": "Member"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "6UJbu9ut5VAsFYQFgPEa5xPfoyF5bB5oi4EknFPvu924",
+                  "is_self": true,
+                  "label": {
+                    "id": "accounts-your-wallet",
+                    "parts": [
+                      {
+                        "text": "Your wallet"
+                      }
+                    ],
+                    "text": "Your wallet"
+                  },
+                  "label_trust": "verified",
+                  "stand_in": null
+                }
+              }
+            },
+            {
+              "help": null,
+              "label": {
+                "id": "label-steps",
+                "parts": [
+                  {
+                    "text": "Steps"
+                  }
+                ],
+                "text": "Steps"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "integer",
+                "value": "1"
+              }
+            }
+          ],
+          "kind": {
+            "type": "instruction",
+            "value": {
+              "index": 2
+            }
+          },
+          "subtitle": {
+            "id": "decode-program-verified",
+            "parts": [
+              {
+                "text": "Squads multisig v4",
+                "value": {
+                  "type": "text",
+                  "value": "Squads multisig v4"
+                }
+              },
+              {
+                "text": " (verified)"
+              }
+            ],
+            "text": "Squads multisig v4 (verified)"
+          },
+          "title": {
+            "id": "squads-execute-title",
+            "parts": [
+              {
+                "text": "Execute vault transaction"
+              }
+            ],
+            "text": "Execute vault transaction"
+          }
+        },
+        {
+          "collapsed": false,
+          "fields": [
+            {
+              "help": {
+                "id": null,
+                "parts": [
+                  {
+                    "text": "The account that becomes Drift's admin. The admin can add markets, set their oracles and collateral weights, and raise the limits on withdrawals, over every user's deposits."
+                  }
+                ],
+                "text": "The account that becomes Drift's admin. The admin can add markets, set their oracles and collateral weights, and raise the limits on withdrawals, over every user's deposits."
+              },
+              "label": {
+                "id": null,
+                "parts": [
+                  {
+                    "text": "New admin"
+                  }
+                ],
+                "text": "New admin"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "H7PiGqqUaanBovwKgEtreJbKmQe6dbq6VTrw6guy7ZgL",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "fact",
+                  "stand_in": null
+                }
+              }
+            },
+            {
+              "help": {
+                "id": null,
+                "parts": [
+                  {
+                    "text": "The account that is Drift's admin until this hands it over; for Drift, a multisig vault."
+                  }
+                ],
+                "text": "The account that is Drift's admin until this hands it over; for Drift, a multisig vault."
+              },
+              "label": {
+                "id": null,
+                "parts": [
+                  {
+                    "text": "Current admin"
+                  }
+                ],
+                "text": "Current admin"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "AiLGdNitMjv8n5HMS7HAdV2kaeJZZFd4jdfn5xp1PKrW",
+                  "is_self": false,
+                  "label": {
+                    "id": "accounts-name",
+                    "parts": [
+                      {
+                        "text": "Vault "
+                      },
+                      {
+                        "text": "0",
+                        "value": {
+                          "type": "integer",
+                          "value": "0"
+                        }
+                      },
+                      {
+                        "text": " of multisig "
+                      },
+                      {
+                        "short": {
+                          "address": "2LW6PSEjp81xSEttWwXDB6Etb1eKdhYPbFEojYbyhx88",
+                          "is_self": false,
+                          "label": null,
+                          "label_trust": "fact",
+                          "stand_in": null
+                        },
+                        "text": "2LW6…hx88"
+                      }
+                    ],
+                    "text": "Vault 0 of multisig 2LW6…hx88"
+                  },
+                  "label_trust": "verified",
+                  "stand_in": null
+                }
+              }
+            },
+            {
+              "help": {
+                "id": null,
+                "parts": [
+                  {
+                    "text": "The account that holds Drift's protocol-wide settings, the admin among them."
+                  }
+                ],
+                "text": "The account that holds Drift's protocol-wide settings, the admin among them."
+              },
+              "label": {
+                "id": null,
+                "parts": [
+                  {
+                    "text": "Drift state"
+                  }
+                ],
+                "text": "Drift state"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "5zpq7DvB6UdFFvpmBPspGPNfUGoBRRCE2HHg5u3gxcsN",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "fact",
+                  "stand_in": null
+                }
+              }
+            }
+          ],
+          "kind": {
+            "type": "nested",
+            "value": {
+              "index": 0,
+              "parent": 2
+            }
+          },
+          "subtitle": {
+            "id": "descriptor-subtitle",
+            "parts": [
+              {
+                "text": "Drift Protocol v2",
+                "value": {
+                  "type": "text",
+                  "value": "Drift Protocol v2"
+                }
+              },
+              {
+                "text": " (descriptor reviewed "
+              },
+              {
+                "text": "2026-10-25",
+                "value": {
+                  "type": "text",
+                  "value": "2026-10-25"
+                }
+              },
+              {
+                "text": ", upgradeable by "
+              },
+              {
+                "short": {
+                  "address": "8jj7zJgdr5bDndc7evM74FMGwzLPmd4u4QxNzFi1BMai",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "fact",
+                  "stand_in": null
+                },
+                "text": "8jj7…BMai"
+              },
+              {
+                "text": ")"
+              }
+            ],
+            "text": "Drift Protocol v2 (descriptor reviewed 2026-10-25, upgradeable by 8jj7…BMai)"
+          },
+          "title": {
+            "id": null,
+            "parts": [
+              {
+                "text": "Change the protocol admin"
+              }
+            ],
+            "text": "Change the protocol admin"
+          }
+        },
+        {
+          "collapsed": true,
+          "fields": [
+            {
+              "help": null,
+              "label": {
+                "id": "explain-housekeeping-label",
+                "parts": [
+                  {
+                    "text": "Advance durable nonce: Nonce account"
+                  }
+                ],
+                "text": "Advance durable nonce: Nonce account"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "EmYEryTDXtuVCxrjNqJXbiwr4hfiJajd4g5P58vvhQnc",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "fact",
+                  "stand_in": null
+                }
+              }
+            },
+            {
+              "help": null,
+              "label": {
+                "id": "explain-housekeeping-label",
+                "parts": [
+                  {
+                    "text": "Advance durable nonce: Authority"
+                  }
+                ],
+                "text": "Advance durable nonce: Authority"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "6UJbu9ut5VAsFYQFgPEa5xPfoyF5bB5oi4EknFPvu924",
+                  "is_self": true,
+                  "label": {
+                    "id": "accounts-your-wallet",
+                    "parts": [
+                      {
+                        "text": "Your wallet"
+                      }
+                    ],
+                    "text": "Your wallet"
+                  },
+                  "label_trust": "verified",
+                  "stand_in": null
+                }
+              }
+            }
+          ],
+          "kind": {
+            "type": "housekeeping"
+          },
+          "subtitle": null,
+          "title": {
+            "id": "explain-also",
+            "parts": [
+              {
+                "text": "Also"
+              }
+            ],
+            "text": "Also"
+          }
+        },
+        {
+          "collapsed": false,
+          "fields": [
+            {
+              "help": null,
+              "label": {
+                "id": "label-fee-payer",
+                "parts": [
+                  {
+                    "text": "Fee payer"
+                  }
+                ],
+                "text": "Fee payer"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "6UJbu9ut5VAsFYQFgPEa5xPfoyF5bB5oi4EknFPvu924",
+                  "is_self": true,
+                  "label": {
+                    "id": "accounts-your-wallet",
+                    "parts": [
+                      {
+                        "text": "Your wallet"
+                      }
+                    ],
+                    "text": "Your wallet"
+                  },
+                  "label_trust": "verified",
+                  "stand_in": null
+                }
+              }
+            }
+          ],
+          "kind": {
+            "type": "signers"
+          },
+          "subtitle": null,
+          "title": {
+            "id": "explain-signers",
+            "parts": [
+              {
+                "text": "Signers"
+              }
+            ],
+            "text": "Signers"
+          }
+        },
+        {
+          "collapsed": false,
+          "fields": [
+            {
+              "help": null,
+              "label": {
+                "id": "label-total",
+                "parts": [
+                  {
+                    "text": "Total"
+                  }
+                ],
+                "text": "Total"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "amount",
+                "value": {
+                  "asset": {
+                    "decimals": 9,
+                    "description": null,
+                    "id": "native",
+                    "symbol": "SOL",
+                    "trust": "fact"
+                  },
+                  "bound": "exact",
+                  "note": null,
+                  "units": "5000"
+                }
+              }
+            },
+            {
+              "help": null,
+              "label": {
+                "id": "label-base",
+                "parts": [
+                  {
+                    "text": "Base"
+                  }
+                ],
+                "text": "Base"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "amount",
+                "value": {
+                  "asset": {
+                    "decimals": 9,
+                    "description": null,
+                    "id": "native",
+                    "symbol": "SOL",
+                    "trust": "fact"
+                  },
+                  "bound": "exact",
+                  "note": null,
+                  "units": "5000"
+                }
+              }
+            }
+          ],
+          "kind": {
+            "type": "fees"
+          },
+          "subtitle": null,
+          "title": {
+            "id": "explain-fee",
+            "parts": [
+              {
+                "text": "Fee"
+              }
+            ],
+            "text": "Fee"
+          }
+        },
+        {
+          "collapsed": false,
+          "fields": [
+            {
+              "help": null,
+              "label": {
+                "id": "label-expires",
+                "parts": [
+                  {
+                    "text": "Expires"
+                  }
+                ],
+                "text": "Expires"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "words",
+                "value": {
+                  "id": "explain-expires-never",
+                  "parts": [
+                    {
+                      "text": "never, until the nonce account is advanced"
+                    }
+                  ],
+                  "text": "never, until the nonce account is advanced"
+                }
+              }
+            },
+            {
+              "help": null,
+              "label": {
+                "id": "label-nonce-account",
+                "parts": [
+                  {
+                    "text": "Nonce account"
+                  }
+                ],
+                "text": "Nonce account"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "EmYEryTDXtuVCxrjNqJXbiwr4hfiJajd4g5P58vvhQnc",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "fact",
+                  "stand_in": null
+                }
+              }
+            }
+          ],
+          "kind": {
+            "type": "lifetime"
+          },
+          "subtitle": null,
+          "title": {
+            "id": "explain-validity",
+            "parts": [
+              {
+                "text": "Validity"
+              }
+            ],
+            "text": "Validity"
+          }
+        }
+      ],
+      "summary": {
+        "id": "explain-actions",
+        "parts": [
+          {
+            "text": "2",
+            "value": {
+              "type": "integer",
+              "value": "2"
+            }
+          },
+          {
+            "text": " actions: Approve proposal #"
+          },
+          {
+            "text": "7",
+            "value": {
+              "type": "integer",
+              "value": "7"
+            }
+          },
+          {
+            "text": " (Hand the admin of Drift to H7PiGqqUaanBovwKgEtreJbKmQe6dbq6VTrw6guy7ZgL, per your RPC); Execute proposal #"
+          },
+          {
+            "text": "7",
+            "value": {
+              "type": "integer",
+              "value": "7"
+            }
+          },
+          {
+            "text": " (Hand the admin of Drift to H7PiGqqUaanBovwKgEtreJbKmQe6dbq6VTrw6guy7ZgL, per your RPC)"
+          }
+        ],
+        "text": "2 actions: Approve proposal #7 (Hand the admin of Drift to H7PiGqqUaanBovwKgEtreJbKmQe6dbq6VTrw6guy7ZgL, per your RPC); Execute proposal #7 (Hand the admin of Drift to H7PiGqqUaanBovwKgEtreJbKmQe6dbq6VTrw6guy7ZgL, per your RPC)"
+      },
+      "text": "2 actions: Approve proposal #7 (Hand the admin of Drift to H7PiGqqUaanBovwKgEtreJbKmQe6dbq6VTrw6guy7ZgL, per your RPC); Execute proposal #7 (Hand the admin of Drift to H7PiGqqUaanBovwKgEtreJbKmQe6dbq6VTrw6guy7ZgL, per your RPC)\nWARNING: review the findings before approving\n\nFindings:\n  [HIGH] Proposal step 1: Hands the admin of the whole Drift protocol to an account that is not yours: the admin can add markets, set their oracles and collateral weights, and raise withdrawal limits, over every user's deposits (instruction 1)\n  [HIGH] This would approve a multisig proposal whose content is on chain, not in the signed bytes; its steps are shown from the transaction account as your RPC returned it, which the signed bytes cannot confirm (instruction 1)\n  [HIGH] Proposal step 1: Hands the admin of the whole Drift protocol to an account that is not yours: the admin can add markets, set their oracles and collateral weights, and raise withdrawal limits, over every user's deposits (instruction 2)\n  [HIGH] This would execute a multisig proposal whose content is on chain, not in the signed bytes; its steps are shown from the transaction account as your RPC returned it, which the signed bytes cannot confirm (instruction 2)\n  [HIGH] This signature never expires; anyone holding the signed transaction can submit it at any later time until the nonce is advanced\n\n== Approve proposal | Squads multisig v4 (verified)\n  Multisig: 2LW6PSEjp81xSEttWwXDB6Etb1eKdhYPbFEojYbyhx88\n  Proposal: J1w1U5BB9W4Tnf2NhrcnTmV5t6iZugXSkujYKadwxti8\n  Content: transaction #7 of this multisig, from its account as your RPC returned it at slot 461256036; the signed bytes do not hold it (claimed, unverified)\n  Vault: Vault 0 of multisig 2LW6…hx88 (AiLG…PKrW) (verified)\n  Member: Your wallet (6UJb…u924) (verified)\n  Steps: 1\n\n==== Step 1: Change the protocol admin | Drift Protocol v2 (descriptor reviewed 2026-10-25, upgradeable by 8jj7…BMai)\n  New admin: H7PiGqqUaanBovwKgEtreJbKmQe6dbq6VTrw6guy7ZgL\n  Current admin: Vault 0 of multisig 2LW6…hx88 (AiLG…PKrW) (verified)\n  Drift state: 5zpq7DvB6UdFFvpmBPspGPNfUGoBRRCE2HHg5u3gxcsN\n\n== Execute vault transaction | Squads multisig v4 (verified)\n  Multisig: 2LW6PSEjp81xSEttWwXDB6Etb1eKdhYPbFEojYbyhx88\n  Proposal: J1w1U5BB9W4Tnf2NhrcnTmV5t6iZugXSkujYKadwxti8\n  Content: transaction #7 of this multisig, from its account as your RPC returned it at slot 461256036; the signed bytes do not hold it (claimed, unverified)\n  Vault: Vault 0 of multisig 2LW6…hx88 (AiLG…PKrW) (verified)\n  Member: Your wallet (6UJb…u924) (verified)\n  Steps: 1\n\n==== Step 1: Change the protocol admin | Drift Protocol v2 (descriptor reviewed 2026-10-25, upgradeable by 8jj7…BMai)\n  New admin: H7PiGqqUaanBovwKgEtreJbKmQe6dbq6VTrw6guy7ZgL\n  Current admin: Vault 0 of multisig 2LW6…hx88 (AiLG…PKrW) (verified)\n  Drift state: 5zpq7DvB6UdFFvpmBPspGPNfUGoBRRCE2HHg5u3gxcsN\n\n== Also [collapsed]\n  Advance durable nonce: Nonce account: EmYEryTDXtuVCxrjNqJXbiwr4hfiJajd4g5P58vvhQnc\n  Advance durable nonce: Authority: Your wallet (6UJb…u924) (verified)\n\n== Signers\n  Fee payer: Your wallet (6UJb…u924) (verified)\n\n== Fee\n  Total: 0.000005 SOL\n  Base: 0.000005 SOL\n\n== Validity\n  Expires: never, until the nonce account is advanced\n  Nonce account: EmYEryTDXtuVCxrjNqJXbiwr4hfiJajd4g5P58vvhQnc\n\nEffects:\n  - Once approved, Vault 0 of multisig 2LW6…hx88 (AiLG…PKrW) (verified) would: Give the admin authority over 5zpq7DvB6UdFFvpmBPspGPNfUGoBRRCE2HHg5u3gxcsN to H7PiGqqUaanBovwKgEtreJbKmQe6dbq6VTrw6guy7ZgL\n  - Give the admin authority over 5zpq7DvB6UdFFvpmBPspGPNfUGoBRRCE2HHg5u3gxcsN to H7PiGqqUaanBovwKgEtreJbKmQe6dbq6VTrw6guy7ZgL\n  - You pay a fee of 0.000005 SOL\n  - Valid FOREVER until nonce account EmYEryTDXtuVCxrjNqJXbiwr4hfiJajd4g5P58vvhQnc is advanced (durable nonce)\n\nRaw: solana legacy (432 bytes)\n  digest: ee7706555a2bed3f52dde729942482697f4aef89b2e733ee1e75b78b037a2af5\n",
+      "verdict": "warn"
+    }
+  }
+}

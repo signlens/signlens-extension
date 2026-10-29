@@ -41,6 +41,15 @@ uses [Semantic Versioning](https://semver.org/).
 
 ### Changed
 
+- **The explanation from the API's `/v2`.** SignLens asks the SignLens
+  API for `/v2/explain`, where the engine says every word as a message:
+  its words and the amounts and addresses they name, which the window
+  lays out with its own nodes, and words in place of an address or a
+  token the engine does not know. It reads that document
+  (`signlens-explanation/2`) as strictly as the last, and the window
+  reads as it did. An API that does not serve `/v2` yet cannot explain
+  for this version.
+
 - **Your contacts' names stay in your browser.** The address book went to
   the SignLens API names and all, with each transaction, though the
   engine uses a name only to write it into what it says. Now each

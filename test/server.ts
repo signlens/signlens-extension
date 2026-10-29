@@ -147,13 +147,18 @@ export function recorded(name: string): object {
     return JSON.parse(readFileSync(new URL(`${name}.explanation.json`, FIXTURES), 'utf8')) as object;
 }
 
+/** `text` as the engine's words, with no identifier, for an answer a test makes itself. */
+export function words(text: string): { id: null; parts: { text: string }[]; text: string } {
+    return { id: null, parts: [{ text }], text };
+}
+
 /** An explanation with nothing in it but `verdict` and `changes`, for a test that needs the API to answer exactly that. */
 export function explanation(verdict: string, changes: Record<string, unknown> = {}): object {
     const summary = 'A transaction';
     return {
-        schema: 'signlens-explanation/1',
+        schema: 'signlens-explanation/2',
         chain: 'solana:mainnet',
-        summary,
+        summary: words(summary),
         verdict,
         findings: [],
         sections: [],

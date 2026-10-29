@@ -190,7 +190,7 @@ export async function explainTransactions(
             sections: said.sections,
             // For the feedback strip: what to name, what to report and, if the user asks, what to send.
             digest: said.raw?.digest ?? null,
-            reportedSummary: book.unnamed(document.summary),
+            reportedSummary: book.unnamed(document.summary.text),
             transaction,
         });
     }

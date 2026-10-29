@@ -5,9 +5,14 @@
 import type { BrowserContext, Page, Worker } from '@playwright/test';
 import type { ExplainedRow, HistoryEntry } from '../../src/shared/model.ts';
 import { type Pending, pendingKey } from '../../src/shared/store.ts';
-import type { Explanation } from '../../src/shared/types.ts';
+import type { Explanation, Message } from '../../src/shared/types.ts';
 import { fixture, recorded } from '../../test/server.ts';
 import { liveGate } from './extension.ts';
+
+/** `text` as the engine's words, with no identifier, for a row a test makes itself. */
+export function words(text: string): Message {
+    return { id: null, parts: [{ text }], text };
+}
 
 /** The recorded transfer as the worker keeps it: one row, with the terms and toggles the window shows. */
 export function transferRow(): ExplainedRow {
@@ -22,7 +27,7 @@ export function transferRow(): ExplainedRow {
         effects: document.effects,
         sections: document.sections,
         digest: document.raw?.digest ?? null,
-        reportedSummary: document.summary,
+        reportedSummary: document.summary.text,
         transaction: transfer.base64,
         tables: null,
         simulation: null,

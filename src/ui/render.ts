@@ -6,7 +6,7 @@
 
 import type { ExplainedRow, Row } from '../shared/model.ts';
 import { short } from '../shared/text.ts';
-import type { Address, Amount, Bound, Effect, Field, Section, Trust, Value } from '../shared/types.ts';
+import type { Address, Amount, Bound, Effect, Field, Message, Section, Trust, Value } from '../shared/types.ts';
 
 export function element<K extends keyof HTMLElementTagNameMap>(tag: K, className?: string, text?: string): HTMLElementTagNameMap[K] {
     const node = document.createElement(tag);
@@ -172,22 +172,49 @@ function amountNode(amount: Amount): HTMLSpanElement {
     else if (asset.symbol) node.append(`${prefix}${quantity(amount)} ${asset.symbol}`);
     else node.append(`${prefix}${quantity(amount)} of an unverified token`);
     mark(node, asset.trust);
-    let tail = '';
-    if (amount.note) tail += ` (${amount.note})`;
-    if (!asset.symbol) tail += ` (${asset.id})`;
-    if (tail) node.append(tail);
+    if (amount.note) node.append(' (', messageNode(amount.note), ')');
+    // A token whose mint is not known is described, where its mint would be.
+    if (!asset.symbol) node.append(' (', asset.description ? messageNode(asset.description) : (asset.id ?? ''), ')');
     return node;
 }
 
-/** An address as a node: its label in bold and its short form when it has one. The signer's own is green, and its label says so in words ("Your wallet"). */
+/**
+ * An address as a node: its label in bold and its short form when it has
+ * one. The signer's own is green, and its label says so in words ("Your
+ * wallet"). Words stand in for an address the engine does not know (a
+ * lookup table's slot it did not read), where the address would be.
+ */
 function addressNode(address: Address): HTMLSpanElement {
     const node = element('span', `address${address.is_self ? ' self' : ''}`);
-    node.title = address.address;
+    const key = keyNode(address, address.label !== null);
     if (address.label) {
-        node.append(element('b', '', address.label), ' (', element('span', 'key', short(address.address)), ')');
+        node.append(element('b', '', address.label.text), ' (', key, ')');
         mark(node, address.label_trust);
     } else {
-        node.append(element('span', 'key', address.address));
+        node.append(key);
+    }
+    return node;
+}
+
+/** The address itself, shortened when `shorten`, its whole on hover; or the words that stand in for it. */
+function keyNode(address: Address, shorten: boolean): HTMLSpanElement {
+    if (address.address === null) return messageNode(address.stand_in, 'key');
+    const node = element('span', 'key', shorten ? short(address.address) : address.address);
+    node.title = address.address;
+    return node;
+}
+
+/**
+ * A message as a node: its words as text, and each value it names with the
+ * node the window has for that value, so an amount or an address reads the
+ * same in a sentence as in a field. The words are the engine's.
+ */
+export function messageNode(message: Message | null, className = ''): HTMLSpanElement {
+    const node = element('span', className);
+    for (const part of message?.parts ?? []) {
+        if (part.value) node.append(valueNode(part.value));
+        else if (part.short) node.append(keyNode(part.short, true));
+        else node.append(part.text);
     }
     return node;
 }
@@ -203,6 +230,8 @@ function valueNode(value: Value): HTMLElement {
         case 'text':
         case 'integer':
             return element('span', '', value.value);
+        case 'words':
+            return messageNode(value.value);
         case 'amount':
             return amountNode(value.value);
         case 'address':
@@ -276,8 +305,8 @@ function effectNode(effect: Effect): HTMLLIElement {
         case 'authority_change': {
             const v = effect.value;
             return v.new_authority
-                ? append(li, `Give the ${v.authority} authority over `, addressNode(v.subject), ' to ', addressNode(v.new_authority))
-                : append(li, `Permanently remove the ${v.authority} authority over `, addressNode(v.subject));
+                ? append(li, `Give the ${v.authority.text} authority over `, addressNode(v.subject), ' to ', addressNode(v.new_authority))
+                : append(li, `Permanently remove the ${v.authority.text} authority over `, addressNode(v.subject));
         }
         case 'delegate': {
             const v = effect.value;
@@ -317,7 +346,7 @@ function effectNode(effect: Effect): HTMLLIElement {
             return inner;
         }
         case 'other':
-            return append(li, effect.value.description);
+            return append(li, messageNode(effect.value.description));
         case 'Unrecognized':
             return append(li, unrecognized('Something', effect.value.type));
     }
@@ -368,9 +397,9 @@ function sectionIndex(section: Section): number | null {
 function sectionNode(section: Section, open: boolean, nested: HTMLElement[]): HTMLDivElement {
     const label = element('span', 'section-head');
     const index = sectionIndex(section);
-    const title = section.kind.type === 'nested' && index !== null ? `Step ${index + 1}: ${section.title}` : section.title;
+    const title = section.kind.type === 'nested' && index !== null ? `Step ${index + 1}: ${section.title.text}` : section.title.text;
     label.append(element('span', 'section-title', title));
-    if (section.subtitle) label.append(' ', element('span', 'section-subtitle', section.subtitle));
+    if (section.subtitle) label.append(' ', element('span', 'section-subtitle', section.subtitle.text));
     const claims = section.kind.type === 'claims';
     const body = element('div');
     const fields = element('dl', 'fields');
@@ -385,8 +414,8 @@ function sectionNode(section: Section, open: boolean, nested: HTMLElement[]): HT
 function fieldNodes(field: Field, inClaims: boolean): [HTMLElement, HTMLElement] {
     const dt = element('dt');
     const dd = element('dd');
-    const help = field.help ?? helpFor(field.label);
-    dt.append(help ? term(field.label, help, dd) : field.label);
+    const help = field.help?.text ?? helpFor(field.label.text);
+    dt.append(help ? term(field.label.text, help, dd) : field.label.text);
     dd.append(valueNode(field.value));
     if (field.trust === 'claimed' && !inClaims) dd.append(mark(element('span', 'claimed'), 'claimed'));
     return [dt, dd];
@@ -425,7 +454,7 @@ function sectionsNode(row: ExplainedRow): DocumentFragment {
     if (rest.length) {
         const body = element('div');
         for (const section of rest) body.append(sectionNode(section, !section.collapsed, []));
-        fragment.append(disclosure('more', `Details: ${rest.map((s) => s.title.toLowerCase()).join(', ')}`, body, false));
+        fragment.append(disclosure('more', `Details: ${rest.map((s) => s.title.text.toLowerCase()).join(', ')}`, body, false));
     }
     return fragment;
 }
@@ -543,7 +572,8 @@ export function captureName(site: string | undefined, at: number, part?: number)
 }
 
 function explainedNode(body: HTMLDivElement, row: ExplainedRow, options: RenderOptions): HTMLDivElement {
-    body.append(element('p', 'summary-line', row.summary));
+    // The summary and the findings are read as lines of text; the effects lay out what they name.
+    body.append(element('p', 'summary-line', row.summary.text));
     if (row.findings.length) {
         body.append(element(options.heading ?? 'h3', 'effects-title', 'What SignLens found'));
         const list = element('ul', 'findings');
@@ -552,7 +582,7 @@ function explainedNode(body: HTMLDivElement, row: ExplainedRow, options: RenderO
             const item = element('li', finding.severity);
             // Shown as a word with a capital (High); the document's value is lowercase.
             const severity = finding.severity.charAt(0).toUpperCase() + finding.severity.slice(1);
-            item.append(element('span', `severity ${finding.severity}`, severity), ' ', finding.message);
+            item.append(element('span', `severity ${finding.severity}`, severity), ' ', finding.message.text);
             list.append(item);
         }
         body.append(list);

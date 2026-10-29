@@ -27,7 +27,7 @@ function row(transaction: string, explanation: string, simulation: string | null
         effects: document.effects,
         sections: document.sections,
         digest: document.raw?.digest ?? null,
-        reportedSummary: document.summary,
+        reportedSummary: document.summary.text,
         transaction: bytes,
         tables: null,
         simulation,

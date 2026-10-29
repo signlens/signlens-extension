@@ -6,7 +6,7 @@
 
 import type { Locator, Page } from '@playwright/test';
 import { closing, expect, test } from './support/extension.ts';
-import { request, transferRow, windowFor } from './support/windows.ts';
+import { request, transferRow, windowFor, words } from './support/windows.ts';
 
 const SELF = 'Ffz5kwUjkUNw7hV4r6iCJnUoXXsAPFHkCMCmKKDypiwg';
 const OTHER = 'DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp';
@@ -234,7 +234,7 @@ test('a window 256 pixels high (400% zoom) still shows every part of it, as the 
     const summary =
         '3 actions: Transfer 0.0005 SOL from 8Aet...tiTo to 879A...MGsA; Wrap 0.0495 SOL into wrapped SOL account ' +
         '4hJnan1NC4BuwPSn41WAQ7yG3zMK5JfXzDiq8jw2VH6R via DFlow; DFlow swap whose route cannot be resolved';
-    const rows = [transferRow(), { ...transferRow(), verdict: 'blocked' as const, summary }, transferRow()];
+    const rows = [transferRow(), { ...transferRow(), verdict: 'blocked' as const, summary: words(summary) }, transferRow()];
     const gate = await windowFor(context, worker, request({ rows, origin: LONG_ORIGIN, upstream: LONG_WALLET }));
     await gate.setViewportSize({ width: 320, height: 256 });
     for (const target of [

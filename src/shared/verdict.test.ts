@@ -5,14 +5,17 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { type ExplainedRow, failure, type Row, type TransactionVerdict } from './model.ts';
-import type { Explanation } from './types.ts';
+import type { Explanation, Message } from './types.ts';
 import { rowVerdictWord, summaryOf, verdictOf, worse, worstVerdict } from './verdict.ts';
+
+/** `text` as the engine's words, with no identifier. */
+const words = (text: string): Message => ({ id: null, parts: [{ text }], text });
 
 function explained(verdict: TransactionVerdict): ExplainedRow {
     return {
         kind: 'explained',
         verdict,
-        summary: `A ${verdict} transaction`,
+        summary: words(`A ${verdict} transaction`),
         findings: [],
         effects: [],
         sections: [],

@@ -2,7 +2,7 @@
 // is "could not explain", never "nothing wrong"; the feedback strip sends
 // what the user chose and nothing more.
 
-import { explanation, fixture, recorded } from '../test/server.ts';
+import { explanation, fixture, recorded, words } from '../test/server.ts';
 import { clickToClose, expect, liveGate, test } from './support/extension.ts';
 
 const WALLET = 'SignLens';
@@ -51,7 +51,7 @@ test('an API that refuses leaves the request unexplained, with a verdict that ca
     await expect(gate.locator('#band')).toHaveClass(/error/);
     await expect(gate.locator('#band-summary')).toContainText('every worker is busy');
     // Busy is worth one more try, after a pause; the second answer stands.
-    expect(server.apiCalls.filter((call) => call.path === '/v1/explain')).toHaveLength(2);
+    expect(server.apiCalls.filter((call) => call.path === '/v2/explain')).toHaveLength(2);
     await expect(gate.locator('#note')).toContainText('SignLens would refuse this');
     await expect(gate.getByRole('button', { name: /Continue anyway/ })).not.toHaveClass(/primary/);
     expect(await worker.evaluate(() => chrome.action.getBadgeText({}))).toBe('?');
@@ -271,7 +271,9 @@ test('a verdict this version does not know is an error, never a pass', async ({ 
 test('an effect this version does not know is shown as one, not left out', async ({ configure, context, dapp, server }) => {
     const transfer = fixture('legacy_durable_nonce_token_transfer');
     await configure({ lookupTokens: false, simulate: false, mode: 'passthrough', upstream: 'Fake Wallet' });
-    server.answerApi(explanation('warn', { effects: [{ type: 'drain', value: { everything: true } }] }));
+    server.answerApi(
+        explanation('warn', { effects: [{ type: 'drain', value: { everything: true }, message: words('Drain everything') }] }),
+    );
 
     const signing = dapp.evaluate(({ wallet, base64 }: { wallet: string; base64: string }) => window.sign(wallet, base64), {
         wallet: WALLET,
