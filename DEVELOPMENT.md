@@ -84,9 +84,13 @@ call it refuses with `429` is answered from its recording and named in a
 note at the end, as checked against nothing, never as drift, strict or
 not, and never recorded. Feedback is never sent, live or not.
 `npm run test:e2e:record` runs the suite that way and records every answer
-anew (`SIGNLENS_API_URL`, default `http://127.0.0.1:8787`). The fixtures
+anew (`SIGNLENS_API_URL`, default `http://127.0.0.1:8787`). The API must
+serve `/v2/explain`, whose explanation is `signlens-explanation/2`, every
+word the engine says a message (the engine's `docs/explanation-schema.md`);
+an API from before it answers 404, and the suite fails. The fixtures
 under `test/fixtures` are mainnet transactions and what the API made of
-them.
+them: each `*.explanation.json` is the `/v2` answer to the request that
+made it.
 
 On every change CI runs the lint, the types, the Node tests and the
 end-to-end suite, and builds the package on Linux, macOS and Windows,
