@@ -54,8 +54,8 @@ function named(payload: ExplainPayload): string[] {
  * A page names the addresses it signs with, but everything the page's
  * world hands SignLens can be the page's own: an impostor wallet under
  * your wallet's name, a replaced built-in. Called "you", an attacker's
- * address turns a drain into "You receive 50 SOL into Your wallet
- * (verified)". So only addresses you put in the settings are "you": in
+ * address turns a drain into "You receive 50 SOL into Your wallet",
+ * marked verified. So only addresses you put in the settings are "you": in
  * watch mode the watched one, which a page cannot change; in pass-through
  * mode your addresses. When the page names one your settings do not have
  * (or none is there yet), you are asked in a window of your own, before

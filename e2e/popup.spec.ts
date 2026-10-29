@@ -65,7 +65,7 @@ test('new requests open the popup on them, counted until seen, each with its sum
     await expect(popup.locator('#view-settings')).toBeHidden();
     await expect(popup.locator('#unseen')).toHaveText('2 new');
     await expect(popup.locator('#history > li')).toHaveCount(2);
-    await expect(popup.locator('#history li').first().locator('.lead')).toHaveText('Send 0.996423 USDC (verified) to DV3B…L7Qp');
+    await expect(popup.locator('#history li').first().locator('.lead')).toHaveText('Send 0.996423 USDC to DV3B…L7Qp');
     await expect(popup.locator('#history > li').first().locator('.where')).toHaveText(/^localhost:\d+ · signTransaction$/);
     await expect.poll(() => worker.evaluate(() => chrome.action.getBadgeText({}))).toBe('');
 

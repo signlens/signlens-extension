@@ -41,6 +41,15 @@ uses [Semantic Versioning](https://semver.org/).
 
 ### Changed
 
+- **A badge for what SignLens verified.** A token or account name that
+  SignLens verified shows a small check in a ring after it, where it was
+  followed by the word "(verified)": up to three in one line read as if
+  the amounts had been checked. The badge opens the same help, a screen
+  reader names it, and it is drawn, so no token name can carry it. A
+  claim keeps its words, "(claimed, unverified)", now in the warning
+  colour, and the summary line and the findings, which carry the
+  engine's text, now mark only claims.
+
 - **"1 raw unit".** One raw unit reads in the singular, as the engine now
   writes it, where it read "1 raw units".
 

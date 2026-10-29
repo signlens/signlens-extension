@@ -66,7 +66,7 @@ test('the contact itself labels the recipient', async ({ configure, dapp, popup,
     const row = popup.locator('#history li').first();
     await expect(row.locator('.verdict')).toHaveText('warning');
     await row.locator('summary').click();
-    await expect(row.locator('pre')).toContainText('To: Bob (DV3B…L7Qp) (verified)');
+    await expect(row.locator('pre')).toContainText('To: Bob (DV3B…L7Qp)\n');
     await expect(row.locator('.findings')).not.toContainText('looks like');
     expect(JSON.stringify(server.apiCalls)).not.toContain('Bob');
 });

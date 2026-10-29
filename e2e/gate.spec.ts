@@ -30,7 +30,7 @@ test('in pass-through mode the window shows the explanation and Continue hands t
     await expect(gate.locator('#what')).toHaveText('signTransaction');
     await expect(gate.locator('#where')).toContainText('localhost');
     await expect(gate.locator('.verdict').first()).toHaveText('warning');
-    await expect(gate.locator('.summary-line')).toContainText('Transfer 0.996423 USDC (verified)');
+    await expect(gate.locator('.summary-line')).toContainText('Transfer 0.996423 USDC from');
     await expect(gate.locator('.findings')).toContainText('This signature has no time limit');
     await expect(gate.locator('#note')).toContainText('hands the request unchanged to Fake Wallet');
     expect(await worker.evaluate(() => chrome.action.getBadgeText({}))).toBe('WARN');
@@ -134,13 +134,15 @@ test('the window puts the verdict and what the transaction does first, with the 
     await expect(gate.locator('#title')).toHaveText('Sign a transaction');
     await expect(gate.locator('#where .host')).toContainText('localhost');
     await expect(gate.locator('#band')).toHaveClass(/warning/);
-    await expect(gate.locator('#band-summary')).toContainText('Send 0.996423 USDC (verified)');
+    await expect(gate.locator('#band-summary')).toContainText('Send 0.996423 USDC to');
 
     // The effects as sentences, the signer's own accounts marked.
     const effects = gate.locator('.effects li');
     await expect(effects.first()).toContainText(
-        "You send 0.996423 USDC (verified) from Your token account (Ffz5…piwg) (verified) to BNgs…TT1Z's USDC account (DV3B…L7Qp)",
+        "You send 0.996423 USDC from Your token account (Ffz5…piwg) to BNgs…TT1Z's USDC account (DV3B…L7Qp)",
     );
+    // The verified token and both verified account names each carry a badge, not the word.
+    await expect(effects.first().locator('.verified-badge')).toHaveCount(3);
     await expect(effects.first().locator('.address.self')).toHaveCount(1);
     await expect(effects).toContainText([
         /You send/,
@@ -179,14 +181,15 @@ test('the window puts the verdict and what the transaction does first, with the 
     await expect(more.locator('dl.fields dd .help-note')).toHaveText(/What the network charges/);
     await total.click();
     await expect(more.locator('.help-note')).toBeHidden();
-    const verified = effects.first().locator('.term', { hasText: '(verified)' }).first();
+    const verified = effects.first().locator('.verified-badge').first();
+    await expect(verified).toHaveAccessibleName('verified');
     await verified.press('Enter');
     await expect(effects.first().locator('.help-note')).toHaveText(/^This name comes from SignLens or from you/);
     const full = gate.locator('.disclosure.full-text');
     await expect(full.locator('pre')).toBeHidden();
     await full.getByRole('button', { name: 'Full text, as the engine prints it', exact: true }).press('Enter');
     await expect(full.locator('pre')).toBeVisible();
-    await expect(full.locator('pre')).toContainText('== Transfer tokens | Token program (verified)');
+    await expect(full.locator('pre')).toContainText('== Transfer tokens | Token program\n');
 
     // The buttons are in view without scrolling.
     expect(await gate.locator('#reject').evaluate((b) => b.getBoundingClientRect().bottom <= window.innerHeight)).toBe(true);

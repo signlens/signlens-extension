@@ -28,8 +28,8 @@ export function originNode(origin: string | undefined, asks: string): DocumentFr
     return node;
 }
 
-/** The trust marker the engine's text uses, after a label or an amount. */
-const MARKER: Record<Trust, string> = { fact: '', verified: ' (verified)', claimed: ' (claimed, unverified)' };
+/** The words that mark a claim after a label or an amount, as the engine's text does; a verified value gets a badge instead ({@link badge}). */
+const MARKER: Record<Trust, string> = { fact: '', verified: '', claimed: ' (claimed, unverified)' };
 
 /** What a trust marker means, for a reader who opens it. */
 const MARKER_HELP: Partial<Record<Trust, string>> = {
@@ -189,13 +189,49 @@ function term(text: string, help: string, host?: HTMLElement): HTMLButtonElement
 }
 
 /**
- * Appends the trust marker for `trust` to `node`, as a term, when there is
- * one. `help` replaces the marker's usual text and `host` is where the
- * help opens; otherwise it opens under the nearest value.
+ * Appends the trust marker for `trust` to `node`: a verified value's badge,
+ * or a claim's warning in words, each a term. `help` replaces the marker's
+ * usual text and `host` is where the help opens; otherwise it opens under
+ * the nearest value.
  */
 function mark<T extends HTMLElement>(node: T, trust: Trust, help?: string, host?: HTMLElement): T {
+    if (trust === 'verified') {
+        node.append(badge(help ?? MARKER_HELP.verified ?? '', host));
+        return node;
+    }
     const marker = MARKER[trust];
-    if (marker) node.append(' ', term(marker.trim(), help ?? MARKER_HELP[trust] ?? '', host));
+    if (marker) {
+        const warning = term(marker.trim(), help ?? MARKER_HELP[trust] ?? '', host);
+        warning.classList.add('unverified');
+        node.append(' ', warning);
+    }
+    return node;
+}
+
+const SVG = 'http://www.w3.org/2000/svg';
+
+/**
+ * A verified value's badge: a check in a ring, drawn rather than written,
+ * so that no name can carry it, named "verified" for a screen reader; its
+ * help opens as a term's does.
+ */
+function badge(help: string, host?: HTMLElement): HTMLButtonElement {
+    const node = term('', help, host);
+    node.classList.add('verified-badge');
+    // Its name, and no title: a title would become its description while
+    // the help is closed, where the help describes it while open.
+    node.setAttribute('aria-label', 'verified');
+    const svg = document.createElementNS(SVG, 'svg');
+    svg.setAttribute('viewBox', '0 0 16 16');
+    svg.setAttribute('aria-hidden', 'true');
+    const ring = document.createElementNS(SVG, 'circle');
+    ring.setAttribute('cx', '8');
+    ring.setAttribute('cy', '8');
+    ring.setAttribute('r', '6.5');
+    const check = document.createElementNS(SVG, 'path');
+    check.setAttribute('d', 'M5 8.2 7.1 10.3 11 6');
+    svg.append(ring, check);
+    node.append(svg);
     return node;
 }
 

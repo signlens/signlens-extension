@@ -23,7 +23,7 @@ test('a nonce transfer is explained for the connected address and refused', asyn
     await expect(row.locator('.verdict')).toHaveText('warning');
     await expect(row.locator('.where')).toContainText('signTransaction');
     await row.locator('summary').click();
-    await expect(row.locator('.summary-line')).toHaveText(/^Send 0\.996423 USDC \(verified\) to/);
+    await expect(row.locator('.summary-line')).toHaveText(/^Send 0\.996423 USDC to/);
     await expect(row.locator('.findings')).toContainText('This signature has no time limit');
     await expect(row.locator('.severity').first()).toHaveText('High');
     await expect(row.locator('pre')).toContainText('== Transfer tokens | Token program');
@@ -52,9 +52,7 @@ test('lookup tables are read over the RPC and a swap is named', async ({ configu
     const row = popup.locator('#history li').first();
     await expect(row.locator('.verdict')).toHaveText('ok');
     await row.locator('summary').click();
-    await expect(row.locator('.summary-line')).toHaveText(
-        'Swap ≤ 0.005265026 tSpaceX (verified) for ≥ 0.004080684 tKalshi (verified) via DFlow',
-    );
+    await expect(row.locator('.summary-line')).toHaveText('Swap ≤ 0.005265026 tSpaceX for ≥ 0.004080684 tKalshi via DFlow');
     await expect(row.locator('.tables')).toContainText('read over RPC, unverified');
 });
 

@@ -593,6 +593,34 @@ code.bytes {
     color: var(--muted);
 }
 
+/* A verified value's badge: a check in a ring, drawn after the value, never a
+   character a name could carry; its shape says it, not only its colour. */
+.verified-badge {
+    display: inline-flex;
+    margin-left: 3px;
+    vertical-align: -2px;
+    cursor: help;
+}
+
+.verified-badge svg {
+    width: 13px;
+    height: 13px;
+}
+
+.verified-badge circle,
+.verified-badge path {
+    fill: none;
+    stroke: var(--ok);
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* A claim's marker is a warning, in words and in the warning colour. */
+.term.unverified {
+    color: var(--warning);
+}
+
 .full-text pre {
     border-top: 1px solid var(--line);
 }

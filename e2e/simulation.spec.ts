@@ -53,7 +53,7 @@ test('a simulation within the effects is shown as a claim and agrees quietly', a
     await expect(row.locator('.findings')).toContainText('simulation agrees');
     await expect(row.locator('pre')).toContainText("== Simulated outcome | the host's simulation (claimed, unverified)");
     await expect(row.locator('pre')).toContainText('Result: would succeed');
-    await expect(row.locator('pre')).toContainText('Your USDC: −0.996423 USDC (verified)\n');
+    await expect(row.locator('pre')).toContainText('Your USDC: −0.996423 USDC\n');
     await expect(row.locator('pre')).toContainText('Compute units: 4200\n');
     // The outcome sits under the simulation line, outside the instructions
     // and the details, open. Its head carries the one marker, its rows
