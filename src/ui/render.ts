@@ -222,7 +222,13 @@ export function quantity(amount: Amount): string {
     return `${sign}${fraction ? `${integer}.${fraction}` : integer}`;
 }
 
-const PREFIX: Record<Bound, string> = { exact: '', at_least: '≥ ', at_most: '≤ ', unlimited: 'UNLIMITED ', unknown: 'unknown amount of ' };
+const PREFIX: Record<Bound, string> = {
+    exact: '',
+    at_least: '≥ ',
+    at_most: '≤ ',
+    unlimited: 'UNLIMITED ',
+    unknown: 'an unknown amount of ',
+};
 
 /** An amount as the engine's text writes it, as a node: the trust marker in it is a term. */
 function amountNode(amount: Amount): HTMLSpanElement {
@@ -231,7 +237,7 @@ function amountNode(amount: Amount): HTMLSpanElement {
     const asset = amount.asset;
     if ((amount.bound === 'unlimited' || amount.bound === 'unknown') && asset.symbol) node.append(`${prefix}${asset.symbol}`);
     else if (amount.bound === 'unlimited') node.append('UNLIMITED unverified token');
-    else if (amount.bound === 'unknown') node.append('unknown amount of an unverified token');
+    else if (amount.bound === 'unknown') node.append('an unknown amount of an unverified token');
     else if (asset.symbol) node.append(`${prefix}${quantity(amount)} ${asset.symbol}`);
     else node.append(`${prefix}${quantity(amount)} of an unverified token`);
     mark(node, asset.trust);

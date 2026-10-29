@@ -41,6 +41,10 @@ uses [Semantic Versioning](https://semver.org/).
 
 ### Changed
 
+- **"An unknown amount of".** An amount fixed only when the transaction
+  runs reads "an unknown amount of SOL", with the article the engine now
+  writes, where it read "unknown amount of SOL".
+
 - **What a transaction does, in the engine's words.** Each line under
   "What this does" is the sentence the SignLens engine words for it, its
   amounts and addresses laid out as before, where the window wrote its
