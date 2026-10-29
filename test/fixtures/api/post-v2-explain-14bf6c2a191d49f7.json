@@ -14,6 +14,20 @@
   "response": {
     "status": 200,
     "body": {
+      "actions": [
+        {
+          "instruction": 2,
+          "summary": {
+            "id": "dflow-unresolved-summary",
+            "parts": [
+              {
+                "text": "DFlow swap whose route cannot be resolved"
+              }
+            ],
+            "text": "DFlow swap whose route cannot be resolved"
+          }
+        }
+      ],
       "chain": "solana",
       "effects": [
         {

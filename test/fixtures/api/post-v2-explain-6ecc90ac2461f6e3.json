@@ -38,6 +38,179 @@
   "response": {
     "status": 200,
     "body": {
+      "actions": [
+        {
+          "instruction": 3,
+          "summary": {
+            "id": "system-send-summary",
+            "parts": [
+              {
+                "text": "Send "
+              },
+              {
+                "text": "0.0005 SOL",
+                "value": {
+                  "type": "amount",
+                  "value": {
+                    "asset": {
+                      "decimals": 9,
+                      "description": null,
+                      "id": "native",
+                      "symbol": "SOL",
+                      "trust": "fact"
+                    },
+                    "bound": "exact",
+                    "note": null,
+                    "units": "500000"
+                  }
+                }
+              },
+              {
+                "text": " to "
+              },
+              {
+                "short": {
+                  "address": "879ArayuxbYjBhpUe4QCx8nqaAKjiwCG1hFiJo6zMGsA",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "fact",
+                  "stand_in": null
+                },
+                "text": "879A…MGsA"
+              }
+            ],
+            "text": "Send 0.0005 SOL to 879A…MGsA"
+          }
+        },
+        {
+          "instruction": 4,
+          "summary": {
+            "id": null,
+            "parts": [
+              {
+                "text": "Wrap "
+              },
+              {
+                "text": "0.0495 SOL",
+                "value": {
+                  "type": "amount",
+                  "value": {
+                    "asset": {
+                      "decimals": 9,
+                      "description": null,
+                      "id": "native",
+                      "symbol": "SOL",
+                      "trust": "fact"
+                    },
+                    "bound": "exact",
+                    "note": null,
+                    "units": "49500000"
+                  }
+                }
+              },
+              {
+                "text": " into "
+              },
+              {
+                "text": "Your SOL account (4hJn…VH6R)",
+                "value": {
+                  "type": "address",
+                  "value": {
+                    "address": "4hJnan1NC4BuwPSn41WAQ7yG3zMK5JfXzDiq8jw2VH6R",
+                    "is_self": true,
+                    "label": {
+                      "id": "accounts-your-token",
+                      "parts": [
+                        {
+                          "text": "Your "
+                        },
+                        {
+                          "text": "SOL",
+                          "value": {
+                            "type": "text",
+                            "value": "SOL"
+                          }
+                        },
+                        {
+                          "text": " account"
+                        }
+                      ],
+                      "text": "Your SOL account"
+                    },
+                    "label_trust": "verified",
+                    "stand_in": null
+                  }
+                }
+              },
+              {
+                "text": " via DFlow"
+              }
+            ],
+            "text": "Wrap 0.0495 SOL into Your SOL account (4hJn…VH6R) via DFlow"
+          }
+        },
+        {
+          "instruction": 5,
+          "summary": {
+            "id": "swap-summary",
+            "parts": [
+              {
+                "text": "Swap "
+              },
+              {
+                "text": "≤ 0.0495 SOL",
+                "value": {
+                  "type": "amount",
+                  "value": {
+                    "asset": {
+                      "decimals": 9,
+                      "description": null,
+                      "id": "native",
+                      "symbol": "SOL",
+                      "trust": "fact"
+                    },
+                    "bound": "at_most",
+                    "note": null,
+                    "units": "49500000"
+                  }
+                }
+              },
+              {
+                "text": " for "
+              },
+              {
+                "text": "≥ 142,243.976392 HMYD (claimed, unverified)",
+                "value": {
+                  "type": "amount",
+                  "value": {
+                    "asset": {
+                      "decimals": 6,
+                      "description": null,
+                      "id": "HMYd9tosnUXuNHmq7pXmoePRVBLBBjA3JBfydq6upump",
+                      "symbol": "HMYD",
+                      "trust": "claimed"
+                    },
+                    "bound": "at_least",
+                    "note": null,
+                    "units": "142243976392"
+                  }
+                }
+              },
+              {
+                "text": " via "
+              },
+              {
+                "text": "DFlow",
+                "value": {
+                  "type": "text",
+                  "value": "DFlow"
+                }
+              }
+            ],
+            "text": "Swap ≤ 0.0495 SOL for ≥ 142,243.976392 HMYD (claimed, unverified) via DFlow"
+          }
+        }
+      ],
       "chain": "solana",
       "effects": [
         {
@@ -2087,7 +2260,62 @@
             "text": "879A…MGsA"
           },
           {
-            "text": "; Wrap 0.0495 SOL into Your SOL account (4hJn…VH6R) via DFlow; Swap "
+            "text": "; Wrap "
+          },
+          {
+            "text": "0.0495 SOL",
+            "value": {
+              "type": "amount",
+              "value": {
+                "asset": {
+                  "decimals": 9,
+                  "description": null,
+                  "id": "native",
+                  "symbol": "SOL",
+                  "trust": "fact"
+                },
+                "bound": "exact",
+                "note": null,
+                "units": "49500000"
+              }
+            }
+          },
+          {
+            "text": " into "
+          },
+          {
+            "text": "Your SOL account (4hJn…VH6R)",
+            "value": {
+              "type": "address",
+              "value": {
+                "address": "4hJnan1NC4BuwPSn41WAQ7yG3zMK5JfXzDiq8jw2VH6R",
+                "is_self": true,
+                "label": {
+                  "id": "accounts-your-token",
+                  "parts": [
+                    {
+                      "text": "Your "
+                    },
+                    {
+                      "text": "SOL",
+                      "value": {
+                        "type": "text",
+                        "value": "SOL"
+                      }
+                    },
+                    {
+                      "text": " account"
+                    }
+                  ],
+                  "text": "Your SOL account"
+                },
+                "label_trust": "verified",
+                "stand_in": null
+              }
+            }
+          },
+          {
+            "text": " via DFlow; Swap "
           },
           {
             "text": "≤ 0.0495 SOL",

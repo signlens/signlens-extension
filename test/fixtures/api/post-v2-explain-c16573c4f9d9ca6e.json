@@ -14,6 +14,52 @@
   "response": {
     "status": 200,
     "body": {
+      "actions": [
+        {
+          "instruction": 1,
+          "summary": {
+            "id": "squads-verb-address-summary",
+            "parts": [
+              {
+                "text": "Approve proposal "
+              },
+              {
+                "short": {
+                  "address": "J1w1U5BB9W4Tnf2NhrcnTmV5t6iZugXSkujYKadwxti8",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "fact",
+                  "stand_in": null
+                },
+                "text": "J1w1…xti8"
+              }
+            ],
+            "text": "Approve proposal J1w1…xti8"
+          }
+        },
+        {
+          "instruction": 2,
+          "summary": {
+            "id": "squads-verb-address-summary",
+            "parts": [
+              {
+                "text": "Execute proposal "
+              },
+              {
+                "short": {
+                  "address": "J1w1U5BB9W4Tnf2NhrcnTmV5t6iZugXSkujYKadwxti8",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "fact",
+                  "stand_in": null
+                },
+                "text": "J1w1…xti8"
+              }
+            ],
+            "text": "Execute proposal J1w1…xti8"
+          }
+        }
+      ],
       "chain": "solana",
       "effects": [
         {

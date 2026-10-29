@@ -40,6 +40,69 @@
   "response": {
     "status": 200,
     "body": {
+      "actions": [
+        {
+          "instruction": 2,
+          "summary": {
+            "id": "swap-summary",
+            "parts": [
+              {
+                "text": "Swap "
+              },
+              {
+                "text": "≤ 0.005265026 tSpaceX",
+                "value": {
+                  "type": "amount",
+                  "value": {
+                    "asset": {
+                      "decimals": 9,
+                      "description": null,
+                      "id": "TSPXcLV76s6V2zDiZQ18kBfcbnjaE2ZzNT3ga2Pd99v",
+                      "symbol": "tSpaceX",
+                      "trust": "verified"
+                    },
+                    "bound": "at_most",
+                    "note": null,
+                    "units": "5265026"
+                  }
+                }
+              },
+              {
+                "text": " for "
+              },
+              {
+                "text": "≥ 0.004080684 tKalshi",
+                "value": {
+                  "type": "amount",
+                  "value": {
+                    "asset": {
+                      "decimals": 9,
+                      "description": null,
+                      "id": "TKLSidmLVt3cqGaaodG8tyRzoANfQwoh67AccjmubeZ",
+                      "symbol": "tKalshi",
+                      "trust": "verified"
+                    },
+                    "bound": "at_least",
+                    "note": null,
+                    "units": "4080684"
+                  }
+                }
+              },
+              {
+                "text": " via "
+              },
+              {
+                "text": "DFlow",
+                "value": {
+                  "type": "text",
+                  "value": "DFlow"
+                }
+              }
+            ],
+            "text": "Swap ≤ 0.005265026 tSpaceX for ≥ 0.004080684 tKalshi via DFlow"
+          }
+        }
+      ],
       "chain": "solana",
       "effects": [
         {

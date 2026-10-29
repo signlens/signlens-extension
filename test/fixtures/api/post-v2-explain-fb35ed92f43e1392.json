@@ -19,6 +19,76 @@
   "response": {
     "status": 200,
     "body": {
+      "actions": [
+        {
+          "instruction": 2,
+          "summary": {
+            "id": "token-transfer-summary",
+            "parts": [
+              {
+                "text": "Transfer "
+              },
+              {
+                "text": "0.996423 USDC",
+                "value": {
+                  "type": "amount",
+                  "value": {
+                    "asset": {
+                      "decimals": 6,
+                      "description": null,
+                      "id": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+                      "symbol": "USDC",
+                      "trust": "verified"
+                    },
+                    "bound": "exact",
+                    "note": null,
+                    "units": "996423"
+                  }
+                }
+              },
+              {
+                "text": " from "
+              },
+              {
+                "short": {
+                  "address": "Ffz5kwUjkUNw7hV4r6iCJnUoXXsAPFHkCMCmKKDypiwg",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "fact",
+                  "stand_in": null
+                },
+                "text": "Ffz5…piwg"
+              },
+              {
+                "text": " to "
+              },
+              {
+                "short": {
+                  "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp",
+                  "is_self": false,
+                  "label": {
+                    "id": "accounts-name",
+                    "parts": [
+                      {
+                        "text": "[[contact-1-0000000000000000]]",
+                        "value": {
+                          "type": "text",
+                          "value": "[[contact-1-0000000000000000]]"
+                        }
+                      }
+                    ],
+                    "text": "[[contact-1-0000000000000000]]"
+                  },
+                  "label_trust": "verified",
+                  "stand_in": null
+                },
+                "text": "DV3B…L7Qp"
+              }
+            ],
+            "text": "Transfer 0.996423 USDC from Ffz5…piwg to DV3B…L7Qp"
+          }
+        }
+      ],
       "chain": "solana",
       "effects": [
         {

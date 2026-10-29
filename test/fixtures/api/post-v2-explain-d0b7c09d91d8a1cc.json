@@ -28,6 +28,84 @@
   "response": {
     "status": 200,
     "body": {
+      "actions": [
+        {
+          "instruction": 1,
+          "summary": {
+            "id": "squads-verb-from-rpc-summary",
+            "parts": [
+              {
+                "text": "Approve proposal #"
+              },
+              {
+                "text": "7",
+                "value": {
+                  "type": "integer",
+                  "value": "7"
+                }
+              },
+              {
+                "text": " (Hand the admin of Drift to "
+              },
+              {
+                "text": "H7PiGqqUaanBovwKgEtreJbKmQe6dbq6VTrw6guy7ZgL",
+                "value": {
+                  "type": "address",
+                  "value": {
+                    "address": "H7PiGqqUaanBovwKgEtreJbKmQe6dbq6VTrw6guy7ZgL",
+                    "is_self": false,
+                    "label": null,
+                    "label_trust": "fact",
+                    "stand_in": null
+                  }
+                }
+              },
+              {
+                "text": ", per your RPC)"
+              }
+            ],
+            "text": "Approve proposal #7 (Hand the admin of Drift to H7PiGqqUaanBovwKgEtreJbKmQe6dbq6VTrw6guy7ZgL, per your RPC)"
+          }
+        },
+        {
+          "instruction": 2,
+          "summary": {
+            "id": "squads-verb-from-rpc-summary",
+            "parts": [
+              {
+                "text": "Execute proposal #"
+              },
+              {
+                "text": "7",
+                "value": {
+                  "type": "integer",
+                  "value": "7"
+                }
+              },
+              {
+                "text": " (Hand the admin of Drift to "
+              },
+              {
+                "text": "H7PiGqqUaanBovwKgEtreJbKmQe6dbq6VTrw6guy7ZgL",
+                "value": {
+                  "type": "address",
+                  "value": {
+                    "address": "H7PiGqqUaanBovwKgEtreJbKmQe6dbq6VTrw6guy7ZgL",
+                    "is_self": false,
+                    "label": null,
+                    "label_trust": "fact",
+                    "stand_in": null
+                  }
+                }
+              },
+              {
+                "text": ", per your RPC)"
+              }
+            ],
+            "text": "Execute proposal #7 (Hand the admin of Drift to H7PiGqqUaanBovwKgEtreJbKmQe6dbq6VTrw6guy7ZgL, per your RPC)"
+          }
+        }
+      ],
       "chain": "solana",
       "effects": [
         {
@@ -1535,7 +1613,23 @@
             }
           },
           {
-            "text": " (Hand the admin of Drift to H7PiGqqUaanBovwKgEtreJbKmQe6dbq6VTrw6guy7ZgL, per your RPC); Execute proposal #"
+            "text": " (Hand the admin of Drift to "
+          },
+          {
+            "text": "H7PiGqqUaanBovwKgEtreJbKmQe6dbq6VTrw6guy7ZgL",
+            "value": {
+              "type": "address",
+              "value": {
+                "address": "H7PiGqqUaanBovwKgEtreJbKmQe6dbq6VTrw6guy7ZgL",
+                "is_self": false,
+                "label": null,
+                "label_trust": "fact",
+                "stand_in": null
+              }
+            }
+          },
+          {
+            "text": ", per your RPC); Execute proposal #"
           },
           {
             "text": "7",
@@ -1545,7 +1639,23 @@
             }
           },
           {
-            "text": " (Hand the admin of Drift to H7PiGqqUaanBovwKgEtreJbKmQe6dbq6VTrw6guy7ZgL, per your RPC)"
+            "text": " (Hand the admin of Drift to "
+          },
+          {
+            "text": "H7PiGqqUaanBovwKgEtreJbKmQe6dbq6VTrw6guy7ZgL",
+            "value": {
+              "type": "address",
+              "value": {
+                "address": "H7PiGqqUaanBovwKgEtreJbKmQe6dbq6VTrw6guy7ZgL",
+                "is_self": false,
+                "label": null,
+                "label_trust": "fact",
+                "stand_in": null
+              }
+            }
+          },
+          {
+            "text": ", per your RPC)"
           }
         ],
         "text": "2 actions: Approve proposal #7 (Hand the admin of Drift to H7PiGqqUaanBovwKgEtreJbKmQe6dbq6VTrw6guy7ZgL, per your RPC); Execute proposal #7 (Hand the admin of Drift to H7PiGqqUaanBovwKgEtreJbKmQe6dbq6VTrw6guy7ZgL, per your RPC)"

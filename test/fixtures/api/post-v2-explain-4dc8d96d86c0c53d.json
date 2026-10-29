@@ -1,0 +1,2255 @@
+{
+  "request": {
+    "method": "POST",
+    "path": "/v2/explain",
+    "body": {
+      "transaction": "AaIQf3Oschj/qh92ASvd+RLn4TfbYPqbfBkHF6IzgaL1nRjtwMBdVPYOs5Y+ftvh8qXVWkAdVyj+yYVOWY0wtAiAAQAGD2p64Wy3DwExkgISHXGxD44ChZyypRxHOIy1k3B5dv4ufV+npr00kKWnl/tnnzgVpa0vdgW1eBtBjtkxUi+F44dplIf1aqQr81GQgy3Pr/kylInCSRBL7yZrjv+5q5MHSTbmZ1qYQEooaGarbiYz43o7vof7TwHCDS69lSEqFk6q1sLT0VjnBs+ZwXGLYUsswIr4N6hjJqgJPnHAXxgauouAwUdHRe1jvlE1NCfD7R5qioHYjUNdWNBaoCbJ5/INuOSUIcgSB96qiXwfeQffVg11Ph4+XdWfbNfV0D2WCNrtm5sARtwvzW7AP9uVi33IYdGgfPctVFoshUPwNjyhuoZ4Uhyxec67hYm1VqLV7JTSSYaC/fm7KvWtZOSRzEFT2gMGRm/lIRcy/+ytunLDm+e8jOW7xfcSayxDmzpAAAAAjJclj04kifG7PRApFI4NgwtaE5na/xCEBI572Nvp+Fny/l0WNQK/LFqbJoXcYycf5+sqmsPHNvsgMlKJyZCgLwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAteNKFOK8c0hpDuH1r13u1lU4QKNtqrhgsFBgc73APBBYw43zkOIdCkJ8aTcDwMFXJE+e3elMJuTMpOqIdMfu2nhlCHp/9qhE6hLLwT73UAIwlGYYY8TZIudp97gVn9UZBwkABQIgoQcACQAJA+JJAgAAAAAACgYAAQALDBEBAQwCAAIMAgAAACChBwAAAAAADQYAAxITCgwQLz6brIPNJclgT/MCAAAAAA0dEwoMABQNDRURDQsWFw8LBAUBAAYYAxIZBxobDhBv+MaekeF1h8gCAAAAJVmzXNQeqLXtmQ96Ny8FSKvJkCccynUZZOnt+HH22gShWlgbZIAN/5QP1sbTfKjORT82Iy8UPHVJ6KEUKLRU3QIXMw8bAABaQQAAAAAIYE/zAgAAAAADwkFyzCQAAADoAwAADAIACAwCAAAAxdwBAAAAAAABg4sL5A9FV+sVlm7jTSBReURrdqAXwtC1s9CQorJ6bPwCZIMLBrgFCgEdRj1bXFo=",
+      "own_keys": [
+        "FakeWa11et1111111111111111111111111111111111"
+      ],
+      "loaded_writable": [
+        "AVmoTthdrX6tKt4nDjco2D775W2YK3sDhxPcMmzUAmTY",
+        "3BpXnfJaUTiwXnJNe7Ej1rcbzqTTQUvLShZaWazebsVR"
+      ],
+      "loaded_readonly": [
+        "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+        "So11111111111111111111111111111111111111112",
+        "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+        "8xeaWCsJYxRoudEZGJWURdfrtFhLYZz9b4iHJnW5tb3d",
+        "Sysvar1nstructions1111111111111111111111111",
+        "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P",
+        "4wTV1YmiEkRvAtNtsSGPtUrqRYQMe5SKy2uB4Jjaxnjf",
+        "Ce6TQqeHC9p8KetsN6JsjHK7UTZk7nasjjnr7XxXp9F1",
+        "Hq2wp8uJ9jCPsYgNHex8RtqdvMPfVGoYwjvF1ATiwn2Y",
+        "8Wf5TiAheLUqBrKXeYg2JtAFFMWtKdG2BSFgqUcPVwTt",
+        "pfeeUxB6jkeY1Hxd7CsFCAjcbHA9rWtchMGdZ6VojVZ"
+      ],
+      "contacts": [],
+      "render": true
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "actions": [
+        {
+          "instruction": 3,
+          "summary": {
+            "id": "system-transfer-summary",
+            "parts": [
+              {
+                "text": "Transfer "
+              },
+              {
+                "text": "0.0005 SOL",
+                "value": {
+                  "type": "amount",
+                  "value": {
+                    "asset": {
+                      "decimals": 9,
+                      "description": null,
+                      "id": "native",
+                      "symbol": "SOL",
+                      "trust": "fact"
+                    },
+                    "bound": "exact",
+                    "note": null,
+                    "units": "500000"
+                  }
+                }
+              },
+              {
+                "text": " from "
+              },
+              {
+                "short": {
+                  "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "fact",
+                  "stand_in": null
+                },
+                "text": "8Aet…tiTo"
+              },
+              {
+                "text": " to "
+              },
+              {
+                "short": {
+                  "address": "879ArayuxbYjBhpUe4QCx8nqaAKjiwCG1hFiJo6zMGsA",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "fact",
+                  "stand_in": null
+                },
+                "text": "879A…MGsA"
+              }
+            ],
+            "text": "Transfer 0.0005 SOL from 8Aet…tiTo to 879A…MGsA"
+          }
+        },
+        {
+          "instruction": 4,
+          "summary": {
+            "id": null,
+            "parts": [
+              {
+                "text": "Wrap "
+              },
+              {
+                "text": "0.0495 SOL",
+                "value": {
+                  "type": "amount",
+                  "value": {
+                    "asset": {
+                      "decimals": 9,
+                      "description": null,
+                      "id": "native",
+                      "symbol": "SOL",
+                      "trust": "fact"
+                    },
+                    "bound": "exact",
+                    "note": null,
+                    "units": "49500000"
+                  }
+                }
+              },
+              {
+                "text": " into wrapped SOL account "
+              },
+              {
+                "text": "4hJnan1NC4BuwPSn41WAQ7yG3zMK5JfXzDiq8jw2VH6R",
+                "value": {
+                  "type": "address",
+                  "value": {
+                    "address": "4hJnan1NC4BuwPSn41WAQ7yG3zMK5JfXzDiq8jw2VH6R",
+                    "is_self": false,
+                    "label": null,
+                    "label_trust": "fact",
+                    "stand_in": null
+                  }
+                }
+              },
+              {
+                "text": " via DFlow"
+              }
+            ],
+            "text": "Wrap 0.0495 SOL into wrapped SOL account 4hJnan1NC4BuwPSn41WAQ7yG3zMK5JfXzDiq8jw2VH6R via DFlow"
+          }
+        },
+        {
+          "instruction": 5,
+          "summary": {
+            "id": "swap-summary",
+            "parts": [
+              {
+                "text": "Swap "
+              },
+              {
+                "text": "≤ 0.0495 SOL",
+                "value": {
+                  "type": "amount",
+                  "value": {
+                    "asset": {
+                      "decimals": 9,
+                      "description": null,
+                      "id": "native",
+                      "symbol": "SOL",
+                      "trust": "fact"
+                    },
+                    "bound": "at_most",
+                    "note": null,
+                    "units": "49500000"
+                  }
+                }
+              },
+              {
+                "text": " for "
+              },
+              {
+                "text": "≥ 142,243,976,392 raw units of unverified token HMYd…pump",
+                "value": {
+                  "type": "amount",
+                  "value": {
+                    "asset": {
+                      "decimals": null,
+                      "description": null,
+                      "id": "HMYd9tosnUXuNHmq7pXmoePRVBLBBjA3JBfydq6upump",
+                      "symbol": null,
+                      "trust": "fact"
+                    },
+                    "bound": "at_least",
+                    "note": null,
+                    "units": "142243976392"
+                  }
+                }
+              },
+              {
+                "text": " via "
+              },
+              {
+                "text": "DFlow",
+                "value": {
+                  "type": "text",
+                  "value": "DFlow"
+                }
+              }
+            ],
+            "text": "Swap ≤ 0.0495 SOL for ≥ 142,243,976,392 raw units of unverified token HMYd…pump via DFlow"
+          }
+        }
+      ],
+      "chain": "solana",
+      "effects": [
+        {
+          "message": {
+            "id": "effect-transfer",
+            "parts": [
+              {
+                "text": "Transfer "
+              },
+              {
+                "text": "0.0005 SOL",
+                "value": {
+                  "type": "amount",
+                  "value": {
+                    "asset": {
+                      "decimals": 9,
+                      "description": null,
+                      "id": "native",
+                      "symbol": "SOL",
+                      "trust": "fact"
+                    },
+                    "bound": "exact",
+                    "note": null,
+                    "units": "500000"
+                  }
+                }
+              },
+              {
+                "text": " from "
+              },
+              {
+                "text": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+                "value": {
+                  "type": "address",
+                  "value": {
+                    "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+                    "is_self": false,
+                    "label": null,
+                    "label_trust": "fact",
+                    "stand_in": null
+                  }
+                }
+              },
+              {
+                "text": " to "
+              },
+              {
+                "text": "879ArayuxbYjBhpUe4QCx8nqaAKjiwCG1hFiJo6zMGsA",
+                "value": {
+                  "type": "address",
+                  "value": {
+                    "address": "879ArayuxbYjBhpUe4QCx8nqaAKjiwCG1hFiJo6zMGsA",
+                    "is_self": false,
+                    "label": null,
+                    "label_trust": "fact",
+                    "stand_in": null
+                  }
+                }
+              }
+            ],
+            "text": "Transfer 0.0005 SOL from 8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo to 879ArayuxbYjBhpUe4QCx8nqaAKjiwCG1hFiJo6zMGsA"
+          },
+          "type": "transfer",
+          "value": {
+            "amount": {
+              "asset": {
+                "decimals": 9,
+                "description": null,
+                "id": "native",
+                "symbol": "SOL",
+                "trust": "fact"
+              },
+              "bound": "exact",
+              "note": null,
+              "units": "500000"
+            },
+            "from": {
+              "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+              "is_self": false,
+              "label": null,
+              "label_trust": "fact",
+              "stand_in": null
+            },
+            "to": {
+              "address": "879ArayuxbYjBhpUe4QCx8nqaAKjiwCG1hFiJo6zMGsA",
+              "is_self": false,
+              "label": null,
+              "label_trust": "fact",
+              "stand_in": null
+            }
+          }
+        },
+        {
+          "message": {
+            "id": "effect-transfer",
+            "parts": [
+              {
+                "text": "Transfer "
+              },
+              {
+                "text": "0.0495 SOL",
+                "value": {
+                  "type": "amount",
+                  "value": {
+                    "asset": {
+                      "decimals": 9,
+                      "description": null,
+                      "id": "native",
+                      "symbol": "SOL",
+                      "trust": "fact"
+                    },
+                    "bound": "exact",
+                    "note": null,
+                    "units": "49500000"
+                  }
+                }
+              },
+              {
+                "text": " from "
+              },
+              {
+                "text": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+                "value": {
+                  "type": "address",
+                  "value": {
+                    "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+                    "is_self": false,
+                    "label": null,
+                    "label_trust": "fact",
+                    "stand_in": null
+                  }
+                }
+              },
+              {
+                "text": " to "
+              },
+              {
+                "text": "4hJnan1NC4BuwPSn41WAQ7yG3zMK5JfXzDiq8jw2VH6R",
+                "value": {
+                  "type": "address",
+                  "value": {
+                    "address": "4hJnan1NC4BuwPSn41WAQ7yG3zMK5JfXzDiq8jw2VH6R",
+                    "is_self": false,
+                    "label": null,
+                    "label_trust": "fact",
+                    "stand_in": null
+                  }
+                }
+              }
+            ],
+            "text": "Transfer 0.0495 SOL from 8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo to 4hJnan1NC4BuwPSn41WAQ7yG3zMK5JfXzDiq8jw2VH6R"
+          },
+          "type": "transfer",
+          "value": {
+            "amount": {
+              "asset": {
+                "decimals": 9,
+                "description": null,
+                "id": "native",
+                "symbol": "SOL",
+                "trust": "fact"
+              },
+              "bound": "exact",
+              "note": null,
+              "units": "49500000"
+            },
+            "from": {
+              "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+              "is_self": false,
+              "label": null,
+              "label_trust": "fact",
+              "stand_in": null
+            },
+            "to": {
+              "address": "4hJnan1NC4BuwPSn41WAQ7yG3zMK5JfXzDiq8jw2VH6R",
+              "is_self": false,
+              "label": null,
+              "label_trust": "fact",
+              "stand_in": null
+            }
+          }
+        },
+        {
+          "message": {
+            "id": null,
+            "parts": [
+              {
+                "text": "Create the wrapped SOL account first if it does not exist, as the sender's associated token account and at the sender's cost"
+              }
+            ],
+            "text": "Create the wrapped SOL account first if it does not exist, as the sender's associated token account and at the sender's cost"
+          },
+          "type": "other",
+          "value": {
+            "description": {
+              "id": null,
+              "parts": [
+                {
+                  "text": "Create the wrapped SOL account first if it does not exist, as the sender's associated token account and at the sender's cost"
+                }
+              ],
+              "text": "Create the wrapped SOL account first if it does not exist, as the sender's associated token account and at the sender's cost"
+            }
+          }
+        },
+        {
+          "message": {
+            "id": "effect-transfer",
+            "parts": [
+              {
+                "text": "Transfer "
+              },
+              {
+                "text": "≤ 0.0495 SOL",
+                "value": {
+                  "type": "amount",
+                  "value": {
+                    "asset": {
+                      "decimals": 9,
+                      "description": null,
+                      "id": "native",
+                      "symbol": "SOL",
+                      "trust": "fact"
+                    },
+                    "bound": "at_most",
+                    "note": null,
+                    "units": "49500000"
+                  }
+                }
+              },
+              {
+                "text": " from "
+              },
+              {
+                "text": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+                "value": {
+                  "type": "address",
+                  "value": {
+                    "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+                    "is_self": false,
+                    "label": null,
+                    "label_trust": "fact",
+                    "stand_in": null
+                  }
+                }
+              },
+              {
+                "text": " to "
+              },
+              {
+                "text": "DFlow Aggregator (DF1o…7QBH)",
+                "value": {
+                  "type": "address",
+                  "value": {
+                    "address": "DF1ow4tspfHX9JwWJsAb9epbkA8hmpSEAtxXy1V27QBH",
+                    "is_self": false,
+                    "label": {
+                      "id": "accounts-name",
+                      "parts": [
+                        {
+                          "text": "DFlow Aggregator",
+                          "value": {
+                            "type": "text",
+                            "value": "DFlow Aggregator"
+                          }
+                        }
+                      ],
+                      "text": "DFlow Aggregator"
+                    },
+                    "label_trust": "verified",
+                    "stand_in": null
+                  }
+                }
+              }
+            ],
+            "text": "Transfer ≤ 0.0495 SOL from 8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo to DFlow Aggregator (DF1o…7QBH)"
+          },
+          "type": "transfer",
+          "value": {
+            "amount": {
+              "asset": {
+                "decimals": 9,
+                "description": null,
+                "id": "native",
+                "symbol": "SOL",
+                "trust": "fact"
+              },
+              "bound": "at_most",
+              "note": null,
+              "units": "49500000"
+            },
+            "from": {
+              "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+              "is_self": false,
+              "label": null,
+              "label_trust": "fact",
+              "stand_in": null
+            },
+            "to": {
+              "address": "DF1ow4tspfHX9JwWJsAb9epbkA8hmpSEAtxXy1V27QBH",
+              "is_self": false,
+              "label": {
+                "id": "accounts-name",
+                "parts": [
+                  {
+                    "text": "DFlow Aggregator",
+                    "value": {
+                      "type": "text",
+                      "value": "DFlow Aggregator"
+                    }
+                  }
+                ],
+                "text": "DFlow Aggregator"
+              },
+              "label_trust": "verified",
+              "stand_in": null
+            }
+          }
+        },
+        {
+          "message": {
+            "id": "effect-transfer",
+            "parts": [
+              {
+                "text": "Transfer "
+              },
+              {
+                "text": "≥ 142,243,976,392 raw units of unverified token HMYd…pump",
+                "value": {
+                  "type": "amount",
+                  "value": {
+                    "asset": {
+                      "decimals": null,
+                      "description": null,
+                      "id": "HMYd9tosnUXuNHmq7pXmoePRVBLBBjA3JBfydq6upump",
+                      "symbol": null,
+                      "trust": "fact"
+                    },
+                    "bound": "at_least",
+                    "note": null,
+                    "units": "142243976392"
+                  }
+                }
+              },
+              {
+                "text": " from "
+              },
+              {
+                "text": "DFlow Aggregator (DF1o…7QBH)",
+                "value": {
+                  "type": "address",
+                  "value": {
+                    "address": "DF1ow4tspfHX9JwWJsAb9epbkA8hmpSEAtxXy1V27QBH",
+                    "is_self": false,
+                    "label": {
+                      "id": "accounts-name",
+                      "parts": [
+                        {
+                          "text": "DFlow Aggregator",
+                          "value": {
+                            "type": "text",
+                            "value": "DFlow Aggregator"
+                          }
+                        }
+                      ],
+                      "text": "DFlow Aggregator"
+                    },
+                    "label_trust": "verified",
+                    "stand_in": null
+                  }
+                }
+              },
+              {
+                "text": " to "
+              },
+              {
+                "text": "The authority's token account (9SQZ…GxVU)",
+                "value": {
+                  "type": "address",
+                  "value": {
+                    "address": "9SQZUTsLbv469tCRm9BFo64vpUiWToZukM4WeNdDGxVU",
+                    "is_self": false,
+                    "label": {
+                      "id": "dflow-authority-token-account",
+                      "parts": [
+                        {
+                          "text": "The authority's token account"
+                        }
+                      ],
+                      "text": "The authority's token account"
+                    },
+                    "label_trust": "verified",
+                    "stand_in": null
+                  }
+                }
+              }
+            ],
+            "text": "Transfer ≥ 142,243,976,392 raw units of unverified token HMYd…pump from DFlow Aggregator (DF1o…7QBH) to The authority's token account (9SQZ…GxVU)"
+          },
+          "type": "transfer",
+          "value": {
+            "amount": {
+              "asset": {
+                "decimals": null,
+                "description": null,
+                "id": "HMYd9tosnUXuNHmq7pXmoePRVBLBBjA3JBfydq6upump",
+                "symbol": null,
+                "trust": "fact"
+              },
+              "bound": "at_least",
+              "note": null,
+              "units": "142243976392"
+            },
+            "from": {
+              "address": "DF1ow4tspfHX9JwWJsAb9epbkA8hmpSEAtxXy1V27QBH",
+              "is_self": false,
+              "label": {
+                "id": "accounts-name",
+                "parts": [
+                  {
+                    "text": "DFlow Aggregator",
+                    "value": {
+                      "type": "text",
+                      "value": "DFlow Aggregator"
+                    }
+                  }
+                ],
+                "text": "DFlow Aggregator"
+              },
+              "label_trust": "verified",
+              "stand_in": null
+            },
+            "to": {
+              "address": "9SQZUTsLbv469tCRm9BFo64vpUiWToZukM4WeNdDGxVU",
+              "is_self": false,
+              "label": {
+                "id": "dflow-authority-token-account",
+                "parts": [
+                  {
+                    "text": "The authority's token account"
+                  }
+                ],
+                "text": "The authority's token account"
+              },
+              "label_trust": "verified",
+              "stand_in": null
+            }
+          }
+        },
+        {
+          "message": {
+            "id": "effect-create-deposit-if-missing",
+            "parts": [
+              {
+                "text": "Create "
+              },
+              {
+                "text": "8Aet…tiTo's token account (9SQZ…GxVU)",
+                "value": {
+                  "type": "address",
+                  "value": {
+                    "address": "9SQZUTsLbv469tCRm9BFo64vpUiWToZukM4WeNdDGxVU",
+                    "is_self": false,
+                    "label": {
+                      "id": "accounts-others-unnamed-token",
+                      "parts": [
+                        {
+                          "short": {
+                            "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+                            "is_self": false,
+                            "label": null,
+                            "label_trust": "fact",
+                            "stand_in": null
+                          },
+                          "text": "8Aet…tiTo"
+                        },
+                        {
+                          "text": "'s token account"
+                        }
+                      ],
+                      "text": "8Aet…tiTo's token account"
+                    },
+                    "label_trust": "verified",
+                    "stand_in": null
+                  }
+                }
+              },
+              {
+                "text": ", managed by "
+              },
+              {
+                "text": "Token-2022 program (Toke…xuEb)",
+                "value": {
+                  "type": "address",
+                  "value": {
+                    "address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+                    "is_self": false,
+                    "label": {
+                      "id": "accounts-name",
+                      "parts": [
+                        {
+                          "text": "Token-2022 program",
+                          "value": {
+                            "type": "text",
+                            "value": "Token-2022 program"
+                          }
+                        }
+                      ],
+                      "text": "Token-2022 program"
+                    },
+                    "label_trust": "verified",
+                    "stand_in": null
+                  }
+                }
+              },
+              {
+                "text": ", depositing "
+              },
+              {
+                "text": "0.00151384 SOL",
+                "value": {
+                  "type": "amount",
+                  "value": {
+                    "asset": {
+                      "decimals": 9,
+                      "description": null,
+                      "id": "native",
+                      "symbol": "SOL",
+                      "trust": "fact"
+                    },
+                    "bound": "exact",
+                    "note": null,
+                    "units": "1513840"
+                  }
+                }
+              },
+              {
+                "text": " unless it already exists"
+              }
+            ],
+            "text": "Create 8Aet…tiTo's token account (9SQZ…GxVU), managed by Token-2022 program (Toke…xuEb), depositing 0.00151384 SOL unless it already exists"
+          },
+          "type": "create",
+          "value": {
+            "account": {
+              "address": "9SQZUTsLbv469tCRm9BFo64vpUiWToZukM4WeNdDGxVU",
+              "is_self": false,
+              "label": {
+                "id": "accounts-others-unnamed-token",
+                "parts": [
+                  {
+                    "short": {
+                      "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+                      "is_self": false,
+                      "label": null,
+                      "label_trust": "fact",
+                      "stand_in": null
+                    },
+                    "text": "8Aet…tiTo"
+                  },
+                  {
+                    "text": "'s token account"
+                  }
+                ],
+                "text": "8Aet…tiTo's token account"
+              },
+              "label_trust": "verified",
+              "stand_in": null
+            },
+            "deposit": {
+              "asset": {
+                "decimals": 9,
+                "description": null,
+                "id": "native",
+                "symbol": "SOL",
+                "trust": "fact"
+              },
+              "bound": "exact",
+              "note": null,
+              "units": "1513840"
+            },
+            "if_missing": true,
+            "owner": {
+              "address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+              "is_self": false,
+              "label": {
+                "id": "accounts-name",
+                "parts": [
+                  {
+                    "text": "Token-2022 program",
+                    "value": {
+                      "type": "text",
+                      "value": "Token-2022 program"
+                    }
+                  }
+                ],
+                "text": "Token-2022 program"
+              },
+              "label_trust": "verified",
+              "stand_in": null
+            }
+          }
+        },
+        {
+          "message": {
+            "id": "effect-transfer",
+            "parts": [
+              {
+                "text": "Transfer "
+              },
+              {
+                "text": "0.000122053 SOL",
+                "value": {
+                  "type": "amount",
+                  "value": {
+                    "asset": {
+                      "decimals": 9,
+                      "description": null,
+                      "id": "native",
+                      "symbol": "SOL",
+                      "trust": "fact"
+                    },
+                    "bound": "exact",
+                    "note": null,
+                    "units": "122053"
+                  }
+                }
+              },
+              {
+                "text": " from "
+              },
+              {
+                "text": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+                "value": {
+                  "type": "address",
+                  "value": {
+                    "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+                    "is_self": false,
+                    "label": null,
+                    "label_trust": "fact",
+                    "stand_in": null
+                  }
+                }
+              },
+              {
+                "text": " to "
+              },
+              {
+                "text": "Jito tip account (96gY…rZU5)",
+                "value": {
+                  "type": "address",
+                  "value": {
+                    "address": "96gYZGLnJYVFmbjzopPSU6QiEV5fGqZNyN9nmNhvrZU5",
+                    "is_self": false,
+                    "label": {
+                      "id": "accounts-jito-tip",
+                      "parts": [
+                        {
+                          "text": "Jito tip account"
+                        }
+                      ],
+                      "text": "Jito tip account"
+                    },
+                    "label_trust": "verified",
+                    "stand_in": null
+                  }
+                }
+              }
+            ],
+            "text": "Transfer 0.000122053 SOL from 8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo to Jito tip account (96gY…rZU5)"
+          },
+          "type": "transfer",
+          "value": {
+            "amount": {
+              "asset": {
+                "decimals": 9,
+                "description": null,
+                "id": "native",
+                "symbol": "SOL",
+                "trust": "fact"
+              },
+              "bound": "exact",
+              "note": null,
+              "units": "122053"
+            },
+            "from": {
+              "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+              "is_self": false,
+              "label": null,
+              "label_trust": "fact",
+              "stand_in": null
+            },
+            "to": {
+              "address": "96gYZGLnJYVFmbjzopPSU6QiEV5fGqZNyN9nmNhvrZU5",
+              "is_self": false,
+              "label": {
+                "id": "accounts-jito-tip",
+                "parts": [
+                  {
+                    "text": "Jito tip account"
+                  }
+                ],
+                "text": "Jito tip account"
+              },
+              "label_trust": "verified",
+              "stand_in": null
+            }
+          }
+        },
+        {
+          "message": {
+            "id": "effect-fee",
+            "parts": [
+              {
+                "text": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+                "value": {
+                  "type": "address",
+                  "value": {
+                    "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+                    "is_self": false,
+                    "label": null,
+                    "label_trust": "fact",
+                    "stand_in": null
+                  }
+                }
+              },
+              {
+                "text": " pays a fee of "
+              },
+              {
+                "text": "0.000079993 SOL",
+                "value": {
+                  "type": "amount",
+                  "value": {
+                    "asset": {
+                      "decimals": 9,
+                      "description": null,
+                      "id": "native",
+                      "symbol": "SOL",
+                      "trust": "fact"
+                    },
+                    "bound": "exact",
+                    "note": null,
+                    "units": "79993"
+                  }
+                }
+              }
+            ],
+            "text": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo pays a fee of 0.000079993 SOL"
+          },
+          "type": "fee",
+          "value": {
+            "amount": {
+              "asset": {
+                "decimals": 9,
+                "description": null,
+                "id": "native",
+                "symbol": "SOL",
+                "trust": "fact"
+              },
+              "bound": "exact",
+              "note": null,
+              "units": "79993"
+            },
+            "payer": {
+              "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+              "is_self": false,
+              "label": null,
+              "label_trust": "fact",
+              "stand_in": null
+            }
+          }
+        },
+        {
+          "message": {
+            "id": "effect-recent-blockhash",
+            "parts": [
+              {
+                "text": "Valid for about a minute (recent blockhash)"
+              }
+            ],
+            "text": "Valid for about a minute (recent blockhash)"
+          },
+          "type": "lifetime",
+          "value": {
+            "type": "recent_blockhash"
+          }
+        }
+      ],
+      "findings": [
+        {
+          "code": "SWAP_AUTHORITY_NOT_YOU",
+          "instruction": 5,
+          "message": {
+            "id": "swap-authority-not-you",
+            "parts": [
+              {
+                "text": "The swap spends from token accounts you do not control"
+              }
+            ],
+            "text": "The swap spends from token accounts you do not control"
+          },
+          "severity": "high"
+        },
+        {
+          "code": "FEE_PAID_BY_OTHER",
+          "instruction": null,
+          "message": {
+            "id": "explain-fee-paid-by-other",
+            "parts": [
+              {
+                "text": "The fee is paid by "
+              },
+              {
+                "short": {
+                  "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "fact",
+                  "stand_in": null
+                },
+                "text": "8Aet…tiTo"
+              },
+              {
+                "text": ", not by you"
+              }
+            ],
+            "text": "The fee is paid by 8Aet…tiTo, not by you"
+          },
+          "severity": "info"
+        }
+      ],
+      "raw": {
+        "digest": "b892642d9d9599ea782feb6bffdc9939bf6aa2c699eb2c67b6e5d3463baa7682",
+        "format": "solana v0"
+      },
+      "schema": "signlens-explanation/2",
+      "sections": [
+        {
+          "collapsed": false,
+          "fields": [
+            {
+              "help": null,
+              "label": {
+                "id": "label-amount",
+                "parts": [
+                  {
+                    "text": "Amount"
+                  }
+                ],
+                "text": "Amount"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "amount",
+                "value": {
+                  "asset": {
+                    "decimals": 9,
+                    "description": null,
+                    "id": "native",
+                    "symbol": "SOL",
+                    "trust": "fact"
+                  },
+                  "bound": "exact",
+                  "note": null,
+                  "units": "500000"
+                }
+              }
+            },
+            {
+              "help": null,
+              "label": {
+                "id": "label-from",
+                "parts": [
+                  {
+                    "text": "From"
+                  }
+                ],
+                "text": "From"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "fact",
+                  "stand_in": null
+                }
+              }
+            },
+            {
+              "help": null,
+              "label": {
+                "id": "label-to",
+                "parts": [
+                  {
+                    "text": "To"
+                  }
+                ],
+                "text": "To"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "879ArayuxbYjBhpUe4QCx8nqaAKjiwCG1hFiJo6zMGsA",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "fact",
+                  "stand_in": null
+                }
+              }
+            }
+          ],
+          "kind": {
+            "type": "instruction",
+            "value": {
+              "index": 3
+            }
+          },
+          "subtitle": {
+            "id": "decode-program-verified",
+            "parts": [
+              {
+                "text": "System program",
+                "value": {
+                  "type": "text",
+                  "value": "System program"
+                }
+              }
+            ],
+            "text": "System program"
+          },
+          "title": {
+            "id": "system-transfer-title",
+            "parts": [
+              {
+                "text": "Transfer"
+              }
+            ],
+            "text": "Transfer"
+          }
+        },
+        {
+          "collapsed": false,
+          "fields": [
+            {
+              "help": {
+                "id": null,
+                "parts": [
+                  {
+                    "text": "What moves."
+                  }
+                ],
+                "text": "What moves."
+              },
+              "label": {
+                "id": null,
+                "parts": [
+                  {
+                    "text": "Amount"
+                  }
+                ],
+                "text": "Amount"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "amount",
+                "value": {
+                  "asset": {
+                    "decimals": 9,
+                    "description": null,
+                    "id": "native",
+                    "symbol": "SOL",
+                    "trust": "fact"
+                  },
+                  "bound": "exact",
+                  "note": null,
+                  "units": "49500000"
+                }
+              }
+            },
+            {
+              "help": {
+                "id": null,
+                "parts": [
+                  {
+                    "text": "The wallet the SOL leaves."
+                  }
+                ],
+                "text": "The wallet the SOL leaves."
+              },
+              "label": {
+                "id": null,
+                "parts": [
+                  {
+                    "text": "From"
+                  }
+                ],
+                "text": "From"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "fact",
+                  "stand_in": null
+                }
+              }
+            },
+            {
+              "help": {
+                "id": null,
+                "parts": [
+                  {
+                    "text": "A token account holding SOL as a token (wSOL), so programs can treat it like any other token."
+                  }
+                ],
+                "text": "A token account holding SOL as a token (wSOL), so programs can treat it like any other token."
+              },
+              "label": {
+                "id": null,
+                "parts": [
+                  {
+                    "text": "Wrapped SOL account"
+                  }
+                ],
+                "text": "Wrapped SOL account"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "4hJnan1NC4BuwPSn41WAQ7yG3zMK5JfXzDiq8jw2VH6R",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "fact",
+                  "stand_in": null
+                }
+              }
+            }
+          ],
+          "kind": {
+            "type": "instruction",
+            "value": {
+              "index": 4
+            }
+          },
+          "subtitle": {
+            "id": "descriptor-subtitle",
+            "parts": [
+              {
+                "text": "DFlow Aggregator",
+                "value": {
+                  "type": "text",
+                  "value": "DFlow Aggregator"
+                }
+              },
+              {
+                "text": " (descriptor reviewed "
+              },
+              {
+                "text": "2026-10-17",
+                "value": {
+                  "type": "text",
+                  "value": "2026-10-17"
+                }
+              },
+              {
+                "text": ", upgradeable by "
+              },
+              {
+                "short": {
+                  "address": "9uo2iJKJkmiYwy5MrkrbGQXbPqwHXqvQaUqxhCkowgsh",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "fact",
+                  "stand_in": null
+                },
+                "text": "9uo2…wgsh"
+              },
+              {
+                "text": ")"
+              }
+            ],
+            "text": "DFlow Aggregator (descriptor reviewed 2026-10-17, upgradeable by 9uo2…wgsh)"
+          },
+          "title": {
+            "id": null,
+            "parts": [
+              {
+                "text": "Wrap SOL"
+              }
+            ],
+            "text": "Wrap SOL"
+          }
+        },
+        {
+          "collapsed": false,
+          "fields": [
+            {
+              "help": null,
+              "label": {
+                "id": "label-send",
+                "parts": [
+                  {
+                    "text": "Send"
+                  }
+                ],
+                "text": "Send"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "amount",
+                "value": {
+                  "asset": {
+                    "decimals": 9,
+                    "description": null,
+                    "id": "native",
+                    "symbol": "SOL",
+                    "trust": "fact"
+                  },
+                  "bound": "at_most",
+                  "note": null,
+                  "units": "49500000"
+                }
+              }
+            },
+            {
+              "help": null,
+              "label": {
+                "id": "label-receive",
+                "parts": [
+                  {
+                    "text": "Receive"
+                  }
+                ],
+                "text": "Receive"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "amount",
+                "value": {
+                  "asset": {
+                    "decimals": null,
+                    "description": null,
+                    "id": "HMYd9tosnUXuNHmq7pXmoePRVBLBBjA3JBfydq6upump",
+                    "symbol": null,
+                    "trust": "fact"
+                  },
+                  "bound": "at_least",
+                  "note": null,
+                  "units": "142243976392"
+                }
+              }
+            },
+            {
+              "help": null,
+              "label": {
+                "id": "label-quoted",
+                "parts": [
+                  {
+                    "text": "Quoted"
+                  }
+                ],
+                "text": "Quoted"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "amount",
+                "value": {
+                  "asset": {
+                    "decimals": null,
+                    "description": null,
+                    "id": "HMYd9tosnUXuNHmq7pXmoePRVBLBBjA3JBfydq6upump",
+                    "symbol": null,
+                    "trust": "fact"
+                  },
+                  "bound": "exact",
+                  "note": null,
+                  "units": "158048862658"
+                }
+              }
+            },
+            {
+              "help": null,
+              "label": {
+                "id": "label-max-slippage",
+                "parts": [
+                  {
+                    "text": "Max slippage"
+                  }
+                ],
+                "text": "Max slippage"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "basis_points",
+                "value": 1000
+              }
+            },
+            {
+              "help": null,
+              "label": {
+                "id": "label-route",
+                "parts": [
+                  {
+                    "text": "Route"
+                  }
+                ],
+                "text": "Route"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "list",
+                "value": [
+                  {
+                    "type": "words",
+                    "value": {
+                      "id": "dflow-route-leg",
+                      "parts": [
+                        {
+                          "text": "PumpFunBuy",
+                          "value": {
+                            "type": "text",
+                            "value": "PumpFunBuy"
+                          }
+                        },
+                        {
+                          "text": " ("
+                        },
+                        {
+                          "text": "49,500,000",
+                          "value": {
+                            "type": "text",
+                            "value": "49,500,000"
+                          }
+                        },
+                        {
+                          "text": " raw units)"
+                        }
+                      ],
+                      "text": "PumpFunBuy (49,500,000 raw units)"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "help": null,
+              "label": {
+                "id": "label-to-account",
+                "parts": [
+                  {
+                    "text": "To account"
+                  }
+                ],
+                "text": "To account"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "9SQZUTsLbv469tCRm9BFo64vpUiWToZukM4WeNdDGxVU",
+                  "is_self": false,
+                  "label": {
+                    "id": "dflow-authority-token-account",
+                    "parts": [
+                      {
+                        "text": "The authority's token account"
+                      }
+                    ],
+                    "text": "The authority's token account"
+                  },
+                  "label_trust": "verified",
+                  "stand_in": null
+                }
+              }
+            },
+            {
+              "help": null,
+              "label": {
+                "id": "label-instruction",
+                "parts": [
+                  {
+                    "text": "Instruction"
+                  }
+                ],
+                "text": "Instruction"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "text",
+                "value": "swap"
+              }
+            }
+          ],
+          "kind": {
+            "type": "instruction",
+            "value": {
+              "index": 5
+            }
+          },
+          "subtitle": {
+            "id": "decode-program-verified",
+            "parts": [
+              {
+                "text": "DFlow Aggregator",
+                "value": {
+                  "type": "text",
+                  "value": "DFlow Aggregator"
+                }
+              }
+            ],
+            "text": "DFlow Aggregator"
+          },
+          "title": {
+            "id": "swap-title",
+            "parts": [
+              {
+                "text": "Swap"
+              }
+            ],
+            "text": "Swap"
+          }
+        },
+        {
+          "collapsed": true,
+          "fields": [
+            {
+              "help": null,
+              "label": {
+                "id": "label-compute-unit-limit",
+                "parts": [
+                  {
+                    "text": "Compute unit limit"
+                  }
+                ],
+                "text": "Compute unit limit"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "integer",
+                "value": "500000"
+              }
+            },
+            {
+              "help": null,
+              "label": {
+                "id": "label-compute-unit-price",
+                "parts": [
+                  {
+                    "text": "Compute unit price"
+                  }
+                ],
+                "text": "Compute unit price"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "words",
+                "value": {
+                  "id": "compute-budget-price",
+                  "parts": [
+                    {
+                      "text": "149986",
+                      "value": {
+                        "type": "integer",
+                        "value": "149986"
+                      }
+                    },
+                    {
+                      "text": " micro-lamports per unit"
+                    }
+                  ],
+                  "text": "149986 micro-lamports per unit"
+                }
+              }
+            },
+            {
+              "help": null,
+              "label": {
+                "id": "explain-housekeeping-label",
+                "parts": [
+                  {
+                    "text": "Create token account if missing: Token account"
+                  }
+                ],
+                "text": "Create token account if missing: Token account"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "9SQZUTsLbv469tCRm9BFo64vpUiWToZukM4WeNdDGxVU",
+                  "is_self": false,
+                  "label": {
+                    "id": "accounts-others-unnamed-token",
+                    "parts": [
+                      {
+                        "short": {
+                          "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+                          "is_self": false,
+                          "label": null,
+                          "label_trust": "fact",
+                          "stand_in": null
+                        },
+                        "text": "8Aet…tiTo"
+                      },
+                      {
+                        "text": "'s token account"
+                      }
+                    ],
+                    "text": "8Aet…tiTo's token account"
+                  },
+                  "label_trust": "verified",
+                  "stand_in": null
+                }
+              }
+            },
+            {
+              "help": null,
+              "label": {
+                "id": "explain-housekeeping-label",
+                "parts": [
+                  {
+                    "text": "Create token account if missing: Owner"
+                  }
+                ],
+                "text": "Create token account if missing: Owner"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "fact",
+                  "stand_in": null
+                }
+              }
+            },
+            {
+              "help": null,
+              "label": {
+                "id": "explain-housekeeping-label",
+                "parts": [
+                  {
+                    "text": "Create token account if missing: Mint"
+                  }
+                ],
+                "text": "Create token account if missing: Mint"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "HMYd9tosnUXuNHmq7pXmoePRVBLBBjA3JBfydq6upump",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "fact",
+                  "stand_in": null
+                }
+              }
+            },
+            {
+              "help": null,
+              "label": {
+                "id": "explain-housekeeping-label",
+                "parts": [
+                  {
+                    "text": "Create token account if missing: Rent paid by"
+                  }
+                ],
+                "text": "Create token account if missing: Rent paid by"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "fact",
+                  "stand_in": null
+                }
+              }
+            },
+            {
+              "help": null,
+              "label": {
+                "id": "explain-housekeeping-label",
+                "parts": [
+                  {
+                    "text": "Create token account if missing: Token program"
+                  }
+                ],
+                "text": "Create token account if missing: Token program"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+                  "is_self": false,
+                  "label": {
+                    "id": "accounts-name",
+                    "parts": [
+                      {
+                        "text": "Token-2022 program",
+                        "value": {
+                          "type": "text",
+                          "value": "Token-2022 program"
+                        }
+                      }
+                    ],
+                    "text": "Token-2022 program"
+                  },
+                  "label_trust": "verified",
+                  "stand_in": null
+                }
+              }
+            },
+            {
+              "help": null,
+              "label": {
+                "id": "explain-housekeeping-label",
+                "parts": [
+                  {
+                    "text": "Jito tip: Amount"
+                  }
+                ],
+                "text": "Jito tip: Amount"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "amount",
+                "value": {
+                  "asset": {
+                    "decimals": 9,
+                    "description": null,
+                    "id": "native",
+                    "symbol": "SOL",
+                    "trust": "fact"
+                  },
+                  "bound": "exact",
+                  "note": null,
+                  "units": "122053"
+                }
+              }
+            },
+            {
+              "help": null,
+              "label": {
+                "id": "explain-housekeeping-label",
+                "parts": [
+                  {
+                    "text": "Jito tip: From"
+                  }
+                ],
+                "text": "Jito tip: From"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "fact",
+                  "stand_in": null
+                }
+              }
+            },
+            {
+              "help": null,
+              "label": {
+                "id": "explain-housekeeping-label",
+                "parts": [
+                  {
+                    "text": "Jito tip: To"
+                  }
+                ],
+                "text": "Jito tip: To"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "96gYZGLnJYVFmbjzopPSU6QiEV5fGqZNyN9nmNhvrZU5",
+                  "is_self": false,
+                  "label": {
+                    "id": "accounts-jito-tip",
+                    "parts": [
+                      {
+                        "text": "Jito tip account"
+                      }
+                    ],
+                    "text": "Jito tip account"
+                  },
+                  "label_trust": "verified",
+                  "stand_in": null
+                }
+              }
+            }
+          ],
+          "kind": {
+            "type": "housekeeping"
+          },
+          "subtitle": null,
+          "title": {
+            "id": "explain-also",
+            "parts": [
+              {
+                "text": "Also"
+              }
+            ],
+            "text": "Also"
+          }
+        },
+        {
+          "collapsed": false,
+          "fields": [
+            {
+              "help": null,
+              "label": {
+                "id": "label-fee-payer",
+                "parts": [
+                  {
+                    "text": "Fee payer"
+                  }
+                ],
+                "text": "Fee payer"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "fact",
+                  "stand_in": null
+                }
+              }
+            }
+          ],
+          "kind": {
+            "type": "signers"
+          },
+          "subtitle": null,
+          "title": {
+            "id": "explain-signers",
+            "parts": [
+              {
+                "text": "Signers"
+              }
+            ],
+            "text": "Signers"
+          }
+        },
+        {
+          "collapsed": false,
+          "fields": [
+            {
+              "help": null,
+              "label": {
+                "id": "label-total",
+                "parts": [
+                  {
+                    "text": "Total"
+                  }
+                ],
+                "text": "Total"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "amount",
+                "value": {
+                  "asset": {
+                    "decimals": 9,
+                    "description": null,
+                    "id": "native",
+                    "symbol": "SOL",
+                    "trust": "fact"
+                  },
+                  "bound": "exact",
+                  "note": null,
+                  "units": "79993"
+                }
+              }
+            },
+            {
+              "help": null,
+              "label": {
+                "id": "label-base",
+                "parts": [
+                  {
+                    "text": "Base"
+                  }
+                ],
+                "text": "Base"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "amount",
+                "value": {
+                  "asset": {
+                    "decimals": 9,
+                    "description": null,
+                    "id": "native",
+                    "symbol": "SOL",
+                    "trust": "fact"
+                  },
+                  "bound": "exact",
+                  "note": null,
+                  "units": "5000"
+                }
+              }
+            },
+            {
+              "help": null,
+              "label": {
+                "id": "label-priority",
+                "parts": [
+                  {
+                    "text": "Priority"
+                  }
+                ],
+                "text": "Priority"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "amount",
+                "value": {
+                  "asset": {
+                    "decimals": 9,
+                    "description": null,
+                    "id": "native",
+                    "symbol": "SOL",
+                    "trust": "fact"
+                  },
+                  "bound": "exact",
+                  "note": null,
+                  "units": "74993"
+                }
+              }
+            },
+            {
+              "help": null,
+              "label": {
+                "id": "label-priority-basis",
+                "parts": [
+                  {
+                    "text": "Priority basis"
+                  }
+                ],
+                "text": "Priority basis"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "words",
+                "value": {
+                  "id": "explain-priority-basis",
+                  "parts": [
+                    {
+                      "text": "149986",
+                      "value": {
+                        "type": "integer",
+                        "value": "149986"
+                      }
+                    },
+                    {
+                      "text": " micro-lamports per unit × "
+                    },
+                    {
+                      "text": "500000",
+                      "value": {
+                        "type": "integer",
+                        "value": "500000"
+                      }
+                    },
+                    {
+                      "text": " units requested"
+                    }
+                  ],
+                  "text": "149986 micro-lamports per unit × 500000 units requested"
+                }
+              }
+            },
+            {
+              "help": null,
+              "label": {
+                "id": "label-rent-deposits",
+                "parts": [
+                  {
+                    "text": "Rent deposits"
+                  }
+                ],
+                "text": "Rent deposits"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "words",
+                "value": {
+                  "id": "explain-rent",
+                  "parts": [
+                    {
+                      "text": "up to "
+                    },
+                    {
+                      "text": "0.00151384 SOL",
+                      "value": {
+                        "type": "amount",
+                        "value": {
+                          "asset": {
+                            "decimals": 9,
+                            "description": null,
+                            "id": "native",
+                            "symbol": "SOL",
+                            "trust": "fact"
+                          },
+                          "bound": "exact",
+                          "note": null,
+                          "units": "1513840"
+                        }
+                      }
+                    },
+                    {
+                      "text": ", if the account this transaction creates when missing does not exist yet; refunded to whoever closes the account"
+                    }
+                  ],
+                  "text": "up to 0.00151384 SOL, if the account this transaction creates when missing does not exist yet; refunded to whoever closes the account"
+                }
+              }
+            }
+          ],
+          "kind": {
+            "type": "fees"
+          },
+          "subtitle": null,
+          "title": {
+            "id": "explain-fee",
+            "parts": [
+              {
+                "text": "Fee"
+              }
+            ],
+            "text": "Fee"
+          }
+        },
+        {
+          "collapsed": false,
+          "fields": [
+            {
+              "help": null,
+              "label": {
+                "id": "label-expires",
+                "parts": [
+                  {
+                    "text": "Expires"
+                  }
+                ],
+                "text": "Expires"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "words",
+                "value": {
+                  "id": "explain-expires-soon",
+                  "parts": [
+                    {
+                      "text": "in about a minute (recent blockhash)"
+                    }
+                  ],
+                  "text": "in about a minute (recent blockhash)"
+                }
+              }
+            }
+          ],
+          "kind": {
+            "type": "lifetime"
+          },
+          "subtitle": null,
+          "title": {
+            "id": "explain-validity",
+            "parts": [
+              {
+                "text": "Validity"
+              }
+            ],
+            "text": "Validity"
+          }
+        }
+      ],
+      "summary": {
+        "id": "explain-actions",
+        "parts": [
+          {
+            "text": "3",
+            "value": {
+              "type": "integer",
+              "value": "3"
+            }
+          },
+          {
+            "text": " actions: Transfer "
+          },
+          {
+            "text": "0.0005 SOL",
+            "value": {
+              "type": "amount",
+              "value": {
+                "asset": {
+                  "decimals": 9,
+                  "description": null,
+                  "id": "native",
+                  "symbol": "SOL",
+                  "trust": "fact"
+                },
+                "bound": "exact",
+                "note": null,
+                "units": "500000"
+              }
+            }
+          },
+          {
+            "text": " from "
+          },
+          {
+            "short": {
+              "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+              "is_self": false,
+              "label": null,
+              "label_trust": "fact",
+              "stand_in": null
+            },
+            "text": "8Aet…tiTo"
+          },
+          {
+            "text": " to "
+          },
+          {
+            "short": {
+              "address": "879ArayuxbYjBhpUe4QCx8nqaAKjiwCG1hFiJo6zMGsA",
+              "is_self": false,
+              "label": null,
+              "label_trust": "fact",
+              "stand_in": null
+            },
+            "text": "879A…MGsA"
+          },
+          {
+            "text": "; Wrap "
+          },
+          {
+            "text": "0.0495 SOL",
+            "value": {
+              "type": "amount",
+              "value": {
+                "asset": {
+                  "decimals": 9,
+                  "description": null,
+                  "id": "native",
+                  "symbol": "SOL",
+                  "trust": "fact"
+                },
+                "bound": "exact",
+                "note": null,
+                "units": "49500000"
+              }
+            }
+          },
+          {
+            "text": " into wrapped SOL account "
+          },
+          {
+            "text": "4hJnan1NC4BuwPSn41WAQ7yG3zMK5JfXzDiq8jw2VH6R",
+            "value": {
+              "type": "address",
+              "value": {
+                "address": "4hJnan1NC4BuwPSn41WAQ7yG3zMK5JfXzDiq8jw2VH6R",
+                "is_self": false,
+                "label": null,
+                "label_trust": "fact",
+                "stand_in": null
+              }
+            }
+          },
+          {
+            "text": " via DFlow; Swap "
+          },
+          {
+            "text": "≤ 0.0495 SOL",
+            "value": {
+              "type": "amount",
+              "value": {
+                "asset": {
+                  "decimals": 9,
+                  "description": null,
+                  "id": "native",
+                  "symbol": "SOL",
+                  "trust": "fact"
+                },
+                "bound": "at_most",
+                "note": null,
+                "units": "49500000"
+              }
+            }
+          },
+          {
+            "text": " for "
+          },
+          {
+            "text": "≥ 142,243,976,392 raw units of unverified token HMYd…pump",
+            "value": {
+              "type": "amount",
+              "value": {
+                "asset": {
+                  "decimals": null,
+                  "description": null,
+                  "id": "HMYd9tosnUXuNHmq7pXmoePRVBLBBjA3JBfydq6upump",
+                  "symbol": null,
+                  "trust": "fact"
+                },
+                "bound": "at_least",
+                "note": null,
+                "units": "142243976392"
+              }
+            }
+          },
+          {
+            "text": " via "
+          },
+          {
+            "text": "DFlow",
+            "value": {
+              "type": "text",
+              "value": "DFlow"
+            }
+          }
+        ],
+        "text": "3 actions: Transfer 0.0005 SOL from 8Aet…tiTo to 879A…MGsA; Wrap 0.0495 SOL into wrapped SOL account 4hJnan1NC4BuwPSn41WAQ7yG3zMK5JfXzDiq8jw2VH6R via DFlow; Swap ≤ 0.0495 SOL for ≥ 142,243,976,392 raw units of unverified token HMYd…pump via DFlow"
+      },
+      "text": "3 actions: Transfer 0.0005 SOL from 8Aet…tiTo to 879A…MGsA; Wrap 0.0495 SOL into wrapped SOL account 4hJnan1NC4BuwPSn41WAQ7yG3zMK5JfXzDiq8jw2VH6R via DFlow; Swap ≤ 0.0495 SOL for ≥ 142,243,976,392 raw units of unverified token HMYd…pump via DFlow\nWARNING: review the findings before approving\n\nFindings:\n  [HIGH] The swap spends from token accounts you do not control (instruction 6)\n  [INFO] The fee is paid by 8Aet…tiTo, not by you\n\n== Transfer | System program\n  Amount: 0.0005 SOL\n  From: 8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo\n  To: 879ArayuxbYjBhpUe4QCx8nqaAKjiwCG1hFiJo6zMGsA\n\n== Wrap SOL | DFlow Aggregator (descriptor reviewed 2026-10-17, upgradeable by 9uo2…wgsh)\n  Amount: 0.0495 SOL\n  From: 8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo\n  Wrapped SOL account: 4hJnan1NC4BuwPSn41WAQ7yG3zMK5JfXzDiq8jw2VH6R\n\n== Swap | DFlow Aggregator\n  Send: ≤ 0.0495 SOL\n  Receive: ≥ 142,243,976,392 raw units of unverified token HMYd…pump\n  Quoted: 158,048,862,658 raw units of unverified token HMYd…pump\n  Max slippage: 10.00%\n  Route:\n    - PumpFunBuy (49,500,000 raw units)\n  To account: The authority's token account (9SQZ…GxVU)\n  Instruction: swap\n\n== Also [collapsed]\n  Compute unit limit: 500000\n  Compute unit price: 149986 micro-lamports per unit\n  Create token account if missing: Token account: 8Aet…tiTo's token account (9SQZ…GxVU)\n  Create token account if missing: Owner: 8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo\n  Create token account if missing: Mint: HMYd9tosnUXuNHmq7pXmoePRVBLBBjA3JBfydq6upump\n  Create token account if missing: Rent paid by: 8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo\n  Create token account if missing: Token program: Token-2022 program (Toke…xuEb)\n  Jito tip: Amount: 0.000122053 SOL\n  Jito tip: From: 8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo\n  Jito tip: To: Jito tip account (96gY…rZU5)\n\n== Signers\n  Fee payer: 8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo\n\n== Fee\n  Total: 0.000079993 SOL\n  Base: 0.000005 SOL\n  Priority: 0.000074993 SOL\n  Priority basis: 149986 micro-lamports per unit × 500000 units requested\n  Rent deposits: up to 0.00151384 SOL, if the account this transaction creates when missing does not exist yet; refunded to whoever closes the account\n\n== Validity\n  Expires: in about a minute (recent blockhash)\n\nEffects:\n  - Transfer 0.0005 SOL from 8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo to 879ArayuxbYjBhpUe4QCx8nqaAKjiwCG1hFiJo6zMGsA\n  - Transfer 0.0495 SOL from 8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo to 4hJnan1NC4BuwPSn41WAQ7yG3zMK5JfXzDiq8jw2VH6R\n  - Create the wrapped SOL account first if it does not exist, as the sender's associated token account and at the sender's cost\n  - Transfer ≤ 0.0495 SOL from 8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo to DFlow Aggregator (DF1o…7QBH)\n  - Transfer ≥ 142,243,976,392 raw units of unverified token HMYd…pump from DFlow Aggregator (DF1o…7QBH) to The authority's token account (9SQZ…GxVU)\n  - Create 8Aet…tiTo's token account (9SQZ…GxVU), managed by Token-2022 program (Toke…xuEb), depositing 0.00151384 SOL unless it already exists\n  - Transfer 0.000122053 SOL from 8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo to Jito tip account (96gY…rZU5)\n  - 8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo pays a fee of 0.000079993 SOL\n  - Valid for about a minute (recent blockhash)\n\nRaw: solana v0 (798 bytes)\n  digest: b892642d9d9599ea782feb6bffdc9939bf6aa2c699eb2c67b6e5d3463baa7682\n",
+      "verdict": "warn"
+    }
+  }
+}

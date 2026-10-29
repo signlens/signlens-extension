@@ -14,6 +14,70 @@
   "response": {
     "status": 200,
     "body": {
+      "actions": [
+        {
+          "instruction": 3,
+          "summary": {
+            "id": null,
+            "parts": [
+              {
+                "text": "Buy "
+              },
+              {
+                "text": "≥ 3,731,969,312 raw units of unverified token 9sVJ…pump (before any transfer fee)",
+                "value": {
+                  "type": "amount",
+                  "value": {
+                    "asset": {
+                      "decimals": null,
+                      "description": null,
+                      "id": "9sVJwhNTEtoq8PWeZJigJKNbRMZW7CoByosnxV2Cpump",
+                      "symbol": null,
+                      "trust": "fact"
+                    },
+                    "bound": "at_least",
+                    "note": {
+                      "id": "descriptor-before-fee",
+                      "parts": [
+                        {
+                          "text": "before any transfer fee"
+                        }
+                      ],
+                      "text": "before any transfer fee"
+                    },
+                    "units": "3731969312"
+                  }
+                }
+              },
+              {
+                "text": " for "
+              },
+              {
+                "text": "≤ 0.000235478 SOL",
+                "value": {
+                  "type": "amount",
+                  "value": {
+                    "asset": {
+                      "decimals": 9,
+                      "description": null,
+                      "id": "native",
+                      "symbol": "SOL",
+                      "trust": "fact"
+                    },
+                    "bound": "at_most",
+                    "note": null,
+                    "units": "235478"
+                  }
+                }
+              },
+              {
+                "text": " via Pump.fun"
+              }
+            ],
+            "text": "Buy ≥ 3,731,969,312 raw units of unverified token 9sVJ…pump (before any transfer fee) for ≤ 0.000235478 SOL via Pump.fun"
+          }
+        }
+      ],
       "chain": "solana",
       "effects": [
         {
@@ -1328,7 +1392,57 @@
         "id": null,
         "parts": [
           {
-            "text": "Buy ≥ 3,731,969,312 raw units of unverified token 9sVJ…pump (before any transfer fee) for ≤ 0.000235478 SOL via Pump.fun"
+            "text": "Buy "
+          },
+          {
+            "text": "≥ 3,731,969,312 raw units of unverified token 9sVJ…pump (before any transfer fee)",
+            "value": {
+              "type": "amount",
+              "value": {
+                "asset": {
+                  "decimals": null,
+                  "description": null,
+                  "id": "9sVJwhNTEtoq8PWeZJigJKNbRMZW7CoByosnxV2Cpump",
+                  "symbol": null,
+                  "trust": "fact"
+                },
+                "bound": "at_least",
+                "note": {
+                  "id": "descriptor-before-fee",
+                  "parts": [
+                    {
+                      "text": "before any transfer fee"
+                    }
+                  ],
+                  "text": "before any transfer fee"
+                },
+                "units": "3731969312"
+              }
+            }
+          },
+          {
+            "text": " for "
+          },
+          {
+            "text": "≤ 0.000235478 SOL",
+            "value": {
+              "type": "amount",
+              "value": {
+                "asset": {
+                  "decimals": 9,
+                  "description": null,
+                  "id": "native",
+                  "symbol": "SOL",
+                  "trust": "fact"
+                },
+                "bound": "at_most",
+                "note": null,
+                "units": "235478"
+              }
+            }
+          },
+          {
+            "text": " via Pump.fun"
           }
         ],
         "text": "Buy ≥ 3,731,969,312 raw units of unverified token 9sVJ…pump (before any transfer fee) for ≤ 0.000235478 SOL via Pump.fun"

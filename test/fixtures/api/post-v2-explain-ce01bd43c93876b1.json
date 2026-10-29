@@ -69,6 +69,105 @@
   "response": {
     "status": 200,
     "body": {
+      "actions": [
+        {
+          "instruction": 3,
+          "summary": {
+            "id": "system-send-summary",
+            "parts": [
+              {
+                "text": "Send "
+              },
+              {
+                "text": "0.001855569 SOL",
+                "value": {
+                  "type": "amount",
+                  "value": {
+                    "asset": {
+                      "decimals": 9,
+                      "description": null,
+                      "id": "native",
+                      "symbol": "SOL",
+                      "trust": "fact"
+                    },
+                    "bound": "exact",
+                    "note": null,
+                    "units": "1855569"
+                  }
+                }
+              },
+              {
+                "text": " to "
+              },
+              {
+                "short": {
+                  "address": "91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "fact",
+                  "stand_in": null
+                },
+                "text": "91rj…BXHD"
+              }
+            ],
+            "text": "Send 0.001855569 SOL to 91rj…BXHD"
+          }
+        },
+        {
+          "instruction": 5,
+          "summary": {
+            "id": null,
+            "parts": [
+              {
+                "text": "Swap "
+              },
+              {
+                "text": "151.360479993 ZCAT",
+                "value": {
+                  "type": "amount",
+                  "value": {
+                    "asset": {
+                      "decimals": 9,
+                      "description": null,
+                      "id": "HcRLc9VDgjLeK154xDawfb1dmVJ98DoSqcwTHGqiDeJR",
+                      "symbol": "ZCAT",
+                      "trust": "verified"
+                    },
+                    "bound": "exact",
+                    "note": null,
+                    "units": "151360479993"
+                  }
+                }
+              },
+              {
+                "text": " for "
+              },
+              {
+                "text": "≥ 0.080334153 SOL",
+                "value": {
+                  "type": "amount",
+                  "value": {
+                    "asset": {
+                      "decimals": 9,
+                      "description": null,
+                      "id": "So11111111111111111111111111111111111111112",
+                      "symbol": "SOL",
+                      "trust": "verified"
+                    },
+                    "bound": "at_least",
+                    "note": null,
+                    "units": "80334153"
+                  }
+                }
+              },
+              {
+                "text": " via OKX"
+              }
+            ],
+            "text": "Swap 151.360479993 ZCAT for ≥ 0.080334153 SOL via OKX"
+          }
+        }
+      ],
       "chain": "solana",
       "effects": [
         {
@@ -1142,20 +1241,160 @@
                 "type": "list",
                 "value": [
                   {
-                    "type": "text",
-                    "value": "RaydiumClmmSwapV2 (weight 2790, leg 1)"
+                    "type": "words",
+                    "value": {
+                      "id": null,
+                      "parts": [
+                        {
+                          "text": "RaydiumClmmSwapV2",
+                          "value": {
+                            "type": "text",
+                            "value": "RaydiumClmmSwapV2"
+                          }
+                        },
+                        {
+                          "text": " (weight "
+                        },
+                        {
+                          "text": "2790",
+                          "value": {
+                            "type": "integer",
+                            "value": "2790"
+                          }
+                        },
+                        {
+                          "text": ", leg "
+                        },
+                        {
+                          "text": "1",
+                          "value": {
+                            "type": "integer",
+                            "value": "1"
+                          }
+                        },
+                        {
+                          "text": ")"
+                        }
+                      ],
+                      "text": "RaydiumClmmSwapV2 (weight 2790, leg 1)"
+                    }
                   },
                   {
-                    "type": "text",
-                    "value": "MeteoraDlmmSwap2 (weight 310, leg 1)"
+                    "type": "words",
+                    "value": {
+                      "id": null,
+                      "parts": [
+                        {
+                          "text": "MeteoraDlmmSwap2",
+                          "value": {
+                            "type": "text",
+                            "value": "MeteoraDlmmSwap2"
+                          }
+                        },
+                        {
+                          "text": " (weight "
+                        },
+                        {
+                          "text": "310",
+                          "value": {
+                            "type": "integer",
+                            "value": "310"
+                          }
+                        },
+                        {
+                          "text": ", leg "
+                        },
+                        {
+                          "text": "1",
+                          "value": {
+                            "type": "integer",
+                            "value": "1"
+                          }
+                        },
+                        {
+                          "text": ")"
+                        }
+                      ],
+                      "text": "MeteoraDlmmSwap2 (weight 310, leg 1)"
+                    }
                   },
                   {
-                    "type": "text",
-                    "value": "RaydiumClmmSwapV2 (weight 6900, leg 2)"
+                    "type": "words",
+                    "value": {
+                      "id": null,
+                      "parts": [
+                        {
+                          "text": "RaydiumClmmSwapV2",
+                          "value": {
+                            "type": "text",
+                            "value": "RaydiumClmmSwapV2"
+                          }
+                        },
+                        {
+                          "text": " (weight "
+                        },
+                        {
+                          "text": "6900",
+                          "value": {
+                            "type": "integer",
+                            "value": "6900"
+                          }
+                        },
+                        {
+                          "text": ", leg "
+                        },
+                        {
+                          "text": "2",
+                          "value": {
+                            "type": "integer",
+                            "value": "2"
+                          }
+                        },
+                        {
+                          "text": ")"
+                        }
+                      ],
+                      "text": "RaydiumClmmSwapV2 (weight 6900, leg 2)"
+                    }
                   },
                   {
-                    "type": "text",
-                    "value": "ByrealClmm3 (weight 10000, leg 18)"
+                    "type": "words",
+                    "value": {
+                      "id": null,
+                      "parts": [
+                        {
+                          "text": "ByrealClmm3",
+                          "value": {
+                            "type": "text",
+                            "value": "ByrealClmm3"
+                          }
+                        },
+                        {
+                          "text": " (weight "
+                        },
+                        {
+                          "text": "10000",
+                          "value": {
+                            "type": "integer",
+                            "value": "10000"
+                          }
+                        },
+                        {
+                          "text": ", leg "
+                        },
+                        {
+                          "text": "18",
+                          "value": {
+                            "type": "integer",
+                            "value": "18"
+                          }
+                        },
+                        {
+                          "text": ")"
+                        }
+                      ],
+                      "text": "ByrealClmm3 (weight 10000, leg 18)"
+                    }
                   }
                 ]
               }
@@ -2043,7 +2282,49 @@
             "text": "91rj…BXHD"
           },
           {
-            "text": "; Swap 151.360479993 ZCAT for ≥ 0.080334153 SOL via OKX"
+            "text": "; Swap "
+          },
+          {
+            "text": "151.360479993 ZCAT",
+            "value": {
+              "type": "amount",
+              "value": {
+                "asset": {
+                  "decimals": 9,
+                  "description": null,
+                  "id": "HcRLc9VDgjLeK154xDawfb1dmVJ98DoSqcwTHGqiDeJR",
+                  "symbol": "ZCAT",
+                  "trust": "verified"
+                },
+                "bound": "exact",
+                "note": null,
+                "units": "151360479993"
+              }
+            }
+          },
+          {
+            "text": " for "
+          },
+          {
+            "text": "≥ 0.080334153 SOL",
+            "value": {
+              "type": "amount",
+              "value": {
+                "asset": {
+                  "decimals": 9,
+                  "description": null,
+                  "id": "So11111111111111111111111111111111111111112",
+                  "symbol": "SOL",
+                  "trust": "verified"
+                },
+                "bound": "at_least",
+                "note": null,
+                "units": "80334153"
+              }
+            }
+          },
+          {
+            "text": " via OKX"
           }
         ],
         "text": "2 actions: Send 0.001855569 SOL to 91rj…BXHD; Swap 151.360479993 ZCAT for ≥ 0.080334153 SOL via OKX"
