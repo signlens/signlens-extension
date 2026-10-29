@@ -136,10 +136,10 @@
         "id": null,
         "parts": [
           {
-            "text": "credits the deposit to the obligation as collateral"
+            "text": "Credits the deposit to the obligation as collateral"
           }
         ],
-        "text": "credits the deposit to the obligation as collateral"
+        "text": "Credits the deposit to the obligation as collateral"
       },
       "type": "other",
       "value": {
@@ -147,10 +147,10 @@
           "id": null,
           "parts": [
             {
-              "text": "credits the deposit to the obligation as collateral"
+              "text": "Credits the deposit to the obligation as collateral"
             }
           ],
-          "text": "credits the deposit to the obligation as collateral"
+          "text": "Credits the deposit to the obligation as collateral"
         }
       }
     },
@@ -313,10 +313,10 @@
         "id": null,
         "parts": [
           {
-            "text": "updates the reserve's oracle prices and accrued interest; moves no tokens"
+            "text": "Updates the reserve's oracle prices and accrued interest; moves no tokens"
           }
         ],
-        "text": "updates the reserve's oracle prices and accrued interest; moves no tokens"
+        "text": "Updates the reserve's oracle prices and accrued interest; moves no tokens"
       },
       "type": "other",
       "value": {
@@ -324,10 +324,10 @@
           "id": null,
           "parts": [
             {
-              "text": "updates the reserve's oracle prices and accrued interest; moves no tokens"
+              "text": "Updates the reserve's oracle prices and accrued interest; moves no tokens"
             }
           ],
-          "text": "updates the reserve's oracle prices and accrued interest; moves no tokens"
+          "text": "Updates the reserve's oracle prices and accrued interest; moves no tokens"
         }
       }
     },
@@ -336,10 +336,10 @@
         "id": null,
         "parts": [
           {
-            "text": "updates the reserve's oracle prices and accrued interest; moves no tokens"
+            "text": "Updates the reserve's oracle prices and accrued interest; moves no tokens"
           }
         ],
-        "text": "updates the reserve's oracle prices and accrued interest; moves no tokens"
+        "text": "Updates the reserve's oracle prices and accrued interest; moves no tokens"
       },
       "type": "other",
       "value": {
@@ -347,10 +347,10 @@
           "id": null,
           "parts": [
             {
-              "text": "updates the reserve's oracle prices and accrued interest; moves no tokens"
+              "text": "Updates the reserve's oracle prices and accrued interest; moves no tokens"
             }
           ],
-          "text": "updates the reserve's oracle prices and accrued interest; moves no tokens"
+          "text": "Updates the reserve's oracle prices and accrued interest; moves no tokens"
         }
       }
     },
@@ -359,10 +359,10 @@
         "id": null,
         "parts": [
           {
-            "text": "updates the reserve's oracle prices and accrued interest; moves no tokens"
+            "text": "Updates the reserve's oracle prices and accrued interest; moves no tokens"
           }
         ],
-        "text": "updates the reserve's oracle prices and accrued interest; moves no tokens"
+        "text": "Updates the reserve's oracle prices and accrued interest; moves no tokens"
       },
       "type": "other",
       "value": {
@@ -370,10 +370,10 @@
           "id": null,
           "parts": [
             {
-              "text": "updates the reserve's oracle prices and accrued interest; moves no tokens"
+              "text": "Updates the reserve's oracle prices and accrued interest; moves no tokens"
             }
           ],
-          "text": "updates the reserve's oracle prices and accrued interest; moves no tokens"
+          "text": "Updates the reserve's oracle prices and accrued interest; moves no tokens"
         }
       }
     },
@@ -382,10 +382,10 @@
         "id": null,
         "parts": [
           {
-            "text": "recomputes the obligation's collateral and debt values; moves no tokens"
+            "text": "Recomputes the obligation's collateral and debt values; moves no tokens"
           }
         ],
-        "text": "recomputes the obligation's collateral and debt values; moves no tokens"
+        "text": "Recomputes the obligation's collateral and debt values; moves no tokens"
       },
       "type": "other",
       "value": {
@@ -393,10 +393,10 @@
           "id": null,
           "parts": [
             {
-              "text": "recomputes the obligation's collateral and debt values; moves no tokens"
+              "text": "Recomputes the obligation's collateral and debt values; moves no tokens"
             }
           ],
-          "text": "recomputes the obligation's collateral and debt values; moves no tokens"
+          "text": "Recomputes the obligation's collateral and debt values; moves no tokens"
         }
       }
     },
@@ -1379,6 +1379,6 @@
     ],
     "text": "Deposit 4,635.28675 USDC (verified) into Kamino Lend as collateral"
   },
-  "text": "Deposit 4,635.28675 USDC (verified) into Kamino Lend as collateral\nOK\n\n== Deposit collateral | Kamino Lend (descriptor reviewed 2026-09-29, upgradeable by GzFg…kzkW)\n  Deposit: 4,635.28675 USDC (verified)\n  Obligation: 5iLEgayZ19eL6vGLEtELtCpYrGxZYGL4xEBsxMaYAfFz\n  Reserve: D6q6wuQSrifJKZYpR1M8R4YawnLDtDsMmWM1NbBmgJ59\n  From account: Your USDC account (4Pus…gpZ8) (verified)\n\n== Also [collapsed]\n  Compute unit limit: 213727\n  Compute unit price: 70182 micro-lamports per unit\n  Create token account if missing: Token account: Your USDC account (4Pus…gpZ8) (verified)\n  Create token account if missing: Owner: Your wallet (2P5t…sPxW) (verified)\n  Create token account if missing: Mint: USDC mint (EPjF…Dt1v) (verified)\n  Create token account if missing: Rent paid by: Your wallet (2P5t…sPxW) (verified)\n  Create token account if missing: Token program: Token program (Toke…Q5DA) (verified)\n  Refresh reserve: Reserve: 37Jk2zkz23vkAYBT66HM2gaqJuNg2nYLsCreQAVt5MWK\n  Refresh reserve: Reserve: d4A2prbA2whesmvHaL88BH6Ewn5N4bTSU2Ze8P6Bc4Q\n  Refresh reserve: Reserve: D6q6wuQSrifJKZYpR1M8R4YawnLDtDsMmWM1NbBmgJ59\n  Refresh obligation: Obligation: 5iLEgayZ19eL6vGLEtELtCpYrGxZYGL4xEBsxMaYAfFz\n  Refresh obligation: Additional accounts: 3, not named by this descriptor\n\n== Signers\n  Fee payer: Your wallet (2P5t…sPxW) (verified)\n\n== Fee\n  Total: 0.00002 SOL\n  Base: 0.000005 SOL\n  Priority: 0.000015 SOL\n  Priority basis: 70182 micro-lamports per unit × 213727 units requested\n  Rent deposits: up to 0.00148844 SOL if the accounts it creates only when missing do not exist yet; returned when the accounts are closed\n\n== Validity\n  Expires: in about a minute (recent blockhash)\n\nEffects:\n  - You send 4,635.28675 USDC (verified) from Your wallet (2P5t…sPxW) (verified) to Kamino Lend (KLen…gmjD) (verified)\n  - credits the deposit to the obligation as collateral\n  - Create Your USDC account (4Pus…gpZ8) (verified) owned by Token program (Toke…Q5DA) (verified), depositing 0.00148844 SOL unless it already exists\n  - updates the reserve's oracle prices and accrued interest; moves no tokens\n  - updates the reserve's oracle prices and accrued interest; moves no tokens\n  - updates the reserve's oracle prices and accrued interest; moves no tokens\n  - recomputes the obligation's collateral and debt values; moves no tokens\n  - You pay a fee of 0.00002 SOL\n  - Valid for about a minute (recent blockhash)\n\nRaw: solana v0 (507 bytes)\n  digest: 00aceb9aa518bff00dfe2464dfe370cd22dc63e59126a1521d38557ae97a3612\n",
+  "text": "Deposit 4,635.28675 USDC (verified) into Kamino Lend as collateral\nOK\n\n== Deposit collateral | Kamino Lend (descriptor reviewed 2026-09-29, upgradeable by GzFg…kzkW)\n  Deposit: 4,635.28675 USDC (verified)\n  Obligation: 5iLEgayZ19eL6vGLEtELtCpYrGxZYGL4xEBsxMaYAfFz\n  Reserve: D6q6wuQSrifJKZYpR1M8R4YawnLDtDsMmWM1NbBmgJ59\n  From account: Your USDC account (4Pus…gpZ8) (verified)\n\n== Also [collapsed]\n  Compute unit limit: 213727\n  Compute unit price: 70182 micro-lamports per unit\n  Create token account if missing: Token account: Your USDC account (4Pus…gpZ8) (verified)\n  Create token account if missing: Owner: Your wallet (2P5t…sPxW) (verified)\n  Create token account if missing: Mint: USDC mint (EPjF…Dt1v) (verified)\n  Create token account if missing: Rent paid by: Your wallet (2P5t…sPxW) (verified)\n  Create token account if missing: Token program: Token program (Toke…Q5DA) (verified)\n  Refresh reserve: Reserve: 37Jk2zkz23vkAYBT66HM2gaqJuNg2nYLsCreQAVt5MWK\n  Refresh reserve: Reserve: d4A2prbA2whesmvHaL88BH6Ewn5N4bTSU2Ze8P6Bc4Q\n  Refresh reserve: Reserve: D6q6wuQSrifJKZYpR1M8R4YawnLDtDsMmWM1NbBmgJ59\n  Refresh obligation: Obligation: 5iLEgayZ19eL6vGLEtELtCpYrGxZYGL4xEBsxMaYAfFz\n  Refresh obligation: Additional accounts: 3, not named by this descriptor\n\n== Signers\n  Fee payer: Your wallet (2P5t…sPxW) (verified)\n\n== Fee\n  Total: 0.00002 SOL\n  Base: 0.000005 SOL\n  Priority: 0.000015 SOL\n  Priority basis: 70182 micro-lamports per unit × 213727 units requested\n  Rent deposits: up to 0.00148844 SOL if the accounts it creates only when missing do not exist yet; returned when the accounts are closed\n\n== Validity\n  Expires: in about a minute (recent blockhash)\n\nEffects:\n  - You send 4,635.28675 USDC (verified) from Your wallet (2P5t…sPxW) (verified) to Kamino Lend (KLen…gmjD) (verified)\n  - Credits the deposit to the obligation as collateral\n  - Create Your USDC account (4Pus…gpZ8) (verified) owned by Token program (Toke…Q5DA) (verified), depositing 0.00148844 SOL unless it already exists\n  - Updates the reserve's oracle prices and accrued interest; moves no tokens\n  - Updates the reserve's oracle prices and accrued interest; moves no tokens\n  - Updates the reserve's oracle prices and accrued interest; moves no tokens\n  - Recomputes the obligation's collateral and debt values; moves no tokens\n  - You pay a fee of 0.00002 SOL\n  - Valid for about a minute (recent blockhash)\n\nRaw: solana v0 (507 bytes)\n  digest: 00aceb9aa518bff00dfe2464dfe370cd22dc63e59126a1521d38557ae97a3612\n",
   "verdict": "ok"
 }
