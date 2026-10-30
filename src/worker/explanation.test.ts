@@ -253,8 +253,13 @@ test("a message's parts come through, words and the values or the short addresse
         text: 'You send 1 USDC (verified) to Ffz5…ypiw',
     };
     assert.deepEqual(parseExplanation(document({ summary: sent })).summary, sent);
+    // A descriptor's words are named by the program's address and the identifier of their place.
+    const described = { ...sent, id: 'JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4/route_v2-fields-args_in_amount.help' };
+    assert.deepEqual(parseExplanation(document({ summary: described })).summary, described);
     const cases: [unknown, string, RegExp][] = [
         [{ ...sent, id: 'Effect Send' }, 'explanation.summary.id', /not a message identifier/],
+        [{ ...sent, id: 'JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4/Route' }, 'explanation.summary.id', /not a message identifier/],
+        [{ ...sent, id: 'route/route_v2-intent' }, 'explanation.summary.id', /not a message identifier/],
         [{ ...sent, parts: [{ text: 'x', value: { type: 'text', value: 'x' }, short: SELF }] }, 'explanation.summary.parts[0]', /both/],
         [{ ...sent, parts: [{ value: { type: 'text', value: 'x' } }] }, 'explanation.summary.parts[0].text', /not a string/],
         [{ id: null, text: 'x' }, 'explanation.summary.parts', /not a list/],
