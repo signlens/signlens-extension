@@ -8,6 +8,13 @@ uses [Semantic Versioning](https://semver.org/).
 
 ### Added
 
+- **Laid out in its language.** The window sets the explanation's
+  language and direction from what the engine says it is worded in, so a
+  right-to-left language runs right to left, and holds each amount and
+  address apart from the words around it, so that it cannot reorder the
+  sentence. A rating sends the language the explanation was in, so that
+  ratings can be read per language.
+
 - **Explanations in your language.** The extension asks the API for the
   explanation in the browser's languages, in their order, and the engine
   words it in the first it has. Until a language ships, explanations stay

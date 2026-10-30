@@ -195,6 +195,7 @@ export async function explainTransactions(
             digest: said.raw?.digest ?? null,
             reportedSummary: book.unnamed(document.summary.text),
             transaction,
+            ...(said.locale ? { locale: said.locale } : {}),
         });
     }
     return { rows: results };

@@ -101,6 +101,17 @@ test('the actions come through one by one; an engine that lists none gives an em
     assert.equal(refusal(document({ actions: [{ instruction: 0 }] })).path, 'explanation.actions[0].summary');
 });
 
+test('the locale an explanation is worded in comes through; an engine before locales says none', () => {
+    const locale = { asked: ['ar-XB'], used: 'ar-XB', direction: 'rtl', review: { kind: 'generated' }, fallbacks: 0 };
+    assert.deepEqual(parseExplanation(document({ locale })).locale, locale);
+    const reviewed = { ...locale, used: 'ru', direction: 'ltr', review: { kind: 'reviewed', by: ['A Reviewer'], on: '2026-11-02' } };
+    assert.deepEqual(parseExplanation(document({ locale: reviewed })).locale, reviewed);
+    assert.equal(refusal(document({ locale: { ...locale, review: { kind: 'maybe' } } })).path, 'explanation.locale.review.kind');
+    assert.equal(parseExplanation(document()).locale, undefined);
+    assert.equal(refusal(document({ locale: { ...locale, used: 'ar XB' } })).path, 'explanation.locale.used');
+    assert.equal(refusal(document({ locale: { ...locale, direction: 'up' } })).path, 'explanation.locale.direction');
+});
+
 test('the accounts an explanation wants come through, and one that is not an address is refused', () => {
     const wanted = [{ address: SELF.address, reason: words('the transaction proposal #7 stores') }];
     assert.deepEqual(parseExplanation(document({ wanted_accounts: wanted })).wanted_accounts, wanted);

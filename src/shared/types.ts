@@ -174,7 +174,24 @@ export interface Explanation {
     text?: string;
     /** Accounts whose contents would explain more, for the worker to read from the RPC and ask again with; absent when none. */
     wanted_accounts?: WantedAccount[];
+    /** The locale the explanation is worded in; absent from an engine before locales. */
+    locale?: WordedIn;
 }
+
+/** The locale an explanation is worded in, as the document says: what was asked, what was used, which way it runs, its review, and how much fell back to English. */
+export interface WordedIn {
+    asked: string[];
+    /** The locale used, a BCP 47 tag; `en` when the engine has none of those asked. */
+    used: string;
+    direction: 'ltr' | 'rtl';
+    /** `null` for English, the source. */
+    review: Review | null;
+    /** How many messages are in English because the locale has no translation of them. */
+    fallbacks: number;
+}
+
+/** Whether a locale's words were reviewed: made from the English (a pseudo-locale), not yet, or by whom and when. */
+export type Review = { kind: 'generated' } | { kind: 'unreviewed' } | { kind: 'reviewed'; by: string[]; on: string };
 
 /** An account an explanation would read: its address and what its contents would show. */
 export interface WantedAccount {
@@ -285,6 +302,8 @@ export interface Feedback {
     extension?: string;
     /** What the window showed about the transaction. */
     seen?: Seen;
+    /** The locale the explanation was worded in, so that ratings can be read per language. */
+    locale?: string;
     /** With the transaction only: the addresses its lookup tables loaded, in the message's order. */
     loaded_writable?: string[];
     loaded_readonly?: string[];

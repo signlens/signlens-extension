@@ -4,7 +4,7 @@
 // history keeps it, with where it came from and what became of it. Shared
 // by the worker, the window and the popup: no DOM, no `chrome`.
 
-import type { Action, Finding, Message, Section, WordedEffect } from './types.ts';
+import type { Action, Finding, Message, Section, WordedEffect, WordedIn } from './types.ts';
 
 /** What became of a request: passed on (for a site's asking, allowed), or not. */
 export type Decision = 'continue' | 'reject';
@@ -48,6 +48,8 @@ export interface ExplainedRow {
     reportedSummary: string;
     /** The transaction, base64, sent with feedback only when the user asks. */
     transaction: string;
+    /** The locale the explanation is worded in (absent in rows kept before there were any). */
+    locale?: WordedIn;
 }
 
 /**

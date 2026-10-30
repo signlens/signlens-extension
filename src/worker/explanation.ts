@@ -27,6 +27,7 @@ import {
     type Message,
     type Part,
     type Raw,
+    type Review,
     SEVERITIES,
     type Section,
     type SectionKind,
@@ -35,6 +36,7 @@ import {
     VERDICTS,
     type WantedAccount,
     type WordedEffect,
+    type WordedIn,
 } from '../shared/types.ts';
 
 export const EXPLANATION_SCHEMA = 'signlens-explanation/2';
@@ -454,5 +456,34 @@ export function parseExplanation(document: unknown): Explanation {
     // Left out when the explanation wants none.
     const wants = o.read('wanted_accounts', (v, p) => (v === undefined ? undefined : list(wanted)(v, p)));
     if (wants !== undefined) explanation.wanted_accounts = wants;
+    // An engine before locales says none.
+    const locale = o.read('locale', (v, p) => (v === undefined ? undefined : wordedIn(v, p)));
+    if (locale !== undefined) explanation.locale = locale;
     return explanation;
 }
+
+/** A BCP 47 tag: letters, digits and dashes. */
+const tag: Read<string> = (value, path) => {
+    const found = text(35)(value, path);
+    return /^[A-Za-z0-9-]{1,35}$/.test(found) ? found : fail(path, `${quote(found)} is not a BCP 47 tag`);
+};
+
+/** Whether a locale's words were reviewed, and by whom and when. */
+const review: Read<Review> = (value, path) => {
+    const o = new Fields(value, path);
+    const kind = o.read('kind', oneOf(['generated', 'unreviewed', 'reviewed'] as const, 'a review'));
+    if (kind === 'reviewed') return { kind, by: o.read('by', list(text(200), 16)), on: o.read('on', text(10)) };
+    return { kind };
+};
+
+/** The locale an explanation is worded in, as the document says. */
+const wordedIn: Read<WordedIn> = (value, path) => {
+    const o = new Fields(value, path);
+    return {
+        asked: o.read('asked', list(tag, 8)),
+        used: o.read('used', tag),
+        direction: o.read('direction', oneOf(['ltr', 'rtl'] as const, 'a direction')),
+        review: o.read('review', nullable(review)),
+        fallbacks: o.read('fallbacks', integer(0, 1_000_000)),
+    };
+};

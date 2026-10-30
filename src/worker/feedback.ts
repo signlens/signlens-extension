@@ -82,6 +82,7 @@ export function feedbackRecords(payload: FeedbackPayload, extension?: string, wi
                 seen?: unknown;
                 loaded_writable?: unknown;
                 loaded_readonly?: unknown;
+                locale?: unknown;
             } =>
                 typeof record?.digest === 'string' &&
                 /^[0-9a-f]{64}$/.test(record.digest) &&
@@ -95,6 +96,7 @@ export function feedbackRecords(payload: FeedbackPayload, extension?: string, wi
             if (version) feedback.extension = version;
             const seen = seenOf(record.seen);
             if (seen) feedback.seen = seen;
+            if (typeof record.locale === 'string' && /^[A-Za-z0-9-]{1,35}$/.test(record.locale)) feedback.locale = record.locale;
             // The tables' addresses go only with the transaction they load for.
             const writable = addresses(record.loaded_writable);
             const readonly = addresses(record.loaded_readonly);

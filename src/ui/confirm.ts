@@ -133,6 +133,7 @@ function feedbackStrip(list: Row[], page: { origin?: string; method?: string }):
                 digest: row.digest,
                 transaction: covered ? row.transaction : null,
                 seen: seenOf(row),
+                ...(row.locale ? { locale: row.locale.used } : {}),
                 ...(covered ? loadedOf(row.capture) : {}),
             };
         });

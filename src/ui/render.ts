@@ -265,11 +265,23 @@ function keyNode(address: Address, shorten: boolean): HTMLElement {
 export function messageNode(message: Message | null, className = ''): HTMLSpanElement {
     const node = element('span', className);
     for (const part of message?.parts ?? []) {
-        if (part.value) node.append(valueNode(part.value));
-        else if (part.short) node.append(keyNode(part.short, true));
+        if (part.value) node.append(isolated(valueNode(part.value), part.value.type === 'amount' || part.value.type === 'address'));
+        else if (part.short) node.append(isolated(keyNode(part.short, true), true));
         else node.append(part.text);
     }
     return node;
+}
+
+/**
+ * A value set apart from the words around it, so that in a right-to-left
+ * language an address or an amount cannot reorder the sentence (ADR-0015,
+ * decision 8): in `<bdi>`, left to right for an address or an amount.
+ */
+function isolated(node: HTMLElement, leftToRight: boolean): HTMLElement {
+    const bdi = element('bdi');
+    if (leftToRight) bdi.dir = 'ltr';
+    bdi.append(node);
+    return bdi;
 }
 
 /** What the window says of a variant this version does not know. */
@@ -567,6 +579,11 @@ export function captureName(site: string | undefined, at: number, part?: number)
 }
 
 function explainedNode(body: HTMLDivElement, row: ExplainedRow, options: RenderOptions): HTMLDivElement {
+    // The explanation's language and direction, which its words and their layout follow.
+    if (row.locale) {
+        body.lang = row.locale.used;
+        body.dir = row.locale.direction;
+    }
     // The summary, its actions and the findings lay out what they name, as the effects do.
     const actions = row.actions ?? [];
     if (actions.length > 1) {

@@ -25,6 +25,18 @@ test('each record keeps its own digest and its own bytes', () => {
     ]);
 });
 
+test('a record names the locale its explanation was worded in, when it is a tag', () => {
+    const records = feedbackRecords({
+        rating: 'unclear',
+        records: [
+            { digest: A, transaction: null, locale: 'pt-BR' },
+            { digest: B, transaction: null, locale: '<script>' },
+        ],
+    });
+    assert.equal(records[0]?.locale, 'pt-BR');
+    assert.equal(records[1]?.locale, undefined);
+});
+
 test('a rating that is not one sends nothing', () => {
     for (const rating of [undefined, 'great', 'Clear', 1, null]) {
         assert.deepEqual(feedbackRecords({ rating, records: [{ digest: A, transaction: null }] }), [], String(rating));
