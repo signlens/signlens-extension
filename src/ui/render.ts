@@ -6,7 +6,7 @@
 
 import type { ExplainedRow, Row } from '../shared/model.ts';
 import { short } from '../shared/text.ts';
-import type { Address, Amount, Bound, Field, Message, Section, Trust, Value, WordedEffect } from '../shared/types.ts';
+import type { Address, Amount, Bound, Field, Message, Section, Severity, Trust, Value, WordedEffect } from '../shared/types.ts';
 
 export function element<K extends keyof HTMLElementTagNameMap>(tag: K, className?: string, text?: string): HTMLElementTagNameMap[K] {
     const node = document.createElement(tag);
@@ -130,6 +130,9 @@ const GLOSSARY: readonly (readonly [id: string, english: string, help: string])[
         'How much work the transaction did in the simulation. The priority fee is paid per unit, so this is what it buys.',
     ],
 ];
+
+/** A finding's severity as the window words it: its own words, not the document's value with a capital made in code. */
+const SEVERITY_WORD: Record<Severity, string> = { info: 'Info', warning: 'Warning', high: 'High', critical: 'Critical' };
 
 /** The help by label identifier; a map, since an identifier is the engine's: "constructor" is no key. */
 const HELP = new Map(GLOSSARY.map(([id, , help]) => [id, help]));
@@ -690,9 +693,11 @@ function explainedNode(body: HTMLDivElement, row: ExplainedRow, options: RenderO
         for (const finding of row.findings) {
             // An informational finding is a note, not a warning, and reads as one.
             const item = element('li', finding.severity);
-            // Shown as a word with a capital (High); the document's value is lowercase.
-            const severity = finding.severity.charAt(0).toUpperCase() + finding.severity.slice(1);
-            item.append(element('span', `severity ${finding.severity}`, severity), ' ', messageNode(finding.message));
+            item.append(
+                element('span', `severity ${finding.severity}`, SEVERITY_WORD[finding.severity]),
+                ' ',
+                messageNode(finding.message),
+            );
             list.append(item);
         }
         body.append(list);
