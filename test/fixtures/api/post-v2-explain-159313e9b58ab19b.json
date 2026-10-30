@@ -34,7 +34,10 @@
         "TKLSidmLVt3cqGaaodG8tyRzoANfQwoh67AccjmubeZ"
       ],
       "contacts": [],
-      "render": true
+      "render": true,
+      "locale": [
+        "en-US"
+      ]
     }
   },
   "response": {
@@ -63,7 +66,23 @@
                     },
                     "bound": "at_most",
                     "note": null,
-                    "units": "5265026"
+                    "units": "5265026",
+                    "words": {
+                      "id": "amount",
+                      "parts": [
+                        {
+                          "text": "≤ 0.005265026 "
+                        },
+                        {
+                          "text": "tSpaceX",
+                          "value": {
+                            "type": "text",
+                            "value": "tSpaceX"
+                          }
+                        }
+                      ],
+                      "text": "≤ 0.005265026 tSpaceX"
+                    }
                   }
                 }
               },
@@ -84,7 +103,23 @@
                     },
                     "bound": "at_least",
                     "note": null,
-                    "units": "4080684"
+                    "units": "4080684",
+                    "words": {
+                      "id": "amount",
+                      "parts": [
+                        {
+                          "text": "≥ 0.004080684 "
+                        },
+                        {
+                          "text": "tKalshi",
+                          "value": {
+                            "type": "text",
+                            "value": "tKalshi"
+                          }
+                        }
+                      ],
+                      "text": "≥ 0.004080684 tKalshi"
+                    }
                   }
                 }
               },
@@ -126,7 +161,23 @@
                     },
                     "bound": "at_most",
                     "note": null,
-                    "units": "5265026"
+                    "units": "5265026",
+                    "words": {
+                      "id": "amount",
+                      "parts": [
+                        {
+                          "text": "≤ 0.005265026 "
+                        },
+                        {
+                          "text": "tSpaceX",
+                          "value": {
+                            "type": "text",
+                            "value": "tSpaceX"
+                          }
+                        }
+                      ],
+                      "text": "≤ 0.005265026 tSpaceX"
+                    }
                   }
                 }
               },
@@ -197,7 +248,23 @@
               },
               "bound": "at_most",
               "note": null,
-              "units": "5265026"
+              "units": "5265026",
+              "words": {
+                "id": "amount",
+                "parts": [
+                  {
+                    "text": "≤ 0.005265026 "
+                  },
+                  {
+                    "text": "tSpaceX",
+                    "value": {
+                      "type": "text",
+                      "value": "tSpaceX"
+                    }
+                  }
+                ],
+                "text": "≤ 0.005265026 tSpaceX"
+              }
             },
             "from": {
               "address": "5yLgQQwD42seAkce1heScsh2spYgNA3q43SPhZBn8Ldc",
@@ -256,7 +323,23 @@
                     },
                     "bound": "at_least",
                     "note": null,
-                    "units": "4080684"
+                    "units": "4080684",
+                    "words": {
+                      "id": "amount",
+                      "parts": [
+                        {
+                          "text": "≥ 0.004080684 "
+                        },
+                        {
+                          "text": "tKalshi",
+                          "value": {
+                            "type": "text",
+                            "value": "tKalshi"
+                          }
+                        }
+                      ],
+                      "text": "≥ 0.004080684 tKalshi"
+                    }
                   }
                 }
               },
@@ -327,7 +410,23 @@
               },
               "bound": "at_least",
               "note": null,
-              "units": "4080684"
+              "units": "4080684",
+              "words": {
+                "id": "amount",
+                "parts": [
+                  {
+                    "text": "≥ 0.004080684 "
+                  },
+                  {
+                    "text": "tKalshi",
+                    "value": {
+                      "type": "text",
+                      "value": "tKalshi"
+                    }
+                  }
+                ],
+                "text": "≥ 0.004080684 tKalshi"
+              }
             },
             "from": {
               "address": "DF1ow4tspfHX9JwWJsAb9epbkA8hmpSEAtxXy1V27QBH",
@@ -386,7 +485,23 @@
                     },
                     "bound": "exact",
                     "note": null,
-                    "units": "5535"
+                    "units": "5535",
+                    "words": {
+                      "id": "amount",
+                      "parts": [
+                        {
+                          "text": "0.000005535 "
+                        },
+                        {
+                          "text": "SOL",
+                          "value": {
+                            "type": "text",
+                            "value": "SOL"
+                          }
+                        }
+                      ],
+                      "text": "0.000005535 SOL"
+                    }
                   }
                 }
               }
@@ -405,7 +520,23 @@
               },
               "bound": "exact",
               "note": null,
-              "units": "5535"
+              "units": "5535",
+              "words": {
+                "id": "amount",
+                "parts": [
+                  {
+                    "text": "0.000005535 "
+                  },
+                  {
+                    "text": "SOL",
+                    "value": {
+                      "type": "text",
+                      "value": "SOL"
+                    }
+                  }
+                ],
+                "text": "0.000005535 SOL"
+              }
             },
             "payer": {
               "address": "5yLgQQwD42seAkce1heScsh2spYgNA3q43SPhZBn8Ldc",
@@ -441,6 +572,15 @@
         }
       ],
       "findings": [],
+      "locale": {
+        "asked": [
+          "en-US"
+        ],
+        "direction": "ltr",
+        "fallbacks": 0,
+        "review": null,
+        "used": "en"
+      },
       "raw": {
         "digest": "9bdd08c0fa2a6a063bcab6cc1581b881a5fbc0a5eefa3c4ee59dc380cdb66876",
         "format": "solana v0"
@@ -474,7 +614,23 @@
                   },
                   "bound": "at_most",
                   "note": null,
-                  "units": "5265026"
+                  "units": "5265026",
+                  "words": {
+                    "id": "amount",
+                    "parts": [
+                      {
+                        "text": "≤ 0.005265026 "
+                      },
+                      {
+                        "text": "tSpaceX",
+                        "value": {
+                          "type": "text",
+                          "value": "tSpaceX"
+                        }
+                      }
+                    ],
+                    "text": "≤ 0.005265026 tSpaceX"
+                  }
                 }
               }
             },
@@ -502,7 +658,23 @@
                   },
                   "bound": "at_least",
                   "note": null,
-                  "units": "4080684"
+                  "units": "4080684",
+                  "words": {
+                    "id": "amount",
+                    "parts": [
+                      {
+                        "text": "≥ 0.004080684 "
+                      },
+                      {
+                        "text": "tKalshi",
+                        "value": {
+                          "type": "text",
+                          "value": "tKalshi"
+                        }
+                      }
+                    ],
+                    "text": "≥ 0.004080684 tKalshi"
+                  }
                 }
               }
             },
@@ -530,7 +702,23 @@
                   },
                   "bound": "exact",
                   "note": null,
-                  "units": "4206891"
+                  "units": "4206891",
+                  "words": {
+                    "id": "amount",
+                    "parts": [
+                      {
+                        "text": "0.004206891 "
+                      },
+                      {
+                        "text": "tKalshi",
+                        "value": {
+                          "type": "text",
+                          "value": "tKalshi"
+                        }
+                      }
+                    ],
+                    "text": "0.004206891 tKalshi"
+                  }
                 }
               }
             },
@@ -884,7 +1072,23 @@
                   },
                   "bound": "exact",
                   "note": null,
-                  "units": "5535"
+                  "units": "5535",
+                  "words": {
+                    "id": "amount",
+                    "parts": [
+                      {
+                        "text": "0.000005535 "
+                      },
+                      {
+                        "text": "SOL",
+                        "value": {
+                          "type": "text",
+                          "value": "SOL"
+                        }
+                      }
+                    ],
+                    "text": "0.000005535 SOL"
+                  }
                 }
               }
             },
@@ -920,7 +1124,23 @@
                   },
                   "bound": "exact",
                   "note": null,
-                  "units": "5000"
+                  "units": "5000",
+                  "words": {
+                    "id": "amount",
+                    "parts": [
+                      {
+                        "text": "0.000005 "
+                      },
+                      {
+                        "text": "SOL",
+                        "value": {
+                          "type": "text",
+                          "value": "SOL"
+                        }
+                      }
+                    ],
+                    "text": "0.000005 SOL"
+                  }
                 }
               }
             },
@@ -956,7 +1176,23 @@
                   },
                   "bound": "exact",
                   "note": null,
-                  "units": "535"
+                  "units": "535",
+                  "words": {
+                    "id": "amount",
+                    "parts": [
+                      {
+                        "text": "0.000000535 "
+                      },
+                      {
+                        "text": "SOL",
+                        "value": {
+                          "type": "text",
+                          "value": "SOL"
+                        }
+                      }
+                    ],
+                    "text": "0.000000535 SOL"
+                  }
                 }
               }
             },
@@ -1080,7 +1316,23 @@
                 },
                 "bound": "at_most",
                 "note": null,
-                "units": "5265026"
+                "units": "5265026",
+                "words": {
+                  "id": "amount",
+                  "parts": [
+                    {
+                      "text": "≤ 0.005265026 "
+                    },
+                    {
+                      "text": "tSpaceX",
+                      "value": {
+                        "type": "text",
+                        "value": "tSpaceX"
+                      }
+                    }
+                  ],
+                  "text": "≤ 0.005265026 tSpaceX"
+                }
               }
             }
           },
@@ -1101,7 +1353,23 @@
                 },
                 "bound": "at_least",
                 "note": null,
-                "units": "4080684"
+                "units": "4080684",
+                "words": {
+                  "id": "amount",
+                  "parts": [
+                    {
+                      "text": "≥ 0.004080684 "
+                    },
+                    {
+                      "text": "tKalshi",
+                      "value": {
+                        "type": "text",
+                        "value": "tKalshi"
+                      }
+                    }
+                  ],
+                  "text": "≥ 0.004080684 tKalshi"
+                }
               }
             }
           },

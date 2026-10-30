@@ -25,7 +25,10 @@
         "pfeeUxB6jkeY1Hxd7CsFCAjcbHA9rWtchMGdZ6VojVZ"
       ],
       "contacts": [],
-      "render": true
+      "render": true,
+      "locale": [
+        "en-US"
+      ]
     }
   },
   "response": {
@@ -54,7 +57,23 @@
                     },
                     "bound": "exact",
                     "note": null,
-                    "units": "500000"
+                    "units": "500000",
+                    "words": {
+                      "id": "amount",
+                      "parts": [
+                        {
+                          "text": "0.0005 "
+                        },
+                        {
+                          "text": "SOL",
+                          "value": {
+                            "type": "text",
+                            "value": "SOL"
+                          }
+                        }
+                      ],
+                      "text": "0.0005 SOL"
+                    }
                   }
                 }
               },
@@ -110,7 +129,23 @@
                     },
                     "bound": "exact",
                     "note": null,
-                    "units": "49500000"
+                    "units": "49500000",
+                    "words": {
+                      "id": "amount",
+                      "parts": [
+                        {
+                          "text": "0.0495 "
+                        },
+                        {
+                          "text": "SOL",
+                          "value": {
+                            "type": "text",
+                            "value": "SOL"
+                          }
+                        }
+                      ],
+                      "text": "0.0495 SOL"
+                    }
                   }
                 }
               },
@@ -156,7 +191,23 @@
                     },
                     "bound": "at_most",
                     "note": null,
-                    "units": "49500000"
+                    "units": "49500000",
+                    "words": {
+                      "id": "amount",
+                      "parts": [
+                        {
+                          "text": "≤ 0.0495 "
+                        },
+                        {
+                          "text": "SOL",
+                          "value": {
+                            "type": "text",
+                            "value": "SOL"
+                          }
+                        }
+                      ],
+                      "text": "≤ 0.0495 SOL"
+                    }
                   }
                 }
               },
@@ -177,7 +228,26 @@
                     },
                     "bound": "at_least",
                     "note": null,
-                    "units": "142243976392"
+                    "units": "142243976392",
+                    "words": {
+                      "id": "amount-unverified",
+                      "parts": [
+                        {
+                          "text": "≥ 142,243,976,392 raw units of unverified token "
+                        },
+                        {
+                          "short": {
+                            "address": "HMYd9tosnUXuNHmq7pXmoePRVBLBBjA3JBfydq6upump",
+                            "is_self": false,
+                            "label": null,
+                            "label_trust": "fact",
+                            "stand_in": null
+                          },
+                          "text": "HMYd…pump"
+                        }
+                      ],
+                      "text": "≥ 142,243,976,392 raw units of unverified token HMYd…pump"
+                    }
                   }
                 }
               },
@@ -219,7 +289,23 @@
                     },
                     "bound": "exact",
                     "note": null,
-                    "units": "500000"
+                    "units": "500000",
+                    "words": {
+                      "id": "amount",
+                      "parts": [
+                        {
+                          "text": "0.0005 "
+                        },
+                        {
+                          "text": "SOL",
+                          "value": {
+                            "type": "text",
+                            "value": "SOL"
+                          }
+                        }
+                      ],
+                      "text": "0.0005 SOL"
+                    }
                   }
                 }
               },
@@ -270,7 +356,23 @@
               },
               "bound": "exact",
               "note": null,
-              "units": "500000"
+              "units": "500000",
+              "words": {
+                "id": "amount",
+                "parts": [
+                  {
+                    "text": "0.0005 "
+                  },
+                  {
+                    "text": "SOL",
+                    "value": {
+                      "type": "text",
+                      "value": "SOL"
+                    }
+                  }
+                ],
+                "text": "0.0005 SOL"
+              }
             },
             "from": {
               "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
@@ -309,7 +411,23 @@
                     },
                     "bound": "exact",
                     "note": null,
-                    "units": "49500000"
+                    "units": "49500000",
+                    "words": {
+                      "id": "amount",
+                      "parts": [
+                        {
+                          "text": "0.0495 "
+                        },
+                        {
+                          "text": "SOL",
+                          "value": {
+                            "type": "text",
+                            "value": "SOL"
+                          }
+                        }
+                      ],
+                      "text": "0.0495 SOL"
+                    }
                   }
                 }
               },
@@ -360,7 +478,23 @@
               },
               "bound": "exact",
               "note": null,
-              "units": "49500000"
+              "units": "49500000",
+              "words": {
+                "id": "amount",
+                "parts": [
+                  {
+                    "text": "0.0495 "
+                  },
+                  {
+                    "text": "SOL",
+                    "value": {
+                      "type": "text",
+                      "value": "SOL"
+                    }
+                  }
+                ],
+                "text": "0.0495 SOL"
+              }
             },
             "from": {
               "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
@@ -422,7 +556,23 @@
                     },
                     "bound": "at_most",
                     "note": null,
-                    "units": "49500000"
+                    "units": "49500000",
+                    "words": {
+                      "id": "amount",
+                      "parts": [
+                        {
+                          "text": "≤ 0.0495 "
+                        },
+                        {
+                          "text": "SOL",
+                          "value": {
+                            "type": "text",
+                            "value": "SOL"
+                          }
+                        }
+                      ],
+                      "text": "≤ 0.0495 SOL"
+                    }
                   }
                 }
               },
@@ -485,7 +635,23 @@
               },
               "bound": "at_most",
               "note": null,
-              "units": "49500000"
+              "units": "49500000",
+              "words": {
+                "id": "amount",
+                "parts": [
+                  {
+                    "text": "≤ 0.0495 "
+                  },
+                  {
+                    "text": "SOL",
+                    "value": {
+                      "type": "text",
+                      "value": "SOL"
+                    }
+                  }
+                ],
+                "text": "≤ 0.0495 SOL"
+              }
             },
             "from": {
               "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
@@ -536,7 +702,26 @@
                     },
                     "bound": "at_least",
                     "note": null,
-                    "units": "142243976392"
+                    "units": "142243976392",
+                    "words": {
+                      "id": "amount-unverified",
+                      "parts": [
+                        {
+                          "text": "≥ 142,243,976,392 raw units of unverified token "
+                        },
+                        {
+                          "short": {
+                            "address": "HMYd9tosnUXuNHmq7pXmoePRVBLBBjA3JBfydq6upump",
+                            "is_self": false,
+                            "label": null,
+                            "label_trust": "fact",
+                            "stand_in": null
+                          },
+                          "text": "HMYd…pump"
+                        }
+                      ],
+                      "text": "≥ 142,243,976,392 raw units of unverified token HMYd…pump"
+                    }
                   }
                 }
               },
@@ -607,7 +792,26 @@
               },
               "bound": "at_least",
               "note": null,
-              "units": "142243976392"
+              "units": "142243976392",
+              "words": {
+                "id": "amount-unverified",
+                "parts": [
+                  {
+                    "text": "≥ 142,243,976,392 raw units of unverified token "
+                  },
+                  {
+                    "short": {
+                      "address": "HMYd9tosnUXuNHmq7pXmoePRVBLBBjA3JBfydq6upump",
+                      "is_self": false,
+                      "label": null,
+                      "label_trust": "fact",
+                      "stand_in": null
+                    },
+                    "text": "HMYd…pump"
+                  }
+                ],
+                "text": "≥ 142,243,976,392 raw units of unverified token HMYd…pump"
+              }
             },
             "from": {
               "address": "DF1ow4tspfHX9JwWJsAb9epbkA8hmpSEAtxXy1V27QBH",
@@ -728,7 +932,23 @@
                     },
                     "bound": "exact",
                     "note": null,
-                    "units": "1513840"
+                    "units": "1513840",
+                    "words": {
+                      "id": "amount",
+                      "parts": [
+                        {
+                          "text": "0.00151384 "
+                        },
+                        {
+                          "text": "SOL",
+                          "value": {
+                            "type": "text",
+                            "value": "SOL"
+                          }
+                        }
+                      ],
+                      "text": "0.00151384 SOL"
+                    }
                   }
                 }
               },
@@ -775,7 +995,23 @@
               },
               "bound": "exact",
               "note": null,
-              "units": "1513840"
+              "units": "1513840",
+              "words": {
+                "id": "amount",
+                "parts": [
+                  {
+                    "text": "0.00151384 "
+                  },
+                  {
+                    "text": "SOL",
+                    "value": {
+                      "type": "text",
+                      "value": "SOL"
+                    }
+                  }
+                ],
+                "text": "0.00151384 SOL"
+              }
             },
             "if_missing": true,
             "owner": {
@@ -820,7 +1056,23 @@
                     },
                     "bound": "exact",
                     "note": null,
-                    "units": "122053"
+                    "units": "122053",
+                    "words": {
+                      "id": "amount",
+                      "parts": [
+                        {
+                          "text": "0.000122053 "
+                        },
+                        {
+                          "text": "SOL",
+                          "value": {
+                            "type": "text",
+                            "value": "SOL"
+                          }
+                        }
+                      ],
+                      "text": "0.000122053 SOL"
+                    }
                   }
                 }
               },
@@ -879,7 +1131,23 @@
               },
               "bound": "exact",
               "note": null,
-              "units": "122053"
+              "units": "122053",
+              "words": {
+                "id": "amount",
+                "parts": [
+                  {
+                    "text": "0.000122053 "
+                  },
+                  {
+                    "text": "SOL",
+                    "value": {
+                      "type": "text",
+                      "value": "SOL"
+                    }
+                  }
+                ],
+                "text": "0.000122053 SOL"
+              }
             },
             "from": {
               "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
@@ -939,7 +1207,23 @@
                     },
                     "bound": "exact",
                     "note": null,
-                    "units": "79993"
+                    "units": "79993",
+                    "words": {
+                      "id": "amount",
+                      "parts": [
+                        {
+                          "text": "0.000079993 "
+                        },
+                        {
+                          "text": "SOL",
+                          "value": {
+                            "type": "text",
+                            "value": "SOL"
+                          }
+                        }
+                      ],
+                      "text": "0.000079993 SOL"
+                    }
                   }
                 }
               }
@@ -958,7 +1242,23 @@
               },
               "bound": "exact",
               "note": null,
-              "units": "79993"
+              "units": "79993",
+              "words": {
+                "id": "amount",
+                "parts": [
+                  {
+                    "text": "0.000079993 "
+                  },
+                  {
+                    "text": "SOL",
+                    "value": {
+                      "type": "text",
+                      "value": "SOL"
+                    }
+                  }
+                ],
+                "text": "0.000079993 SOL"
+              }
             },
             "payer": {
               "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
@@ -1028,6 +1328,15 @@
           "severity": "info"
         }
       ],
+      "locale": {
+        "asked": [
+          "en-US"
+        ],
+        "direction": "ltr",
+        "fallbacks": 0,
+        "review": null,
+        "used": "en"
+      },
       "raw": {
         "digest": "b892642d9d9599ea782feb6bffdc9939bf6aa2c699eb2c67b6e5d3463baa7682",
         "format": "solana v0"
@@ -1061,7 +1370,23 @@
                   },
                   "bound": "exact",
                   "note": null,
-                  "units": "500000"
+                  "units": "500000",
+                  "words": {
+                    "id": "amount",
+                    "parts": [
+                      {
+                        "text": "0.0005 "
+                      },
+                      {
+                        "text": "SOL",
+                        "value": {
+                          "type": "text",
+                          "value": "SOL"
+                        }
+                      }
+                    ],
+                    "text": "0.0005 SOL"
+                  }
                 }
               }
             },
@@ -1176,7 +1501,23 @@
                   },
                   "bound": "exact",
                   "note": null,
-                  "units": "49500000"
+                  "units": "49500000",
+                  "words": {
+                    "id": "amount",
+                    "parts": [
+                      {
+                        "text": "0.0495 "
+                      },
+                      {
+                        "text": "SOL",
+                        "value": {
+                          "type": "text",
+                          "value": "SOL"
+                        }
+                      }
+                    ],
+                    "text": "0.0495 SOL"
+                  }
                 }
               }
             },
@@ -1325,7 +1666,23 @@
                   },
                   "bound": "at_most",
                   "note": null,
-                  "units": "49500000"
+                  "units": "49500000",
+                  "words": {
+                    "id": "amount",
+                    "parts": [
+                      {
+                        "text": "≤ 0.0495 "
+                      },
+                      {
+                        "text": "SOL",
+                        "value": {
+                          "type": "text",
+                          "value": "SOL"
+                        }
+                      }
+                    ],
+                    "text": "≤ 0.0495 SOL"
+                  }
                 }
               }
             },
@@ -1353,7 +1710,26 @@
                   },
                   "bound": "at_least",
                   "note": null,
-                  "units": "142243976392"
+                  "units": "142243976392",
+                  "words": {
+                    "id": "amount-unverified",
+                    "parts": [
+                      {
+                        "text": "≥ 142,243,976,392 raw units of unverified token "
+                      },
+                      {
+                        "short": {
+                          "address": "HMYd9tosnUXuNHmq7pXmoePRVBLBBjA3JBfydq6upump",
+                          "is_self": false,
+                          "label": null,
+                          "label_trust": "fact",
+                          "stand_in": null
+                        },
+                        "text": "HMYd…pump"
+                      }
+                    ],
+                    "text": "≥ 142,243,976,392 raw units of unverified token HMYd…pump"
+                  }
                 }
               }
             },
@@ -1381,7 +1757,26 @@
                   },
                   "bound": "exact",
                   "note": null,
-                  "units": "158048862658"
+                  "units": "158048862658",
+                  "words": {
+                    "id": "amount-unverified",
+                    "parts": [
+                      {
+                        "text": "158,048,862,658 raw units of unverified token "
+                      },
+                      {
+                        "short": {
+                          "address": "HMYd9tosnUXuNHmq7pXmoePRVBLBBjA3JBfydq6upump",
+                          "is_self": false,
+                          "label": null,
+                          "label_trust": "fact",
+                          "stand_in": null
+                        },
+                        "text": "HMYd…pump"
+                      }
+                    ],
+                    "text": "158,048,862,658 raw units of unverified token HMYd…pump"
+                  }
                 }
               }
             },
@@ -1779,7 +2174,23 @@
                   },
                   "bound": "exact",
                   "note": null,
-                  "units": "122053"
+                  "units": "122053",
+                  "words": {
+                    "id": "amount",
+                    "parts": [
+                      {
+                        "text": "0.000122053 "
+                      },
+                      {
+                        "text": "SOL",
+                        "value": {
+                          "type": "text",
+                          "value": "SOL"
+                        }
+                      }
+                    ],
+                    "text": "0.000122053 SOL"
+                  }
                 }
               }
             },
@@ -1936,7 +2347,23 @@
                   },
                   "bound": "exact",
                   "note": null,
-                  "units": "79993"
+                  "units": "79993",
+                  "words": {
+                    "id": "amount",
+                    "parts": [
+                      {
+                        "text": "0.000079993 "
+                      },
+                      {
+                        "text": "SOL",
+                        "value": {
+                          "type": "text",
+                          "value": "SOL"
+                        }
+                      }
+                    ],
+                    "text": "0.000079993 SOL"
+                  }
                 }
               }
             },
@@ -1972,7 +2399,23 @@
                   },
                   "bound": "exact",
                   "note": null,
-                  "units": "5000"
+                  "units": "5000",
+                  "words": {
+                    "id": "amount",
+                    "parts": [
+                      {
+                        "text": "0.000005 "
+                      },
+                      {
+                        "text": "SOL",
+                        "value": {
+                          "type": "text",
+                          "value": "SOL"
+                        }
+                      }
+                    ],
+                    "text": "0.000005 SOL"
+                  }
                 }
               }
             },
@@ -2008,7 +2451,23 @@
                   },
                   "bound": "exact",
                   "note": null,
-                  "units": "74993"
+                  "units": "74993",
+                  "words": {
+                    "id": "amount",
+                    "parts": [
+                      {
+                        "text": "0.000074993 "
+                      },
+                      {
+                        "text": "SOL",
+                        "value": {
+                          "type": "text",
+                          "value": "SOL"
+                        }
+                      }
+                    ],
+                    "text": "0.000074993 SOL"
+                  }
                 }
               }
             },
@@ -2087,7 +2546,23 @@
                           },
                           "bound": "exact",
                           "note": null,
-                          "units": "1513840"
+                          "units": "1513840",
+                          "words": {
+                            "id": "amount",
+                            "parts": [
+                              {
+                                "text": "0.00151384 "
+                              },
+                              {
+                                "text": "SOL",
+                                "value": {
+                                  "type": "text",
+                                  "value": "SOL"
+                                }
+                              }
+                            ],
+                            "text": "0.00151384 SOL"
+                          }
                         }
                       }
                     },
@@ -2193,7 +2668,23 @@
                 },
                 "bound": "exact",
                 "note": null,
-                "units": "500000"
+                "units": "500000",
+                "words": {
+                  "id": "amount",
+                  "parts": [
+                    {
+                      "text": "0.0005 "
+                    },
+                    {
+                      "text": "SOL",
+                      "value": {
+                        "type": "text",
+                        "value": "SOL"
+                      }
+                    }
+                  ],
+                  "text": "0.0005 SOL"
+                }
               }
             }
           },
@@ -2240,7 +2731,23 @@
                 },
                 "bound": "exact",
                 "note": null,
-                "units": "49500000"
+                "units": "49500000",
+                "words": {
+                  "id": "amount",
+                  "parts": [
+                    {
+                      "text": "0.0495 "
+                    },
+                    {
+                      "text": "SOL",
+                      "value": {
+                        "type": "text",
+                        "value": "SOL"
+                      }
+                    }
+                  ],
+                  "text": "0.0495 SOL"
+                }
               }
             }
           },
@@ -2274,7 +2781,23 @@
                 },
                 "bound": "at_most",
                 "note": null,
-                "units": "49500000"
+                "units": "49500000",
+                "words": {
+                  "id": "amount",
+                  "parts": [
+                    {
+                      "text": "≤ 0.0495 "
+                    },
+                    {
+                      "text": "SOL",
+                      "value": {
+                        "type": "text",
+                        "value": "SOL"
+                      }
+                    }
+                  ],
+                  "text": "≤ 0.0495 SOL"
+                }
               }
             }
           },
@@ -2295,7 +2818,26 @@
                 },
                 "bound": "at_least",
                 "note": null,
-                "units": "142243976392"
+                "units": "142243976392",
+                "words": {
+                  "id": "amount-unverified",
+                  "parts": [
+                    {
+                      "text": "≥ 142,243,976,392 raw units of unverified token "
+                    },
+                    {
+                      "short": {
+                        "address": "HMYd9tosnUXuNHmq7pXmoePRVBLBBjA3JBfydq6upump",
+                        "is_self": false,
+                        "label": null,
+                        "label_trust": "fact",
+                        "stand_in": null
+                      },
+                      "text": "HMYd…pump"
+                    }
+                  ],
+                  "text": "≥ 142,243,976,392 raw units of unverified token HMYd…pump"
+                }
               }
             }
           },

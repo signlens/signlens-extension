@@ -5,15 +5,18 @@
     "body": {
       "transaction": "AmIHCiJr3qGOpw3J/RoC6nFPGp4cZvj5OXdFEW+2RtIxnatvYOnBfp5vgojfbCopIiEGbDEfKJ+S2VWpjID0YgOk0RfylCPfFYXp6tgDZr4E5Ojq7HTZ5pRCEzVLl2I7lFqHNzJjO0ZtaXZGuPvyYBu4pBJjBhaPS1vX2nXif7AIAgEIDWzbTSORkLlRD2B1iXNZmTugpfx/HKjCfePPBmQkM6QFyha/+yWS3ihSSiGhrp6o7V4IAQQWneno5Zm2D0aEsiyLAOs2rEgq9kakRnkb/IW8WOrE60uK5K1hUYgZKj4/Prl692pCMtSgUohtDM8D2KH3dJhtC1XSFybBbIUtkN+F2gA7Bnr1ABu4fDIf+oguy5B4LwWLy9RsmfGCd9Bmwv8Gp9UXGSxWjuCKhF9z0peIzwNcMUWyGrNE2AYuqUAAAJojKD3FS3qecYOCMGOFVDcc0dQ+7VOnOThCnjdAol44xvp6877brTo9ZfNqq8l0MbG75MLS9uDkfKYCA0UvXWEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbd9uHXZaGT2cvhRs7reawctIXtX1s3kTqM9YV+/wCpBqfVFxksXFEhjMlMPUrxf1ja7gibof1E49vZigAAAACMlyWPTiSJ8bs9ECkUjg2DC1oTmdr/EIQEjnvY2+n4WQMGRm/lIRcy/+ytunLDm+e8jOW7xfcSayxDmzpAAAAAdI9VKVQxKl861pri3hPZK0Q0k5M1x1y5QD/ks/GROa0FCAMCBQEEBAAAAAsHAAMGBwgJCgEBCQQEBwMACgxHNA8AAAAAAAYMAAUC+FAAAAwACQP4oQEAAAAAAA==",
       "own_keys": [
-        "FakeWa11et1111111111111111111111111111111111"
+        "8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa"
       ],
-      "contacts": [
-        {
-          "name": "[[contact-1-0000000000000000]]",
-          "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp"
-        }
-      ],
-      "render": true
+      "contacts": [],
+      "simulation": {
+        "failure": null,
+        "units": 4200,
+        "changes": []
+      },
+      "render": true,
+      "locale": [
+        "en-US"
+      ]
     }
   },
   "response": {
@@ -23,10 +26,10 @@
         {
           "instruction": 2,
           "summary": {
-            "id": "token-transfer-summary",
+            "id": "token-send-summary",
             "parts": [
               {
-                "text": "Transfer "
+                "text": "Send "
               },
               {
                 "text": "0.996423 USDC",
@@ -42,22 +45,25 @@
                     },
                     "bound": "exact",
                     "note": null,
-                    "units": "996423"
+                    "units": "996423",
+                    "words": {
+                      "id": "amount",
+                      "parts": [
+                        {
+                          "text": "0.996423 "
+                        },
+                        {
+                          "text": "USDC",
+                          "value": {
+                            "type": "text",
+                            "value": "USDC"
+                          }
+                        }
+                      ],
+                      "text": "0.996423 USDC"
+                    }
                   }
                 }
-              },
-              {
-                "text": " from "
-              },
-              {
-                "short": {
-                  "address": "Ffz5kwUjkUNw7hV4r6iCJnUoXXsAPFHkCMCmKKDypiwg",
-                  "is_self": false,
-                  "label": null,
-                  "label_trust": "fact",
-                  "stand_in": null
-                },
-                "text": "Ffz5…piwg"
               },
               {
                 "text": " to "
@@ -67,17 +73,33 @@
                   "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp",
                   "is_self": false,
                   "label": {
-                    "id": "accounts-name",
+                    "id": "accounts-others-token",
                     "parts": [
                       {
-                        "text": "[[contact-1-0000000000000000]]",
+                        "short": {
+                          "address": "BNgsxo3eHqQLNTaKy4juhAUJ8DyewcJNEcYdMuSmTT1Z",
+                          "is_self": false,
+                          "label": null,
+                          "label_trust": "fact",
+                          "stand_in": null
+                        },
+                        "text": "BNgs…TT1Z"
+                      },
+                      {
+                        "text": "'s "
+                      },
+                      {
+                        "text": "USDC",
                         "value": {
                           "type": "text",
-                          "value": "[[contact-1-0000000000000000]]"
+                          "value": "USDC"
                         }
+                      },
+                      {
+                        "text": " account"
                       }
                     ],
-                    "text": "[[contact-1-0000000000000000]]"
+                    "text": "BNgs…TT1Z's USDC account"
                   },
                   "label_trust": "verified",
                   "stand_in": null
@@ -85,7 +107,7 @@
                 "text": "DV3B…L7Qp"
               }
             ],
-            "text": "Transfer 0.996423 USDC from Ffz5…piwg to DV3B…L7Qp"
+            "text": "Send 0.996423 USDC to DV3B…L7Qp"
           }
         }
       ],
@@ -93,10 +115,10 @@
       "effects": [
         {
           "message": {
-            "id": "effect-transfer",
+            "id": "effect-send",
             "parts": [
               {
-                "text": "Transfer "
+                "text": "You send "
               },
               {
                 "text": "0.996423 USDC",
@@ -112,7 +134,23 @@
                     },
                     "bound": "exact",
                     "note": null,
-                    "units": "996423"
+                    "units": "996423",
+                    "words": {
+                      "id": "amount",
+                      "parts": [
+                        {
+                          "text": "0.996423 "
+                        },
+                        {
+                          "text": "USDC",
+                          "value": {
+                            "type": "text",
+                            "value": "USDC"
+                          }
+                        }
+                      ],
+                      "text": "0.996423 USDC"
+                    }
                   }
                 }
               },
@@ -120,14 +158,22 @@
                 "text": " from "
               },
               {
-                "text": "Ffz5kwUjkUNw7hV4r6iCJnUoXXsAPFHkCMCmKKDypiwg",
+                "text": "Your token account (Ffz5…piwg)",
                 "value": {
                   "type": "address",
                   "value": {
                     "address": "Ffz5kwUjkUNw7hV4r6iCJnUoXXsAPFHkCMCmKKDypiwg",
-                    "is_self": false,
-                    "label": null,
-                    "label_trust": "fact",
+                    "is_self": true,
+                    "label": {
+                      "id": "token-your-account",
+                      "parts": [
+                        {
+                          "text": "Your token account"
+                        }
+                      ],
+                      "text": "Your token account"
+                    },
+                    "label_trust": "verified",
                     "stand_in": null
                   }
                 }
@@ -136,24 +182,40 @@
                 "text": " to "
               },
               {
-                "text": "[[contact-1-0000000000000000]] (DV3B…L7Qp)",
+                "text": "BNgs…TT1Z's USDC account (DV3B…L7Qp)",
                 "value": {
                   "type": "address",
                   "value": {
                     "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp",
                     "is_self": false,
                     "label": {
-                      "id": "accounts-name",
+                      "id": "accounts-others-token",
                       "parts": [
                         {
-                          "text": "[[contact-1-0000000000000000]]",
+                          "short": {
+                            "address": "BNgsxo3eHqQLNTaKy4juhAUJ8DyewcJNEcYdMuSmTT1Z",
+                            "is_self": false,
+                            "label": null,
+                            "label_trust": "fact",
+                            "stand_in": null
+                          },
+                          "text": "BNgs…TT1Z"
+                        },
+                        {
+                          "text": "'s "
+                        },
+                        {
+                          "text": "USDC",
                           "value": {
                             "type": "text",
-                            "value": "[[contact-1-0000000000000000]]"
+                            "value": "USDC"
                           }
+                        },
+                        {
+                          "text": " account"
                         }
                       ],
-                      "text": "[[contact-1-0000000000000000]]"
+                      "text": "BNgs…TT1Z's USDC account"
                     },
                     "label_trust": "verified",
                     "stand_in": null
@@ -161,7 +223,7 @@
                 }
               }
             ],
-            "text": "Transfer 0.996423 USDC from Ffz5kwUjkUNw7hV4r6iCJnUoXXsAPFHkCMCmKKDypiwg to [[contact-1-0000000000000000]] (DV3B…L7Qp)"
+            "text": "You send 0.996423 USDC from Your token account (Ffz5…piwg) to BNgs…TT1Z's USDC account (DV3B…L7Qp)"
           },
           "type": "transfer",
           "value": {
@@ -175,30 +237,70 @@
               },
               "bound": "exact",
               "note": null,
-              "units": "996423"
+              "units": "996423",
+              "words": {
+                "id": "amount",
+                "parts": [
+                  {
+                    "text": "0.996423 "
+                  },
+                  {
+                    "text": "USDC",
+                    "value": {
+                      "type": "text",
+                      "value": "USDC"
+                    }
+                  }
+                ],
+                "text": "0.996423 USDC"
+              }
             },
             "from": {
               "address": "Ffz5kwUjkUNw7hV4r6iCJnUoXXsAPFHkCMCmKKDypiwg",
-              "is_self": false,
-              "label": null,
-              "label_trust": "fact",
+              "is_self": true,
+              "label": {
+                "id": "token-your-account",
+                "parts": [
+                  {
+                    "text": "Your token account"
+                  }
+                ],
+                "text": "Your token account"
+              },
+              "label_trust": "verified",
               "stand_in": null
             },
             "to": {
               "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp",
               "is_self": false,
               "label": {
-                "id": "accounts-name",
+                "id": "accounts-others-token",
                 "parts": [
                   {
-                    "text": "[[contact-1-0000000000000000]]",
+                    "short": {
+                      "address": "BNgsxo3eHqQLNTaKy4juhAUJ8DyewcJNEcYdMuSmTT1Z",
+                      "is_self": false,
+                      "label": null,
+                      "label_trust": "fact",
+                      "stand_in": null
+                    },
+                    "text": "BNgs…TT1Z"
+                  },
+                  {
+                    "text": "'s "
+                  },
+                  {
+                    "text": "USDC",
                     "value": {
                       "type": "text",
-                      "value": "[[contact-1-0000000000000000]]"
+                      "value": "USDC"
                     }
+                  },
+                  {
+                    "text": " account"
                   }
                 ],
-                "text": "[[contact-1-0000000000000000]]"
+                "text": "BNgs…TT1Z's USDC account"
               },
               "label_trust": "verified",
               "stand_in": null
@@ -213,24 +315,40 @@
                 "text": "Create "
               },
               {
-                "text": "[[contact-1-0000000000000000]] (DV3B…L7Qp)",
+                "text": "BNgs…TT1Z's USDC account (DV3B…L7Qp)",
                 "value": {
                   "type": "address",
                   "value": {
                     "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp",
                     "is_self": false,
                     "label": {
-                      "id": "accounts-name",
+                      "id": "accounts-others-token",
                       "parts": [
                         {
-                          "text": "[[contact-1-0000000000000000]]",
+                          "short": {
+                            "address": "BNgsxo3eHqQLNTaKy4juhAUJ8DyewcJNEcYdMuSmTT1Z",
+                            "is_self": false,
+                            "label": null,
+                            "label_trust": "fact",
+                            "stand_in": null
+                          },
+                          "text": "BNgs…TT1Z"
+                        },
+                        {
+                          "text": "'s "
+                        },
+                        {
+                          "text": "USDC",
                           "value": {
                             "type": "text",
-                            "value": "[[contact-1-0000000000000000]]"
+                            "value": "USDC"
                           }
+                        },
+                        {
+                          "text": " account"
                         }
                       ],
-                      "text": "[[contact-1-0000000000000000]]"
+                      "text": "BNgs…TT1Z's USDC account"
                     },
                     "label_trust": "verified",
                     "stand_in": null
@@ -282,7 +400,23 @@
                     },
                     "bound": "exact",
                     "note": null,
-                    "units": "1488440"
+                    "units": "1488440",
+                    "words": {
+                      "id": "amount",
+                      "parts": [
+                        {
+                          "text": "0.00148844 "
+                        },
+                        {
+                          "text": "SOL",
+                          "value": {
+                            "type": "text",
+                            "value": "SOL"
+                          }
+                        }
+                      ],
+                      "text": "0.00148844 SOL"
+                    }
                   }
                 }
               },
@@ -290,7 +424,7 @@
                 "text": " unless it already exists"
               }
             ],
-            "text": "Create [[contact-1-0000000000000000]] (DV3B…L7Qp), managed by Token program (Toke…Q5DA), depositing 0.00148844 SOL unless it already exists"
+            "text": "Create BNgs…TT1Z's USDC account (DV3B…L7Qp), managed by Token program (Toke…Q5DA), depositing 0.00148844 SOL unless it already exists"
           },
           "type": "create",
           "value": {
@@ -298,17 +432,33 @@
               "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp",
               "is_self": false,
               "label": {
-                "id": "accounts-name",
+                "id": "accounts-others-token",
                 "parts": [
                   {
-                    "text": "[[contact-1-0000000000000000]]",
+                    "short": {
+                      "address": "BNgsxo3eHqQLNTaKy4juhAUJ8DyewcJNEcYdMuSmTT1Z",
+                      "is_self": false,
+                      "label": null,
+                      "label_trust": "fact",
+                      "stand_in": null
+                    },
+                    "text": "BNgs…TT1Z"
+                  },
+                  {
+                    "text": "'s "
+                  },
+                  {
+                    "text": "USDC",
                     "value": {
                       "type": "text",
-                      "value": "[[contact-1-0000000000000000]]"
+                      "value": "USDC"
                     }
+                  },
+                  {
+                    "text": " account"
                   }
                 ],
-                "text": "[[contact-1-0000000000000000]]"
+                "text": "BNgs…TT1Z's USDC account"
               },
               "label_trust": "verified",
               "stand_in": null
@@ -323,7 +473,23 @@
               },
               "bound": "exact",
               "note": null,
-              "units": "1488440"
+              "units": "1488440",
+              "words": {
+                "id": "amount",
+                "parts": [
+                  {
+                    "text": "0.00148844 "
+                  },
+                  {
+                    "text": "SOL",
+                    "value": {
+                      "type": "text",
+                      "value": "SOL"
+                    }
+                  }
+                ],
+                "text": "0.00148844 SOL"
+              }
             },
             "if_missing": true,
             "owner": {
@@ -349,23 +515,10 @@
         },
         {
           "message": {
-            "id": "effect-fee",
+            "id": "effect-fee-own",
             "parts": [
               {
-                "text": "8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa",
-                "value": {
-                  "type": "address",
-                  "value": {
-                    "address": "8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa",
-                    "is_self": false,
-                    "label": null,
-                    "label_trust": "fact",
-                    "stand_in": null
-                  }
-                }
-              },
-              {
-                "text": " pays a fee of "
+                "text": "You pay a fee of "
               },
               {
                 "text": "0.000012218 SOL",
@@ -381,12 +534,28 @@
                     },
                     "bound": "exact",
                     "note": null,
-                    "units": "12218"
+                    "units": "12218",
+                    "words": {
+                      "id": "amount",
+                      "parts": [
+                        {
+                          "text": "0.000012218 "
+                        },
+                        {
+                          "text": "SOL",
+                          "value": {
+                            "type": "text",
+                            "value": "SOL"
+                          }
+                        }
+                      ],
+                      "text": "0.000012218 SOL"
+                    }
                   }
                 }
               }
             ],
-            "text": "8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa pays a fee of 0.000012218 SOL"
+            "text": "You pay a fee of 0.000012218 SOL"
           },
           "type": "fee",
           "value": {
@@ -400,13 +569,37 @@
               },
               "bound": "exact",
               "note": null,
-              "units": "12218"
+              "units": "12218",
+              "words": {
+                "id": "amount",
+                "parts": [
+                  {
+                    "text": "0.000012218 "
+                  },
+                  {
+                    "text": "SOL",
+                    "value": {
+                      "type": "text",
+                      "value": "SOL"
+                    }
+                  }
+                ],
+                "text": "0.000012218 SOL"
+              }
             },
             "payer": {
               "address": "8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa",
-              "is_self": false,
-              "label": null,
-              "label_trust": "fact",
+              "is_self": true,
+              "label": {
+                "id": "accounts-your-wallet",
+                "parts": [
+                  {
+                    "text": "Your wallet"
+                  }
+                ],
+                "text": "Your wallet"
+              },
+              "label_trust": "verified",
               "stand_in": null
             }
           }
@@ -432,7 +625,14 @@
                 }
               },
               {
-                "text": " is advanced, with NO TIME LIMIT (durable nonce)"
+                "text": " is advanced, with "
+              },
+              {
+                "emphasis": true,
+                "text": "NO TIME LIMIT"
+              },
+              {
+                "text": " (durable nonce)"
               }
             ],
             "text": "Valid until nonce account AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw is advanced, with NO TIME LIMIT (durable nonce)"
@@ -468,33 +668,29 @@
           "severity": "high"
         },
         {
-          "code": "FEE_PAID_BY_OTHER",
+          "code": "SIMULATION_AGREES",
           "instruction": null,
           "message": {
-            "id": "explain-fee-paid-by-other",
+            "id": "simulation-agrees",
             "parts": [
               {
-                "text": "The fee is paid by "
-              },
-              {
-                "short": {
-                  "address": "8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa",
-                  "is_self": false,
-                  "label": null,
-                  "label_trust": "fact",
-                  "stand_in": null
-                },
-                "text": "8Kvy…p1fa"
-              },
-              {
-                "text": ", not by you"
+                "text": "The host's simulation agrees with the instructions' effects on your balances"
               }
             ],
-            "text": "The fee is paid by 8Kvy…p1fa, not by you"
+            "text": "The host's simulation agrees with the instructions' effects on your balances"
           },
           "severity": "info"
         }
       ],
+      "locale": {
+        "asked": [
+          "en-US"
+        ],
+        "direction": "ltr",
+        "fallbacks": 0,
+        "review": null,
+        "used": "en"
+      },
       "raw": {
         "digest": "05d51e61e33bad79d124089e71be7988c37cccf1f9268ee6e338e439f5ec582f",
         "format": "solana legacy"
@@ -528,7 +724,23 @@
                   },
                   "bound": "exact",
                   "note": null,
-                  "units": "996423"
+                  "units": "996423",
+                  "words": {
+                    "id": "amount",
+                    "parts": [
+                      {
+                        "text": "0.996423 "
+                      },
+                      {
+                        "text": "USDC",
+                        "value": {
+                          "type": "text",
+                          "value": "USDC"
+                        }
+                      }
+                    ],
+                    "text": "0.996423 USDC"
+                  }
                 }
               }
             },
@@ -548,9 +760,17 @@
                 "type": "address",
                 "value": {
                   "address": "Ffz5kwUjkUNw7hV4r6iCJnUoXXsAPFHkCMCmKKDypiwg",
-                  "is_self": false,
-                  "label": null,
-                  "label_trust": "fact",
+                  "is_self": true,
+                  "label": {
+                    "id": "token-your-account",
+                    "parts": [
+                      {
+                        "text": "Your token account"
+                      }
+                    ],
+                    "text": "Your token account"
+                  },
+                  "label_trust": "verified",
                   "stand_in": null
                 }
               }
@@ -573,17 +793,33 @@
                   "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp",
                   "is_self": false,
                   "label": {
-                    "id": "accounts-name",
+                    "id": "accounts-others-token",
                     "parts": [
                       {
-                        "text": "[[contact-1-0000000000000000]]",
+                        "short": {
+                          "address": "BNgsxo3eHqQLNTaKy4juhAUJ8DyewcJNEcYdMuSmTT1Z",
+                          "is_self": false,
+                          "label": null,
+                          "label_trust": "fact",
+                          "stand_in": null
+                        },
+                        "text": "BNgs…TT1Z"
+                      },
+                      {
+                        "text": "'s "
+                      },
+                      {
+                        "text": "USDC",
                         "value": {
                           "type": "text",
-                          "value": "[[contact-1-0000000000000000]]"
+                          "value": "USDC"
                         }
+                      },
+                      {
+                        "text": " account"
                       }
                     ],
-                    "text": "[[contact-1-0000000000000000]]"
+                    "text": "BNgs…TT1Z's USDC account"
                   },
                   "label_trust": "verified",
                   "stand_in": null
@@ -606,9 +842,17 @@
                 "type": "address",
                 "value": {
                   "address": "8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa",
-                  "is_self": false,
-                  "label": null,
-                  "label_trust": "fact",
+                  "is_self": true,
+                  "label": {
+                    "id": "accounts-your-wallet",
+                    "parts": [
+                      {
+                        "text": "Your wallet"
+                      }
+                    ],
+                    "text": "Your wallet"
+                  },
+                  "label_trust": "verified",
                   "stand_in": null
                 }
               }
@@ -772,17 +1016,33 @@
                   "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp",
                   "is_self": false,
                   "label": {
-                    "id": "accounts-name",
+                    "id": "accounts-others-token",
                     "parts": [
                       {
-                        "text": "[[contact-1-0000000000000000]]",
+                        "short": {
+                          "address": "BNgsxo3eHqQLNTaKy4juhAUJ8DyewcJNEcYdMuSmTT1Z",
+                          "is_self": false,
+                          "label": null,
+                          "label_trust": "fact",
+                          "stand_in": null
+                        },
+                        "text": "BNgs…TT1Z"
+                      },
+                      {
+                        "text": "'s "
+                      },
+                      {
+                        "text": "USDC",
                         "value": {
                           "type": "text",
-                          "value": "[[contact-1-0000000000000000]]"
+                          "value": "USDC"
                         }
+                      },
+                      {
+                        "text": " account"
                       }
                     ],
-                    "text": "[[contact-1-0000000000000000]]"
+                    "text": "BNgs…TT1Z's USDC account"
                   },
                   "label_trust": "verified",
                   "stand_in": null
@@ -882,9 +1142,17 @@
                 "type": "address",
                 "value": {
                   "address": "8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa",
-                  "is_self": false,
-                  "label": null,
-                  "label_trust": "fact",
+                  "is_self": true,
+                  "label": {
+                    "id": "accounts-your-wallet",
+                    "parts": [
+                      {
+                        "text": "Your wallet"
+                      }
+                    ],
+                    "text": "Your wallet"
+                  },
+                  "label_trust": "verified",
                   "stand_in": null
                 }
               }
@@ -1032,9 +1300,17 @@
                 "type": "address",
                 "value": {
                   "address": "8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa",
-                  "is_self": false,
-                  "label": null,
-                  "label_trust": "fact",
+                  "is_self": true,
+                  "label": {
+                    "id": "accounts-your-wallet",
+                    "parts": [
+                      {
+                        "text": "Your wallet"
+                      }
+                    ],
+                    "text": "Your wallet"
+                  },
+                  "label_trust": "verified",
                   "stand_in": null
                 }
               }
@@ -1120,7 +1396,23 @@
                   },
                   "bound": "exact",
                   "note": null,
-                  "units": "12218"
+                  "units": "12218",
+                  "words": {
+                    "id": "amount",
+                    "parts": [
+                      {
+                        "text": "0.000012218 "
+                      },
+                      {
+                        "text": "SOL",
+                        "value": {
+                          "type": "text",
+                          "value": "SOL"
+                        }
+                      }
+                    ],
+                    "text": "0.000012218 SOL"
+                  }
                 }
               }
             },
@@ -1156,7 +1448,23 @@
                   },
                   "bound": "exact",
                   "note": null,
-                  "units": "10000"
+                  "units": "10000",
+                  "words": {
+                    "id": "amount",
+                    "parts": [
+                      {
+                        "text": "0.00001 "
+                      },
+                      {
+                        "text": "SOL",
+                        "value": {
+                          "type": "text",
+                          "value": "SOL"
+                        }
+                      }
+                    ],
+                    "text": "0.00001 SOL"
+                  }
                 }
               }
             },
@@ -1192,7 +1500,23 @@
                   },
                   "bound": "exact",
                   "note": null,
-                  "units": "2218"
+                  "units": "2218",
+                  "words": {
+                    "id": "amount",
+                    "parts": [
+                      {
+                        "text": "0.000002218 "
+                      },
+                      {
+                        "text": "SOL",
+                        "value": {
+                          "type": "text",
+                          "value": "SOL"
+                        }
+                      }
+                    ],
+                    "text": "0.000002218 SOL"
+                  }
                 }
               }
             },
@@ -1271,7 +1595,23 @@
                           },
                           "bound": "exact",
                           "note": null,
-                          "units": "1488440"
+                          "units": "1488440",
+                          "words": {
+                            "id": "amount",
+                            "parts": [
+                              {
+                                "text": "0.00148844 "
+                              },
+                              {
+                                "text": "SOL",
+                                "value": {
+                                  "type": "text",
+                                  "value": "SOL"
+                                }
+                              }
+                            ],
+                            "text": "0.00148844 SOL"
+                          }
                         }
                       }
                     },
@@ -1379,13 +1719,122 @@
             ],
             "text": "Validity"
           }
+        },
+        {
+          "collapsed": false,
+          "fields": [
+            {
+              "help": {
+                "id": "label-result.help",
+                "parts": [
+                  {
+                    "text": "What the RPC says would happen if this were sent now. A simulation, not the real thing: the chain can differ by the time it lands."
+                  }
+                ],
+                "text": "What the RPC says would happen if this were sent now. A simulation, not the real thing: the chain can differ by the time it lands."
+              },
+              "label": {
+                "id": "label-result",
+                "parts": [
+                  {
+                    "text": "Result"
+                  }
+                ],
+                "text": "Result"
+              },
+              "trust": "claimed",
+              "value": {
+                "type": "words",
+                "value": {
+                  "id": "simulation-would-succeed",
+                  "parts": [
+                    {
+                      "text": "would succeed"
+                    }
+                  ],
+                  "text": "would succeed"
+                }
+              }
+            },
+            {
+              "help": {
+                "id": "label-compute-units.help",
+                "parts": [
+                  {
+                    "text": "How much work the transaction did in the simulation. The priority fee is paid per unit, so this is what it buys."
+                  }
+                ],
+                "text": "How much work the transaction did in the simulation. The priority fee is paid per unit, so this is what it buys."
+              },
+              "label": {
+                "id": "label-compute-units",
+                "parts": [
+                  {
+                    "text": "Compute units"
+                  }
+                ],
+                "text": "Compute units"
+              },
+              "trust": "claimed",
+              "value": {
+                "type": "integer",
+                "value": "4200"
+              }
+            },
+            {
+              "help": null,
+              "label": {
+                "id": "label-your-balances",
+                "parts": [
+                  {
+                    "text": "Your balances"
+                  }
+                ],
+                "text": "Your balances"
+              },
+              "trust": "claimed",
+              "value": {
+                "type": "words",
+                "value": {
+                  "id": "simulation-unchanged",
+                  "parts": [
+                    {
+                      "text": "unchanged"
+                    }
+                  ],
+                  "text": "unchanged"
+                }
+              }
+            }
+          ],
+          "kind": {
+            "type": "claims"
+          },
+          "subtitle": {
+            "id": "simulation-subtitle",
+            "parts": [
+              {
+                "text": "the host's simulation"
+              }
+            ],
+            "text": "the host's simulation"
+          },
+          "title": {
+            "id": "simulation-title",
+            "parts": [
+              {
+                "text": "Simulated outcome"
+              }
+            ],
+            "text": "Simulated outcome"
+          }
         }
       ],
       "summary": {
-        "id": "token-transfer-summary",
+        "id": "token-send-summary",
         "parts": [
           {
-            "text": "Transfer "
+            "text": "Send "
           },
           {
             "text": "0.996423 USDC",
@@ -1401,22 +1850,25 @@
                 },
                 "bound": "exact",
                 "note": null,
-                "units": "996423"
+                "units": "996423",
+                "words": {
+                  "id": "amount",
+                  "parts": [
+                    {
+                      "text": "0.996423 "
+                    },
+                    {
+                      "text": "USDC",
+                      "value": {
+                        "type": "text",
+                        "value": "USDC"
+                      }
+                    }
+                  ],
+                  "text": "0.996423 USDC"
+                }
               }
             }
-          },
-          {
-            "text": " from "
-          },
-          {
-            "short": {
-              "address": "Ffz5kwUjkUNw7hV4r6iCJnUoXXsAPFHkCMCmKKDypiwg",
-              "is_self": false,
-              "label": null,
-              "label_trust": "fact",
-              "stand_in": null
-            },
-            "text": "Ffz5…piwg"
           },
           {
             "text": " to "
@@ -1426,17 +1878,33 @@
               "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp",
               "is_self": false,
               "label": {
-                "id": "accounts-name",
+                "id": "accounts-others-token",
                 "parts": [
                   {
-                    "text": "[[contact-1-0000000000000000]]",
+                    "short": {
+                      "address": "BNgsxo3eHqQLNTaKy4juhAUJ8DyewcJNEcYdMuSmTT1Z",
+                      "is_self": false,
+                      "label": null,
+                      "label_trust": "fact",
+                      "stand_in": null
+                    },
+                    "text": "BNgs…TT1Z"
+                  },
+                  {
+                    "text": "'s "
+                  },
+                  {
+                    "text": "USDC",
                     "value": {
                       "type": "text",
-                      "value": "[[contact-1-0000000000000000]]"
+                      "value": "USDC"
                     }
+                  },
+                  {
+                    "text": " account"
                   }
                 ],
-                "text": "[[contact-1-0000000000000000]]"
+                "text": "BNgs…TT1Z's USDC account"
               },
               "label_trust": "verified",
               "stand_in": null
@@ -1444,9 +1912,9 @@
             "text": "DV3B…L7Qp"
           }
         ],
-        "text": "Transfer 0.996423 USDC from Ffz5…piwg to DV3B…L7Qp"
+        "text": "Send 0.996423 USDC to DV3B…L7Qp"
       },
-      "text": "Transfer 0.996423 USDC from Ffz5…piwg to DV3B…L7Qp\nWARNING: review the findings before approving\n\nFindings:\n  [HIGH] This signature has no time limit: anyone holding the signed transaction can submit it at any later time, until the nonce account is advanced\n  [INFO] The fee is paid by 8Kvy…p1fa, not by you\n\n== Transfer tokens | Token program\n  Amount: 0.996423 USDC\n  From: Ffz5kwUjkUNw7hV4r6iCJnUoXXsAPFHkCMCmKKDypiwg\n  To: [[contact-1-0000000000000000]] (DV3B…L7Qp)\n  Authorized by: 8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa\n  Mint: USDC mint (EPjF…Dt1v)\n\n== Also [collapsed]\n  Advance durable nonce: Nonce account: AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw\n  Advance durable nonce: Authority: EbsUZEFAU23Z2SgAymFtU2hADLiyNLzaPLKiJfvpKnE7\n  Create token account if missing: Token account: [[contact-1-0000000000000000]] (DV3B…L7Qp)\n  Create token account if missing: Owner: BNgsxo3eHqQLNTaKy4juhAUJ8DyewcJNEcYdMuSmTT1Z\n  Create token account if missing: Mint: USDC mint (EPjF…Dt1v)\n  Create token account if missing: Rent paid by: 8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa\n  Create token account if missing: Token program: Token program (Toke…Q5DA)\n  Compute unit limit: 20728\n  Compute unit price: 107,000 micro-lamports per compute unit\n\n== Signers\n  Fee payer: 8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa\n  Signer: EbsUZEFAU23Z2SgAymFtU2hADLiyNLzaPLKiJfvpKnE7\n\n== Fee\n  Total: 0.000012218 SOL\n  Base: 0.00001 SOL\n  Priority: 0.000002218 SOL\n  Priority basis: 107,000 micro-lamports per compute unit × 20,728 compute units requested\n  Rent deposits: up to 0.00148844 SOL, if the account this transaction creates when missing does not exist yet; refunded to whoever closes the account\n\n== Validity\n  Expires: when the nonce account is advanced, with no time limit\n  Nonce account: AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw\n\nEffects:\n  - Transfer 0.996423 USDC from Ffz5kwUjkUNw7hV4r6iCJnUoXXsAPFHkCMCmKKDypiwg to [[contact-1-0000000000000000]] (DV3B…L7Qp)\n  - Create [[contact-1-0000000000000000]] (DV3B…L7Qp), managed by Token program (Toke…Q5DA), depositing 0.00148844 SOL unless it already exists\n  - 8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa pays a fee of 0.000012218 SOL\n  - Valid until nonce account AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw is advanced, with NO TIME LIMIT (durable nonce)\n\nRaw: solana legacy (511 bytes)\n  digest: 05d51e61e33bad79d124089e71be7988c37cccf1f9268ee6e338e439f5ec582f\n",
+      "text": "Send 0.996423 USDC to DV3B…L7Qp\nWARNING: review the findings before approving\n\nFindings:\n  [HIGH] This signature has no time limit: anyone holding the signed transaction can submit it at any later time, until the nonce account is advanced\n  [INFO] The host's simulation agrees with the instructions' effects on your balances\n\n== Transfer tokens | Token program\n  Amount: 0.996423 USDC\n  From: Your token account (Ffz5…piwg)\n  To: BNgs…TT1Z's USDC account (DV3B…L7Qp)\n  Authorized by: Your wallet (8Kvy…p1fa)\n  Mint: USDC mint (EPjF…Dt1v)\n\n== Also [collapsed]\n  Advance durable nonce: Nonce account: AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw\n  Advance durable nonce: Authority: EbsUZEFAU23Z2SgAymFtU2hADLiyNLzaPLKiJfvpKnE7\n  Create token account if missing: Token account: BNgs…TT1Z's USDC account (DV3B…L7Qp)\n  Create token account if missing: Owner: BNgsxo3eHqQLNTaKy4juhAUJ8DyewcJNEcYdMuSmTT1Z\n  Create token account if missing: Mint: USDC mint (EPjF…Dt1v)\n  Create token account if missing: Rent paid by: Your wallet (8Kvy…p1fa)\n  Create token account if missing: Token program: Token program (Toke…Q5DA)\n  Compute unit limit: 20728\n  Compute unit price: 107,000 micro-lamports per compute unit\n\n== Signers\n  Fee payer: Your wallet (8Kvy…p1fa)\n  Signer: EbsUZEFAU23Z2SgAymFtU2hADLiyNLzaPLKiJfvpKnE7\n\n== Fee\n  Total: 0.000012218 SOL\n  Base: 0.00001 SOL\n  Priority: 0.000002218 SOL\n  Priority basis: 107,000 micro-lamports per compute unit × 20,728 compute units requested\n  Rent deposits: up to 0.00148844 SOL, if the account this transaction creates when missing does not exist yet; refunded to whoever closes the account\n\n== Validity\n  Expires: when the nonce account is advanced, with no time limit\n  Nonce account: AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw\n\n== Simulated outcome | the host's simulation (claimed, unverified)\n  Result: would succeed\n  Compute units: 4200\n  Your balances: unchanged\n\nEffects:\n  - You send 0.996423 USDC from Your token account (Ffz5…piwg) to BNgs…TT1Z's USDC account (DV3B…L7Qp)\n  - Create BNgs…TT1Z's USDC account (DV3B…L7Qp), managed by Token program (Toke…Q5DA), depositing 0.00148844 SOL unless it already exists\n  - You pay a fee of 0.000012218 SOL\n  - Valid until nonce account AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw is advanced, with NO TIME LIMIT (durable nonce)\n\nRaw: solana legacy (511 bytes)\n  digest: 05d51e61e33bad79d124089e71be7988c37cccf1f9268ee6e338e439f5ec582f\n",
       "verdict": "warn"
     }
   }

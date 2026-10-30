@@ -247,6 +247,8 @@ export interface EngineRequest {
     render?: boolean;
     /** The accounts an earlier answer wanted, as the RPC returned them. */
     accounts?: AccountData[];
+    /** The reader's languages, BCP 47 tags in order: the engine words the explanation in the first it has. */
+    locale?: string[];
 }
 
 /** What `GET /v1/packs` answers. */

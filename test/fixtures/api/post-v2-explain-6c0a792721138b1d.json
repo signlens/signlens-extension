@@ -14,7 +14,7 @@
         "changes": [
           {
             "account": "8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa",
-            "delta": "-12218"
+            "delta": "-5000012218"
           },
           {
             "account": "Ffz5kwUjkUNw7hV4r6iCJnUoXXsAPFHkCMCmKKDypiwg",
@@ -24,7 +24,10 @@
           }
         ]
       },
-      "render": true
+      "render": true,
+      "locale": [
+        "en-US"
+      ]
     }
   },
   "response": {
@@ -53,7 +56,23 @@
                     },
                     "bound": "exact",
                     "note": null,
-                    "units": "996423"
+                    "units": "996423",
+                    "words": {
+                      "id": "amount",
+                      "parts": [
+                        {
+                          "text": "0.996423 "
+                        },
+                        {
+                          "text": "USDC",
+                          "value": {
+                            "type": "text",
+                            "value": "USDC"
+                          }
+                        }
+                      ],
+                      "text": "0.996423 USDC"
+                    }
                   }
                 }
               },
@@ -126,7 +145,23 @@
                     },
                     "bound": "exact",
                     "note": null,
-                    "units": "996423"
+                    "units": "996423",
+                    "words": {
+                      "id": "amount",
+                      "parts": [
+                        {
+                          "text": "0.996423 "
+                        },
+                        {
+                          "text": "USDC",
+                          "value": {
+                            "type": "text",
+                            "value": "USDC"
+                          }
+                        }
+                      ],
+                      "text": "0.996423 USDC"
+                    }
                   }
                 }
               },
@@ -213,7 +248,23 @@
               },
               "bound": "exact",
               "note": null,
-              "units": "996423"
+              "units": "996423",
+              "words": {
+                "id": "amount",
+                "parts": [
+                  {
+                    "text": "0.996423 "
+                  },
+                  {
+                    "text": "USDC",
+                    "value": {
+                      "type": "text",
+                      "value": "USDC"
+                    }
+                  }
+                ],
+                "text": "0.996423 USDC"
+              }
             },
             "from": {
               "address": "Ffz5kwUjkUNw7hV4r6iCJnUoXXsAPFHkCMCmKKDypiwg",
@@ -360,7 +411,23 @@
                     },
                     "bound": "exact",
                     "note": null,
-                    "units": "1488440"
+                    "units": "1488440",
+                    "words": {
+                      "id": "amount",
+                      "parts": [
+                        {
+                          "text": "0.00148844 "
+                        },
+                        {
+                          "text": "SOL",
+                          "value": {
+                            "type": "text",
+                            "value": "SOL"
+                          }
+                        }
+                      ],
+                      "text": "0.00148844 SOL"
+                    }
                   }
                 }
               },
@@ -417,7 +484,23 @@
               },
               "bound": "exact",
               "note": null,
-              "units": "1488440"
+              "units": "1488440",
+              "words": {
+                "id": "amount",
+                "parts": [
+                  {
+                    "text": "0.00148844 "
+                  },
+                  {
+                    "text": "SOL",
+                    "value": {
+                      "type": "text",
+                      "value": "SOL"
+                    }
+                  }
+                ],
+                "text": "0.00148844 SOL"
+              }
             },
             "if_missing": true,
             "owner": {
@@ -462,7 +545,23 @@
                     },
                     "bound": "exact",
                     "note": null,
-                    "units": "12218"
+                    "units": "12218",
+                    "words": {
+                      "id": "amount",
+                      "parts": [
+                        {
+                          "text": "0.000012218 "
+                        },
+                        {
+                          "text": "SOL",
+                          "value": {
+                            "type": "text",
+                            "value": "SOL"
+                          }
+                        }
+                      ],
+                      "text": "0.000012218 SOL"
+                    }
                   }
                 }
               }
@@ -481,7 +580,23 @@
               },
               "bound": "exact",
               "note": null,
-              "units": "12218"
+              "units": "12218",
+              "words": {
+                "id": "amount",
+                "parts": [
+                  {
+                    "text": "0.000012218 "
+                  },
+                  {
+                    "text": "SOL",
+                    "value": {
+                      "type": "text",
+                      "value": "SOL"
+                    }
+                  }
+                ],
+                "text": "0.000012218 SOL"
+              }
             },
             "payer": {
               "address": "8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa",
@@ -521,7 +636,14 @@
                 }
               },
               {
-                "text": " is advanced, with NO TIME LIMIT (durable nonce)"
+                "text": " is advanced, with "
+              },
+              {
+                "emphasis": true,
+                "text": "NO TIME LIMIT"
+              },
+              {
+                "text": " (durable nonce)"
               }
             ],
             "text": "Valid until nonce account AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw is advanced, with NO TIME LIMIT (durable nonce)"
@@ -557,20 +679,103 @@
           "severity": "high"
         },
         {
-          "code": "SIMULATION_AGREES",
+          "code": "SIMULATION_DISAGREES",
           "instruction": null,
           "message": {
-            "id": "simulation-agrees",
+            "id": "simulation-more-out",
             "parts": [
               {
-                "text": "The host's simulation agrees with the instructions' effects on your balances"
+                "text": "The simulation shows "
+              },
+              {
+                "text": "5.000012218 SOL",
+                "value": {
+                  "type": "amount",
+                  "value": {
+                    "asset": {
+                      "decimals": 9,
+                      "description": null,
+                      "id": "native",
+                      "symbol": "SOL",
+                      "trust": "fact"
+                    },
+                    "bound": "exact",
+                    "note": null,
+                    "units": "5000012218",
+                    "words": {
+                      "id": "amount",
+                      "parts": [
+                        {
+                          "text": "5.000012218 "
+                        },
+                        {
+                          "text": "SOL",
+                          "value": {
+                            "type": "text",
+                            "value": "SOL"
+                          }
+                        }
+                      ],
+                      "text": "5.000012218 SOL"
+                    }
+                  }
+                }
+              },
+              {
+                "text": " leaving your accounts, more than the "
+              },
+              {
+                "text": "0.001500658 SOL",
+                "value": {
+                  "type": "amount",
+                  "value": {
+                    "asset": {
+                      "decimals": 9,
+                      "description": null,
+                      "id": "native",
+                      "symbol": "SOL",
+                      "trust": "fact"
+                    },
+                    "bound": "exact",
+                    "note": null,
+                    "units": "1500658",
+                    "words": {
+                      "id": "amount",
+                      "parts": [
+                        {
+                          "text": "0.001500658 "
+                        },
+                        {
+                          "text": "SOL",
+                          "value": {
+                            "type": "text",
+                            "value": "SOL"
+                          }
+                        }
+                      ],
+                      "text": "0.001500658 SOL"
+                    }
+                  }
+                }
+              },
+              {
+                "text": " the instructions state"
               }
             ],
-            "text": "The host's simulation agrees with the instructions' effects on your balances"
+            "text": "The simulation shows 5.000012218 SOL leaving your accounts, more than the 0.001500658 SOL the instructions state"
           },
-          "severity": "info"
+          "severity": "high"
         }
       ],
+      "locale": {
+        "asked": [
+          "en-US"
+        ],
+        "direction": "ltr",
+        "fallbacks": 0,
+        "review": null,
+        "used": "en"
+      },
       "raw": {
         "digest": "05d51e61e33bad79d124089e71be7988c37cccf1f9268ee6e338e439f5ec582f",
         "format": "solana legacy"
@@ -604,7 +809,23 @@
                   },
                   "bound": "exact",
                   "note": null,
-                  "units": "996423"
+                  "units": "996423",
+                  "words": {
+                    "id": "amount",
+                    "parts": [
+                      {
+                        "text": "0.996423 "
+                      },
+                      {
+                        "text": "USDC",
+                        "value": {
+                          "type": "text",
+                          "value": "USDC"
+                        }
+                      }
+                    ],
+                    "text": "0.996423 USDC"
+                  }
                 }
               }
             },
@@ -1260,7 +1481,23 @@
                   },
                   "bound": "exact",
                   "note": null,
-                  "units": "12218"
+                  "units": "12218",
+                  "words": {
+                    "id": "amount",
+                    "parts": [
+                      {
+                        "text": "0.000012218 "
+                      },
+                      {
+                        "text": "SOL",
+                        "value": {
+                          "type": "text",
+                          "value": "SOL"
+                        }
+                      }
+                    ],
+                    "text": "0.000012218 SOL"
+                  }
                 }
               }
             },
@@ -1296,7 +1533,23 @@
                   },
                   "bound": "exact",
                   "note": null,
-                  "units": "10000"
+                  "units": "10000",
+                  "words": {
+                    "id": "amount",
+                    "parts": [
+                      {
+                        "text": "0.00001 "
+                      },
+                      {
+                        "text": "SOL",
+                        "value": {
+                          "type": "text",
+                          "value": "SOL"
+                        }
+                      }
+                    ],
+                    "text": "0.00001 SOL"
+                  }
                 }
               }
             },
@@ -1332,7 +1585,23 @@
                   },
                   "bound": "exact",
                   "note": null,
-                  "units": "2218"
+                  "units": "2218",
+                  "words": {
+                    "id": "amount",
+                    "parts": [
+                      {
+                        "text": "0.000002218 "
+                      },
+                      {
+                        "text": "SOL",
+                        "value": {
+                          "type": "text",
+                          "value": "SOL"
+                        }
+                      }
+                    ],
+                    "text": "0.000002218 SOL"
+                  }
                 }
               }
             },
@@ -1411,7 +1680,23 @@
                           },
                           "bound": "exact",
                           "note": null,
-                          "units": "1488440"
+                          "units": "1488440",
+                          "words": {
+                            "id": "amount",
+                            "parts": [
+                              {
+                                "text": "0.00148844 "
+                              },
+                              {
+                                "text": "SOL",
+                                "value": {
+                                  "type": "text",
+                                  "value": "SOL"
+                                }
+                              }
+                            ],
+                            "text": "0.00148844 SOL"
+                          }
                         }
                       }
                     },
@@ -1622,7 +1907,23 @@
                           },
                           "bound": "exact",
                           "note": null,
-                          "units": "996423"
+                          "units": "996423",
+                          "words": {
+                            "id": "amount",
+                            "parts": [
+                              {
+                                "text": "0.996423 "
+                              },
+                              {
+                                "text": "USDC",
+                                "value": {
+                                  "type": "text",
+                                  "value": "USDC"
+                                }
+                              }
+                            ],
+                            "text": "0.996423 USDC"
+                          }
                         }
                       }
                     }
@@ -1659,7 +1960,7 @@
                       "text": "−"
                     },
                     {
-                      "text": "0.000012218 SOL",
+                      "text": "5.000012218 SOL",
                       "value": {
                         "type": "amount",
                         "value": {
@@ -1672,12 +1973,28 @@
                           },
                           "bound": "exact",
                           "note": null,
-                          "units": "12218"
+                          "units": "5000012218",
+                          "words": {
+                            "id": "amount",
+                            "parts": [
+                              {
+                                "text": "5.000012218 "
+                              },
+                              {
+                                "text": "SOL",
+                                "value": {
+                                  "type": "text",
+                                  "value": "SOL"
+                                }
+                              }
+                            ],
+                            "text": "5.000012218 SOL"
+                          }
                         }
                       }
                     }
                   ],
-                  "text": "−0.000012218 SOL"
+                  "text": "−5.000012218 SOL"
                 }
               }
             }
@@ -1725,7 +2042,23 @@
                 },
                 "bound": "exact",
                 "note": null,
-                "units": "996423"
+                "units": "996423",
+                "words": {
+                  "id": "amount",
+                  "parts": [
+                    {
+                      "text": "0.996423 "
+                    },
+                    {
+                      "text": "USDC",
+                      "value": {
+                        "type": "text",
+                        "value": "USDC"
+                      }
+                    }
+                  ],
+                  "text": "0.996423 USDC"
+                }
               }
             }
           },
@@ -1773,7 +2106,7 @@
         ],
         "text": "Send 0.996423 USDC to DV3B…L7Qp"
       },
-      "text": "Send 0.996423 USDC to DV3B…L7Qp\nWARNING: review the findings before approving\n\nFindings:\n  [HIGH] This signature has no time limit: anyone holding the signed transaction can submit it at any later time, until the nonce account is advanced\n  [INFO] The host's simulation agrees with the instructions' effects on your balances\n\n== Transfer tokens | Token program\n  Amount: 0.996423 USDC\n  From: Your token account (Ffz5…piwg)\n  To: BNgs…TT1Z's USDC account (DV3B…L7Qp)\n  Authorized by: Your wallet (8Kvy…p1fa)\n  Mint: USDC mint (EPjF…Dt1v)\n\n== Also [collapsed]\n  Advance durable nonce: Nonce account: AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw\n  Advance durable nonce: Authority: EbsUZEFAU23Z2SgAymFtU2hADLiyNLzaPLKiJfvpKnE7\n  Create token account if missing: Token account: BNgs…TT1Z's USDC account (DV3B…L7Qp)\n  Create token account if missing: Owner: BNgsxo3eHqQLNTaKy4juhAUJ8DyewcJNEcYdMuSmTT1Z\n  Create token account if missing: Mint: USDC mint (EPjF…Dt1v)\n  Create token account if missing: Rent paid by: Your wallet (8Kvy…p1fa)\n  Create token account if missing: Token program: Token program (Toke…Q5DA)\n  Compute unit limit: 20728\n  Compute unit price: 107,000 micro-lamports per compute unit\n\n== Signers\n  Fee payer: Your wallet (8Kvy…p1fa)\n  Signer: EbsUZEFAU23Z2SgAymFtU2hADLiyNLzaPLKiJfvpKnE7\n\n== Fee\n  Total: 0.000012218 SOL\n  Base: 0.00001 SOL\n  Priority: 0.000002218 SOL\n  Priority basis: 107,000 micro-lamports per compute unit × 20,728 compute units requested\n  Rent deposits: up to 0.00148844 SOL, if the account this transaction creates when missing does not exist yet; refunded to whoever closes the account\n\n== Validity\n  Expires: when the nonce account is advanced, with no time limit\n  Nonce account: AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw\n\n== Simulated outcome | the host's simulation (claimed, unverified)\n  Result: would succeed\n  Compute units: 4200\n  Your USDC: −0.996423 USDC\n  Your SOL: −0.000012218 SOL\n\nEffects:\n  - You send 0.996423 USDC from Your token account (Ffz5…piwg) to BNgs…TT1Z's USDC account (DV3B…L7Qp)\n  - Create BNgs…TT1Z's USDC account (DV3B…L7Qp), managed by Token program (Toke…Q5DA), depositing 0.00148844 SOL unless it already exists\n  - You pay a fee of 0.000012218 SOL\n  - Valid until nonce account AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw is advanced, with NO TIME LIMIT (durable nonce)\n\nRaw: solana legacy (511 bytes)\n  digest: 05d51e61e33bad79d124089e71be7988c37cccf1f9268ee6e338e439f5ec582f\n",
+      "text": "Send 0.996423 USDC to DV3B…L7Qp\nWARNING: review the findings before approving\n\nFindings:\n  [HIGH] This signature has no time limit: anyone holding the signed transaction can submit it at any later time, until the nonce account is advanced\n  [HIGH] The simulation shows 5.000012218 SOL leaving your accounts, more than the 0.001500658 SOL the instructions state\n\n== Transfer tokens | Token program\n  Amount: 0.996423 USDC\n  From: Your token account (Ffz5…piwg)\n  To: BNgs…TT1Z's USDC account (DV3B…L7Qp)\n  Authorized by: Your wallet (8Kvy…p1fa)\n  Mint: USDC mint (EPjF…Dt1v)\n\n== Also [collapsed]\n  Advance durable nonce: Nonce account: AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw\n  Advance durable nonce: Authority: EbsUZEFAU23Z2SgAymFtU2hADLiyNLzaPLKiJfvpKnE7\n  Create token account if missing: Token account: BNgs…TT1Z's USDC account (DV3B…L7Qp)\n  Create token account if missing: Owner: BNgsxo3eHqQLNTaKy4juhAUJ8DyewcJNEcYdMuSmTT1Z\n  Create token account if missing: Mint: USDC mint (EPjF…Dt1v)\n  Create token account if missing: Rent paid by: Your wallet (8Kvy…p1fa)\n  Create token account if missing: Token program: Token program (Toke…Q5DA)\n  Compute unit limit: 20728\n  Compute unit price: 107,000 micro-lamports per compute unit\n\n== Signers\n  Fee payer: Your wallet (8Kvy…p1fa)\n  Signer: EbsUZEFAU23Z2SgAymFtU2hADLiyNLzaPLKiJfvpKnE7\n\n== Fee\n  Total: 0.000012218 SOL\n  Base: 0.00001 SOL\n  Priority: 0.000002218 SOL\n  Priority basis: 107,000 micro-lamports per compute unit × 20,728 compute units requested\n  Rent deposits: up to 0.00148844 SOL, if the account this transaction creates when missing does not exist yet; refunded to whoever closes the account\n\n== Validity\n  Expires: when the nonce account is advanced, with no time limit\n  Nonce account: AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw\n\n== Simulated outcome | the host's simulation (claimed, unverified)\n  Result: would succeed\n  Compute units: 4200\n  Your USDC: −0.996423 USDC\n  Your SOL: −5.000012218 SOL\n\nEffects:\n  - You send 0.996423 USDC from Your token account (Ffz5…piwg) to BNgs…TT1Z's USDC account (DV3B…L7Qp)\n  - Create BNgs…TT1Z's USDC account (DV3B…L7Qp), managed by Token program (Toke…Q5DA), depositing 0.00148844 SOL unless it already exists\n  - You pay a fee of 0.000012218 SOL\n  - Valid until nonce account AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw is advanced, with NO TIME LIMIT (durable nonce)\n\nRaw: solana legacy (511 bytes)\n  digest: 05d51e61e33bad79d124089e71be7988c37cccf1f9268ee6e338e439f5ec582f\n",
       "verdict": "warn"
     }
   }

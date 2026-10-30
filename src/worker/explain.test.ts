@@ -11,6 +11,7 @@ import { MAX_TRANSACTION_BASE64, MAX_TRANSACTIONS } from '../shared/messages.ts'
 import { type Entry, failure, type Row, requestError } from '../shared/model.ts';
 import { DEFAULTS, type Settings } from '../shared/settings.ts';
 import { explainTransactions, showMessage } from './explain.ts';
+import { readerLocales } from './locale.ts';
 import { base58Encode } from './solana.ts';
 
 const USDC = 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v';
@@ -135,6 +136,8 @@ test('a transaction is explained with its lookup tables, the signer and the cont
         loaded_writable: swap.writable,
         loaded_readonly: swap.readonly,
         render: true,
+        // The reader's languages, as the browser lists them.
+        locale: readerLocales(),
     });
     // The contact's address, its name a stand-in (contacts.ts).
     assert.deepEqual(

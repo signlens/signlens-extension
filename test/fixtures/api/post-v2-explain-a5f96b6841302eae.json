@@ -63,7 +63,10 @@
         "units": 4200,
         "changes": []
       },
-      "render": true
+      "render": true,
+      "locale": [
+        "en-US"
+      ]
     }
   },
   "response": {
@@ -92,7 +95,23 @@
                     },
                     "bound": "exact",
                     "note": null,
-                    "units": "1855569"
+                    "units": "1855569",
+                    "words": {
+                      "id": "amount",
+                      "parts": [
+                        {
+                          "text": "0.001855569 "
+                        },
+                        {
+                          "text": "SOL",
+                          "value": {
+                            "type": "text",
+                            "value": "SOL"
+                          }
+                        }
+                      ],
+                      "text": "0.001855569 SOL"
+                    }
                   }
                 }
               },
@@ -135,7 +154,23 @@
                     },
                     "bound": "exact",
                     "note": null,
-                    "units": "151360479993"
+                    "units": "151360479993",
+                    "words": {
+                      "id": "amount",
+                      "parts": [
+                        {
+                          "text": "151.360479993 "
+                        },
+                        {
+                          "text": "ZCAT",
+                          "value": {
+                            "type": "text",
+                            "value": "ZCAT"
+                          }
+                        }
+                      ],
+                      "text": "151.360479993 ZCAT"
+                    }
                   }
                 }
               },
@@ -156,7 +191,23 @@
                     },
                     "bound": "at_least",
                     "note": null,
-                    "units": "80334153"
+                    "units": "80334153",
+                    "words": {
+                      "id": "amount",
+                      "parts": [
+                        {
+                          "text": "≥ 0.080334153 "
+                        },
+                        {
+                          "text": "SOL",
+                          "value": {
+                            "type": "text",
+                            "value": "SOL"
+                          }
+                        }
+                      ],
+                      "text": "≥ 0.080334153 SOL"
+                    }
                   }
                 }
               },
@@ -191,7 +242,23 @@
                     },
                     "bound": "exact",
                     "note": null,
-                    "units": "1855569"
+                    "units": "1855569",
+                    "words": {
+                      "id": "amount",
+                      "parts": [
+                        {
+                          "text": "0.001855569 "
+                        },
+                        {
+                          "text": "SOL",
+                          "value": {
+                            "type": "text",
+                            "value": "SOL"
+                          }
+                        }
+                      ],
+                      "text": "0.001855569 SOL"
+                    }
                   }
                 }
               },
@@ -250,7 +317,23 @@
               },
               "bound": "exact",
               "note": null,
-              "units": "1855569"
+              "units": "1855569",
+              "words": {
+                "id": "amount",
+                "parts": [
+                  {
+                    "text": "0.001855569 "
+                  },
+                  {
+                    "text": "SOL",
+                    "value": {
+                      "type": "text",
+                      "value": "SOL"
+                    }
+                  }
+                ],
+                "text": "0.001855569 SOL"
+              }
             },
             "from": {
               "address": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR",
@@ -297,7 +380,23 @@
                     },
                     "bound": "exact",
                     "note": null,
-                    "units": "151360479993"
+                    "units": "151360479993",
+                    "words": {
+                      "id": "amount",
+                      "parts": [
+                        {
+                          "text": "151.360479993 "
+                        },
+                        {
+                          "text": "ZCAT",
+                          "value": {
+                            "type": "text",
+                            "value": "ZCAT"
+                          }
+                        }
+                      ],
+                      "text": "151.360479993 ZCAT"
+                    }
                   }
                 }
               },
@@ -368,7 +467,23 @@
               },
               "bound": "exact",
               "note": null,
-              "units": "151360479993"
+              "units": "151360479993",
+              "words": {
+                "id": "amount",
+                "parts": [
+                  {
+                    "text": "151.360479993 "
+                  },
+                  {
+                    "text": "ZCAT",
+                    "value": {
+                      "type": "text",
+                      "value": "ZCAT"
+                    }
+                  }
+                ],
+                "text": "151.360479993 ZCAT"
+              }
             },
             "from": {
               "address": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR",
@@ -427,7 +542,23 @@
                     },
                     "bound": "at_least",
                     "note": null,
-                    "units": "80334153"
+                    "units": "80334153",
+                    "words": {
+                      "id": "amount",
+                      "parts": [
+                        {
+                          "text": "≥ 0.080334153 "
+                        },
+                        {
+                          "text": "SOL",
+                          "value": {
+                            "type": "text",
+                            "value": "SOL"
+                          }
+                        }
+                      ],
+                      "text": "≥ 0.080334153 SOL"
+                    }
                   }
                 }
               },
@@ -498,7 +629,23 @@
               },
               "bound": "at_least",
               "note": null,
-              "units": "80334153"
+              "units": "80334153",
+              "words": {
+                "id": "amount",
+                "parts": [
+                  {
+                    "text": "≥ 0.080334153 "
+                  },
+                  {
+                    "text": "SOL",
+                    "value": {
+                      "type": "text",
+                      "value": "SOL"
+                    }
+                  }
+                ],
+                "text": "≥ 0.080334153 SOL"
+              }
             },
             "from": {
               "address": "proVF4pMXVaYqmy4NjniPh4pqKNfMmsihgd4wdkCX3u",
@@ -601,7 +748,23 @@
                     },
                     "bound": "exact",
                     "note": null,
-                    "units": "1488440"
+                    "units": "1488440",
+                    "words": {
+                      "id": "amount",
+                      "parts": [
+                        {
+                          "text": "0.00148844 "
+                        },
+                        {
+                          "text": "SOL",
+                          "value": {
+                            "type": "text",
+                            "value": "SOL"
+                          }
+                        }
+                      ],
+                      "text": "0.00148844 SOL"
+                    }
                   }
                 }
               }
@@ -627,7 +790,23 @@
               },
               "bound": "exact",
               "note": null,
-              "units": "1488440"
+              "units": "1488440",
+              "words": {
+                "id": "amount",
+                "parts": [
+                  {
+                    "text": "0.00148844 "
+                  },
+                  {
+                    "text": "SOL",
+                    "value": {
+                      "type": "text",
+                      "value": "SOL"
+                    }
+                  }
+                ],
+                "text": "0.00148844 SOL"
+              }
             },
             "if_missing": false,
             "owner": {
@@ -672,7 +851,23 @@
                     },
                     "bound": "exact",
                     "note": null,
-                    "units": "7098"
+                    "units": "7098",
+                    "words": {
+                      "id": "amount",
+                      "parts": [
+                        {
+                          "text": "0.000007098 "
+                        },
+                        {
+                          "text": "SOL",
+                          "value": {
+                            "type": "text",
+                            "value": "SOL"
+                          }
+                        }
+                      ],
+                      "text": "0.000007098 SOL"
+                    }
                   }
                 }
               }
@@ -691,7 +886,23 @@
               },
               "bound": "exact",
               "note": null,
-              "units": "7098"
+              "units": "7098",
+              "words": {
+                "id": "amount",
+                "parts": [
+                  {
+                    "text": "0.000007098 "
+                  },
+                  {
+                    "text": "SOL",
+                    "value": {
+                      "type": "text",
+                      "value": "SOL"
+                    }
+                  }
+                ],
+                "text": "0.000007098 SOL"
+              }
             },
             "payer": {
               "address": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR",
@@ -750,7 +961,23 @@
                     },
                     "bound": "exact",
                     "note": null,
-                    "units": "0"
+                    "units": "0",
+                    "words": {
+                      "id": "amount",
+                      "parts": [
+                        {
+                          "text": "0 "
+                        },
+                        {
+                          "text": "SOL",
+                          "value": {
+                            "type": "text",
+                            "value": "SOL"
+                          }
+                        }
+                      ],
+                      "text": "0 SOL"
+                    }
                   }
                 }
               },
@@ -781,7 +1008,23 @@
                     },
                     "bound": "exact",
                     "note": null,
-                    "units": "80334153"
+                    "units": "80334153",
+                    "words": {
+                      "id": "amount",
+                      "parts": [
+                        {
+                          "text": "0.080334153 "
+                        },
+                        {
+                          "text": "SOL",
+                          "value": {
+                            "type": "text",
+                            "value": "SOL"
+                          }
+                        }
+                      ],
+                      "text": "0.080334153 SOL"
+                    }
                   }
                 }
               },
@@ -829,6 +1072,15 @@
           "severity": "info"
         }
       ],
+      "locale": {
+        "asked": [
+          "en-US"
+        ],
+        "direction": "ltr",
+        "fallbacks": 0,
+        "review": null,
+        "used": "en"
+      },
       "raw": {
         "digest": "9f46f53cb1549cfb1d859dc7109c80f65b636658c9999b7f227a133aad7823a2",
         "format": "solana v0"
@@ -862,7 +1114,23 @@
                   },
                   "bound": "exact",
                   "note": null,
-                  "units": "1855569"
+                  "units": "1855569",
+                  "words": {
+                    "id": "amount",
+                    "parts": [
+                      {
+                        "text": "0.001855569 "
+                      },
+                      {
+                        "text": "SOL",
+                        "value": {
+                          "type": "text",
+                          "value": "SOL"
+                        }
+                      }
+                    ],
+                    "text": "0.001855569 SOL"
+                  }
                 }
               }
             },
@@ -985,7 +1253,23 @@
                   },
                   "bound": "exact",
                   "note": null,
-                  "units": "151360479993"
+                  "units": "151360479993",
+                  "words": {
+                    "id": "amount",
+                    "parts": [
+                      {
+                        "text": "151.360479993 "
+                      },
+                      {
+                        "text": "ZCAT",
+                        "value": {
+                          "type": "text",
+                          "value": "ZCAT"
+                        }
+                      }
+                    ],
+                    "text": "151.360479993 ZCAT"
+                  }
                 }
               }
             },
@@ -1021,7 +1305,23 @@
                   },
                   "bound": "at_least",
                   "note": null,
-                  "units": "80334153"
+                  "units": "80334153",
+                  "words": {
+                    "id": "amount",
+                    "parts": [
+                      {
+                        "text": "≥ 0.080334153 "
+                      },
+                      {
+                        "text": "SOL",
+                        "value": {
+                          "type": "text",
+                          "value": "SOL"
+                        }
+                      }
+                    ],
+                    "text": "≥ 0.080334153 SOL"
+                  }
                 }
               }
             },
@@ -1057,7 +1357,23 @@
                   },
                   "bound": "exact",
                   "note": null,
-                  "units": "80737843"
+                  "units": "80737843",
+                  "words": {
+                    "id": "amount",
+                    "parts": [
+                      {
+                        "text": "0.080737843 "
+                      },
+                      {
+                        "text": "SOL",
+                        "value": {
+                          "type": "text",
+                          "value": "SOL"
+                        }
+                      }
+                    ],
+                    "text": "0.080737843 SOL"
+                  }
                 }
               }
             },
@@ -2013,7 +2329,23 @@
                   },
                   "bound": "exact",
                   "note": null,
-                  "units": "7098"
+                  "units": "7098",
+                  "words": {
+                    "id": "amount",
+                    "parts": [
+                      {
+                        "text": "0.000007098 "
+                      },
+                      {
+                        "text": "SOL",
+                        "value": {
+                          "type": "text",
+                          "value": "SOL"
+                        }
+                      }
+                    ],
+                    "text": "0.000007098 SOL"
+                  }
                 }
               }
             },
@@ -2049,7 +2381,23 @@
                   },
                   "bound": "exact",
                   "note": null,
-                  "units": "5000"
+                  "units": "5000",
+                  "words": {
+                    "id": "amount",
+                    "parts": [
+                      {
+                        "text": "0.000005 "
+                      },
+                      {
+                        "text": "SOL",
+                        "value": {
+                          "type": "text",
+                          "value": "SOL"
+                        }
+                      }
+                    ],
+                    "text": "0.000005 SOL"
+                  }
                 }
               }
             },
@@ -2085,7 +2433,23 @@
                   },
                   "bound": "exact",
                   "note": null,
-                  "units": "2098"
+                  "units": "2098",
+                  "words": {
+                    "id": "amount",
+                    "parts": [
+                      {
+                        "text": "0.000002098 "
+                      },
+                      {
+                        "text": "SOL",
+                        "value": {
+                          "type": "text",
+                          "value": "SOL"
+                        }
+                      }
+                    ],
+                    "text": "0.000002098 SOL"
+                  }
                 }
               }
             },
@@ -2161,7 +2525,23 @@
                           },
                           "bound": "exact",
                           "note": null,
-                          "units": "1488440"
+                          "units": "1488440",
+                          "words": {
+                            "id": "amount",
+                            "parts": [
+                              {
+                                "text": "0.00148844 "
+                              },
+                              {
+                                "text": "SOL",
+                                "value": {
+                                  "type": "text",
+                                  "value": "SOL"
+                                }
+                              }
+                            ],
+                            "text": "0.00148844 SOL"
+                          }
                         }
                       }
                     },
@@ -2376,7 +2756,23 @@
                 },
                 "bound": "exact",
                 "note": null,
-                "units": "1855569"
+                "units": "1855569",
+                "words": {
+                  "id": "amount",
+                  "parts": [
+                    {
+                      "text": "0.001855569 "
+                    },
+                    {
+                      "text": "SOL",
+                      "value": {
+                        "type": "text",
+                        "value": "SOL"
+                      }
+                    }
+                  ],
+                  "text": "0.001855569 SOL"
+                }
               }
             }
           },
@@ -2410,7 +2806,23 @@
                 },
                 "bound": "exact",
                 "note": null,
-                "units": "151360479993"
+                "units": "151360479993",
+                "words": {
+                  "id": "amount",
+                  "parts": [
+                    {
+                      "text": "151.360479993 "
+                    },
+                    {
+                      "text": "ZCAT",
+                      "value": {
+                        "type": "text",
+                        "value": "ZCAT"
+                      }
+                    }
+                  ],
+                  "text": "151.360479993 ZCAT"
+                }
               }
             }
           },
@@ -2431,7 +2843,23 @@
                 },
                 "bound": "at_least",
                 "note": null,
-                "units": "80334153"
+                "units": "80334153",
+                "words": {
+                  "id": "amount",
+                  "parts": [
+                    {
+                      "text": "≥ 0.080334153 "
+                    },
+                    {
+                      "text": "SOL",
+                      "value": {
+                        "type": "text",
+                        "value": "SOL"
+                      }
+                    }
+                  ],
+                  "text": "≥ 0.080334153 SOL"
+                }
               }
             }
           },

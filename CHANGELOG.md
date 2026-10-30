@@ -8,6 +8,11 @@ uses [Semantic Versioning](https://semver.org/).
 
 ### Added
 
+- **Explanations in your language.** The extension asks the API for the
+  explanation in the browser's languages, in their order, and the engine
+  words it in the first it has. Until a language ships, explanations stay
+  in English.
+
 - **Which wallet signs, asked once.** With "First one found" in the
   settings, SignLens passed requests to whichever wallet announced itself
   first in the page: MetaMask, Brave or OKX, say, for someone who signs

@@ -8,7 +8,10 @@
         "6UJbu9ut5VAsFYQFgPEa5xPfoyF5bB5oi4EknFPvu924"
       ],
       "contacts": [],
-      "render": true
+      "render": true,
+      "locale": [
+        "en-US"
+      ]
     }
   },
   "response": {
@@ -83,7 +86,23 @@
                     },
                     "bound": "exact",
                     "note": null,
-                    "units": "5000"
+                    "units": "5000",
+                    "words": {
+                      "id": "amount",
+                      "parts": [
+                        {
+                          "text": "0.000005 "
+                        },
+                        {
+                          "text": "SOL",
+                          "value": {
+                            "type": "text",
+                            "value": "SOL"
+                          }
+                        }
+                      ],
+                      "text": "0.000005 SOL"
+                    }
                   }
                 }
               }
@@ -102,7 +121,23 @@
               },
               "bound": "exact",
               "note": null,
-              "units": "5000"
+              "units": "5000",
+              "words": {
+                "id": "amount",
+                "parts": [
+                  {
+                    "text": "0.000005 "
+                  },
+                  {
+                    "text": "SOL",
+                    "value": {
+                      "type": "text",
+                      "value": "SOL"
+                    }
+                  }
+                ],
+                "text": "0.000005 SOL"
+              }
             },
             "payer": {
               "address": "6UJbu9ut5VAsFYQFgPEa5xPfoyF5bB5oi4EknFPvu924",
@@ -142,7 +177,14 @@
                 }
               },
               {
-                "text": " is advanced, with NO TIME LIMIT (durable nonce)"
+                "text": " is advanced, with "
+              },
+              {
+                "emphasis": true,
+                "text": "NO TIME LIMIT"
+              },
+              {
+                "text": " (durable nonce)"
               }
             ],
             "text": "Valid until nonce account EmYEryTDXtuVCxrjNqJXbiwr4hfiJajd4g5P58vvhQnc is advanced, with NO TIME LIMIT (durable nonce)"
@@ -206,6 +248,15 @@
           "severity": "high"
         }
       ],
+      "locale": {
+        "asked": [
+          "en-US"
+        ],
+        "direction": "ltr",
+        "fallbacks": 0,
+        "review": null,
+        "used": "en"
+      },
       "raw": {
         "digest": "ee7706555a2bed3f52dde729942482697f4aef89b2e733ee1e75b78b037a2af5",
         "format": "solana legacy"
@@ -654,7 +705,23 @@
                   },
                   "bound": "exact",
                   "note": null,
-                  "units": "5000"
+                  "units": "5000",
+                  "words": {
+                    "id": "amount",
+                    "parts": [
+                      {
+                        "text": "0.000005 "
+                      },
+                      {
+                        "text": "SOL",
+                        "value": {
+                          "type": "text",
+                          "value": "SOL"
+                        }
+                      }
+                    ],
+                    "text": "0.000005 SOL"
+                  }
                 }
               }
             },
@@ -690,7 +757,23 @@
                   },
                   "bound": "exact",
                   "note": null,
-                  "units": "5000"
+                  "units": "5000",
+                  "words": {
+                    "id": "amount",
+                    "parts": [
+                      {
+                        "text": "0.000005 "
+                      },
+                      {
+                        "text": "SOL",
+                        "value": {
+                          "type": "text",
+                          "value": "SOL"
+                        }
+                      }
+                    ],
+                    "text": "0.000005 SOL"
+                  }
                 }
               }
             }

@@ -24,6 +24,7 @@ import { withAccounts } from './accounts.ts';
 import { explainRemotely, LIMITED } from './api.ts';
 import { eachString, standIns } from './contacts.ts';
 import { tokenHints, unknownMints } from './hints.ts';
+import { readerLocales } from './locale.ts';
 import { type SimulationResult, simulate } from './simulation.ts';
 import { fromBase64, isAddress, type LoadedAddresses } from './solana.ts';
 import { resolveTables } from './tables.ts';
@@ -139,6 +140,7 @@ export async function explainTransactions(
             contacts: book.sent,
             ...(simulation ? { simulation: { failure: simulation.failure, units: simulation.units, changes: simulation.changes } } : {}),
             render: true,
+            locale: readerLocales(),
         };
         let document: EngineAnswer = await explainRemotely(config.apiUrl, bytes, request, stop);
         if (isError(document) && document.error.code === LIMITED) limitedAt = i + 1;
