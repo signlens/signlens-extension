@@ -203,17 +203,7 @@
                   "id": "descriptor-floor-before-fee-unnamed",
                   "parts": [
                     {
-                      "text": "at least "
-                    },
-                    {
-                      "text": "3,731,969,312 raw units",
-                      "value": {
-                        "type": "text",
-                        "value": "3,731,969,312 raw units"
-                      }
-                    },
-                    {
-                      "text": ", before a transfer fee SignLens cannot check"
+                      "text": "at least 3,731,969,312 raw units, before a transfer fee SignLens cannot check"
                     }
                   ],
                   "text": "at least 3,731,969,312 raw units, before a transfer fee SignLens cannot check"
@@ -302,17 +292,7 @@
             "id": "descriptor-floor-before-fee-unnamed",
             "parts": [
               {
-                "text": "at least "
-              },
-              {
-                "text": "3,731,969,312 raw units",
-                "value": {
-                  "type": "text",
-                  "value": "3,731,969,312 raw units"
-                }
-              },
-              {
-                "text": ", before a transfer fee SignLens cannot check"
+                "text": "at least 3,731,969,312 raw units, before a transfer fee SignLens cannot check"
               }
             ],
             "text": "at least 3,731,969,312 raw units, before a transfer fee SignLens cannot check"
@@ -1007,14 +987,7 @@
               "id": "compute-budget-price",
               "parts": [
                 {
-                  "text": "200,000",
-                  "value": {
-                    "type": "text",
-                    "value": "200,000"
-                  }
-                },
-                {
-                  "text": " micro-lamports per compute unit"
+                  "text": "200,000 micro-lamports per compute unit"
                 }
               ],
               "text": "200,000 micro-lamports per compute unit"
@@ -1327,24 +1300,7 @@
               "id": "explain-priority-basis",
               "parts": [
                 {
-                  "text": "200,000",
-                  "value": {
-                    "type": "text",
-                    "value": "200,000"
-                  }
-                },
-                {
-                  "text": " micro-lamports per compute unit × "
-                },
-                {
-                  "text": "400,000",
-                  "value": {
-                    "type": "text",
-                    "value": "400,000"
-                  }
-                },
-                {
-                  "text": " compute units requested"
+                  "text": "200,000 micro-lamports per compute unit × 400,000 compute units requested"
                 }
               ],
               "text": "200,000 micro-lamports per compute unit × 400,000 compute units requested"

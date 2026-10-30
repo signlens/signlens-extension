@@ -264,14 +264,7 @@
                   "id": "compute-budget-price",
                   "parts": [
                     {
-                      "text": "2,701",
-                      "value": {
-                        "type": "text",
-                        "value": "2,701"
-                      }
-                    },
-                    {
-                      "text": " micro-lamports per compute unit"
+                      "text": "2,701 micro-lamports per compute unit"
                     }
                   ],
                   "text": "2,701 micro-lamports per compute unit"
@@ -439,24 +432,7 @@
                   "id": "explain-priority-basis",
                   "parts": [
                     {
-                      "text": "2,701",
-                      "value": {
-                        "type": "text",
-                        "value": "2,701"
-                      }
-                    },
-                    {
-                      "text": " micro-lamports per compute unit × "
-                    },
-                    {
-                      "text": "197,941",
-                      "value": {
-                        "type": "text",
-                        "value": "197,941"
-                      }
-                    },
-                    {
-                      "text": " compute units requested"
+                      "text": "2,701 micro-lamports per compute unit × 197,941 compute units requested"
                     }
                   ],
                   "text": "2,701 micro-lamports per compute unit × 197,941 compute units requested"
