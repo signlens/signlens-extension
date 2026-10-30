@@ -579,17 +579,7 @@
                           }
                         },
                         {
-                          "text": " ("
-                        },
-                        {
-                          "text": "3,379,812",
-                          "value": {
-                            "type": "text",
-                            "value": "3,379,812"
-                          }
-                        },
-                        {
-                          "text": " raw units)"
+                          "text": " (3,379,812 raw units)"
                         }
                       ],
                       "text": "MeteoraDlmmSwapV2 (3,379,812 raw units)"
@@ -608,17 +598,7 @@
                           }
                         },
                         {
-                          "text": " ("
-                        },
-                        {
-                          "text": "1,885,214",
-                          "value": {
-                            "type": "text",
-                            "value": "1,885,214"
-                          }
-                        },
-                        {
-                          "text": " raw units)"
+                          "text": " (1,885,214 raw units)"
                         }
                       ],
                       "text": "MeteoraDlmmSwapV2 (1,885,214 raw units)"
@@ -740,7 +720,15 @@
           "collapsed": true,
           "fields": [
             {
-              "help": null,
+              "help": {
+                "id": "label-compute-unit-limit.help",
+                "parts": [
+                  {
+                    "text": "How much work the transaction may do. It affects the fee, not what the transaction does."
+                  }
+                ],
+                "text": "How much work the transaction may do. It affects the fee, not what the transaction does."
+              },
               "label": {
                 "id": "label-compute-unit-limit",
                 "parts": [
@@ -757,7 +745,15 @@
               }
             },
             {
-              "help": null,
+              "help": {
+                "id": "label-compute-unit-price.help",
+                "parts": [
+                  {
+                    "text": "The tip per unit of work, in millionths of a lamport. With the limit, it sets the priority fee."
+                  }
+                ],
+                "text": "The tip per unit of work, in millionths of a lamport. With the limit, it sets the priority fee."
+              },
               "label": {
                 "id": "label-compute-unit-price",
                 "parts": [
@@ -774,14 +770,7 @@
                   "id": "compute-budget-price",
                   "parts": [
                     {
-                      "text": "2,701",
-                      "value": {
-                        "type": "text",
-                        "value": "2,701"
-                      }
-                    },
-                    {
-                      "text": " micro-lamports per compute unit"
+                      "text": "2,701 micro-lamports per compute unit"
                     }
                   ],
                   "text": "2,701 micro-lamports per compute unit"
@@ -807,7 +796,15 @@
           "collapsed": false,
           "fields": [
             {
-              "help": null,
+              "help": {
+                "id": "label-fee-payer.help",
+                "parts": [
+                  {
+                    "text": "The account that pays the fee: the first signer."
+                  }
+                ],
+                "text": "The account that pays the fee: the first signer."
+              },
               "label": {
                 "id": "label-fee-payer",
                 "parts": [
@@ -856,7 +853,15 @@
           "collapsed": false,
           "fields": [
             {
-              "help": null,
+              "help": {
+                "id": "label-total.help",
+                "parts": [
+                  {
+                    "text": "What the network charges for this transaction. The fee payer pays it whether the transaction succeeds or fails."
+                  }
+                ],
+                "text": "What the network charges for this transaction. The fee payer pays it whether the transaction succeeds or fails."
+              },
               "label": {
                 "id": "label-total",
                 "parts": [
@@ -884,7 +889,15 @@
               }
             },
             {
-              "help": null,
+              "help": {
+                "id": "label-base.help",
+                "parts": [
+                  {
+                    "text": "The flat part of the fee: the network charges it per signature."
+                  }
+                ],
+                "text": "The flat part of the fee: the network charges it per signature."
+              },
               "label": {
                 "id": "label-base",
                 "parts": [
@@ -912,7 +925,15 @@
               }
             },
             {
-              "help": null,
+              "help": {
+                "id": "label-priority.help",
+                "parts": [
+                  {
+                    "text": "A tip the site added so validators take the transaction sooner. It is optional, and it is yours to pay."
+                  }
+                ],
+                "text": "A tip the site added so validators take the transaction sooner. It is optional, and it is yours to pay."
+              },
               "label": {
                 "id": "label-priority",
                 "parts": [
@@ -940,7 +961,15 @@
               }
             },
             {
-              "help": null,
+              "help": {
+                "id": "label-priority-basis.help",
+                "parts": [
+                  {
+                    "text": "How the tip was computed: the price per unit of work, times the work the transaction asked to be allowed."
+                  }
+                ],
+                "text": "How the tip was computed: the price per unit of work, times the work the transaction asked to be allowed."
+              },
               "label": {
                 "id": "label-priority-basis",
                 "parts": [
@@ -957,24 +986,7 @@
                   "id": "explain-priority-basis",
                   "parts": [
                     {
-                      "text": "2,701",
-                      "value": {
-                        "type": "text",
-                        "value": "2,701"
-                      }
-                    },
-                    {
-                      "text": " micro-lamports per compute unit × "
-                    },
-                    {
-                      "text": "197,941",
-                      "value": {
-                        "type": "text",
-                        "value": "197,941"
-                      }
-                    },
-                    {
-                      "text": " compute units requested"
+                      "text": "2,701 micro-lamports per compute unit × 197,941 compute units requested"
                     }
                   ],
                   "text": "2,701 micro-lamports per compute unit × 197,941 compute units requested"
@@ -1000,7 +1012,15 @@
           "collapsed": false,
           "fields": [
             {
-              "help": null,
+              "help": {
+                "id": "label-expires.help",
+                "parts": [
+                  {
+                    "text": "How long the signature can be used. About a minute is normal; a durable nonce keeps it usable until the nonce is advanced."
+                  }
+                ],
+                "text": "How long the signature can be used. About a minute is normal; a durable nonce keeps it usable until the nonce is advanced."
+              },
               "label": {
                 "id": "label-expires",
                 "parts": [
@@ -1098,7 +1118,7 @@
         ],
         "text": "Swap ≤ 0.005265026 tSpaceX for ≥ 0.004080684 tKalshi via DFlow"
       },
-      "text": "Swap ≤ 0.005265026 tSpaceX for ≥ 0.004080684 tKalshi via DFlow\nOK\n\n== Swap | DFlow Aggregator\n  Send: ≤ 0.005265026 tSpaceX\n  Receive: ≥ 0.004080684 tKalshi\n  Quoted: 0.004206891 tKalshi\n  Max slippage: 3.00%\n  Route:\n    - MeteoraDlmmSwapV2 (3,379,812 raw units)\n    - MeteoraDlmmSwapV2 (1,885,214 raw units)\n  From account: Your token account (FfxP…C7ft)\n  To account: Your token account (2n1w…SJBw)\n  Instruction: swap\n\n== Also [collapsed]\n  Compute unit limit: 197941\n  Compute unit price: 2,701 micro-lamports per compute unit\n\n== Signers\n  Fee payer: Your wallet (5yLg…8Ldc)\n\n== Fee\n  Total: 0.000005535 SOL\n  Base: 0.000005 SOL\n  Priority: 0.000000535 SOL\n  Priority basis: 2,701 micro-lamports per compute unit × 197,941 compute units requested\n\n== Validity\n  Expires: in about a minute (recent blockhash)\n\nEffects:\n  - You send ≤ 0.005265026 tSpaceX from Your wallet (5yLg…8Ldc) to DFlow Aggregator (DF1o…7QBH)\n  - You receive ≥ 0.004080684 tKalshi into Your token account (2n1w…SJBw) from DFlow Aggregator (DF1o…7QBH)\n  - You pay a fee of 0.000005535 SOL\n  - Valid for about a minute (recent blockhash)\n\nRaw: solana v0 (574 bytes)\n  digest: 9bdd08c0fa2a6a063bcab6cc1581b881a5fbc0a5eefa3c4ee59dc380cdb66876\n",
+      "text": "Swap ≤ 0.005265026 tSpaceX for ≥ 0.004080684 tKalshi via DFlow\nOK\n\n== Swap | DFlow Aggregator\n  Send: ≤ 0.005265026 tSpaceX\n  Receive: ≥ 0.004080684 tKalshi\n  Quoted: 0.004206891 tKalshi\n  Max slippage: 3%\n  Route:\n    - MeteoraDlmmSwapV2 (3,379,812 raw units)\n    - MeteoraDlmmSwapV2 (1,885,214 raw units)\n  From account: Your token account (FfxP…C7ft)\n  To account: Your token account (2n1w…SJBw)\n  Instruction: swap\n\n== Also [collapsed]\n  Compute unit limit: 197941\n  Compute unit price: 2,701 micro-lamports per compute unit\n\n== Signers\n  Fee payer: Your wallet (5yLg…8Ldc)\n\n== Fee\n  Total: 0.000005535 SOL\n  Base: 0.000005 SOL\n  Priority: 0.000000535 SOL\n  Priority basis: 2,701 micro-lamports per compute unit × 197,941 compute units requested\n\n== Validity\n  Expires: in about a minute (recent blockhash)\n\nEffects:\n  - You send ≤ 0.005265026 tSpaceX from Your wallet (5yLg…8Ldc) to DFlow Aggregator (DF1o…7QBH)\n  - You receive ≥ 0.004080684 tKalshi into Your token account (2n1w…SJBw) from DFlow Aggregator (DF1o…7QBH)\n  - You pay a fee of 0.000005535 SOL\n  - Valid for about a minute (recent blockhash)\n\nRaw: solana v0 (574 bytes)\n  digest: 9bdd08c0fa2a6a063bcab6cc1581b881a5fbc0a5eefa3c4ee59dc380cdb66876\n",
       "verdict": "ok"
     }
   }

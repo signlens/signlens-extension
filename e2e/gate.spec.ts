@@ -207,7 +207,7 @@ test('the window puts the verdict and what the transaction does first, with the 
     await expect(instruction.locator('dl.fields')).toContainText('Authorized by');
     const more = gate.locator('.disclosure.more');
     await expect(more.locator(':scope > .disclosure-body')).toBeHidden();
-    await more.getByRole('button', { name: 'Details: also, signers, fee, validity', exact: true }).click();
+    await more.getByRole('button', { name: 'Details: Also, Signers, Fee, Validity', exact: true }).click();
     await expect(more.locator(':scope > .disclosure-body')).toBeVisible();
     await expect(more.locator('.section-title')).toContainText(['Also', 'Signers', 'Fee', 'Validity']);
 

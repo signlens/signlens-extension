@@ -520,17 +520,7 @@
                   "id": "descriptor-floor-before-fee-unnamed",
                   "parts": [
                     {
-                      "text": "at least "
-                    },
-                    {
-                      "text": "80,334,153 raw units",
-                      "value": {
-                        "type": "text",
-                        "value": "80,334,153 raw units"
-                      }
-                    },
-                    {
-                      "text": ", before a transfer fee SignLens cannot check"
+                      "text": "at least 80,334,153 raw units, before a transfer fee SignLens cannot check"
                     }
                   ],
                   "text": "at least 80,334,153 raw units, before a transfer fee SignLens cannot check"
@@ -632,17 +622,7 @@
             "id": "descriptor-floor-before-fee-unnamed",
             "parts": [
               {
-                "text": "at least "
-              },
-              {
-                "text": "80,334,153 raw units",
-                "value": {
-                  "type": "text",
-                  "value": "80,334,153 raw units"
-                }
-              },
-              {
-                "text": ", before a transfer fee SignLens cannot check"
+                "text": "at least 80,334,153 raw units, before a transfer fee SignLens cannot check"
               }
             ],
             "text": "at least 80,334,153 raw units, before a transfer fee SignLens cannot check"
@@ -929,7 +909,7 @@
       "code": "DESTINATION_NOT_VERIFIED",
       "instruction": 5,
       "message": {
-        "id": null,
+        "id": "descriptor-unproven-account",
         "parts": [
           {
             "text": "The destination token account is not one of your accounts for a verified token; SignLens cannot confirm who owns it"
@@ -1687,7 +1667,15 @@
           }
         },
         {
-          "help": null,
+          "help": {
+            "id": "label-additional-accounts.help",
+            "parts": [
+              {
+                "text": "Additional accounts this instruction uses that its reviewed descriptor does not name. It is normal for instructions to need several."
+              }
+            ],
+            "text": "Additional accounts this instruction uses that its reviewed descriptor does not name. It is normal for instructions to need several."
+          },
           "label": {
             "id": "label-additional-accounts",
             "parts": [
@@ -1778,7 +1766,15 @@
       "collapsed": true,
       "fields": [
         {
-          "help": null,
+          "help": {
+            "id": "label-compute-unit-limit.help",
+            "parts": [
+              {
+                "text": "How much work the transaction may do. It affects the fee, not what the transaction does."
+              }
+            ],
+            "text": "How much work the transaction may do. It affects the fee, not what the transaction does."
+          },
           "label": {
             "id": "label-compute-unit-limit",
             "parts": [
@@ -1795,7 +1791,15 @@
           }
         },
         {
-          "help": null,
+          "help": {
+            "id": "label-heap-size.help",
+            "parts": [
+              {
+                "text": "Memory a program asked for. It affects the fee, not what the transaction does."
+              }
+            ],
+            "text": "Memory a program asked for. It affects the fee, not what the transaction does."
+          },
           "label": {
             "id": "label-heap-size",
             "parts": [
@@ -1827,7 +1831,15 @@
           }
         },
         {
-          "help": null,
+          "help": {
+            "id": "label-compute-unit-price.help",
+            "parts": [
+              {
+                "text": "The tip per unit of work, in millionths of a lamport. With the limit, it sets the priority fee."
+              }
+            ],
+            "text": "The tip per unit of work, in millionths of a lamport. With the limit, it sets the priority fee."
+          },
           "label": {
             "id": "label-compute-unit-price",
             "parts": [
@@ -1844,14 +1856,7 @@
               "id": "compute-budget-price",
               "parts": [
                 {
-                  "text": "1,676",
-                  "value": {
-                    "type": "text",
-                    "value": "1,676"
-                  }
-                },
-                {
-                  "text": " micro-lamports per compute unit"
+                  "text": "1,676 micro-lamports per compute unit"
                 }
               ],
               "text": "1,676 micro-lamports per compute unit"
@@ -2094,7 +2099,15 @@
       "collapsed": false,
       "fields": [
         {
-          "help": null,
+          "help": {
+            "id": "label-fee-payer.help",
+            "parts": [
+              {
+                "text": "The account that pays the fee: the first signer."
+              }
+            ],
+            "text": "The account that pays the fee: the first signer."
+          },
           "label": {
             "id": "label-fee-payer",
             "parts": [
@@ -2135,7 +2148,15 @@
       "collapsed": false,
       "fields": [
         {
-          "help": null,
+          "help": {
+            "id": "label-total.help",
+            "parts": [
+              {
+                "text": "What the network charges for this transaction. The fee payer pays it whether the transaction succeeds or fails."
+              }
+            ],
+            "text": "What the network charges for this transaction. The fee payer pays it whether the transaction succeeds or fails."
+          },
           "label": {
             "id": "label-total",
             "parts": [
@@ -2163,7 +2184,15 @@
           }
         },
         {
-          "help": null,
+          "help": {
+            "id": "label-base.help",
+            "parts": [
+              {
+                "text": "The flat part of the fee: the network charges it per signature."
+              }
+            ],
+            "text": "The flat part of the fee: the network charges it per signature."
+          },
           "label": {
             "id": "label-base",
             "parts": [
@@ -2191,7 +2220,15 @@
           }
         },
         {
-          "help": null,
+          "help": {
+            "id": "label-priority.help",
+            "parts": [
+              {
+                "text": "A tip the site added so validators take the transaction sooner. It is optional, and it is yours to pay."
+              }
+            ],
+            "text": "A tip the site added so validators take the transaction sooner. It is optional, and it is yours to pay."
+          },
           "label": {
             "id": "label-priority",
             "parts": [
@@ -2219,7 +2256,15 @@
           }
         },
         {
-          "help": null,
+          "help": {
+            "id": "label-priority-basis.help",
+            "parts": [
+              {
+                "text": "How the tip was computed: the price per unit of work, times the work the transaction asked to be allowed."
+              }
+            ],
+            "text": "How the tip was computed: the price per unit of work, times the work the transaction asked to be allowed."
+          },
           "label": {
             "id": "label-priority-basis",
             "parts": [
@@ -2236,24 +2281,7 @@
               "id": "explain-priority-basis",
               "parts": [
                 {
-                  "text": "1,676",
-                  "value": {
-                    "type": "text",
-                    "value": "1,676"
-                  }
-                },
-                {
-                  "text": " micro-lamports per compute unit × "
-                },
-                {
-                  "text": "1,251,656",
-                  "value": {
-                    "type": "text",
-                    "value": "1,251,656"
-                  }
-                },
-                {
-                  "text": " compute units requested"
+                  "text": "1,676 micro-lamports per compute unit × 1,251,656 compute units requested"
                 }
               ],
               "text": "1,676 micro-lamports per compute unit × 1,251,656 compute units requested"
@@ -2261,7 +2289,15 @@
           }
         },
         {
-          "help": null,
+          "help": {
+            "id": "label-rent-deposits.help",
+            "parts": [
+              {
+                "text": "SOL locked to keep the accounts this transaction creates on chain. It is a deposit, not a fee: closing an account returns it to whoever closes it."
+              }
+            ],
+            "text": "SOL locked to keep the accounts this transaction creates on chain. It is a deposit, not a fee: closing an account returns it to whoever closes it."
+          },
           "label": {
             "id": "label-rent-deposits",
             "parts": [
@@ -2322,7 +2358,15 @@
       "collapsed": false,
       "fields": [
         {
-          "help": null,
+          "help": {
+            "id": "label-expires.help",
+            "parts": [
+              {
+                "text": "How long the signature can be used. About a minute is normal; a durable nonce keeps it usable until the nonce is advanced."
+              }
+            ],
+            "text": "How long the signature can be used. About a minute is normal; a durable nonce keeps it usable until the nonce is advanced."
+          },
           "label": {
             "id": "label-expires",
             "parts": [
@@ -2537,6 +2581,6 @@
     ],
     "text": "2 actions: Transfer 0.001855569 SOL from CVJ6…Q3bR to 91rj…BXHD; Swap 151,360,479,993 raw units of the token at lookup table 6vgy…uwpB[3] for ≥ 80,334,153 raw units of the token at lookup table GP57…1gPy[60] (before any transfer fee) via OKX"
   },
-  "text": "2 actions: Transfer 0.001855569 SOL from CVJ6…Q3bR to 91rj…BXHD; Swap 151,360,479,993 raw units of the token at lookup table 6vgy…uwpB[3] for ≥ 80,334,153 raw units of the token at lookup table GP57…1gPy[60] (before any transfer fee) via OKX\nWARNING: review the findings before approving\n\nFindings:\n  [HIGH] The swap spends from a token account you do not control (instruction 6)\n  [INFO] The destination token account is not one of your accounts for a verified token; SignLens cannot confirm who owns it (instruction 6)\n  [INFO] 4 bytes after this compute budget value are ignored; the runtime reads only the value, as shown (instruction 2)\n\n== Transfer | System program\n  Amount: 0.001855569 SOL\n  From: CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR\n  To: 91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD\n\n== Swap | OKX DEX Router (descriptor reviewed 2026-10-27, upgradeable by CjoV…N1Mj)\n  Send: 151,360,479,993 raw units of the token at lookup table 6vgy…uwpB[3]\n  Receive: ≥ 80,334,153 raw units of the token at lookup table GP57…1gPy[60] (before any transfer fee)\n  Quoted: 80,737,843 raw units of the token at lookup table GP57…1gPy[60]\n  Max slippage: 0.50%\n  Commission: 0.81%\n  Commission account: BEochrdGhm5pcKVF73DURYrGo1DLzxq6bBcUBphQR64d\n  Trim rate (program units): 100\n  Charge rate (program units): 500\n  Closes the temporary token account afterwards (flag): 1\n  Route:\n    - RaydiumClmmSwapV2 (weight 2790, leg 1)\n    - MeteoraDlmmSwap2 (weight 310, leg 1)\n    - RaydiumClmmSwapV2 (weight 6900, leg 2)\n    - ByrealClmm3 (weight 10000, leg 18)\n  From account: H51r5KPyahCGiGCQ9jZr5r5bukcXFaRDFtPFZBUyiHfo\n  To account: 91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD\n  Additional accounts: 80, not named by this descriptor\n\n== Also [collapsed]\n  Compute unit limit: 1251656\n  Heap size: 65536 bytes\n  Compute unit price: 1,676 micro-lamports per compute unit\n  Create token account: Token account: 91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD\n  Create token account: Owner: CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR\n  Create token account: Mint: the account at lookup table GP57…1gPy[60]\n  Create token account: Rent paid by: CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR\n  Create token account: Token program: the account at lookup table GP57…1gPy[65]\n\n== Signers\n  Fee payer: CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR\n\n== Fee\n  Total: 0.000007098 SOL\n  Base: 0.000005 SOL\n  Priority: 0.000002098 SOL\n  Priority basis: 1,676 micro-lamports per compute unit × 1,251,656 compute units requested\n  Rent deposits: 0.00148844 SOL; refunded to whoever closes the account\n\n== Validity\n  Expires: in about a minute (recent blockhash)\n\nEffects:\n  - Transfer 0.001855569 SOL from CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR to 91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD\n  - Transfer ≤ 151,360,479,993 raw units of the token at lookup table 6vgy…uwpB[3] (before any transfer fee) from CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR to OKX DEX Router (proV…CX3u)\n  - Transfer an unknown amount of the token at lookup table GP57…1gPy[60] (at least 80,334,153 raw units, before a transfer fee SignLens cannot check) from OKX DEX Router (proV…CX3u) to CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR\n  - Create 91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD, managed by the account at lookup table GP57…1gPy[65], depositing 0.00148844 SOL\n  - CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR pays a fee of 0.000007098 SOL\n  - Valid for about a minute (recent blockhash)\n\nRaw: solana v0 (804 bytes)\n  digest: 9f46f53cb1549cfb1d859dc7109c80f65b636658c9999b7f227a133aad7823a2\n",
+  "text": "2 actions: Transfer 0.001855569 SOL from CVJ6…Q3bR to 91rj…BXHD; Swap 151,360,479,993 raw units of the token at lookup table 6vgy…uwpB[3] for ≥ 80,334,153 raw units of the token at lookup table GP57…1gPy[60] (before any transfer fee) via OKX\nWARNING: review the findings before approving\n\nFindings:\n  [HIGH] The swap spends from a token account you do not control (instruction 6)\n  [INFO] The destination token account is not one of your accounts for a verified token; SignLens cannot confirm who owns it (instruction 6)\n  [INFO] 4 bytes after this compute budget value are ignored; the runtime reads only the value, as shown (instruction 2)\n\n== Transfer | System program\n  Amount: 0.001855569 SOL\n  From: CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR\n  To: 91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD\n\n== Swap | OKX DEX Router (descriptor reviewed 2026-10-27, upgradeable by CjoV…N1Mj)\n  Send: 151,360,479,993 raw units of the token at lookup table 6vgy…uwpB[3]\n  Receive: ≥ 80,334,153 raw units of the token at lookup table GP57…1gPy[60] (before any transfer fee)\n  Quoted: 80,737,843 raw units of the token at lookup table GP57…1gPy[60]\n  Max slippage: 0.5%\n  Commission: 0.81%\n  Commission account: BEochrdGhm5pcKVF73DURYrGo1DLzxq6bBcUBphQR64d\n  Trim rate (program units): 100\n  Charge rate (program units): 500\n  Closes the temporary token account afterwards (flag): 1\n  Route:\n    - RaydiumClmmSwapV2 (weight 2790, leg 1)\n    - MeteoraDlmmSwap2 (weight 310, leg 1)\n    - RaydiumClmmSwapV2 (weight 6900, leg 2)\n    - ByrealClmm3 (weight 10000, leg 18)\n  From account: H51r5KPyahCGiGCQ9jZr5r5bukcXFaRDFtPFZBUyiHfo\n  To account: 91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD\n  Additional accounts: 80, not named by this descriptor\n\n== Also [collapsed]\n  Compute unit limit: 1251656\n  Heap size: 65536 bytes\n  Compute unit price: 1,676 micro-lamports per compute unit\n  Create token account: Token account: 91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD\n  Create token account: Owner: CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR\n  Create token account: Mint: the account at lookup table GP57…1gPy[60]\n  Create token account: Rent paid by: CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR\n  Create token account: Token program: the account at lookup table GP57…1gPy[65]\n\n== Signers\n  Fee payer: CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR\n\n== Fee\n  Total: 0.000007098 SOL\n  Base: 0.000005 SOL\n  Priority: 0.000002098 SOL\n  Priority basis: 1,676 micro-lamports per compute unit × 1,251,656 compute units requested\n  Rent deposits: 0.00148844 SOL; refunded to whoever closes the account\n\n== Validity\n  Expires: in about a minute (recent blockhash)\n\nEffects:\n  - Transfer 0.001855569 SOL from CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR to 91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD\n  - Transfer ≤ 151,360,479,993 raw units of the token at lookup table 6vgy…uwpB[3] (before any transfer fee) from CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR to OKX DEX Router (proV…CX3u)\n  - Transfer an unknown amount of the token at lookup table GP57…1gPy[60] (at least 80,334,153 raw units, before a transfer fee SignLens cannot check) from OKX DEX Router (proV…CX3u) to CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR\n  - Create 91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD, managed by the account at lookup table GP57…1gPy[65], depositing 0.00148844 SOL\n  - CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR pays a fee of 0.000007098 SOL\n  - Valid for about a minute (recent blockhash)\n\nRaw: solana v0 (804 bytes)\n  digest: 9f46f53cb1549cfb1d859dc7109c80f65b636658c9999b7f227a133aad7823a2\n",
   "verdict": "warn"
 }

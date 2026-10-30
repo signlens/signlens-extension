@@ -1,9 +1,9 @@
-// The parts of the renderer that need no DOM: quantities, and the help for a label.
+// The parts of the renderer that need no DOM: quantities, durations and percentages, and file names.
 
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import type { Amount, Message } from '../shared/types.ts';
-import { captureName, durationText, helpFor, quantity } from './render.ts';
+import type { Amount } from '../shared/types.ts';
+import { captureName, durationText, percentText, quantity } from './render.ts';
 
 function amount(units: string, decimals: number | null): Amount {
     return { units, asset: { id: 'x', symbol: null, decimals, trust: 'fact', description: null }, bound: 'exact', note: null };
@@ -21,6 +21,16 @@ test('a quantity is scaled by its decimals, grouped by thousands, and signed', (
     assert.equal(quantity(amount('not a number', 2)), 'not a number raw units');
 });
 
+test('basis points read as the engine writes a percentage, with the decimals they have', () => {
+    assert.equal(percentText(50), '0.5%');
+    assert.equal(percentText(20), '0.2%');
+    assert.equal(percentText(7), '0.07%');
+    assert.equal(percentText(0), '0%');
+    assert.equal(percentText(10_000), '100%');
+    assert.equal(percentText(12_345), '123.45%');
+    assert.equal(percentText(12_345_600), '123,456%');
+});
+
 test('a duration reads in its two largest units, as the engine writes it', () => {
     assert.equal(durationText(0), '0 seconds');
     assert.equal(durationText(1), '1 second');
@@ -32,19 +42,6 @@ test('a duration reads in its two largest units, as the engine writes it', () =>
     assert.equal(durationText(86_400), '1 day');
     assert.equal(durationText(183_600), '2 days 3 hours');
     assert.equal(durationText(90_061), '1 day 1 hour');
-});
-
-/** A label as the engine sends it: its identifier and its English. */
-const label = (id: string | null, text: string): Message => ({ id, parts: [{ text }], text });
-
-test('a label gets the help written for it, by its identifier, and no other', () => {
-    assert.match(helpFor(label('label-fee-payer', 'Fee payer')) ?? '', /pays the fee/);
-    // Whatever the words: the identifier says which label it is.
-    assert.match(helpFor(label('label-fee-payer', 'Payeur des frais')) ?? '', /pays the fee/);
-    assert.match(helpFor(label('explain-housekeeping-label', 'Create token account if missing: Mint')) ?? '', /identifies the token/);
-    assert.equal(helpFor(label(null, 'Fee payer')), undefined, "a descriptor's label carries its own help");
-    for (const id of ['constructor', 'toString', '__proto__', 'label-unknown']) assert.equal(helpFor(label(id, 'x')), undefined, id);
-    assert.equal(helpFor(label('explain-housekeeping-label', 'Create token account if missing: hasOwnProperty')), undefined);
 });
 
 test('a transaction is saved under its time and the site, with no character a file name could be steered by', () => {

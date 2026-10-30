@@ -198,7 +198,15 @@
           "collapsed": true,
           "fields": [
             {
-              "help": null,
+              "help": {
+                "id": "label-compute-unit-limit.help",
+                "parts": [
+                  {
+                    "text": "How much work the transaction may do. It affects the fee, not what the transaction does."
+                  }
+                ],
+                "text": "How much work the transaction may do. It affects the fee, not what the transaction does."
+              },
               "label": {
                 "id": "label-compute-unit-limit",
                 "parts": [
@@ -215,7 +223,15 @@
               }
             },
             {
-              "help": null,
+              "help": {
+                "id": "label-compute-unit-price.help",
+                "parts": [
+                  {
+                    "text": "The tip per unit of work, in millionths of a lamport. With the limit, it sets the priority fee."
+                  }
+                ],
+                "text": "The tip per unit of work, in millionths of a lamport. With the limit, it sets the priority fee."
+              },
               "label": {
                 "id": "label-compute-unit-price",
                 "parts": [
@@ -232,14 +248,7 @@
                   "id": "compute-budget-price",
                   "parts": [
                     {
-                      "text": "2,701",
-                      "value": {
-                        "type": "text",
-                        "value": "2,701"
-                      }
-                    },
-                    {
-                      "text": " micro-lamports per compute unit"
+                      "text": "2,701 micro-lamports per compute unit"
                     }
                   ],
                   "text": "2,701 micro-lamports per compute unit"
@@ -265,7 +274,15 @@
           "collapsed": false,
           "fields": [
             {
-              "help": null,
+              "help": {
+                "id": "label-fee-payer.help",
+                "parts": [
+                  {
+                    "text": "The account that pays the fee: the first signer."
+                  }
+                ],
+                "text": "The account that pays the fee: the first signer."
+              },
               "label": {
                 "id": "label-fee-payer",
                 "parts": [
@@ -314,7 +331,15 @@
           "collapsed": false,
           "fields": [
             {
-              "help": null,
+              "help": {
+                "id": "label-total.help",
+                "parts": [
+                  {
+                    "text": "What the network charges for this transaction. The fee payer pays it whether the transaction succeeds or fails."
+                  }
+                ],
+                "text": "What the network charges for this transaction. The fee payer pays it whether the transaction succeeds or fails."
+              },
               "label": {
                 "id": "label-total",
                 "parts": [
@@ -342,7 +367,15 @@
               }
             },
             {
-              "help": null,
+              "help": {
+                "id": "label-base.help",
+                "parts": [
+                  {
+                    "text": "The flat part of the fee: the network charges it per signature."
+                  }
+                ],
+                "text": "The flat part of the fee: the network charges it per signature."
+              },
               "label": {
                 "id": "label-base",
                 "parts": [
@@ -370,7 +403,15 @@
               }
             },
             {
-              "help": null,
+              "help": {
+                "id": "label-priority.help",
+                "parts": [
+                  {
+                    "text": "A tip the site added so validators take the transaction sooner. It is optional, and it is yours to pay."
+                  }
+                ],
+                "text": "A tip the site added so validators take the transaction sooner. It is optional, and it is yours to pay."
+              },
               "label": {
                 "id": "label-priority",
                 "parts": [
@@ -398,7 +439,15 @@
               }
             },
             {
-              "help": null,
+              "help": {
+                "id": "label-priority-basis.help",
+                "parts": [
+                  {
+                    "text": "How the tip was computed: the price per unit of work, times the work the transaction asked to be allowed."
+                  }
+                ],
+                "text": "How the tip was computed: the price per unit of work, times the work the transaction asked to be allowed."
+              },
               "label": {
                 "id": "label-priority-basis",
                 "parts": [
@@ -415,24 +464,7 @@
                   "id": "explain-priority-basis",
                   "parts": [
                     {
-                      "text": "2,701",
-                      "value": {
-                        "type": "text",
-                        "value": "2,701"
-                      }
-                    },
-                    {
-                      "text": " micro-lamports per compute unit × "
-                    },
-                    {
-                      "text": "197,941",
-                      "value": {
-                        "type": "text",
-                        "value": "197,941"
-                      }
-                    },
-                    {
-                      "text": " compute units requested"
+                      "text": "2,701 micro-lamports per compute unit × 197,941 compute units requested"
                     }
                   ],
                   "text": "2,701 micro-lamports per compute unit × 197,941 compute units requested"
@@ -458,7 +490,15 @@
           "collapsed": false,
           "fields": [
             {
-              "help": null,
+              "help": {
+                "id": "label-expires.help",
+                "parts": [
+                  {
+                    "text": "How long the signature can be used. About a minute is normal; a durable nonce keeps it usable until the nonce is advanced."
+                  }
+                ],
+                "text": "How long the signature can be used. About a minute is normal; a durable nonce keeps it usable until the nonce is advanced."
+              },
               "label": {
                 "id": "label-expires",
                 "parts": [

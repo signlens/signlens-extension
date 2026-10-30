@@ -1512,17 +1512,7 @@
                           }
                         },
                         {
-                          "text": " ("
-                        },
-                        {
-                          "text": "49,500,000",
-                          "value": {
-                            "type": "text",
-                            "value": "49,500,000"
-                          }
-                        },
-                        {
-                          "text": " raw units)"
+                          "text": " (49,500,000 raw units)"
                         }
                       ],
                       "text": "PumpFunBuy (49,500,000 raw units)"
@@ -1613,7 +1603,15 @@
           "collapsed": true,
           "fields": [
             {
-              "help": null,
+              "help": {
+                "id": "label-compute-unit-limit.help",
+                "parts": [
+                  {
+                    "text": "How much work the transaction may do. It affects the fee, not what the transaction does."
+                  }
+                ],
+                "text": "How much work the transaction may do. It affects the fee, not what the transaction does."
+              },
               "label": {
                 "id": "label-compute-unit-limit",
                 "parts": [
@@ -1630,7 +1628,15 @@
               }
             },
             {
-              "help": null,
+              "help": {
+                "id": "label-compute-unit-price.help",
+                "parts": [
+                  {
+                    "text": "The tip per unit of work, in millionths of a lamport. With the limit, it sets the priority fee."
+                  }
+                ],
+                "text": "The tip per unit of work, in millionths of a lamport. With the limit, it sets the priority fee."
+              },
               "label": {
                 "id": "label-compute-unit-price",
                 "parts": [
@@ -1647,14 +1653,7 @@
                   "id": "compute-budget-price",
                   "parts": [
                     {
-                      "text": "149,986",
-                      "value": {
-                        "type": "text",
-                        "value": "149,986"
-                      }
-                    },
-                    {
-                      "text": " micro-lamports per compute unit"
+                      "text": "149,986 micro-lamports per compute unit"
                     }
                   ],
                   "text": "149,986 micro-lamports per compute unit"
@@ -1662,7 +1661,15 @@
               }
             },
             {
-              "help": null,
+              "help": {
+                "id": "label-token-account.help",
+                "parts": [
+                  {
+                    "text": "An account that holds one token for one wallet. A wallet has a separate one for each token it holds."
+                  }
+                ],
+                "text": "An account that holds one token for one wallet. A wallet has a separate one for each token it holds."
+              },
               "label": {
                 "id": "explain-housekeeping-label",
                 "parts": [
@@ -1724,7 +1731,15 @@
               }
             },
             {
-              "help": null,
+              "help": {
+                "id": "label-mint.help",
+                "parts": [
+                  {
+                    "text": "The address that identifies the token itself, as opposed to an account holding some of it."
+                  }
+                ],
+                "text": "The address that identifies the token itself, as opposed to an account holding some of it."
+              },
               "label": {
                 "id": "explain-housekeeping-label",
                 "parts": [
@@ -1762,7 +1777,15 @@
               }
             },
             {
-              "help": null,
+              "help": {
+                "id": "label-rent-paid-by.help",
+                "parts": [
+                  {
+                    "text": "Who pays the deposit that keeps a new account on chain. It comes back when the account is closed."
+                  }
+                ],
+                "text": "Who pays the deposit that keeps a new account on chain. It comes back when the account is closed."
+              },
               "label": {
                 "id": "explain-housekeeping-label",
                 "parts": [
@@ -1793,7 +1816,15 @@
               }
             },
             {
-              "help": null,
+              "help": {
+                "id": "label-token-program.help",
+                "parts": [
+                  {
+                    "text": "The program that manages this token: SPL Token or Token-2022."
+                  }
+                ],
+                "text": "The program that manages this token: SPL Token or Token-2022."
+              },
               "label": {
                 "id": "explain-housekeeping-label",
                 "parts": [
@@ -1936,7 +1967,15 @@
           "collapsed": false,
           "fields": [
             {
-              "help": null,
+              "help": {
+                "id": "label-fee-payer.help",
+                "parts": [
+                  {
+                    "text": "The account that pays the fee: the first signer."
+                  }
+                ],
+                "text": "The account that pays the fee: the first signer."
+              },
               "label": {
                 "id": "label-fee-payer",
                 "parts": [
@@ -1985,7 +2024,15 @@
           "collapsed": false,
           "fields": [
             {
-              "help": null,
+              "help": {
+                "id": "label-total.help",
+                "parts": [
+                  {
+                    "text": "What the network charges for this transaction. The fee payer pays it whether the transaction succeeds or fails."
+                  }
+                ],
+                "text": "What the network charges for this transaction. The fee payer pays it whether the transaction succeeds or fails."
+              },
               "label": {
                 "id": "label-total",
                 "parts": [
@@ -2013,7 +2060,15 @@
               }
             },
             {
-              "help": null,
+              "help": {
+                "id": "label-base.help",
+                "parts": [
+                  {
+                    "text": "The flat part of the fee: the network charges it per signature."
+                  }
+                ],
+                "text": "The flat part of the fee: the network charges it per signature."
+              },
               "label": {
                 "id": "label-base",
                 "parts": [
@@ -2041,7 +2096,15 @@
               }
             },
             {
-              "help": null,
+              "help": {
+                "id": "label-priority.help",
+                "parts": [
+                  {
+                    "text": "A tip the site added so validators take the transaction sooner. It is optional, and it is yours to pay."
+                  }
+                ],
+                "text": "A tip the site added so validators take the transaction sooner. It is optional, and it is yours to pay."
+              },
               "label": {
                 "id": "label-priority",
                 "parts": [
@@ -2069,7 +2132,15 @@
               }
             },
             {
-              "help": null,
+              "help": {
+                "id": "label-priority-basis.help",
+                "parts": [
+                  {
+                    "text": "How the tip was computed: the price per unit of work, times the work the transaction asked to be allowed."
+                  }
+                ],
+                "text": "How the tip was computed: the price per unit of work, times the work the transaction asked to be allowed."
+              },
               "label": {
                 "id": "label-priority-basis",
                 "parts": [
@@ -2086,24 +2157,7 @@
                   "id": "explain-priority-basis",
                   "parts": [
                     {
-                      "text": "149,986",
-                      "value": {
-                        "type": "text",
-                        "value": "149,986"
-                      }
-                    },
-                    {
-                      "text": " micro-lamports per compute unit × "
-                    },
-                    {
-                      "text": "500,000",
-                      "value": {
-                        "type": "text",
-                        "value": "500,000"
-                      }
-                    },
-                    {
-                      "text": " compute units requested"
+                      "text": "149,986 micro-lamports per compute unit × 500,000 compute units requested"
                     }
                   ],
                   "text": "149,986 micro-lamports per compute unit × 500,000 compute units requested"
@@ -2111,7 +2165,15 @@
               }
             },
             {
-              "help": null,
+              "help": {
+                "id": "label-rent-deposits.help",
+                "parts": [
+                  {
+                    "text": "SOL locked to keep the accounts this transaction creates on chain. It is a deposit, not a fee: closing an account returns it to whoever closes it."
+                  }
+                ],
+                "text": "SOL locked to keep the accounts this transaction creates on chain. It is a deposit, not a fee: closing an account returns it to whoever closes it."
+              },
               "label": {
                 "id": "label-rent-deposits",
                 "parts": [
@@ -2175,7 +2237,15 @@
           "collapsed": false,
           "fields": [
             {
-              "help": null,
+              "help": {
+                "id": "label-expires.help",
+                "parts": [
+                  {
+                    "text": "How long the signature can be used. About a minute is normal; a durable nonce keeps it usable until the nonce is advanced."
+                  }
+                ],
+                "text": "How long the signature can be used. About a minute is normal; a durable nonce keeps it usable until the nonce is advanced."
+              },
               "label": {
                 "id": "label-expires",
                 "parts": [
@@ -2369,7 +2439,7 @@
         ],
         "text": "3 actions: Send 0.0005 SOL to 879A…MGsA; Wrap 0.0495 SOL into Your SOL account (4hJn…VH6R) via DFlow; Swap ≤ 0.0495 SOL for ≥ 142,243.976392 HMYD (claimed, unverified) via DFlow"
       },
-      "text": "3 actions: Send 0.0005 SOL to 879A…MGsA; Wrap 0.0495 SOL into Your SOL account (4hJn…VH6R) via DFlow; Swap ≤ 0.0495 SOL for ≥ 142,243.976392 HMYD (claimed, unverified) via DFlow\nOK\n\n== Transfer | System program\n  Amount: 0.0005 SOL\n  From: Your wallet (8Aet…tiTo)\n  To: 879ArayuxbYjBhpUe4QCx8nqaAKjiwCG1hFiJo6zMGsA\n\n== Wrap SOL | DFlow Aggregator (descriptor reviewed 2026-10-17, upgradeable by 9uo2…wgsh)\n  Amount: 0.0495 SOL\n  From: Your wallet (8Aet…tiTo)\n  Wrapped SOL account: Your SOL account (4hJn…VH6R)\n\n== Swap | DFlow Aggregator\n  Send: ≤ 0.0495 SOL\n  Receive: ≥ 142,243.976392 HMYD (claimed, unverified)\n  Quoted: 158,048.862658 HMYD (claimed, unverified)\n  Max slippage: 10.00%\n  Route:\n    - PumpFunBuy (49,500,000 raw units)\n  To account: Your token account (9SQZ…GxVU)\n  Instruction: swap\n\n== Also [collapsed]\n  Compute unit limit: 500000\n  Compute unit price: 149,986 micro-lamports per compute unit\n  Create token account if missing: Token account: Your token account (9SQZ…GxVU)\n  Create token account if missing: Owner: Your wallet (8Aet…tiTo)\n  Create token account if missing: Mint: HMYD mint (HMYd…pump) (claimed, unverified)\n  Create token account if missing: Rent paid by: Your wallet (8Aet…tiTo)\n  Create token account if missing: Token program: Token-2022 program (Toke…xuEb)\n  Jito tip: Amount: 0.000122053 SOL\n  Jito tip: From: Your wallet (8Aet…tiTo)\n  Jito tip: To: Jito tip account (96gY…rZU5)\n\n== Signers\n  Fee payer: Your wallet (8Aet…tiTo)\n\n== Fee\n  Total: 0.000079993 SOL\n  Base: 0.000005 SOL\n  Priority: 0.000074993 SOL\n  Priority basis: 149,986 micro-lamports per compute unit × 500,000 compute units requested\n  Rent deposits: up to 0.00151384 SOL, if the account this transaction creates when missing does not exist yet; refunded to whoever closes the account\n\n== Validity\n  Expires: in about a minute (recent blockhash)\n\nEffects:\n  - You send 0.0005 SOL from Your wallet (8Aet…tiTo) to 879ArayuxbYjBhpUe4QCx8nqaAKjiwCG1hFiJo6zMGsA\n  - Transfer 0.0495 SOL from Your wallet (8Aet…tiTo) to Your SOL account (4hJn…VH6R)\n  - Create the wrapped SOL account first if it does not exist, as the sender's associated token account and at the sender's cost\n  - You send ≤ 0.0495 SOL from Your wallet (8Aet…tiTo) to DFlow Aggregator (DF1o…7QBH)\n  - You receive ≥ 142,243.976392 HMYD (claimed, unverified) into Your token account (9SQZ…GxVU) from DFlow Aggregator (DF1o…7QBH)\n  - Create Your token account (9SQZ…GxVU), managed by Token-2022 program (Toke…xuEb), depositing 0.00151384 SOL unless it already exists\n  - You send 0.000122053 SOL from Your wallet (8Aet…tiTo) to Jito tip account (96gY…rZU5)\n  - You pay a fee of 0.000079993 SOL\n  - Valid for about a minute (recent blockhash)\n\nRaw: solana v0 (798 bytes)\n  digest: b892642d9d9599ea782feb6bffdc9939bf6aa2c699eb2c67b6e5d3463baa7682\n",
+      "text": "3 actions: Send 0.0005 SOL to 879A…MGsA; Wrap 0.0495 SOL into Your SOL account (4hJn…VH6R) via DFlow; Swap ≤ 0.0495 SOL for ≥ 142,243.976392 HMYD (claimed, unverified) via DFlow\nOK\n\n== Transfer | System program\n  Amount: 0.0005 SOL\n  From: Your wallet (8Aet…tiTo)\n  To: 879ArayuxbYjBhpUe4QCx8nqaAKjiwCG1hFiJo6zMGsA\n\n== Wrap SOL | DFlow Aggregator (descriptor reviewed 2026-10-17, upgradeable by 9uo2…wgsh)\n  Amount: 0.0495 SOL\n  From: Your wallet (8Aet…tiTo)\n  Wrapped SOL account: Your SOL account (4hJn…VH6R)\n\n== Swap | DFlow Aggregator\n  Send: ≤ 0.0495 SOL\n  Receive: ≥ 142,243.976392 HMYD (claimed, unverified)\n  Quoted: 158,048.862658 HMYD (claimed, unverified)\n  Max slippage: 10%\n  Route:\n    - PumpFunBuy (49,500,000 raw units)\n  To account: Your token account (9SQZ…GxVU)\n  Instruction: swap\n\n== Also [collapsed]\n  Compute unit limit: 500000\n  Compute unit price: 149,986 micro-lamports per compute unit\n  Create token account if missing: Token account: Your token account (9SQZ…GxVU)\n  Create token account if missing: Owner: Your wallet (8Aet…tiTo)\n  Create token account if missing: Mint: HMYD mint (HMYd…pump) (claimed, unverified)\n  Create token account if missing: Rent paid by: Your wallet (8Aet…tiTo)\n  Create token account if missing: Token program: Token-2022 program (Toke…xuEb)\n  Jito tip: Amount: 0.000122053 SOL\n  Jito tip: From: Your wallet (8Aet…tiTo)\n  Jito tip: To: Jito tip account (96gY…rZU5)\n\n== Signers\n  Fee payer: Your wallet (8Aet…tiTo)\n\n== Fee\n  Total: 0.000079993 SOL\n  Base: 0.000005 SOL\n  Priority: 0.000074993 SOL\n  Priority basis: 149,986 micro-lamports per compute unit × 500,000 compute units requested\n  Rent deposits: up to 0.00151384 SOL, if the account this transaction creates when missing does not exist yet; refunded to whoever closes the account\n\n== Validity\n  Expires: in about a minute (recent blockhash)\n\nEffects:\n  - You send 0.0005 SOL from Your wallet (8Aet…tiTo) to 879ArayuxbYjBhpUe4QCx8nqaAKjiwCG1hFiJo6zMGsA\n  - Transfer 0.0495 SOL from Your wallet (8Aet…tiTo) to Your SOL account (4hJn…VH6R)\n  - Create the wrapped SOL account first if it does not exist, as the sender's associated token account and at the sender's cost\n  - You send ≤ 0.0495 SOL from Your wallet (8Aet…tiTo) to DFlow Aggregator (DF1o…7QBH)\n  - You receive ≥ 142,243.976392 HMYD (claimed, unverified) into Your token account (9SQZ…GxVU) from DFlow Aggregator (DF1o…7QBH)\n  - Create Your token account (9SQZ…GxVU), managed by Token-2022 program (Toke…xuEb), depositing 0.00151384 SOL unless it already exists\n  - You send 0.000122053 SOL from Your wallet (8Aet…tiTo) to Jito tip account (96gY…rZU5)\n  - You pay a fee of 0.000079993 SOL\n  - Valid for about a minute (recent blockhash)\n\nRaw: solana v0 (798 bytes)\n  digest: b892642d9d9599ea782feb6bffdc9939bf6aa2c699eb2c67b6e5d3463baa7682\n",
       "verdict": "ok"
     }
   }

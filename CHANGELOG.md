@@ -41,6 +41,22 @@ uses [Semantic Versioning](https://semver.org/).
 
 ### Changed
 
+- **The engine's help for its labels.** The help a fixed label opens
+  (the fee's parts, the signers, the compute budget's settings, a token
+  account's mint) is the engine's, sent with each field, where the
+  extension kept its own copy and found a label in the collapsed
+  section by its English ("Create token account if missing: Mint").
+
+- **Section titles as the engine words them.** The toggle over the
+  sections after the instructions lists their titles as the engine
+  writes them ("Details: Also, Signers, Fee, Validity"), where it
+  lowercased them, which a translation could not survive.
+
+- **One percentage format.** A percentage in the instructions reads as
+  the engine now writes every one, with the decimals it has and no more
+  ("Max slippage: 1%", "Platform fee: 0.2%"), where it had two ("1.00%",
+  "0.20%").
+
 - **A duration in words.** A duration in the instructions reads as the
   engine writes it, in its two largest units, the smaller left out when
   it is zero ("2 days 3 hours", "5 minutes 20 seconds"), where it read
