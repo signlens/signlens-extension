@@ -159,6 +159,8 @@ test('the window puts the verdict and what the transaction does first, with the 
     await expect(gate.locator('#where .host')).toContainText('localhost');
     await expect(gate.locator('#band')).toHaveClass(/warning/);
     await expect(gate.locator('#band-summary')).toContainText('Send 0.996423 USDC to');
+    // The band lays its summary out as the rows do: the verified token has its badge.
+    await expect(gate.locator('#band-summary .amount .verified-badge')).toHaveCount(1);
 
     // The effects as sentences, the signer's own accounts marked.
     const effects = gate.locator('.effects li');

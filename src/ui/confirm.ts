@@ -13,7 +13,7 @@ import { logged, methodName, withoutScheme } from '../shared/text.ts';
 import { type Rating, SEVERITIES, type Seen } from '../shared/types.ts';
 import { rowVerdictWord, summaryOf, worstVerdict } from '../shared/verdict.ts';
 import { byId } from './dom.ts';
-import { element, originNode, renderRow } from './render.ts';
+import { element, messageNode, originNode, renderRow } from './render.ts';
 import { goneAtOpen, noLongerPending, requestId, sendDecision } from './windows.ts';
 
 /** Remembers whether the reader keeps the instructions open, for the next window and the popup. */
@@ -287,7 +287,7 @@ async function start(): Promise<void> {
     );
     const lead = list[at];
     const summary = lead ? bandLine(lead) : '';
-    byId('band-summary').textContent = many ? `${summary} (transaction ${at + 1} of ${list.length}; each is below)` : summary;
+    byId('band-summary').replaceChildren(summary, many ? ` (transaction ${at + 1} of ${list.length}; each is below)` : '');
 
     // What the API or the RPC could not explain may be explained on a second try; a request refused as a whole would be refused again.
     const firstFailed = list.findIndex((row) => row.kind === 'failed' && row.scope === 'transaction');
@@ -364,8 +364,13 @@ async function start(): Promise<void> {
 
 void start();
 
-/** The band's line for a transaction: several actions by their count, which heads their list below; otherwise its summary. */
-function bandLine(row: Row): string {
-    const actions = row.kind === 'explained' ? (row.actions ?? []) : [];
-    return actions.length > 1 ? `${actions.length} actions` : summaryOf(row);
+/**
+ * The band's line for a transaction: several actions by their count, which
+ * heads their list below; otherwise its summary, an explained one laid out
+ * in its parts as the rows lay it out.
+ */
+function bandLine(row: Row): string | Node {
+    if (row.kind !== 'explained') return summaryOf(row);
+    const actions = row.actions ?? [];
+    return actions.length > 1 ? `${actions.length} actions` : messageNode(row.summary);
 }

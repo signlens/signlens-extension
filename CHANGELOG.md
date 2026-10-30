@@ -41,6 +41,12 @@ uses [Semantic Versioning](https://semver.org/).
 
 ### Changed
 
+- **The band's summary laid out.** The summary in the window's band, of
+  a single transaction, lays out the amounts and addresses it names as
+  the rows below do: a verified token or account name has its badge, a
+  claim its warning, a short address its full form on hover. It was the
+  summary's plain text, so the one line read first carried no badge.
+
 - **Each action on its own line.** A transaction that does several things
   shows their count in the window's band ("3 actions") and each one on a
   line of its own below, where the summary ran them together with
