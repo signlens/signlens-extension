@@ -1332,10 +1332,10 @@
                 "id": "label-nonce-account.help",
                 "parts": [
                   {
-                    "text": "The account that keeps this signature usable. Until it is advanced, anyone holding the signed transaction can submit it."
+                    "text": "An account that holds a durable nonce. A transaction that uses its nonce in place of a recent blockhash stays valid until the nonce is advanced, so anyone holding it signed can submit it until then."
                   }
                 ],
-                "text": "The account that keeps this signature usable. Until it is advanced, anyone holding the signed transaction can submit it."
+                "text": "An account that holds a durable nonce. A transaction that uses its nonce in place of a recent blockhash stays valid until the nonce is advanced, so anyone holding it signed can submit it until then."
               },
               "label": {
                 "id": "explain-housekeeping-label",
@@ -1592,10 +1592,10 @@
                 "id": "label-nonce-account.help",
                 "parts": [
                   {
-                    "text": "The account that keeps this signature usable. Until it is advanced, anyone holding the signed transaction can submit it."
+                    "text": "An account that holds a durable nonce. A transaction that uses its nonce in place of a recent blockhash stays valid until the nonce is advanced, so anyone holding it signed can submit it until then."
                   }
                 ],
-                "text": "The account that keeps this signature usable. Until it is advanced, anyone holding the signed transaction can submit it."
+                "text": "An account that holds a durable nonce. A transaction that uses its nonce in place of a recent blockhash stays valid until the nonce is advanced, so anyone holding it signed can submit it until then."
               },
               "label": {
                 "id": "label-nonce-account",

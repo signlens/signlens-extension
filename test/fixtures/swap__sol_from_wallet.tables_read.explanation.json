@@ -1727,10 +1727,10 @@
             "id": "label-rent-paid-by.help",
             "parts": [
               {
-                "text": "Who pays the small deposit that keeps a new account alive. It comes back when the account is closed."
+                "text": "Who pays the deposit that keeps a new account on chain. It comes back when the account is closed."
               }
             ],
-            "text": "Who pays the small deposit that keeps a new account alive. It comes back when the account is closed."
+            "text": "Who pays the deposit that keeps a new account on chain. It comes back when the account is closed."
           },
           "label": {
             "id": "explain-housekeeping-label",
