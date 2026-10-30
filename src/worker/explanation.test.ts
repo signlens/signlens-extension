@@ -26,6 +26,7 @@ function document(changes: Record<string, unknown> = {}): Record<string, unknown
         schema: 'signlens-explanation/2',
         chain: 'solana',
         summary: words('Send 1 USDC'),
+        actions: [{ instruction: 0, summary: words('Send 1 USDC') }],
         verdict: 'ok',
         findings: [{ severity: 'info', code: 'fee', message: words('A fee is paid'), instruction: null }],
         sections: [
@@ -86,6 +87,18 @@ test('what is not in the contract is left out, and the result shares nothing wit
     // The engine writes the signed bytes as hex; the API leaves them out, and so does the parser.
     const engines = parseExplanation(document({ raw: { format: 'solana legacy', payload: 'abcd', digest: 'ab'.repeat(32) } }));
     assert.deepEqual(engines.raw, { format: 'solana legacy', digest: 'ab'.repeat(32) });
+});
+
+test('the actions come through one by one; an engine that lists none gives an empty list', () => {
+    const actions = [
+        { instruction: 0, summary: words('Send 1 USDC') },
+        { instruction: 2, summary: words('Swap 1 USDC for SOL') },
+    ];
+    assert.deepEqual(parseExplanation(document({ actions })).actions, actions);
+    const { actions: _, ...before } = document();
+    assert.deepEqual(parseExplanation(before).actions, []);
+    assert.equal(refusal(document({ actions: [{ instruction: -1, summary: words('x') }] })).path, 'explanation.actions[0].instruction');
+    assert.equal(refusal(document({ actions: [{ instruction: 0 }] })).path, 'explanation.actions[0].summary');
 });
 
 test('the accounts an explanation wants come through, and one that is not an address is refused', () => {

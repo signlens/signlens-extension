@@ -4,7 +4,7 @@
 // history keeps it, with where it came from and what became of it. Shared
 // by the worker, the window and the popup: no DOM, no `chrome`.
 
-import type { Finding, Message, Section, WordedEffect } from './types.ts';
+import type { Action, Finding, Message, Section, WordedEffect } from './types.ts';
 
 /** What became of a request: passed on (for a site's asking, allowed), or not. */
 export type Decision = 'continue' | 'reject';
@@ -23,6 +23,8 @@ export interface ExplainedRow {
     kind: 'explained';
     verdict: TransactionVerdict;
     summary: Message;
+    /** The actions one by one (absent in rows kept before there were any). */
+    actions?: Action[];
     findings: Finding[];
     effects: WordedEffect[];
     sections: Section[];

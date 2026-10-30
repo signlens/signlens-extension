@@ -16,6 +16,7 @@ const EXPLANATION: Explanation = {
     chain: 'solana',
     verdict: 'ok',
     summary: words('Send 1 SOL'),
+    actions: [{ instruction: 0, summary: words('Send 1 SOL') }],
     findings: [],
     effects: [],
     sections: [],

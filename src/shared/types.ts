@@ -142,6 +142,12 @@ export interface Finding {
     instruction: number | null;
 }
 
+/** One of the actions a summary counts: its instruction's index, from 0, and what it does. */
+export interface Action {
+    instruction: number;
+    summary: Message;
+}
+
 /**
  * What the explanation says of the signed bytes. The API leaves out their
  * hex, `payload`: the extension sent them, and reads only the digest.
@@ -157,6 +163,8 @@ export interface Explanation {
     schema: 'signlens-explanation/2';
     chain: string;
     summary: Message;
+    /** Every action the summary counts, in order; empty when there is only setup and cleanup, or from an engine that does not list them. */
+    actions: Action[];
     verdict: Verdict;
     findings: Finding[];
     sections: Section[];

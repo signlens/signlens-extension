@@ -50,9 +50,8 @@ test("an approval shows the transaction it approves, read from the RPC and said 
     const row = popup.locator('#history li').first();
     await expect(row.locator('.verdict')).toHaveText('warning');
     await row.locator('summary').click();
-    await expect(row.locator('.summary-line')).toContainText(
-        'Approve proposal #7 (Hand the admin of Drift to H7PiGqqUaanBovwKgEtreJbKmQe6dbq6VTrw6guy7ZgL, per your RPC)',
-    );
+    await expect(row.locator('ol.actions')).toContainText('Approve proposal #7 (Hand the admin of Drift to H7Pi…7ZgL, per your RPC)');
+    await expect(row.locator('ol.actions button.key').first()).toHaveAttribute('title', 'H7PiGqqUaanBovwKgEtreJbKmQe6dbq6VTrw6guy7ZgL');
     await expect(row.locator('.findings')).toContainText('its steps are shown from the transaction account as your RPC returned it');
     // The stored steps are explained as a proposal's are, with their own findings.
     await expect(row.locator('.findings')).toContainText('Proposal step 1: Hands the admin of the whole Drift protocol');
@@ -80,7 +79,7 @@ test('with account lookup off, nothing is read and the approval says its content
     await popup.reload();
     const row = popup.locator('#history li').first();
     await row.locator('summary').click();
-    await expect(row.locator('.summary-line')).not.toContainText('per your RPC');
+    await expect(row.locator('ol.actions')).not.toContainText('per your RPC');
     await expect(row.locator('.tables')).toHaveCount(0);
     // The engine still says what it would have read.
     await expect(row.locator('pre')).toContainText(`Would read, to explain more:\n  - ${PROPOSAL}:`);

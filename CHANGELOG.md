@@ -41,6 +41,31 @@ uses [Semantic Versioning](https://semver.org/).
 
 ### Changed
 
+- **A duration in words.** A duration in the instructions reads as the
+  engine writes it, in its two largest units, the smaller left out when
+  it is zero ("2 days 3 hours", "5 minutes 20 seconds"), where it read
+  as a count of seconds ("183600 seconds").
+
+- **A shortened address opens to its whole.** An address shortened to
+  its first and last four characters ("H7Pi…7ZgL") shows all of it when
+  clicked, tapped, or pressed with Enter or Space, and its short form
+  again the same way; open, it can be selected and copied. The whole was
+  only in a tooltip on hover, out of reach of the keyboard and of touch.
+
+- **The band's summary laid out.** The summary in the window's band, of
+  a single transaction, lays out the amounts and addresses it names as
+  the rows below do: a verified token or account name has its badge, a
+  claim its warning, a short address its full form on hover. It was the
+  summary's plain text, so the one line read first carried no badge.
+
+- **Each action on its own line.** A transaction that does several things
+  shows their count in the window's band ("3 actions") and each one on a
+  line of its own below, where the summary ran them together with
+  semicolons and named only the first three. The summary, its actions and
+  the findings lay out the amounts and addresses they name as "What this
+  does" does: a verified token or account name has its badge, a claim its
+  warning, and a short address its full form.
+
 - **A badge for what SignLens verified.** A token or account name that
   SignLens verified shows a small check in a ring after it, where it was
   followed by the word "(verified)": up to three in one line read as if

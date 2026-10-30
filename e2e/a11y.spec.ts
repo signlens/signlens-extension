@@ -50,7 +50,7 @@ test('Escape in the comment box, or on an open help term or toggle, closes that 
     const comment = gate.getByRole('textbox', { name: 'What was unclear or wrong? (optional)' });
     await comment.fill('Which nonce?');
     await comment.press('Escape');
-    const term = gate.locator('#rows .term').first();
+    const term = gate.locator('#rows .term:visible').first();
     await term.click();
     await expect(term).toHaveAttribute('aria-expanded', 'true');
     await term.press('Escape');
@@ -100,7 +100,7 @@ test("the verdict describes the buttons, and a transaction's findings have a hea
 
 test('a help term names the note it opens, and is described by it while open', async ({ context, worker }) => {
     const gate = await windowFor(context, worker, request());
-    const term = gate.locator('#rows .term').first();
+    const term = gate.locator('#rows .term:visible').first();
     await term.click();
     const id = await term.getAttribute('aria-controls');
     expect(id).toBeTruthy();

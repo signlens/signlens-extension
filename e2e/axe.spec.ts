@@ -76,7 +76,7 @@ test('the popup, its requests and its settings', async ({ popup, worker }) => {
 test('the window, with what a reader opens in it', async ({ context, worker }) => {
     const gate = await windowFor(context, worker, request());
     await gate.getByRole('button', { name: 'Unclear' }).click();
-    await gate.locator('#rows .term').first().click();
+    await gate.locator('#rows .term:visible').first().click();
     await gate.getByRole('button', { name: /and details$/ }).click();
     expect(await violations(gate)).toEqual([]);
 });

@@ -17,6 +17,30 @@ async function askToSign(context: BrowserContext, dapp: Page, base64: string, me
     return { signing, gate };
 }
 
+test('several actions are one line each under their count, their values laid out as the effects are', async ({
+    configure,
+    context,
+    dapp,
+    server,
+}) => {
+    const swap = fixture('swap__sol_from_wallet.b64');
+    server.know(swap);
+    await configure({ lookupTokens: false, simulate: false, mode: 'passthrough', upstream: 'Fake Wallet', rpcUrl: server.rpc });
+
+    const { signing, gate } = await askToSign(context, dapp, swap.base64);
+    // The band counts them; the list below says each, where the summary ran them together.
+    await expect(gate.locator('#band-summary')).toHaveText('3 actions');
+    const actions = gate.locator('ol.actions li');
+    await expect(actions).toHaveCount(3);
+    await expect(actions.nth(0)).toHaveText(/^Transfer 0\.0005 SOL from /);
+    await expect(actions.nth(2)).toContainText('raw units of unverified token HMYd…pump');
+    // The wrap is a descriptor's summary, its values parts of their own: its account, unnamed, is shortened, and opens to its whole.
+    await expect(actions.nth(1)).toContainText(/Wrap 0\.0495 SOL into wrapped SOL account \w{4}…\w{4}/);
+    await expect(actions.nth(1).locator('button.key')).toHaveCount(1);
+    await clickToClose(gate.getByRole('button', { name: 'Reject' }));
+    expect((await signing).error).toContain('User rejected the request in SignLens');
+});
+
 test('in pass-through mode the window shows the explanation and Continue hands the request on', async ({
     configure,
     context,
@@ -135,6 +159,20 @@ test('the window puts the verdict and what the transaction does first, with the 
     await expect(gate.locator('#where .host')).toContainText('localhost');
     await expect(gate.locator('#band')).toHaveClass(/warning/);
     await expect(gate.locator('#band-summary')).toContainText('Send 0.996423 USDC to');
+    // The band lays its summary out as the rows do: the verified token has its badge.
+    await expect(gate.locator('#band-summary .amount .verified-badge')).toHaveCount(1);
+    // A shortened address opens to its whole, by click or keyboard, and closes again; the whole is on hover too.
+    const key = gate.locator('#band-summary button.key').first();
+    const whole = (await key.getAttribute('title')) ?? '';
+    expect(whole).toMatch(/^[1-9A-HJ-NP-Za-km-z]{32,44}$/);
+    const abridged = `${whole.slice(0, 4)}…${whole.slice(-4)}`;
+    await expect(key).toHaveText(abridged);
+    await key.click();
+    await expect(key).toHaveText(whole);
+    await expect(key).toHaveAttribute('aria-expanded', 'true');
+    await key.press('Enter');
+    await expect(key).toHaveText(abridged);
+    await expect(key).toHaveAttribute('aria-expanded', 'false');
 
     // The effects as sentences, the signer's own accounts marked.
     const effects = gate.locator('.effects li');
