@@ -3,7 +3,7 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import type { Amount, Message } from '../shared/types.ts';
-import { captureName, durationText, helpFor, quantity } from './render.ts';
+import { captureName, durationText, helpFor, percentText, quantity } from './render.ts';
 
 function amount(units: string, decimals: number | null): Amount {
     return { units, asset: { id: 'x', symbol: null, decimals, trust: 'fact', description: null }, bound: 'exact', note: null };
@@ -19,6 +19,16 @@ test('a quantity is scaled by its decimals, grouped by thousands, and signed', (
     assert.equal(quantity(amount('20998877118', null)), '20,998,877,118 raw units');
     assert.equal(quantity(amount('1', null)), '1 raw unit');
     assert.equal(quantity(amount('not a number', 2)), 'not a number raw units');
+});
+
+test('basis points read as the engine writes a percentage, with the decimals they have', () => {
+    assert.equal(percentText(50), '0.5%');
+    assert.equal(percentText(20), '0.2%');
+    assert.equal(percentText(7), '0.07%');
+    assert.equal(percentText(0), '0%');
+    assert.equal(percentText(10_000), '100%');
+    assert.equal(percentText(12_345), '123.45%');
+    assert.equal(percentText(12_345_600), '123,456%');
 });
 
 test('a duration reads in its two largest units, as the engine writes it', () => {

@@ -41,6 +41,11 @@ uses [Semantic Versioning](https://semver.org/).
 
 ### Changed
 
+- **One percentage format.** A percentage in the instructions reads as
+  the engine now writes every one, with the decimals it has and no more
+  ("Max slippage: 1%", "Platform fee: 0.2%"), where it had two ("1.00%",
+  "0.20%").
+
 - **A duration in words.** A duration in the instructions reads as the
   engine writes it, in its two largest units, the smaller left out when
   it is zero ("2 days 3 hours", "5 minutes 20 seconds"), where it read

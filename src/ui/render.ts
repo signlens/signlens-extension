@@ -258,6 +258,13 @@ export function quantity(amount: Amount): string {
     return `${sign}${fraction ? `${integer}.${fraction}` : integer}`;
 }
 
+/** Basis points as the engine writes a percentage: grouped, with the decimals it has and no more ("0.5%", "100%"). */
+export function percentText(bps: number): string {
+    const digits = String(bps).padStart(3, '0');
+    const fraction = digits.slice(-2).replace(/0+$/, '');
+    return `${group(digits.slice(0, -2))}${fraction ? `.${fraction}` : ''}%`;
+}
+
 /** `n` of a unit, in the singular for one. */
 function count(n: number, unit: string): string {
     return `${n} ${unit}${n === 1 ? '' : 's'}`;
@@ -385,7 +392,7 @@ function valueNode(value: Value): HTMLElement {
         case 'address':
             return addressNode(value.value);
         case 'basis_points':
-            return element('span', '', `${(value.value / 100).toFixed(2)}%`);
+            return element('span', '', percentText(value.value));
         case 'duration':
             return element('span', '', durationText(value.value));
         case 'timestamp':
