@@ -552,7 +552,8 @@ function sectionsNode(row: ExplainedRow): DocumentFragment {
     if (rest.length) {
         const body = element('div');
         for (const section of rest) body.append(sectionNode(section, !section.collapsed, []));
-        fragment.append(disclosure('more', `Details: ${rest.map((s) => s.title.text.toLowerCase()).join(', ')}`, body, false));
+        // The titles as the engine words them: changing their case in code would be wrong in a language with other rules (ADR-0015).
+        fragment.append(disclosure('more', `Details: ${rest.map((s) => s.title.text).join(', ')}`, body, false));
     }
     return fragment;
 }

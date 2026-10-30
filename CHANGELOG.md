@@ -41,6 +41,11 @@ uses [Semantic Versioning](https://semver.org/).
 
 ### Changed
 
+- **Section titles as the engine words them.** The toggle over the
+  sections after the instructions lists their titles as the engine
+  writes them ("Details: Also, Signers, Fee, Validity"), where it
+  lowercased them, which a translation could not survive.
+
 - **One percentage format.** A percentage in the instructions reads as
   the engine now writes every one, with the decimals it has and no more
   ("Max slippage: 1%", "Platform fee: 0.2%"), where it had two ("1.00%",
