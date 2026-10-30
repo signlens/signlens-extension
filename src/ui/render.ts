@@ -198,6 +198,14 @@ const PREFIX: Record<Bound, string> = {
 /** An amount as the engine's text writes it, as a node: the trust marker in it is a term. */
 function amountNode(amount: Amount): HTMLSpanElement {
     const node = element('span', 'amount');
+    // The engine's words for the amount, in the explanation's language; the
+    // window words it itself only for an engine that sends none.
+    if (amount.words) {
+        node.append(messageNode(amount.words));
+        mark(node, amount.asset.trust);
+        if (amount.note) node.append(' (', messageNode(amount.note), ')');
+        return node;
+    }
     const prefix = PREFIX[amount.bound];
     const asset = amount.asset;
     // A token without a symbol is named after "of": by its description when
@@ -267,6 +275,7 @@ export function messageNode(message: Message | null, className = ''): HTMLSpanEl
     for (const part of message?.parts ?? []) {
         if (part.value) node.append(isolated(valueNode(part.value), part.value.type === 'amount' || part.value.type === 'address'));
         else if (part.short) node.append(isolated(keyNode(part.short, true), true));
+        else if (part.emphasis) node.append(element('strong', 'emphasis', part.text));
         else node.append(part.text);
     }
     return node;

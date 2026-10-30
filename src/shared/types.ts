@@ -37,6 +37,8 @@ export interface Part {
     text: string;
     value?: Value;
     short?: Address;
+    /** Words to emphasise, where English writes capitals ("YOUR"). */
+    emphasis?: true;
 }
 
 /** Something the engine says: its identifier (`null` for a descriptor's words), its parts and their text. */
@@ -72,6 +74,8 @@ export interface Amount {
     asset: Asset;
     bound: Bound;
     note: Message | null;
+    /** The amount in the engine's words, its bound, quantity and token, without the trust marker or the note; absent from an engine before them. */
+    words?: Message;
 }
 
 export type Value =

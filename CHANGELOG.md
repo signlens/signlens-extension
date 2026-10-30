@@ -53,6 +53,14 @@ uses [Semantic Versioning](https://semver.org/).
 
 ### Changed
 
+- **Amounts and emphasis in the engine's words.** An amount reads as the
+  engine words it, in the explanation's language ("≥ 1.5 SOL", "an
+  unknown amount of the token held in …"), where the window rebuilt it
+  from its units, decimals and bound in English; its trust badge and note
+  stay the window's. Words the engine emphasises ("YOUR", "UNLIMITED",
+  "NO TIME LIMIT") are set in bold, as a language without capitals needs.
+  An explanation from an engine before these words reads as it did.
+
 - **A descriptor's words, named.** The extension reads the identifier
   the engine now gives each word a descriptor wrote, its program's
   address and the place in the descriptor

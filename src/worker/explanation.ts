@@ -182,6 +182,7 @@ function partAt(depth: number, max: number): Read<Part> {
         if (named !== undefined && short !== undefined) fail(path, 'names both a value and an address');
         if (named !== undefined) part.value = named;
         if (short !== undefined) part.short = short;
+        if (o.read('emphasis', (v, p) => (v === undefined ? false : flag(v, p)))) part.emphasis = true;
         return part;
     };
 }
@@ -222,12 +223,16 @@ function assetAt(depth: number): Read<Asset> {
 function amountAt(depth: number): Read<Amount> {
     return (value, path) => {
         const o = new Fields(value, path);
-        return {
+        const amount: Amount = {
             units: o.read('units', decimal),
             asset: o.read('asset', assetAt(depth)),
             bound: o.read('bound', oneOf(BOUNDS, 'a bound')),
             note: o.read('note', nullable(messageAt(depth, 500))),
         };
+        // An engine before an amount's words sends none; the window then words it.
+        const words = o.read('words', (v, p) => (v === undefined ? undefined : messageAt(depth + 1, 500)(v, p)));
+        if (words !== undefined) amount.words = words;
+        return amount;
     };
 }
 
