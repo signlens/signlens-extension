@@ -3,6 +3,7 @@
 // where it finds no other wallet to pass requests to, and which languages
 // the API explains in.
 
+import type { Row } from '../shared/model.ts';
 import type { ApiStatus } from '../shared/types.ts';
 
 /** Whether SignLens's scripts run on a page at `url`: https, or plain http on this machine. */
@@ -49,4 +50,19 @@ function languageNames(): (tag: string) => string {
     } catch {
         return (tag) => tag;
     }
+}
+
+/**
+ * What the window offers about the explanation's language (phase 4, D6):
+ * English, for one worded in another language, so that a doubted
+ * translation can be read against the source; the reader's own, for one
+ * asked for in English alone ("Show in English") when the browser's first
+ * language is another; else nothing.
+ */
+export function languageChoice(rows: readonly Row[], browser: readonly string[]): 'english' | 'reader' | null {
+    const worded = rows.flatMap((row) => (row.kind === 'explained' && row.locale ? [row.locale] : []));
+    if (worded.some((locale) => locale.used !== 'en')) return 'english';
+    const inEnglish = worded.length > 0 && worded.every((locale) => locale.asked.length === 1 && locale.asked[0] === 'en');
+    const first = browser[0] ?? 'en';
+    return inEnglish && !/^en(-|$)/i.test(first) ? 'reader' : null;
 }

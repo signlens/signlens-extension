@@ -81,7 +81,9 @@ function transactionsOf(payload: ExplainPayload): string[] | string {
  * row each, with `ownKeys` as the addresses the explanation calls "you":
  * the caller's to choose, never the page's (requests.ts). Once `stop`
  * aborts, the page went or stopped waiting: the calls under way stop, and
- * nothing more is asked, since no one is left to show it to.
+ * nothing more is asked, since no one is left to show it to. The
+ * explanation is asked for in `locale`, the browser's languages unless
+ * the window asked for English ("Show in English").
  */
 export async function explainTransactions(
     payload: ExplainPayload,
@@ -89,6 +91,7 @@ export async function explainTransactions(
     contacts: Contact[],
     ownKeys: string[],
     stop?: AbortSignal,
+    locale: string[] = readerLocales(),
 ): Promise<Entry> {
     const transactions = transactionsOf(payload);
     if (typeof transactions === 'string') return failure(transactions);
@@ -140,7 +143,7 @@ export async function explainTransactions(
             contacts: book.sent,
             ...(simulation ? { simulation: { failure: simulation.failure, units: simulation.units, changes: simulation.changes } } : {}),
             render: true,
-            locale: readerLocales(),
+            locale,
         };
         let document: EngineAnswer = await explainRemotely(config.apiUrl, bytes, request, stop);
         if (isError(document) && document.error.code === LIMITED) limitedAt = i + 1;

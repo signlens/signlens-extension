@@ -8,6 +8,11 @@ uses [Semantic Versioning](https://semver.org/).
 
 ### Added
 
+- **Show in English.** An explanation in another language has a "Show
+  in English" button under its verdict, which asks for it again in
+  English while the request waits, so that a translation in doubt can be
+  read against the source; "Show in your language" asks for it back.
+
 - **The languages it explains in.** The popup's status line names the
   languages the API explains in besides English, each with the day it
   was reviewed, as the API lists them, and no reviewer's name; the

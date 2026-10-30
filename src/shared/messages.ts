@@ -148,8 +148,8 @@ export type Message =
     /** The wallets of a tab, or, when the popup cannot tell its tab, of the latest page that announced any. */
     | Each<'wallet-list', { tabId: number | null }>
     | Each<'decision', { id: string; decision: Decision }>
-    /** "Try again" in the window of a request still waiting: explain it anew. */
-    | Each<'retry', { id: string }>
+    /** "Try again" in the window of a request still waiting: explain it anew, in English when `english` ("Show in English"). */
+    | Each<'retry', { id: string; english?: true }>
     /** Takes back a site's approval, which the worker alone writes (sites.ts). */
     | Each<'revoke', { origin: string; address: string }>;
 
@@ -214,7 +214,7 @@ const READERS: { [T in MessageType]: Reader<T> } = {
     'wallet-list': ({ tabId }) => ({ type: 'wallet-list', tabId: typeof tabId === 'number' ? tabId : null }),
     decision: ({ id, decision }) =>
         typeof id === 'string' && id ? { type: 'decision', id, decision: decision === 'continue' ? 'continue' : 'reject' } : null,
-    retry: ({ id }) => (typeof id === 'string' && id ? { type: 'retry', id } : null),
+    retry: ({ id, english }) => (typeof id === 'string' && id ? { type: 'retry', id, ...(english === true ? { english } : {}) } : null),
     revoke: ({ origin, address }) =>
         typeof origin === 'string' && typeof address === 'string' ? { type: 'revoke', origin, address } : null,
 };

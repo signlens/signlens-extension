@@ -143,11 +143,18 @@ async function answer(type: 'explain' | 'message', payload: ExplainPayload & Mes
         if ('reply' in who) return who.reply;
         ownKeys = who.ownKeys;
     }
-    const explain = async (using: Settings): Promise<Entry> => {
+    const explain = async (using: Settings, english = false): Promise<Entry> => {
         try {
             return type === 'message'
                 ? showMessage(payload)
-                : await explainTransactions(payload, using, parseContacts(using.contacts).contacts, ownKeys, flight.signal);
+                : await explainTransactions(
+                      payload,
+                      using,
+                      parseContacts(using.contacts).contacts,
+                      ownKeys,
+                      flight.signal,
+                      english ? ['en'] : undefined,
+                  );
         } catch (error) {
             return failure(describe(error));
         }
@@ -160,9 +167,10 @@ async function answer(type: 'explain' | 'message', payload: ExplainPayload & Mes
     let entry: HistoryEntry = { ...about(payload, config), rows: result.rows };
     // "Try again" in the window: explained anew with the settings as they
     // are now (an RPC changed since, say), for the same "you"; where it goes
-    // and how it is decided on stay as they were when it arrived.
-    const again = async (): Promise<HistoryEntry> => {
-        result = await explain(await settings().catch(() => config));
+    // and how it is decided on stay as they were when it arrived. "Show in
+    // English" is the same, the explanation asked for in English.
+    const again = async (english: boolean): Promise<HistoryEntry> => {
+        result = await explain(await settings().catch(() => config), english);
         await showBadge(worstVerdict(result.rows)).catch(logged('show the badge'));
         entry = { ...entry, rows: result.rows };
         return entry;

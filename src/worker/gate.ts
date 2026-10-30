@@ -50,8 +50,8 @@ const inFlight = new Map<number, InFlight>();
 const stops = new WeakMap<InFlight, AbortController>();
 /** Decisions awaited, by the id the window knows its request by. */
 const decisions = new Map<string, (outcome: Outcome) => void>();
-/** What "Try again" does for a request waiting in its window, by id; out of the map while it runs, so one runs at a time. */
-const retries = new Map<string, () => Promise<boolean>>();
+/** What "Try again" does for a request waiting in its window, by id, in English when asked; out of the map while it runs, so one runs at a time. */
+const retries = new Map<string, (english: boolean) => Promise<boolean>>();
 let nextRequest = 0;
 
 /**
@@ -116,19 +116,19 @@ export function decide(id: string, decision: Decision): boolean {
  * was: not for a request no longer waiting, or one already being explained
  * again.
  */
-export async function retry(id: string): Promise<boolean> {
+export async function retry(id: string, english = false): Promise<boolean> {
     const run = retries.get(id);
     if (!run) return false;
     retries.delete(id);
     try {
-        return await run();
+        return await run(english);
     } finally {
         if (decisions.has(id)) retries.set(id, run);
     }
 }
 
 /** Shows `entry` in the explanation's window, which `again` explains anew on "Try again": see `ask`. */
-export function askUser(entry: HistoryEntry, flight: InFlight, again?: () => Promise<HistoryEntry>): Promise<Outcome> {
+export function askUser(entry: HistoryEntry, flight: InFlight, again?: (english: boolean) => Promise<HistoryEntry>): Promise<Outcome> {
     return ask('confirm.html', entry, flight, again);
 }
 
@@ -145,7 +145,7 @@ export async function ask<P extends keyof Pending>(
     page: P,
     pending: Pending[P],
     flight: InFlight,
-    again?: () => Promise<Pending[P]>,
+    again?: (english: boolean) => Promise<Pending[P]>,
 ): Promise<Outcome> {
     if (flight.abandoned) return GONE;
     const left = flight.deadline - Date.now();
@@ -158,8 +158,8 @@ export async function ask<P extends keyof Pending>(
         flight.decide = resolve;
     });
     if (again) {
-        retries.set(id, async () => {
-            const next = await again();
+        retries.set(id, async (english) => {
+            const next = await again(english);
             if (!decisions.has(id)) return false;
             await putPending(page, id, next);
             return true;

@@ -4,7 +4,8 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
-import { languages, noWalletHint, runsOn } from './pages.ts';
+import type { Row } from '../shared/model.ts';
+import { languageChoice, languages, noWalletHint, runsOn } from './pages.ts';
 
 test('SignLens runs on https pages and on this machine over http, as the manifest says, and nowhere else', () => {
     for (const url of ['https://jup.ag/swap', 'http://localhost:5173/', 'http://127.0.0.1:8080/app', 'http://localhost/']) {
@@ -45,4 +46,15 @@ test('the popup names each language the API explains in and when it was reviewed
         'Explains in English, and in Simplified Chinese (zh-Hans), reviewed on 2026-11-02, when your browser asks for it.',
     );
     assert.match(languages([{ locale: 'xx', review: { kind: 'unreviewed' } }], names), /xx, not reviewed/);
+});
+
+test("the window offers English for a translated explanation, and the reader's language back", () => {
+    const row = (asked: string[], used: string) =>
+        ({ kind: 'explained', locale: { asked, used, direction: 'ltr', review: null, fallbacks: 0 } }) as unknown as Row;
+    assert.equal(languageChoice([row(['zh-CN', 'en'], 'zh-Hans')], ['zh-CN', 'en']), 'english');
+    assert.equal(languageChoice([row(['en'], 'en')], ['zh-CN', 'en']), 'reader');
+    assert.equal(languageChoice([row(['en'], 'en')], ['en-GB']), null);
+    // A browser whose language the engine lacks gets English, and nothing to switch to.
+    assert.equal(languageChoice([row(['de-DE'], 'en')], ['de-DE']), null);
+    assert.equal(languageChoice([{ kind: 'failed' } as unknown as Row], ['zh-CN']), null);
 });

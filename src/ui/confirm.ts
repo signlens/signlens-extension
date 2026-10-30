@@ -13,6 +13,7 @@ import { logged, methodName, withoutScheme } from '../shared/text.ts';
 import { type Rating, SEVERITIES, type Seen } from '../shared/types.ts';
 import { rowVerdictWord, summaryOf, worstVerdict } from '../shared/verdict.ts';
 import { byId } from './dom.ts';
+import { languageChoice } from './pages.ts';
 import { element, messageNode, originNode, renderRow } from './render.ts';
 import { goneAtOpen, noLongerPending, requestId, sendDecision } from './windows.ts';
 
@@ -233,6 +234,41 @@ function tryAgain(proceed: HTMLButtonElement, reject: HTMLButtonElement): HTMLEl
 }
 
 /**
+ * "Show in English" for an explanation worded in another language, "Show
+ * in your language" for one asked for in English: the worker explains the
+ * request anew in it while it waits, as "Try again" does, and the window
+ * shows what that made, the decision still to take.
+ */
+function languageSwitch(choice: 'english' | 'reader', proceed: HTMLButtonElement, reject: HTMLButtonElement): HTMLElement {
+    const english = choice === 'english';
+    const holder = element('p', 'language');
+    const button = element('button', 'small', english ? 'Show in English' : 'Show in your language');
+    button.type = 'button';
+    const status = element('span', 'note');
+    status.setAttribute('role', 'status');
+    holder.append(button, ' ', status);
+    button.addEventListener('click', () => {
+        if (button.getAttribute('aria-disabled') === 'true') return;
+        button.setAttribute('aria-disabled', 'true');
+        status.textContent = english ? 'Asking for it in English…' : 'Asking for it in your language…';
+        send({ type: 'retry', id: requestId, ...(english ? { english: true as const } : {}) })
+            .catch(() => false)
+            .then((again) => {
+                if (again) window.location.reload();
+                else {
+                    status.textContent = '';
+                    noLongerPending(
+                        'This request is no longer pending, so it was not explained again. Ask the site again if you still mean to sign.',
+                        proceed,
+                        reject,
+                    );
+                }
+            });
+    });
+    return holder;
+}
+
+/**
  * Escape rejects, as closing the window does, unless it has something
  * nearer to close: an open help term, toggle or run of bytes the focus is
  * on closes, and a box being typed in keeps the request, so a key pressed
@@ -289,6 +325,9 @@ async function start(): Promise<void> {
     const lead = list[at];
     const summary = lead ? bandLine(lead) : '';
     byId('band-summary').replaceChildren(summary, many ? ` (transaction ${at + 1} of ${list.length}; each is below)` : '');
+
+    const choice = languageChoice(list, navigator.languages);
+    if (choice) band.after(languageSwitch(choice, proceed, reject));
 
     // What the API or the RPC could not explain may be explained on a second try; a request refused as a whole would be refused again.
     const firstFailed = list.findIndex((row) => row.kind === 'failed' && row.scope === 'transaction');
