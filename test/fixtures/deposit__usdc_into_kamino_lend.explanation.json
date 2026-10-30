@@ -3,7 +3,7 @@
     {
       "instruction": 7,
       "summary": {
-        "id": null,
+        "id": "KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD/deposit_reserve_liquidity_and_obligation_collateral_v2-summary",
         "parts": [
           {
             "text": "Deposit "
@@ -168,7 +168,7 @@
     },
     {
       "message": {
-        "id": null,
+        "id": "KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD/deposit_reserve_liquidity_and_obligation_collateral_v2-effects-other",
         "parts": [
           {
             "text": "Credit the deposit to the obligation as collateral"
@@ -179,7 +179,7 @@
       "type": "other",
       "value": {
         "description": {
-          "id": null,
+          "id": "KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD/deposit_reserve_liquidity_and_obligation_collateral_v2-effects-other",
           "parts": [
             {
               "text": "Credit the deposit to the obligation as collateral"
@@ -345,7 +345,7 @@
     },
     {
       "message": {
-        "id": null,
+        "id": "KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD/refresh_reserve-effects-other",
         "parts": [
           {
             "text": "Update the reserve's oracle prices and accrued interest; no tokens move"
@@ -356,7 +356,7 @@
       "type": "other",
       "value": {
         "description": {
-          "id": null,
+          "id": "KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD/refresh_reserve-effects-other",
           "parts": [
             {
               "text": "Update the reserve's oracle prices and accrued interest; no tokens move"
@@ -368,7 +368,7 @@
     },
     {
       "message": {
-        "id": null,
+        "id": "KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD/refresh_reserve-effects-other",
         "parts": [
           {
             "text": "Update the reserve's oracle prices and accrued interest; no tokens move"
@@ -379,7 +379,7 @@
       "type": "other",
       "value": {
         "description": {
-          "id": null,
+          "id": "KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD/refresh_reserve-effects-other",
           "parts": [
             {
               "text": "Update the reserve's oracle prices and accrued interest; no tokens move"
@@ -391,7 +391,7 @@
     },
     {
       "message": {
-        "id": null,
+        "id": "KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD/refresh_reserve-effects-other",
         "parts": [
           {
             "text": "Update the reserve's oracle prices and accrued interest; no tokens move"
@@ -402,7 +402,7 @@
       "type": "other",
       "value": {
         "description": {
-          "id": null,
+          "id": "KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD/refresh_reserve-effects-other",
           "parts": [
             {
               "text": "Update the reserve's oracle prices and accrued interest; no tokens move"
@@ -414,7 +414,7 @@
     },
     {
       "message": {
-        "id": null,
+        "id": "KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD/refresh_obligation-effects-other",
         "parts": [
           {
             "text": "Recompute the obligation's collateral and debt values; no tokens move"
@@ -425,7 +425,7 @@
       "type": "other",
       "value": {
         "description": {
-          "id": null,
+          "id": "KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD/refresh_obligation-effects-other",
           "parts": [
             {
               "text": "Recompute the obligation's collateral and debt values; no tokens move"
@@ -522,7 +522,7 @@
       "fields": [
         {
           "help": {
-            "id": null,
+            "id": "KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD/glossary-deposit",
             "parts": [
               {
                 "text": "What you put into the reserve. It earns interest and backs what you borrow."
@@ -531,7 +531,7 @@
             "text": "What you put into the reserve. It earns interest and backs what you borrow."
           },
           "label": {
-            "id": null,
+            "id": "KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD/deposit_reserve_liquidity_and_obligation_collateral_v2-fields-args_liquidity_amount",
             "parts": [
               {
                 "text": "Deposit"
@@ -558,7 +558,7 @@
         },
         {
           "help": {
-            "id": null,
+            "id": "KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD/glossary-obligation",
             "parts": [
               {
                 "text": "Your account with Kamino Lend: what you have deposited and what you owe."
@@ -567,7 +567,7 @@
             "text": "Your account with Kamino Lend: what you have deposited and what you owe."
           },
           "label": {
-            "id": null,
+            "id": "KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD/deposit_reserve_liquidity_and_obligation_collateral_v2-fields-accounts_deposit_accounts_obligation",
             "parts": [
               {
                 "text": "Obligation"
@@ -589,7 +589,7 @@
         },
         {
           "help": {
-            "id": null,
+            "id": "KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD/glossary-reserve",
             "parts": [
               {
                 "text": "The pool for one token in the market. Deposits go in, loans come out."
@@ -598,7 +598,7 @@
             "text": "The pool for one token in the market. Deposits go in, loans come out."
           },
           "label": {
-            "id": null,
+            "id": "KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD/deposit_reserve_liquidity_and_obligation_collateral_v2-fields-accounts_deposit_accounts_reserve",
             "parts": [
               {
                 "text": "Reserve"
@@ -620,7 +620,7 @@
         },
         {
           "help": {
-            "id": null,
+            "id": "KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD/glossary-from_account",
             "parts": [
               {
                 "text": "The token account the tokens leave. It should be one of yours."
@@ -629,7 +629,7 @@
             "text": "The token account the tokens leave. It should be one of yours."
           },
           "label": {
-            "id": null,
+            "id": "KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD/deposit_reserve_liquidity_and_obligation_collateral_v2-fields-accounts_deposit_accounts_user_source_liquidity",
             "parts": [
               {
                 "text": "From account"
@@ -714,7 +714,7 @@
         "text": "Kamino Lend (descriptor reviewed 2026-09-29, upgradeable by GzFg…kzkW)"
       },
       "title": {
-        "id": null,
+        "id": "KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD/deposit_reserve_liquidity_and_obligation_collateral_v2-intent",
         "parts": [
           {
             "text": "Deposit collateral"
@@ -994,7 +994,7 @@
         },
         {
           "help": {
-            "id": null,
+            "id": "KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD/glossary-reserve",
             "parts": [
               {
                 "text": "The pool for one token in the market. Deposits go in, loans come out."
@@ -1025,7 +1025,7 @@
         },
         {
           "help": {
-            "id": null,
+            "id": "KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD/glossary-reserve",
             "parts": [
               {
                 "text": "The pool for one token in the market. Deposits go in, loans come out."
@@ -1056,7 +1056,7 @@
         },
         {
           "help": {
-            "id": null,
+            "id": "KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD/glossary-reserve",
             "parts": [
               {
                 "text": "The pool for one token in the market. Deposits go in, loans come out."
@@ -1087,7 +1087,7 @@
         },
         {
           "help": {
-            "id": null,
+            "id": "KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD/glossary-obligation",
             "parts": [
               {
                 "text": "Your account with Kamino Lend: what you have deposited and what you owe."
@@ -1494,7 +1494,7 @@
     }
   ],
   "summary": {
-    "id": null,
+    "id": "KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD/deposit_reserve_liquidity_and_obligation_collateral_v2-summary",
     "parts": [
       {
         "text": "Deposit "

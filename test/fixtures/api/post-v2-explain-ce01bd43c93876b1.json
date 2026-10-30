@@ -116,7 +116,7 @@
         {
           "instruction": 5,
           "summary": {
-            "id": null,
+            "id": "proVF4pMXVaYqmy4NjniPh4pqKNfMmsihgd4wdkCX3u/swap_tob_enhanced-summary-else",
             "parts": [
               {
                 "text": "Swap "
@@ -955,7 +955,7 @@
           "fields": [
             {
               "help": {
-                "id": null,
+                "id": "proVF4pMXVaYqmy4NjniPh4pqKNfMmsihgd4wdkCX3u/glossary-send",
                 "parts": [
                   {
                     "text": "What is swapped, after the commission is taken."
@@ -964,7 +964,7 @@
                 "text": "What is swapped, after the commission is taken."
               },
               "label": {
-                "id": null,
+                "id": "proVF4pMXVaYqmy4NjniPh4pqKNfMmsihgd4wdkCX3u/swap_tob_enhanced-fields-else-args_args_amount_in",
                 "parts": [
                   {
                     "text": "Send"
@@ -991,7 +991,7 @@
             },
             {
               "help": {
-                "id": null,
+                "id": "proVF4pMXVaYqmy4NjniPh4pqKNfMmsihgd4wdkCX3u/glossary-receive",
                 "parts": [
                   {
                     "text": "What comes back to you. Shown as at least when the program only guarantees a floor and fails below it."
@@ -1000,7 +1000,7 @@
                 "text": "What comes back to you. Shown as at least when the program only guarantees a floor and fails below it."
               },
               "label": {
-                "id": null,
+                "id": "proVF4pMXVaYqmy4NjniPh4pqKNfMmsihgd4wdkCX3u/swap_tob_enhanced-fields-else-derived_min_out",
                 "parts": [
                   {
                     "text": "Receive"
@@ -1027,7 +1027,7 @@
             },
             {
               "help": {
-                "id": null,
+                "id": "proVF4pMXVaYqmy4NjniPh4pqKNfMmsihgd4wdkCX3u/glossary-quoted",
                 "parts": [
                   {
                     "text": "What the site expected when it built the transaction. The Receive floor is this less the slippage allowance."
@@ -1036,7 +1036,7 @@
                 "text": "What the site expected when it built the transaction. The Receive floor is this less the slippage allowance."
               },
               "label": {
-                "id": null,
+                "id": "proVF4pMXVaYqmy4NjniPh4pqKNfMmsihgd4wdkCX3u/swap_tob_enhanced-fields-else-args_args_expect_amount_out",
                 "parts": [
                   {
                     "text": "Quoted"
@@ -1063,7 +1063,7 @@
             },
             {
               "help": {
-                "id": null,
+                "id": "proVF4pMXVaYqmy4NjniPh4pqKNfMmsihgd4wdkCX3u/glossary-max_slippage",
                 "parts": [
                   {
                     "text": "How far the executed price may move against you before the swap fails, as a percentage of the quote."
@@ -1072,7 +1072,7 @@
                 "text": "How far the executed price may move against you before the swap fails, as a percentage of the quote."
               },
               "label": {
-                "id": null,
+                "id": "proVF4pMXVaYqmy4NjniPh4pqKNfMmsihgd4wdkCX3u/swap_tob_enhanced-fields-else-args_args_slippage",
                 "parts": [
                   {
                     "text": "Max slippage"
@@ -1088,7 +1088,7 @@
             },
             {
               "help": {
-                "id": null,
+                "id": "proVF4pMXVaYqmy4NjniPh4pqKNfMmsihgd4wdkCX3u/glossary-commission",
                 "parts": [
                   {
                     "text": "The cut the site takes, as a percentage of the swap."
@@ -1097,7 +1097,7 @@
                 "text": "The cut the site takes, as a percentage of the swap."
               },
               "label": {
-                "id": null,
+                "id": "proVF4pMXVaYqmy4NjniPh4pqKNfMmsihgd4wdkCX3u/swap_tob_enhanced-fields-else-derived_commission_bps",
                 "parts": [
                   {
                     "text": "Commission"
@@ -1113,7 +1113,7 @@
             },
             {
               "help": {
-                "id": null,
+                "id": "proVF4pMXVaYqmy4NjniPh4pqKNfMmsihgd4wdkCX3u/glossary-commission_account",
                 "parts": [
                   {
                     "text": "Where the commission goes: an account of the site that built this transaction."
@@ -1122,7 +1122,7 @@
                 "text": "Where the commission goes: an account of the site that built this transaction."
               },
               "label": {
-                "id": null,
+                "id": "proVF4pMXVaYqmy4NjniPh4pqKNfMmsihgd4wdkCX3u/swap_tob_enhanced-fields-else-accounts_commission_account",
                 "parts": [
                   {
                     "text": "Commission account"
@@ -1144,7 +1144,7 @@
             },
             {
               "help": {
-                "id": null,
+                "id": "proVF4pMXVaYqmy4NjniPh4pqKNfMmsihgd4wdkCX3u/glossary-trim_rate_program_units",
                 "parts": [
                   {
                     "text": "A share of any surplus over the quote the router keeps, in its own units."
@@ -1153,7 +1153,7 @@
                 "text": "A share of any surplus over the quote the router keeps, in its own units."
               },
               "label": {
-                "id": null,
+                "id": "proVF4pMXVaYqmy4NjniPh4pqKNfMmsihgd4wdkCX3u/swap_tob_enhanced-fields-else-args_trim_rate",
                 "parts": [
                   {
                     "text": "Trim rate (program units)"
@@ -1169,7 +1169,7 @@
             },
             {
               "help": {
-                "id": null,
+                "id": "proVF4pMXVaYqmy4NjniPh4pqKNfMmsihgd4wdkCX3u/glossary-charge_rate_program_units",
                 "parts": [
                   {
                     "text": "A further fee rate the router applies, in its own units."
@@ -1178,7 +1178,7 @@
                 "text": "A further fee rate the router applies, in its own units."
               },
               "label": {
-                "id": null,
+                "id": "proVF4pMXVaYqmy4NjniPh4pqKNfMmsihgd4wdkCX3u/swap_tob_enhanced-fields-else-args_charge_rate",
                 "parts": [
                   {
                     "text": "Charge rate (program units)"
@@ -1194,7 +1194,7 @@
             },
             {
               "help": {
-                "id": null,
+                "id": "proVF4pMXVaYqmy4NjniPh4pqKNfMmsihgd4wdkCX3u/glossary-closes_the_temporary_token_account_afterwards_flag",
                 "parts": [
                   {
                     "text": "When set, the router closes the temporary token account it used and returns its rent."
@@ -1203,7 +1203,7 @@
                 "text": "When set, the router closes the temporary token account it used and returns its rent."
               },
               "label": {
-                "id": null,
+                "id": "proVF4pMXVaYqmy4NjniPh4pqKNfMmsihgd4wdkCX3u/swap_tob_enhanced-fields-else-derived_close_flag",
                 "parts": [
                   {
                     "text": "Closes the temporary token account afterwards (flag)"
@@ -1219,7 +1219,7 @@
             },
             {
               "help": {
-                "id": null,
+                "id": "proVF4pMXVaYqmy4NjniPh4pqKNfMmsihgd4wdkCX3u/glossary-route",
                 "parts": [
                   {
                     "text": "The path the swap takes: which markets, and what share of the amount goes through each."
@@ -1228,7 +1228,7 @@
                 "text": "The path the swap takes: which markets, and what share of the amount goes through each."
               },
               "label": {
-                "id": null,
+                "id": "proVF4pMXVaYqmy4NjniPh4pqKNfMmsihgd4wdkCX3u/swap_tob_enhanced-fields-else-args_args_routes",
                 "parts": [
                   {
                     "text": "Route"
@@ -1243,13 +1243,21 @@
                   {
                     "type": "words",
                     "value": {
-                      "id": null,
+                      "id": "proVF4pMXVaYqmy4NjniPh4pqKNfMmsihgd4wdkCX3u/swap_tob_enhanced-fields-else-args_args_routes-item",
                       "parts": [
                         {
                           "text": "RaydiumClmmSwapV2",
                           "value": {
-                            "type": "text",
-                            "value": "RaydiumClmmSwapV2"
+                            "type": "words",
+                            "value": {
+                              "id": "proVF4pMXVaYqmy4NjniPh4pqKNfMmsihgd4wdkCX3u/enum-dex-raydium_clmm_swap_v2",
+                              "parts": [
+                                {
+                                  "text": "RaydiumClmmSwapV2"
+                                }
+                              ],
+                              "text": "RaydiumClmmSwapV2"
+                            }
                           }
                         },
                         {
@@ -1282,13 +1290,21 @@
                   {
                     "type": "words",
                     "value": {
-                      "id": null,
+                      "id": "proVF4pMXVaYqmy4NjniPh4pqKNfMmsihgd4wdkCX3u/swap_tob_enhanced-fields-else-args_args_routes-item",
                       "parts": [
                         {
                           "text": "MeteoraDlmmSwap2",
                           "value": {
-                            "type": "text",
-                            "value": "MeteoraDlmmSwap2"
+                            "type": "words",
+                            "value": {
+                              "id": "proVF4pMXVaYqmy4NjniPh4pqKNfMmsihgd4wdkCX3u/enum-dex-meteora_dlmm_swap2",
+                              "parts": [
+                                {
+                                  "text": "MeteoraDlmmSwap2"
+                                }
+                              ],
+                              "text": "MeteoraDlmmSwap2"
+                            }
                           }
                         },
                         {
@@ -1321,13 +1337,21 @@
                   {
                     "type": "words",
                     "value": {
-                      "id": null,
+                      "id": "proVF4pMXVaYqmy4NjniPh4pqKNfMmsihgd4wdkCX3u/swap_tob_enhanced-fields-else-args_args_routes-item",
                       "parts": [
                         {
                           "text": "RaydiumClmmSwapV2",
                           "value": {
-                            "type": "text",
-                            "value": "RaydiumClmmSwapV2"
+                            "type": "words",
+                            "value": {
+                              "id": "proVF4pMXVaYqmy4NjniPh4pqKNfMmsihgd4wdkCX3u/enum-dex-raydium_clmm_swap_v2",
+                              "parts": [
+                                {
+                                  "text": "RaydiumClmmSwapV2"
+                                }
+                              ],
+                              "text": "RaydiumClmmSwapV2"
+                            }
                           }
                         },
                         {
@@ -1360,13 +1384,21 @@
                   {
                     "type": "words",
                     "value": {
-                      "id": null,
+                      "id": "proVF4pMXVaYqmy4NjniPh4pqKNfMmsihgd4wdkCX3u/swap_tob_enhanced-fields-else-args_args_routes-item",
                       "parts": [
                         {
                           "text": "ByrealClmm3",
                           "value": {
-                            "type": "text",
-                            "value": "ByrealClmm3"
+                            "type": "words",
+                            "value": {
+                              "id": "proVF4pMXVaYqmy4NjniPh4pqKNfMmsihgd4wdkCX3u/enum-dex-byreal_clmm3",
+                              "parts": [
+                                {
+                                  "text": "ByrealClmm3"
+                                }
+                              ],
+                              "text": "ByrealClmm3"
+                            }
                           }
                         },
                         {
@@ -1401,7 +1433,7 @@
             },
             {
               "help": {
-                "id": null,
+                "id": "proVF4pMXVaYqmy4NjniPh4pqKNfMmsihgd4wdkCX3u/glossary-from_account",
                 "parts": [
                   {
                     "text": "The token account the tokens leave. It should be one of yours."
@@ -1410,7 +1442,7 @@
                 "text": "The token account the tokens leave. It should be one of yours."
               },
               "label": {
-                "id": null,
+                "id": "proVF4pMXVaYqmy4NjniPh4pqKNfMmsihgd4wdkCX3u/swap_tob_enhanced-fields-else-accounts_source_token_account",
                 "parts": [
                   {
                     "text": "From account"
@@ -1450,7 +1482,7 @@
             },
             {
               "help": {
-                "id": null,
+                "id": "proVF4pMXVaYqmy4NjniPh4pqKNfMmsihgd4wdkCX3u/glossary-to_account",
                 "parts": [
                   {
                     "text": "The token account that receives the tokens. Check it is yours, unless you mean to pay someone else."
@@ -1459,7 +1491,7 @@
                 "text": "The token account that receives the tokens. Check it is yours, unless you mean to pay someone else."
               },
               "label": {
-                "id": null,
+                "id": "proVF4pMXVaYqmy4NjniPh4pqKNfMmsihgd4wdkCX3u/swap_tob_enhanced-fields-else-accounts_destination_token_account",
                 "parts": [
                   {
                     "text": "To account"
@@ -1566,7 +1598,7 @@
             "text": "OKX DEX Router (descriptor reviewed 2026-10-27, upgradeable by CjoV…N1Mj)"
           },
           "title": {
-            "id": null,
+            "id": "proVF4pMXVaYqmy4NjniPh4pqKNfMmsihgd4wdkCX3u/swap_tob_enhanced-intent",
             "parts": [
               {
                 "text": "Swap"
@@ -1678,7 +1710,7 @@
             },
             {
               "help": {
-                "id": null,
+                "id": "proVF4pMXVaYqmy4NjniPh4pqKNfMmsihgd4wdkCX3u/glossary-token_account",
                 "parts": [
                   {
                     "text": "An account that holds one token for one wallet."
@@ -1709,7 +1741,7 @@
             },
             {
               "help": {
-                "id": null,
+                "id": "proVF4pMXVaYqmy4NjniPh4pqKNfMmsihgd4wdkCX3u/glossary-owner",
                 "parts": [
                   {
                     "text": "The wallet that controls the account."
@@ -1748,7 +1780,7 @@
             },
             {
               "help": {
-                "id": null,
+                "id": "proVF4pMXVaYqmy4NjniPh4pqKNfMmsihgd4wdkCX3u/glossary-mint",
                 "parts": [
                   {
                     "text": "The address that identifies the token itself, as opposed to an account holding some of it."
@@ -1794,7 +1826,7 @@
             },
             {
               "help": {
-                "id": null,
+                "id": "proVF4pMXVaYqmy4NjniPh4pqKNfMmsihgd4wdkCX3u/glossary-rent_paid_by",
                 "parts": [
                   {
                     "text": "Who pays the small deposit that keeps a new account alive on chain. It comes back when the account is closed."
@@ -1833,7 +1865,7 @@
             },
             {
               "help": {
-                "id": null,
+                "id": "proVF4pMXVaYqmy4NjniPh4pqKNfMmsihgd4wdkCX3u/glossary-token_program",
                 "parts": [
                   {
                     "text": "The program that manages this token: SPL Token or Token-2022."

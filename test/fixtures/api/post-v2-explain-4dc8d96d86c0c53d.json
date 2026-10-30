@@ -91,7 +91,7 @@
         {
           "instruction": 4,
           "summary": {
-            "id": null,
+            "id": "DF1ow4tspfHX9JwWJsAb9epbkA8hmpSEAtxXy1V27QBH/wrap_sol-summary-else",
             "parts": [
               {
                 "text": "Wrap "
@@ -380,7 +380,7 @@
         },
         {
           "message": {
-            "id": null,
+            "id": "DF1ow4tspfHX9JwWJsAb9epbkA8hmpSEAtxXy1V27QBH/wrap_sol-effects-other",
             "parts": [
               {
                 "text": "Create the wrapped SOL account first if it does not exist, as the sender's associated token account and at the sender's cost"
@@ -391,7 +391,7 @@
           "type": "other",
           "value": {
             "description": {
-              "id": null,
+              "id": "DF1ow4tspfHX9JwWJsAb9epbkA8hmpSEAtxXy1V27QBH/wrap_sol-effects-other",
               "parts": [
                 {
                   "text": "Create the wrapped SOL account first if it does not exist, as the sender's associated token account and at the sender's cost"
@@ -1146,7 +1146,7 @@
           "fields": [
             {
               "help": {
-                "id": null,
+                "id": "DF1ow4tspfHX9JwWJsAb9epbkA8hmpSEAtxXy1V27QBH/glossary-amount",
                 "parts": [
                   {
                     "text": "What moves."
@@ -1155,7 +1155,7 @@
                 "text": "What moves."
               },
               "label": {
-                "id": null,
+                "id": "DF1ow4tspfHX9JwWJsAb9epbkA8hmpSEAtxXy1V27QBH/wrap_sol-fields-args_lamports",
                 "parts": [
                   {
                     "text": "Amount"
@@ -1182,7 +1182,7 @@
             },
             {
               "help": {
-                "id": null,
+                "id": "DF1ow4tspfHX9JwWJsAb9epbkA8hmpSEAtxXy1V27QBH/glossary-from",
                 "parts": [
                   {
                     "text": "The wallet the SOL leaves."
@@ -1191,7 +1191,7 @@
                 "text": "The wallet the SOL leaves."
               },
               "label": {
-                "id": null,
+                "id": "DF1ow4tspfHX9JwWJsAb9epbkA8hmpSEAtxXy1V27QBH/wrap_sol-fields-accounts_from",
                 "parts": [
                   {
                     "text": "From"
@@ -1213,7 +1213,7 @@
             },
             {
               "help": {
-                "id": null,
+                "id": "DF1ow4tspfHX9JwWJsAb9epbkA8hmpSEAtxXy1V27QBH/glossary-wrapped_sol_account",
                 "parts": [
                   {
                     "text": "A token account holding SOL as a token (wSOL), so programs can treat it like any other token."
@@ -1222,7 +1222,7 @@
                 "text": "A token account holding SOL as a token (wSOL), so programs can treat it like any other token."
               },
               "label": {
-                "id": null,
+                "id": "DF1ow4tspfHX9JwWJsAb9epbkA8hmpSEAtxXy1V27QBH/wrap_sol-fields-accounts_wrapped_sol_associated_token_account",
                 "parts": [
                   {
                     "text": "Wrapped SOL account"
@@ -1289,7 +1289,7 @@
             "text": "DFlow Aggregator (descriptor reviewed 2026-10-17, upgradeable by 9uo2…wgsh)"
           },
           "title": {
-            "id": null,
+            "id": "DF1ow4tspfHX9JwWJsAb9epbkA8hmpSEAtxXy1V27QBH/wrap_sol-intent",
             "parts": [
               {
                 "text": "Wrap SOL"

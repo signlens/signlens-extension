@@ -43,8 +43,13 @@ export const EXPLANATION_SCHEMA = 'signlens-explanation/2';
 const MAX_DEPTH = 16;
 /** How many parts a message may hold. */
 const MAX_PARTS = 200;
-/** A message's identifier, as the engine's Fluent files name it (`effect-send`, `label-total`). */
-const MESSAGE_ID = /^[a-z][a-z0-9-]*(?:\.[a-z][a-z0-9-]*)?$/;
+/**
+ * A message's identifier: the engine's, as its Fluent files name it (`effect-send`, `label-total.help`), or a
+ * descriptor's, its program's address and the identifier of its place there (`JUP6…TaV4/route_v2-summary-absent`).
+ */
+const MESSAGE_ID = /^(?:[1-9A-HJ-NP-Za-km-z]{32,44}\/[a-z][a-z0-9_.-]*|[a-z][a-z0-9-]*(?:\.[a-z][a-z0-9-]*)?)$/;
+/** The longest identifier: a program's address and the engine's longest identifier of a place, 160 bytes. */
+const MAX_ID = 205;
 /** How many items a list of findings, sections, fields or effects may hold. */
 const MAX_ITEMS = 500;
 /** The longest string, other than the full text. */
@@ -155,7 +160,7 @@ function messageAt(depth: number, max = MAX_TEXT): Read<Message> {
     return (value, path) => {
         if (depth >= MAX_DEPTH) fail(path, 'is nested too deep');
         const o = new Fields(value, path);
-        const id = o.read('id', nullable(text(100)));
+        const id = o.read('id', nullable(text(MAX_ID)));
         if (id !== null && !MESSAGE_ID.test(id)) fail(`${path}.id`, `${quote(id)} is not a message identifier`);
         return {
             id,

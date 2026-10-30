@@ -226,7 +226,7 @@
               "type": "authority_change",
               "value": {
                 "authority": {
-                  "id": null,
+                  "id": "dRiftyHA39MWEi3m9aunc5MzRF1JYuBsbn6VPcn33UH/update_admin-effects-authority_change-accounts_state-authority",
                   "parts": [
                     {
                       "text": "admin"
@@ -294,7 +294,7 @@
           "type": "authority_change",
           "value": {
             "authority": {
-              "id": null,
+              "id": "dRiftyHA39MWEi3m9aunc5MzRF1JYuBsbn6VPcn33UH/update_admin-effects-authority_change-accounts_state-authority",
               "parts": [
                 {
                   "text": "admin"
@@ -744,7 +744,7 @@
           "fields": [
             {
               "help": {
-                "id": null,
+                "id": "dRiftyHA39MWEi3m9aunc5MzRF1JYuBsbn6VPcn33UH/glossary-new_admin",
                 "parts": [
                   {
                     "text": "The account that becomes Drift's admin. The admin can add markets, set their oracles and collateral weights, and raise the limits on withdrawals, over every user's deposits."
@@ -753,7 +753,7 @@
                 "text": "The account that becomes Drift's admin. The admin can add markets, set their oracles and collateral weights, and raise the limits on withdrawals, over every user's deposits."
               },
               "label": {
-                "id": null,
+                "id": "dRiftyHA39MWEi3m9aunc5MzRF1JYuBsbn6VPcn33UH/update_admin-fields-args_admin",
                 "parts": [
                   {
                     "text": "New admin"
@@ -775,7 +775,7 @@
             },
             {
               "help": {
-                "id": null,
+                "id": "dRiftyHA39MWEi3m9aunc5MzRF1JYuBsbn6VPcn33UH/glossary-current_admin",
                 "parts": [
                   {
                     "text": "The account that is Drift's admin until this hands it over; for Drift, a multisig vault."
@@ -784,7 +784,7 @@
                 "text": "The account that is Drift's admin until this hands it over; for Drift, a multisig vault."
               },
               "label": {
-                "id": null,
+                "id": "dRiftyHA39MWEi3m9aunc5MzRF1JYuBsbn6VPcn33UH/update_admin-fields-accounts_admin",
                 "parts": [
                   {
                     "text": "Current admin"
@@ -834,7 +834,7 @@
             },
             {
               "help": {
-                "id": null,
+                "id": "dRiftyHA39MWEi3m9aunc5MzRF1JYuBsbn6VPcn33UH/glossary-drift_state",
                 "parts": [
                   {
                     "text": "The account that holds Drift's protocol-wide settings, the admin among them."
@@ -843,7 +843,7 @@
                 "text": "The account that holds Drift's protocol-wide settings, the admin among them."
               },
               "label": {
-                "id": null,
+                "id": "dRiftyHA39MWEi3m9aunc5MzRF1JYuBsbn6VPcn33UH/update_admin-fields-accounts_state",
                 "parts": [
                   {
                     "text": "Drift state"
@@ -911,7 +911,7 @@
             "text": "Drift Protocol v2 (descriptor reviewed 2026-10-25, upgradeable by 8jj7…BMai)"
           },
           "title": {
-            "id": null,
+            "id": "dRiftyHA39MWEi3m9aunc5MzRF1JYuBsbn6VPcn33UH/update_admin-intent",
             "parts": [
               {
                 "text": "Change the protocol admin"
@@ -1148,7 +1148,7 @@
           "fields": [
             {
               "help": {
-                "id": null,
+                "id": "dRiftyHA39MWEi3m9aunc5MzRF1JYuBsbn6VPcn33UH/glossary-new_admin",
                 "parts": [
                   {
                     "text": "The account that becomes Drift's admin. The admin can add markets, set their oracles and collateral weights, and raise the limits on withdrawals, over every user's deposits."
@@ -1157,7 +1157,7 @@
                 "text": "The account that becomes Drift's admin. The admin can add markets, set their oracles and collateral weights, and raise the limits on withdrawals, over every user's deposits."
               },
               "label": {
-                "id": null,
+                "id": "dRiftyHA39MWEi3m9aunc5MzRF1JYuBsbn6VPcn33UH/update_admin-fields-args_admin",
                 "parts": [
                   {
                     "text": "New admin"
@@ -1179,7 +1179,7 @@
             },
             {
               "help": {
-                "id": null,
+                "id": "dRiftyHA39MWEi3m9aunc5MzRF1JYuBsbn6VPcn33UH/glossary-current_admin",
                 "parts": [
                   {
                     "text": "The account that is Drift's admin until this hands it over; for Drift, a multisig vault."
@@ -1188,7 +1188,7 @@
                 "text": "The account that is Drift's admin until this hands it over; for Drift, a multisig vault."
               },
               "label": {
-                "id": null,
+                "id": "dRiftyHA39MWEi3m9aunc5MzRF1JYuBsbn6VPcn33UH/update_admin-fields-accounts_admin",
                 "parts": [
                   {
                     "text": "Current admin"
@@ -1238,7 +1238,7 @@
             },
             {
               "help": {
-                "id": null,
+                "id": "dRiftyHA39MWEi3m9aunc5MzRF1JYuBsbn6VPcn33UH/glossary-drift_state",
                 "parts": [
                   {
                     "text": "The account that holds Drift's protocol-wide settings, the admin among them."
@@ -1247,7 +1247,7 @@
                 "text": "The account that holds Drift's protocol-wide settings, the admin among them."
               },
               "label": {
-                "id": null,
+                "id": "dRiftyHA39MWEi3m9aunc5MzRF1JYuBsbn6VPcn33UH/update_admin-fields-accounts_state",
                 "parts": [
                   {
                     "text": "Drift state"
@@ -1315,7 +1315,7 @@
             "text": "Drift Protocol v2 (descriptor reviewed 2026-10-25, upgradeable by 8jj7…BMai)"
           },
           "title": {
-            "id": null,
+            "id": "dRiftyHA39MWEi3m9aunc5MzRF1JYuBsbn6VPcn33UH/update_admin-intent",
             "parts": [
               {
                 "text": "Change the protocol admin"

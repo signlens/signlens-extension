@@ -41,6 +41,12 @@ uses [Semantic Versioning](https://semver.org/).
 
 ### Changed
 
+- **A descriptor's words, named.** The extension reads the identifier
+  the engine now gives each word a descriptor wrote, its program's
+  address and the place in the descriptor
+  (`JUP6…TaV4/route_v2-summary-absent`), where it would have refused the
+  whole explanation as one it cannot read. Nothing on screen changes.
+
 - **The engine's help for its labels.** The help a fixed label opens
   (the fee's parts, the signers, the compute budget's settings, a token
   account's mint) is the engine's, sent with each field, where the

@@ -18,7 +18,7 @@
         {
           "instruction": 3,
           "summary": {
-            "id": null,
+            "id": "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P/buy_exact_sol_in-summary",
             "parts": [
               {
                 "text": "Buy "
@@ -592,7 +592,7 @@
           "fields": [
             {
               "help": {
-                "id": null,
+                "id": "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P/glossary-pay_up_to",
                 "parts": [
                   {
                     "text": "The budget: the program spends up to this much to buy what it can at the current price."
@@ -601,7 +601,7 @@
                 "text": "The budget: the program spends up to this much to buy what it can at the current price."
               },
               "label": {
-                "id": null,
+                "id": "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P/buy_exact_sol_in-fields-derived_budget",
                 "parts": [
                   {
                     "text": "Pay up to"
@@ -628,7 +628,7 @@
             },
             {
               "help": {
-                "id": null,
+                "id": "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P/glossary-receive",
                 "parts": [
                   {
                     "text": "What comes back to you. Shown as at least when the program only guarantees a floor and fails below it."
@@ -637,7 +637,7 @@
                 "text": "What comes back to you. Shown as at least when the program only guarantees a floor and fails below it."
               },
               "label": {
-                "id": null,
+                "id": "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P/buy_exact_sol_in-fields-derived_min_tokens",
                 "parts": [
                   {
                     "text": "Receive"
@@ -672,7 +672,7 @@
             },
             {
               "help": {
-                "id": null,
+                "id": "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P/glossary-token",
                 "parts": [
                   {
                     "text": "The token being bought or sold."
@@ -681,7 +681,7 @@
                 "text": "The token being bought or sold."
               },
               "label": {
-                "id": null,
+                "id": "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P/buy_exact_sol_in-fields-accounts_mint",
                 "parts": [
                   {
                     "text": "Token"
@@ -703,7 +703,7 @@
             },
             {
               "help": {
-                "id": null,
+                "id": "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P/glossary-bonding_curve",
                 "parts": [
                   {
                     "text": "The market for a token that has not graduated to a pool yet. Its price rises with every buy along a fixed curve."
@@ -712,7 +712,7 @@
                 "text": "The market for a token that has not graduated to a pool yet. Its price rises with every buy along a fixed curve."
               },
               "label": {
-                "id": null,
+                "id": "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P/buy_exact_sol_in-fields-accounts_bonding_curve",
                 "parts": [
                   {
                     "text": "Bonding curve"
@@ -727,7 +727,7 @@
                   "address": "DmbshQGYgnRnC7XQtQeZ5doBfR2opB15FWKWNUEpyUbo",
                   "is_self": false,
                   "label": {
-                    "id": null,
+                    "id": "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P/buy_exact_sol_in-label-accounts_bonding_curve",
                     "parts": [
                       {
                         "text": "Pump.fun bonding curve for this token"
@@ -742,7 +742,7 @@
             },
             {
               "help": {
-                "id": null,
+                "id": "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P/glossary-token_account",
                 "parts": [
                   {
                     "text": "Your account for this token."
@@ -751,7 +751,7 @@
                 "text": "Your account for this token."
               },
               "label": {
-                "id": null,
+                "id": "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P/buy_exact_sol_in-fields-accounts_associated_user",
                 "parts": [
                   {
                     "text": "Token account"
@@ -866,7 +866,7 @@
             "text": "Pump.fun (descriptor reviewed 2026-10-18, upgradeable by 7gZu…jFr8)"
           },
           "title": {
-            "id": null,
+            "id": "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P/buy_exact_sol_in-intent",
             "parts": [
               {
                 "text": "Buy"
@@ -1457,7 +1457,7 @@
         }
       ],
       "summary": {
-        "id": null,
+        "id": "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P/buy_exact_sol_in-summary",
         "parts": [
           {
             "text": "Buy "
