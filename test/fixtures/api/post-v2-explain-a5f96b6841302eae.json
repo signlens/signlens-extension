@@ -95,6 +95,7 @@
                     },
                     "bound": "exact",
                     "note": null,
+                    "note_words": null,
                     "units": "1855569",
                     "words": {
                       "id": "amount",
@@ -124,7 +125,8 @@
                   "is_self": false,
                   "label": null,
                   "label_trust": "fact",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": null
                 },
                 "text": "91rj…BXHD"
               }
@@ -154,6 +156,7 @@
                     },
                     "bound": "exact",
                     "note": null,
+                    "note_words": null,
                     "units": "151360479993",
                     "words": {
                       "id": "amount",
@@ -191,6 +194,7 @@
                     },
                     "bound": "at_least",
                     "note": null,
+                    "note_words": null,
                     "units": "80334153",
                     "words": {
                       "id": "amount",
@@ -242,6 +246,7 @@
                     },
                     "bound": "exact",
                     "note": null,
+                    "note_words": null,
                     "units": "1855569",
                     "words": {
                       "id": "amount",
@@ -282,7 +287,45 @@
                       "text": "Your wallet"
                     },
                     "label_trust": "verified",
-                    "stand_in": null
+                    "stand_in": null,
+                    "words": {
+                      "id": "address-labelled",
+                      "parts": [
+                        {
+                          "text": "Your wallet",
+                          "value": {
+                            "type": "words",
+                            "value": {
+                              "id": "accounts-your-wallet",
+                              "parts": [
+                                {
+                                  "text": "Your wallet"
+                                }
+                              ],
+                              "text": "Your wallet"
+                            }
+                          }
+                        },
+                        {
+                          "text": " ("
+                        },
+                        {
+                          "short": {
+                            "address": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR",
+                            "is_self": true,
+                            "label": null,
+                            "label_trust": "verified",
+                            "stand_in": null,
+                            "words": null
+                          },
+                          "text": "CVJ6…Q3bR"
+                        },
+                        {
+                          "text": ")"
+                        }
+                      ],
+                      "text": "Your wallet (CVJ6…Q3bR)"
+                    }
                   }
                 }
               },
@@ -298,7 +341,8 @@
                     "is_self": false,
                     "label": null,
                     "label_trust": "fact",
-                    "stand_in": null
+                    "stand_in": null,
+                    "words": null
                   }
                 }
               }
@@ -317,6 +361,7 @@
               },
               "bound": "exact",
               "note": null,
+              "note_words": null,
               "units": "1855569",
               "words": {
                 "id": "amount",
@@ -348,14 +393,53 @@
                 "text": "Your wallet"
               },
               "label_trust": "verified",
-              "stand_in": null
+              "stand_in": null,
+              "words": {
+                "id": "address-labelled",
+                "parts": [
+                  {
+                    "text": "Your wallet",
+                    "value": {
+                      "type": "words",
+                      "value": {
+                        "id": "accounts-your-wallet",
+                        "parts": [
+                          {
+                            "text": "Your wallet"
+                          }
+                        ],
+                        "text": "Your wallet"
+                      }
+                    }
+                  },
+                  {
+                    "text": " ("
+                  },
+                  {
+                    "short": {
+                      "address": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR",
+                      "is_self": true,
+                      "label": null,
+                      "label_trust": "verified",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "CVJ6…Q3bR"
+                  },
+                  {
+                    "text": ")"
+                  }
+                ],
+                "text": "Your wallet (CVJ6…Q3bR)"
+              }
             },
             "to": {
               "address": "91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD",
               "is_self": false,
               "label": null,
               "label_trust": "fact",
-              "stand_in": null
+              "stand_in": null,
+              "words": null
             }
           }
         },
@@ -380,6 +464,7 @@
                     },
                     "bound": "exact",
                     "note": null,
+                    "note_words": null,
                     "units": "151360479993",
                     "words": {
                       "id": "amount",
@@ -420,7 +505,45 @@
                       "text": "Your wallet"
                     },
                     "label_trust": "verified",
-                    "stand_in": null
+                    "stand_in": null,
+                    "words": {
+                      "id": "address-labelled",
+                      "parts": [
+                        {
+                          "text": "Your wallet",
+                          "value": {
+                            "type": "words",
+                            "value": {
+                              "id": "accounts-your-wallet",
+                              "parts": [
+                                {
+                                  "text": "Your wallet"
+                                }
+                              ],
+                              "text": "Your wallet"
+                            }
+                          }
+                        },
+                        {
+                          "text": " ("
+                        },
+                        {
+                          "short": {
+                            "address": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR",
+                            "is_self": true,
+                            "label": null,
+                            "label_trust": "verified",
+                            "stand_in": null,
+                            "words": null
+                          },
+                          "text": "CVJ6…Q3bR"
+                        },
+                        {
+                          "text": ")"
+                        }
+                      ],
+                      "text": "Your wallet (CVJ6…Q3bR)"
+                    }
                   }
                 }
               },
@@ -448,7 +571,49 @@
                       "text": "OKX DEX Router"
                     },
                     "label_trust": "verified",
-                    "stand_in": null
+                    "stand_in": null,
+                    "words": {
+                      "id": "address-labelled",
+                      "parts": [
+                        {
+                          "text": "OKX DEX Router",
+                          "value": {
+                            "type": "words",
+                            "value": {
+                              "id": "accounts-name",
+                              "parts": [
+                                {
+                                  "text": "OKX DEX Router",
+                                  "value": {
+                                    "type": "text",
+                                    "value": "OKX DEX Router"
+                                  }
+                                }
+                              ],
+                              "text": "OKX DEX Router"
+                            }
+                          }
+                        },
+                        {
+                          "text": " ("
+                        },
+                        {
+                          "short": {
+                            "address": "proVF4pMXVaYqmy4NjniPh4pqKNfMmsihgd4wdkCX3u",
+                            "is_self": false,
+                            "label": null,
+                            "label_trust": "verified",
+                            "stand_in": null,
+                            "words": null
+                          },
+                          "text": "proV…CX3u"
+                        },
+                        {
+                          "text": ")"
+                        }
+                      ],
+                      "text": "OKX DEX Router (proV…CX3u)"
+                    }
                   }
                 }
               }
@@ -467,6 +632,7 @@
               },
               "bound": "exact",
               "note": null,
+              "note_words": null,
               "units": "151360479993",
               "words": {
                 "id": "amount",
@@ -498,7 +664,45 @@
                 "text": "Your wallet"
               },
               "label_trust": "verified",
-              "stand_in": null
+              "stand_in": null,
+              "words": {
+                "id": "address-labelled",
+                "parts": [
+                  {
+                    "text": "Your wallet",
+                    "value": {
+                      "type": "words",
+                      "value": {
+                        "id": "accounts-your-wallet",
+                        "parts": [
+                          {
+                            "text": "Your wallet"
+                          }
+                        ],
+                        "text": "Your wallet"
+                      }
+                    }
+                  },
+                  {
+                    "text": " ("
+                  },
+                  {
+                    "short": {
+                      "address": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR",
+                      "is_self": true,
+                      "label": null,
+                      "label_trust": "verified",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "CVJ6…Q3bR"
+                  },
+                  {
+                    "text": ")"
+                  }
+                ],
+                "text": "Your wallet (CVJ6…Q3bR)"
+              }
             },
             "to": {
               "address": "proVF4pMXVaYqmy4NjniPh4pqKNfMmsihgd4wdkCX3u",
@@ -517,7 +721,49 @@
                 "text": "OKX DEX Router"
               },
               "label_trust": "verified",
-              "stand_in": null
+              "stand_in": null,
+              "words": {
+                "id": "address-labelled",
+                "parts": [
+                  {
+                    "text": "OKX DEX Router",
+                    "value": {
+                      "type": "words",
+                      "value": {
+                        "id": "accounts-name",
+                        "parts": [
+                          {
+                            "text": "OKX DEX Router",
+                            "value": {
+                              "type": "text",
+                              "value": "OKX DEX Router"
+                            }
+                          }
+                        ],
+                        "text": "OKX DEX Router"
+                      }
+                    }
+                  },
+                  {
+                    "text": " ("
+                  },
+                  {
+                    "short": {
+                      "address": "proVF4pMXVaYqmy4NjniPh4pqKNfMmsihgd4wdkCX3u",
+                      "is_self": false,
+                      "label": null,
+                      "label_trust": "verified",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "proV…CX3u"
+                  },
+                  {
+                    "text": ")"
+                  }
+                ],
+                "text": "OKX DEX Router (proV…CX3u)"
+              }
             }
           }
         },
@@ -542,6 +788,7 @@
                     },
                     "bound": "at_least",
                     "note": null,
+                    "note_words": null,
                     "units": "80334153",
                     "words": {
                       "id": "amount",
@@ -582,7 +829,45 @@
                       "text": "Your wallet"
                     },
                     "label_trust": "verified",
-                    "stand_in": null
+                    "stand_in": null,
+                    "words": {
+                      "id": "address-labelled",
+                      "parts": [
+                        {
+                          "text": "Your wallet",
+                          "value": {
+                            "type": "words",
+                            "value": {
+                              "id": "accounts-your-wallet",
+                              "parts": [
+                                {
+                                  "text": "Your wallet"
+                                }
+                              ],
+                              "text": "Your wallet"
+                            }
+                          }
+                        },
+                        {
+                          "text": " ("
+                        },
+                        {
+                          "short": {
+                            "address": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR",
+                            "is_self": true,
+                            "label": null,
+                            "label_trust": "verified",
+                            "stand_in": null,
+                            "words": null
+                          },
+                          "text": "CVJ6…Q3bR"
+                        },
+                        {
+                          "text": ")"
+                        }
+                      ],
+                      "text": "Your wallet (CVJ6…Q3bR)"
+                    }
                   }
                 }
               },
@@ -610,7 +895,49 @@
                       "text": "OKX DEX Router"
                     },
                     "label_trust": "verified",
-                    "stand_in": null
+                    "stand_in": null,
+                    "words": {
+                      "id": "address-labelled",
+                      "parts": [
+                        {
+                          "text": "OKX DEX Router",
+                          "value": {
+                            "type": "words",
+                            "value": {
+                              "id": "accounts-name",
+                              "parts": [
+                                {
+                                  "text": "OKX DEX Router",
+                                  "value": {
+                                    "type": "text",
+                                    "value": "OKX DEX Router"
+                                  }
+                                }
+                              ],
+                              "text": "OKX DEX Router"
+                            }
+                          }
+                        },
+                        {
+                          "text": " ("
+                        },
+                        {
+                          "short": {
+                            "address": "proVF4pMXVaYqmy4NjniPh4pqKNfMmsihgd4wdkCX3u",
+                            "is_self": false,
+                            "label": null,
+                            "label_trust": "verified",
+                            "stand_in": null,
+                            "words": null
+                          },
+                          "text": "proV…CX3u"
+                        },
+                        {
+                          "text": ")"
+                        }
+                      ],
+                      "text": "OKX DEX Router (proV…CX3u)"
+                    }
                   }
                 }
               }
@@ -629,6 +956,7 @@
               },
               "bound": "at_least",
               "note": null,
+              "note_words": null,
               "units": "80334153",
               "words": {
                 "id": "amount",
@@ -664,7 +992,49 @@
                 "text": "OKX DEX Router"
               },
               "label_trust": "verified",
-              "stand_in": null
+              "stand_in": null,
+              "words": {
+                "id": "address-labelled",
+                "parts": [
+                  {
+                    "text": "OKX DEX Router",
+                    "value": {
+                      "type": "words",
+                      "value": {
+                        "id": "accounts-name",
+                        "parts": [
+                          {
+                            "text": "OKX DEX Router",
+                            "value": {
+                              "type": "text",
+                              "value": "OKX DEX Router"
+                            }
+                          }
+                        ],
+                        "text": "OKX DEX Router"
+                      }
+                    }
+                  },
+                  {
+                    "text": " ("
+                  },
+                  {
+                    "short": {
+                      "address": "proVF4pMXVaYqmy4NjniPh4pqKNfMmsihgd4wdkCX3u",
+                      "is_self": false,
+                      "label": null,
+                      "label_trust": "verified",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "proV…CX3u"
+                  },
+                  {
+                    "text": ")"
+                  }
+                ],
+                "text": "OKX DEX Router (proV…CX3u)"
+              }
             },
             "to": {
               "address": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR",
@@ -679,7 +1049,45 @@
                 "text": "Your wallet"
               },
               "label_trust": "verified",
-              "stand_in": null
+              "stand_in": null,
+              "words": {
+                "id": "address-labelled",
+                "parts": [
+                  {
+                    "text": "Your wallet",
+                    "value": {
+                      "type": "words",
+                      "value": {
+                        "id": "accounts-your-wallet",
+                        "parts": [
+                          {
+                            "text": "Your wallet"
+                          }
+                        ],
+                        "text": "Your wallet"
+                      }
+                    }
+                  },
+                  {
+                    "text": " ("
+                  },
+                  {
+                    "short": {
+                      "address": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR",
+                      "is_self": true,
+                      "label": null,
+                      "label_trust": "verified",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "CVJ6…Q3bR"
+                  },
+                  {
+                    "text": ")"
+                  }
+                ],
+                "text": "Your wallet (CVJ6…Q3bR)"
+              }
             }
           }
         },
@@ -699,7 +1107,8 @@
                     "is_self": false,
                     "label": null,
                     "label_trust": "fact",
-                    "stand_in": null
+                    "stand_in": null,
+                    "words": null
                   }
                 }
               },
@@ -727,7 +1136,49 @@
                       "text": "Token program"
                     },
                     "label_trust": "verified",
-                    "stand_in": null
+                    "stand_in": null,
+                    "words": {
+                      "id": "address-labelled",
+                      "parts": [
+                        {
+                          "text": "Token program",
+                          "value": {
+                            "type": "words",
+                            "value": {
+                              "id": "accounts-name",
+                              "parts": [
+                                {
+                                  "text": "Token program",
+                                  "value": {
+                                    "type": "text",
+                                    "value": "Token program"
+                                  }
+                                }
+                              ],
+                              "text": "Token program"
+                            }
+                          }
+                        },
+                        {
+                          "text": " ("
+                        },
+                        {
+                          "short": {
+                            "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+                            "is_self": false,
+                            "label": null,
+                            "label_trust": "verified",
+                            "stand_in": null,
+                            "words": null
+                          },
+                          "text": "Toke…Q5DA"
+                        },
+                        {
+                          "text": ")"
+                        }
+                      ],
+                      "text": "Token program (Toke…Q5DA)"
+                    }
                   }
                 }
               },
@@ -748,6 +1199,7 @@
                     },
                     "bound": "exact",
                     "note": null,
+                    "note_words": null,
                     "units": "1488440",
                     "words": {
                       "id": "amount",
@@ -778,7 +1230,8 @@
               "is_self": false,
               "label": null,
               "label_trust": "fact",
-              "stand_in": null
+              "stand_in": null,
+              "words": null
             },
             "deposit": {
               "asset": {
@@ -790,6 +1243,7 @@
               },
               "bound": "exact",
               "note": null,
+              "note_words": null,
               "units": "1488440",
               "words": {
                 "id": "amount",
@@ -826,7 +1280,49 @@
                 "text": "Token program"
               },
               "label_trust": "verified",
-              "stand_in": null
+              "stand_in": null,
+              "words": {
+                "id": "address-labelled",
+                "parts": [
+                  {
+                    "text": "Token program",
+                    "value": {
+                      "type": "words",
+                      "value": {
+                        "id": "accounts-name",
+                        "parts": [
+                          {
+                            "text": "Token program",
+                            "value": {
+                              "type": "text",
+                              "value": "Token program"
+                            }
+                          }
+                        ],
+                        "text": "Token program"
+                      }
+                    }
+                  },
+                  {
+                    "text": " ("
+                  },
+                  {
+                    "short": {
+                      "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+                      "is_self": false,
+                      "label": null,
+                      "label_trust": "verified",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "Toke…Q5DA"
+                  },
+                  {
+                    "text": ")"
+                  }
+                ],
+                "text": "Token program (Toke…Q5DA)"
+              }
             }
           }
         },
@@ -851,6 +1347,7 @@
                     },
                     "bound": "exact",
                     "note": null,
+                    "note_words": null,
                     "units": "7098",
                     "words": {
                       "id": "amount",
@@ -886,6 +1383,7 @@
               },
               "bound": "exact",
               "note": null,
+              "note_words": null,
               "units": "7098",
               "words": {
                 "id": "amount",
@@ -917,7 +1415,45 @@
                 "text": "Your wallet"
               },
               "label_trust": "verified",
-              "stand_in": null
+              "stand_in": null,
+              "words": {
+                "id": "address-labelled",
+                "parts": [
+                  {
+                    "text": "Your wallet",
+                    "value": {
+                      "type": "words",
+                      "value": {
+                        "id": "accounts-your-wallet",
+                        "parts": [
+                          {
+                            "text": "Your wallet"
+                          }
+                        ],
+                        "text": "Your wallet"
+                      }
+                    }
+                  },
+                  {
+                    "text": " ("
+                  },
+                  {
+                    "short": {
+                      "address": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR",
+                      "is_self": true,
+                      "label": null,
+                      "label_trust": "verified",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "CVJ6…Q3bR"
+                  },
+                  {
+                    "text": ")"
+                  }
+                ],
+                "text": "Your wallet (CVJ6…Q3bR)"
+              }
             }
           }
         },
@@ -961,6 +1497,7 @@
                     },
                     "bound": "exact",
                     "note": null,
+                    "note_words": null,
                     "units": "0",
                     "words": {
                       "id": "amount",
@@ -1008,6 +1545,7 @@
                     },
                     "bound": "exact",
                     "note": null,
+                    "note_words": null,
                     "units": "80334153",
                     "words": {
                       "id": "amount",
@@ -1114,6 +1652,7 @@
                   },
                   "bound": "exact",
                   "note": null,
+                  "note_words": null,
                   "units": "1855569",
                   "words": {
                     "id": "amount",
@@ -1161,7 +1700,45 @@
                     "text": "Your wallet"
                   },
                   "label_trust": "verified",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": {
+                    "id": "address-labelled",
+                    "parts": [
+                      {
+                        "text": "Your wallet",
+                        "value": {
+                          "type": "words",
+                          "value": {
+                            "id": "accounts-your-wallet",
+                            "parts": [
+                              {
+                                "text": "Your wallet"
+                              }
+                            ],
+                            "text": "Your wallet"
+                          }
+                        }
+                      },
+                      {
+                        "text": " ("
+                      },
+                      {
+                        "short": {
+                          "address": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR",
+                          "is_self": true,
+                          "label": null,
+                          "label_trust": "verified",
+                          "stand_in": null,
+                          "words": null
+                        },
+                        "text": "CVJ6…Q3bR"
+                      },
+                      {
+                        "text": ")"
+                      }
+                    ],
+                    "text": "Your wallet (CVJ6…Q3bR)"
+                  }
                 }
               }
             },
@@ -1184,7 +1761,8 @@
                   "is_self": false,
                   "label": null,
                   "label_trust": "fact",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": null
                 }
               }
             }
@@ -1253,6 +1831,7 @@
                   },
                   "bound": "exact",
                   "note": null,
+                  "note_words": null,
                   "units": "151360479993",
                   "words": {
                     "id": "amount",
@@ -1305,6 +1884,7 @@
                   },
                   "bound": "at_least",
                   "note": null,
+                  "note_words": null,
                   "units": "80334153",
                   "words": {
                     "id": "amount",
@@ -1357,6 +1937,7 @@
                   },
                   "bound": "exact",
                   "note": null,
+                  "note_words": null,
                   "units": "80737843",
                   "words": {
                     "id": "amount",
@@ -1454,7 +2035,8 @@
                   "is_self": false,
                   "label": null,
                   "label_trust": "fact",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": null
                 }
               }
             },
@@ -1792,7 +2374,55 @@
                     "text": "Your ZCAT account"
                   },
                   "label_trust": "verified",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": {
+                    "id": "address-labelled",
+                    "parts": [
+                      {
+                        "text": "Your ZCAT account",
+                        "value": {
+                          "type": "words",
+                          "value": {
+                            "id": "accounts-your-token",
+                            "parts": [
+                              {
+                                "text": "Your "
+                              },
+                              {
+                                "text": "ZCAT",
+                                "value": {
+                                  "type": "text",
+                                  "value": "ZCAT"
+                                }
+                              },
+                              {
+                                "text": " account"
+                              }
+                            ],
+                            "text": "Your ZCAT account"
+                          }
+                        }
+                      },
+                      {
+                        "text": " ("
+                      },
+                      {
+                        "short": {
+                          "address": "H51r5KPyahCGiGCQ9jZr5r5bukcXFaRDFtPFZBUyiHfo",
+                          "is_self": true,
+                          "label": null,
+                          "label_trust": "verified",
+                          "stand_in": null,
+                          "words": null
+                        },
+                        "text": "H51r…iHfo"
+                      },
+                      {
+                        "text": ")"
+                      }
+                    ],
+                    "text": "Your ZCAT account (H51r…iHfo)"
+                  }
                 }
               }
             },
@@ -1823,7 +2453,8 @@
                   "is_self": false,
                   "label": null,
                   "label_trust": "fact",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": null
                 }
               }
             },
@@ -1903,7 +2534,8 @@
                   "is_self": false,
                   "label": null,
                   "label_trust": "fact",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": null
                 },
                 "text": "CjoV…N1Mj"
               },
@@ -2051,7 +2683,8 @@
                   "is_self": false,
                   "label": null,
                   "label_trust": "fact",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": null
                 }
               }
             },
@@ -2090,7 +2723,45 @@
                     "text": "Your wallet"
                   },
                   "label_trust": "verified",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": {
+                    "id": "address-labelled",
+                    "parts": [
+                      {
+                        "text": "Your wallet",
+                        "value": {
+                          "type": "words",
+                          "value": {
+                            "id": "accounts-your-wallet",
+                            "parts": [
+                              {
+                                "text": "Your wallet"
+                              }
+                            ],
+                            "text": "Your wallet"
+                          }
+                        }
+                      },
+                      {
+                        "text": " ("
+                      },
+                      {
+                        "short": {
+                          "address": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR",
+                          "is_self": true,
+                          "label": null,
+                          "label_trust": "verified",
+                          "stand_in": null,
+                          "words": null
+                        },
+                        "text": "CVJ6…Q3bR"
+                      },
+                      {
+                        "text": ")"
+                      }
+                    ],
+                    "text": "Your wallet (CVJ6…Q3bR)"
+                  }
                 }
               }
             },
@@ -2136,7 +2807,52 @@
                     "text": "SOL mint"
                   },
                   "label_trust": "verified",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": {
+                    "id": "address-labelled",
+                    "parts": [
+                      {
+                        "text": "SOL mint",
+                        "value": {
+                          "type": "words",
+                          "value": {
+                            "id": "accounts-mint",
+                            "parts": [
+                              {
+                                "text": "SOL",
+                                "value": {
+                                  "type": "text",
+                                  "value": "SOL"
+                                }
+                              },
+                              {
+                                "text": " mint"
+                              }
+                            ],
+                            "text": "SOL mint"
+                          }
+                        }
+                      },
+                      {
+                        "text": " ("
+                      },
+                      {
+                        "short": {
+                          "address": "So11111111111111111111111111111111111111112",
+                          "is_self": false,
+                          "label": null,
+                          "label_trust": "verified",
+                          "stand_in": null,
+                          "words": null
+                        },
+                        "text": "So11…1112"
+                      },
+                      {
+                        "text": ")"
+                      }
+                    ],
+                    "text": "SOL mint (So11…1112)"
+                  }
                 }
               }
             },
@@ -2175,7 +2891,45 @@
                     "text": "Your wallet"
                   },
                   "label_trust": "verified",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": {
+                    "id": "address-labelled",
+                    "parts": [
+                      {
+                        "text": "Your wallet",
+                        "value": {
+                          "type": "words",
+                          "value": {
+                            "id": "accounts-your-wallet",
+                            "parts": [
+                              {
+                                "text": "Your wallet"
+                              }
+                            ],
+                            "text": "Your wallet"
+                          }
+                        }
+                      },
+                      {
+                        "text": " ("
+                      },
+                      {
+                        "short": {
+                          "address": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR",
+                          "is_self": true,
+                          "label": null,
+                          "label_trust": "verified",
+                          "stand_in": null,
+                          "words": null
+                        },
+                        "text": "CVJ6…Q3bR"
+                      },
+                      {
+                        "text": ")"
+                      }
+                    ],
+                    "text": "Your wallet (CVJ6…Q3bR)"
+                  }
                 }
               }
             },
@@ -2218,7 +2972,49 @@
                     "text": "Token program"
                   },
                   "label_trust": "verified",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": {
+                    "id": "address-labelled",
+                    "parts": [
+                      {
+                        "text": "Token program",
+                        "value": {
+                          "type": "words",
+                          "value": {
+                            "id": "accounts-name",
+                            "parts": [
+                              {
+                                "text": "Token program",
+                                "value": {
+                                  "type": "text",
+                                  "value": "Token program"
+                                }
+                              }
+                            ],
+                            "text": "Token program"
+                          }
+                        }
+                      },
+                      {
+                        "text": " ("
+                      },
+                      {
+                        "short": {
+                          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+                          "is_self": false,
+                          "label": null,
+                          "label_trust": "verified",
+                          "stand_in": null,
+                          "words": null
+                        },
+                        "text": "Toke…Q5DA"
+                      },
+                      {
+                        "text": ")"
+                      }
+                    ],
+                    "text": "Token program (Toke…Q5DA)"
+                  }
                 }
               }
             }
@@ -2275,7 +3071,45 @@
                     "text": "Your wallet"
                   },
                   "label_trust": "verified",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": {
+                    "id": "address-labelled",
+                    "parts": [
+                      {
+                        "text": "Your wallet",
+                        "value": {
+                          "type": "words",
+                          "value": {
+                            "id": "accounts-your-wallet",
+                            "parts": [
+                              {
+                                "text": "Your wallet"
+                              }
+                            ],
+                            "text": "Your wallet"
+                          }
+                        }
+                      },
+                      {
+                        "text": " ("
+                      },
+                      {
+                        "short": {
+                          "address": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR",
+                          "is_self": true,
+                          "label": null,
+                          "label_trust": "verified",
+                          "stand_in": null,
+                          "words": null
+                        },
+                        "text": "CVJ6…Q3bR"
+                      },
+                      {
+                        "text": ")"
+                      }
+                    ],
+                    "text": "Your wallet (CVJ6…Q3bR)"
+                  }
                 }
               }
             }
@@ -2329,6 +3163,7 @@
                   },
                   "bound": "exact",
                   "note": null,
+                  "note_words": null,
                   "units": "7098",
                   "words": {
                     "id": "amount",
@@ -2381,6 +3216,7 @@
                   },
                   "bound": "exact",
                   "note": null,
+                  "note_words": null,
                   "units": "5000",
                   "words": {
                     "id": "amount",
@@ -2433,6 +3269,7 @@
                   },
                   "bound": "exact",
                   "note": null,
+                  "note_words": null,
                   "units": "2098",
                   "words": {
                     "id": "amount",
@@ -2525,6 +3362,7 @@
                           },
                           "bound": "exact",
                           "note": null,
+                          "note_words": null,
                           "units": "1488440",
                           "words": {
                             "id": "amount",
@@ -2756,6 +3594,7 @@
                 },
                 "bound": "exact",
                 "note": null,
+                "note_words": null,
                 "units": "1855569",
                 "words": {
                   "id": "amount",
@@ -2785,7 +3624,8 @@
               "is_self": false,
               "label": null,
               "label_trust": "fact",
-              "stand_in": null
+              "stand_in": null,
+              "words": null
             },
             "text": "91rj…BXHD"
           },
@@ -2806,6 +3646,7 @@
                 },
                 "bound": "exact",
                 "note": null,
+                "note_words": null,
                 "units": "151360479993",
                 "words": {
                   "id": "amount",
@@ -2843,6 +3684,7 @@
                 },
                 "bound": "at_least",
                 "note": null,
+                "note_words": null,
                 "units": "80334153",
                 "words": {
                   "id": "amount",

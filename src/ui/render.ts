@@ -203,7 +203,9 @@ function amountNode(amount: Amount): HTMLSpanElement {
     if (amount.words) {
         node.append(messageNode(amount.words));
         mark(node, amount.asset.trust);
-        if (amount.note) node.append(' (', messageNode(amount.note), ')');
+        // The note in the locale's brackets; an engine before them sends the note alone.
+        if (amount.note_words) node.append(messageNode(amount.note_words));
+        else if (amount.note) node.append(' (', messageNode(amount.note), ')');
         return node;
     }
     const prefix = PREFIX[amount.bound];
@@ -229,6 +231,17 @@ function amountNode(amount: Amount): HTMLSpanElement {
  */
 function addressNode(address: Address): HTMLSpanElement {
     const node = element('span', `address${address.is_self ? ' self' : ''}`);
+    if (address.label && address.words) {
+        // The engine's words for it: the label in bold and the address, in
+        // the locale's brackets and order.
+        for (const part of address.words.parts) {
+            if (part.value?.type === 'words') node.append(element('b', '', part.value.value.text));
+            else if (part.short) node.append(keyNode(address, true));
+            else node.append(part.text);
+        }
+        mark(node, address.label_trust);
+        return node;
+    }
     const key = keyNode(address, address.label !== null);
     if (address.label) {
         node.append(element('b', '', address.label.text), ' (', key, ')');

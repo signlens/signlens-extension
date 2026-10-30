@@ -54,6 +54,7 @@
                     },
                     "bound": "exact",
                     "note": null,
+                    "note_words": null,
                     "units": "5535",
                     "words": {
                       "id": "amount",
@@ -89,6 +90,7 @@
               },
               "bound": "exact",
               "note": null,
+              "note_words": null,
               "units": "5535",
               "words": {
                 "id": "amount",
@@ -120,7 +122,45 @@
                 "text": "Your wallet"
               },
               "label_trust": "verified",
-              "stand_in": null
+              "stand_in": null,
+              "words": {
+                "id": "address-labelled",
+                "parts": [
+                  {
+                    "text": "Your wallet",
+                    "value": {
+                      "type": "words",
+                      "value": {
+                        "id": "accounts-your-wallet",
+                        "parts": [
+                          {
+                            "text": "Your wallet"
+                          }
+                        ],
+                        "text": "Your wallet"
+                      }
+                    }
+                  },
+                  {
+                    "text": " ("
+                  },
+                  {
+                    "short": {
+                      "address": "5yLgQQwD42seAkce1heScsh2spYgNA3q43SPhZBn8Ldc",
+                      "is_self": true,
+                      "label": null,
+                      "label_trust": "verified",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "5yLg…8Ldc"
+                  },
+                  {
+                    "text": ")"
+                  }
+                ],
+                "text": "Your wallet (5yLg…8Ldc)"
+              }
             }
           }
         },
@@ -352,7 +392,45 @@
                     "text": "Your wallet"
                   },
                   "label_trust": "verified",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": {
+                    "id": "address-labelled",
+                    "parts": [
+                      {
+                        "text": "Your wallet",
+                        "value": {
+                          "type": "words",
+                          "value": {
+                            "id": "accounts-your-wallet",
+                            "parts": [
+                              {
+                                "text": "Your wallet"
+                              }
+                            ],
+                            "text": "Your wallet"
+                          }
+                        }
+                      },
+                      {
+                        "text": " ("
+                      },
+                      {
+                        "short": {
+                          "address": "5yLgQQwD42seAkce1heScsh2spYgNA3q43SPhZBn8Ldc",
+                          "is_self": true,
+                          "label": null,
+                          "label_trust": "verified",
+                          "stand_in": null,
+                          "words": null
+                        },
+                        "text": "5yLg…8Ldc"
+                      },
+                      {
+                        "text": ")"
+                      }
+                    ],
+                    "text": "Your wallet (5yLg…8Ldc)"
+                  }
                 }
               }
             }
@@ -406,6 +484,7 @@
                   },
                   "bound": "exact",
                   "note": null,
+                  "note_words": null,
                   "units": "5535",
                   "words": {
                     "id": "amount",
@@ -458,6 +537,7 @@
                   },
                   "bound": "exact",
                   "note": null,
+                  "note_words": null,
                   "units": "5000",
                   "words": {
                     "id": "amount",
@@ -510,6 +590,7 @@
                   },
                   "bound": "exact",
                   "note": null,
+                  "note_words": null,
                   "units": "535",
                   "words": {
                     "id": "amount",

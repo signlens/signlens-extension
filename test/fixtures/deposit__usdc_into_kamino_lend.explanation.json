@@ -22,6 +22,7 @@
                 },
                 "bound": "exact",
                 "note": null,
+                "note_words": null,
                 "units": "4635286750",
                 "words": {
                   "id": "amount",
@@ -73,6 +74,7 @@
                 },
                 "bound": "exact",
                 "note": null,
+                "note_words": null,
                 "units": "4635286750",
                 "words": {
                   "id": "amount",
@@ -113,7 +115,45 @@
                   "text": "Your wallet"
                 },
                 "label_trust": "verified",
-                "stand_in": null
+                "stand_in": null,
+                "words": {
+                  "id": "address-labelled",
+                  "parts": [
+                    {
+                      "text": "Your wallet",
+                      "value": {
+                        "type": "words",
+                        "value": {
+                          "id": "accounts-your-wallet",
+                          "parts": [
+                            {
+                              "text": "Your wallet"
+                            }
+                          ],
+                          "text": "Your wallet"
+                        }
+                      }
+                    },
+                    {
+                      "text": " ("
+                    },
+                    {
+                      "short": {
+                        "address": "2P5tkJVpceLPdnejvc5DBGd4RxkmtouYfNkb9KKPsPxW",
+                        "is_self": true,
+                        "label": null,
+                        "label_trust": "verified",
+                        "stand_in": null,
+                        "words": null
+                      },
+                      "text": "2P5t…sPxW"
+                    },
+                    {
+                      "text": ")"
+                    }
+                  ],
+                  "text": "Your wallet (2P5t…sPxW)"
+                }
               }
             }
           },
@@ -141,7 +181,49 @@
                   "text": "Kamino Lend"
                 },
                 "label_trust": "verified",
-                "stand_in": null
+                "stand_in": null,
+                "words": {
+                  "id": "address-labelled",
+                  "parts": [
+                    {
+                      "text": "Kamino Lend",
+                      "value": {
+                        "type": "words",
+                        "value": {
+                          "id": "accounts-name",
+                          "parts": [
+                            {
+                              "text": "Kamino Lend",
+                              "value": {
+                                "type": "text",
+                                "value": "Kamino Lend"
+                              }
+                            }
+                          ],
+                          "text": "Kamino Lend"
+                        }
+                      }
+                    },
+                    {
+                      "text": " ("
+                    },
+                    {
+                      "short": {
+                        "address": "KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD",
+                        "is_self": false,
+                        "label": null,
+                        "label_trust": "verified",
+                        "stand_in": null,
+                        "words": null
+                      },
+                      "text": "KLen…gmjD"
+                    },
+                    {
+                      "text": ")"
+                    }
+                  ],
+                  "text": "Kamino Lend (KLen…gmjD)"
+                }
               }
             }
           }
@@ -160,6 +242,7 @@
           },
           "bound": "exact",
           "note": null,
+          "note_words": null,
           "units": "4635286750",
           "words": {
             "id": "amount",
@@ -191,7 +274,45 @@
             "text": "Your wallet"
           },
           "label_trust": "verified",
-          "stand_in": null
+          "stand_in": null,
+          "words": {
+            "id": "address-labelled",
+            "parts": [
+              {
+                "text": "Your wallet",
+                "value": {
+                  "type": "words",
+                  "value": {
+                    "id": "accounts-your-wallet",
+                    "parts": [
+                      {
+                        "text": "Your wallet"
+                      }
+                    ],
+                    "text": "Your wallet"
+                  }
+                }
+              },
+              {
+                "text": " ("
+              },
+              {
+                "short": {
+                  "address": "2P5tkJVpceLPdnejvc5DBGd4RxkmtouYfNkb9KKPsPxW",
+                  "is_self": true,
+                  "label": null,
+                  "label_trust": "verified",
+                  "stand_in": null,
+                  "words": null
+                },
+                "text": "2P5t…sPxW"
+              },
+              {
+                "text": ")"
+              }
+            ],
+            "text": "Your wallet (2P5t…sPxW)"
+          }
         },
         "to": {
           "address": "KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD",
@@ -210,7 +331,49 @@
             "text": "Kamino Lend"
           },
           "label_trust": "verified",
-          "stand_in": null
+          "stand_in": null,
+          "words": {
+            "id": "address-labelled",
+            "parts": [
+              {
+                "text": "Kamino Lend",
+                "value": {
+                  "type": "words",
+                  "value": {
+                    "id": "accounts-name",
+                    "parts": [
+                      {
+                        "text": "Kamino Lend",
+                        "value": {
+                          "type": "text",
+                          "value": "Kamino Lend"
+                        }
+                      }
+                    ],
+                    "text": "Kamino Lend"
+                  }
+                }
+              },
+              {
+                "text": " ("
+              },
+              {
+                "short": {
+                  "address": "KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "verified",
+                  "stand_in": null,
+                  "words": null
+                },
+                "text": "KLen…gmjD"
+              },
+              {
+                "text": ")"
+              }
+            ],
+            "text": "Kamino Lend (KLen…gmjD)"
+          }
         }
       }
     },
@@ -271,7 +434,55 @@
                   "text": "Your USDC account"
                 },
                 "label_trust": "verified",
-                "stand_in": null
+                "stand_in": null,
+                "words": {
+                  "id": "address-labelled",
+                  "parts": [
+                    {
+                      "text": "Your USDC account",
+                      "value": {
+                        "type": "words",
+                        "value": {
+                          "id": "accounts-your-token",
+                          "parts": [
+                            {
+                              "text": "Your "
+                            },
+                            {
+                              "text": "USDC",
+                              "value": {
+                                "type": "text",
+                                "value": "USDC"
+                              }
+                            },
+                            {
+                              "text": " account"
+                            }
+                          ],
+                          "text": "Your USDC account"
+                        }
+                      }
+                    },
+                    {
+                      "text": " ("
+                    },
+                    {
+                      "short": {
+                        "address": "4PusLnTYexjqGnHofx85uCymgdGc4QYmNhzKwtJjgpZ8",
+                        "is_self": true,
+                        "label": null,
+                        "label_trust": "verified",
+                        "stand_in": null,
+                        "words": null
+                      },
+                      "text": "4Pus…gpZ8"
+                    },
+                    {
+                      "text": ")"
+                    }
+                  ],
+                  "text": "Your USDC account (4Pus…gpZ8)"
+                }
               }
             }
           },
@@ -299,7 +510,49 @@
                   "text": "Token program"
                 },
                 "label_trust": "verified",
-                "stand_in": null
+                "stand_in": null,
+                "words": {
+                  "id": "address-labelled",
+                  "parts": [
+                    {
+                      "text": "Token program",
+                      "value": {
+                        "type": "words",
+                        "value": {
+                          "id": "accounts-name",
+                          "parts": [
+                            {
+                              "text": "Token program",
+                              "value": {
+                                "type": "text",
+                                "value": "Token program"
+                              }
+                            }
+                          ],
+                          "text": "Token program"
+                        }
+                      }
+                    },
+                    {
+                      "text": " ("
+                    },
+                    {
+                      "short": {
+                        "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+                        "is_self": false,
+                        "label": null,
+                        "label_trust": "verified",
+                        "stand_in": null,
+                        "words": null
+                      },
+                      "text": "Toke…Q5DA"
+                    },
+                    {
+                      "text": ")"
+                    }
+                  ],
+                  "text": "Token program (Toke…Q5DA)"
+                }
               }
             }
           },
@@ -320,6 +573,7 @@
                 },
                 "bound": "exact",
                 "note": null,
+                "note_words": null,
                 "units": "1488440",
                 "words": {
                   "id": "amount",
@@ -371,7 +625,55 @@
             "text": "Your USDC account"
           },
           "label_trust": "verified",
-          "stand_in": null
+          "stand_in": null,
+          "words": {
+            "id": "address-labelled",
+            "parts": [
+              {
+                "text": "Your USDC account",
+                "value": {
+                  "type": "words",
+                  "value": {
+                    "id": "accounts-your-token",
+                    "parts": [
+                      {
+                        "text": "Your "
+                      },
+                      {
+                        "text": "USDC",
+                        "value": {
+                          "type": "text",
+                          "value": "USDC"
+                        }
+                      },
+                      {
+                        "text": " account"
+                      }
+                    ],
+                    "text": "Your USDC account"
+                  }
+                }
+              },
+              {
+                "text": " ("
+              },
+              {
+                "short": {
+                  "address": "4PusLnTYexjqGnHofx85uCymgdGc4QYmNhzKwtJjgpZ8",
+                  "is_self": true,
+                  "label": null,
+                  "label_trust": "verified",
+                  "stand_in": null,
+                  "words": null
+                },
+                "text": "4Pus…gpZ8"
+              },
+              {
+                "text": ")"
+              }
+            ],
+            "text": "Your USDC account (4Pus…gpZ8)"
+          }
         },
         "deposit": {
           "asset": {
@@ -383,6 +685,7 @@
           },
           "bound": "exact",
           "note": null,
+          "note_words": null,
           "units": "1488440",
           "words": {
             "id": "amount",
@@ -419,7 +722,49 @@
             "text": "Token program"
           },
           "label_trust": "verified",
-          "stand_in": null
+          "stand_in": null,
+          "words": {
+            "id": "address-labelled",
+            "parts": [
+              {
+                "text": "Token program",
+                "value": {
+                  "type": "words",
+                  "value": {
+                    "id": "accounts-name",
+                    "parts": [
+                      {
+                        "text": "Token program",
+                        "value": {
+                          "type": "text",
+                          "value": "Token program"
+                        }
+                      }
+                    ],
+                    "text": "Token program"
+                  }
+                }
+              },
+              {
+                "text": " ("
+              },
+              {
+                "short": {
+                  "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "verified",
+                  "stand_in": null,
+                  "words": null
+                },
+                "text": "Toke…Q5DA"
+              },
+              {
+                "text": ")"
+              }
+            ],
+            "text": "Token program (Toke…Q5DA)"
+          }
         }
       }
     },
@@ -536,6 +881,7 @@
                 },
                 "bound": "exact",
                 "note": null,
+                "note_words": null,
                 "units": "20000",
                 "words": {
                   "id": "amount",
@@ -571,6 +917,7 @@
           },
           "bound": "exact",
           "note": null,
+          "note_words": null,
           "units": "20000",
           "words": {
             "id": "amount",
@@ -602,7 +949,45 @@
             "text": "Your wallet"
           },
           "label_trust": "verified",
-          "stand_in": null
+          "stand_in": null,
+          "words": {
+            "id": "address-labelled",
+            "parts": [
+              {
+                "text": "Your wallet",
+                "value": {
+                  "type": "words",
+                  "value": {
+                    "id": "accounts-your-wallet",
+                    "parts": [
+                      {
+                        "text": "Your wallet"
+                      }
+                    ],
+                    "text": "Your wallet"
+                  }
+                }
+              },
+              {
+                "text": " ("
+              },
+              {
+                "short": {
+                  "address": "2P5tkJVpceLPdnejvc5DBGd4RxkmtouYfNkb9KKPsPxW",
+                  "is_self": true,
+                  "label": null,
+                  "label_trust": "verified",
+                  "stand_in": null,
+                  "words": null
+                },
+                "text": "2P5t…sPxW"
+              },
+              {
+                "text": ")"
+              }
+            ],
+            "text": "Your wallet (2P5t…sPxW)"
+          }
         }
       }
     },
@@ -673,6 +1058,7 @@
               },
               "bound": "exact",
               "note": null,
+              "note_words": null,
               "units": "4635286750",
               "words": {
                 "id": "amount",
@@ -720,7 +1106,8 @@
               "is_self": false,
               "label": null,
               "label_trust": "fact",
-              "stand_in": null
+              "stand_in": null,
+              "words": null
             }
           }
         },
@@ -751,7 +1138,8 @@
               "is_self": false,
               "label": null,
               "label_trust": "fact",
-              "stand_in": null
+              "stand_in": null,
+              "words": null
             }
           }
         },
@@ -800,7 +1188,55 @@
                 "text": "Your USDC account"
               },
               "label_trust": "verified",
-              "stand_in": null
+              "stand_in": null,
+              "words": {
+                "id": "address-labelled",
+                "parts": [
+                  {
+                    "text": "Your USDC account",
+                    "value": {
+                      "type": "words",
+                      "value": {
+                        "id": "accounts-your-token",
+                        "parts": [
+                          {
+                            "text": "Your "
+                          },
+                          {
+                            "text": "USDC",
+                            "value": {
+                              "type": "text",
+                              "value": "USDC"
+                            }
+                          },
+                          {
+                            "text": " account"
+                          }
+                        ],
+                        "text": "Your USDC account"
+                      }
+                    }
+                  },
+                  {
+                    "text": " ("
+                  },
+                  {
+                    "short": {
+                      "address": "4PusLnTYexjqGnHofx85uCymgdGc4QYmNhzKwtJjgpZ8",
+                      "is_self": true,
+                      "label": null,
+                      "label_trust": "verified",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "4Pus…gpZ8"
+                  },
+                  {
+                    "text": ")"
+                  }
+                ],
+                "text": "Your USDC account (4Pus…gpZ8)"
+              }
             }
           }
         }
@@ -840,7 +1276,8 @@
               "is_self": false,
               "label": null,
               "label_trust": "fact",
-              "stand_in": null
+              "stand_in": null,
+              "words": null
             },
             "text": "GzFg…kzkW"
           },
@@ -966,7 +1403,55 @@
                 "text": "Your USDC account"
               },
               "label_trust": "verified",
-              "stand_in": null
+              "stand_in": null,
+              "words": {
+                "id": "address-labelled",
+                "parts": [
+                  {
+                    "text": "Your USDC account",
+                    "value": {
+                      "type": "words",
+                      "value": {
+                        "id": "accounts-your-token",
+                        "parts": [
+                          {
+                            "text": "Your "
+                          },
+                          {
+                            "text": "USDC",
+                            "value": {
+                              "type": "text",
+                              "value": "USDC"
+                            }
+                          },
+                          {
+                            "text": " account"
+                          }
+                        ],
+                        "text": "Your USDC account"
+                      }
+                    }
+                  },
+                  {
+                    "text": " ("
+                  },
+                  {
+                    "short": {
+                      "address": "4PusLnTYexjqGnHofx85uCymgdGc4QYmNhzKwtJjgpZ8",
+                      "is_self": true,
+                      "label": null,
+                      "label_trust": "verified",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "4Pus…gpZ8"
+                  },
+                  {
+                    "text": ")"
+                  }
+                ],
+                "text": "Your USDC account (4Pus…gpZ8)"
+              }
             }
           }
         },
@@ -997,7 +1482,45 @@
                 "text": "Your wallet"
               },
               "label_trust": "verified",
-              "stand_in": null
+              "stand_in": null,
+              "words": {
+                "id": "address-labelled",
+                "parts": [
+                  {
+                    "text": "Your wallet",
+                    "value": {
+                      "type": "words",
+                      "value": {
+                        "id": "accounts-your-wallet",
+                        "parts": [
+                          {
+                            "text": "Your wallet"
+                          }
+                        ],
+                        "text": "Your wallet"
+                      }
+                    }
+                  },
+                  {
+                    "text": " ("
+                  },
+                  {
+                    "short": {
+                      "address": "2P5tkJVpceLPdnejvc5DBGd4RxkmtouYfNkb9KKPsPxW",
+                      "is_self": true,
+                      "label": null,
+                      "label_trust": "verified",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "2P5t…sPxW"
+                  },
+                  {
+                    "text": ")"
+                  }
+                ],
+                "text": "Your wallet (2P5t…sPxW)"
+              }
             }
           }
         },
@@ -1043,7 +1566,52 @@
                 "text": "USDC mint"
               },
               "label_trust": "verified",
-              "stand_in": null
+              "stand_in": null,
+              "words": {
+                "id": "address-labelled",
+                "parts": [
+                  {
+                    "text": "USDC mint",
+                    "value": {
+                      "type": "words",
+                      "value": {
+                        "id": "accounts-mint",
+                        "parts": [
+                          {
+                            "text": "USDC",
+                            "value": {
+                              "type": "text",
+                              "value": "USDC"
+                            }
+                          },
+                          {
+                            "text": " mint"
+                          }
+                        ],
+                        "text": "USDC mint"
+                      }
+                    }
+                  },
+                  {
+                    "text": " ("
+                  },
+                  {
+                    "short": {
+                      "address": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+                      "is_self": false,
+                      "label": null,
+                      "label_trust": "verified",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "EPjF…Dt1v"
+                  },
+                  {
+                    "text": ")"
+                  }
+                ],
+                "text": "USDC mint (EPjF…Dt1v)"
+              }
             }
           }
         },
@@ -1082,7 +1650,45 @@
                 "text": "Your wallet"
               },
               "label_trust": "verified",
-              "stand_in": null
+              "stand_in": null,
+              "words": {
+                "id": "address-labelled",
+                "parts": [
+                  {
+                    "text": "Your wallet",
+                    "value": {
+                      "type": "words",
+                      "value": {
+                        "id": "accounts-your-wallet",
+                        "parts": [
+                          {
+                            "text": "Your wallet"
+                          }
+                        ],
+                        "text": "Your wallet"
+                      }
+                    }
+                  },
+                  {
+                    "text": " ("
+                  },
+                  {
+                    "short": {
+                      "address": "2P5tkJVpceLPdnejvc5DBGd4RxkmtouYfNkb9KKPsPxW",
+                      "is_self": true,
+                      "label": null,
+                      "label_trust": "verified",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "2P5t…sPxW"
+                  },
+                  {
+                    "text": ")"
+                  }
+                ],
+                "text": "Your wallet (2P5t…sPxW)"
+              }
             }
           }
         },
@@ -1125,7 +1731,49 @@
                 "text": "Token program"
               },
               "label_trust": "verified",
-              "stand_in": null
+              "stand_in": null,
+              "words": {
+                "id": "address-labelled",
+                "parts": [
+                  {
+                    "text": "Token program",
+                    "value": {
+                      "type": "words",
+                      "value": {
+                        "id": "accounts-name",
+                        "parts": [
+                          {
+                            "text": "Token program",
+                            "value": {
+                              "type": "text",
+                              "value": "Token program"
+                            }
+                          }
+                        ],
+                        "text": "Token program"
+                      }
+                    }
+                  },
+                  {
+                    "text": " ("
+                  },
+                  {
+                    "short": {
+                      "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+                      "is_self": false,
+                      "label": null,
+                      "label_trust": "verified",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "Toke…Q5DA"
+                  },
+                  {
+                    "text": ")"
+                  }
+                ],
+                "text": "Token program (Toke…Q5DA)"
+              }
             }
           }
         },
@@ -1156,7 +1804,8 @@
               "is_self": false,
               "label": null,
               "label_trust": "fact",
-              "stand_in": null
+              "stand_in": null,
+              "words": null
             }
           }
         },
@@ -1187,7 +1836,8 @@
               "is_self": false,
               "label": null,
               "label_trust": "fact",
-              "stand_in": null
+              "stand_in": null,
+              "words": null
             }
           }
         },
@@ -1218,7 +1868,8 @@
               "is_self": false,
               "label": null,
               "label_trust": "fact",
-              "stand_in": null
+              "stand_in": null,
+              "words": null
             }
           }
         },
@@ -1249,7 +1900,8 @@
               "is_self": false,
               "label": null,
               "label_trust": "fact",
-              "stand_in": null
+              "stand_in": null,
+              "words": null
             }
           }
         },
@@ -1346,7 +1998,45 @@
                 "text": "Your wallet"
               },
               "label_trust": "verified",
-              "stand_in": null
+              "stand_in": null,
+              "words": {
+                "id": "address-labelled",
+                "parts": [
+                  {
+                    "text": "Your wallet",
+                    "value": {
+                      "type": "words",
+                      "value": {
+                        "id": "accounts-your-wallet",
+                        "parts": [
+                          {
+                            "text": "Your wallet"
+                          }
+                        ],
+                        "text": "Your wallet"
+                      }
+                    }
+                  },
+                  {
+                    "text": " ("
+                  },
+                  {
+                    "short": {
+                      "address": "2P5tkJVpceLPdnejvc5DBGd4RxkmtouYfNkb9KKPsPxW",
+                      "is_self": true,
+                      "label": null,
+                      "label_trust": "verified",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "2P5t…sPxW"
+                  },
+                  {
+                    "text": ")"
+                  }
+                ],
+                "text": "Your wallet (2P5t…sPxW)"
+              }
             }
           }
         }
@@ -1400,6 +2090,7 @@
               },
               "bound": "exact",
               "note": null,
+              "note_words": null,
               "units": "20000",
               "words": {
                 "id": "amount",
@@ -1452,6 +2143,7 @@
               },
               "bound": "exact",
               "note": null,
+              "note_words": null,
               "units": "5000",
               "words": {
                 "id": "amount",
@@ -1504,6 +2196,7 @@
               },
               "bound": "exact",
               "note": null,
+              "note_words": null,
               "units": "15000",
               "words": {
                 "id": "amount",
@@ -1599,6 +2292,7 @@
                       },
                       "bound": "exact",
                       "note": null,
+                      "note_words": null,
                       "units": "1488440",
                       "words": {
                         "id": "amount",
@@ -1714,6 +2408,7 @@
             },
             "bound": "exact",
             "note": null,
+            "note_words": null,
             "units": "4635286750",
             "words": {
               "id": "amount",

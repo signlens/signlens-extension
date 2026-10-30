@@ -22,6 +22,7 @@
                 },
                 "bound": "exact",
                 "note": null,
+                "note_words": null,
                 "units": "996423",
                 "words": {
                   "id": "amount",
@@ -51,7 +52,8 @@
               "is_self": false,
               "label": null,
               "label_trust": "fact",
-              "stand_in": null
+              "stand_in": null,
+              "words": null
             },
             "text": "Ffz5…piwg"
           },
@@ -71,7 +73,8 @@
                       "is_self": false,
                       "label": null,
                       "label_trust": "fact",
-                      "stand_in": null
+                      "stand_in": null,
+                      "words": null
                     },
                     "text": "BNgs…TT1Z"
                   },
@@ -92,7 +95,66 @@
                 "text": "BNgs…TT1Z's USDC account"
               },
               "label_trust": "verified",
-              "stand_in": null
+              "stand_in": null,
+              "words": {
+                "id": "address-labelled",
+                "parts": [
+                  {
+                    "text": "BNgs…TT1Z's USDC account",
+                    "value": {
+                      "type": "words",
+                      "value": {
+                        "id": "accounts-others-token",
+                        "parts": [
+                          {
+                            "short": {
+                              "address": "BNgsxo3eHqQLNTaKy4juhAUJ8DyewcJNEcYdMuSmTT1Z",
+                              "is_self": false,
+                              "label": null,
+                              "label_trust": "fact",
+                              "stand_in": null,
+                              "words": null
+                            },
+                            "text": "BNgs…TT1Z"
+                          },
+                          {
+                            "text": "'s "
+                          },
+                          {
+                            "text": "USDC",
+                            "value": {
+                              "type": "text",
+                              "value": "USDC"
+                            }
+                          },
+                          {
+                            "text": " account"
+                          }
+                        ],
+                        "text": "BNgs…TT1Z's USDC account"
+                      }
+                    }
+                  },
+                  {
+                    "text": " ("
+                  },
+                  {
+                    "short": {
+                      "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp",
+                      "is_self": false,
+                      "label": null,
+                      "label_trust": "verified",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "DV3B…L7Qp"
+                  },
+                  {
+                    "text": ")"
+                  }
+                ],
+                "text": "BNgs…TT1Z's USDC account (DV3B…L7Qp)"
+              }
             },
             "text": "DV3B…L7Qp"
           }
@@ -124,6 +186,7 @@
                 },
                 "bound": "exact",
                 "note": null,
+                "note_words": null,
                 "units": "996423",
                 "words": {
                   "id": "amount",
@@ -156,7 +219,8 @@
                 "is_self": false,
                 "label": null,
                 "label_trust": "fact",
-                "stand_in": null
+                "stand_in": null,
+                "words": null
               }
             }
           },
@@ -179,7 +243,8 @@
                         "is_self": false,
                         "label": null,
                         "label_trust": "fact",
-                        "stand_in": null
+                        "stand_in": null,
+                        "words": null
                       },
                       "text": "BNgs…TT1Z"
                     },
@@ -200,7 +265,66 @@
                   "text": "BNgs…TT1Z's USDC account"
                 },
                 "label_trust": "verified",
-                "stand_in": null
+                "stand_in": null,
+                "words": {
+                  "id": "address-labelled",
+                  "parts": [
+                    {
+                      "text": "BNgs…TT1Z's USDC account",
+                      "value": {
+                        "type": "words",
+                        "value": {
+                          "id": "accounts-others-token",
+                          "parts": [
+                            {
+                              "short": {
+                                "address": "BNgsxo3eHqQLNTaKy4juhAUJ8DyewcJNEcYdMuSmTT1Z",
+                                "is_self": false,
+                                "label": null,
+                                "label_trust": "fact",
+                                "stand_in": null,
+                                "words": null
+                              },
+                              "text": "BNgs…TT1Z"
+                            },
+                            {
+                              "text": "'s "
+                            },
+                            {
+                              "text": "USDC",
+                              "value": {
+                                "type": "text",
+                                "value": "USDC"
+                              }
+                            },
+                            {
+                              "text": " account"
+                            }
+                          ],
+                          "text": "BNgs…TT1Z's USDC account"
+                        }
+                      }
+                    },
+                    {
+                      "text": " ("
+                    },
+                    {
+                      "short": {
+                        "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp",
+                        "is_self": false,
+                        "label": null,
+                        "label_trust": "verified",
+                        "stand_in": null,
+                        "words": null
+                      },
+                      "text": "DV3B…L7Qp"
+                    },
+                    {
+                      "text": ")"
+                    }
+                  ],
+                  "text": "BNgs…TT1Z's USDC account (DV3B…L7Qp)"
+                }
               }
             }
           }
@@ -219,6 +343,7 @@
           },
           "bound": "exact",
           "note": null,
+          "note_words": null,
           "units": "996423",
           "words": {
             "id": "amount",
@@ -242,7 +367,8 @@
           "is_self": false,
           "label": null,
           "label_trust": "fact",
-          "stand_in": null
+          "stand_in": null,
+          "words": null
         },
         "to": {
           "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp",
@@ -256,7 +382,8 @@
                   "is_self": false,
                   "label": null,
                   "label_trust": "fact",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": null
                 },
                 "text": "BNgs…TT1Z"
               },
@@ -277,7 +404,66 @@
             "text": "BNgs…TT1Z's USDC account"
           },
           "label_trust": "verified",
-          "stand_in": null
+          "stand_in": null,
+          "words": {
+            "id": "address-labelled",
+            "parts": [
+              {
+                "text": "BNgs…TT1Z's USDC account",
+                "value": {
+                  "type": "words",
+                  "value": {
+                    "id": "accounts-others-token",
+                    "parts": [
+                      {
+                        "short": {
+                          "address": "BNgsxo3eHqQLNTaKy4juhAUJ8DyewcJNEcYdMuSmTT1Z",
+                          "is_self": false,
+                          "label": null,
+                          "label_trust": "fact",
+                          "stand_in": null,
+                          "words": null
+                        },
+                        "text": "BNgs…TT1Z"
+                      },
+                      {
+                        "text": "'s "
+                      },
+                      {
+                        "text": "USDC",
+                        "value": {
+                          "type": "text",
+                          "value": "USDC"
+                        }
+                      },
+                      {
+                        "text": " account"
+                      }
+                    ],
+                    "text": "BNgs…TT1Z's USDC account"
+                  }
+                }
+              },
+              {
+                "text": " ("
+              },
+              {
+                "short": {
+                  "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "verified",
+                  "stand_in": null,
+                  "words": null
+                },
+                "text": "DV3B…L7Qp"
+              },
+              {
+                "text": ")"
+              }
+            ],
+            "text": "BNgs…TT1Z's USDC account (DV3B…L7Qp)"
+          }
         }
       }
     },
@@ -304,7 +490,8 @@
                         "is_self": false,
                         "label": null,
                         "label_trust": "fact",
-                        "stand_in": null
+                        "stand_in": null,
+                        "words": null
                       },
                       "text": "BNgs…TT1Z"
                     },
@@ -325,7 +512,66 @@
                   "text": "BNgs…TT1Z's USDC account"
                 },
                 "label_trust": "verified",
-                "stand_in": null
+                "stand_in": null,
+                "words": {
+                  "id": "address-labelled",
+                  "parts": [
+                    {
+                      "text": "BNgs…TT1Z's USDC account",
+                      "value": {
+                        "type": "words",
+                        "value": {
+                          "id": "accounts-others-token",
+                          "parts": [
+                            {
+                              "short": {
+                                "address": "BNgsxo3eHqQLNTaKy4juhAUJ8DyewcJNEcYdMuSmTT1Z",
+                                "is_self": false,
+                                "label": null,
+                                "label_trust": "fact",
+                                "stand_in": null,
+                                "words": null
+                              },
+                              "text": "BNgs…TT1Z"
+                            },
+                            {
+                              "text": "'s "
+                            },
+                            {
+                              "text": "USDC",
+                              "value": {
+                                "type": "text",
+                                "value": "USDC"
+                              }
+                            },
+                            {
+                              "text": " account"
+                            }
+                          ],
+                          "text": "BNgs…TT1Z's USDC account"
+                        }
+                      }
+                    },
+                    {
+                      "text": " ("
+                    },
+                    {
+                      "short": {
+                        "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp",
+                        "is_self": false,
+                        "label": null,
+                        "label_trust": "verified",
+                        "stand_in": null,
+                        "words": null
+                      },
+                      "text": "DV3B…L7Qp"
+                    },
+                    {
+                      "text": ")"
+                    }
+                  ],
+                  "text": "BNgs…TT1Z's USDC account (DV3B…L7Qp)"
+                }
               }
             }
           },
@@ -353,7 +599,49 @@
                   "text": "Token program"
                 },
                 "label_trust": "verified",
-                "stand_in": null
+                "stand_in": null,
+                "words": {
+                  "id": "address-labelled",
+                  "parts": [
+                    {
+                      "text": "Token program",
+                      "value": {
+                        "type": "words",
+                        "value": {
+                          "id": "accounts-name",
+                          "parts": [
+                            {
+                              "text": "Token program",
+                              "value": {
+                                "type": "text",
+                                "value": "Token program"
+                              }
+                            }
+                          ],
+                          "text": "Token program"
+                        }
+                      }
+                    },
+                    {
+                      "text": " ("
+                    },
+                    {
+                      "short": {
+                        "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+                        "is_self": false,
+                        "label": null,
+                        "label_trust": "verified",
+                        "stand_in": null,
+                        "words": null
+                      },
+                      "text": "Toke…Q5DA"
+                    },
+                    {
+                      "text": ")"
+                    }
+                  ],
+                  "text": "Token program (Toke…Q5DA)"
+                }
               }
             }
           },
@@ -374,6 +662,7 @@
                 },
                 "bound": "exact",
                 "note": null,
+                "note_words": null,
                 "units": "1488440",
                 "words": {
                   "id": "amount",
@@ -414,7 +703,8 @@
                   "is_self": false,
                   "label": null,
                   "label_trust": "fact",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": null
                 },
                 "text": "BNgs…TT1Z"
               },
@@ -435,7 +725,66 @@
             "text": "BNgs…TT1Z's USDC account"
           },
           "label_trust": "verified",
-          "stand_in": null
+          "stand_in": null,
+          "words": {
+            "id": "address-labelled",
+            "parts": [
+              {
+                "text": "BNgs…TT1Z's USDC account",
+                "value": {
+                  "type": "words",
+                  "value": {
+                    "id": "accounts-others-token",
+                    "parts": [
+                      {
+                        "short": {
+                          "address": "BNgsxo3eHqQLNTaKy4juhAUJ8DyewcJNEcYdMuSmTT1Z",
+                          "is_self": false,
+                          "label": null,
+                          "label_trust": "fact",
+                          "stand_in": null,
+                          "words": null
+                        },
+                        "text": "BNgs…TT1Z"
+                      },
+                      {
+                        "text": "'s "
+                      },
+                      {
+                        "text": "USDC",
+                        "value": {
+                          "type": "text",
+                          "value": "USDC"
+                        }
+                      },
+                      {
+                        "text": " account"
+                      }
+                    ],
+                    "text": "BNgs…TT1Z's USDC account"
+                  }
+                }
+              },
+              {
+                "text": " ("
+              },
+              {
+                "short": {
+                  "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "verified",
+                  "stand_in": null,
+                  "words": null
+                },
+                "text": "DV3B…L7Qp"
+              },
+              {
+                "text": ")"
+              }
+            ],
+            "text": "BNgs…TT1Z's USDC account (DV3B…L7Qp)"
+          }
         },
         "deposit": {
           "asset": {
@@ -447,6 +796,7 @@
           },
           "bound": "exact",
           "note": null,
+          "note_words": null,
           "units": "1488440",
           "words": {
             "id": "amount",
@@ -483,7 +833,49 @@
             "text": "Token program"
           },
           "label_trust": "verified",
-          "stand_in": null
+          "stand_in": null,
+          "words": {
+            "id": "address-labelled",
+            "parts": [
+              {
+                "text": "Token program",
+                "value": {
+                  "type": "words",
+                  "value": {
+                    "id": "accounts-name",
+                    "parts": [
+                      {
+                        "text": "Token program",
+                        "value": {
+                          "type": "text",
+                          "value": "Token program"
+                        }
+                      }
+                    ],
+                    "text": "Token program"
+                  }
+                }
+              },
+              {
+                "text": " ("
+              },
+              {
+                "short": {
+                  "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "verified",
+                  "stand_in": null,
+                  "words": null
+                },
+                "text": "Toke…Q5DA"
+              },
+              {
+                "text": ")"
+              }
+            ],
+            "text": "Token program (Toke…Q5DA)"
+          }
         }
       }
     },
@@ -500,7 +892,8 @@
                 "is_self": false,
                 "label": null,
                 "label_trust": "fact",
-                "stand_in": null
+                "stand_in": null,
+                "words": null
               }
             }
           },
@@ -521,6 +914,7 @@
                 },
                 "bound": "exact",
                 "note": null,
+                "note_words": null,
                 "units": "12218",
                 "words": {
                   "id": "amount",
@@ -556,6 +950,7 @@
           },
           "bound": "exact",
           "note": null,
+          "note_words": null,
           "units": "12218",
           "words": {
             "id": "amount",
@@ -579,7 +974,8 @@
           "is_self": false,
           "label": null,
           "label_trust": "fact",
-          "stand_in": null
+          "stand_in": null,
+          "words": null
         }
       }
     },
@@ -599,7 +995,8 @@
                 "is_self": false,
                 "label": null,
                 "label_trust": "fact",
-                "stand_in": null
+                "stand_in": null,
+                "words": null
               }
             }
           },
@@ -625,7 +1022,8 @@
             "is_self": false,
             "label": null,
             "label_trust": "fact",
-            "stand_in": null
+            "stand_in": null,
+            "words": null
           }
         }
       }
@@ -689,6 +1087,7 @@
               },
               "bound": "exact",
               "note": null,
+              "note_words": null,
               "units": "996423",
               "words": {
                 "id": "amount",
@@ -728,7 +1127,8 @@
               "is_self": false,
               "label": null,
               "label_trust": "fact",
-              "stand_in": null
+              "stand_in": null,
+              "words": null
             }
           }
         },
@@ -758,7 +1158,8 @@
                       "is_self": false,
                       "label": null,
                       "label_trust": "fact",
-                      "stand_in": null
+                      "stand_in": null,
+                      "words": null
                     },
                     "text": "BNgs…TT1Z"
                   },
@@ -779,7 +1180,66 @@
                 "text": "BNgs…TT1Z's USDC account"
               },
               "label_trust": "verified",
-              "stand_in": null
+              "stand_in": null,
+              "words": {
+                "id": "address-labelled",
+                "parts": [
+                  {
+                    "text": "BNgs…TT1Z's USDC account",
+                    "value": {
+                      "type": "words",
+                      "value": {
+                        "id": "accounts-others-token",
+                        "parts": [
+                          {
+                            "short": {
+                              "address": "BNgsxo3eHqQLNTaKy4juhAUJ8DyewcJNEcYdMuSmTT1Z",
+                              "is_self": false,
+                              "label": null,
+                              "label_trust": "fact",
+                              "stand_in": null,
+                              "words": null
+                            },
+                            "text": "BNgs…TT1Z"
+                          },
+                          {
+                            "text": "'s "
+                          },
+                          {
+                            "text": "USDC",
+                            "value": {
+                              "type": "text",
+                              "value": "USDC"
+                            }
+                          },
+                          {
+                            "text": " account"
+                          }
+                        ],
+                        "text": "BNgs…TT1Z's USDC account"
+                      }
+                    }
+                  },
+                  {
+                    "text": " ("
+                  },
+                  {
+                    "short": {
+                      "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp",
+                      "is_self": false,
+                      "label": null,
+                      "label_trust": "verified",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "DV3B…L7Qp"
+                  },
+                  {
+                    "text": ")"
+                  }
+                ],
+                "text": "BNgs…TT1Z's USDC account (DV3B…L7Qp)"
+              }
             }
           }
         },
@@ -802,7 +1262,8 @@
               "is_self": false,
               "label": null,
               "label_trust": "fact",
-              "stand_in": null
+              "stand_in": null,
+              "words": null
             }
           }
         },
@@ -848,7 +1309,52 @@
                 "text": "USDC mint"
               },
               "label_trust": "verified",
-              "stand_in": null
+              "stand_in": null,
+              "words": {
+                "id": "address-labelled",
+                "parts": [
+                  {
+                    "text": "USDC mint",
+                    "value": {
+                      "type": "words",
+                      "value": {
+                        "id": "accounts-mint",
+                        "parts": [
+                          {
+                            "text": "USDC",
+                            "value": {
+                              "type": "text",
+                              "value": "USDC"
+                            }
+                          },
+                          {
+                            "text": " mint"
+                          }
+                        ],
+                        "text": "USDC mint"
+                      }
+                    }
+                  },
+                  {
+                    "text": " ("
+                  },
+                  {
+                    "short": {
+                      "address": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+                      "is_self": false,
+                      "label": null,
+                      "label_trust": "verified",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "EPjF…Dt1v"
+                  },
+                  {
+                    "text": ")"
+                  }
+                ],
+                "text": "USDC mint (EPjF…Dt1v)"
+              }
             }
           }
         }
@@ -912,7 +1418,8 @@
               "is_self": false,
               "label": null,
               "label_trust": "fact",
-              "stand_in": null
+              "stand_in": null,
+              "words": null
             }
           }
         },
@@ -935,7 +1442,8 @@
               "is_self": false,
               "label": null,
               "label_trust": "fact",
-              "stand_in": null
+              "stand_in": null,
+              "words": null
             }
           }
         },
@@ -973,7 +1481,8 @@
                       "is_self": false,
                       "label": null,
                       "label_trust": "fact",
-                      "stand_in": null
+                      "stand_in": null,
+                      "words": null
                     },
                     "text": "BNgs…TT1Z"
                   },
@@ -994,7 +1503,66 @@
                 "text": "BNgs…TT1Z's USDC account"
               },
               "label_trust": "verified",
-              "stand_in": null
+              "stand_in": null,
+              "words": {
+                "id": "address-labelled",
+                "parts": [
+                  {
+                    "text": "BNgs…TT1Z's USDC account",
+                    "value": {
+                      "type": "words",
+                      "value": {
+                        "id": "accounts-others-token",
+                        "parts": [
+                          {
+                            "short": {
+                              "address": "BNgsxo3eHqQLNTaKy4juhAUJ8DyewcJNEcYdMuSmTT1Z",
+                              "is_self": false,
+                              "label": null,
+                              "label_trust": "fact",
+                              "stand_in": null,
+                              "words": null
+                            },
+                            "text": "BNgs…TT1Z"
+                          },
+                          {
+                            "text": "'s "
+                          },
+                          {
+                            "text": "USDC",
+                            "value": {
+                              "type": "text",
+                              "value": "USDC"
+                            }
+                          },
+                          {
+                            "text": " account"
+                          }
+                        ],
+                        "text": "BNgs…TT1Z's USDC account"
+                      }
+                    }
+                  },
+                  {
+                    "text": " ("
+                  },
+                  {
+                    "short": {
+                      "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp",
+                      "is_self": false,
+                      "label": null,
+                      "label_trust": "verified",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "DV3B…L7Qp"
+                  },
+                  {
+                    "text": ")"
+                  }
+                ],
+                "text": "BNgs…TT1Z's USDC account (DV3B…L7Qp)"
+              }
             }
           }
         },
@@ -1017,7 +1585,8 @@
               "is_self": false,
               "label": null,
               "label_trust": "fact",
-              "stand_in": null
+              "stand_in": null,
+              "words": null
             }
           }
         },
@@ -1063,7 +1632,52 @@
                 "text": "USDC mint"
               },
               "label_trust": "verified",
-              "stand_in": null
+              "stand_in": null,
+              "words": {
+                "id": "address-labelled",
+                "parts": [
+                  {
+                    "text": "USDC mint",
+                    "value": {
+                      "type": "words",
+                      "value": {
+                        "id": "accounts-mint",
+                        "parts": [
+                          {
+                            "text": "USDC",
+                            "value": {
+                              "type": "text",
+                              "value": "USDC"
+                            }
+                          },
+                          {
+                            "text": " mint"
+                          }
+                        ],
+                        "text": "USDC mint"
+                      }
+                    }
+                  },
+                  {
+                    "text": " ("
+                  },
+                  {
+                    "short": {
+                      "address": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+                      "is_self": false,
+                      "label": null,
+                      "label_trust": "verified",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "EPjF…Dt1v"
+                  },
+                  {
+                    "text": ")"
+                  }
+                ],
+                "text": "USDC mint (EPjF…Dt1v)"
+              }
             }
           }
         },
@@ -1094,7 +1708,8 @@
               "is_self": false,
               "label": null,
               "label_trust": "fact",
-              "stand_in": null
+              "stand_in": null,
+              "words": null
             }
           }
         },
@@ -1137,7 +1752,49 @@
                 "text": "Token program"
               },
               "label_trust": "verified",
-              "stand_in": null
+              "stand_in": null,
+              "words": {
+                "id": "address-labelled",
+                "parts": [
+                  {
+                    "text": "Token program",
+                    "value": {
+                      "type": "words",
+                      "value": {
+                        "id": "accounts-name",
+                        "parts": [
+                          {
+                            "text": "Token program",
+                            "value": {
+                              "type": "text",
+                              "value": "Token program"
+                            }
+                          }
+                        ],
+                        "text": "Token program"
+                      }
+                    }
+                  },
+                  {
+                    "text": " ("
+                  },
+                  {
+                    "short": {
+                      "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+                      "is_self": false,
+                      "label": null,
+                      "label_trust": "verified",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "Toke…Q5DA"
+                  },
+                  {
+                    "text": ")"
+                  }
+                ],
+                "text": "Token program (Toke…Q5DA)"
+              }
             }
           }
         },
@@ -1244,7 +1901,8 @@
               "is_self": false,
               "label": null,
               "label_trust": "fact",
-              "stand_in": null
+              "stand_in": null,
+              "words": null
             }
           }
         },
@@ -1275,7 +1933,8 @@
               "is_self": false,
               "label": null,
               "label_trust": "fact",
-              "stand_in": null
+              "stand_in": null,
+              "words": null
             }
           }
         }
@@ -1329,6 +1988,7 @@
               },
               "bound": "exact",
               "note": null,
+              "note_words": null,
               "units": "12218",
               "words": {
                 "id": "amount",
@@ -1381,6 +2041,7 @@
               },
               "bound": "exact",
               "note": null,
+              "note_words": null,
               "units": "10000",
               "words": {
                 "id": "amount",
@@ -1433,6 +2094,7 @@
               },
               "bound": "exact",
               "note": null,
+              "note_words": null,
               "units": "2218",
               "words": {
                 "id": "amount",
@@ -1528,6 +2190,7 @@
                       },
                       "bound": "exact",
                       "note": null,
+                      "note_words": null,
                       "units": "1488440",
                       "words": {
                         "id": "amount",
@@ -1634,7 +2297,8 @@
               "is_self": false,
               "label": null,
               "label_trust": "fact",
-              "stand_in": null
+              "stand_in": null,
+              "words": null
             }
           }
         }
@@ -1674,6 +2338,7 @@
             },
             "bound": "exact",
             "note": null,
+            "note_words": null,
             "units": "996423",
             "words": {
               "id": "amount",
@@ -1703,7 +2368,8 @@
           "is_self": false,
           "label": null,
           "label_trust": "fact",
-          "stand_in": null
+          "stand_in": null,
+          "words": null
         },
         "text": "Ffz5…piwg"
       },
@@ -1723,7 +2389,8 @@
                   "is_self": false,
                   "label": null,
                   "label_trust": "fact",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": null
                 },
                 "text": "BNgs…TT1Z"
               },
@@ -1744,7 +2411,66 @@
             "text": "BNgs…TT1Z's USDC account"
           },
           "label_trust": "verified",
-          "stand_in": null
+          "stand_in": null,
+          "words": {
+            "id": "address-labelled",
+            "parts": [
+              {
+                "text": "BNgs…TT1Z's USDC account",
+                "value": {
+                  "type": "words",
+                  "value": {
+                    "id": "accounts-others-token",
+                    "parts": [
+                      {
+                        "short": {
+                          "address": "BNgsxo3eHqQLNTaKy4juhAUJ8DyewcJNEcYdMuSmTT1Z",
+                          "is_self": false,
+                          "label": null,
+                          "label_trust": "fact",
+                          "stand_in": null,
+                          "words": null
+                        },
+                        "text": "BNgs…TT1Z"
+                      },
+                      {
+                        "text": "'s "
+                      },
+                      {
+                        "text": "USDC",
+                        "value": {
+                          "type": "text",
+                          "value": "USDC"
+                        }
+                      },
+                      {
+                        "text": " account"
+                      }
+                    ],
+                    "text": "BNgs…TT1Z's USDC account"
+                  }
+                }
+              },
+              {
+                "text": " ("
+              },
+              {
+                "short": {
+                  "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "verified",
+                  "stand_in": null,
+                  "words": null
+                },
+                "text": "DV3B…L7Qp"
+              },
+              {
+                "text": ")"
+              }
+            ],
+            "text": "BNgs…TT1Z's USDC account (DV3B…L7Qp)"
+          }
         },
         "text": "DV3B…L7Qp"
       }

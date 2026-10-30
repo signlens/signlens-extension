@@ -45,6 +45,7 @@
                     },
                     "bound": "exact",
                     "note": null,
+                    "note_words": null,
                     "units": "996423",
                     "words": {
                       "id": "amount",
@@ -86,7 +87,49 @@
                     "text": "[[contact-1-0000000000000000]]"
                   },
                   "label_trust": "verified",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": {
+                    "id": "address-labelled",
+                    "parts": [
+                      {
+                        "text": "[[contact-1-0000000000000000]]",
+                        "value": {
+                          "type": "words",
+                          "value": {
+                            "id": "accounts-name",
+                            "parts": [
+                              {
+                                "text": "[[contact-1-0000000000000000]]",
+                                "value": {
+                                  "type": "text",
+                                  "value": "[[contact-1-0000000000000000]]"
+                                }
+                              }
+                            ],
+                            "text": "[[contact-1-0000000000000000]]"
+                          }
+                        }
+                      },
+                      {
+                        "text": " ("
+                      },
+                      {
+                        "short": {
+                          "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp",
+                          "is_self": false,
+                          "label": null,
+                          "label_trust": "verified",
+                          "stand_in": null,
+                          "words": null
+                        },
+                        "text": "DV3B…L7Qp"
+                      },
+                      {
+                        "text": ")"
+                      }
+                    ],
+                    "text": "[[contact-1-0000000000000000]] (DV3B…L7Qp)"
+                  }
                 },
                 "text": "DV3B…L7Qp"
               }
@@ -118,6 +161,7 @@
                     },
                     "bound": "exact",
                     "note": null,
+                    "note_words": null,
                     "units": "996423",
                     "words": {
                       "id": "amount",
@@ -158,7 +202,45 @@
                       "text": "Your token account"
                     },
                     "label_trust": "verified",
-                    "stand_in": null
+                    "stand_in": null,
+                    "words": {
+                      "id": "address-labelled",
+                      "parts": [
+                        {
+                          "text": "Your token account",
+                          "value": {
+                            "type": "words",
+                            "value": {
+                              "id": "token-your-account",
+                              "parts": [
+                                {
+                                  "text": "Your token account"
+                                }
+                              ],
+                              "text": "Your token account"
+                            }
+                          }
+                        },
+                        {
+                          "text": " ("
+                        },
+                        {
+                          "short": {
+                            "address": "Ffz5kwUjkUNw7hV4r6iCJnUoXXsAPFHkCMCmKKDypiwg",
+                            "is_self": true,
+                            "label": null,
+                            "label_trust": "verified",
+                            "stand_in": null,
+                            "words": null
+                          },
+                          "text": "Ffz5…piwg"
+                        },
+                        {
+                          "text": ")"
+                        }
+                      ],
+                      "text": "Your token account (Ffz5…piwg)"
+                    }
                   }
                 }
               },
@@ -186,7 +268,49 @@
                       "text": "[[contact-1-0000000000000000]]"
                     },
                     "label_trust": "verified",
-                    "stand_in": null
+                    "stand_in": null,
+                    "words": {
+                      "id": "address-labelled",
+                      "parts": [
+                        {
+                          "text": "[[contact-1-0000000000000000]]",
+                          "value": {
+                            "type": "words",
+                            "value": {
+                              "id": "accounts-name",
+                              "parts": [
+                                {
+                                  "text": "[[contact-1-0000000000000000]]",
+                                  "value": {
+                                    "type": "text",
+                                    "value": "[[contact-1-0000000000000000]]"
+                                  }
+                                }
+                              ],
+                              "text": "[[contact-1-0000000000000000]]"
+                            }
+                          }
+                        },
+                        {
+                          "text": " ("
+                        },
+                        {
+                          "short": {
+                            "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp",
+                            "is_self": false,
+                            "label": null,
+                            "label_trust": "verified",
+                            "stand_in": null,
+                            "words": null
+                          },
+                          "text": "DV3B…L7Qp"
+                        },
+                        {
+                          "text": ")"
+                        }
+                      ],
+                      "text": "[[contact-1-0000000000000000]] (DV3B…L7Qp)"
+                    }
                   }
                 }
               }
@@ -205,6 +329,7 @@
               },
               "bound": "exact",
               "note": null,
+              "note_words": null,
               "units": "996423",
               "words": {
                 "id": "amount",
@@ -236,7 +361,45 @@
                 "text": "Your token account"
               },
               "label_trust": "verified",
-              "stand_in": null
+              "stand_in": null,
+              "words": {
+                "id": "address-labelled",
+                "parts": [
+                  {
+                    "text": "Your token account",
+                    "value": {
+                      "type": "words",
+                      "value": {
+                        "id": "token-your-account",
+                        "parts": [
+                          {
+                            "text": "Your token account"
+                          }
+                        ],
+                        "text": "Your token account"
+                      }
+                    }
+                  },
+                  {
+                    "text": " ("
+                  },
+                  {
+                    "short": {
+                      "address": "Ffz5kwUjkUNw7hV4r6iCJnUoXXsAPFHkCMCmKKDypiwg",
+                      "is_self": true,
+                      "label": null,
+                      "label_trust": "verified",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "Ffz5…piwg"
+                  },
+                  {
+                    "text": ")"
+                  }
+                ],
+                "text": "Your token account (Ffz5…piwg)"
+              }
             },
             "to": {
               "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp",
@@ -255,7 +418,49 @@
                 "text": "[[contact-1-0000000000000000]]"
               },
               "label_trust": "verified",
-              "stand_in": null
+              "stand_in": null,
+              "words": {
+                "id": "address-labelled",
+                "parts": [
+                  {
+                    "text": "[[contact-1-0000000000000000]]",
+                    "value": {
+                      "type": "words",
+                      "value": {
+                        "id": "accounts-name",
+                        "parts": [
+                          {
+                            "text": "[[contact-1-0000000000000000]]",
+                            "value": {
+                              "type": "text",
+                              "value": "[[contact-1-0000000000000000]]"
+                            }
+                          }
+                        ],
+                        "text": "[[contact-1-0000000000000000]]"
+                      }
+                    }
+                  },
+                  {
+                    "text": " ("
+                  },
+                  {
+                    "short": {
+                      "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp",
+                      "is_self": false,
+                      "label": null,
+                      "label_trust": "verified",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "DV3B…L7Qp"
+                  },
+                  {
+                    "text": ")"
+                  }
+                ],
+                "text": "[[contact-1-0000000000000000]] (DV3B…L7Qp)"
+              }
             }
           }
         },
@@ -287,7 +492,49 @@
                       "text": "[[contact-1-0000000000000000]]"
                     },
                     "label_trust": "verified",
-                    "stand_in": null
+                    "stand_in": null,
+                    "words": {
+                      "id": "address-labelled",
+                      "parts": [
+                        {
+                          "text": "[[contact-1-0000000000000000]]",
+                          "value": {
+                            "type": "words",
+                            "value": {
+                              "id": "accounts-name",
+                              "parts": [
+                                {
+                                  "text": "[[contact-1-0000000000000000]]",
+                                  "value": {
+                                    "type": "text",
+                                    "value": "[[contact-1-0000000000000000]]"
+                                  }
+                                }
+                              ],
+                              "text": "[[contact-1-0000000000000000]]"
+                            }
+                          }
+                        },
+                        {
+                          "text": " ("
+                        },
+                        {
+                          "short": {
+                            "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp",
+                            "is_self": false,
+                            "label": null,
+                            "label_trust": "verified",
+                            "stand_in": null,
+                            "words": null
+                          },
+                          "text": "DV3B…L7Qp"
+                        },
+                        {
+                          "text": ")"
+                        }
+                      ],
+                      "text": "[[contact-1-0000000000000000]] (DV3B…L7Qp)"
+                    }
                   }
                 }
               },
@@ -315,7 +562,49 @@
                       "text": "Token program"
                     },
                     "label_trust": "verified",
-                    "stand_in": null
+                    "stand_in": null,
+                    "words": {
+                      "id": "address-labelled",
+                      "parts": [
+                        {
+                          "text": "Token program",
+                          "value": {
+                            "type": "words",
+                            "value": {
+                              "id": "accounts-name",
+                              "parts": [
+                                {
+                                  "text": "Token program",
+                                  "value": {
+                                    "type": "text",
+                                    "value": "Token program"
+                                  }
+                                }
+                              ],
+                              "text": "Token program"
+                            }
+                          }
+                        },
+                        {
+                          "text": " ("
+                        },
+                        {
+                          "short": {
+                            "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+                            "is_self": false,
+                            "label": null,
+                            "label_trust": "verified",
+                            "stand_in": null,
+                            "words": null
+                          },
+                          "text": "Toke…Q5DA"
+                        },
+                        {
+                          "text": ")"
+                        }
+                      ],
+                      "text": "Token program (Toke…Q5DA)"
+                    }
                   }
                 }
               },
@@ -336,6 +625,7 @@
                     },
                     "bound": "exact",
                     "note": null,
+                    "note_words": null,
                     "units": "1488440",
                     "words": {
                       "id": "amount",
@@ -381,7 +671,49 @@
                 "text": "[[contact-1-0000000000000000]]"
               },
               "label_trust": "verified",
-              "stand_in": null
+              "stand_in": null,
+              "words": {
+                "id": "address-labelled",
+                "parts": [
+                  {
+                    "text": "[[contact-1-0000000000000000]]",
+                    "value": {
+                      "type": "words",
+                      "value": {
+                        "id": "accounts-name",
+                        "parts": [
+                          {
+                            "text": "[[contact-1-0000000000000000]]",
+                            "value": {
+                              "type": "text",
+                              "value": "[[contact-1-0000000000000000]]"
+                            }
+                          }
+                        ],
+                        "text": "[[contact-1-0000000000000000]]"
+                      }
+                    }
+                  },
+                  {
+                    "text": " ("
+                  },
+                  {
+                    "short": {
+                      "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp",
+                      "is_self": false,
+                      "label": null,
+                      "label_trust": "verified",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "DV3B…L7Qp"
+                  },
+                  {
+                    "text": ")"
+                  }
+                ],
+                "text": "[[contact-1-0000000000000000]] (DV3B…L7Qp)"
+              }
             },
             "deposit": {
               "asset": {
@@ -393,6 +725,7 @@
               },
               "bound": "exact",
               "note": null,
+              "note_words": null,
               "units": "1488440",
               "words": {
                 "id": "amount",
@@ -429,7 +762,49 @@
                 "text": "Token program"
               },
               "label_trust": "verified",
-              "stand_in": null
+              "stand_in": null,
+              "words": {
+                "id": "address-labelled",
+                "parts": [
+                  {
+                    "text": "Token program",
+                    "value": {
+                      "type": "words",
+                      "value": {
+                        "id": "accounts-name",
+                        "parts": [
+                          {
+                            "text": "Token program",
+                            "value": {
+                              "type": "text",
+                              "value": "Token program"
+                            }
+                          }
+                        ],
+                        "text": "Token program"
+                      }
+                    }
+                  },
+                  {
+                    "text": " ("
+                  },
+                  {
+                    "short": {
+                      "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+                      "is_self": false,
+                      "label": null,
+                      "label_trust": "verified",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "Toke…Q5DA"
+                  },
+                  {
+                    "text": ")"
+                  }
+                ],
+                "text": "Token program (Toke…Q5DA)"
+              }
             }
           }
         },
@@ -454,6 +829,7 @@
                     },
                     "bound": "exact",
                     "note": null,
+                    "note_words": null,
                     "units": "12218",
                     "words": {
                       "id": "amount",
@@ -489,6 +865,7 @@
               },
               "bound": "exact",
               "note": null,
+              "note_words": null,
               "units": "12218",
               "words": {
                 "id": "amount",
@@ -520,7 +897,45 @@
                 "text": "Your wallet"
               },
               "label_trust": "verified",
-              "stand_in": null
+              "stand_in": null,
+              "words": {
+                "id": "address-labelled",
+                "parts": [
+                  {
+                    "text": "Your wallet",
+                    "value": {
+                      "type": "words",
+                      "value": {
+                        "id": "accounts-your-wallet",
+                        "parts": [
+                          {
+                            "text": "Your wallet"
+                          }
+                        ],
+                        "text": "Your wallet"
+                      }
+                    }
+                  },
+                  {
+                    "text": " ("
+                  },
+                  {
+                    "short": {
+                      "address": "8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa",
+                      "is_self": true,
+                      "label": null,
+                      "label_trust": "verified",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "8Kvy…p1fa"
+                  },
+                  {
+                    "text": ")"
+                  }
+                ],
+                "text": "Your wallet (8Kvy…p1fa)"
+              }
             }
           }
         },
@@ -540,7 +955,8 @@
                     "is_self": false,
                     "label": null,
                     "label_trust": "fact",
-                    "stand_in": null
+                    "stand_in": null,
+                    "words": null
                   }
                 }
               },
@@ -566,7 +982,8 @@
                 "is_self": false,
                 "label": null,
                 "label_trust": "fact",
-                "stand_in": null
+                "stand_in": null,
+                "words": null
               }
             }
           }
@@ -630,6 +1047,7 @@
                   },
                   "bound": "exact",
                   "note": null,
+                  "note_words": null,
                   "units": "996423",
                   "words": {
                     "id": "amount",
@@ -677,7 +1095,45 @@
                     "text": "Your token account"
                   },
                   "label_trust": "verified",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": {
+                    "id": "address-labelled",
+                    "parts": [
+                      {
+                        "text": "Your token account",
+                        "value": {
+                          "type": "words",
+                          "value": {
+                            "id": "token-your-account",
+                            "parts": [
+                              {
+                                "text": "Your token account"
+                              }
+                            ],
+                            "text": "Your token account"
+                          }
+                        }
+                      },
+                      {
+                        "text": " ("
+                      },
+                      {
+                        "short": {
+                          "address": "Ffz5kwUjkUNw7hV4r6iCJnUoXXsAPFHkCMCmKKDypiwg",
+                          "is_self": true,
+                          "label": null,
+                          "label_trust": "verified",
+                          "stand_in": null,
+                          "words": null
+                        },
+                        "text": "Ffz5…piwg"
+                      },
+                      {
+                        "text": ")"
+                      }
+                    ],
+                    "text": "Your token account (Ffz5…piwg)"
+                  }
                 }
               }
             },
@@ -712,7 +1168,49 @@
                     "text": "[[contact-1-0000000000000000]]"
                   },
                   "label_trust": "verified",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": {
+                    "id": "address-labelled",
+                    "parts": [
+                      {
+                        "text": "[[contact-1-0000000000000000]]",
+                        "value": {
+                          "type": "words",
+                          "value": {
+                            "id": "accounts-name",
+                            "parts": [
+                              {
+                                "text": "[[contact-1-0000000000000000]]",
+                                "value": {
+                                  "type": "text",
+                                  "value": "[[contact-1-0000000000000000]]"
+                                }
+                              }
+                            ],
+                            "text": "[[contact-1-0000000000000000]]"
+                          }
+                        }
+                      },
+                      {
+                        "text": " ("
+                      },
+                      {
+                        "short": {
+                          "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp",
+                          "is_self": false,
+                          "label": null,
+                          "label_trust": "verified",
+                          "stand_in": null,
+                          "words": null
+                        },
+                        "text": "DV3B…L7Qp"
+                      },
+                      {
+                        "text": ")"
+                      }
+                    ],
+                    "text": "[[contact-1-0000000000000000]] (DV3B…L7Qp)"
+                  }
                 }
               }
             },
@@ -743,7 +1241,45 @@
                     "text": "Your wallet"
                   },
                   "label_trust": "verified",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": {
+                    "id": "address-labelled",
+                    "parts": [
+                      {
+                        "text": "Your wallet",
+                        "value": {
+                          "type": "words",
+                          "value": {
+                            "id": "accounts-your-wallet",
+                            "parts": [
+                              {
+                                "text": "Your wallet"
+                              }
+                            ],
+                            "text": "Your wallet"
+                          }
+                        }
+                      },
+                      {
+                        "text": " ("
+                      },
+                      {
+                        "short": {
+                          "address": "8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa",
+                          "is_self": true,
+                          "label": null,
+                          "label_trust": "verified",
+                          "stand_in": null,
+                          "words": null
+                        },
+                        "text": "8Kvy…p1fa"
+                      },
+                      {
+                        "text": ")"
+                      }
+                    ],
+                    "text": "Your wallet (8Kvy…p1fa)"
+                  }
                 }
               }
             },
@@ -789,7 +1325,52 @@
                     "text": "USDC mint"
                   },
                   "label_trust": "verified",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": {
+                    "id": "address-labelled",
+                    "parts": [
+                      {
+                        "text": "USDC mint",
+                        "value": {
+                          "type": "words",
+                          "value": {
+                            "id": "accounts-mint",
+                            "parts": [
+                              {
+                                "text": "USDC",
+                                "value": {
+                                  "type": "text",
+                                  "value": "USDC"
+                                }
+                              },
+                              {
+                                "text": " mint"
+                              }
+                            ],
+                            "text": "USDC mint"
+                          }
+                        }
+                      },
+                      {
+                        "text": " ("
+                      },
+                      {
+                        "short": {
+                          "address": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+                          "is_self": false,
+                          "label": null,
+                          "label_trust": "verified",
+                          "stand_in": null,
+                          "words": null
+                        },
+                        "text": "EPjF…Dt1v"
+                      },
+                      {
+                        "text": ")"
+                      }
+                    ],
+                    "text": "USDC mint (EPjF…Dt1v)"
+                  }
                 }
               }
             }
@@ -853,7 +1434,8 @@
                   "is_self": false,
                   "label": null,
                   "label_trust": "fact",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": null
                 }
               }
             },
@@ -876,7 +1458,8 @@
                   "is_self": false,
                   "label": null,
                   "label_trust": "fact",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": null
                 }
               }
             },
@@ -919,7 +1502,49 @@
                     "text": "[[contact-1-0000000000000000]]"
                   },
                   "label_trust": "verified",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": {
+                    "id": "address-labelled",
+                    "parts": [
+                      {
+                        "text": "[[contact-1-0000000000000000]]",
+                        "value": {
+                          "type": "words",
+                          "value": {
+                            "id": "accounts-name",
+                            "parts": [
+                              {
+                                "text": "[[contact-1-0000000000000000]]",
+                                "value": {
+                                  "type": "text",
+                                  "value": "[[contact-1-0000000000000000]]"
+                                }
+                              }
+                            ],
+                            "text": "[[contact-1-0000000000000000]]"
+                          }
+                        }
+                      },
+                      {
+                        "text": " ("
+                      },
+                      {
+                        "short": {
+                          "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp",
+                          "is_self": false,
+                          "label": null,
+                          "label_trust": "verified",
+                          "stand_in": null,
+                          "words": null
+                        },
+                        "text": "DV3B…L7Qp"
+                      },
+                      {
+                        "text": ")"
+                      }
+                    ],
+                    "text": "[[contact-1-0000000000000000]] (DV3B…L7Qp)"
+                  }
                 }
               }
             },
@@ -942,7 +1567,8 @@
                   "is_self": false,
                   "label": null,
                   "label_trust": "fact",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": null
                 }
               }
             },
@@ -988,7 +1614,52 @@
                     "text": "USDC mint"
                   },
                   "label_trust": "verified",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": {
+                    "id": "address-labelled",
+                    "parts": [
+                      {
+                        "text": "USDC mint",
+                        "value": {
+                          "type": "words",
+                          "value": {
+                            "id": "accounts-mint",
+                            "parts": [
+                              {
+                                "text": "USDC",
+                                "value": {
+                                  "type": "text",
+                                  "value": "USDC"
+                                }
+                              },
+                              {
+                                "text": " mint"
+                              }
+                            ],
+                            "text": "USDC mint"
+                          }
+                        }
+                      },
+                      {
+                        "text": " ("
+                      },
+                      {
+                        "short": {
+                          "address": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+                          "is_self": false,
+                          "label": null,
+                          "label_trust": "verified",
+                          "stand_in": null,
+                          "words": null
+                        },
+                        "text": "EPjF…Dt1v"
+                      },
+                      {
+                        "text": ")"
+                      }
+                    ],
+                    "text": "USDC mint (EPjF…Dt1v)"
+                  }
                 }
               }
             },
@@ -1027,7 +1698,45 @@
                     "text": "Your wallet"
                   },
                   "label_trust": "verified",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": {
+                    "id": "address-labelled",
+                    "parts": [
+                      {
+                        "text": "Your wallet",
+                        "value": {
+                          "type": "words",
+                          "value": {
+                            "id": "accounts-your-wallet",
+                            "parts": [
+                              {
+                                "text": "Your wallet"
+                              }
+                            ],
+                            "text": "Your wallet"
+                          }
+                        }
+                      },
+                      {
+                        "text": " ("
+                      },
+                      {
+                        "short": {
+                          "address": "8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa",
+                          "is_self": true,
+                          "label": null,
+                          "label_trust": "verified",
+                          "stand_in": null,
+                          "words": null
+                        },
+                        "text": "8Kvy…p1fa"
+                      },
+                      {
+                        "text": ")"
+                      }
+                    ],
+                    "text": "Your wallet (8Kvy…p1fa)"
+                  }
                 }
               }
             },
@@ -1070,7 +1779,49 @@
                     "text": "Token program"
                   },
                   "label_trust": "verified",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": {
+                    "id": "address-labelled",
+                    "parts": [
+                      {
+                        "text": "Token program",
+                        "value": {
+                          "type": "words",
+                          "value": {
+                            "id": "accounts-name",
+                            "parts": [
+                              {
+                                "text": "Token program",
+                                "value": {
+                                  "type": "text",
+                                  "value": "Token program"
+                                }
+                              }
+                            ],
+                            "text": "Token program"
+                          }
+                        }
+                      },
+                      {
+                        "text": " ("
+                      },
+                      {
+                        "short": {
+                          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+                          "is_self": false,
+                          "label": null,
+                          "label_trust": "verified",
+                          "stand_in": null,
+                          "words": null
+                        },
+                        "text": "Toke…Q5DA"
+                      },
+                      {
+                        "text": ")"
+                      }
+                    ],
+                    "text": "Token program (Toke…Q5DA)"
+                  }
                 }
               }
             },
@@ -1185,7 +1936,45 @@
                     "text": "Your wallet"
                   },
                   "label_trust": "verified",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": {
+                    "id": "address-labelled",
+                    "parts": [
+                      {
+                        "text": "Your wallet",
+                        "value": {
+                          "type": "words",
+                          "value": {
+                            "id": "accounts-your-wallet",
+                            "parts": [
+                              {
+                                "text": "Your wallet"
+                              }
+                            ],
+                            "text": "Your wallet"
+                          }
+                        }
+                      },
+                      {
+                        "text": " ("
+                      },
+                      {
+                        "short": {
+                          "address": "8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa",
+                          "is_self": true,
+                          "label": null,
+                          "label_trust": "verified",
+                          "stand_in": null,
+                          "words": null
+                        },
+                        "text": "8Kvy…p1fa"
+                      },
+                      {
+                        "text": ")"
+                      }
+                    ],
+                    "text": "Your wallet (8Kvy…p1fa)"
+                  }
                 }
               }
             },
@@ -1216,7 +2005,8 @@
                   "is_self": false,
                   "label": null,
                   "label_trust": "fact",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": null
                 }
               }
             }
@@ -1270,6 +2060,7 @@
                   },
                   "bound": "exact",
                   "note": null,
+                  "note_words": null,
                   "units": "12218",
                   "words": {
                     "id": "amount",
@@ -1322,6 +2113,7 @@
                   },
                   "bound": "exact",
                   "note": null,
+                  "note_words": null,
                   "units": "10000",
                   "words": {
                     "id": "amount",
@@ -1374,6 +2166,7 @@
                   },
                   "bound": "exact",
                   "note": null,
+                  "note_words": null,
                   "units": "2218",
                   "words": {
                     "id": "amount",
@@ -1469,6 +2262,7 @@
                           },
                           "bound": "exact",
                           "note": null,
+                          "note_words": null,
                           "units": "1488440",
                           "words": {
                             "id": "amount",
@@ -1575,7 +2369,8 @@
                   "is_self": false,
                   "label": null,
                   "label_trust": "fact",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": null
                 }
               }
             }
@@ -1615,6 +2410,7 @@
                 },
                 "bound": "exact",
                 "note": null,
+                "note_words": null,
                 "units": "996423",
                 "words": {
                   "id": "amount",
@@ -1656,7 +2452,49 @@
                 "text": "[[contact-1-0000000000000000]]"
               },
               "label_trust": "verified",
-              "stand_in": null
+              "stand_in": null,
+              "words": {
+                "id": "address-labelled",
+                "parts": [
+                  {
+                    "text": "[[contact-1-0000000000000000]]",
+                    "value": {
+                      "type": "words",
+                      "value": {
+                        "id": "accounts-name",
+                        "parts": [
+                          {
+                            "text": "[[contact-1-0000000000000000]]",
+                            "value": {
+                              "type": "text",
+                              "value": "[[contact-1-0000000000000000]]"
+                            }
+                          }
+                        ],
+                        "text": "[[contact-1-0000000000000000]]"
+                      }
+                    }
+                  },
+                  {
+                    "text": " ("
+                  },
+                  {
+                    "short": {
+                      "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp",
+                      "is_self": false,
+                      "label": null,
+                      "label_trust": "verified",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "DV3B…L7Qp"
+                  },
+                  {
+                    "text": ")"
+                  }
+                ],
+                "text": "[[contact-1-0000000000000000]] (DV3B…L7Qp)"
+              }
             },
             "text": "DV3B…L7Qp"
           }

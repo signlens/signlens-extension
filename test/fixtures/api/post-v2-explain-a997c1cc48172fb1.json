@@ -32,7 +32,8 @@
                   "is_self": false,
                   "label": null,
                   "label_trust": "fact",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": null
                 },
                 "text": "J1w1…xti8"
               }
@@ -54,7 +55,8 @@
                   "is_self": false,
                   "label": null,
                   "label_trust": "fact",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": null
                 },
                 "text": "J1w1…xti8"
               }
@@ -86,6 +88,7 @@
                     },
                     "bound": "exact",
                     "note": null,
+                    "note_words": null,
                     "units": "5000",
                     "words": {
                       "id": "amount",
@@ -121,6 +124,7 @@
               },
               "bound": "exact",
               "note": null,
+              "note_words": null,
               "units": "5000",
               "words": {
                 "id": "amount",
@@ -152,7 +156,45 @@
                 "text": "Your wallet"
               },
               "label_trust": "verified",
-              "stand_in": null
+              "stand_in": null,
+              "words": {
+                "id": "address-labelled",
+                "parts": [
+                  {
+                    "text": "Your wallet",
+                    "value": {
+                      "type": "words",
+                      "value": {
+                        "id": "accounts-your-wallet",
+                        "parts": [
+                          {
+                            "text": "Your wallet"
+                          }
+                        ],
+                        "text": "Your wallet"
+                      }
+                    }
+                  },
+                  {
+                    "text": " ("
+                  },
+                  {
+                    "short": {
+                      "address": "6UJbu9ut5VAsFYQFgPEa5xPfoyF5bB5oi4EknFPvu924",
+                      "is_self": true,
+                      "label": null,
+                      "label_trust": "verified",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "6UJb…u924"
+                  },
+                  {
+                    "text": ")"
+                  }
+                ],
+                "text": "Your wallet (6UJb…u924)"
+              }
             }
           }
         },
@@ -172,7 +214,8 @@
                     "is_self": false,
                     "label": null,
                     "label_trust": "fact",
-                    "stand_in": null
+                    "stand_in": null,
+                    "words": null
                   }
                 }
               },
@@ -198,7 +241,8 @@
                 "is_self": false,
                 "label": null,
                 "label_trust": "fact",
-                "stand_in": null
+                "stand_in": null,
+                "words": null
               }
             }
           }
@@ -285,7 +329,8 @@
                   "is_self": false,
                   "label": null,
                   "label_trust": "fact",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": null
                 }
               }
             },
@@ -308,7 +353,8 @@
                   "is_self": false,
                   "label": null,
                   "label_trust": "fact",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": null
                 }
               }
             },
@@ -364,7 +410,45 @@
                     "text": "Your wallet"
                   },
                   "label_trust": "verified",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": {
+                    "id": "address-labelled",
+                    "parts": [
+                      {
+                        "text": "Your wallet",
+                        "value": {
+                          "type": "words",
+                          "value": {
+                            "id": "accounts-your-wallet",
+                            "parts": [
+                              {
+                                "text": "Your wallet"
+                              }
+                            ],
+                            "text": "Your wallet"
+                          }
+                        }
+                      },
+                      {
+                        "text": " ("
+                      },
+                      {
+                        "short": {
+                          "address": "6UJbu9ut5VAsFYQFgPEa5xPfoyF5bB5oi4EknFPvu924",
+                          "is_self": true,
+                          "label": null,
+                          "label_trust": "verified",
+                          "stand_in": null,
+                          "words": null
+                        },
+                        "text": "6UJb…u924"
+                      },
+                      {
+                        "text": ")"
+                      }
+                    ],
+                    "text": "Your wallet (6UJb…u924)"
+                  }
                 }
               }
             }
@@ -420,7 +504,8 @@
                   "is_self": false,
                   "label": null,
                   "label_trust": "fact",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": null
                 }
               }
             },
@@ -443,7 +528,8 @@
                   "is_self": false,
                   "label": null,
                   "label_trust": "fact",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": null
                 }
               }
             },
@@ -499,7 +585,45 @@
                     "text": "Your wallet"
                   },
                   "label_trust": "verified",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": {
+                    "id": "address-labelled",
+                    "parts": [
+                      {
+                        "text": "Your wallet",
+                        "value": {
+                          "type": "words",
+                          "value": {
+                            "id": "accounts-your-wallet",
+                            "parts": [
+                              {
+                                "text": "Your wallet"
+                              }
+                            ],
+                            "text": "Your wallet"
+                          }
+                        }
+                      },
+                      {
+                        "text": " ("
+                      },
+                      {
+                        "short": {
+                          "address": "6UJbu9ut5VAsFYQFgPEa5xPfoyF5bB5oi4EknFPvu924",
+                          "is_self": true,
+                          "label": null,
+                          "label_trust": "verified",
+                          "stand_in": null,
+                          "words": null
+                        },
+                        "text": "6UJb…u924"
+                      },
+                      {
+                        "text": ")"
+                      }
+                    ],
+                    "text": "Your wallet (6UJb…u924)"
+                  }
                 }
               }
             }
@@ -563,7 +687,8 @@
                   "is_self": false,
                   "label": null,
                   "label_trust": "fact",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": null
                 }
               }
             },
@@ -594,7 +719,45 @@
                     "text": "Your wallet"
                   },
                   "label_trust": "verified",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": {
+                    "id": "address-labelled",
+                    "parts": [
+                      {
+                        "text": "Your wallet",
+                        "value": {
+                          "type": "words",
+                          "value": {
+                            "id": "accounts-your-wallet",
+                            "parts": [
+                              {
+                                "text": "Your wallet"
+                              }
+                            ],
+                            "text": "Your wallet"
+                          }
+                        }
+                      },
+                      {
+                        "text": " ("
+                      },
+                      {
+                        "short": {
+                          "address": "6UJbu9ut5VAsFYQFgPEa5xPfoyF5bB5oi4EknFPvu924",
+                          "is_self": true,
+                          "label": null,
+                          "label_trust": "verified",
+                          "stand_in": null,
+                          "words": null
+                        },
+                        "text": "6UJb…u924"
+                      },
+                      {
+                        "text": ")"
+                      }
+                    ],
+                    "text": "Your wallet (6UJb…u924)"
+                  }
                 }
               }
             }
@@ -651,7 +814,45 @@
                     "text": "Your wallet"
                   },
                   "label_trust": "verified",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": {
+                    "id": "address-labelled",
+                    "parts": [
+                      {
+                        "text": "Your wallet",
+                        "value": {
+                          "type": "words",
+                          "value": {
+                            "id": "accounts-your-wallet",
+                            "parts": [
+                              {
+                                "text": "Your wallet"
+                              }
+                            ],
+                            "text": "Your wallet"
+                          }
+                        }
+                      },
+                      {
+                        "text": " ("
+                      },
+                      {
+                        "short": {
+                          "address": "6UJbu9ut5VAsFYQFgPEa5xPfoyF5bB5oi4EknFPvu924",
+                          "is_self": true,
+                          "label": null,
+                          "label_trust": "verified",
+                          "stand_in": null,
+                          "words": null
+                        },
+                        "text": "6UJb…u924"
+                      },
+                      {
+                        "text": ")"
+                      }
+                    ],
+                    "text": "Your wallet (6UJb…u924)"
+                  }
                 }
               }
             }
@@ -705,6 +906,7 @@
                   },
                   "bound": "exact",
                   "note": null,
+                  "note_words": null,
                   "units": "5000",
                   "words": {
                     "id": "amount",
@@ -757,6 +959,7 @@
                   },
                   "bound": "exact",
                   "note": null,
+                  "note_words": null,
                   "units": "5000",
                   "words": {
                     "id": "amount",
@@ -855,7 +1058,8 @@
                   "is_self": false,
                   "label": null,
                   "label_trust": "fact",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": null
                 }
               }
             }
@@ -894,7 +1098,8 @@
               "is_self": false,
               "label": null,
               "label_trust": "fact",
-              "stand_in": null
+              "stand_in": null,
+              "words": null
             },
             "text": "J1w1…xti8"
           },
@@ -907,7 +1112,8 @@
               "is_self": false,
               "label": null,
               "label_trust": "fact",
-              "stand_in": null
+              "stand_in": null,
+              "words": null
             },
             "text": "J1w1…xti8"
           }

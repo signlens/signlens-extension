@@ -28,7 +28,8 @@
                 "is_self": false,
                 "label": null,
                 "label_trust": "fact",
-                "stand_in": null
+                "stand_in": null,
+                "words": null
               }
             }
           },
@@ -49,6 +50,7 @@
                 },
                 "bound": "exact",
                 "note": null,
+                "note_words": null,
                 "units": "5535",
                 "words": {
                   "id": "amount",
@@ -84,6 +86,7 @@
           },
           "bound": "exact",
           "note": null,
+          "note_words": null,
           "units": "5535",
           "words": {
             "id": "amount",
@@ -107,7 +110,8 @@
           "is_self": false,
           "label": null,
           "label_trust": "fact",
-          "stand_in": null
+          "stand_in": null,
+          "words": null
         }
       }
     },
@@ -331,7 +335,8 @@
               "is_self": false,
               "label": null,
               "label_trust": "fact",
-              "stand_in": null
+              "stand_in": null,
+              "words": null
             }
           }
         }
@@ -385,6 +390,7 @@
               },
               "bound": "exact",
               "note": null,
+              "note_words": null,
               "units": "5535",
               "words": {
                 "id": "amount",
@@ -437,6 +443,7 @@
               },
               "bound": "exact",
               "note": null,
+              "note_words": null,
               "units": "5000",
               "words": {
                 "id": "amount",
@@ -489,6 +496,7 @@
               },
               "bound": "exact",
               "note": null,
+              "note_words": null,
               "units": "535",
               "words": {
                 "id": "amount",

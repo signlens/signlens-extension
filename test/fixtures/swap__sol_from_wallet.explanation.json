@@ -22,6 +22,7 @@
                 },
                 "bound": "exact",
                 "note": null,
+                "note_words": null,
                 "units": "500000",
                 "words": {
                   "id": "amount",
@@ -51,7 +52,8 @@
               "is_self": false,
               "label": null,
               "label_trust": "fact",
-              "stand_in": null
+              "stand_in": null,
+              "words": null
             },
             "text": "8Aet…tiTo"
           },
@@ -64,7 +66,8 @@
               "is_self": false,
               "label": null,
               "label_trust": "fact",
-              "stand_in": null
+              "stand_in": null,
+              "words": null
             },
             "text": "879A…MGsA"
           }
@@ -94,6 +97,7 @@
                 },
                 "bound": "exact",
                 "note": null,
+                "note_words": null,
                 "units": "49500000",
                 "words": {
                   "id": "amount",
@@ -123,7 +127,8 @@
               "is_self": false,
               "label": null,
               "label_trust": "fact",
-              "stand_in": null
+              "stand_in": null,
+              "words": null
             },
             "text": "4hJn…VH6R"
           },
@@ -170,6 +175,7 @@
                 },
                 "bound": "exact",
                 "note": null,
+                "note_words": null,
                 "units": "500000",
                 "words": {
                   "id": "amount",
@@ -202,7 +208,8 @@
                 "is_self": false,
                 "label": null,
                 "label_trust": "fact",
-                "stand_in": null
+                "stand_in": null,
+                "words": null
               }
             }
           },
@@ -218,7 +225,8 @@
                 "is_self": false,
                 "label": null,
                 "label_trust": "fact",
-                "stand_in": null
+                "stand_in": null,
+                "words": null
               }
             }
           }
@@ -237,6 +245,7 @@
           },
           "bound": "exact",
           "note": null,
+          "note_words": null,
           "units": "500000",
           "words": {
             "id": "amount",
@@ -260,14 +269,16 @@
           "is_self": false,
           "label": null,
           "label_trust": "fact",
-          "stand_in": null
+          "stand_in": null,
+          "words": null
         },
         "to": {
           "address": "879ArayuxbYjBhpUe4QCx8nqaAKjiwCG1hFiJo6zMGsA",
           "is_self": false,
           "label": null,
           "label_trust": "fact",
-          "stand_in": null
+          "stand_in": null,
+          "words": null
         }
       }
     },
@@ -292,6 +303,7 @@
                 },
                 "bound": "exact",
                 "note": null,
+                "note_words": null,
                 "units": "49500000",
                 "words": {
                   "id": "amount",
@@ -324,7 +336,8 @@
                 "is_self": false,
                 "label": null,
                 "label_trust": "fact",
-                "stand_in": null
+                "stand_in": null,
+                "words": null
               }
             }
           },
@@ -340,7 +353,8 @@
                 "is_self": false,
                 "label": null,
                 "label_trust": "fact",
-                "stand_in": null
+                "stand_in": null,
+                "words": null
               }
             }
           }
@@ -359,6 +373,7 @@
           },
           "bound": "exact",
           "note": null,
+          "note_words": null,
           "units": "49500000",
           "words": {
             "id": "amount",
@@ -382,14 +397,16 @@
           "is_self": false,
           "label": null,
           "label_trust": "fact",
-          "stand_in": null
+          "stand_in": null,
+          "words": null
         },
         "to": {
           "address": "4hJnan1NC4BuwPSn41WAQ7yG3zMK5JfXzDiq8jw2VH6R",
           "is_self": false,
           "label": null,
           "label_trust": "fact",
-          "stand_in": null
+          "stand_in": null,
+          "words": null
         }
       }
     },
@@ -432,7 +449,8 @@
                 "is_self": false,
                 "label": null,
                 "label_trust": "fact",
-                "stand_in": null
+                "stand_in": null,
+                "words": null
               }
             }
           },
@@ -460,7 +478,8 @@
                         "is_self": false,
                         "label": null,
                         "label_trust": "fact",
-                        "stand_in": null
+                        "stand_in": null,
+                        "words": null
                       },
                       "text": "9rVP…5hT9"
                     },
@@ -479,7 +498,8 @@
                     }
                   ],
                   "text": "the account at lookup table 9rVP…5hT9[6]"
-                }
+                },
+                "words": null
               }
             }
           },
@@ -500,6 +520,7 @@
                 },
                 "bound": "exact",
                 "note": null,
+                "note_words": null,
                 "units": "1488440",
                 "words": {
                   "id": "amount",
@@ -533,7 +554,8 @@
           "is_self": false,
           "label": null,
           "label_trust": "fact",
-          "stand_in": null
+          "stand_in": null,
+          "words": null
         },
         "deposit": {
           "asset": {
@@ -545,6 +567,7 @@
           },
           "bound": "exact",
           "note": null,
+          "note_words": null,
           "units": "1488440",
           "words": {
             "id": "amount",
@@ -581,7 +604,8 @@
                   "is_self": false,
                   "label": null,
                   "label_trust": "fact",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": null
                 },
                 "text": "9rVP…5hT9"
               },
@@ -600,7 +624,8 @@
               }
             ],
             "text": "the account at lookup table 9rVP…5hT9[6]"
-          }
+          },
+          "words": null
         }
       }
     },
@@ -625,6 +650,7 @@
                 },
                 "bound": "exact",
                 "note": null,
+                "note_words": null,
                 "units": "122053",
                 "words": {
                   "id": "amount",
@@ -657,7 +683,8 @@
                 "is_self": false,
                 "label": null,
                 "label_trust": "fact",
-                "stand_in": null
+                "stand_in": null,
+                "words": null
               }
             }
           },
@@ -681,7 +708,45 @@
                   "text": "Jito tip account"
                 },
                 "label_trust": "verified",
-                "stand_in": null
+                "stand_in": null,
+                "words": {
+                  "id": "address-labelled",
+                  "parts": [
+                    {
+                      "text": "Jito tip account",
+                      "value": {
+                        "type": "words",
+                        "value": {
+                          "id": "accounts-jito-tip",
+                          "parts": [
+                            {
+                              "text": "Jito tip account"
+                            }
+                          ],
+                          "text": "Jito tip account"
+                        }
+                      }
+                    },
+                    {
+                      "text": " ("
+                    },
+                    {
+                      "short": {
+                        "address": "96gYZGLnJYVFmbjzopPSU6QiEV5fGqZNyN9nmNhvrZU5",
+                        "is_self": false,
+                        "label": null,
+                        "label_trust": "verified",
+                        "stand_in": null,
+                        "words": null
+                      },
+                      "text": "96gY…rZU5"
+                    },
+                    {
+                      "text": ")"
+                    }
+                  ],
+                  "text": "Jito tip account (96gY…rZU5)"
+                }
               }
             }
           }
@@ -700,6 +765,7 @@
           },
           "bound": "exact",
           "note": null,
+          "note_words": null,
           "units": "122053",
           "words": {
             "id": "amount",
@@ -723,7 +789,8 @@
           "is_self": false,
           "label": null,
           "label_trust": "fact",
-          "stand_in": null
+          "stand_in": null,
+          "words": null
         },
         "to": {
           "address": "96gYZGLnJYVFmbjzopPSU6QiEV5fGqZNyN9nmNhvrZU5",
@@ -738,7 +805,45 @@
             "text": "Jito tip account"
           },
           "label_trust": "verified",
-          "stand_in": null
+          "stand_in": null,
+          "words": {
+            "id": "address-labelled",
+            "parts": [
+              {
+                "text": "Jito tip account",
+                "value": {
+                  "type": "words",
+                  "value": {
+                    "id": "accounts-jito-tip",
+                    "parts": [
+                      {
+                        "text": "Jito tip account"
+                      }
+                    ],
+                    "text": "Jito tip account"
+                  }
+                }
+              },
+              {
+                "text": " ("
+              },
+              {
+                "short": {
+                  "address": "96gYZGLnJYVFmbjzopPSU6QiEV5fGqZNyN9nmNhvrZU5",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "verified",
+                  "stand_in": null,
+                  "words": null
+                },
+                "text": "96gY…rZU5"
+              },
+              {
+                "text": ")"
+              }
+            ],
+            "text": "Jito tip account (96gY…rZU5)"
+          }
         }
       }
     },
@@ -755,7 +860,8 @@
                 "is_self": false,
                 "label": null,
                 "label_trust": "fact",
-                "stand_in": null
+                "stand_in": null,
+                "words": null
               }
             }
           },
@@ -776,6 +882,7 @@
                 },
                 "bound": "exact",
                 "note": null,
+                "note_words": null,
                 "units": "79993",
                 "words": {
                   "id": "amount",
@@ -811,6 +918,7 @@
           },
           "bound": "exact",
           "note": null,
+          "note_words": null,
           "units": "79993",
           "words": {
             "id": "amount",
@@ -834,7 +942,8 @@
           "is_self": false,
           "label": null,
           "label_trust": "fact",
-          "stand_in": null
+          "stand_in": null,
+          "words": null
         }
       }
     },
@@ -926,6 +1035,7 @@
               },
               "bound": "exact",
               "note": null,
+              "note_words": null,
               "units": "500000",
               "words": {
                 "id": "amount",
@@ -965,7 +1075,8 @@
               "is_self": false,
               "label": null,
               "label_trust": "fact",
-              "stand_in": null
+              "stand_in": null,
+              "words": null
             }
           }
         },
@@ -988,7 +1099,8 @@
               "is_self": false,
               "label": null,
               "label_trust": "fact",
-              "stand_in": null
+              "stand_in": null,
+              "words": null
             }
           }
         }
@@ -1057,6 +1169,7 @@
               },
               "bound": "exact",
               "note": null,
+              "note_words": null,
               "units": "49500000",
               "words": {
                 "id": "amount",
@@ -1104,7 +1217,8 @@
               "is_self": false,
               "label": null,
               "label_trust": "fact",
-              "stand_in": null
+              "stand_in": null,
+              "words": null
             }
           }
         },
@@ -1135,7 +1249,8 @@
               "is_self": false,
               "label": null,
               "label_trust": "fact",
-              "stand_in": null
+              "stand_in": null,
+              "words": null
             }
           }
         }
@@ -1175,7 +1290,8 @@
               "is_self": false,
               "label": null,
               "label_trust": "fact",
-              "stand_in": null
+              "stand_in": null,
+              "words": null
             },
             "text": "9uo2…wgsh"
           },
@@ -1350,7 +1466,8 @@
               "is_self": false,
               "label": null,
               "label_trust": "fact",
-              "stand_in": null
+              "stand_in": null,
+              "words": null
             }
           }
         },
@@ -1373,7 +1490,8 @@
               "is_self": false,
               "label": null,
               "label_trust": "fact",
-              "stand_in": null
+              "stand_in": null,
+              "words": null
             }
           }
         },
@@ -1404,7 +1522,8 @@
               "is_self": false,
               "label": null,
               "label_trust": "fact",
-              "stand_in": null
+              "stand_in": null,
+              "words": null
             }
           }
         },
@@ -1435,7 +1554,8 @@
               "is_self": false,
               "label": null,
               "label_trust": "fact",
-              "stand_in": null
+              "stand_in": null,
+              "words": null
             }
           }
         },
@@ -1478,7 +1598,8 @@
                       "is_self": false,
                       "label": null,
                       "label_trust": "fact",
-                      "stand_in": null
+                      "stand_in": null,
+                      "words": null
                     },
                     "text": "9rVP…5hT9"
                   },
@@ -1497,7 +1618,8 @@
                   }
                 ],
                 "text": "the account at lookup table 9rVP…5hT9[6]"
-              }
+              },
+              "words": null
             }
           }
         },
@@ -1525,6 +1647,7 @@
               },
               "bound": "exact",
               "note": null,
+              "note_words": null,
               "units": "122053",
               "words": {
                 "id": "amount",
@@ -1564,7 +1687,8 @@
               "is_self": false,
               "label": null,
               "label_trust": "fact",
-              "stand_in": null
+              "stand_in": null,
+              "words": null
             }
           }
         },
@@ -1595,7 +1719,45 @@
                 "text": "Jito tip account"
               },
               "label_trust": "verified",
-              "stand_in": null
+              "stand_in": null,
+              "words": {
+                "id": "address-labelled",
+                "parts": [
+                  {
+                    "text": "Jito tip account",
+                    "value": {
+                      "type": "words",
+                      "value": {
+                        "id": "accounts-jito-tip",
+                        "parts": [
+                          {
+                            "text": "Jito tip account"
+                          }
+                        ],
+                        "text": "Jito tip account"
+                      }
+                    }
+                  },
+                  {
+                    "text": " ("
+                  },
+                  {
+                    "short": {
+                      "address": "96gYZGLnJYVFmbjzopPSU6QiEV5fGqZNyN9nmNhvrZU5",
+                      "is_self": false,
+                      "label": null,
+                      "label_trust": "verified",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "96gY…rZU5"
+                  },
+                  {
+                    "text": ")"
+                  }
+                ],
+                "text": "Jito tip account (96gY…rZU5)"
+              }
             }
           }
         }
@@ -1644,7 +1806,8 @@
               "is_self": false,
               "label": null,
               "label_trust": "fact",
-              "stand_in": null
+              "stand_in": null,
+              "words": null
             }
           }
         }
@@ -1698,6 +1861,7 @@
               },
               "bound": "exact",
               "note": null,
+              "note_words": null,
               "units": "79993",
               "words": {
                 "id": "amount",
@@ -1750,6 +1914,7 @@
               },
               "bound": "exact",
               "note": null,
+              "note_words": null,
               "units": "5000",
               "words": {
                 "id": "amount",
@@ -1802,6 +1967,7 @@
               },
               "bound": "exact",
               "note": null,
+              "note_words": null,
               "units": "74993",
               "words": {
                 "id": "amount",
@@ -1897,6 +2063,7 @@
                       },
                       "bound": "exact",
                       "note": null,
+                      "note_words": null,
                       "units": "1488440",
                       "words": {
                         "id": "amount",
@@ -2019,6 +2186,7 @@
             },
             "bound": "exact",
             "note": null,
+            "note_words": null,
             "units": "500000",
             "words": {
               "id": "amount",
@@ -2048,7 +2216,8 @@
           "is_self": false,
           "label": null,
           "label_trust": "fact",
-          "stand_in": null
+          "stand_in": null,
+          "words": null
         },
         "text": "8Aet…tiTo"
       },
@@ -2061,7 +2230,8 @@
           "is_self": false,
           "label": null,
           "label_trust": "fact",
-          "stand_in": null
+          "stand_in": null,
+          "words": null
         },
         "text": "879A…MGsA"
       },
@@ -2082,6 +2252,7 @@
             },
             "bound": "exact",
             "note": null,
+            "note_words": null,
             "units": "49500000",
             "words": {
               "id": "amount",
@@ -2111,7 +2282,8 @@
           "is_self": false,
           "label": null,
           "label_trust": "fact",
-          "stand_in": null
+          "stand_in": null,
+          "words": null
         },
         "text": "4hJn…VH6R"
       },

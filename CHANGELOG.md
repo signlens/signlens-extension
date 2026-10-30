@@ -53,6 +53,12 @@ uses [Semantic Versioning](https://semver.org/).
 
 ### Changed
 
+- **Brackets in the language's own.** An amount's note and a labelled
+  address's short form are set in the brackets the engine writes for
+  the explanation's language, full-width in Chinese, where the window
+  wrote half-width ones itself; with an engine that sends none, it
+  brackets them as before.
+
 - **Amounts and emphasis in the engine's words.** An amount reads as the
   engine words it, in the explanation's language ("≥ 1.5 SOL", "an
   unknown amount of the token held in …"), where the window rebuilt it

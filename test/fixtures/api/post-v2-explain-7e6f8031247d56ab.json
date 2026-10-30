@@ -64,6 +64,7 @@
                     },
                     "bound": "exact",
                     "note": null,
+                    "note_words": null,
                     "units": "500000",
                     "words": {
                       "id": "amount",
@@ -93,7 +94,8 @@
                   "is_self": false,
                   "label": null,
                   "label_trust": "fact",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": null
                 },
                 "text": "879A…MGsA"
               }
@@ -123,6 +125,7 @@
                     },
                     "bound": "exact",
                     "note": null,
+                    "note_words": null,
                     "units": "49500000",
                     "words": {
                       "id": "amount",
@@ -173,7 +176,55 @@
                       "text": "Your SOL account"
                     },
                     "label_trust": "verified",
-                    "stand_in": null
+                    "stand_in": null,
+                    "words": {
+                      "id": "address-labelled",
+                      "parts": [
+                        {
+                          "text": "Your SOL account",
+                          "value": {
+                            "type": "words",
+                            "value": {
+                              "id": "accounts-your-token",
+                              "parts": [
+                                {
+                                  "text": "Your "
+                                },
+                                {
+                                  "text": "SOL",
+                                  "value": {
+                                    "type": "text",
+                                    "value": "SOL"
+                                  }
+                                },
+                                {
+                                  "text": " account"
+                                }
+                              ],
+                              "text": "Your SOL account"
+                            }
+                          }
+                        },
+                        {
+                          "text": " ("
+                        },
+                        {
+                          "short": {
+                            "address": "4hJnan1NC4BuwPSn41WAQ7yG3zMK5JfXzDiq8jw2VH6R",
+                            "is_self": true,
+                            "label": null,
+                            "label_trust": "verified",
+                            "stand_in": null,
+                            "words": null
+                          },
+                          "text": "4hJn…VH6R"
+                        },
+                        {
+                          "text": ")"
+                        }
+                      ],
+                      "text": "Your SOL account (4hJn…VH6R)"
+                    }
                   }
                 }
               },
@@ -206,6 +257,7 @@
                     },
                     "bound": "at_most",
                     "note": null,
+                    "note_words": null,
                     "units": "49500000",
                     "words": {
                       "id": "amount",
@@ -243,6 +295,7 @@
                     },
                     "bound": "at_least",
                     "note": null,
+                    "note_words": null,
                     "units": "142243976392",
                     "words": {
                       "id": "amount",
@@ -301,6 +354,7 @@
                     },
                     "bound": "exact",
                     "note": null,
+                    "note_words": null,
                     "units": "500000",
                     "words": {
                       "id": "amount",
@@ -341,7 +395,45 @@
                       "text": "Your wallet"
                     },
                     "label_trust": "verified",
-                    "stand_in": null
+                    "stand_in": null,
+                    "words": {
+                      "id": "address-labelled",
+                      "parts": [
+                        {
+                          "text": "Your wallet",
+                          "value": {
+                            "type": "words",
+                            "value": {
+                              "id": "accounts-your-wallet",
+                              "parts": [
+                                {
+                                  "text": "Your wallet"
+                                }
+                              ],
+                              "text": "Your wallet"
+                            }
+                          }
+                        },
+                        {
+                          "text": " ("
+                        },
+                        {
+                          "short": {
+                            "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+                            "is_self": true,
+                            "label": null,
+                            "label_trust": "verified",
+                            "stand_in": null,
+                            "words": null
+                          },
+                          "text": "8Aet…tiTo"
+                        },
+                        {
+                          "text": ")"
+                        }
+                      ],
+                      "text": "Your wallet (8Aet…tiTo)"
+                    }
                   }
                 }
               },
@@ -357,7 +449,8 @@
                     "is_self": false,
                     "label": null,
                     "label_trust": "fact",
-                    "stand_in": null
+                    "stand_in": null,
+                    "words": null
                   }
                 }
               }
@@ -376,6 +469,7 @@
               },
               "bound": "exact",
               "note": null,
+              "note_words": null,
               "units": "500000",
               "words": {
                 "id": "amount",
@@ -407,14 +501,53 @@
                 "text": "Your wallet"
               },
               "label_trust": "verified",
-              "stand_in": null
+              "stand_in": null,
+              "words": {
+                "id": "address-labelled",
+                "parts": [
+                  {
+                    "text": "Your wallet",
+                    "value": {
+                      "type": "words",
+                      "value": {
+                        "id": "accounts-your-wallet",
+                        "parts": [
+                          {
+                            "text": "Your wallet"
+                          }
+                        ],
+                        "text": "Your wallet"
+                      }
+                    }
+                  },
+                  {
+                    "text": " ("
+                  },
+                  {
+                    "short": {
+                      "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+                      "is_self": true,
+                      "label": null,
+                      "label_trust": "verified",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "8Aet…tiTo"
+                  },
+                  {
+                    "text": ")"
+                  }
+                ],
+                "text": "Your wallet (8Aet…tiTo)"
+              }
             },
             "to": {
               "address": "879ArayuxbYjBhpUe4QCx8nqaAKjiwCG1hFiJo6zMGsA",
               "is_self": false,
               "label": null,
               "label_trust": "fact",
-              "stand_in": null
+              "stand_in": null,
+              "words": null
             }
           }
         },
@@ -439,6 +572,7 @@
                     },
                     "bound": "exact",
                     "note": null,
+                    "note_words": null,
                     "units": "49500000",
                     "words": {
                       "id": "amount",
@@ -479,7 +613,45 @@
                       "text": "Your wallet"
                     },
                     "label_trust": "verified",
-                    "stand_in": null
+                    "stand_in": null,
+                    "words": {
+                      "id": "address-labelled",
+                      "parts": [
+                        {
+                          "text": "Your wallet",
+                          "value": {
+                            "type": "words",
+                            "value": {
+                              "id": "accounts-your-wallet",
+                              "parts": [
+                                {
+                                  "text": "Your wallet"
+                                }
+                              ],
+                              "text": "Your wallet"
+                            }
+                          }
+                        },
+                        {
+                          "text": " ("
+                        },
+                        {
+                          "short": {
+                            "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+                            "is_self": true,
+                            "label": null,
+                            "label_trust": "verified",
+                            "stand_in": null,
+                            "words": null
+                          },
+                          "text": "8Aet…tiTo"
+                        },
+                        {
+                          "text": ")"
+                        }
+                      ],
+                      "text": "Your wallet (8Aet…tiTo)"
+                    }
                   }
                 }
               },
@@ -513,7 +685,55 @@
                       "text": "Your SOL account"
                     },
                     "label_trust": "verified",
-                    "stand_in": null
+                    "stand_in": null,
+                    "words": {
+                      "id": "address-labelled",
+                      "parts": [
+                        {
+                          "text": "Your SOL account",
+                          "value": {
+                            "type": "words",
+                            "value": {
+                              "id": "accounts-your-token",
+                              "parts": [
+                                {
+                                  "text": "Your "
+                                },
+                                {
+                                  "text": "SOL",
+                                  "value": {
+                                    "type": "text",
+                                    "value": "SOL"
+                                  }
+                                },
+                                {
+                                  "text": " account"
+                                }
+                              ],
+                              "text": "Your SOL account"
+                            }
+                          }
+                        },
+                        {
+                          "text": " ("
+                        },
+                        {
+                          "short": {
+                            "address": "4hJnan1NC4BuwPSn41WAQ7yG3zMK5JfXzDiq8jw2VH6R",
+                            "is_self": true,
+                            "label": null,
+                            "label_trust": "verified",
+                            "stand_in": null,
+                            "words": null
+                          },
+                          "text": "4hJn…VH6R"
+                        },
+                        {
+                          "text": ")"
+                        }
+                      ],
+                      "text": "Your SOL account (4hJn…VH6R)"
+                    }
                   }
                 }
               }
@@ -532,6 +752,7 @@
               },
               "bound": "exact",
               "note": null,
+              "note_words": null,
               "units": "49500000",
               "words": {
                 "id": "amount",
@@ -563,7 +784,45 @@
                 "text": "Your wallet"
               },
               "label_trust": "verified",
-              "stand_in": null
+              "stand_in": null,
+              "words": {
+                "id": "address-labelled",
+                "parts": [
+                  {
+                    "text": "Your wallet",
+                    "value": {
+                      "type": "words",
+                      "value": {
+                        "id": "accounts-your-wallet",
+                        "parts": [
+                          {
+                            "text": "Your wallet"
+                          }
+                        ],
+                        "text": "Your wallet"
+                      }
+                    }
+                  },
+                  {
+                    "text": " ("
+                  },
+                  {
+                    "short": {
+                      "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+                      "is_self": true,
+                      "label": null,
+                      "label_trust": "verified",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "8Aet…tiTo"
+                  },
+                  {
+                    "text": ")"
+                  }
+                ],
+                "text": "Your wallet (8Aet…tiTo)"
+              }
             },
             "to": {
               "address": "4hJnan1NC4BuwPSn41WAQ7yG3zMK5JfXzDiq8jw2VH6R",
@@ -588,7 +847,55 @@
                 "text": "Your SOL account"
               },
               "label_trust": "verified",
-              "stand_in": null
+              "stand_in": null,
+              "words": {
+                "id": "address-labelled",
+                "parts": [
+                  {
+                    "text": "Your SOL account",
+                    "value": {
+                      "type": "words",
+                      "value": {
+                        "id": "accounts-your-token",
+                        "parts": [
+                          {
+                            "text": "Your "
+                          },
+                          {
+                            "text": "SOL",
+                            "value": {
+                              "type": "text",
+                              "value": "SOL"
+                            }
+                          },
+                          {
+                            "text": " account"
+                          }
+                        ],
+                        "text": "Your SOL account"
+                      }
+                    }
+                  },
+                  {
+                    "text": " ("
+                  },
+                  {
+                    "short": {
+                      "address": "4hJnan1NC4BuwPSn41WAQ7yG3zMK5JfXzDiq8jw2VH6R",
+                      "is_self": true,
+                      "label": null,
+                      "label_trust": "verified",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "4hJn…VH6R"
+                  },
+                  {
+                    "text": ")"
+                  }
+                ],
+                "text": "Your SOL account (4hJn…VH6R)"
+              }
             }
           }
         },
@@ -636,6 +943,7 @@
                     },
                     "bound": "at_most",
                     "note": null,
+                    "note_words": null,
                     "units": "49500000",
                     "words": {
                       "id": "amount",
@@ -676,7 +984,45 @@
                       "text": "Your wallet"
                     },
                     "label_trust": "verified",
-                    "stand_in": null
+                    "stand_in": null,
+                    "words": {
+                      "id": "address-labelled",
+                      "parts": [
+                        {
+                          "text": "Your wallet",
+                          "value": {
+                            "type": "words",
+                            "value": {
+                              "id": "accounts-your-wallet",
+                              "parts": [
+                                {
+                                  "text": "Your wallet"
+                                }
+                              ],
+                              "text": "Your wallet"
+                            }
+                          }
+                        },
+                        {
+                          "text": " ("
+                        },
+                        {
+                          "short": {
+                            "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+                            "is_self": true,
+                            "label": null,
+                            "label_trust": "verified",
+                            "stand_in": null,
+                            "words": null
+                          },
+                          "text": "8Aet…tiTo"
+                        },
+                        {
+                          "text": ")"
+                        }
+                      ],
+                      "text": "Your wallet (8Aet…tiTo)"
+                    }
                   }
                 }
               },
@@ -704,7 +1050,49 @@
                       "text": "DFlow Aggregator"
                     },
                     "label_trust": "verified",
-                    "stand_in": null
+                    "stand_in": null,
+                    "words": {
+                      "id": "address-labelled",
+                      "parts": [
+                        {
+                          "text": "DFlow Aggregator",
+                          "value": {
+                            "type": "words",
+                            "value": {
+                              "id": "accounts-name",
+                              "parts": [
+                                {
+                                  "text": "DFlow Aggregator",
+                                  "value": {
+                                    "type": "text",
+                                    "value": "DFlow Aggregator"
+                                  }
+                                }
+                              ],
+                              "text": "DFlow Aggregator"
+                            }
+                          }
+                        },
+                        {
+                          "text": " ("
+                        },
+                        {
+                          "short": {
+                            "address": "DF1ow4tspfHX9JwWJsAb9epbkA8hmpSEAtxXy1V27QBH",
+                            "is_self": false,
+                            "label": null,
+                            "label_trust": "verified",
+                            "stand_in": null,
+                            "words": null
+                          },
+                          "text": "DF1o…7QBH"
+                        },
+                        {
+                          "text": ")"
+                        }
+                      ],
+                      "text": "DFlow Aggregator (DF1o…7QBH)"
+                    }
                   }
                 }
               }
@@ -723,6 +1111,7 @@
               },
               "bound": "at_most",
               "note": null,
+              "note_words": null,
               "units": "49500000",
               "words": {
                 "id": "amount",
@@ -754,7 +1143,45 @@
                 "text": "Your wallet"
               },
               "label_trust": "verified",
-              "stand_in": null
+              "stand_in": null,
+              "words": {
+                "id": "address-labelled",
+                "parts": [
+                  {
+                    "text": "Your wallet",
+                    "value": {
+                      "type": "words",
+                      "value": {
+                        "id": "accounts-your-wallet",
+                        "parts": [
+                          {
+                            "text": "Your wallet"
+                          }
+                        ],
+                        "text": "Your wallet"
+                      }
+                    }
+                  },
+                  {
+                    "text": " ("
+                  },
+                  {
+                    "short": {
+                      "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+                      "is_self": true,
+                      "label": null,
+                      "label_trust": "verified",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "8Aet…tiTo"
+                  },
+                  {
+                    "text": ")"
+                  }
+                ],
+                "text": "Your wallet (8Aet…tiTo)"
+              }
             },
             "to": {
               "address": "DF1ow4tspfHX9JwWJsAb9epbkA8hmpSEAtxXy1V27QBH",
@@ -773,7 +1200,49 @@
                 "text": "DFlow Aggregator"
               },
               "label_trust": "verified",
-              "stand_in": null
+              "stand_in": null,
+              "words": {
+                "id": "address-labelled",
+                "parts": [
+                  {
+                    "text": "DFlow Aggregator",
+                    "value": {
+                      "type": "words",
+                      "value": {
+                        "id": "accounts-name",
+                        "parts": [
+                          {
+                            "text": "DFlow Aggregator",
+                            "value": {
+                              "type": "text",
+                              "value": "DFlow Aggregator"
+                            }
+                          }
+                        ],
+                        "text": "DFlow Aggregator"
+                      }
+                    }
+                  },
+                  {
+                    "text": " ("
+                  },
+                  {
+                    "short": {
+                      "address": "DF1ow4tspfHX9JwWJsAb9epbkA8hmpSEAtxXy1V27QBH",
+                      "is_self": false,
+                      "label": null,
+                      "label_trust": "verified",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "DF1o…7QBH"
+                  },
+                  {
+                    "text": ")"
+                  }
+                ],
+                "text": "DFlow Aggregator (DF1o…7QBH)"
+              }
             }
           }
         },
@@ -798,6 +1267,7 @@
                     },
                     "bound": "at_least",
                     "note": null,
+                    "note_words": null,
                     "units": "142243976392",
                     "words": {
                       "id": "amount",
@@ -838,7 +1308,45 @@
                       "text": "Your token account"
                     },
                     "label_trust": "verified",
-                    "stand_in": null
+                    "stand_in": null,
+                    "words": {
+                      "id": "address-labelled",
+                      "parts": [
+                        {
+                          "text": "Your token account",
+                          "value": {
+                            "type": "words",
+                            "value": {
+                              "id": "swap-your-token-account",
+                              "parts": [
+                                {
+                                  "text": "Your token account"
+                                }
+                              ],
+                              "text": "Your token account"
+                            }
+                          }
+                        },
+                        {
+                          "text": " ("
+                        },
+                        {
+                          "short": {
+                            "address": "9SQZUTsLbv469tCRm9BFo64vpUiWToZukM4WeNdDGxVU",
+                            "is_self": true,
+                            "label": null,
+                            "label_trust": "verified",
+                            "stand_in": null,
+                            "words": null
+                          },
+                          "text": "9SQZ…GxVU"
+                        },
+                        {
+                          "text": ")"
+                        }
+                      ],
+                      "text": "Your token account (9SQZ…GxVU)"
+                    }
                   }
                 }
               },
@@ -866,7 +1374,49 @@
                       "text": "DFlow Aggregator"
                     },
                     "label_trust": "verified",
-                    "stand_in": null
+                    "stand_in": null,
+                    "words": {
+                      "id": "address-labelled",
+                      "parts": [
+                        {
+                          "text": "DFlow Aggregator",
+                          "value": {
+                            "type": "words",
+                            "value": {
+                              "id": "accounts-name",
+                              "parts": [
+                                {
+                                  "text": "DFlow Aggregator",
+                                  "value": {
+                                    "type": "text",
+                                    "value": "DFlow Aggregator"
+                                  }
+                                }
+                              ],
+                              "text": "DFlow Aggregator"
+                            }
+                          }
+                        },
+                        {
+                          "text": " ("
+                        },
+                        {
+                          "short": {
+                            "address": "DF1ow4tspfHX9JwWJsAb9epbkA8hmpSEAtxXy1V27QBH",
+                            "is_self": false,
+                            "label": null,
+                            "label_trust": "verified",
+                            "stand_in": null,
+                            "words": null
+                          },
+                          "text": "DF1o…7QBH"
+                        },
+                        {
+                          "text": ")"
+                        }
+                      ],
+                      "text": "DFlow Aggregator (DF1o…7QBH)"
+                    }
                   }
                 }
               }
@@ -885,6 +1435,7 @@
               },
               "bound": "at_least",
               "note": null,
+              "note_words": null,
               "units": "142243976392",
               "words": {
                 "id": "amount",
@@ -920,7 +1471,49 @@
                 "text": "DFlow Aggregator"
               },
               "label_trust": "verified",
-              "stand_in": null
+              "stand_in": null,
+              "words": {
+                "id": "address-labelled",
+                "parts": [
+                  {
+                    "text": "DFlow Aggregator",
+                    "value": {
+                      "type": "words",
+                      "value": {
+                        "id": "accounts-name",
+                        "parts": [
+                          {
+                            "text": "DFlow Aggregator",
+                            "value": {
+                              "type": "text",
+                              "value": "DFlow Aggregator"
+                            }
+                          }
+                        ],
+                        "text": "DFlow Aggregator"
+                      }
+                    }
+                  },
+                  {
+                    "text": " ("
+                  },
+                  {
+                    "short": {
+                      "address": "DF1ow4tspfHX9JwWJsAb9epbkA8hmpSEAtxXy1V27QBH",
+                      "is_self": false,
+                      "label": null,
+                      "label_trust": "verified",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "DF1o…7QBH"
+                  },
+                  {
+                    "text": ")"
+                  }
+                ],
+                "text": "DFlow Aggregator (DF1o…7QBH)"
+              }
             },
             "to": {
               "address": "9SQZUTsLbv469tCRm9BFo64vpUiWToZukM4WeNdDGxVU",
@@ -935,7 +1528,45 @@
                 "text": "Your token account"
               },
               "label_trust": "verified",
-              "stand_in": null
+              "stand_in": null,
+              "words": {
+                "id": "address-labelled",
+                "parts": [
+                  {
+                    "text": "Your token account",
+                    "value": {
+                      "type": "words",
+                      "value": {
+                        "id": "swap-your-token-account",
+                        "parts": [
+                          {
+                            "text": "Your token account"
+                          }
+                        ],
+                        "text": "Your token account"
+                      }
+                    }
+                  },
+                  {
+                    "text": " ("
+                  },
+                  {
+                    "short": {
+                      "address": "9SQZUTsLbv469tCRm9BFo64vpUiWToZukM4WeNdDGxVU",
+                      "is_self": true,
+                      "label": null,
+                      "label_trust": "verified",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "9SQZ…GxVU"
+                  },
+                  {
+                    "text": ")"
+                  }
+                ],
+                "text": "Your token account (9SQZ…GxVU)"
+              }
             }
           }
         },
@@ -963,7 +1594,45 @@
                       "text": "Your token account"
                     },
                     "label_trust": "verified",
-                    "stand_in": null
+                    "stand_in": null,
+                    "words": {
+                      "id": "address-labelled",
+                      "parts": [
+                        {
+                          "text": "Your token account",
+                          "value": {
+                            "type": "words",
+                            "value": {
+                              "id": "accounts-your-unnamed-token",
+                              "parts": [
+                                {
+                                  "text": "Your token account"
+                                }
+                              ],
+                              "text": "Your token account"
+                            }
+                          }
+                        },
+                        {
+                          "text": " ("
+                        },
+                        {
+                          "short": {
+                            "address": "9SQZUTsLbv469tCRm9BFo64vpUiWToZukM4WeNdDGxVU",
+                            "is_self": true,
+                            "label": null,
+                            "label_trust": "verified",
+                            "stand_in": null,
+                            "words": null
+                          },
+                          "text": "9SQZ…GxVU"
+                        },
+                        {
+                          "text": ")"
+                        }
+                      ],
+                      "text": "Your token account (9SQZ…GxVU)"
+                    }
                   }
                 }
               },
@@ -991,7 +1660,49 @@
                       "text": "Token-2022 program"
                     },
                     "label_trust": "verified",
-                    "stand_in": null
+                    "stand_in": null,
+                    "words": {
+                      "id": "address-labelled",
+                      "parts": [
+                        {
+                          "text": "Token-2022 program",
+                          "value": {
+                            "type": "words",
+                            "value": {
+                              "id": "accounts-name",
+                              "parts": [
+                                {
+                                  "text": "Token-2022 program",
+                                  "value": {
+                                    "type": "text",
+                                    "value": "Token-2022 program"
+                                  }
+                                }
+                              ],
+                              "text": "Token-2022 program"
+                            }
+                          }
+                        },
+                        {
+                          "text": " ("
+                        },
+                        {
+                          "short": {
+                            "address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+                            "is_self": false,
+                            "label": null,
+                            "label_trust": "verified",
+                            "stand_in": null,
+                            "words": null
+                          },
+                          "text": "Toke…xuEb"
+                        },
+                        {
+                          "text": ")"
+                        }
+                      ],
+                      "text": "Token-2022 program (Toke…xuEb)"
+                    }
                   }
                 }
               },
@@ -1012,6 +1723,7 @@
                     },
                     "bound": "exact",
                     "note": null,
+                    "note_words": null,
                     "units": "1513840",
                     "words": {
                       "id": "amount",
@@ -1053,7 +1765,45 @@
                 "text": "Your token account"
               },
               "label_trust": "verified",
-              "stand_in": null
+              "stand_in": null,
+              "words": {
+                "id": "address-labelled",
+                "parts": [
+                  {
+                    "text": "Your token account",
+                    "value": {
+                      "type": "words",
+                      "value": {
+                        "id": "accounts-your-unnamed-token",
+                        "parts": [
+                          {
+                            "text": "Your token account"
+                          }
+                        ],
+                        "text": "Your token account"
+                      }
+                    }
+                  },
+                  {
+                    "text": " ("
+                  },
+                  {
+                    "short": {
+                      "address": "9SQZUTsLbv469tCRm9BFo64vpUiWToZukM4WeNdDGxVU",
+                      "is_self": true,
+                      "label": null,
+                      "label_trust": "verified",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "9SQZ…GxVU"
+                  },
+                  {
+                    "text": ")"
+                  }
+                ],
+                "text": "Your token account (9SQZ…GxVU)"
+              }
             },
             "deposit": {
               "asset": {
@@ -1065,6 +1815,7 @@
               },
               "bound": "exact",
               "note": null,
+              "note_words": null,
               "units": "1513840",
               "words": {
                 "id": "amount",
@@ -1101,7 +1852,49 @@
                 "text": "Token-2022 program"
               },
               "label_trust": "verified",
-              "stand_in": null
+              "stand_in": null,
+              "words": {
+                "id": "address-labelled",
+                "parts": [
+                  {
+                    "text": "Token-2022 program",
+                    "value": {
+                      "type": "words",
+                      "value": {
+                        "id": "accounts-name",
+                        "parts": [
+                          {
+                            "text": "Token-2022 program",
+                            "value": {
+                              "type": "text",
+                              "value": "Token-2022 program"
+                            }
+                          }
+                        ],
+                        "text": "Token-2022 program"
+                      }
+                    }
+                  },
+                  {
+                    "text": " ("
+                  },
+                  {
+                    "short": {
+                      "address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+                      "is_self": false,
+                      "label": null,
+                      "label_trust": "verified",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "Toke…xuEb"
+                  },
+                  {
+                    "text": ")"
+                  }
+                ],
+                "text": "Token-2022 program (Toke…xuEb)"
+              }
             }
           }
         },
@@ -1126,6 +1919,7 @@
                     },
                     "bound": "exact",
                     "note": null,
+                    "note_words": null,
                     "units": "122053",
                     "words": {
                       "id": "amount",
@@ -1166,7 +1960,45 @@
                       "text": "Your wallet"
                     },
                     "label_trust": "verified",
-                    "stand_in": null
+                    "stand_in": null,
+                    "words": {
+                      "id": "address-labelled",
+                      "parts": [
+                        {
+                          "text": "Your wallet",
+                          "value": {
+                            "type": "words",
+                            "value": {
+                              "id": "accounts-your-wallet",
+                              "parts": [
+                                {
+                                  "text": "Your wallet"
+                                }
+                              ],
+                              "text": "Your wallet"
+                            }
+                          }
+                        },
+                        {
+                          "text": " ("
+                        },
+                        {
+                          "short": {
+                            "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+                            "is_self": true,
+                            "label": null,
+                            "label_trust": "verified",
+                            "stand_in": null,
+                            "words": null
+                          },
+                          "text": "8Aet…tiTo"
+                        },
+                        {
+                          "text": ")"
+                        }
+                      ],
+                      "text": "Your wallet (8Aet…tiTo)"
+                    }
                   }
                 }
               },
@@ -1190,7 +2022,45 @@
                       "text": "Jito tip account"
                     },
                     "label_trust": "verified",
-                    "stand_in": null
+                    "stand_in": null,
+                    "words": {
+                      "id": "address-labelled",
+                      "parts": [
+                        {
+                          "text": "Jito tip account",
+                          "value": {
+                            "type": "words",
+                            "value": {
+                              "id": "accounts-jito-tip",
+                              "parts": [
+                                {
+                                  "text": "Jito tip account"
+                                }
+                              ],
+                              "text": "Jito tip account"
+                            }
+                          }
+                        },
+                        {
+                          "text": " ("
+                        },
+                        {
+                          "short": {
+                            "address": "96gYZGLnJYVFmbjzopPSU6QiEV5fGqZNyN9nmNhvrZU5",
+                            "is_self": false,
+                            "label": null,
+                            "label_trust": "verified",
+                            "stand_in": null,
+                            "words": null
+                          },
+                          "text": "96gY…rZU5"
+                        },
+                        {
+                          "text": ")"
+                        }
+                      ],
+                      "text": "Jito tip account (96gY…rZU5)"
+                    }
                   }
                 }
               }
@@ -1209,6 +2079,7 @@
               },
               "bound": "exact",
               "note": null,
+              "note_words": null,
               "units": "122053",
               "words": {
                 "id": "amount",
@@ -1240,7 +2111,45 @@
                 "text": "Your wallet"
               },
               "label_trust": "verified",
-              "stand_in": null
+              "stand_in": null,
+              "words": {
+                "id": "address-labelled",
+                "parts": [
+                  {
+                    "text": "Your wallet",
+                    "value": {
+                      "type": "words",
+                      "value": {
+                        "id": "accounts-your-wallet",
+                        "parts": [
+                          {
+                            "text": "Your wallet"
+                          }
+                        ],
+                        "text": "Your wallet"
+                      }
+                    }
+                  },
+                  {
+                    "text": " ("
+                  },
+                  {
+                    "short": {
+                      "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+                      "is_self": true,
+                      "label": null,
+                      "label_trust": "verified",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "8Aet…tiTo"
+                  },
+                  {
+                    "text": ")"
+                  }
+                ],
+                "text": "Your wallet (8Aet…tiTo)"
+              }
             },
             "to": {
               "address": "96gYZGLnJYVFmbjzopPSU6QiEV5fGqZNyN9nmNhvrZU5",
@@ -1255,7 +2164,45 @@
                 "text": "Jito tip account"
               },
               "label_trust": "verified",
-              "stand_in": null
+              "stand_in": null,
+              "words": {
+                "id": "address-labelled",
+                "parts": [
+                  {
+                    "text": "Jito tip account",
+                    "value": {
+                      "type": "words",
+                      "value": {
+                        "id": "accounts-jito-tip",
+                        "parts": [
+                          {
+                            "text": "Jito tip account"
+                          }
+                        ],
+                        "text": "Jito tip account"
+                      }
+                    }
+                  },
+                  {
+                    "text": " ("
+                  },
+                  {
+                    "short": {
+                      "address": "96gYZGLnJYVFmbjzopPSU6QiEV5fGqZNyN9nmNhvrZU5",
+                      "is_self": false,
+                      "label": null,
+                      "label_trust": "verified",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "96gY…rZU5"
+                  },
+                  {
+                    "text": ")"
+                  }
+                ],
+                "text": "Jito tip account (96gY…rZU5)"
+              }
             }
           }
         },
@@ -1280,6 +2227,7 @@
                     },
                     "bound": "exact",
                     "note": null,
+                    "note_words": null,
                     "units": "79993",
                     "words": {
                       "id": "amount",
@@ -1315,6 +2263,7 @@
               },
               "bound": "exact",
               "note": null,
+              "note_words": null,
               "units": "79993",
               "words": {
                 "id": "amount",
@@ -1346,7 +2295,45 @@
                 "text": "Your wallet"
               },
               "label_trust": "verified",
-              "stand_in": null
+              "stand_in": null,
+              "words": {
+                "id": "address-labelled",
+                "parts": [
+                  {
+                    "text": "Your wallet",
+                    "value": {
+                      "type": "words",
+                      "value": {
+                        "id": "accounts-your-wallet",
+                        "parts": [
+                          {
+                            "text": "Your wallet"
+                          }
+                        ],
+                        "text": "Your wallet"
+                      }
+                    }
+                  },
+                  {
+                    "text": " ("
+                  },
+                  {
+                    "short": {
+                      "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+                      "is_self": true,
+                      "label": null,
+                      "label_trust": "verified",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "8Aet…tiTo"
+                  },
+                  {
+                    "text": ")"
+                  }
+                ],
+                "text": "Your wallet (8Aet…tiTo)"
+              }
             }
           }
         },
@@ -1409,6 +2396,7 @@
                   },
                   "bound": "exact",
                   "note": null,
+                  "note_words": null,
                   "units": "500000",
                   "words": {
                     "id": "amount",
@@ -1456,7 +2444,45 @@
                     "text": "Your wallet"
                   },
                   "label_trust": "verified",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": {
+                    "id": "address-labelled",
+                    "parts": [
+                      {
+                        "text": "Your wallet",
+                        "value": {
+                          "type": "words",
+                          "value": {
+                            "id": "accounts-your-wallet",
+                            "parts": [
+                              {
+                                "text": "Your wallet"
+                              }
+                            ],
+                            "text": "Your wallet"
+                          }
+                        }
+                      },
+                      {
+                        "text": " ("
+                      },
+                      {
+                        "short": {
+                          "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+                          "is_self": true,
+                          "label": null,
+                          "label_trust": "verified",
+                          "stand_in": null,
+                          "words": null
+                        },
+                        "text": "8Aet…tiTo"
+                      },
+                      {
+                        "text": ")"
+                      }
+                    ],
+                    "text": "Your wallet (8Aet…tiTo)"
+                  }
                 }
               }
             },
@@ -1479,7 +2505,8 @@
                   "is_self": false,
                   "label": null,
                   "label_trust": "fact",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": null
                 }
               }
             }
@@ -1548,6 +2575,7 @@
                   },
                   "bound": "exact",
                   "note": null,
+                  "note_words": null,
                   "units": "49500000",
                   "words": {
                     "id": "amount",
@@ -1603,7 +2631,45 @@
                     "text": "Your wallet"
                   },
                   "label_trust": "verified",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": {
+                    "id": "address-labelled",
+                    "parts": [
+                      {
+                        "text": "Your wallet",
+                        "value": {
+                          "type": "words",
+                          "value": {
+                            "id": "accounts-your-wallet",
+                            "parts": [
+                              {
+                                "text": "Your wallet"
+                              }
+                            ],
+                            "text": "Your wallet"
+                          }
+                        }
+                      },
+                      {
+                        "text": " ("
+                      },
+                      {
+                        "short": {
+                          "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+                          "is_self": true,
+                          "label": null,
+                          "label_trust": "verified",
+                          "stand_in": null,
+                          "words": null
+                        },
+                        "text": "8Aet…tiTo"
+                      },
+                      {
+                        "text": ")"
+                      }
+                    ],
+                    "text": "Your wallet (8Aet…tiTo)"
+                  }
                 }
               }
             },
@@ -1652,7 +2718,55 @@
                     "text": "Your SOL account"
                   },
                   "label_trust": "verified",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": {
+                    "id": "address-labelled",
+                    "parts": [
+                      {
+                        "text": "Your SOL account",
+                        "value": {
+                          "type": "words",
+                          "value": {
+                            "id": "accounts-your-token",
+                            "parts": [
+                              {
+                                "text": "Your "
+                              },
+                              {
+                                "text": "SOL",
+                                "value": {
+                                  "type": "text",
+                                  "value": "SOL"
+                                }
+                              },
+                              {
+                                "text": " account"
+                              }
+                            ],
+                            "text": "Your SOL account"
+                          }
+                        }
+                      },
+                      {
+                        "text": " ("
+                      },
+                      {
+                        "short": {
+                          "address": "4hJnan1NC4BuwPSn41WAQ7yG3zMK5JfXzDiq8jw2VH6R",
+                          "is_self": true,
+                          "label": null,
+                          "label_trust": "verified",
+                          "stand_in": null,
+                          "words": null
+                        },
+                        "text": "4hJn…VH6R"
+                      },
+                      {
+                        "text": ")"
+                      }
+                    ],
+                    "text": "Your SOL account (4hJn…VH6R)"
+                  }
                 }
               }
             }
@@ -1692,7 +2806,8 @@
                   "is_self": false,
                   "label": null,
                   "label_trust": "fact",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": null
                 },
                 "text": "9uo2…wgsh"
               },
@@ -1739,6 +2854,7 @@
                   },
                   "bound": "at_most",
                   "note": null,
+                  "note_words": null,
                   "units": "49500000",
                   "words": {
                     "id": "amount",
@@ -1783,6 +2899,7 @@
                   },
                   "bound": "at_least",
                   "note": null,
+                  "note_words": null,
                   "units": "142243976392",
                   "words": {
                     "id": "amount",
@@ -1827,6 +2944,7 @@
                   },
                   "bound": "exact",
                   "note": null,
+                  "note_words": null,
                   "units": "158048862658",
                   "words": {
                     "id": "amount",
@@ -1928,7 +3046,45 @@
                     "text": "Your token account"
                   },
                   "label_trust": "verified",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": {
+                    "id": "address-labelled",
+                    "parts": [
+                      {
+                        "text": "Your token account",
+                        "value": {
+                          "type": "words",
+                          "value": {
+                            "id": "swap-your-token-account",
+                            "parts": [
+                              {
+                                "text": "Your token account"
+                              }
+                            ],
+                            "text": "Your token account"
+                          }
+                        }
+                      },
+                      {
+                        "text": " ("
+                      },
+                      {
+                        "short": {
+                          "address": "9SQZUTsLbv469tCRm9BFo64vpUiWToZukM4WeNdDGxVU",
+                          "is_self": true,
+                          "label": null,
+                          "label_trust": "verified",
+                          "stand_in": null,
+                          "words": null
+                        },
+                        "text": "9SQZ…GxVU"
+                      },
+                      {
+                        "text": ")"
+                      }
+                    ],
+                    "text": "Your token account (9SQZ…GxVU)"
+                  }
                 }
               }
             },
@@ -2075,7 +3231,45 @@
                     "text": "Your token account"
                   },
                   "label_trust": "verified",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": {
+                    "id": "address-labelled",
+                    "parts": [
+                      {
+                        "text": "Your token account",
+                        "value": {
+                          "type": "words",
+                          "value": {
+                            "id": "accounts-your-unnamed-token",
+                            "parts": [
+                              {
+                                "text": "Your token account"
+                              }
+                            ],
+                            "text": "Your token account"
+                          }
+                        }
+                      },
+                      {
+                        "text": " ("
+                      },
+                      {
+                        "short": {
+                          "address": "9SQZUTsLbv469tCRm9BFo64vpUiWToZukM4WeNdDGxVU",
+                          "is_self": true,
+                          "label": null,
+                          "label_trust": "verified",
+                          "stand_in": null,
+                          "words": null
+                        },
+                        "text": "9SQZ…GxVU"
+                      },
+                      {
+                        "text": ")"
+                      }
+                    ],
+                    "text": "Your token account (9SQZ…GxVU)"
+                  }
                 }
               }
             },
@@ -2106,7 +3300,45 @@
                     "text": "Your wallet"
                   },
                   "label_trust": "verified",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": {
+                    "id": "address-labelled",
+                    "parts": [
+                      {
+                        "text": "Your wallet",
+                        "value": {
+                          "type": "words",
+                          "value": {
+                            "id": "accounts-your-wallet",
+                            "parts": [
+                              {
+                                "text": "Your wallet"
+                              }
+                            ],
+                            "text": "Your wallet"
+                          }
+                        }
+                      },
+                      {
+                        "text": " ("
+                      },
+                      {
+                        "short": {
+                          "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+                          "is_self": true,
+                          "label": null,
+                          "label_trust": "verified",
+                          "stand_in": null,
+                          "words": null
+                        },
+                        "text": "8Aet…tiTo"
+                      },
+                      {
+                        "text": ")"
+                      }
+                    ],
+                    "text": "Your wallet (8Aet…tiTo)"
+                  }
                 }
               }
             },
@@ -2152,7 +3384,52 @@
                     "text": "HMYD mint"
                   },
                   "label_trust": "claimed",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": {
+                    "id": "address-labelled",
+                    "parts": [
+                      {
+                        "text": "HMYD mint",
+                        "value": {
+                          "type": "words",
+                          "value": {
+                            "id": "accounts-mint",
+                            "parts": [
+                              {
+                                "text": "HMYD",
+                                "value": {
+                                  "type": "text",
+                                  "value": "HMYD"
+                                }
+                              },
+                              {
+                                "text": " mint"
+                              }
+                            ],
+                            "text": "HMYD mint"
+                          }
+                        }
+                      },
+                      {
+                        "text": " ("
+                      },
+                      {
+                        "short": {
+                          "address": "HMYd9tosnUXuNHmq7pXmoePRVBLBBjA3JBfydq6upump",
+                          "is_self": false,
+                          "label": null,
+                          "label_trust": "claimed",
+                          "stand_in": null,
+                          "words": null
+                        },
+                        "text": "HMYd…pump"
+                      },
+                      {
+                        "text": ")"
+                      }
+                    ],
+                    "text": "HMYD mint (HMYd…pump)"
+                  }
                 }
               }
             },
@@ -2191,7 +3468,45 @@
                     "text": "Your wallet"
                   },
                   "label_trust": "verified",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": {
+                    "id": "address-labelled",
+                    "parts": [
+                      {
+                        "text": "Your wallet",
+                        "value": {
+                          "type": "words",
+                          "value": {
+                            "id": "accounts-your-wallet",
+                            "parts": [
+                              {
+                                "text": "Your wallet"
+                              }
+                            ],
+                            "text": "Your wallet"
+                          }
+                        }
+                      },
+                      {
+                        "text": " ("
+                      },
+                      {
+                        "short": {
+                          "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+                          "is_self": true,
+                          "label": null,
+                          "label_trust": "verified",
+                          "stand_in": null,
+                          "words": null
+                        },
+                        "text": "8Aet…tiTo"
+                      },
+                      {
+                        "text": ")"
+                      }
+                    ],
+                    "text": "Your wallet (8Aet…tiTo)"
+                  }
                 }
               }
             },
@@ -2234,7 +3549,49 @@
                     "text": "Token-2022 program"
                   },
                   "label_trust": "verified",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": {
+                    "id": "address-labelled",
+                    "parts": [
+                      {
+                        "text": "Token-2022 program",
+                        "value": {
+                          "type": "words",
+                          "value": {
+                            "id": "accounts-name",
+                            "parts": [
+                              {
+                                "text": "Token-2022 program",
+                                "value": {
+                                  "type": "text",
+                                  "value": "Token-2022 program"
+                                }
+                              }
+                            ],
+                            "text": "Token-2022 program"
+                          }
+                        }
+                      },
+                      {
+                        "text": " ("
+                      },
+                      {
+                        "short": {
+                          "address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+                          "is_self": false,
+                          "label": null,
+                          "label_trust": "verified",
+                          "stand_in": null,
+                          "words": null
+                        },
+                        "text": "Toke…xuEb"
+                      },
+                      {
+                        "text": ")"
+                      }
+                    ],
+                    "text": "Token-2022 program (Toke…xuEb)"
+                  }
                 }
               }
             },
@@ -2262,6 +3619,7 @@
                   },
                   "bound": "exact",
                   "note": null,
+                  "note_words": null,
                   "units": "122053",
                   "words": {
                     "id": "amount",
@@ -2309,7 +3667,45 @@
                     "text": "Your wallet"
                   },
                   "label_trust": "verified",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": {
+                    "id": "address-labelled",
+                    "parts": [
+                      {
+                        "text": "Your wallet",
+                        "value": {
+                          "type": "words",
+                          "value": {
+                            "id": "accounts-your-wallet",
+                            "parts": [
+                              {
+                                "text": "Your wallet"
+                              }
+                            ],
+                            "text": "Your wallet"
+                          }
+                        }
+                      },
+                      {
+                        "text": " ("
+                      },
+                      {
+                        "short": {
+                          "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+                          "is_self": true,
+                          "label": null,
+                          "label_trust": "verified",
+                          "stand_in": null,
+                          "words": null
+                        },
+                        "text": "8Aet…tiTo"
+                      },
+                      {
+                        "text": ")"
+                      }
+                    ],
+                    "text": "Your wallet (8Aet…tiTo)"
+                  }
                 }
               }
             },
@@ -2340,7 +3736,45 @@
                     "text": "Jito tip account"
                   },
                   "label_trust": "verified",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": {
+                    "id": "address-labelled",
+                    "parts": [
+                      {
+                        "text": "Jito tip account",
+                        "value": {
+                          "type": "words",
+                          "value": {
+                            "id": "accounts-jito-tip",
+                            "parts": [
+                              {
+                                "text": "Jito tip account"
+                              }
+                            ],
+                            "text": "Jito tip account"
+                          }
+                        }
+                      },
+                      {
+                        "text": " ("
+                      },
+                      {
+                        "short": {
+                          "address": "96gYZGLnJYVFmbjzopPSU6QiEV5fGqZNyN9nmNhvrZU5",
+                          "is_self": false,
+                          "label": null,
+                          "label_trust": "verified",
+                          "stand_in": null,
+                          "words": null
+                        },
+                        "text": "96gY…rZU5"
+                      },
+                      {
+                        "text": ")"
+                      }
+                    ],
+                    "text": "Jito tip account (96gY…rZU5)"
+                  }
                 }
               }
             }
@@ -2397,7 +3831,45 @@
                     "text": "Your wallet"
                   },
                   "label_trust": "verified",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": {
+                    "id": "address-labelled",
+                    "parts": [
+                      {
+                        "text": "Your wallet",
+                        "value": {
+                          "type": "words",
+                          "value": {
+                            "id": "accounts-your-wallet",
+                            "parts": [
+                              {
+                                "text": "Your wallet"
+                              }
+                            ],
+                            "text": "Your wallet"
+                          }
+                        }
+                      },
+                      {
+                        "text": " ("
+                      },
+                      {
+                        "short": {
+                          "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+                          "is_self": true,
+                          "label": null,
+                          "label_trust": "verified",
+                          "stand_in": null,
+                          "words": null
+                        },
+                        "text": "8Aet…tiTo"
+                      },
+                      {
+                        "text": ")"
+                      }
+                    ],
+                    "text": "Your wallet (8Aet…tiTo)"
+                  }
                 }
               }
             }
@@ -2451,6 +3923,7 @@
                   },
                   "bound": "exact",
                   "note": null,
+                  "note_words": null,
                   "units": "79993",
                   "words": {
                     "id": "amount",
@@ -2503,6 +3976,7 @@
                   },
                   "bound": "exact",
                   "note": null,
+                  "note_words": null,
                   "units": "5000",
                   "words": {
                     "id": "amount",
@@ -2555,6 +4029,7 @@
                   },
                   "bound": "exact",
                   "note": null,
+                  "note_words": null,
                   "units": "74993",
                   "words": {
                     "id": "amount",
@@ -2650,6 +4125,7 @@
                           },
                           "bound": "exact",
                           "note": null,
+                          "note_words": null,
                           "units": "1513840",
                           "words": {
                             "id": "amount",
@@ -2772,6 +4248,7 @@
                 },
                 "bound": "exact",
                 "note": null,
+                "note_words": null,
                 "units": "500000",
                 "words": {
                   "id": "amount",
@@ -2801,7 +4278,8 @@
               "is_self": false,
               "label": null,
               "label_trust": "fact",
-              "stand_in": null
+              "stand_in": null,
+              "words": null
             },
             "text": "879A…MGsA"
           },
@@ -2822,6 +4300,7 @@
                 },
                 "bound": "exact",
                 "note": null,
+                "note_words": null,
                 "units": "49500000",
                 "words": {
                   "id": "amount",
@@ -2872,7 +4351,55 @@
                   "text": "Your SOL account"
                 },
                 "label_trust": "verified",
-                "stand_in": null
+                "stand_in": null,
+                "words": {
+                  "id": "address-labelled",
+                  "parts": [
+                    {
+                      "text": "Your SOL account",
+                      "value": {
+                        "type": "words",
+                        "value": {
+                          "id": "accounts-your-token",
+                          "parts": [
+                            {
+                              "text": "Your "
+                            },
+                            {
+                              "text": "SOL",
+                              "value": {
+                                "type": "text",
+                                "value": "SOL"
+                              }
+                            },
+                            {
+                              "text": " account"
+                            }
+                          ],
+                          "text": "Your SOL account"
+                        }
+                      }
+                    },
+                    {
+                      "text": " ("
+                    },
+                    {
+                      "short": {
+                        "address": "4hJnan1NC4BuwPSn41WAQ7yG3zMK5JfXzDiq8jw2VH6R",
+                        "is_self": true,
+                        "label": null,
+                        "label_trust": "verified",
+                        "stand_in": null,
+                        "words": null
+                      },
+                      "text": "4hJn…VH6R"
+                    },
+                    {
+                      "text": ")"
+                    }
+                  ],
+                  "text": "Your SOL account (4hJn…VH6R)"
+                }
               }
             }
           },
@@ -2893,6 +4420,7 @@
                 },
                 "bound": "at_most",
                 "note": null,
+                "note_words": null,
                 "units": "49500000",
                 "words": {
                   "id": "amount",
@@ -2930,6 +4458,7 @@
                 },
                 "bound": "at_least",
                 "note": null,
+                "note_words": null,
                 "units": "142243976392",
                 "words": {
                   "id": "amount",

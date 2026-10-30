@@ -199,6 +199,9 @@ function addressAt(depth: number): Read<Address> {
             stand_in: o.read('stand_in', nullable(messageAt(depth, 200))),
         };
         if (address.address === null && address.stand_in === null) fail(`${path}.address`, 'is null, and nothing stands in for it');
+        // An engine before a labelled address's words sends none; the window then brackets the address itself.
+        const words = o.read('words', (v, p) => (v === undefined ? undefined : nullable(messageAt(depth + 1, 400))(v, p)));
+        if (words !== undefined) address.words = words;
         return address;
     };
 }
@@ -232,6 +235,8 @@ function amountAt(depth: number): Read<Amount> {
         // An engine before an amount's words sends none; the window then words it.
         const words = o.read('words', (v, p) => (v === undefined ? undefined : messageAt(depth + 1, 500)(v, p)));
         if (words !== undefined) amount.words = words;
+        const noteWords = o.read('note_words', (v, p) => (v === undefined ? undefined : nullable(messageAt(depth + 1, 600))(v, p)));
+        if (noteWords !== undefined) amount.note_words = noteWords;
         return amount;
     };
 }

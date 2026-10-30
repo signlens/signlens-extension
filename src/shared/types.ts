@@ -56,6 +56,8 @@ export interface Address {
     is_self: boolean;
     /** What stands in for an address the engine does not know, such as an account a lookup table loads that was not read. */
     stand_in: Message | null;
+    /** A labelled address in the engine's words, its label a `words` value and the address a short part in the locale's brackets; `null` with no label, absent from an engine before them. */
+    words?: Message | null;
 }
 
 export interface Asset {
@@ -76,6 +78,8 @@ export interface Amount {
     note: Message | null;
     /** The amount in the engine's words, its bound, quantity and token, without the trust marker or the note; absent from an engine before them. */
     words?: Message;
+    /** The note as the engine writes it after the amount, in the locale's brackets; `null` with no note, absent from an engine before them. */
+    note_words?: Message | null;
 }
 
 export type Value =

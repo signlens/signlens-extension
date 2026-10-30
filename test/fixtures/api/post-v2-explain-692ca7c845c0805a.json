@@ -56,7 +56,8 @@
                   "is_self": false,
                   "label": null,
                   "label_trust": "fact",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": null
                 },
                 "text": "H7Pi…7ZgL"
               },
@@ -91,7 +92,8 @@
                   "is_self": false,
                   "label": null,
                   "label_trust": "fact",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": null
                 },
                 "text": "H7Pi…7ZgL"
               },
@@ -141,7 +143,8 @@
                             "is_self": false,
                             "label": null,
                             "label_trust": "fact",
-                            "stand_in": null
+                            "stand_in": null,
+                            "words": null
                           },
                           "text": "2LW6…hx88"
                         }
@@ -149,7 +152,66 @@
                       "text": "Vault 0 of multisig 2LW6…hx88"
                     },
                     "label_trust": "verified",
-                    "stand_in": null
+                    "stand_in": null,
+                    "words": {
+                      "id": "address-labelled",
+                      "parts": [
+                        {
+                          "text": "Vault 0 of multisig 2LW6…hx88",
+                          "value": {
+                            "type": "words",
+                            "value": {
+                              "id": "accounts-name",
+                              "parts": [
+                                {
+                                  "text": "Vault "
+                                },
+                                {
+                                  "text": "0",
+                                  "value": {
+                                    "type": "integer",
+                                    "value": "0"
+                                  }
+                                },
+                                {
+                                  "text": " of multisig "
+                                },
+                                {
+                                  "short": {
+                                    "address": "2LW6PSEjp81xSEttWwXDB6Etb1eKdhYPbFEojYbyhx88",
+                                    "is_self": false,
+                                    "label": null,
+                                    "label_trust": "fact",
+                                    "stand_in": null,
+                                    "words": null
+                                  },
+                                  "text": "2LW6…hx88"
+                                }
+                              ],
+                              "text": "Vault 0 of multisig 2LW6…hx88"
+                            }
+                          }
+                        },
+                        {
+                          "text": " ("
+                        },
+                        {
+                          "short": {
+                            "address": "AiLGdNitMjv8n5HMS7HAdV2kaeJZZFd4jdfn5xp1PKrW",
+                            "is_self": false,
+                            "label": null,
+                            "label_trust": "verified",
+                            "stand_in": null,
+                            "words": null
+                          },
+                          "text": "AiLG…PKrW"
+                        },
+                        {
+                          "text": ")"
+                        }
+                      ],
+                      "text": "Vault 0 of multisig 2LW6…hx88 (AiLG…PKrW)"
+                    }
                   }
                 }
               },
@@ -165,7 +227,8 @@
                     "is_self": false,
                     "label": null,
                     "label_trust": "fact",
-                    "stand_in": null
+                    "stand_in": null,
+                    "words": null
                   }
                 }
               },
@@ -181,7 +244,8 @@
                     "is_self": false,
                     "label": null,
                     "label_trust": "fact",
-                    "stand_in": null
+                    "stand_in": null,
+                    "words": null
                   }
                 }
               }
@@ -215,7 +279,8 @@
                       "is_self": false,
                       "label": null,
                       "label_trust": "fact",
-                      "stand_in": null
+                      "stand_in": null,
+                      "words": null
                     },
                     "text": "2LW6…hx88"
                   }
@@ -223,7 +288,66 @@
                 "text": "Vault 0 of multisig 2LW6…hx88"
               },
               "label_trust": "verified",
-              "stand_in": null
+              "stand_in": null,
+              "words": {
+                "id": "address-labelled",
+                "parts": [
+                  {
+                    "text": "Vault 0 of multisig 2LW6…hx88",
+                    "value": {
+                      "type": "words",
+                      "value": {
+                        "id": "accounts-name",
+                        "parts": [
+                          {
+                            "text": "Vault "
+                          },
+                          {
+                            "text": "0",
+                            "value": {
+                              "type": "integer",
+                              "value": "0"
+                            }
+                          },
+                          {
+                            "text": " of multisig "
+                          },
+                          {
+                            "short": {
+                              "address": "2LW6PSEjp81xSEttWwXDB6Etb1eKdhYPbFEojYbyhx88",
+                              "is_self": false,
+                              "label": null,
+                              "label_trust": "fact",
+                              "stand_in": null,
+                              "words": null
+                            },
+                            "text": "2LW6…hx88"
+                          }
+                        ],
+                        "text": "Vault 0 of multisig 2LW6…hx88"
+                      }
+                    }
+                  },
+                  {
+                    "text": " ("
+                  },
+                  {
+                    "short": {
+                      "address": "AiLGdNitMjv8n5HMS7HAdV2kaeJZZFd4jdfn5xp1PKrW",
+                      "is_self": false,
+                      "label": null,
+                      "label_trust": "verified",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "AiLG…PKrW"
+                  },
+                  {
+                    "text": ")"
+                  }
+                ],
+                "text": "Vault 0 of multisig 2LW6…hx88 (AiLG…PKrW)"
+              }
             },
             "effect": {
               "type": "authority_change",
@@ -242,14 +366,16 @@
                   "is_self": false,
                   "label": null,
                   "label_trust": "fact",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": null
                 },
                 "subject": {
                   "address": "5zpq7DvB6UdFFvpmBPspGPNfUGoBRRCE2HHg5u3gxcsN",
                   "is_self": false,
                   "label": null,
                   "label_trust": "fact",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": null
                 }
               }
             }
@@ -271,7 +397,8 @@
                     "is_self": false,
                     "label": null,
                     "label_trust": "fact",
-                    "stand_in": null
+                    "stand_in": null,
+                    "words": null
                   }
                 }
               },
@@ -287,7 +414,8 @@
                     "is_self": false,
                     "label": null,
                     "label_trust": "fact",
-                    "stand_in": null
+                    "stand_in": null,
+                    "words": null
                   }
                 }
               }
@@ -310,14 +438,16 @@
               "is_self": false,
               "label": null,
               "label_trust": "fact",
-              "stand_in": null
+              "stand_in": null,
+              "words": null
             },
             "subject": {
               "address": "5zpq7DvB6UdFFvpmBPspGPNfUGoBRRCE2HHg5u3gxcsN",
               "is_self": false,
               "label": null,
               "label_trust": "fact",
-              "stand_in": null
+              "stand_in": null,
+              "words": null
             }
           }
         },
@@ -342,6 +472,7 @@
                     },
                     "bound": "exact",
                     "note": null,
+                    "note_words": null,
                     "units": "5000",
                     "words": {
                       "id": "amount",
@@ -377,6 +508,7 @@
               },
               "bound": "exact",
               "note": null,
+              "note_words": null,
               "units": "5000",
               "words": {
                 "id": "amount",
@@ -408,7 +540,45 @@
                 "text": "Your wallet"
               },
               "label_trust": "verified",
-              "stand_in": null
+              "stand_in": null,
+              "words": {
+                "id": "address-labelled",
+                "parts": [
+                  {
+                    "text": "Your wallet",
+                    "value": {
+                      "type": "words",
+                      "value": {
+                        "id": "accounts-your-wallet",
+                        "parts": [
+                          {
+                            "text": "Your wallet"
+                          }
+                        ],
+                        "text": "Your wallet"
+                      }
+                    }
+                  },
+                  {
+                    "text": " ("
+                  },
+                  {
+                    "short": {
+                      "address": "6UJbu9ut5VAsFYQFgPEa5xPfoyF5bB5oi4EknFPvu924",
+                      "is_self": true,
+                      "label": null,
+                      "label_trust": "verified",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "6UJb…u924"
+                  },
+                  {
+                    "text": ")"
+                  }
+                ],
+                "text": "Your wallet (6UJb…u924)"
+              }
             }
           }
         },
@@ -428,7 +598,8 @@
                     "is_self": false,
                     "label": null,
                     "label_trust": "fact",
-                    "stand_in": null
+                    "stand_in": null,
+                    "words": null
                   }
                 }
               },
@@ -454,7 +625,8 @@
                 "is_self": false,
                 "label": null,
                 "label_trust": "fact",
-                "stand_in": null
+                "stand_in": null,
+                "words": null
               }
             }
           }
@@ -589,7 +761,8 @@
                   "is_self": false,
                   "label": null,
                   "label_trust": "fact",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": null
                 }
               }
             },
@@ -612,7 +785,8 @@
                   "is_self": false,
                   "label": null,
                   "label_trust": "fact",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": null
                 }
               }
             },
@@ -700,7 +874,8 @@
                           "is_self": false,
                           "label": null,
                           "label_trust": "fact",
-                          "stand_in": null
+                          "stand_in": null,
+                          "words": null
                         },
                         "text": "2LW6…hx88"
                       }
@@ -708,7 +883,66 @@
                     "text": "Vault 0 of multisig 2LW6…hx88"
                   },
                   "label_trust": "verified",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": {
+                    "id": "address-labelled",
+                    "parts": [
+                      {
+                        "text": "Vault 0 of multisig 2LW6…hx88",
+                        "value": {
+                          "type": "words",
+                          "value": {
+                            "id": "accounts-name",
+                            "parts": [
+                              {
+                                "text": "Vault "
+                              },
+                              {
+                                "text": "0",
+                                "value": {
+                                  "type": "integer",
+                                  "value": "0"
+                                }
+                              },
+                              {
+                                "text": " of multisig "
+                              },
+                              {
+                                "short": {
+                                  "address": "2LW6PSEjp81xSEttWwXDB6Etb1eKdhYPbFEojYbyhx88",
+                                  "is_self": false,
+                                  "label": null,
+                                  "label_trust": "fact",
+                                  "stand_in": null,
+                                  "words": null
+                                },
+                                "text": "2LW6…hx88"
+                              }
+                            ],
+                            "text": "Vault 0 of multisig 2LW6…hx88"
+                          }
+                        }
+                      },
+                      {
+                        "text": " ("
+                      },
+                      {
+                        "short": {
+                          "address": "AiLGdNitMjv8n5HMS7HAdV2kaeJZZFd4jdfn5xp1PKrW",
+                          "is_self": false,
+                          "label": null,
+                          "label_trust": "verified",
+                          "stand_in": null,
+                          "words": null
+                        },
+                        "text": "AiLG…PKrW"
+                      },
+                      {
+                        "text": ")"
+                      }
+                    ],
+                    "text": "Vault 0 of multisig 2LW6…hx88 (AiLG…PKrW)"
+                  }
                 }
               }
             },
@@ -739,7 +973,45 @@
                     "text": "Your wallet"
                   },
                   "label_trust": "verified",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": {
+                    "id": "address-labelled",
+                    "parts": [
+                      {
+                        "text": "Your wallet",
+                        "value": {
+                          "type": "words",
+                          "value": {
+                            "id": "accounts-your-wallet",
+                            "parts": [
+                              {
+                                "text": "Your wallet"
+                              }
+                            ],
+                            "text": "Your wallet"
+                          }
+                        }
+                      },
+                      {
+                        "text": " ("
+                      },
+                      {
+                        "short": {
+                          "address": "6UJbu9ut5VAsFYQFgPEa5xPfoyF5bB5oi4EknFPvu924",
+                          "is_self": true,
+                          "label": null,
+                          "label_trust": "verified",
+                          "stand_in": null,
+                          "words": null
+                        },
+                        "text": "6UJb…u924"
+                      },
+                      {
+                        "text": ")"
+                      }
+                    ],
+                    "text": "Your wallet (6UJb…u924)"
+                  }
                 }
               }
             },
@@ -820,7 +1092,8 @@
                   "is_self": false,
                   "label": null,
                   "label_trust": "fact",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": null
                 }
               }
             },
@@ -871,7 +1144,8 @@
                           "is_self": false,
                           "label": null,
                           "label_trust": "fact",
-                          "stand_in": null
+                          "stand_in": null,
+                          "words": null
                         },
                         "text": "2LW6…hx88"
                       }
@@ -879,7 +1153,66 @@
                     "text": "Vault 0 of multisig 2LW6…hx88"
                   },
                   "label_trust": "verified",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": {
+                    "id": "address-labelled",
+                    "parts": [
+                      {
+                        "text": "Vault 0 of multisig 2LW6…hx88",
+                        "value": {
+                          "type": "words",
+                          "value": {
+                            "id": "accounts-name",
+                            "parts": [
+                              {
+                                "text": "Vault "
+                              },
+                              {
+                                "text": "0",
+                                "value": {
+                                  "type": "integer",
+                                  "value": "0"
+                                }
+                              },
+                              {
+                                "text": " of multisig "
+                              },
+                              {
+                                "short": {
+                                  "address": "2LW6PSEjp81xSEttWwXDB6Etb1eKdhYPbFEojYbyhx88",
+                                  "is_self": false,
+                                  "label": null,
+                                  "label_trust": "fact",
+                                  "stand_in": null,
+                                  "words": null
+                                },
+                                "text": "2LW6…hx88"
+                              }
+                            ],
+                            "text": "Vault 0 of multisig 2LW6…hx88"
+                          }
+                        }
+                      },
+                      {
+                        "text": " ("
+                      },
+                      {
+                        "short": {
+                          "address": "AiLGdNitMjv8n5HMS7HAdV2kaeJZZFd4jdfn5xp1PKrW",
+                          "is_self": false,
+                          "label": null,
+                          "label_trust": "verified",
+                          "stand_in": null,
+                          "words": null
+                        },
+                        "text": "AiLG…PKrW"
+                      },
+                      {
+                        "text": ")"
+                      }
+                    ],
+                    "text": "Vault 0 of multisig 2LW6…hx88 (AiLG…PKrW)"
+                  }
                 }
               }
             },
@@ -910,7 +1243,8 @@
                   "is_self": false,
                   "label": null,
                   "label_trust": "fact",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": null
                 }
               }
             }
@@ -951,7 +1285,8 @@
                   "is_self": false,
                   "label": null,
                   "label_trust": "fact",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": null
                 },
                 "text": "8jj7…BMai"
               },
@@ -993,7 +1328,8 @@
                   "is_self": false,
                   "label": null,
                   "label_trust": "fact",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": null
                 }
               }
             },
@@ -1016,7 +1352,8 @@
                   "is_self": false,
                   "label": null,
                   "label_trust": "fact",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": null
                 }
               }
             },
@@ -1104,7 +1441,8 @@
                           "is_self": false,
                           "label": null,
                           "label_trust": "fact",
-                          "stand_in": null
+                          "stand_in": null,
+                          "words": null
                         },
                         "text": "2LW6…hx88"
                       }
@@ -1112,7 +1450,66 @@
                     "text": "Vault 0 of multisig 2LW6…hx88"
                   },
                   "label_trust": "verified",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": {
+                    "id": "address-labelled",
+                    "parts": [
+                      {
+                        "text": "Vault 0 of multisig 2LW6…hx88",
+                        "value": {
+                          "type": "words",
+                          "value": {
+                            "id": "accounts-name",
+                            "parts": [
+                              {
+                                "text": "Vault "
+                              },
+                              {
+                                "text": "0",
+                                "value": {
+                                  "type": "integer",
+                                  "value": "0"
+                                }
+                              },
+                              {
+                                "text": " of multisig "
+                              },
+                              {
+                                "short": {
+                                  "address": "2LW6PSEjp81xSEttWwXDB6Etb1eKdhYPbFEojYbyhx88",
+                                  "is_self": false,
+                                  "label": null,
+                                  "label_trust": "fact",
+                                  "stand_in": null,
+                                  "words": null
+                                },
+                                "text": "2LW6…hx88"
+                              }
+                            ],
+                            "text": "Vault 0 of multisig 2LW6…hx88"
+                          }
+                        }
+                      },
+                      {
+                        "text": " ("
+                      },
+                      {
+                        "short": {
+                          "address": "AiLGdNitMjv8n5HMS7HAdV2kaeJZZFd4jdfn5xp1PKrW",
+                          "is_self": false,
+                          "label": null,
+                          "label_trust": "verified",
+                          "stand_in": null,
+                          "words": null
+                        },
+                        "text": "AiLG…PKrW"
+                      },
+                      {
+                        "text": ")"
+                      }
+                    ],
+                    "text": "Vault 0 of multisig 2LW6…hx88 (AiLG…PKrW)"
+                  }
                 }
               }
             },
@@ -1143,7 +1540,45 @@
                     "text": "Your wallet"
                   },
                   "label_trust": "verified",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": {
+                    "id": "address-labelled",
+                    "parts": [
+                      {
+                        "text": "Your wallet",
+                        "value": {
+                          "type": "words",
+                          "value": {
+                            "id": "accounts-your-wallet",
+                            "parts": [
+                              {
+                                "text": "Your wallet"
+                              }
+                            ],
+                            "text": "Your wallet"
+                          }
+                        }
+                      },
+                      {
+                        "text": " ("
+                      },
+                      {
+                        "short": {
+                          "address": "6UJbu9ut5VAsFYQFgPEa5xPfoyF5bB5oi4EknFPvu924",
+                          "is_self": true,
+                          "label": null,
+                          "label_trust": "verified",
+                          "stand_in": null,
+                          "words": null
+                        },
+                        "text": "6UJb…u924"
+                      },
+                      {
+                        "text": ")"
+                      }
+                    ],
+                    "text": "Your wallet (6UJb…u924)"
+                  }
                 }
               }
             },
@@ -1224,7 +1659,8 @@
                   "is_self": false,
                   "label": null,
                   "label_trust": "fact",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": null
                 }
               }
             },
@@ -1275,7 +1711,8 @@
                           "is_self": false,
                           "label": null,
                           "label_trust": "fact",
-                          "stand_in": null
+                          "stand_in": null,
+                          "words": null
                         },
                         "text": "2LW6…hx88"
                       }
@@ -1283,7 +1720,66 @@
                     "text": "Vault 0 of multisig 2LW6…hx88"
                   },
                   "label_trust": "verified",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": {
+                    "id": "address-labelled",
+                    "parts": [
+                      {
+                        "text": "Vault 0 of multisig 2LW6…hx88",
+                        "value": {
+                          "type": "words",
+                          "value": {
+                            "id": "accounts-name",
+                            "parts": [
+                              {
+                                "text": "Vault "
+                              },
+                              {
+                                "text": "0",
+                                "value": {
+                                  "type": "integer",
+                                  "value": "0"
+                                }
+                              },
+                              {
+                                "text": " of multisig "
+                              },
+                              {
+                                "short": {
+                                  "address": "2LW6PSEjp81xSEttWwXDB6Etb1eKdhYPbFEojYbyhx88",
+                                  "is_self": false,
+                                  "label": null,
+                                  "label_trust": "fact",
+                                  "stand_in": null,
+                                  "words": null
+                                },
+                                "text": "2LW6…hx88"
+                              }
+                            ],
+                            "text": "Vault 0 of multisig 2LW6…hx88"
+                          }
+                        }
+                      },
+                      {
+                        "text": " ("
+                      },
+                      {
+                        "short": {
+                          "address": "AiLGdNitMjv8n5HMS7HAdV2kaeJZZFd4jdfn5xp1PKrW",
+                          "is_self": false,
+                          "label": null,
+                          "label_trust": "verified",
+                          "stand_in": null,
+                          "words": null
+                        },
+                        "text": "AiLG…PKrW"
+                      },
+                      {
+                        "text": ")"
+                      }
+                    ],
+                    "text": "Vault 0 of multisig 2LW6…hx88 (AiLG…PKrW)"
+                  }
                 }
               }
             },
@@ -1314,7 +1810,8 @@
                   "is_self": false,
                   "label": null,
                   "label_trust": "fact",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": null
                 }
               }
             }
@@ -1355,7 +1852,8 @@
                   "is_self": false,
                   "label": null,
                   "label_trust": "fact",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": null
                 },
                 "text": "8jj7…BMai"
               },
@@ -1405,7 +1903,8 @@
                   "is_self": false,
                   "label": null,
                   "label_trust": "fact",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": null
                 }
               }
             },
@@ -1436,7 +1935,45 @@
                     "text": "Your wallet"
                   },
                   "label_trust": "verified",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": {
+                    "id": "address-labelled",
+                    "parts": [
+                      {
+                        "text": "Your wallet",
+                        "value": {
+                          "type": "words",
+                          "value": {
+                            "id": "accounts-your-wallet",
+                            "parts": [
+                              {
+                                "text": "Your wallet"
+                              }
+                            ],
+                            "text": "Your wallet"
+                          }
+                        }
+                      },
+                      {
+                        "text": " ("
+                      },
+                      {
+                        "short": {
+                          "address": "6UJbu9ut5VAsFYQFgPEa5xPfoyF5bB5oi4EknFPvu924",
+                          "is_self": true,
+                          "label": null,
+                          "label_trust": "verified",
+                          "stand_in": null,
+                          "words": null
+                        },
+                        "text": "6UJb…u924"
+                      },
+                      {
+                        "text": ")"
+                      }
+                    ],
+                    "text": "Your wallet (6UJb…u924)"
+                  }
                 }
               }
             }
@@ -1493,7 +2030,45 @@
                     "text": "Your wallet"
                   },
                   "label_trust": "verified",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": {
+                    "id": "address-labelled",
+                    "parts": [
+                      {
+                        "text": "Your wallet",
+                        "value": {
+                          "type": "words",
+                          "value": {
+                            "id": "accounts-your-wallet",
+                            "parts": [
+                              {
+                                "text": "Your wallet"
+                              }
+                            ],
+                            "text": "Your wallet"
+                          }
+                        }
+                      },
+                      {
+                        "text": " ("
+                      },
+                      {
+                        "short": {
+                          "address": "6UJbu9ut5VAsFYQFgPEa5xPfoyF5bB5oi4EknFPvu924",
+                          "is_self": true,
+                          "label": null,
+                          "label_trust": "verified",
+                          "stand_in": null,
+                          "words": null
+                        },
+                        "text": "6UJb…u924"
+                      },
+                      {
+                        "text": ")"
+                      }
+                    ],
+                    "text": "Your wallet (6UJb…u924)"
+                  }
                 }
               }
             }
@@ -1547,6 +2122,7 @@
                   },
                   "bound": "exact",
                   "note": null,
+                  "note_words": null,
                   "units": "5000",
                   "words": {
                     "id": "amount",
@@ -1599,6 +2175,7 @@
                   },
                   "bound": "exact",
                   "note": null,
+                  "note_words": null,
                   "units": "5000",
                   "words": {
                     "id": "amount",
@@ -1697,7 +2274,8 @@
                   "is_self": false,
                   "label": null,
                   "label_trust": "fact",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": null
                 }
               }
             }
@@ -1746,7 +2324,8 @@
               "is_self": false,
               "label": null,
               "label_trust": "fact",
-              "stand_in": null
+              "stand_in": null,
+              "words": null
             },
             "text": "H7Pi…7ZgL"
           },
@@ -1769,7 +2348,8 @@
               "is_self": false,
               "label": null,
               "label_trust": "fact",
-              "stand_in": null
+              "stand_in": null,
+              "words": null
             },
             "text": "H7Pi…7ZgL"
           },

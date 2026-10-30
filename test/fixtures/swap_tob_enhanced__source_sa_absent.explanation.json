@@ -22,6 +22,7 @@
                 },
                 "bound": "exact",
                 "note": null,
+                "note_words": null,
                 "units": "1855569",
                 "words": {
                   "id": "amount",
@@ -51,7 +52,8 @@
               "is_self": false,
               "label": null,
               "label_trust": "fact",
-              "stand_in": null
+              "stand_in": null,
+              "words": null
             },
             "text": "CVJ6…Q3bR"
           },
@@ -64,7 +66,8 @@
               "is_self": false,
               "label": null,
               "label_trust": "fact",
-              "stand_in": null
+              "stand_in": null,
+              "words": null
             },
             "text": "91rj…BXHD"
           }
@@ -99,7 +102,8 @@
                           "is_self": false,
                           "label": null,
                           "label_trust": "fact",
-                          "stand_in": null
+                          "stand_in": null,
+                          "words": null
                         },
                         "text": "6vgy…uwpB"
                       },
@@ -125,6 +129,7 @@
                 },
                 "bound": "exact",
                 "note": null,
+                "note_words": null,
                 "units": "151360479993",
                 "words": {
                   "id": "amount-unverified",
@@ -138,7 +143,8 @@
                         "is_self": false,
                         "label": null,
                         "label_trust": "fact",
-                        "stand_in": null
+                        "stand_in": null,
+                        "words": null
                       },
                       "text": "6vgy…uwpB"
                     },
@@ -183,7 +189,8 @@
                           "is_self": false,
                           "label": null,
                           "label_trust": "fact",
-                          "stand_in": null
+                          "stand_in": null,
+                          "words": null
                         },
                         "text": "GP57…1gPy"
                       },
@@ -217,6 +224,15 @@
                   ],
                   "text": "before any transfer fee"
                 },
+                "note_words": {
+                  "id": "amount-note",
+                  "parts": [
+                    {
+                      "text": " (before any transfer fee)"
+                    }
+                  ],
+                  "text": " (before any transfer fee)"
+                },
                 "units": "80334153",
                 "words": {
                   "id": "amount-unverified",
@@ -230,7 +246,8 @@
                         "is_self": false,
                         "label": null,
                         "label_trust": "fact",
-                        "stand_in": null
+                        "stand_in": null,
+                        "words": null
                       },
                       "text": "GP57…1gPy"
                     },
@@ -284,6 +301,7 @@
                 },
                 "bound": "exact",
                 "note": null,
+                "note_words": null,
                 "units": "1855569",
                 "words": {
                   "id": "amount",
@@ -316,7 +334,8 @@
                 "is_self": false,
                 "label": null,
                 "label_trust": "fact",
-                "stand_in": null
+                "stand_in": null,
+                "words": null
               }
             }
           },
@@ -332,7 +351,8 @@
                 "is_self": false,
                 "label": null,
                 "label_trust": "fact",
-                "stand_in": null
+                "stand_in": null,
+                "words": null
               }
             }
           }
@@ -351,6 +371,7 @@
           },
           "bound": "exact",
           "note": null,
+          "note_words": null,
           "units": "1855569",
           "words": {
             "id": "amount",
@@ -374,14 +395,16 @@
           "is_self": false,
           "label": null,
           "label_trust": "fact",
-          "stand_in": null
+          "stand_in": null,
+          "words": null
         },
         "to": {
           "address": "91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD",
           "is_self": false,
           "label": null,
           "label_trust": "fact",
-          "stand_in": null
+          "stand_in": null,
+          "words": null
         }
       }
     },
@@ -411,7 +434,8 @@
                           "is_self": false,
                           "label": null,
                           "label_trust": "fact",
-                          "stand_in": null
+                          "stand_in": null,
+                          "words": null
                         },
                         "text": "6vgy…uwpB"
                       },
@@ -445,6 +469,15 @@
                   ],
                   "text": "before any transfer fee"
                 },
+                "note_words": {
+                  "id": "amount-note",
+                  "parts": [
+                    {
+                      "text": " (before any transfer fee)"
+                    }
+                  ],
+                  "text": " (before any transfer fee)"
+                },
                 "units": "151360479993",
                 "words": {
                   "id": "amount-unverified",
@@ -458,7 +491,8 @@
                         "is_self": false,
                         "label": null,
                         "label_trust": "fact",
-                        "stand_in": null
+                        "stand_in": null,
+                        "words": null
                       },
                       "text": "6vgy…uwpB"
                     },
@@ -493,7 +527,8 @@
                 "is_self": false,
                 "label": null,
                 "label_trust": "fact",
-                "stand_in": null
+                "stand_in": null,
+                "words": null
               }
             }
           },
@@ -521,7 +556,49 @@
                   "text": "OKX DEX Router"
                 },
                 "label_trust": "verified",
-                "stand_in": null
+                "stand_in": null,
+                "words": {
+                  "id": "address-labelled",
+                  "parts": [
+                    {
+                      "text": "OKX DEX Router",
+                      "value": {
+                        "type": "words",
+                        "value": {
+                          "id": "accounts-name",
+                          "parts": [
+                            {
+                              "text": "OKX DEX Router",
+                              "value": {
+                                "type": "text",
+                                "value": "OKX DEX Router"
+                              }
+                            }
+                          ],
+                          "text": "OKX DEX Router"
+                        }
+                      }
+                    },
+                    {
+                      "text": " ("
+                    },
+                    {
+                      "short": {
+                        "address": "proVF4pMXVaYqmy4NjniPh4pqKNfMmsihgd4wdkCX3u",
+                        "is_self": false,
+                        "label": null,
+                        "label_trust": "verified",
+                        "stand_in": null,
+                        "words": null
+                      },
+                      "text": "proV…CX3u"
+                    },
+                    {
+                      "text": ")"
+                    }
+                  ],
+                  "text": "OKX DEX Router (proV…CX3u)"
+                }
               }
             }
           }
@@ -545,7 +622,8 @@
                     "is_self": false,
                     "label": null,
                     "label_trust": "fact",
-                    "stand_in": null
+                    "stand_in": null,
+                    "words": null
                   },
                   "text": "6vgy…uwpB"
                 },
@@ -579,6 +657,15 @@
             ],
             "text": "before any transfer fee"
           },
+          "note_words": {
+            "id": "amount-note",
+            "parts": [
+              {
+                "text": " (before any transfer fee)"
+              }
+            ],
+            "text": " (before any transfer fee)"
+          },
           "units": "151360479993",
           "words": {
             "id": "amount-unverified",
@@ -592,7 +679,8 @@
                   "is_self": false,
                   "label": null,
                   "label_trust": "fact",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": null
                 },
                 "text": "6vgy…uwpB"
               },
@@ -618,7 +706,8 @@
           "is_self": false,
           "label": null,
           "label_trust": "fact",
-          "stand_in": null
+          "stand_in": null,
+          "words": null
         },
         "to": {
           "address": "proVF4pMXVaYqmy4NjniPh4pqKNfMmsihgd4wdkCX3u",
@@ -637,7 +726,49 @@
             "text": "OKX DEX Router"
           },
           "label_trust": "verified",
-          "stand_in": null
+          "stand_in": null,
+          "words": {
+            "id": "address-labelled",
+            "parts": [
+              {
+                "text": "OKX DEX Router",
+                "value": {
+                  "type": "words",
+                  "value": {
+                    "id": "accounts-name",
+                    "parts": [
+                      {
+                        "text": "OKX DEX Router",
+                        "value": {
+                          "type": "text",
+                          "value": "OKX DEX Router"
+                        }
+                      }
+                    ],
+                    "text": "OKX DEX Router"
+                  }
+                }
+              },
+              {
+                "text": " ("
+              },
+              {
+                "short": {
+                  "address": "proVF4pMXVaYqmy4NjniPh4pqKNfMmsihgd4wdkCX3u",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "verified",
+                  "stand_in": null,
+                  "words": null
+                },
+                "text": "proV…CX3u"
+              },
+              {
+                "text": ")"
+              }
+            ],
+            "text": "OKX DEX Router (proV…CX3u)"
+          }
         }
       }
     },
@@ -667,7 +798,8 @@
                           "is_self": false,
                           "label": null,
                           "label_trust": "fact",
-                          "stand_in": null
+                          "stand_in": null,
+                          "words": null
                         },
                         "text": "GP57…1gPy"
                       },
@@ -701,6 +833,15 @@
                   ],
                   "text": "at least 80,334,153 raw units, before a transfer fee SignLens cannot check"
                 },
+                "note_words": {
+                  "id": "amount-note",
+                  "parts": [
+                    {
+                      "text": " (at least 80,334,153 raw units, before a transfer fee SignLens cannot check)"
+                    }
+                  ],
+                  "text": " (at least 80,334,153 raw units, before a transfer fee SignLens cannot check)"
+                },
                 "units": "0",
                 "words": {
                   "id": "amount-unverified",
@@ -714,7 +855,8 @@
                         "is_self": false,
                         "label": null,
                         "label_trust": "fact",
-                        "stand_in": null
+                        "stand_in": null,
+                        "words": null
                       },
                       "text": "GP57…1gPy"
                     },
@@ -761,7 +903,49 @@
                   "text": "OKX DEX Router"
                 },
                 "label_trust": "verified",
-                "stand_in": null
+                "stand_in": null,
+                "words": {
+                  "id": "address-labelled",
+                  "parts": [
+                    {
+                      "text": "OKX DEX Router",
+                      "value": {
+                        "type": "words",
+                        "value": {
+                          "id": "accounts-name",
+                          "parts": [
+                            {
+                              "text": "OKX DEX Router",
+                              "value": {
+                                "type": "text",
+                                "value": "OKX DEX Router"
+                              }
+                            }
+                          ],
+                          "text": "OKX DEX Router"
+                        }
+                      }
+                    },
+                    {
+                      "text": " ("
+                    },
+                    {
+                      "short": {
+                        "address": "proVF4pMXVaYqmy4NjniPh4pqKNfMmsihgd4wdkCX3u",
+                        "is_self": false,
+                        "label": null,
+                        "label_trust": "verified",
+                        "stand_in": null,
+                        "words": null
+                      },
+                      "text": "proV…CX3u"
+                    },
+                    {
+                      "text": ")"
+                    }
+                  ],
+                  "text": "OKX DEX Router (proV…CX3u)"
+                }
               }
             }
           },
@@ -777,7 +961,8 @@
                 "is_self": false,
                 "label": null,
                 "label_trust": "fact",
-                "stand_in": null
+                "stand_in": null,
+                "words": null
               }
             }
           }
@@ -801,7 +986,8 @@
                     "is_self": false,
                     "label": null,
                     "label_trust": "fact",
-                    "stand_in": null
+                    "stand_in": null,
+                    "words": null
                   },
                   "text": "GP57…1gPy"
                 },
@@ -835,6 +1021,15 @@
             ],
             "text": "at least 80,334,153 raw units, before a transfer fee SignLens cannot check"
           },
+          "note_words": {
+            "id": "amount-note",
+            "parts": [
+              {
+                "text": " (at least 80,334,153 raw units, before a transfer fee SignLens cannot check)"
+              }
+            ],
+            "text": " (at least 80,334,153 raw units, before a transfer fee SignLens cannot check)"
+          },
           "units": "0",
           "words": {
             "id": "amount-unverified",
@@ -848,7 +1043,8 @@
                   "is_self": false,
                   "label": null,
                   "label_trust": "fact",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": null
                 },
                 "text": "GP57…1gPy"
               },
@@ -886,14 +1082,57 @@
             "text": "OKX DEX Router"
           },
           "label_trust": "verified",
-          "stand_in": null
+          "stand_in": null,
+          "words": {
+            "id": "address-labelled",
+            "parts": [
+              {
+                "text": "OKX DEX Router",
+                "value": {
+                  "type": "words",
+                  "value": {
+                    "id": "accounts-name",
+                    "parts": [
+                      {
+                        "text": "OKX DEX Router",
+                        "value": {
+                          "type": "text",
+                          "value": "OKX DEX Router"
+                        }
+                      }
+                    ],
+                    "text": "OKX DEX Router"
+                  }
+                }
+              },
+              {
+                "text": " ("
+              },
+              {
+                "short": {
+                  "address": "proVF4pMXVaYqmy4NjniPh4pqKNfMmsihgd4wdkCX3u",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "verified",
+                  "stand_in": null,
+                  "words": null
+                },
+                "text": "proV…CX3u"
+              },
+              {
+                "text": ")"
+              }
+            ],
+            "text": "OKX DEX Router (proV…CX3u)"
+          }
         },
         "to": {
           "address": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR",
           "is_self": false,
           "label": null,
           "label_trust": "fact",
-          "stand_in": null
+          "stand_in": null,
+          "words": null
         }
       }
     },
@@ -913,7 +1152,8 @@
                 "is_self": false,
                 "label": null,
                 "label_trust": "fact",
-                "stand_in": null
+                "stand_in": null,
+                "words": null
               }
             }
           },
@@ -941,7 +1181,8 @@
                         "is_self": false,
                         "label": null,
                         "label_trust": "fact",
-                        "stand_in": null
+                        "stand_in": null,
+                        "words": null
                       },
                       "text": "GP57…1gPy"
                     },
@@ -960,7 +1201,8 @@
                     }
                   ],
                   "text": "the account at lookup table GP57…1gPy[65]"
-                }
+                },
+                "words": null
               }
             }
           },
@@ -981,6 +1223,7 @@
                 },
                 "bound": "exact",
                 "note": null,
+                "note_words": null,
                 "units": "1488440",
                 "words": {
                   "id": "amount",
@@ -1011,7 +1254,8 @@
           "is_self": false,
           "label": null,
           "label_trust": "fact",
-          "stand_in": null
+          "stand_in": null,
+          "words": null
         },
         "deposit": {
           "asset": {
@@ -1023,6 +1267,7 @@
           },
           "bound": "exact",
           "note": null,
+          "note_words": null,
           "units": "1488440",
           "words": {
             "id": "amount",
@@ -1059,7 +1304,8 @@
                   "is_self": false,
                   "label": null,
                   "label_trust": "fact",
-                  "stand_in": null
+                  "stand_in": null,
+                  "words": null
                 },
                 "text": "GP57…1gPy"
               },
@@ -1078,7 +1324,8 @@
               }
             ],
             "text": "the account at lookup table GP57…1gPy[65]"
-          }
+          },
+          "words": null
         }
       }
     },
@@ -1095,7 +1342,8 @@
                 "is_self": false,
                 "label": null,
                 "label_trust": "fact",
-                "stand_in": null
+                "stand_in": null,
+                "words": null
               }
             }
           },
@@ -1116,6 +1364,7 @@
                 },
                 "bound": "exact",
                 "note": null,
+                "note_words": null,
                 "units": "7098",
                 "words": {
                   "id": "amount",
@@ -1151,6 +1400,7 @@
           },
           "bound": "exact",
           "note": null,
+          "note_words": null,
           "units": "7098",
           "words": {
             "id": "amount",
@@ -1174,7 +1424,8 @@
           "is_self": false,
           "label": null,
           "label_trust": "fact",
-          "stand_in": null
+          "stand_in": null,
+          "words": null
         }
       }
     },
@@ -1287,6 +1538,7 @@
               },
               "bound": "exact",
               "note": null,
+              "note_words": null,
               "units": "1855569",
               "words": {
                 "id": "amount",
@@ -1326,7 +1578,8 @@
               "is_self": false,
               "label": null,
               "label_trust": "fact",
-              "stand_in": null
+              "stand_in": null,
+              "words": null
             }
           }
         },
@@ -1349,7 +1602,8 @@
               "is_self": false,
               "label": null,
               "label_trust": "fact",
-              "stand_in": null
+              "stand_in": null,
+              "words": null
             }
           }
         }
@@ -1423,7 +1677,8 @@
                         "is_self": false,
                         "label": null,
                         "label_trust": "fact",
-                        "stand_in": null
+                        "stand_in": null,
+                        "words": null
                       },
                       "text": "6vgy…uwpB"
                     },
@@ -1449,6 +1704,7 @@
               },
               "bound": "exact",
               "note": null,
+              "note_words": null,
               "units": "151360479993",
               "words": {
                 "id": "amount-unverified",
@@ -1462,7 +1718,8 @@
                       "is_self": false,
                       "label": null,
                       "label_trust": "fact",
-                      "stand_in": null
+                      "stand_in": null,
+                      "words": null
                     },
                     "text": "6vgy…uwpB"
                   },
@@ -1522,7 +1779,8 @@
                         "is_self": false,
                         "label": null,
                         "label_trust": "fact",
-                        "stand_in": null
+                        "stand_in": null,
+                        "words": null
                       },
                       "text": "GP57…1gPy"
                     },
@@ -1556,6 +1814,15 @@
                 ],
                 "text": "before any transfer fee"
               },
+              "note_words": {
+                "id": "amount-note",
+                "parts": [
+                  {
+                    "text": " (before any transfer fee)"
+                  }
+                ],
+                "text": " (before any transfer fee)"
+              },
               "units": "80334153",
               "words": {
                 "id": "amount-unverified",
@@ -1569,7 +1836,8 @@
                       "is_self": false,
                       "label": null,
                       "label_trust": "fact",
-                      "stand_in": null
+                      "stand_in": null,
+                      "words": null
                     },
                     "text": "GP57…1gPy"
                   },
@@ -1629,7 +1897,8 @@
                         "is_self": false,
                         "label": null,
                         "label_trust": "fact",
-                        "stand_in": null
+                        "stand_in": null,
+                        "words": null
                       },
                       "text": "GP57…1gPy"
                     },
@@ -1655,6 +1924,7 @@
               },
               "bound": "exact",
               "note": null,
+              "note_words": null,
               "units": "80737843",
               "words": {
                 "id": "amount-unverified",
@@ -1668,7 +1938,8 @@
                       "is_self": false,
                       "label": null,
                       "label_trust": "fact",
-                      "stand_in": null
+                      "stand_in": null,
+                      "words": null
                     },
                     "text": "GP57…1gPy"
                   },
@@ -1768,7 +2039,8 @@
               "is_self": false,
               "label": null,
               "label_trust": "fact",
-              "stand_in": null
+              "stand_in": null,
+              "words": null
             }
           }
         },
@@ -2088,7 +2360,8 @@
               "is_self": false,
               "label": null,
               "label_trust": "fact",
-              "stand_in": null
+              "stand_in": null,
+              "words": null
             }
           }
         },
@@ -2119,7 +2392,8 @@
               "is_self": false,
               "label": null,
               "label_trust": "fact",
-              "stand_in": null
+              "stand_in": null,
+              "words": null
             }
           }
         },
@@ -2199,7 +2473,8 @@
               "is_self": false,
               "label": null,
               "label_trust": "fact",
-              "stand_in": null
+              "stand_in": null,
+              "words": null
             },
             "text": "CjoV…N1Mj"
           },
@@ -2347,7 +2622,8 @@
               "is_self": false,
               "label": null,
               "label_trust": "fact",
-              "stand_in": null
+              "stand_in": null,
+              "words": null
             }
           }
         },
@@ -2378,7 +2654,8 @@
               "is_self": false,
               "label": null,
               "label_trust": "fact",
-              "stand_in": null
+              "stand_in": null,
+              "words": null
             }
           }
         },
@@ -2421,7 +2698,8 @@
                       "is_self": false,
                       "label": null,
                       "label_trust": "fact",
-                      "stand_in": null
+                      "stand_in": null,
+                      "words": null
                     },
                     "text": "GP57…1gPy"
                   },
@@ -2440,7 +2718,8 @@
                   }
                 ],
                 "text": "the account at lookup table GP57…1gPy[60]"
-              }
+              },
+              "words": null
             }
           }
         },
@@ -2471,7 +2750,8 @@
               "is_self": false,
               "label": null,
               "label_trust": "fact",
-              "stand_in": null
+              "stand_in": null,
+              "words": null
             }
           }
         },
@@ -2514,7 +2794,8 @@
                       "is_self": false,
                       "label": null,
                       "label_trust": "fact",
-                      "stand_in": null
+                      "stand_in": null,
+                      "words": null
                     },
                     "text": "GP57…1gPy"
                   },
@@ -2533,7 +2814,8 @@
                   }
                 ],
                 "text": "the account at lookup table GP57…1gPy[65]"
-              }
+              },
+              "words": null
             }
           }
         }
@@ -2582,7 +2864,8 @@
               "is_self": false,
               "label": null,
               "label_trust": "fact",
-              "stand_in": null
+              "stand_in": null,
+              "words": null
             }
           }
         }
@@ -2636,6 +2919,7 @@
               },
               "bound": "exact",
               "note": null,
+              "note_words": null,
               "units": "7098",
               "words": {
                 "id": "amount",
@@ -2688,6 +2972,7 @@
               },
               "bound": "exact",
               "note": null,
+              "note_words": null,
               "units": "5000",
               "words": {
                 "id": "amount",
@@ -2740,6 +3025,7 @@
               },
               "bound": "exact",
               "note": null,
+              "note_words": null,
               "units": "2098",
               "words": {
                 "id": "amount",
@@ -2832,6 +3118,7 @@
                       },
                       "bound": "exact",
                       "note": null,
+                      "note_words": null,
                       "units": "1488440",
                       "words": {
                         "id": "amount",
@@ -2954,6 +3241,7 @@
             },
             "bound": "exact",
             "note": null,
+            "note_words": null,
             "units": "1855569",
             "words": {
               "id": "amount",
@@ -2983,7 +3271,8 @@
           "is_self": false,
           "label": null,
           "label_trust": "fact",
-          "stand_in": null
+          "stand_in": null,
+          "words": null
         },
         "text": "CVJ6…Q3bR"
       },
@@ -2996,7 +3285,8 @@
           "is_self": false,
           "label": null,
           "label_trust": "fact",
-          "stand_in": null
+          "stand_in": null,
+          "words": null
         },
         "text": "91rj…BXHD"
       },
@@ -3022,7 +3312,8 @@
                       "is_self": false,
                       "label": null,
                       "label_trust": "fact",
-                      "stand_in": null
+                      "stand_in": null,
+                      "words": null
                     },
                     "text": "6vgy…uwpB"
                   },
@@ -3048,6 +3339,7 @@
             },
             "bound": "exact",
             "note": null,
+            "note_words": null,
             "units": "151360479993",
             "words": {
               "id": "amount-unverified",
@@ -3061,7 +3353,8 @@
                     "is_self": false,
                     "label": null,
                     "label_trust": "fact",
-                    "stand_in": null
+                    "stand_in": null,
+                    "words": null
                   },
                   "text": "6vgy…uwpB"
                 },
@@ -3106,7 +3399,8 @@
                       "is_self": false,
                       "label": null,
                       "label_trust": "fact",
-                      "stand_in": null
+                      "stand_in": null,
+                      "words": null
                     },
                     "text": "GP57…1gPy"
                   },
@@ -3140,6 +3434,15 @@
               ],
               "text": "before any transfer fee"
             },
+            "note_words": {
+              "id": "amount-note",
+              "parts": [
+                {
+                  "text": " (before any transfer fee)"
+                }
+              ],
+              "text": " (before any transfer fee)"
+            },
             "units": "80334153",
             "words": {
               "id": "amount-unverified",
@@ -3153,7 +3456,8 @@
                     "is_self": false,
                     "label": null,
                     "label_trust": "fact",
-                    "stand_in": null
+                    "stand_in": null,
+                    "words": null
                   },
                   "text": "GP57…1gPy"
                 },
