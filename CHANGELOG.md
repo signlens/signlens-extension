@@ -41,6 +41,12 @@ uses [Semantic Versioning](https://semver.org/).
 
 ### Changed
 
+- **The engine's help for its labels.** The help a fixed label opens
+  (the fee's parts, the signers, the compute budget's settings, a token
+  account's mint) is the engine's, sent with each field, where the
+  extension kept its own copy and found a label in the collapsed
+  section by its English ("Create token account if missing: Mint").
+
 - **Section titles as the engine words them.** The toggle over the
   sections after the instructions lists their titles as the engine
   writes them ("Details: Also, Signers, Fee, Validity"), where it

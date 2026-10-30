@@ -43,113 +43,8 @@ const MARKER_HELP: Partial<Record<Trust, string>> = {
 const CLAIMS_HELP =
     'Everything in this section came from the RPC the extension asked, not from the transaction itself. SignLens could not check it, so treat it as a hint, not a fact.';
 
-/**
- * What the engine's fixed labels mean, for a reader who opens one: each
- * label by its identifier (the engine's labels.ftl), then its English and
- * its help. The English finds the label in one the collapsed section
- * composes ("Create token account if missing: Mint"), whose JSON joins the
- * two into words, until the glossary is the engine's (ADR-0015, phase 6).
- * Labels a descriptor chooses are not here: they differ per program, so
- * the descriptor carries their help and the field arrives with it.
- */
-const GLOSSARY: readonly (readonly [id: string, english: string, help: string])[] = [
-    [
-        'label-total',
-        'Total',
-        'What the network charges for this transaction. The fee payer pays it whether the transaction succeeds or fails.',
-    ],
-    ['label-base', 'Base', 'The flat part of the fee: the network charges it per signature.'],
-    [
-        'label-priority',
-        'Priority',
-        'A tip the site added so validators take the transaction sooner. It is optional, and it is yours to pay.',
-    ],
-    [
-        'label-priority-basis',
-        'Priority basis',
-        'How the tip was computed: the price per unit of work, times the work the transaction asked to be allowed.',
-    ],
-    [
-        'label-rent-deposits',
-        'Rent deposits',
-        'SOL locked to keep the accounts this transaction creates on chain. It is a deposit, not a fee: closing an account returns it to whoever closes it.',
-    ],
-    [
-        'label-expires',
-        'Expires',
-        'How long the signature can be used. About a minute is normal; a durable nonce keeps it usable until the nonce is advanced.',
-    ],
-    [
-        'label-nonce-account',
-        'Nonce account',
-        'The account that keeps this signature usable. Until it is advanced, anyone holding the signed transaction can submit it.',
-    ],
-    ['label-fee-payer', 'Fee payer', 'The account that pays the fee: the first signer.'],
-    ['label-signer', 'Signer', 'An account whose signature the transaction needs besides the fee payer.'],
-    [
-        'label-additional-accounts',
-        'Additional accounts',
-        'Additional accounts this instruction uses that its reviewed descriptor does not name. It is normal for instructions to need several.',
-    ],
-    [
-        'label-compute-unit-limit',
-        'Compute unit limit',
-        'How much work the transaction may do. It affects the fee, not what the transaction does.',
-    ],
-    [
-        'label-compute-unit-price',
-        'Compute unit price',
-        'The tip per unit of work, in millionths of a lamport. With the limit, it sets the priority fee.',
-    ],
-    ['label-heap-size', 'Heap size', 'Memory a program asked for. It affects the fee, not what the transaction does.'],
-    [
-        'label-loaded-account-data-limit',
-        'Loaded account data limit',
-        'How much account data the transaction may read. It affects the fee, not what the transaction does.',
-    ],
-    [
-        'label-token-account',
-        'Token account',
-        'An account that holds one token for one wallet. A wallet has a separate one for each token it holds.',
-    ],
-    ['label-mint', 'Mint', 'The address that identifies the token itself, as opposed to an account holding some of it.'],
-    [
-        'label-rent-paid-by',
-        'Rent paid by',
-        'Who pays the small deposit that keeps a new account alive. It comes back when the account is closed.',
-    ],
-    ['label-token-program', 'Token program', 'The program that manages this token: SPL Token or Token-2022.'],
-    [
-        'label-result',
-        'Result',
-        'What the RPC says would happen if this were sent now. A simulation, not the real thing: the chain can differ by the time it lands.',
-    ],
-    [
-        'label-compute-units',
-        'Compute units',
-        'How much work the transaction did in the simulation. The priority fee is paid per unit, so this is what it buys.',
-    ],
-];
-
 /** A finding's severity as the window words it: its own words, not the document's value with a capital made in code. */
 const SEVERITY_WORD: Record<Severity, string> = { info: 'Info', warning: 'Warning', high: 'High', critical: 'Critical' };
-
-/** The help by label identifier; a map, since an identifier is the engine's: "constructor" is no key. */
-const HELP = new Map(GLOSSARY.map(([id, , help]) => [id, help]));
-/** The help by label in English, for a composed label's last part. */
-const HELP_BY_ENGLISH = new Map(GLOSSARY.map(([, english, help]) => [english, help]));
-
-/** The identifier of the message that composes a collapsed section's label from an instruction's title and a field's label. */
-const COMPOSED_LABEL = 'explain-housekeeping-label';
-
-/** The help for a label, or undefined when there is none. */
-export function helpFor(label: Message): string | undefined {
-    if (label.id === COMPOSED_LABEL) {
-        const last = label.text.lastIndexOf(': ');
-        return last >= 0 ? HELP_BY_ENGLISH.get(label.text.slice(last + 2)) : undefined;
-    }
-    return label.id === null ? undefined : HELP.get(label.id);
-}
 
 /** A button, which the keyboard and the screen reader take as one: Enter and Space press it. */
 function button(className: string, text?: string): HTMLButtonElement {
@@ -512,7 +407,8 @@ function sectionNode(section: Section, open: boolean, nested: HTMLElement[]): HT
 function fieldNodes(field: Field, inClaims: boolean): [HTMLElement, HTMLElement] {
     const dt = element('dt');
     const dd = element('dd');
-    const help = field.help?.text ?? helpFor(field.label);
+    // The engine's help: a descriptor's for its labels, the engine's own for its fixed ones.
+    const help = field.help?.text;
     dt.append(help ? term(field.label.text, help, dd) : field.label.text);
     dd.append(valueNode(field.value));
     if (field.trust === 'claimed' && !inClaims) dd.append(mark(element('span', 'claimed'), 'claimed'));
