@@ -302,11 +302,29 @@ function addressNode(address: Address): HTMLSpanElement {
     return node;
 }
 
-/** The address itself, shortened when `shorten`, its whole on hover; or the words that stand in for it. */
-function keyNode(address: Address, shorten: boolean): HTMLSpanElement {
+/**
+ * The address itself, its whole on hover; or the words that stand in for
+ * it. Shortened when `shorten`, it is a button that shows the whole
+ * address and the short form again, by click, tap or keyboard, so the
+ * whole can be read and copied where there is no hover.
+ */
+function keyNode(address: Address, shorten: boolean): HTMLElement {
     if (address.address === null) return messageNode(address.stand_in, 'key');
-    const node = element('span', 'key', shorten ? short(address.address) : address.address);
-    node.title = address.address;
+    const whole = address.address;
+    const abridged = short(whole);
+    if (!shorten || abridged === whole) {
+        const node = element('span', 'key', whole);
+        node.title = whole;
+        return node;
+    }
+    const node = button('key', abridged);
+    node.title = whole;
+    node.setAttribute('aria-expanded', 'false');
+    node.addEventListener('click', () => {
+        const open = node.getAttribute('aria-expanded') !== 'true';
+        node.textContent = open ? whole : abridged;
+        node.setAttribute('aria-expanded', String(open));
+    });
     return node;
 }
 

@@ -383,10 +383,11 @@ button.primary:focus-visible {
     outline-offset: 3px;
 }
 
-/* Controls that read as text (a disclosure's toggle, a term, "show all bytes"): buttons to the keyboard and the screen reader, without a button's box. */
+/* Controls that read as text (a disclosure's toggle, a term, "show all bytes", a shortened address): buttons to the keyboard and the screen reader, without a button's box. */
 .toggle,
 .term,
-.more-bytes {
+.more-bytes,
+button.key {
     padding: 0;
     border: 0;
     border-radius: 0;
@@ -487,9 +488,22 @@ button[aria-disabled='true'] {
 }
 
 /* Keys and hex in monospace; words in the text face. */
-.address .key {
+.address .key,
+button.key {
     font-family: ui-monospace, monospace;
     font-size: 11.5px;
+}
+
+/* A shortened address opens to its whole and back, its whole on hover too;
+   no underline, which is a term's mark. The whole can be selected to copy. */
+button.key {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    user-select: text;
+}
+
+button.key:focus-visible {
+    border-radius: 2px;
 }
 
 .address.self b {

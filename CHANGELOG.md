@@ -41,6 +41,12 @@ uses [Semantic Versioning](https://semver.org/).
 
 ### Changed
 
+- **A shortened address opens to its whole.** An address shortened to
+  its first and last four characters ("H7Pi…7ZgL") shows all of it when
+  clicked, tapped, or pressed with Enter or Space, and its short form
+  again the same way; open, it can be selected and copied. The whole was
+  only in a tooltip on hover, out of reach of the keyboard and of touch.
+
 - **The band's summary laid out.** The summary in the window's band, of
   a single transaction, lays out the amounts and addresses it names as
   the rows below do: a verified token or account name has its badge, a

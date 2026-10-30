@@ -161,6 +161,18 @@ test('the window puts the verdict and what the transaction does first, with the 
     await expect(gate.locator('#band-summary')).toContainText('Send 0.996423 USDC to');
     // The band lays its summary out as the rows do: the verified token has its badge.
     await expect(gate.locator('#band-summary .amount .verified-badge')).toHaveCount(1);
+    // A shortened address opens to its whole, by click or keyboard, and closes again; the whole is on hover too.
+    const key = gate.locator('#band-summary button.key').first();
+    const whole = (await key.getAttribute('title')) ?? '';
+    expect(whole).toMatch(/^[1-9A-HJ-NP-Za-km-z]{32,44}$/);
+    const abridged = `${whole.slice(0, 4)}…${whole.slice(-4)}`;
+    await expect(key).toHaveText(abridged);
+    await key.click();
+    await expect(key).toHaveText(whole);
+    await expect(key).toHaveAttribute('aria-expanded', 'true');
+    await key.press('Enter');
+    await expect(key).toHaveText(abridged);
+    await expect(key).toHaveAttribute('aria-expanded', 'false');
 
     // The effects as sentences, the signer's own accounts marked.
     const effects = gate.locator('.effects li');
