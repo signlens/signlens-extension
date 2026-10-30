@@ -258,6 +258,30 @@ export function quantity(amount: Amount): string {
     return `${sign}${fraction ? `${integer}.${fraction}` : integer}`;
 }
 
+/** `n` of a unit, in the singular for one. */
+function count(n: number, unit: string): string {
+    return `${n} ${unit}${n === 1 ? '' : 's'}`;
+}
+
+/** A duration as the engine writes it: its two largest units, the smaller left out when it is zero ("2 days 3 hours"). */
+export function durationText(seconds: number): string {
+    const units: [number, string][] = [
+        [86_400, 'day'],
+        [3_600, 'hour'],
+        [60, 'minute'],
+        [1, 'second'],
+    ];
+    const found = units.findIndex(([size]) => seconds >= size);
+    // Under a second, which only zero is: in seconds.
+    const at = found < 0 ? units.length - 1 : found;
+    const [size, unit] = units[at] ?? [1, 'second'];
+    const text = count(Math.floor(seconds / size), unit);
+    const next = units[at + 1];
+    if (!next) return text;
+    const rest = Math.floor((seconds % size) / next[0]);
+    return rest === 0 ? text : `${text} ${count(rest, next[1])}`;
+}
+
 const PREFIX: Record<Bound, string> = {
     exact: '',
     at_least: '≥ ',
@@ -363,7 +387,7 @@ function valueNode(value: Value): HTMLElement {
         case 'basis_points':
             return element('span', '', `${(value.value / 100).toFixed(2)}%`);
         case 'duration':
-            return element('span', '', `${value.value} seconds`);
+            return element('span', '', durationText(value.value));
         case 'timestamp':
             return element('span', '', new Date(value.value * 1000).toLocaleString());
         case 'bytes':

@@ -41,6 +41,11 @@ uses [Semantic Versioning](https://semver.org/).
 
 ### Changed
 
+- **A duration in words.** A duration in the instructions reads as the
+  engine writes it, in its two largest units, the smaller left out when
+  it is zero ("2 days 3 hours", "5 minutes 20 seconds"), where it read
+  as a count of seconds ("183600 seconds").
+
 - **A shortened address opens to its whole.** An address shortened to
   its first and last four characters ("H7Pi…7ZgL") shows all of it when
   clicked, tapped, or pressed with Enter or Space, and its short form

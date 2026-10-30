@@ -3,7 +3,7 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import type { Amount, Message } from '../shared/types.ts';
-import { captureName, helpFor, quantity } from './render.ts';
+import { captureName, durationText, helpFor, quantity } from './render.ts';
 
 function amount(units: string, decimals: number | null): Amount {
     return { units, asset: { id: 'x', symbol: null, decimals, trust: 'fact', description: null }, bound: 'exact', note: null };
@@ -19,6 +19,19 @@ test('a quantity is scaled by its decimals, grouped by thousands, and signed', (
     assert.equal(quantity(amount('20998877118', null)), '20,998,877,118 raw units');
     assert.equal(quantity(amount('1', null)), '1 raw unit');
     assert.equal(quantity(amount('not a number', 2)), 'not a number raw units');
+});
+
+test('a duration reads in its two largest units, as the engine writes it', () => {
+    assert.equal(durationText(0), '0 seconds');
+    assert.equal(durationText(1), '1 second');
+    assert.equal(durationText(59), '59 seconds');
+    assert.equal(durationText(60), '1 minute');
+    assert.equal(durationText(320), '5 minutes 20 seconds');
+    assert.equal(durationText(3_660), '1 hour 1 minute');
+    assert.equal(durationText(18_000), '5 hours');
+    assert.equal(durationText(86_400), '1 day');
+    assert.equal(durationText(183_600), '2 days 3 hours');
+    assert.equal(durationText(90_061), '1 day 1 hour');
 });
 
 /** A label as the engine sends it: its identifier and its English. */
