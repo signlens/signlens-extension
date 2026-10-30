@@ -1050,17 +1050,17 @@
                   "id": "compute-budget-price",
                   "parts": [
                     {
-                      "text": "107000",
+                      "text": "107,000",
                       "value": {
-                        "type": "integer",
-                        "value": "107000"
+                        "type": "text",
+                        "value": "107,000"
                       }
                     },
                     {
-                      "text": " micro-lamports per unit"
+                      "text": " micro-lamports per compute unit"
                     }
                   ],
-                  "text": "107000 micro-lamports per unit"
+                  "text": "107,000 micro-lamports per compute unit"
                 }
               }
             }
@@ -1256,27 +1256,27 @@
                   "id": "explain-priority-basis",
                   "parts": [
                     {
-                      "text": "107000",
+                      "text": "107,000",
                       "value": {
-                        "type": "integer",
-                        "value": "107000"
+                        "type": "text",
+                        "value": "107,000"
                       }
                     },
                     {
-                      "text": " micro-lamports per unit × "
+                      "text": " micro-lamports per compute unit × "
                     },
                     {
-                      "text": "20728",
+                      "text": "20,728",
                       "value": {
-                        "type": "integer",
-                        "value": "20728"
+                        "type": "text",
+                        "value": "20,728"
                       }
                     },
                     {
-                      "text": " units requested"
+                      "text": " compute units requested"
                     }
                   ],
-                  "text": "107000 micro-lamports per unit × 20728 units requested"
+                  "text": "107,000 micro-lamports per compute unit × 20,728 compute units requested"
                 }
               }
             },
@@ -1551,7 +1551,7 @@
         ],
         "text": "Send 0.996423 USDC to DV3B…L7Qp"
       },
-      "text": "Send 0.996423 USDC to DV3B…L7Qp\nWARNING: review the findings before approving\n\nFindings:\n  [HIGH] This signature has no time limit: anyone holding the signed transaction can submit it at any later time, until the nonce account is advanced\n  [WARNING] The host's simulation of this transaction failed ({\"InstructionError\":[1,{\"Custom\":6001}]}; the program said: Error: insufficient funds); it would not execute as shown\n\n== Transfer tokens | Token program\n  Amount: 0.996423 USDC\n  From: Your token account (Ffz5…piwg)\n  To: BNgs…TT1Z's USDC account (DV3B…L7Qp)\n  Authorized by: Your wallet (8Kvy…p1fa)\n  Mint: USDC mint (EPjF…Dt1v)\n\n== Also [collapsed]\n  Advance durable nonce: Nonce account: AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw\n  Advance durable nonce: Authority: EbsUZEFAU23Z2SgAymFtU2hADLiyNLzaPLKiJfvpKnE7\n  Create token account if missing: Token account: BNgs…TT1Z's USDC account (DV3B…L7Qp)\n  Create token account if missing: Owner: BNgsxo3eHqQLNTaKy4juhAUJ8DyewcJNEcYdMuSmTT1Z\n  Create token account if missing: Mint: USDC mint (EPjF…Dt1v)\n  Create token account if missing: Rent paid by: Your wallet (8Kvy…p1fa)\n  Create token account if missing: Token program: Token program (Toke…Q5DA)\n  Compute unit limit: 20728\n  Compute unit price: 107000 micro-lamports per unit\n\n== Signers\n  Fee payer: Your wallet (8Kvy…p1fa)\n  Signer: EbsUZEFAU23Z2SgAymFtU2hADLiyNLzaPLKiJfvpKnE7\n\n== Fee\n  Total: 0.000012218 SOL\n  Base: 0.00001 SOL\n  Priority: 0.000002218 SOL\n  Priority basis: 107000 micro-lamports per unit × 20728 units requested\n  Rent deposits: up to 0.00148844 SOL, if the account this transaction creates when missing does not exist yet; refunded to whoever closes the account\n\n== Validity\n  Expires: when the nonce account is advanced, with no time limit\n  Nonce account: AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw\n\n== Simulated outcome | the host's simulation (claimed, unverified)\n  Result: would fail: {\"InstructionError\":[1,{\"Custom\":6001}]}; the program said: Error: insufficient funds\n  Compute units: 0\n\nEffects:\n  - You send 0.996423 USDC from Your token account (Ffz5…piwg) to BNgs…TT1Z's USDC account (DV3B…L7Qp)\n  - Create BNgs…TT1Z's USDC account (DV3B…L7Qp), managed by Token program (Toke…Q5DA), depositing 0.00148844 SOL unless it already exists\n  - You pay a fee of 0.000012218 SOL\n  - Valid until nonce account AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw is advanced, with NO TIME LIMIT (durable nonce)\n\nRaw: solana legacy (511 bytes)\n  digest: 05d51e61e33bad79d124089e71be7988c37cccf1f9268ee6e338e439f5ec582f\n",
+      "text": "Send 0.996423 USDC to DV3B…L7Qp\nWARNING: review the findings before approving\n\nFindings:\n  [HIGH] This signature has no time limit: anyone holding the signed transaction can submit it at any later time, until the nonce account is advanced\n  [WARNING] The host's simulation of this transaction failed ({\"InstructionError\":[1,{\"Custom\":6001}]}; the program said: Error: insufficient funds); it would not execute as shown\n\n== Transfer tokens | Token program\n  Amount: 0.996423 USDC\n  From: Your token account (Ffz5…piwg)\n  To: BNgs…TT1Z's USDC account (DV3B…L7Qp)\n  Authorized by: Your wallet (8Kvy…p1fa)\n  Mint: USDC mint (EPjF…Dt1v)\n\n== Also [collapsed]\n  Advance durable nonce: Nonce account: AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw\n  Advance durable nonce: Authority: EbsUZEFAU23Z2SgAymFtU2hADLiyNLzaPLKiJfvpKnE7\n  Create token account if missing: Token account: BNgs…TT1Z's USDC account (DV3B…L7Qp)\n  Create token account if missing: Owner: BNgsxo3eHqQLNTaKy4juhAUJ8DyewcJNEcYdMuSmTT1Z\n  Create token account if missing: Mint: USDC mint (EPjF…Dt1v)\n  Create token account if missing: Rent paid by: Your wallet (8Kvy…p1fa)\n  Create token account if missing: Token program: Token program (Toke…Q5DA)\n  Compute unit limit: 20728\n  Compute unit price: 107,000 micro-lamports per compute unit\n\n== Signers\n  Fee payer: Your wallet (8Kvy…p1fa)\n  Signer: EbsUZEFAU23Z2SgAymFtU2hADLiyNLzaPLKiJfvpKnE7\n\n== Fee\n  Total: 0.000012218 SOL\n  Base: 0.00001 SOL\n  Priority: 0.000002218 SOL\n  Priority basis: 107,000 micro-lamports per compute unit × 20,728 compute units requested\n  Rent deposits: up to 0.00148844 SOL, if the account this transaction creates when missing does not exist yet; refunded to whoever closes the account\n\n== Validity\n  Expires: when the nonce account is advanced, with no time limit\n  Nonce account: AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw\n\n== Simulated outcome | the host's simulation (claimed, unverified)\n  Result: would fail: {\"InstructionError\":[1,{\"Custom\":6001}]}; the program said: Error: insufficient funds\n  Compute units: 0\n\nEffects:\n  - You send 0.996423 USDC from Your token account (Ffz5…piwg) to BNgs…TT1Z's USDC account (DV3B…L7Qp)\n  - Create BNgs…TT1Z's USDC account (DV3B…L7Qp), managed by Token program (Toke…Q5DA), depositing 0.00148844 SOL unless it already exists\n  - You pay a fee of 0.000012218 SOL\n  - Valid until nonce account AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw is advanced, with NO TIME LIMIT (durable nonce)\n\nRaw: solana legacy (511 bytes)\n  digest: 05d51e61e33bad79d124089e71be7988c37cccf1f9268ee6e338e439f5ec582f\n",
       "verdict": "warn"
     }
   }

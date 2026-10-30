@@ -34,9 +34,9 @@ test('several actions are one line each under their count, their values laid out
     await expect(actions).toHaveCount(3);
     await expect(actions.nth(0)).toHaveText(/^Transfer 0\.0005 SOL from /);
     await expect(actions.nth(2)).toContainText('raw units of unverified token HMYd…pump');
-    // The wrap is a descriptor's summary, its values parts of their own: its account is laid out as an address.
-    await expect(actions.nth(1)).toContainText('Wrap 0.0495 SOL into wrapped SOL account');
-    await expect(actions.nth(1).locator('.address')).toHaveCount(1);
+    // The wrap is a descriptor's summary, its values parts of their own: its account, unnamed, is shortened, and opens to its whole.
+    await expect(actions.nth(1)).toContainText(/Wrap 0\.0495 SOL into wrapped SOL account \w{4}…\w{4}/);
+    await expect(actions.nth(1).locator('button.key')).toHaveCount(1);
     await clickToClose(gate.getByRole('button', { name: 'Reject' }));
     expect((await signing).error).toContain('User rejected the request in SignLens');
 });

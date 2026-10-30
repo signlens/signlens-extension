@@ -48,23 +48,20 @@
                 "text": " (Hand the admin of Drift to "
               },
               {
-                "text": "H7PiGqqUaanBovwKgEtreJbKmQe6dbq6VTrw6guy7ZgL",
-                "value": {
-                  "type": "address",
-                  "value": {
-                    "address": "H7PiGqqUaanBovwKgEtreJbKmQe6dbq6VTrw6guy7ZgL",
-                    "is_self": false,
-                    "label": null,
-                    "label_trust": "fact",
-                    "stand_in": null
-                  }
-                }
+                "short": {
+                  "address": "H7PiGqqUaanBovwKgEtreJbKmQe6dbq6VTrw6guy7ZgL",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "fact",
+                  "stand_in": null
+                },
+                "text": "H7Pi…7ZgL"
               },
               {
                 "text": ", per your RPC)"
               }
             ],
-            "text": "Approve proposal #7 (Hand the admin of Drift to H7PiGqqUaanBovwKgEtreJbKmQe6dbq6VTrw6guy7ZgL, per your RPC)"
+            "text": "Approve proposal #7 (Hand the admin of Drift to H7Pi…7ZgL, per your RPC)"
           }
         },
         {
@@ -86,23 +83,20 @@
                 "text": " (Hand the admin of Drift to "
               },
               {
-                "text": "H7PiGqqUaanBovwKgEtreJbKmQe6dbq6VTrw6guy7ZgL",
-                "value": {
-                  "type": "address",
-                  "value": {
-                    "address": "H7PiGqqUaanBovwKgEtreJbKmQe6dbq6VTrw6guy7ZgL",
-                    "is_self": false,
-                    "label": null,
-                    "label_trust": "fact",
-                    "stand_in": null
-                  }
-                }
+                "short": {
+                  "address": "H7PiGqqUaanBovwKgEtreJbKmQe6dbq6VTrw6guy7ZgL",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "fact",
+                  "stand_in": null
+                },
+                "text": "H7Pi…7ZgL"
               },
               {
                 "text": ", per your RPC)"
               }
             ],
-            "text": "Execute proposal #7 (Hand the admin of Drift to H7PiGqqUaanBovwKgEtreJbKmQe6dbq6VTrw6guy7ZgL, per your RPC)"
+            "text": "Execute proposal #7 (Hand the admin of Drift to H7Pi…7ZgL, per your RPC)"
           }
         }
       ],
@@ -1616,17 +1610,14 @@
             "text": " (Hand the admin of Drift to "
           },
           {
-            "text": "H7PiGqqUaanBovwKgEtreJbKmQe6dbq6VTrw6guy7ZgL",
-            "value": {
-              "type": "address",
-              "value": {
-                "address": "H7PiGqqUaanBovwKgEtreJbKmQe6dbq6VTrw6guy7ZgL",
-                "is_self": false,
-                "label": null,
-                "label_trust": "fact",
-                "stand_in": null
-              }
-            }
+            "short": {
+              "address": "H7PiGqqUaanBovwKgEtreJbKmQe6dbq6VTrw6guy7ZgL",
+              "is_self": false,
+              "label": null,
+              "label_trust": "fact",
+              "stand_in": null
+            },
+            "text": "H7Pi…7ZgL"
           },
           {
             "text": ", per your RPC); Execute proposal #"
@@ -1642,25 +1633,22 @@
             "text": " (Hand the admin of Drift to "
           },
           {
-            "text": "H7PiGqqUaanBovwKgEtreJbKmQe6dbq6VTrw6guy7ZgL",
-            "value": {
-              "type": "address",
-              "value": {
-                "address": "H7PiGqqUaanBovwKgEtreJbKmQe6dbq6VTrw6guy7ZgL",
-                "is_self": false,
-                "label": null,
-                "label_trust": "fact",
-                "stand_in": null
-              }
-            }
+            "short": {
+              "address": "H7PiGqqUaanBovwKgEtreJbKmQe6dbq6VTrw6guy7ZgL",
+              "is_self": false,
+              "label": null,
+              "label_trust": "fact",
+              "stand_in": null
+            },
+            "text": "H7Pi…7ZgL"
           },
           {
             "text": ", per your RPC)"
           }
         ],
-        "text": "2 actions: Approve proposal #7 (Hand the admin of Drift to H7PiGqqUaanBovwKgEtreJbKmQe6dbq6VTrw6guy7ZgL, per your RPC); Execute proposal #7 (Hand the admin of Drift to H7PiGqqUaanBovwKgEtreJbKmQe6dbq6VTrw6guy7ZgL, per your RPC)"
+        "text": "2 actions: Approve proposal #7 (Hand the admin of Drift to H7Pi…7ZgL, per your RPC); Execute proposal #7 (Hand the admin of Drift to H7Pi…7ZgL, per your RPC)"
       },
-      "text": "2 actions: Approve proposal #7 (Hand the admin of Drift to H7PiGqqUaanBovwKgEtreJbKmQe6dbq6VTrw6guy7ZgL, per your RPC); Execute proposal #7 (Hand the admin of Drift to H7PiGqqUaanBovwKgEtreJbKmQe6dbq6VTrw6guy7ZgL, per your RPC)\nWARNING: review the findings before approving\n\nFindings:\n  [HIGH] Proposal step 1: Hands the admin of the whole Drift protocol to an account that is not yours: the admin can add markets, set their oracles and collateral weights, and raise withdrawal limits, over every user's deposits (instruction 2)\n  [HIGH] This would approve a multisig proposal whose content is on chain, not in the signed bytes; its steps are shown from the transaction account as your RPC returned it, which the signed bytes cannot confirm (instruction 2)\n  [HIGH] Proposal step 1: Hands the admin of the whole Drift protocol to an account that is not yours: the admin can add markets, set their oracles and collateral weights, and raise withdrawal limits, over every user's deposits (instruction 3)\n  [HIGH] This would execute a multisig proposal whose content is on chain, not in the signed bytes; its steps are shown from the transaction account as your RPC returned it, which the signed bytes cannot confirm (instruction 3)\n  [HIGH] This signature has no time limit: anyone holding the signed transaction can submit it at any later time, until the nonce account is advanced\n\n== Approve proposal | Squads multisig v4\n  Multisig: 2LW6PSEjp81xSEttWwXDB6Etb1eKdhYPbFEojYbyhx88\n  Proposal: J1w1U5BB9W4Tnf2NhrcnTmV5t6iZugXSkujYKadwxti8\n  Content: transaction #7 of this multisig, from its account as your RPC returned it at slot 461256036; the signed bytes do not hold it (claimed, unverified)\n  Vault: Vault 0 of multisig 2LW6…hx88 (AiLG…PKrW)\n  Member: Your wallet (6UJb…u924)\n  Steps: 1\n\n==== Step 1: Change the protocol admin | Drift Protocol v2 (descriptor reviewed 2026-10-25, upgradeable by 8jj7…BMai)\n  New admin: H7PiGqqUaanBovwKgEtreJbKmQe6dbq6VTrw6guy7ZgL\n  Current admin: Vault 0 of multisig 2LW6…hx88 (AiLG…PKrW)\n  Drift state: 5zpq7DvB6UdFFvpmBPspGPNfUGoBRRCE2HHg5u3gxcsN\n\n== Execute vault transaction | Squads multisig v4\n  Multisig: 2LW6PSEjp81xSEttWwXDB6Etb1eKdhYPbFEojYbyhx88\n  Proposal: J1w1U5BB9W4Tnf2NhrcnTmV5t6iZugXSkujYKadwxti8\n  Content: transaction #7 of this multisig, from its account as your RPC returned it at slot 461256036; the signed bytes do not hold it (claimed, unverified)\n  Vault: Vault 0 of multisig 2LW6…hx88 (AiLG…PKrW)\n  Member: Your wallet (6UJb…u924)\n  Steps: 1\n\n==== Step 1: Change the protocol admin | Drift Protocol v2 (descriptor reviewed 2026-10-25, upgradeable by 8jj7…BMai)\n  New admin: H7PiGqqUaanBovwKgEtreJbKmQe6dbq6VTrw6guy7ZgL\n  Current admin: Vault 0 of multisig 2LW6…hx88 (AiLG…PKrW)\n  Drift state: 5zpq7DvB6UdFFvpmBPspGPNfUGoBRRCE2HHg5u3gxcsN\n\n== Also [collapsed]\n  Advance durable nonce: Nonce account: EmYEryTDXtuVCxrjNqJXbiwr4hfiJajd4g5P58vvhQnc\n  Advance durable nonce: Authority: Your wallet (6UJb…u924)\n\n== Signers\n  Fee payer: Your wallet (6UJb…u924)\n\n== Fee\n  Total: 0.000005 SOL\n  Base: 0.000005 SOL\n\n== Validity\n  Expires: when the nonce account is advanced, with no time limit\n  Nonce account: EmYEryTDXtuVCxrjNqJXbiwr4hfiJajd4g5P58vvhQnc\n\nEffects:\n  - Once approved, Vault 0 of multisig 2LW6…hx88 (AiLG…PKrW) would: Give the admin authority over 5zpq7DvB6UdFFvpmBPspGPNfUGoBRRCE2HHg5u3gxcsN to H7PiGqqUaanBovwKgEtreJbKmQe6dbq6VTrw6guy7ZgL\n  - Give the admin authority over 5zpq7DvB6UdFFvpmBPspGPNfUGoBRRCE2HHg5u3gxcsN to H7PiGqqUaanBovwKgEtreJbKmQe6dbq6VTrw6guy7ZgL\n  - You pay a fee of 0.000005 SOL\n  - Valid until nonce account EmYEryTDXtuVCxrjNqJXbiwr4hfiJajd4g5P58vvhQnc is advanced, with NO TIME LIMIT (durable nonce)\n\nRaw: solana legacy (432 bytes)\n  digest: ee7706555a2bed3f52dde729942482697f4aef89b2e733ee1e75b78b037a2af5\n",
+      "text": "2 actions: Approve proposal #7 (Hand the admin of Drift to H7Pi…7ZgL, per your RPC); Execute proposal #7 (Hand the admin of Drift to H7Pi…7ZgL, per your RPC)\nWARNING: review the findings before approving\n\nFindings:\n  [HIGH] Proposal step 1: Hands the admin of the whole Drift protocol to an account that is not yours: the admin can add markets, set their oracles and collateral weights, and raise withdrawal limits, over every user's deposits (instruction 2)\n  [HIGH] This would approve a multisig proposal whose content is on chain, not in the signed bytes; its steps are shown from the transaction account as your RPC returned it, which the signed bytes cannot confirm (instruction 2)\n  [HIGH] Proposal step 1: Hands the admin of the whole Drift protocol to an account that is not yours: the admin can add markets, set their oracles and collateral weights, and raise withdrawal limits, over every user's deposits (instruction 3)\n  [HIGH] This would execute a multisig proposal whose content is on chain, not in the signed bytes; its steps are shown from the transaction account as your RPC returned it, which the signed bytes cannot confirm (instruction 3)\n  [HIGH] This signature has no time limit: anyone holding the signed transaction can submit it at any later time, until the nonce account is advanced\n\n== Approve proposal | Squads multisig v4\n  Multisig: 2LW6PSEjp81xSEttWwXDB6Etb1eKdhYPbFEojYbyhx88\n  Proposal: J1w1U5BB9W4Tnf2NhrcnTmV5t6iZugXSkujYKadwxti8\n  Content: transaction #7 of this multisig, from its account as your RPC returned it at slot 461256036; the signed bytes do not hold it (claimed, unverified)\n  Vault: Vault 0 of multisig 2LW6…hx88 (AiLG…PKrW)\n  Member: Your wallet (6UJb…u924)\n  Steps: 1\n\n==== Step 1: Change the protocol admin | Drift Protocol v2 (descriptor reviewed 2026-10-25, upgradeable by 8jj7…BMai)\n  New admin: H7PiGqqUaanBovwKgEtreJbKmQe6dbq6VTrw6guy7ZgL\n  Current admin: Vault 0 of multisig 2LW6…hx88 (AiLG…PKrW)\n  Drift state: 5zpq7DvB6UdFFvpmBPspGPNfUGoBRRCE2HHg5u3gxcsN\n\n== Execute vault transaction | Squads multisig v4\n  Multisig: 2LW6PSEjp81xSEttWwXDB6Etb1eKdhYPbFEojYbyhx88\n  Proposal: J1w1U5BB9W4Tnf2NhrcnTmV5t6iZugXSkujYKadwxti8\n  Content: transaction #7 of this multisig, from its account as your RPC returned it at slot 461256036; the signed bytes do not hold it (claimed, unverified)\n  Vault: Vault 0 of multisig 2LW6…hx88 (AiLG…PKrW)\n  Member: Your wallet (6UJb…u924)\n  Steps: 1\n\n==== Step 1: Change the protocol admin | Drift Protocol v2 (descriptor reviewed 2026-10-25, upgradeable by 8jj7…BMai)\n  New admin: H7PiGqqUaanBovwKgEtreJbKmQe6dbq6VTrw6guy7ZgL\n  Current admin: Vault 0 of multisig 2LW6…hx88 (AiLG…PKrW)\n  Drift state: 5zpq7DvB6UdFFvpmBPspGPNfUGoBRRCE2HHg5u3gxcsN\n\n== Also [collapsed]\n  Advance durable nonce: Nonce account: EmYEryTDXtuVCxrjNqJXbiwr4hfiJajd4g5P58vvhQnc\n  Advance durable nonce: Authority: Your wallet (6UJb…u924)\n\n== Signers\n  Fee payer: Your wallet (6UJb…u924)\n\n== Fee\n  Total: 0.000005 SOL\n  Base: 0.000005 SOL\n\n== Validity\n  Expires: when the nonce account is advanced, with no time limit\n  Nonce account: EmYEryTDXtuVCxrjNqJXbiwr4hfiJajd4g5P58vvhQnc\n\nEffects:\n  - Once approved, Vault 0 of multisig 2LW6…hx88 (AiLG…PKrW) would: Give the admin authority over 5zpq7DvB6UdFFvpmBPspGPNfUGoBRRCE2HHg5u3gxcsN to H7PiGqqUaanBovwKgEtreJbKmQe6dbq6VTrw6guy7ZgL\n  - Give the admin authority over 5zpq7DvB6UdFFvpmBPspGPNfUGoBRRCE2HHg5u3gxcsN to H7PiGqqUaanBovwKgEtreJbKmQe6dbq6VTrw6guy7ZgL\n  - You pay a fee of 0.000005 SOL\n  - Valid until nonce account EmYEryTDXtuVCxrjNqJXbiwr4hfiJajd4g5P58vvhQnc is advanced, with NO TIME LIMIT (durable nonce)\n\nRaw: solana legacy (432 bytes)\n  digest: ee7706555a2bed3f52dde729942482697f4aef89b2e733ee1e75b78b037a2af5\n",
       "verdict": "warn"
     }
   }

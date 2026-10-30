@@ -86,23 +86,20 @@
             "text": " into wrapped SOL account "
           },
           {
-            "text": "4hJnan1NC4BuwPSn41WAQ7yG3zMK5JfXzDiq8jw2VH6R",
-            "value": {
-              "type": "address",
-              "value": {
-                "address": "4hJnan1NC4BuwPSn41WAQ7yG3zMK5JfXzDiq8jw2VH6R",
-                "is_self": false,
-                "label": null,
-                "label_trust": "fact",
-                "stand_in": null
-              }
-            }
+            "short": {
+              "address": "4hJnan1NC4BuwPSn41WAQ7yG3zMK5JfXzDiq8jw2VH6R",
+              "is_self": false,
+              "label": null,
+              "label_trust": "fact",
+              "stand_in": null
+            },
+            "text": "4hJn…VH6R"
           },
           {
             "text": " via DFlow"
           }
         ],
-        "text": "Wrap 0.0495 SOL into wrapped SOL account 4hJnan1NC4BuwPSn41WAQ7yG3zMK5JfXzDiq8jw2VH6R via DFlow"
+        "text": "Wrap 0.0495 SOL into wrapped SOL account 4hJn…VH6R via DFlow"
       }
     },
     {
@@ -1070,17 +1067,17 @@
               "id": "compute-budget-price",
               "parts": [
                 {
-                  "text": "149986",
+                  "text": "149,986",
                   "value": {
-                    "type": "integer",
-                    "value": "149986"
+                    "type": "text",
+                    "value": "149,986"
                   }
                 },
                 {
-                  "text": " micro-lamports per unit"
+                  "text": " micro-lamports per compute unit"
                 }
               ],
-              "text": "149986 micro-lamports per unit"
+              "text": "149,986 micro-lamports per compute unit"
             }
           }
         },
@@ -1473,27 +1470,27 @@
               "id": "explain-priority-basis",
               "parts": [
                 {
-                  "text": "149986",
+                  "text": "149,986",
                   "value": {
-                    "type": "integer",
-                    "value": "149986"
+                    "type": "text",
+                    "value": "149,986"
                   }
                 },
                 {
-                  "text": " micro-lamports per unit × "
+                  "text": " micro-lamports per compute unit × "
                 },
                 {
-                  "text": "500000",
+                  "text": "500,000",
                   "value": {
-                    "type": "integer",
-                    "value": "500000"
+                    "type": "text",
+                    "value": "500,000"
                   }
                 },
                 {
-                  "text": " units requested"
+                  "text": " compute units requested"
                 }
               ],
-              "text": "149986 micro-lamports per unit × 500000 units requested"
+              "text": "149,986 micro-lamports per compute unit × 500,000 compute units requested"
             }
           }
         },
@@ -1684,24 +1681,21 @@
         "text": " into wrapped SOL account "
       },
       {
-        "text": "4hJnan1NC4BuwPSn41WAQ7yG3zMK5JfXzDiq8jw2VH6R",
-        "value": {
-          "type": "address",
-          "value": {
-            "address": "4hJnan1NC4BuwPSn41WAQ7yG3zMK5JfXzDiq8jw2VH6R",
-            "is_self": false,
-            "label": null,
-            "label_trust": "fact",
-            "stand_in": null
-          }
-        }
+        "short": {
+          "address": "4hJnan1NC4BuwPSn41WAQ7yG3zMK5JfXzDiq8jw2VH6R",
+          "is_self": false,
+          "label": null,
+          "label_trust": "fact",
+          "stand_in": null
+        },
+        "text": "4hJn…VH6R"
       },
       {
         "text": " via DFlow; DFlow swap whose route cannot be resolved"
       }
     ],
-    "text": "3 actions: Transfer 0.0005 SOL from 8Aet…tiTo to 879A…MGsA; Wrap 0.0495 SOL into wrapped SOL account 4hJnan1NC4BuwPSn41WAQ7yG3zMK5JfXzDiq8jw2VH6R via DFlow; DFlow swap whose route cannot be resolved"
+    "text": "3 actions: Transfer 0.0005 SOL from 8Aet…tiTo to 879A…MGsA; Wrap 0.0495 SOL into wrapped SOL account 4hJn…VH6R via DFlow; DFlow swap whose route cannot be resolved"
   },
-  "text": "3 actions: Transfer 0.0005 SOL from 8Aet…tiTo to 879A…MGsA; Wrap 0.0495 SOL into wrapped SOL account 4hJnan1NC4BuwPSn41WAQ7yG3zMK5JfXzDiq8jw2VH6R via DFlow; DFlow swap whose route cannot be resolved\nBLOCKED BY DEFAULT (1 critical finding)\n\nFindings:\n  [CRITICAL] The accounts that fix the route's layout are loaded from lookup tables SignLens did not read (instruction 6)\n  [INFO] The token program account is loaded from a lookup table; the Associated Token Account program only accepts the SPL Token and Token-2022 programs (instruction 3)\n\n== Transfer | System program\n  Amount: 0.0005 SOL\n  From: 8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo\n  To: 879ArayuxbYjBhpUe4QCx8nqaAKjiwCG1hFiJo6zMGsA\n\n== Wrap SOL | DFlow Aggregator (descriptor reviewed 2026-10-17, upgradeable by 9uo2…wgsh)\n  Amount: 0.0495 SOL\n  From: 8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo\n  Wrapped SOL account: 4hJnan1NC4BuwPSn41WAQ7yG3zMK5JfXzDiq8jw2VH6R\n\n== DFlow swap | DFlow Aggregator\n  Accounts: 29\n  Data: 0xf8c69e91e17587c8020000002559b35cd41ea8b5ed990f7a372f0548abc990271cca751964e9edf871f6da04a15a581b64800dff940fd6c6d37ca8ce453f36232f143c7549e8a11428b454dd0217330f1b00005a410000000008604ff3020000000003c24172cc24000000e8030000\n\n== Also [collapsed]\n  Compute unit limit: 500000\n  Compute unit price: 149986 micro-lamports per unit\n  Create token account if missing: Token account: 9SQZUTsLbv469tCRm9BFo64vpUiWToZukM4WeNdDGxVU\n  Create token account if missing: Owner: 8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo\n  Create token account if missing: Mint: HMYd9tosnUXuNHmq7pXmoePRVBLBBjA3JBfydq6upump\n  Create token account if missing: Rent paid by: 8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo\n  Create token account if missing: Token program: the account at lookup table 9rVP…5hT9[6]\n  Jito tip: Amount: 0.000122053 SOL\n  Jito tip: From: 8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo\n  Jito tip: To: Jito tip account (96gY…rZU5)\n\n== Signers\n  Fee payer: 8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo\n\n== Fee\n  Total: 0.000079993 SOL\n  Base: 0.000005 SOL\n  Priority: 0.000074993 SOL\n  Priority basis: 149986 micro-lamports per unit × 500000 units requested\n  Rent deposits: up to 0.00148844 SOL, if the account this transaction creates when missing does not exist yet; refunded to whoever closes the account\n\n== Validity\n  Expires: in about a minute (recent blockhash)\n\nEffects:\n  - Transfer 0.0005 SOL from 8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo to 879ArayuxbYjBhpUe4QCx8nqaAKjiwCG1hFiJo6zMGsA\n  - Transfer 0.0495 SOL from 8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo to 4hJnan1NC4BuwPSn41WAQ7yG3zMK5JfXzDiq8jw2VH6R\n  - Create the wrapped SOL account first if it does not exist, as the sender's associated token account and at the sender's cost\n  - Create 9SQZUTsLbv469tCRm9BFo64vpUiWToZukM4WeNdDGxVU, managed by the account at lookup table 9rVP…5hT9[6], depositing 0.00148844 SOL unless it already exists\n  - Transfer 0.000122053 SOL from 8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo to Jito tip account (96gY…rZU5)\n  - 8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo pays a fee of 0.000079993 SOL\n  - Valid for about a minute (recent blockhash)\n\nRaw: solana v0 (798 bytes)\n  digest: b892642d9d9599ea782feb6bffdc9939bf6aa2c699eb2c67b6e5d3463baa7682\n",
+  "text": "3 actions: Transfer 0.0005 SOL from 8Aet…tiTo to 879A…MGsA; Wrap 0.0495 SOL into wrapped SOL account 4hJn…VH6R via DFlow; DFlow swap whose route cannot be resolved\nBLOCKED BY DEFAULT (1 critical finding)\n\nFindings:\n  [CRITICAL] The accounts that fix the route's layout are loaded from lookup tables SignLens did not read (instruction 6)\n  [INFO] The token program account is loaded from a lookup table; the Associated Token Account program only accepts the SPL Token and Token-2022 programs (instruction 3)\n\n== Transfer | System program\n  Amount: 0.0005 SOL\n  From: 8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo\n  To: 879ArayuxbYjBhpUe4QCx8nqaAKjiwCG1hFiJo6zMGsA\n\n== Wrap SOL | DFlow Aggregator (descriptor reviewed 2026-10-17, upgradeable by 9uo2…wgsh)\n  Amount: 0.0495 SOL\n  From: 8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo\n  Wrapped SOL account: 4hJnan1NC4BuwPSn41WAQ7yG3zMK5JfXzDiq8jw2VH6R\n\n== DFlow swap | DFlow Aggregator\n  Accounts: 29\n  Data: 0xf8c69e91e17587c8020000002559b35cd41ea8b5ed990f7a372f0548abc990271cca751964e9edf871f6da04a15a581b64800dff940fd6c6d37ca8ce453f36232f143c7549e8a11428b454dd0217330f1b00005a410000000008604ff3020000000003c24172cc24000000e8030000\n\n== Also [collapsed]\n  Compute unit limit: 500000\n  Compute unit price: 149,986 micro-lamports per compute unit\n  Create token account if missing: Token account: 9SQZUTsLbv469tCRm9BFo64vpUiWToZukM4WeNdDGxVU\n  Create token account if missing: Owner: 8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo\n  Create token account if missing: Mint: HMYd9tosnUXuNHmq7pXmoePRVBLBBjA3JBfydq6upump\n  Create token account if missing: Rent paid by: 8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo\n  Create token account if missing: Token program: the account at lookup table 9rVP…5hT9[6]\n  Jito tip: Amount: 0.000122053 SOL\n  Jito tip: From: 8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo\n  Jito tip: To: Jito tip account (96gY…rZU5)\n\n== Signers\n  Fee payer: 8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo\n\n== Fee\n  Total: 0.000079993 SOL\n  Base: 0.000005 SOL\n  Priority: 0.000074993 SOL\n  Priority basis: 149,986 micro-lamports per compute unit × 500,000 compute units requested\n  Rent deposits: up to 0.00148844 SOL, if the account this transaction creates when missing does not exist yet; refunded to whoever closes the account\n\n== Validity\n  Expires: in about a minute (recent blockhash)\n\nEffects:\n  - Transfer 0.0005 SOL from 8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo to 879ArayuxbYjBhpUe4QCx8nqaAKjiwCG1hFiJo6zMGsA\n  - Transfer 0.0495 SOL from 8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo to 4hJnan1NC4BuwPSn41WAQ7yG3zMK5JfXzDiq8jw2VH6R\n  - Create the wrapped SOL account first if it does not exist, as the sender's associated token account and at the sender's cost\n  - Create 9SQZUTsLbv469tCRm9BFo64vpUiWToZukM4WeNdDGxVU, managed by the account at lookup table 9rVP…5hT9[6], depositing 0.00148844 SOL unless it already exists\n  - Transfer 0.000122053 SOL from 8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo to Jito tip account (96gY…rZU5)\n  - 8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo pays a fee of 0.000079993 SOL\n  - Valid for about a minute (recent blockhash)\n\nRaw: solana v0 (798 bytes)\n  digest: b892642d9d9599ea782feb6bffdc9939bf6aa2c699eb2c67b6e5d3463baa7682\n",
   "verdict": "block"
 }

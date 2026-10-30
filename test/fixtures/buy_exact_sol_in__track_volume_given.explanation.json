@@ -1007,17 +1007,17 @@
               "id": "compute-budget-price",
               "parts": [
                 {
-                  "text": "200000",
+                  "text": "200,000",
                   "value": {
-                    "type": "integer",
-                    "value": "200000"
+                    "type": "text",
+                    "value": "200,000"
                   }
                 },
                 {
-                  "text": " micro-lamports per unit"
+                  "text": " micro-lamports per compute unit"
                 }
               ],
-              "text": "200000 micro-lamports per unit"
+              "text": "200,000 micro-lamports per compute unit"
             }
           }
         },
@@ -1327,27 +1327,27 @@
               "id": "explain-priority-basis",
               "parts": [
                 {
-                  "text": "200000",
+                  "text": "200,000",
                   "value": {
-                    "type": "integer",
-                    "value": "200000"
+                    "type": "text",
+                    "value": "200,000"
                   }
                 },
                 {
-                  "text": " micro-lamports per unit × "
+                  "text": " micro-lamports per compute unit × "
                 },
                 {
-                  "text": "400000",
+                  "text": "400,000",
                   "value": {
-                    "type": "integer",
-                    "value": "400000"
+                    "type": "text",
+                    "value": "400,000"
                   }
                 },
                 {
-                  "text": " units requested"
+                  "text": " compute units requested"
                 }
               ],
-              "text": "200000 micro-lamports per unit × 400000 units requested"
+              "text": "200,000 micro-lamports per compute unit × 400,000 compute units requested"
             }
           }
         },
@@ -1515,6 +1515,6 @@
     ],
     "text": "Buy ≥ 3,731,969,312 raw units of unverified token 9sVJ…pump (before any transfer fee) for ≤ 0.000235478 SOL via Pump.fun"
   },
-  "text": "Buy ≥ 3,731,969,312 raw units of unverified token 9sVJ…pump (before any transfer fee) for ≤ 0.000235478 SOL via Pump.fun\nWARNING: review the findings before approving\n\nFindings:\n  [HIGH] The trade is signed for and paid by a key that is not yours (instruction 4)\n  [HIGH] The destination token account is G93M…pAnU's token account (7oT8…mjKW), not one of yours (instruction 4)\n\n== Buy | Pump.fun (descriptor reviewed 2026-10-18, upgradeable by 7gZu…jFr8)\n  Pay up to: ≤ 0.000235478 SOL\n  Receive: ≥ 3,731,969,312 raw units of unverified token 9sVJ…pump (before any transfer fee)\n  Token: 9sVJwhNTEtoq8PWeZJigJKNbRMZW7CoByosnxV2Cpump\n  Bonding curve: Pump.fun bonding curve for this token (Dmbs…yUbo)\n  Token account: G93M…pAnU's token account (7oT8…mjKW)\n  Additional accounts: 2, not named by this descriptor\n\n== Also [collapsed]\n  Compute unit limit: 400000\n  Compute unit price: 200000 micro-lamports per unit\n  Create token account if missing: Token account: G93M…pAnU's token account (7oT8…mjKW)\n  Create token account if missing: Owner: G93MH3589G8Wj16suqKCU7e846WXPzhKsT5suf4vpAnU\n  Create token account if missing: Mint: 9sVJwhNTEtoq8PWeZJigJKNbRMZW7CoByosnxV2Cpump\n  Create token account if missing: Rent paid by: G93MH3589G8Wj16suqKCU7e846WXPzhKsT5suf4vpAnU\n  Create token account if missing: Token program: Token-2022 program (Toke…xuEb)\n\n== Signers\n  Fee payer: G93MH3589G8Wj16suqKCU7e846WXPzhKsT5suf4vpAnU\n\n== Fee\n  Total: 0.000085 SOL\n  Base: 0.000005 SOL\n  Priority: 0.00008 SOL\n  Priority basis: 200000 micro-lamports per unit × 400000 units requested\n  Rent deposits: up to 0.00151384 SOL, if the account this transaction creates when missing does not exist yet; refunded to whoever closes the account\n\n== Validity\n  Expires: in about a minute (recent blockhash)\n\nEffects:\n  - Transfer ≤ 0.000235478 SOL from G93MH3589G8Wj16suqKCU7e846WXPzhKsT5suf4vpAnU to Pump.fun (6EF8…wF6P)\n  - Transfer an unknown amount of unverified token 9sVJ…pump (at least 3,731,969,312 raw units, before a transfer fee SignLens cannot check) from Pump.fun (6EF8…wF6P) to G93M…pAnU's token account (7oT8…mjKW)\n  - Create G93M…pAnU's token account (7oT8…mjKW), managed by Token-2022 program (Toke…xuEb), depositing 0.00151384 SOL unless it already exists\n  - G93MH3589G8Wj16suqKCU7e846WXPzhKsT5suf4vpAnU pays a fee of 0.000085 SOL\n  - Valid for about a minute (recent blockhash)\n\nRaw: solana legacy (753 bytes)\n  digest: 7c86bc9defeee8a6705f7abc498275f845a7db2db2756be47af036c4fab29cf2\n",
+  "text": "Buy ≥ 3,731,969,312 raw units of unverified token 9sVJ…pump (before any transfer fee) for ≤ 0.000235478 SOL via Pump.fun\nWARNING: review the findings before approving\n\nFindings:\n  [HIGH] The trade is signed for and paid by a key that is not yours (instruction 4)\n  [HIGH] The destination token account is G93M…pAnU's token account (7oT8…mjKW), not one of yours (instruction 4)\n\n== Buy | Pump.fun (descriptor reviewed 2026-10-18, upgradeable by 7gZu…jFr8)\n  Pay up to: ≤ 0.000235478 SOL\n  Receive: ≥ 3,731,969,312 raw units of unverified token 9sVJ…pump (before any transfer fee)\n  Token: 9sVJwhNTEtoq8PWeZJigJKNbRMZW7CoByosnxV2Cpump\n  Bonding curve: Pump.fun bonding curve for this token (Dmbs…yUbo)\n  Token account: G93M…pAnU's token account (7oT8…mjKW)\n  Additional accounts: 2, not named by this descriptor\n\n== Also [collapsed]\n  Compute unit limit: 400000\n  Compute unit price: 200,000 micro-lamports per compute unit\n  Create token account if missing: Token account: G93M…pAnU's token account (7oT8…mjKW)\n  Create token account if missing: Owner: G93MH3589G8Wj16suqKCU7e846WXPzhKsT5suf4vpAnU\n  Create token account if missing: Mint: 9sVJwhNTEtoq8PWeZJigJKNbRMZW7CoByosnxV2Cpump\n  Create token account if missing: Rent paid by: G93MH3589G8Wj16suqKCU7e846WXPzhKsT5suf4vpAnU\n  Create token account if missing: Token program: Token-2022 program (Toke…xuEb)\n\n== Signers\n  Fee payer: G93MH3589G8Wj16suqKCU7e846WXPzhKsT5suf4vpAnU\n\n== Fee\n  Total: 0.000085 SOL\n  Base: 0.000005 SOL\n  Priority: 0.00008 SOL\n  Priority basis: 200,000 micro-lamports per compute unit × 400,000 compute units requested\n  Rent deposits: up to 0.00151384 SOL, if the account this transaction creates when missing does not exist yet; refunded to whoever closes the account\n\n== Validity\n  Expires: in about a minute (recent blockhash)\n\nEffects:\n  - Transfer ≤ 0.000235478 SOL from G93MH3589G8Wj16suqKCU7e846WXPzhKsT5suf4vpAnU to Pump.fun (6EF8…wF6P)\n  - Transfer an unknown amount of unverified token 9sVJ…pump (at least 3,731,969,312 raw units, before a transfer fee SignLens cannot check) from Pump.fun (6EF8…wF6P) to G93M…pAnU's token account (7oT8…mjKW)\n  - Create G93M…pAnU's token account (7oT8…mjKW), managed by Token-2022 program (Toke…xuEb), depositing 0.00151384 SOL unless it already exists\n  - G93MH3589G8Wj16suqKCU7e846WXPzhKsT5suf4vpAnU pays a fee of 0.000085 SOL\n  - Valid for about a minute (recent blockhash)\n\nRaw: solana legacy (753 bytes)\n  digest: 7c86bc9defeee8a6705f7abc498275f845a7db2db2756be47af036c4fab29cf2\n",
   "verdict": "warn"
 }
