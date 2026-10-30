@@ -862,7 +862,15 @@
           }
         },
         {
-          "help": null,
+          "help": {
+            "id": "label-additional-accounts.help",
+            "parts": [
+              {
+                "text": "Additional accounts this instruction uses that its reviewed descriptor does not name. It is normal for instructions to need several."
+              }
+            ],
+            "text": "Additional accounts this instruction uses that its reviewed descriptor does not name. It is normal for instructions to need several."
+          },
           "label": {
             "id": "label-additional-accounts",
             "parts": [
@@ -953,7 +961,15 @@
       "collapsed": true,
       "fields": [
         {
-          "help": null,
+          "help": {
+            "id": "label-compute-unit-limit.help",
+            "parts": [
+              {
+                "text": "How much work the transaction may do. It affects the fee, not what the transaction does."
+              }
+            ],
+            "text": "How much work the transaction may do. It affects the fee, not what the transaction does."
+          },
           "label": {
             "id": "label-compute-unit-limit",
             "parts": [
@@ -970,7 +986,15 @@
           }
         },
         {
-          "help": null,
+          "help": {
+            "id": "label-compute-unit-price.help",
+            "parts": [
+              {
+                "text": "The tip per unit of work, in millionths of a lamport. With the limit, it sets the priority fee."
+              }
+            ],
+            "text": "The tip per unit of work, in millionths of a lamport. With the limit, it sets the priority fee."
+          },
           "label": {
             "id": "label-compute-unit-price",
             "parts": [
@@ -995,7 +1019,15 @@
           }
         },
         {
-          "help": null,
+          "help": {
+            "id": "label-token-account.help",
+            "parts": [
+              {
+                "text": "An account that holds one token for one wallet. A wallet has a separate one for each token it holds."
+              }
+            ],
+            "text": "An account that holds one token for one wallet. A wallet has a separate one for each token it holds."
+          },
           "label": {
             "id": "explain-housekeeping-label",
             "parts": [
@@ -1059,7 +1091,15 @@
           }
         },
         {
-          "help": null,
+          "help": {
+            "id": "label-mint.help",
+            "parts": [
+              {
+                "text": "The address that identifies the token itself, as opposed to an account holding some of it."
+              }
+            ],
+            "text": "The address that identifies the token itself, as opposed to an account holding some of it."
+          },
           "label": {
             "id": "explain-housekeeping-label",
             "parts": [
@@ -1082,7 +1122,15 @@
           }
         },
         {
-          "help": null,
+          "help": {
+            "id": "label-rent-paid-by.help",
+            "parts": [
+              {
+                "text": "Who pays the small deposit that keeps a new account alive. It comes back when the account is closed."
+              }
+            ],
+            "text": "Who pays the small deposit that keeps a new account alive. It comes back when the account is closed."
+          },
           "label": {
             "id": "explain-housekeeping-label",
             "parts": [
@@ -1105,7 +1153,15 @@
           }
         },
         {
-          "help": null,
+          "help": {
+            "id": "label-token-program.help",
+            "parts": [
+              {
+                "text": "The program that manages this token: SPL Token or Token-2022."
+              }
+            ],
+            "text": "The program that manages this token: SPL Token or Token-2022."
+          },
           "label": {
             "id": "explain-housekeeping-label",
             "parts": [
@@ -1158,7 +1214,15 @@
       "collapsed": false,
       "fields": [
         {
-          "help": null,
+          "help": {
+            "id": "label-fee-payer.help",
+            "parts": [
+              {
+                "text": "The account that pays the fee: the first signer."
+              }
+            ],
+            "text": "The account that pays the fee: the first signer."
+          },
           "label": {
             "id": "label-fee-payer",
             "parts": [
@@ -1199,7 +1263,15 @@
       "collapsed": false,
       "fields": [
         {
-          "help": null,
+          "help": {
+            "id": "label-total.help",
+            "parts": [
+              {
+                "text": "What the network charges for this transaction. The fee payer pays it whether the transaction succeeds or fails."
+              }
+            ],
+            "text": "What the network charges for this transaction. The fee payer pays it whether the transaction succeeds or fails."
+          },
           "label": {
             "id": "label-total",
             "parts": [
@@ -1227,7 +1299,15 @@
           }
         },
         {
-          "help": null,
+          "help": {
+            "id": "label-base.help",
+            "parts": [
+              {
+                "text": "The flat part of the fee: the network charges it per signature."
+              }
+            ],
+            "text": "The flat part of the fee: the network charges it per signature."
+          },
           "label": {
             "id": "label-base",
             "parts": [
@@ -1255,7 +1335,15 @@
           }
         },
         {
-          "help": null,
+          "help": {
+            "id": "label-priority.help",
+            "parts": [
+              {
+                "text": "A tip the site added so validators take the transaction sooner. It is optional, and it is yours to pay."
+              }
+            ],
+            "text": "A tip the site added so validators take the transaction sooner. It is optional, and it is yours to pay."
+          },
           "label": {
             "id": "label-priority",
             "parts": [
@@ -1283,7 +1371,15 @@
           }
         },
         {
-          "help": null,
+          "help": {
+            "id": "label-priority-basis.help",
+            "parts": [
+              {
+                "text": "How the tip was computed: the price per unit of work, times the work the transaction asked to be allowed."
+              }
+            ],
+            "text": "How the tip was computed: the price per unit of work, times the work the transaction asked to be allowed."
+          },
           "label": {
             "id": "label-priority-basis",
             "parts": [
@@ -1308,7 +1404,15 @@
           }
         },
         {
-          "help": null,
+          "help": {
+            "id": "label-rent-deposits.help",
+            "parts": [
+              {
+                "text": "SOL locked to keep the accounts this transaction creates on chain. It is a deposit, not a fee: closing an account returns it to whoever closes it."
+              }
+            ],
+            "text": "SOL locked to keep the accounts this transaction creates on chain. It is a deposit, not a fee: closing an account returns it to whoever closes it."
+          },
           "label": {
             "id": "label-rent-deposits",
             "parts": [
@@ -1372,7 +1476,15 @@
       "collapsed": false,
       "fields": [
         {
-          "help": null,
+          "help": {
+            "id": "label-expires.help",
+            "parts": [
+              {
+                "text": "How long the signature can be used. About a minute is normal; a durable nonce keeps it usable until the nonce is advanced."
+              }
+            ],
+            "text": "How long the signature can be used. About a minute is normal; a durable nonce keeps it usable until the nonce is advanced."
+          },
           "label": {
             "id": "label-expires",
             "parts": [

@@ -1328,7 +1328,15 @@
           "collapsed": true,
           "fields": [
             {
-              "help": null,
+              "help": {
+                "id": "label-nonce-account.help",
+                "parts": [
+                  {
+                    "text": "The account that keeps this signature usable. Until it is advanced, anyone holding the signed transaction can submit it."
+                  }
+                ],
+                "text": "The account that keeps this signature usable. Until it is advanced, anyone holding the signed transaction can submit it."
+              },
               "label": {
                 "id": "explain-housekeeping-label",
                 "parts": [
@@ -1400,7 +1408,15 @@
           "collapsed": false,
           "fields": [
             {
-              "help": null,
+              "help": {
+                "id": "label-fee-payer.help",
+                "parts": [
+                  {
+                    "text": "The account that pays the fee: the first signer."
+                  }
+                ],
+                "text": "The account that pays the fee: the first signer."
+              },
               "label": {
                 "id": "label-fee-payer",
                 "parts": [
@@ -1449,7 +1465,15 @@
           "collapsed": false,
           "fields": [
             {
-              "help": null,
+              "help": {
+                "id": "label-total.help",
+                "parts": [
+                  {
+                    "text": "What the network charges for this transaction. The fee payer pays it whether the transaction succeeds or fails."
+                  }
+                ],
+                "text": "What the network charges for this transaction. The fee payer pays it whether the transaction succeeds or fails."
+              },
               "label": {
                 "id": "label-total",
                 "parts": [
@@ -1477,7 +1501,15 @@
               }
             },
             {
-              "help": null,
+              "help": {
+                "id": "label-base.help",
+                "parts": [
+                  {
+                    "text": "The flat part of the fee: the network charges it per signature."
+                  }
+                ],
+                "text": "The flat part of the fee: the network charges it per signature."
+              },
               "label": {
                 "id": "label-base",
                 "parts": [
@@ -1523,7 +1555,15 @@
           "collapsed": false,
           "fields": [
             {
-              "help": null,
+              "help": {
+                "id": "label-expires.help",
+                "parts": [
+                  {
+                    "text": "How long the signature can be used. About a minute is normal; a durable nonce keeps it usable until the nonce is advanced."
+                  }
+                ],
+                "text": "How long the signature can be used. About a minute is normal; a durable nonce keeps it usable until the nonce is advanced."
+              },
               "label": {
                 "id": "label-expires",
                 "parts": [
@@ -1548,7 +1588,15 @@
               }
             },
             {
-              "help": null,
+              "help": {
+                "id": "label-nonce-account.help",
+                "parts": [
+                  {
+                    "text": "The account that keeps this signature usable. Until it is advanced, anyone holding the signed transaction can submit it."
+                  }
+                ],
+                "text": "The account that keeps this signature usable. Until it is advanced, anyone holding the signed transaction can submit it."
+              },
               "label": {
                 "id": "label-nonce-account",
                 "parts": [
