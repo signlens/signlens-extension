@@ -102,6 +102,22 @@ The interface's own terms, proposed for the review's first pass:
 | Try again | 重试 |
 | pin to the toolbar | 固定到工具栏 |
 | endpoint (the API's or the RPC's address) | 地址 |
+| beta | 测试版 |
+| Allow; Deny (a site's connect) | 允许; 拒绝 |
+| allowed; denied (a connect, in the history) | 已允许; 已拒绝 |
+| you rejected it; SignLens refused it (in the history) | 您已拒绝; 已拒绝 (the line under it says SignLens 已拒绝：…) |
+| watch-only | 仅观察 |
+| pass on (a request, to the wallet); unchanged | 转交; 原样 |
+| pending; no longer pending | 待处理; 已不再待处理 |
+| Cancel; Close; Go back | 取消; 关闭; 返回 |
+| revoke (a site's access) | 撤销 |
+| the setup page | 初始设置页面 |
+| None yet | 暂无 |
+| Clear; Unclear; Wrong (a rating) | 清楚; 不清楚; 有误 |
+| details; full text | 详情; 完整文本 |
+| engine; extension | 引擎; 扩展程序 |
+| unlisted (a token) | 未收录 |
+| the badge's texts: OK, WARN, blocked, MSG | 正常, 警告, 拦截, 消息 (at most 4 characters) |
 
 ## Kept in English
 
@@ -110,4 +126,4 @@ Names and symbols a translation may write in Latin letters, as they are:
 `SignLens` `Solana` `SOL` `USDC` `API` `RPC` `HTTP` `HTTPS` `http` `https`
 `URL` `localhost` `DApp` `Phantom` `Solflare` `Backpack` `MetaMask` `Chrome`
 `Firefox` `JSON` `UTF-8` `base64` `ID` `slot` `epoch` `Unicode` `Wallet`
-`Standard`
+`Standard` `base58` `JSON-RPC` `compact-u16` `v2` `explain`

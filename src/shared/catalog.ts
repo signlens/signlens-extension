@@ -2034,4 +2034,5 @@ export const CATALOGS: Readonly<Record<string, Catalog>> = {
         'yours-remove-label': { value: ['[Rémóvé ', { arg: 'address' }, '···]'] },
         'yours-removed': { value: ['[Rémóvéd ', { arg: 'address' }, '.····]'] },
     },
+    'zh-Hans': {},
 };
