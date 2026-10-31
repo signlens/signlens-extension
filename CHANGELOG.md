@@ -215,6 +215,11 @@ uses [Semantic Versioning](https://semver.org/).
 
 ### Fixed
 
+- **A transaction past the API's limit.** When the API took no more
+  explanations, the transactions after the one it refused read "Not
+  explained: not explained: the SignLens API took no more…"; the second
+  "not explained" is gone.
+
 - **The wallet the window names is the one that signs.** Choosing
   another wallet in the settings while a site was connected left the site
   connected to the one before: the window said "Continue to Backpack" and

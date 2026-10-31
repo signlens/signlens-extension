@@ -96,10 +96,7 @@ test('past the API limit, the transactions after the one refused are not asked f
     assert.equal(simulated, 3);
     const [refused, skipped] = entry.rows.slice(2) as Extract<Row, { kind: 'failed' }>[];
     assert.equal(refused?.error, 'too many explanations; try again later');
-    assert.equal(
-        skipped?.error,
-        'not explained: the SignLens API took no more explanations for now, from transaction 3 of 5 on; try again in a minute',
-    );
+    assert.equal(skipped?.error, 'the SignLens API took no more explanations for now, from transaction 3 of 5 on; try again in a minute');
     assert.ok(skipped?.capture, 'a transaction not explained can still be saved');
 });
 

@@ -48,7 +48,7 @@ worker-simulation-changes = { $count } balance change(s), unverified
 ## Why a transaction of a request was not explained: its row in the window and the popup, after “Not explained:” (worker/explain.ts, worker/api.ts)
 
 # The API refused a transaction for its rate limit, so the ones after it were not asked for either. $at: the first transaction refused, counted from 1; $count: how many the request holds.
-worker-limited = not explained: the SignLens API took no more explanations for now, from transaction { $at } of { $count } on; try again in a minute
+worker-limited = the SignLens API took no more explanations for now, from transaction { $at } of { $count } on; try again in a minute
 worker-api-error-unsaid = the SignLens API answered an error without a message
 # $url: the API's address, as the settings have it; $error: the browser's words for the failure.
 worker-api-no-answer = the SignLens API at { $url } did not answer ({ $error })

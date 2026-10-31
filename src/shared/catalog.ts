@@ -993,7 +993,7 @@ export const CATALOGS: Readonly<Record<string, Catalog>> = {
         'worker-history-slimmed': { value: ['The full text was too long to keep in the history.'] },
         'worker-limited': {
             value: [
-                'not explained: the SignLens API took no more explanations for now, from transaction ',
+                'the SignLens API took no more explanations for now, from transaction ',
                 { arg: 'at' },
                 ' of ',
                 { arg: 'count' },
