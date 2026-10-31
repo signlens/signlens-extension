@@ -6,7 +6,7 @@ import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { type Row, refusal, type Said } from './model.ts';
 import { summaryOf } from './verdict.ts';
-import { english, type Id, inEnglish, said, spoken } from './words.ts';
+import { chooseLocale, english, type Id, inEnglish, said, spoken } from './words.ts';
 
 test('a reason kept as a message is worded when shown, and is in English what its page is told', () => {
     const reason = said('worker-refused-window-not-open', { error: 'no display' });
@@ -34,4 +34,20 @@ test("a request's line is its reason as the interface words it where there is on
     });
     assert.equal(summaryOf(row({ id: 'worker-failed-page-gone' })), 'Not explained: the page closed or reloaded');
     assert.equal(summaryOf(row()), 'Not explained: the page closed or reloaded');
+});
+
+test("the interface's locale is the reader's first language it has, by tag, else by language in the same script", () => {
+    const have = ['en', 'zh-Hans', 'en-XA'];
+    assert.equal(chooseLocale(['zh-CN', 'en'], have), 'zh-Hans');
+    assert.equal(chooseLocale(['zh-SG'], have), 'zh-Hans');
+    assert.equal(chooseLocale(['not a tag', 'zh'], have), 'zh-Hans');
+    // Traditional Chinese is not answered in Simplified: the reader's next language is.
+    assert.equal(chooseLocale(['zh-TW', 'en-GB'], have), 'en');
+    assert.equal(chooseLocale(['zh-HK', 'zh-CN'], have), 'zh-Hans');
+    assert.equal(chooseLocale(['en-GB', 'zh-CN'], have), 'en');
+    // A pseudo-locale only by its own tag.
+    assert.equal(chooseLocale(['en-XA'], have), 'en-XA');
+    assert.equal(chooseLocale(['en-US'], have), 'en');
+    assert.equal(chooseLocale(['fr-FR', 'de'], have), 'en');
+    assert.equal(chooseLocale([], have), 'en');
 });

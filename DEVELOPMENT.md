@@ -125,6 +125,15 @@ link the page holds by `data-l10n-name`; it is laid out with DOM calls,
 never parsed as HTML. A number argument is written as the locale writes
 numbers, and a choice by a number takes its plural category.
 
+The interface's locale is the reader's first language it has
+(`navigator.languages`), as the engine chooses an explanation's: by the
+tag, else by the language in the same script (zh-CN takes zh-Hans; zh-TW
+goes on to the next language); a pseudo-locale only by its own tag;
+English when none matches, and always in Node, so that the tests read
+English. A locale with no message yet is not offered. A page carries
+the interface's `lang`; the engine's words in an explanation carry the
+explanation's.
+
 A translation is reviewed as the engine's are (its `docs/translating.md`),
 from a spreadsheet, in two passes: what the signing window shows first,
 then the rest.

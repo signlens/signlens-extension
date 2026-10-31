@@ -3,7 +3,7 @@
 // page marks with `data-l10n-id` worded when the page loads.
 
 import { MARKUP, type Piece, pieces, plain, shown } from '../shared/fluent.ts';
-import { type ArgsOf, argsOf, type Id, lookup } from '../shared/words.ts';
+import { type ArgsOf, argsOf, type Id, interfaceLocale, lookup } from '../shared/words.ts';
 
 /** The attributes a message may set on the element it words. */
 const ATTRIBUTES = new Set(['title', 'aria-label', 'placeholder', 'alt']);
@@ -58,7 +58,8 @@ export function word(element: Element): void {
         if (ATTRIBUTES.has(name)) element.setAttribute(name, plain(pieces(pattern, {}, locale), locale));
 }
 
-/** Words every element under `root` that names a message. */
+/** Words every element under `root` that names a message, and marks the page with the interface's language. */
 export function localize(root: ParentNode = document): void {
+    document.documentElement.lang = interfaceLocale();
     for (const element of root.querySelectorAll('[data-l10n-id]')) word(element);
 }

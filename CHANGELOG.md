@@ -63,6 +63,16 @@ uses [Semantic Versioning](https://semver.org/).
 
 ### Changed
 
+- **The interface's language.** The extension words its own interface
+  in the reader's first language it has, chosen as the engine chooses
+  an explanation's: by the tag, else by the language written in the
+  same script, so that zh-TW, Traditional Chinese, goes on to the
+  reader's next language; English while it has no other. The popup's
+  dates and numbers, and the names of the languages it lists, follow
+  that language, where they took the browser's. In an explanation, the
+  engine's words are marked with the explanation's language and the
+  extension's around them with the interface's.
+
 - **Brackets in the language's own.** An amount's note and a labelled
   address's short form are set in the brackets the engine writes for
   the explanation's language, full-width in Chinese, where the window

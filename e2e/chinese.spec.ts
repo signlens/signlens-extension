@@ -51,6 +51,7 @@ test('the popup names the languages the API explains in, and when they were revi
     await configure({ apiUrl: server.api });
     await popup.reload();
     await expect(popup.locator('#engine-status')).toContainText(
-        'Explains in English, and in 简体中文 (zh-Hans), reviewed on 2026-10-31, when your browser asks for it.',
+        // The interface is English, so it names the language in English.
+        'Explains in English, and in Simplified Chinese (zh-Hans), reviewed on 2026-10-31, when your browser asks for it.',
     );
 });

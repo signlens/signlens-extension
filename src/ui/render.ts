@@ -6,7 +6,7 @@
 
 import type { ExplainedRow, Row } from '../shared/model.ts';
 import { short } from '../shared/text.ts';
-import type { Address, Amount, Field, Message, Section, Severity, Trust, Value, WordedEffect } from '../shared/types.ts';
+import type { Address, Amount, Field, Message, Section, Severity, Trust, Value, WordedEffect, WordedIn } from '../shared/types.ts';
 import { type Id, spoken, t } from '../shared/words.ts';
 import { nodes } from './localize.ts';
 
@@ -255,6 +255,20 @@ function keyNode(address: Address, shorten: boolean): HTMLElement {
     return node;
 }
 
+/** The language of the explanation being laid out, which its words are marked with, apart from the interface's own around them. */
+let wordedIn: WordedIn | undefined;
+
+/** `make()`, with the engine's words in it marked as `row`'s explanation's language (ADR-0015, decision 8). */
+export function asWorded<T>(row: ExplainedRow, make: () => T): T {
+    const before = wordedIn;
+    wordedIn = row.locale;
+    try {
+        return make();
+    } finally {
+        wordedIn = before;
+    }
+}
+
 /**
  * A message as a node: its words as text, and each value it names with the
  * node the window has for that value, so an amount or an address reads the
@@ -262,6 +276,10 @@ function keyNode(address: Address, shorten: boolean): HTMLElement {
  */
 export function messageNode(message: Message | null, className = ''): HTMLSpanElement {
     const node = element('span', className);
+    if (wordedIn) {
+        node.lang = wordedIn.used;
+        node.dir = wordedIn.direction;
+    }
     for (const part of message?.parts ?? []) {
         if (part.value) node.append(isolated(valueNode(part.value), part.value.type === 'amount' || part.value.type === 'address'));
         else if (part.short) node.append(isolated(keyNode(part.short, true), true));
@@ -537,7 +555,7 @@ export function renderRow(row: Row, options: RenderOptions = {}): HTMLDivElement
             return body;
         }
         case 'explained':
-            return explainedNode(body, row, options);
+            return asWorded(row, () => explainedNode(body, row, options));
     }
 }
 
@@ -565,11 +583,8 @@ export function captureName(site: string | undefined, at: number, part?: number)
 }
 
 function explainedNode(body: HTMLDivElement, row: ExplainedRow, options: RenderOptions): HTMLDivElement {
-    // The explanation's language and direction, which its words and their layout follow.
-    if (row.locale) {
-        body.lang = row.locale.used;
-        body.dir = row.locale.direction;
-    }
+    // The explanation's direction, which its layout follows; its language marks the engine's words alone (messageNode), not the interface's around them.
+    if (row.locale) body.dir = row.locale.direction;
     // The summary, its actions and the findings lay out what they name, as the effects do.
     const actions = row.actions ?? [];
     if (actions.length > 1) {

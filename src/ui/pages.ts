@@ -5,7 +5,7 @@
 
 import type { Row } from '../shared/model.ts';
 import type { ApiStatus } from '../shared/types.ts';
-import { t } from '../shared/words.ts';
+import { interfaceLocale, t } from '../shared/words.ts';
 
 /** Whether SignLens's scripts run on a page at `url`: https, or plain http on this machine. */
 export function runsOn(url: string | undefined): boolean {
@@ -46,7 +46,7 @@ export function languages(locales: ApiStatus['locales'], names = languageNames()
 /** A locale's name in the browser's language, or the tag where the browser has none. */
 function languageNames(): (tag: string) => string {
     try {
-        const names = new Intl.DisplayNames([navigator.language], { type: 'language' });
+        const names = new Intl.DisplayNames([interfaceLocale()], { type: 'language' });
         return (tag) => names.of(tag) ?? tag;
     } catch {
         return (tag) => tag;

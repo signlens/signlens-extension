@@ -18,7 +18,7 @@ import { local, onChange, session } from '../shared/store.ts';
 import { describe, methodName, short, withoutScheme } from '../shared/text.ts';
 import type { ApiStatus } from '../shared/types.ts';
 import { rowVerdictWord, summaryOf, verdictText } from '../shared/verdict.ts';
-import { spoken, t } from '../shared/words.ts';
+import { interfaceLocale, spoken, t } from '../shared/words.ts';
 import { access } from './access.ts';
 import { byId } from './dom.ts';
 import { localize, nodes } from './localize.ts';
@@ -382,10 +382,12 @@ function when(time: number): HTMLTimeElement {
     const node = element(
         'time',
         '',
-        today ? at.toLocaleTimeString() : at.toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' }),
+        today
+            ? at.toLocaleTimeString(interfaceLocale())
+            : at.toLocaleString(interfaceLocale(), { dateStyle: 'medium', timeStyle: 'short' }),
     );
     node.dateTime = at.toISOString();
-    node.title = at.toLocaleString(undefined, { dateStyle: 'full', timeStyle: 'medium' });
+    node.title = at.toLocaleString(interfaceLocale(), { dateStyle: 'full', timeStyle: 'medium' });
     return node;
 }
 

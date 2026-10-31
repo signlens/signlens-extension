@@ -16,7 +16,7 @@ import { t } from '../shared/words.ts';
 import { byId } from './dom.ts';
 import { localize, nodes } from './localize.ts';
 import { languageChoice } from './pages.ts';
-import { element, messageNode, originNode, renderRow } from './render.ts';
+import { asWorded, element, messageNode, originNode, renderRow } from './render.ts';
 import { goneAtOpen, noLongerPending, requestId, sendDecision } from './windows.ts';
 
 /** Remembers whether the reader keeps the instructions open, for the next window and the popup. */
@@ -394,5 +394,5 @@ void start();
 function bandLine(row: Row): string | Node {
     if (row.kind !== 'explained') return summaryOf(row);
     const actions = row.actions ?? [];
-    return actions.length > 1 ? t('row-actions', { count: actions.length }) : messageNode(row.summary);
+    return actions.length > 1 ? t('row-actions', { count: actions.length }) : asWorded(row, () => messageNode(row.summary));
 }
