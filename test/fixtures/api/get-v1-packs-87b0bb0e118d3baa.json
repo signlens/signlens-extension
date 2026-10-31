@@ -14,7 +14,21 @@
         "source": "packs/descriptors"
       },
       "engine": "0.3.0",
-      "locales": [],
+      "locales": [
+        {
+          "direction": "ltr",
+          "locale": "zh-Hans",
+          "messages": 4509,
+          "review": {
+            "by": [
+              "a native speaker"
+            ],
+            "kind": "reviewed",
+            "on": "2026-10-31"
+          },
+          "serves": []
+        }
+      ],
       "schema": "signlens-api-status/1",
       "token_snapshot": {
         "created_at": 1792354634,

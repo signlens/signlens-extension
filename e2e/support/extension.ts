@@ -15,6 +15,11 @@ export const EXTENSION = join(HERE, '../../dist/chrome');
 /** The account of the test dapp's own wallet (test/dapp.html). */
 export const FAKE_ACCOUNT = 'FakeWa11et1111111111111111111111111111111111';
 
+interface Options {
+    /** The browser's language, `navigator.languages` included: `test.use({ browserLocale: 'zh-CN' })` for a reader of another. */
+    browserLocale: string;
+}
+
 interface Fixtures {
     worker: Worker;
     extensionId: string;
@@ -24,19 +29,20 @@ interface Fixtures {
     dapp: Page;
 }
 
-export const test = base.extend<Fixtures>({
+export const test = base.extend<Fixtures & Options>({
+    browserLocale: ['en-US', { option: true }],
+
     // The extension needs a persistent context; a fresh temporary profile
     // for each test keeps its settings and history from leaking across.
     // The browser resolves no host but this machine: a default left in the
     // settings (the public RPC, the production API) fails rather than
     // reach the network, and makes no answer depend on the day.
-    // biome-ignore lint/correctness/noEmptyPattern: Playwright's fixture signature
-    context: async ({}, use) => {
+    context: async ({ browserLocale }, use) => {
         const context = await chromium.launchPersistentContext('', {
             channel: 'chromium',
             headless: true,
             // Numbers and times as the tests read them (4,003 tokens), whatever the machine's locale.
-            locale: 'en-US',
+            locale: browserLocale,
             args: [
                 `--disable-extensions-except=${EXTENSION}`,
                 `--load-extension=${EXTENSION}`,

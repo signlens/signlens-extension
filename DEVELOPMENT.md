@@ -72,6 +72,10 @@ running SignLens API answered them, recorded under `test/fixtures/api/` (one
 file per call: its method, path and body), counting them and refusing them
 when a test asks. A call nothing was recorded for fails its test, and the
 browser resolves no host but this machine, so the suite needs no network.
+The browser reads `en-US`, so numbers and times are as the tests read
+them; a spec for a reader of another language sets its own
+(`test.use({ browserLocale: 'zh-CN' })`, `e2e/chinese.spec.ts`), and
+skips when the API it talks to carries no pack for it.
 With `SIGNLENS_API_URL` set, the calls go to that API instead, and each
 answer is held against its recording: every value recorded must still be
 there, the same (a field the API added, or a newer token snapshot, is

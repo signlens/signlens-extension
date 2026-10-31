@@ -1,0 +1,2536 @@
+{
+  "request": {
+    "method": "POST",
+    "path": "/v2/explain",
+    "body": {
+      "transaction": "AmIHCiJr3qGOpw3J/RoC6nFPGp4cZvj5OXdFEW+2RtIxnatvYOnBfp5vgojfbCopIiEGbDEfKJ+S2VWpjID0YgOk0RfylCPfFYXp6tgDZr4E5Ojq7HTZ5pRCEzVLl2I7lFqHNzJjO0ZtaXZGuPvyYBu4pBJjBhaPS1vX2nXif7AIAgEIDWzbTSORkLlRD2B1iXNZmTugpfx/HKjCfePPBmQkM6QFyha/+yWS3ihSSiGhrp6o7V4IAQQWneno5Zm2D0aEsiyLAOs2rEgq9kakRnkb/IW8WOrE60uK5K1hUYgZKj4/Prl692pCMtSgUohtDM8D2KH3dJhtC1XSFybBbIUtkN+F2gA7Bnr1ABu4fDIf+oguy5B4LwWLy9RsmfGCd9Bmwv8Gp9UXGSxWjuCKhF9z0peIzwNcMUWyGrNE2AYuqUAAAJojKD3FS3qecYOCMGOFVDcc0dQ+7VOnOThCnjdAol44xvp6877brTo9ZfNqq8l0MbG75MLS9uDkfKYCA0UvXWEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbd9uHXZaGT2cvhRs7reawctIXtX1s3kTqM9YV+/wCpBqfVFxksXFEhjMlMPUrxf1ja7gibof1E49vZigAAAACMlyWPTiSJ8bs9ECkUjg2DC1oTmdr/EIQEjnvY2+n4WQMGRm/lIRcy/+ytunLDm+e8jOW7xfcSayxDmzpAAAAAdI9VKVQxKl861pri3hPZK0Q0k5M1x1y5QD/ks/GROa0FCAMCBQEEBAAAAAsHAAMGBwgJCgEBCQQEBwMACgxHNA8AAAAAAAYMAAUC+FAAAAwACQP4oQEAAAAAAA==",
+      "own_keys": [
+        "FakeWa11et1111111111111111111111111111111111"
+      ],
+      "contacts": [],
+      "render": true,
+      "locale": [
+        "zh-CN"
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "actions": [
+        {
+          "instruction": 2,
+          "summary": {
+            "id": "token-transfer-summary",
+            "parts": [
+              {
+                "text": "从 "
+              },
+              {
+                "short": {
+                  "address": "Ffz5kwUjkUNw7hV4r6iCJnUoXXsAPFHkCMCmKKDypiwg",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "fact",
+                  "stand_in": null,
+                  "words": null
+                },
+                "text": "Ffz5…piwg"
+              },
+              {
+                "text": " 转账 "
+              },
+              {
+                "text": "0.996423 USDC",
+                "value": {
+                  "type": "amount",
+                  "value": {
+                    "asset": {
+                      "decimals": 6,
+                      "description": null,
+                      "id": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+                      "symbol": "USDC",
+                      "trust": "verified"
+                    },
+                    "bound": "exact",
+                    "note": null,
+                    "note_words": null,
+                    "units": "996423",
+                    "words": {
+                      "id": "amount",
+                      "parts": [
+                        {
+                          "text": "0.996423 "
+                        },
+                        {
+                          "text": "USDC",
+                          "value": {
+                            "type": "text",
+                            "value": "USDC"
+                          }
+                        }
+                      ],
+                      "text": "0.996423 USDC"
+                    }
+                  }
+                }
+              },
+              {
+                "text": " 到 "
+              },
+              {
+                "short": {
+                  "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp",
+                  "is_self": false,
+                  "label": {
+                    "id": "accounts-others-token",
+                    "parts": [
+                      {
+                        "short": {
+                          "address": "BNgsxo3eHqQLNTaKy4juhAUJ8DyewcJNEcYdMuSmTT1Z",
+                          "is_self": false,
+                          "label": null,
+                          "label_trust": "fact",
+                          "stand_in": null,
+                          "words": null
+                        },
+                        "text": "BNgs…TT1Z"
+                      },
+                      {
+                        "text": " 的 "
+                      },
+                      {
+                        "text": "USDC",
+                        "value": {
+                          "type": "text",
+                          "value": "USDC"
+                        }
+                      },
+                      {
+                        "text": " 账户"
+                      }
+                    ],
+                    "text": "BNgs…TT1Z 的 USDC 账户"
+                  },
+                  "label_trust": "verified",
+                  "stand_in": null,
+                  "words": {
+                    "id": "address-labelled",
+                    "parts": [
+                      {
+                        "text": "BNgs…TT1Z 的 USDC 账户",
+                        "value": {
+                          "type": "words",
+                          "value": {
+                            "id": "accounts-others-token",
+                            "parts": [
+                              {
+                                "short": {
+                                  "address": "BNgsxo3eHqQLNTaKy4juhAUJ8DyewcJNEcYdMuSmTT1Z",
+                                  "is_self": false,
+                                  "label": null,
+                                  "label_trust": "fact",
+                                  "stand_in": null,
+                                  "words": null
+                                },
+                                "text": "BNgs…TT1Z"
+                              },
+                              {
+                                "text": " 的 "
+                              },
+                              {
+                                "text": "USDC",
+                                "value": {
+                                  "type": "text",
+                                  "value": "USDC"
+                                }
+                              },
+                              {
+                                "text": " 账户"
+                              }
+                            ],
+                            "text": "BNgs…TT1Z 的 USDC 账户"
+                          }
+                        }
+                      },
+                      {
+                        "text": "（"
+                      },
+                      {
+                        "short": {
+                          "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp",
+                          "is_self": false,
+                          "label": null,
+                          "label_trust": "verified",
+                          "stand_in": null,
+                          "words": null
+                        },
+                        "text": "DV3B…L7Qp"
+                      },
+                      {
+                        "text": "）"
+                      }
+                    ],
+                    "text": "BNgs…TT1Z 的 USDC 账户（DV3B…L7Qp）"
+                  }
+                },
+                "text": "DV3B…L7Qp"
+              }
+            ],
+            "text": "从 Ffz5…piwg 转账 0.996423 USDC 到 DV3B…L7Qp"
+          }
+        }
+      ],
+      "chain": "solana",
+      "effects": [
+        {
+          "message": {
+            "id": "effect-transfer",
+            "parts": [
+              {
+                "text": "从 "
+              },
+              {
+                "text": "Ffz5kwUjkUNw7hV4r6iCJnUoXXsAPFHkCMCmKKDypiwg",
+                "value": {
+                  "type": "address",
+                  "value": {
+                    "address": "Ffz5kwUjkUNw7hV4r6iCJnUoXXsAPFHkCMCmKKDypiwg",
+                    "is_self": false,
+                    "label": null,
+                    "label_trust": "fact",
+                    "stand_in": null,
+                    "words": null
+                  }
+                }
+              },
+              {
+                "text": " 转账 "
+              },
+              {
+                "text": "0.996423 USDC",
+                "value": {
+                  "type": "amount",
+                  "value": {
+                    "asset": {
+                      "decimals": 6,
+                      "description": null,
+                      "id": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+                      "symbol": "USDC",
+                      "trust": "verified"
+                    },
+                    "bound": "exact",
+                    "note": null,
+                    "note_words": null,
+                    "units": "996423",
+                    "words": {
+                      "id": "amount",
+                      "parts": [
+                        {
+                          "text": "0.996423 "
+                        },
+                        {
+                          "text": "USDC",
+                          "value": {
+                            "type": "text",
+                            "value": "USDC"
+                          }
+                        }
+                      ],
+                      "text": "0.996423 USDC"
+                    }
+                  }
+                }
+              },
+              {
+                "text": " 到 "
+              },
+              {
+                "text": "BNgs…TT1Z 的 USDC 账户（DV3B…L7Qp）",
+                "value": {
+                  "type": "address",
+                  "value": {
+                    "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp",
+                    "is_self": false,
+                    "label": {
+                      "id": "accounts-others-token",
+                      "parts": [
+                        {
+                          "short": {
+                            "address": "BNgsxo3eHqQLNTaKy4juhAUJ8DyewcJNEcYdMuSmTT1Z",
+                            "is_self": false,
+                            "label": null,
+                            "label_trust": "fact",
+                            "stand_in": null,
+                            "words": null
+                          },
+                          "text": "BNgs…TT1Z"
+                        },
+                        {
+                          "text": " 的 "
+                        },
+                        {
+                          "text": "USDC",
+                          "value": {
+                            "type": "text",
+                            "value": "USDC"
+                          }
+                        },
+                        {
+                          "text": " 账户"
+                        }
+                      ],
+                      "text": "BNgs…TT1Z 的 USDC 账户"
+                    },
+                    "label_trust": "verified",
+                    "stand_in": null,
+                    "words": {
+                      "id": "address-labelled",
+                      "parts": [
+                        {
+                          "text": "BNgs…TT1Z 的 USDC 账户",
+                          "value": {
+                            "type": "words",
+                            "value": {
+                              "id": "accounts-others-token",
+                              "parts": [
+                                {
+                                  "short": {
+                                    "address": "BNgsxo3eHqQLNTaKy4juhAUJ8DyewcJNEcYdMuSmTT1Z",
+                                    "is_self": false,
+                                    "label": null,
+                                    "label_trust": "fact",
+                                    "stand_in": null,
+                                    "words": null
+                                  },
+                                  "text": "BNgs…TT1Z"
+                                },
+                                {
+                                  "text": " 的 "
+                                },
+                                {
+                                  "text": "USDC",
+                                  "value": {
+                                    "type": "text",
+                                    "value": "USDC"
+                                  }
+                                },
+                                {
+                                  "text": " 账户"
+                                }
+                              ],
+                              "text": "BNgs…TT1Z 的 USDC 账户"
+                            }
+                          }
+                        },
+                        {
+                          "text": "（"
+                        },
+                        {
+                          "short": {
+                            "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp",
+                            "is_self": false,
+                            "label": null,
+                            "label_trust": "verified",
+                            "stand_in": null,
+                            "words": null
+                          },
+                          "text": "DV3B…L7Qp"
+                        },
+                        {
+                          "text": "）"
+                        }
+                      ],
+                      "text": "BNgs…TT1Z 的 USDC 账户（DV3B…L7Qp）"
+                    }
+                  }
+                }
+              }
+            ],
+            "text": "从 Ffz5kwUjkUNw7hV4r6iCJnUoXXsAPFHkCMCmKKDypiwg 转账 0.996423 USDC 到 BNgs…TT1Z 的 USDC 账户（DV3B…L7Qp）"
+          },
+          "type": "transfer",
+          "value": {
+            "amount": {
+              "asset": {
+                "decimals": 6,
+                "description": null,
+                "id": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+                "symbol": "USDC",
+                "trust": "verified"
+              },
+              "bound": "exact",
+              "note": null,
+              "note_words": null,
+              "units": "996423",
+              "words": {
+                "id": "amount",
+                "parts": [
+                  {
+                    "text": "0.996423 "
+                  },
+                  {
+                    "text": "USDC",
+                    "value": {
+                      "type": "text",
+                      "value": "USDC"
+                    }
+                  }
+                ],
+                "text": "0.996423 USDC"
+              }
+            },
+            "from": {
+              "address": "Ffz5kwUjkUNw7hV4r6iCJnUoXXsAPFHkCMCmKKDypiwg",
+              "is_self": false,
+              "label": null,
+              "label_trust": "fact",
+              "stand_in": null,
+              "words": null
+            },
+            "to": {
+              "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp",
+              "is_self": false,
+              "label": {
+                "id": "accounts-others-token",
+                "parts": [
+                  {
+                    "short": {
+                      "address": "BNgsxo3eHqQLNTaKy4juhAUJ8DyewcJNEcYdMuSmTT1Z",
+                      "is_self": false,
+                      "label": null,
+                      "label_trust": "fact",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "BNgs…TT1Z"
+                  },
+                  {
+                    "text": " 的 "
+                  },
+                  {
+                    "text": "USDC",
+                    "value": {
+                      "type": "text",
+                      "value": "USDC"
+                    }
+                  },
+                  {
+                    "text": " 账户"
+                  }
+                ],
+                "text": "BNgs…TT1Z 的 USDC 账户"
+              },
+              "label_trust": "verified",
+              "stand_in": null,
+              "words": {
+                "id": "address-labelled",
+                "parts": [
+                  {
+                    "text": "BNgs…TT1Z 的 USDC 账户",
+                    "value": {
+                      "type": "words",
+                      "value": {
+                        "id": "accounts-others-token",
+                        "parts": [
+                          {
+                            "short": {
+                              "address": "BNgsxo3eHqQLNTaKy4juhAUJ8DyewcJNEcYdMuSmTT1Z",
+                              "is_self": false,
+                              "label": null,
+                              "label_trust": "fact",
+                              "stand_in": null,
+                              "words": null
+                            },
+                            "text": "BNgs…TT1Z"
+                          },
+                          {
+                            "text": " 的 "
+                          },
+                          {
+                            "text": "USDC",
+                            "value": {
+                              "type": "text",
+                              "value": "USDC"
+                            }
+                          },
+                          {
+                            "text": " 账户"
+                          }
+                        ],
+                        "text": "BNgs…TT1Z 的 USDC 账户"
+                      }
+                    }
+                  },
+                  {
+                    "text": "（"
+                  },
+                  {
+                    "short": {
+                      "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp",
+                      "is_self": false,
+                      "label": null,
+                      "label_trust": "verified",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "DV3B…L7Qp"
+                  },
+                  {
+                    "text": "）"
+                  }
+                ],
+                "text": "BNgs…TT1Z 的 USDC 账户（DV3B…L7Qp）"
+              }
+            }
+          }
+        },
+        {
+          "message": {
+            "id": "effect-create-deposit-if-missing",
+            "parts": [
+              {
+                "text": "创建 "
+              },
+              {
+                "text": "BNgs…TT1Z 的 USDC 账户（DV3B…L7Qp）",
+                "value": {
+                  "type": "address",
+                  "value": {
+                    "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp",
+                    "is_self": false,
+                    "label": {
+                      "id": "accounts-others-token",
+                      "parts": [
+                        {
+                          "short": {
+                            "address": "BNgsxo3eHqQLNTaKy4juhAUJ8DyewcJNEcYdMuSmTT1Z",
+                            "is_self": false,
+                            "label": null,
+                            "label_trust": "fact",
+                            "stand_in": null,
+                            "words": null
+                          },
+                          "text": "BNgs…TT1Z"
+                        },
+                        {
+                          "text": " 的 "
+                        },
+                        {
+                          "text": "USDC",
+                          "value": {
+                            "type": "text",
+                            "value": "USDC"
+                          }
+                        },
+                        {
+                          "text": " 账户"
+                        }
+                      ],
+                      "text": "BNgs…TT1Z 的 USDC 账户"
+                    },
+                    "label_trust": "verified",
+                    "stand_in": null,
+                    "words": {
+                      "id": "address-labelled",
+                      "parts": [
+                        {
+                          "text": "BNgs…TT1Z 的 USDC 账户",
+                          "value": {
+                            "type": "words",
+                            "value": {
+                              "id": "accounts-others-token",
+                              "parts": [
+                                {
+                                  "short": {
+                                    "address": "BNgsxo3eHqQLNTaKy4juhAUJ8DyewcJNEcYdMuSmTT1Z",
+                                    "is_self": false,
+                                    "label": null,
+                                    "label_trust": "fact",
+                                    "stand_in": null,
+                                    "words": null
+                                  },
+                                  "text": "BNgs…TT1Z"
+                                },
+                                {
+                                  "text": " 的 "
+                                },
+                                {
+                                  "text": "USDC",
+                                  "value": {
+                                    "type": "text",
+                                    "value": "USDC"
+                                  }
+                                },
+                                {
+                                  "text": " 账户"
+                                }
+                              ],
+                              "text": "BNgs…TT1Z 的 USDC 账户"
+                            }
+                          }
+                        },
+                        {
+                          "text": "（"
+                        },
+                        {
+                          "short": {
+                            "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp",
+                            "is_self": false,
+                            "label": null,
+                            "label_trust": "verified",
+                            "stand_in": null,
+                            "words": null
+                          },
+                          "text": "DV3B…L7Qp"
+                        },
+                        {
+                          "text": "）"
+                        }
+                      ],
+                      "text": "BNgs…TT1Z 的 USDC 账户（DV3B…L7Qp）"
+                    }
+                  }
+                }
+              },
+              {
+                "text": "，由 "
+              },
+              {
+                "text": "Token program（Toke…Q5DA）",
+                "value": {
+                  "type": "address",
+                  "value": {
+                    "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+                    "is_self": false,
+                    "label": {
+                      "id": "accounts-name",
+                      "parts": [
+                        {
+                          "text": "Token program",
+                          "value": {
+                            "type": "text",
+                            "value": "Token program"
+                          }
+                        }
+                      ],
+                      "text": "Token program"
+                    },
+                    "label_trust": "verified",
+                    "stand_in": null,
+                    "words": {
+                      "id": "address-labelled",
+                      "parts": [
+                        {
+                          "text": "Token program",
+                          "value": {
+                            "type": "words",
+                            "value": {
+                              "id": "accounts-name",
+                              "parts": [
+                                {
+                                  "text": "Token program",
+                                  "value": {
+                                    "type": "text",
+                                    "value": "Token program"
+                                  }
+                                }
+                              ],
+                              "text": "Token program"
+                            }
+                          }
+                        },
+                        {
+                          "text": "（"
+                        },
+                        {
+                          "short": {
+                            "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+                            "is_self": false,
+                            "label": null,
+                            "label_trust": "verified",
+                            "stand_in": null,
+                            "words": null
+                          },
+                          "text": "Toke…Q5DA"
+                        },
+                        {
+                          "text": "）"
+                        }
+                      ],
+                      "text": "Token program（Toke…Q5DA）"
+                    }
+                  }
+                }
+              },
+              {
+                "text": "管理，存入 "
+              },
+              {
+                "text": "0.00148844 SOL",
+                "value": {
+                  "type": "amount",
+                  "value": {
+                    "asset": {
+                      "decimals": 9,
+                      "description": null,
+                      "id": "native",
+                      "symbol": "SOL",
+                      "trust": "fact"
+                    },
+                    "bound": "exact",
+                    "note": null,
+                    "note_words": null,
+                    "units": "1488440",
+                    "words": {
+                      "id": "amount",
+                      "parts": [
+                        {
+                          "text": "0.00148844 "
+                        },
+                        {
+                          "text": "SOL",
+                          "value": {
+                            "type": "text",
+                            "value": "SOL"
+                          }
+                        }
+                      ],
+                      "text": "0.00148844 SOL"
+                    }
+                  }
+                }
+              },
+              {
+                "text": "，除非该账户已存在"
+              }
+            ],
+            "text": "创建 BNgs…TT1Z 的 USDC 账户（DV3B…L7Qp），由 Token program（Toke…Q5DA）管理，存入 0.00148844 SOL，除非该账户已存在"
+          },
+          "type": "create",
+          "value": {
+            "account": {
+              "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp",
+              "is_self": false,
+              "label": {
+                "id": "accounts-others-token",
+                "parts": [
+                  {
+                    "short": {
+                      "address": "BNgsxo3eHqQLNTaKy4juhAUJ8DyewcJNEcYdMuSmTT1Z",
+                      "is_self": false,
+                      "label": null,
+                      "label_trust": "fact",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "BNgs…TT1Z"
+                  },
+                  {
+                    "text": " 的 "
+                  },
+                  {
+                    "text": "USDC",
+                    "value": {
+                      "type": "text",
+                      "value": "USDC"
+                    }
+                  },
+                  {
+                    "text": " 账户"
+                  }
+                ],
+                "text": "BNgs…TT1Z 的 USDC 账户"
+              },
+              "label_trust": "verified",
+              "stand_in": null,
+              "words": {
+                "id": "address-labelled",
+                "parts": [
+                  {
+                    "text": "BNgs…TT1Z 的 USDC 账户",
+                    "value": {
+                      "type": "words",
+                      "value": {
+                        "id": "accounts-others-token",
+                        "parts": [
+                          {
+                            "short": {
+                              "address": "BNgsxo3eHqQLNTaKy4juhAUJ8DyewcJNEcYdMuSmTT1Z",
+                              "is_self": false,
+                              "label": null,
+                              "label_trust": "fact",
+                              "stand_in": null,
+                              "words": null
+                            },
+                            "text": "BNgs…TT1Z"
+                          },
+                          {
+                            "text": " 的 "
+                          },
+                          {
+                            "text": "USDC",
+                            "value": {
+                              "type": "text",
+                              "value": "USDC"
+                            }
+                          },
+                          {
+                            "text": " 账户"
+                          }
+                        ],
+                        "text": "BNgs…TT1Z 的 USDC 账户"
+                      }
+                    }
+                  },
+                  {
+                    "text": "（"
+                  },
+                  {
+                    "short": {
+                      "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp",
+                      "is_self": false,
+                      "label": null,
+                      "label_trust": "verified",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "DV3B…L7Qp"
+                  },
+                  {
+                    "text": "）"
+                  }
+                ],
+                "text": "BNgs…TT1Z 的 USDC 账户（DV3B…L7Qp）"
+              }
+            },
+            "deposit": {
+              "asset": {
+                "decimals": 9,
+                "description": null,
+                "id": "native",
+                "symbol": "SOL",
+                "trust": "fact"
+              },
+              "bound": "exact",
+              "note": null,
+              "note_words": null,
+              "units": "1488440",
+              "words": {
+                "id": "amount",
+                "parts": [
+                  {
+                    "text": "0.00148844 "
+                  },
+                  {
+                    "text": "SOL",
+                    "value": {
+                      "type": "text",
+                      "value": "SOL"
+                    }
+                  }
+                ],
+                "text": "0.00148844 SOL"
+              }
+            },
+            "if_missing": true,
+            "owner": {
+              "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "is_self": false,
+              "label": {
+                "id": "accounts-name",
+                "parts": [
+                  {
+                    "text": "Token program",
+                    "value": {
+                      "type": "text",
+                      "value": "Token program"
+                    }
+                  }
+                ],
+                "text": "Token program"
+              },
+              "label_trust": "verified",
+              "stand_in": null,
+              "words": {
+                "id": "address-labelled",
+                "parts": [
+                  {
+                    "text": "Token program",
+                    "value": {
+                      "type": "words",
+                      "value": {
+                        "id": "accounts-name",
+                        "parts": [
+                          {
+                            "text": "Token program",
+                            "value": {
+                              "type": "text",
+                              "value": "Token program"
+                            }
+                          }
+                        ],
+                        "text": "Token program"
+                      }
+                    }
+                  },
+                  {
+                    "text": "（"
+                  },
+                  {
+                    "short": {
+                      "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+                      "is_self": false,
+                      "label": null,
+                      "label_trust": "verified",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "Toke…Q5DA"
+                  },
+                  {
+                    "text": "）"
+                  }
+                ],
+                "text": "Token program（Toke…Q5DA）"
+              }
+            }
+          }
+        },
+        {
+          "message": {
+            "id": "effect-fee",
+            "parts": [
+              {
+                "text": "8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa",
+                "value": {
+                  "type": "address",
+                  "value": {
+                    "address": "8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa",
+                    "is_self": false,
+                    "label": null,
+                    "label_trust": "fact",
+                    "stand_in": null,
+                    "words": null
+                  }
+                }
+              },
+              {
+                "text": " 支付手续费 "
+              },
+              {
+                "text": "0.000012218 SOL",
+                "value": {
+                  "type": "amount",
+                  "value": {
+                    "asset": {
+                      "decimals": 9,
+                      "description": null,
+                      "id": "native",
+                      "symbol": "SOL",
+                      "trust": "fact"
+                    },
+                    "bound": "exact",
+                    "note": null,
+                    "note_words": null,
+                    "units": "12218",
+                    "words": {
+                      "id": "amount",
+                      "parts": [
+                        {
+                          "text": "0.000012218 "
+                        },
+                        {
+                          "text": "SOL",
+                          "value": {
+                            "type": "text",
+                            "value": "SOL"
+                          }
+                        }
+                      ],
+                      "text": "0.000012218 SOL"
+                    }
+                  }
+                }
+              }
+            ],
+            "text": "8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa 支付手续费 0.000012218 SOL"
+          },
+          "type": "fee",
+          "value": {
+            "amount": {
+              "asset": {
+                "decimals": 9,
+                "description": null,
+                "id": "native",
+                "symbol": "SOL",
+                "trust": "fact"
+              },
+              "bound": "exact",
+              "note": null,
+              "note_words": null,
+              "units": "12218",
+              "words": {
+                "id": "amount",
+                "parts": [
+                  {
+                    "text": "0.000012218 "
+                  },
+                  {
+                    "text": "SOL",
+                    "value": {
+                      "type": "text",
+                      "value": "SOL"
+                    }
+                  }
+                ],
+                "text": "0.000012218 SOL"
+              }
+            },
+            "payer": {
+              "address": "8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa",
+              "is_self": false,
+              "label": null,
+              "label_trust": "fact",
+              "stand_in": null,
+              "words": null
+            }
+          }
+        },
+        {
+          "message": {
+            "id": "effect-durable-nonce",
+            "parts": [
+              {
+                "text": "在随机数账户 "
+              },
+              {
+                "text": "AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw",
+                "value": {
+                  "type": "address",
+                  "value": {
+                    "address": "AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw",
+                    "is_self": false,
+                    "label": null,
+                    "label_trust": "fact",
+                    "stand_in": null,
+                    "words": null
+                  }
+                }
+              },
+              {
+                "text": " 被推进之前一直有效，"
+              },
+              {
+                "emphasis": true,
+                "text": "无时间限制"
+              },
+              {
+                "text": "（持久随机数）"
+              }
+            ],
+            "text": "在随机数账户 AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw 被推进之前一直有效，无时间限制（持久随机数）"
+          },
+          "type": "lifetime",
+          "value": {
+            "type": "durable_nonce",
+            "value": {
+              "nonce_account": {
+                "address": "AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw",
+                "is_self": false,
+                "label": null,
+                "label_trust": "fact",
+                "stand_in": null,
+                "words": null
+              }
+            }
+          }
+        }
+      ],
+      "findings": [
+        {
+          "code": "DURABLE_NONCE",
+          "instruction": null,
+          "message": {
+            "id": "explain-durable-nonce",
+            "parts": [
+              {
+                "text": "此签名没有时间限制：任何持有已签名交易的人都可以在之后的任何时间提交它，直到随机数账户被推进"
+              }
+            ],
+            "text": "此签名没有时间限制：任何持有已签名交易的人都可以在之后的任何时间提交它，直到随机数账户被推进"
+          },
+          "severity": "high"
+        },
+        {
+          "code": "FEE_PAID_BY_OTHER",
+          "instruction": null,
+          "message": {
+            "id": "explain-fee-paid-by-other",
+            "parts": [
+              {
+                "text": "手续费由 "
+              },
+              {
+                "short": {
+                  "address": "8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "fact",
+                  "stand_in": null,
+                  "words": null
+                },
+                "text": "8Kvy…p1fa"
+              },
+              {
+                "text": " 支付，而不是您"
+              }
+            ],
+            "text": "手续费由 8Kvy…p1fa 支付，而不是您"
+          },
+          "severity": "info"
+        }
+      ],
+      "locale": {
+        "asked": [
+          "zh-CN"
+        ],
+        "direction": "ltr",
+        "fallbacks": 15,
+        "review": {
+          "by": [
+            "a native speaker"
+          ],
+          "kind": "reviewed",
+          "on": "2026-10-31"
+        },
+        "used": "zh-Hans"
+      },
+      "raw": {
+        "digest": "05d51e61e33bad79d124089e71be7988c37cccf1f9268ee6e338e439f5ec582f",
+        "format": "solana legacy"
+      },
+      "schema": "signlens-explanation/2",
+      "sections": [
+        {
+          "collapsed": false,
+          "fields": [
+            {
+              "help": null,
+              "label": {
+                "id": "label-amount",
+                "parts": [
+                  {
+                    "text": "数量"
+                  }
+                ],
+                "text": "数量"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "amount",
+                "value": {
+                  "asset": {
+                    "decimals": 6,
+                    "description": null,
+                    "id": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+                    "symbol": "USDC",
+                    "trust": "verified"
+                  },
+                  "bound": "exact",
+                  "note": null,
+                  "note_words": null,
+                  "units": "996423",
+                  "words": {
+                    "id": "amount",
+                    "parts": [
+                      {
+                        "text": "0.996423 "
+                      },
+                      {
+                        "text": "USDC",
+                        "value": {
+                          "type": "text",
+                          "value": "USDC"
+                        }
+                      }
+                    ],
+                    "text": "0.996423 USDC"
+                  }
+                }
+              }
+            },
+            {
+              "help": null,
+              "label": {
+                "id": "label-from",
+                "parts": [
+                  {
+                    "text": "发送方"
+                  }
+                ],
+                "text": "发送方"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "Ffz5kwUjkUNw7hV4r6iCJnUoXXsAPFHkCMCmKKDypiwg",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "fact",
+                  "stand_in": null,
+                  "words": null
+                }
+              }
+            },
+            {
+              "help": null,
+              "label": {
+                "id": "label-to",
+                "parts": [
+                  {
+                    "text": "接收方"
+                  }
+                ],
+                "text": "接收方"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp",
+                  "is_self": false,
+                  "label": {
+                    "id": "accounts-others-token",
+                    "parts": [
+                      {
+                        "short": {
+                          "address": "BNgsxo3eHqQLNTaKy4juhAUJ8DyewcJNEcYdMuSmTT1Z",
+                          "is_self": false,
+                          "label": null,
+                          "label_trust": "fact",
+                          "stand_in": null,
+                          "words": null
+                        },
+                        "text": "BNgs…TT1Z"
+                      },
+                      {
+                        "text": " 的 "
+                      },
+                      {
+                        "text": "USDC",
+                        "value": {
+                          "type": "text",
+                          "value": "USDC"
+                        }
+                      },
+                      {
+                        "text": " 账户"
+                      }
+                    ],
+                    "text": "BNgs…TT1Z 的 USDC 账户"
+                  },
+                  "label_trust": "verified",
+                  "stand_in": null,
+                  "words": {
+                    "id": "address-labelled",
+                    "parts": [
+                      {
+                        "text": "BNgs…TT1Z 的 USDC 账户",
+                        "value": {
+                          "type": "words",
+                          "value": {
+                            "id": "accounts-others-token",
+                            "parts": [
+                              {
+                                "short": {
+                                  "address": "BNgsxo3eHqQLNTaKy4juhAUJ8DyewcJNEcYdMuSmTT1Z",
+                                  "is_self": false,
+                                  "label": null,
+                                  "label_trust": "fact",
+                                  "stand_in": null,
+                                  "words": null
+                                },
+                                "text": "BNgs…TT1Z"
+                              },
+                              {
+                                "text": " 的 "
+                              },
+                              {
+                                "text": "USDC",
+                                "value": {
+                                  "type": "text",
+                                  "value": "USDC"
+                                }
+                              },
+                              {
+                                "text": " 账户"
+                              }
+                            ],
+                            "text": "BNgs…TT1Z 的 USDC 账户"
+                          }
+                        }
+                      },
+                      {
+                        "text": "（"
+                      },
+                      {
+                        "short": {
+                          "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp",
+                          "is_self": false,
+                          "label": null,
+                          "label_trust": "verified",
+                          "stand_in": null,
+                          "words": null
+                        },
+                        "text": "DV3B…L7Qp"
+                      },
+                      {
+                        "text": "）"
+                      }
+                    ],
+                    "text": "BNgs…TT1Z 的 USDC 账户（DV3B…L7Qp）"
+                  }
+                }
+              }
+            },
+            {
+              "help": null,
+              "label": {
+                "id": "label-authorized-by",
+                "parts": [
+                  {
+                    "text": "授权签名者"
+                  }
+                ],
+                "text": "授权签名者"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "fact",
+                  "stand_in": null,
+                  "words": null
+                }
+              }
+            },
+            {
+              "help": {
+                "id": "label-mint.help",
+                "parts": [
+                  {
+                    "text": "The address that identifies the token itself, as opposed to an account holding some of it."
+                  }
+                ],
+                "text": "The address that identifies the token itself, as opposed to an account holding some of it."
+              },
+              "label": {
+                "id": "label-mint",
+                "parts": [
+                  {
+                    "text": "代币铸造地址"
+                  }
+                ],
+                "text": "代币铸造地址"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+                  "is_self": false,
+                  "label": {
+                    "id": "accounts-mint",
+                    "parts": [
+                      {
+                        "text": "USDC",
+                        "value": {
+                          "type": "text",
+                          "value": "USDC"
+                        }
+                      },
+                      {
+                        "text": " 代币铸造地址"
+                      }
+                    ],
+                    "text": "USDC 代币铸造地址"
+                  },
+                  "label_trust": "verified",
+                  "stand_in": null,
+                  "words": {
+                    "id": "address-labelled",
+                    "parts": [
+                      {
+                        "text": "USDC 代币铸造地址",
+                        "value": {
+                          "type": "words",
+                          "value": {
+                            "id": "accounts-mint",
+                            "parts": [
+                              {
+                                "text": "USDC",
+                                "value": {
+                                  "type": "text",
+                                  "value": "USDC"
+                                }
+                              },
+                              {
+                                "text": " 代币铸造地址"
+                              }
+                            ],
+                            "text": "USDC 代币铸造地址"
+                          }
+                        }
+                      },
+                      {
+                        "text": "（"
+                      },
+                      {
+                        "short": {
+                          "address": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+                          "is_self": false,
+                          "label": null,
+                          "label_trust": "verified",
+                          "stand_in": null,
+                          "words": null
+                        },
+                        "text": "EPjF…Dt1v"
+                      },
+                      {
+                        "text": "）"
+                      }
+                    ],
+                    "text": "USDC 代币铸造地址（EPjF…Dt1v）"
+                  }
+                }
+              }
+            }
+          ],
+          "kind": {
+            "type": "instruction",
+            "value": {
+              "index": 2
+            }
+          },
+          "subtitle": {
+            "id": "decode-program-verified",
+            "parts": [
+              {
+                "text": "Token program",
+                "value": {
+                  "type": "text",
+                  "value": "Token program"
+                }
+              }
+            ],
+            "text": "Token program"
+          },
+          "title": {
+            "id": "token-transfer-title",
+            "parts": [
+              {
+                "text": "代币转账"
+              }
+            ],
+            "text": "代币转账"
+          }
+        },
+        {
+          "collapsed": true,
+          "fields": [
+            {
+              "help": {
+                "id": "label-nonce-account.help",
+                "parts": [
+                  {
+                    "text": "An account that holds a durable nonce. A transaction that uses its nonce in place of a recent blockhash stays valid until the nonce is advanced, so anyone holding it signed can submit it until then."
+                  }
+                ],
+                "text": "An account that holds a durable nonce. A transaction that uses its nonce in place of a recent blockhash stays valid until the nonce is advanced, so anyone holding it signed can submit it until then."
+              },
+              "label": {
+                "id": "explain-housekeeping-label",
+                "parts": [
+                  {
+                    "text": "推进持久随机数：随机数账户"
+                  }
+                ],
+                "text": "推进持久随机数：随机数账户"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "fact",
+                  "stand_in": null,
+                  "words": null
+                }
+              }
+            },
+            {
+              "help": null,
+              "label": {
+                "id": "explain-housekeeping-label",
+                "parts": [
+                  {
+                    "text": "推进持久随机数：权限"
+                  }
+                ],
+                "text": "推进持久随机数：权限"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "EbsUZEFAU23Z2SgAymFtU2hADLiyNLzaPLKiJfvpKnE7",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "fact",
+                  "stand_in": null,
+                  "words": null
+                }
+              }
+            },
+            {
+              "help": {
+                "id": "label-token-account.help",
+                "parts": [
+                  {
+                    "text": "An account that holds one token for one wallet. A wallet has a separate one for each token it holds."
+                  }
+                ],
+                "text": "An account that holds one token for one wallet. A wallet has a separate one for each token it holds."
+              },
+              "label": {
+                "id": "explain-housekeeping-label",
+                "parts": [
+                  {
+                    "text": "如不存在则创建代币账户：代币账户"
+                  }
+                ],
+                "text": "如不存在则创建代币账户：代币账户"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp",
+                  "is_self": false,
+                  "label": {
+                    "id": "accounts-others-token",
+                    "parts": [
+                      {
+                        "short": {
+                          "address": "BNgsxo3eHqQLNTaKy4juhAUJ8DyewcJNEcYdMuSmTT1Z",
+                          "is_self": false,
+                          "label": null,
+                          "label_trust": "fact",
+                          "stand_in": null,
+                          "words": null
+                        },
+                        "text": "BNgs…TT1Z"
+                      },
+                      {
+                        "text": " 的 "
+                      },
+                      {
+                        "text": "USDC",
+                        "value": {
+                          "type": "text",
+                          "value": "USDC"
+                        }
+                      },
+                      {
+                        "text": " 账户"
+                      }
+                    ],
+                    "text": "BNgs…TT1Z 的 USDC 账户"
+                  },
+                  "label_trust": "verified",
+                  "stand_in": null,
+                  "words": {
+                    "id": "address-labelled",
+                    "parts": [
+                      {
+                        "text": "BNgs…TT1Z 的 USDC 账户",
+                        "value": {
+                          "type": "words",
+                          "value": {
+                            "id": "accounts-others-token",
+                            "parts": [
+                              {
+                                "short": {
+                                  "address": "BNgsxo3eHqQLNTaKy4juhAUJ8DyewcJNEcYdMuSmTT1Z",
+                                  "is_self": false,
+                                  "label": null,
+                                  "label_trust": "fact",
+                                  "stand_in": null,
+                                  "words": null
+                                },
+                                "text": "BNgs…TT1Z"
+                              },
+                              {
+                                "text": " 的 "
+                              },
+                              {
+                                "text": "USDC",
+                                "value": {
+                                  "type": "text",
+                                  "value": "USDC"
+                                }
+                              },
+                              {
+                                "text": " 账户"
+                              }
+                            ],
+                            "text": "BNgs…TT1Z 的 USDC 账户"
+                          }
+                        }
+                      },
+                      {
+                        "text": "（"
+                      },
+                      {
+                        "short": {
+                          "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp",
+                          "is_self": false,
+                          "label": null,
+                          "label_trust": "verified",
+                          "stand_in": null,
+                          "words": null
+                        },
+                        "text": "DV3B…L7Qp"
+                      },
+                      {
+                        "text": "）"
+                      }
+                    ],
+                    "text": "BNgs…TT1Z 的 USDC 账户（DV3B…L7Qp）"
+                  }
+                }
+              }
+            },
+            {
+              "help": null,
+              "label": {
+                "id": "explain-housekeeping-label",
+                "parts": [
+                  {
+                    "text": "如不存在则创建代币账户：所有者"
+                  }
+                ],
+                "text": "如不存在则创建代币账户：所有者"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "BNgsxo3eHqQLNTaKy4juhAUJ8DyewcJNEcYdMuSmTT1Z",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "fact",
+                  "stand_in": null,
+                  "words": null
+                }
+              }
+            },
+            {
+              "help": {
+                "id": "label-mint.help",
+                "parts": [
+                  {
+                    "text": "The address that identifies the token itself, as opposed to an account holding some of it."
+                  }
+                ],
+                "text": "The address that identifies the token itself, as opposed to an account holding some of it."
+              },
+              "label": {
+                "id": "explain-housekeeping-label",
+                "parts": [
+                  {
+                    "text": "如不存在则创建代币账户：代币铸造地址"
+                  }
+                ],
+                "text": "如不存在则创建代币账户：代币铸造地址"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+                  "is_self": false,
+                  "label": {
+                    "id": "accounts-mint",
+                    "parts": [
+                      {
+                        "text": "USDC",
+                        "value": {
+                          "type": "text",
+                          "value": "USDC"
+                        }
+                      },
+                      {
+                        "text": " 代币铸造地址"
+                      }
+                    ],
+                    "text": "USDC 代币铸造地址"
+                  },
+                  "label_trust": "verified",
+                  "stand_in": null,
+                  "words": {
+                    "id": "address-labelled",
+                    "parts": [
+                      {
+                        "text": "USDC 代币铸造地址",
+                        "value": {
+                          "type": "words",
+                          "value": {
+                            "id": "accounts-mint",
+                            "parts": [
+                              {
+                                "text": "USDC",
+                                "value": {
+                                  "type": "text",
+                                  "value": "USDC"
+                                }
+                              },
+                              {
+                                "text": " 代币铸造地址"
+                              }
+                            ],
+                            "text": "USDC 代币铸造地址"
+                          }
+                        }
+                      },
+                      {
+                        "text": "（"
+                      },
+                      {
+                        "short": {
+                          "address": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+                          "is_self": false,
+                          "label": null,
+                          "label_trust": "verified",
+                          "stand_in": null,
+                          "words": null
+                        },
+                        "text": "EPjF…Dt1v"
+                      },
+                      {
+                        "text": "）"
+                      }
+                    ],
+                    "text": "USDC 代币铸造地址（EPjF…Dt1v）"
+                  }
+                }
+              }
+            },
+            {
+              "help": {
+                "id": "label-rent-paid-by.help",
+                "parts": [
+                  {
+                    "text": "Who pays the deposit that keeps a new account on chain. It comes back when the account is closed."
+                  }
+                ],
+                "text": "Who pays the deposit that keeps a new account on chain. It comes back when the account is closed."
+              },
+              "label": {
+                "id": "explain-housekeeping-label",
+                "parts": [
+                  {
+                    "text": "如不存在则创建代币账户：租金付款方"
+                  }
+                ],
+                "text": "如不存在则创建代币账户：租金付款方"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "fact",
+                  "stand_in": null,
+                  "words": null
+                }
+              }
+            },
+            {
+              "help": {
+                "id": "label-token-program.help",
+                "parts": [
+                  {
+                    "text": "The program that manages this token: SPL Token or Token-2022."
+                  }
+                ],
+                "text": "The program that manages this token: SPL Token or Token-2022."
+              },
+              "label": {
+                "id": "explain-housekeeping-label",
+                "parts": [
+                  {
+                    "text": "如不存在则创建代币账户：代币程序"
+                  }
+                ],
+                "text": "如不存在则创建代币账户：代币程序"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+                  "is_self": false,
+                  "label": {
+                    "id": "accounts-name",
+                    "parts": [
+                      {
+                        "text": "Token program",
+                        "value": {
+                          "type": "text",
+                          "value": "Token program"
+                        }
+                      }
+                    ],
+                    "text": "Token program"
+                  },
+                  "label_trust": "verified",
+                  "stand_in": null,
+                  "words": {
+                    "id": "address-labelled",
+                    "parts": [
+                      {
+                        "text": "Token program",
+                        "value": {
+                          "type": "words",
+                          "value": {
+                            "id": "accounts-name",
+                            "parts": [
+                              {
+                                "text": "Token program",
+                                "value": {
+                                  "type": "text",
+                                  "value": "Token program"
+                                }
+                              }
+                            ],
+                            "text": "Token program"
+                          }
+                        }
+                      },
+                      {
+                        "text": "（"
+                      },
+                      {
+                        "short": {
+                          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+                          "is_self": false,
+                          "label": null,
+                          "label_trust": "verified",
+                          "stand_in": null,
+                          "words": null
+                        },
+                        "text": "Toke…Q5DA"
+                      },
+                      {
+                        "text": "）"
+                      }
+                    ],
+                    "text": "Token program（Toke…Q5DA）"
+                  }
+                }
+              }
+            },
+            {
+              "help": {
+                "id": "label-compute-unit-limit.help",
+                "parts": [
+                  {
+                    "text": "How much work the transaction may do. It affects the fee, not what the transaction does."
+                  }
+                ],
+                "text": "How much work the transaction may do. It affects the fee, not what the transaction does."
+              },
+              "label": {
+                "id": "label-compute-unit-limit",
+                "parts": [
+                  {
+                    "text": "计算单元上限"
+                  }
+                ],
+                "text": "计算单元上限"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "integer",
+                "value": "20728"
+              }
+            },
+            {
+              "help": {
+                "id": "label-compute-unit-price.help",
+                "parts": [
+                  {
+                    "text": "The tip per unit of work, in millionths of a lamport. With the limit, it sets the priority fee."
+                  }
+                ],
+                "text": "The tip per unit of work, in millionths of a lamport. With the limit, it sets the priority fee."
+              },
+              "label": {
+                "id": "label-compute-unit-price",
+                "parts": [
+                  {
+                    "text": "计算单元价格"
+                  }
+                ],
+                "text": "计算单元价格"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "words",
+                "value": {
+                  "id": "compute-budget-price",
+                  "parts": [
+                    {
+                      "text": "每计算单元 107,000 微 lamports"
+                    }
+                  ],
+                  "text": "每计算单元 107,000 微 lamports"
+                }
+              }
+            }
+          ],
+          "kind": {
+            "type": "housekeeping"
+          },
+          "subtitle": null,
+          "title": {
+            "id": "explain-also",
+            "parts": [
+              {
+                "text": "其他"
+              }
+            ],
+            "text": "其他"
+          }
+        },
+        {
+          "collapsed": false,
+          "fields": [
+            {
+              "help": {
+                "id": "label-fee-payer.help",
+                "parts": [
+                  {
+                    "text": "The account that pays the fee: the first signer."
+                  }
+                ],
+                "text": "The account that pays the fee: the first signer."
+              },
+              "label": {
+                "id": "label-fee-payer",
+                "parts": [
+                  {
+                    "text": "手续费付款方"
+                  }
+                ],
+                "text": "手续费付款方"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "fact",
+                  "stand_in": null,
+                  "words": null
+                }
+              }
+            },
+            {
+              "help": {
+                "id": "label-signer.help",
+                "parts": [
+                  {
+                    "text": "An account whose signature the transaction needs besides the fee payer."
+                  }
+                ],
+                "text": "An account whose signature the transaction needs besides the fee payer."
+              },
+              "label": {
+                "id": "label-signer",
+                "parts": [
+                  {
+                    "text": "签名者"
+                  }
+                ],
+                "text": "签名者"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "EbsUZEFAU23Z2SgAymFtU2hADLiyNLzaPLKiJfvpKnE7",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "fact",
+                  "stand_in": null,
+                  "words": null
+                }
+              }
+            }
+          ],
+          "kind": {
+            "type": "signers"
+          },
+          "subtitle": null,
+          "title": {
+            "id": "explain-signers",
+            "parts": [
+              {
+                "text": "签名者"
+              }
+            ],
+            "text": "签名者"
+          }
+        },
+        {
+          "collapsed": false,
+          "fields": [
+            {
+              "help": {
+                "id": "label-total.help",
+                "parts": [
+                  {
+                    "text": "What the network charges for this transaction. The fee payer pays it whether the transaction succeeds or fails."
+                  }
+                ],
+                "text": "What the network charges for this transaction. The fee payer pays it whether the transaction succeeds or fails."
+              },
+              "label": {
+                "id": "label-total",
+                "parts": [
+                  {
+                    "text": "总计"
+                  }
+                ],
+                "text": "总计"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "amount",
+                "value": {
+                  "asset": {
+                    "decimals": 9,
+                    "description": null,
+                    "id": "native",
+                    "symbol": "SOL",
+                    "trust": "fact"
+                  },
+                  "bound": "exact",
+                  "note": null,
+                  "note_words": null,
+                  "units": "12218",
+                  "words": {
+                    "id": "amount",
+                    "parts": [
+                      {
+                        "text": "0.000012218 "
+                      },
+                      {
+                        "text": "SOL",
+                        "value": {
+                          "type": "text",
+                          "value": "SOL"
+                        }
+                      }
+                    ],
+                    "text": "0.000012218 SOL"
+                  }
+                }
+              }
+            },
+            {
+              "help": {
+                "id": "label-base.help",
+                "parts": [
+                  {
+                    "text": "The flat part of the fee: the network charges it per signature."
+                  }
+                ],
+                "text": "The flat part of the fee: the network charges it per signature."
+              },
+              "label": {
+                "id": "label-base",
+                "parts": [
+                  {
+                    "text": "基础费"
+                  }
+                ],
+                "text": "基础费"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "amount",
+                "value": {
+                  "asset": {
+                    "decimals": 9,
+                    "description": null,
+                    "id": "native",
+                    "symbol": "SOL",
+                    "trust": "fact"
+                  },
+                  "bound": "exact",
+                  "note": null,
+                  "note_words": null,
+                  "units": "10000",
+                  "words": {
+                    "id": "amount",
+                    "parts": [
+                      {
+                        "text": "0.00001 "
+                      },
+                      {
+                        "text": "SOL",
+                        "value": {
+                          "type": "text",
+                          "value": "SOL"
+                        }
+                      }
+                    ],
+                    "text": "0.00001 SOL"
+                  }
+                }
+              }
+            },
+            {
+              "help": {
+                "id": "label-priority.help",
+                "parts": [
+                  {
+                    "text": "A tip the site added so validators take the transaction sooner. It is optional, and it is yours to pay."
+                  }
+                ],
+                "text": "A tip the site added so validators take the transaction sooner. It is optional, and it is yours to pay."
+              },
+              "label": {
+                "id": "label-priority",
+                "parts": [
+                  {
+                    "text": "优先费"
+                  }
+                ],
+                "text": "优先费"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "amount",
+                "value": {
+                  "asset": {
+                    "decimals": 9,
+                    "description": null,
+                    "id": "native",
+                    "symbol": "SOL",
+                    "trust": "fact"
+                  },
+                  "bound": "exact",
+                  "note": null,
+                  "note_words": null,
+                  "units": "2218",
+                  "words": {
+                    "id": "amount",
+                    "parts": [
+                      {
+                        "text": "0.000002218 "
+                      },
+                      {
+                        "text": "SOL",
+                        "value": {
+                          "type": "text",
+                          "value": "SOL"
+                        }
+                      }
+                    ],
+                    "text": "0.000002218 SOL"
+                  }
+                }
+              }
+            },
+            {
+              "help": {
+                "id": "label-priority-basis.help",
+                "parts": [
+                  {
+                    "text": "How the tip was computed: the price per unit of work, times the work the transaction asked to be allowed."
+                  }
+                ],
+                "text": "How the tip was computed: the price per unit of work, times the work the transaction asked to be allowed."
+              },
+              "label": {
+                "id": "label-priority-basis",
+                "parts": [
+                  {
+                    "text": "优先费计算依据"
+                  }
+                ],
+                "text": "优先费计算依据"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "words",
+                "value": {
+                  "id": "explain-priority-basis",
+                  "parts": [
+                    {
+                      "text": "每计算单元 107,000 微 lamports × 请求的 20,728 个计算单元"
+                    }
+                  ],
+                  "text": "每计算单元 107,000 微 lamports × 请求的 20,728 个计算单元"
+                }
+              }
+            },
+            {
+              "help": {
+                "id": "label-rent-deposits.help",
+                "parts": [
+                  {
+                    "text": "SOL locked to keep the accounts this transaction creates on chain. It is a deposit, not a fee: closing an account returns it to whoever closes it."
+                  }
+                ],
+                "text": "SOL locked to keep the accounts this transaction creates on chain. It is a deposit, not a fee: closing an account returns it to whoever closes it."
+              },
+              "label": {
+                "id": "label-rent-deposits",
+                "parts": [
+                  {
+                    "text": "租金押金"
+                  }
+                ],
+                "text": "租金押金"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "words",
+                "value": {
+                  "id": "explain-rent",
+                  "parts": [
+                    {
+                      "text": "最多 "
+                    },
+                    {
+                      "text": "0.00148844 SOL",
+                      "value": {
+                        "type": "amount",
+                        "value": {
+                          "asset": {
+                            "decimals": 9,
+                            "description": null,
+                            "id": "native",
+                            "symbol": "SOL",
+                            "trust": "fact"
+                          },
+                          "bound": "exact",
+                          "note": null,
+                          "note_words": null,
+                          "units": "1488440",
+                          "words": {
+                            "id": "amount",
+                            "parts": [
+                              {
+                                "text": "0.00148844 "
+                              },
+                              {
+                                "text": "SOL",
+                                "value": {
+                                  "type": "text",
+                                  "value": "SOL"
+                                }
+                              }
+                            ],
+                            "text": "0.00148844 SOL"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "text": "，前提是本交易在缺失时才创建的账户尚不存在；退还给关闭该账户的一方"
+                    }
+                  ],
+                  "text": "最多 0.00148844 SOL，前提是本交易在缺失时才创建的账户尚不存在；退还给关闭该账户的一方"
+                }
+              }
+            }
+          ],
+          "kind": {
+            "type": "fees"
+          },
+          "subtitle": null,
+          "title": {
+            "id": "explain-fee",
+            "parts": [
+              {
+                "text": "手续费"
+              }
+            ],
+            "text": "手续费"
+          }
+        },
+        {
+          "collapsed": false,
+          "fields": [
+            {
+              "help": {
+                "id": "label-expires.help",
+                "parts": [
+                  {
+                    "text": "How long the signature can be used. About a minute is normal; a durable nonce keeps it usable until the nonce is advanced."
+                  }
+                ],
+                "text": "How long the signature can be used. About a minute is normal; a durable nonce keeps it usable until the nonce is advanced."
+              },
+              "label": {
+                "id": "label-expires",
+                "parts": [
+                  {
+                    "text": "到期时间"
+                  }
+                ],
+                "text": "到期时间"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "words",
+                "value": {
+                  "id": "explain-expires-never",
+                  "parts": [
+                    {
+                      "text": "无时间限制（随机数账户被推进时失效）"
+                    }
+                  ],
+                  "text": "无时间限制（随机数账户被推进时失效）"
+                }
+              }
+            },
+            {
+              "help": {
+                "id": "label-nonce-account.help",
+                "parts": [
+                  {
+                    "text": "An account that holds a durable nonce. A transaction that uses its nonce in place of a recent blockhash stays valid until the nonce is advanced, so anyone holding it signed can submit it until then."
+                  }
+                ],
+                "text": "An account that holds a durable nonce. A transaction that uses its nonce in place of a recent blockhash stays valid until the nonce is advanced, so anyone holding it signed can submit it until then."
+              },
+              "label": {
+                "id": "label-nonce-account",
+                "parts": [
+                  {
+                    "text": "随机数账户"
+                  }
+                ],
+                "text": "随机数账户"
+              },
+              "trust": "fact",
+              "value": {
+                "type": "address",
+                "value": {
+                  "address": "AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "fact",
+                  "stand_in": null,
+                  "words": null
+                }
+              }
+            }
+          ],
+          "kind": {
+            "type": "lifetime"
+          },
+          "subtitle": null,
+          "title": {
+            "id": "explain-validity",
+            "parts": [
+              {
+                "text": "有效期"
+              }
+            ],
+            "text": "有效期"
+          }
+        }
+      ],
+      "summary": {
+        "id": "token-transfer-summary",
+        "parts": [
+          {
+            "text": "从 "
+          },
+          {
+            "short": {
+              "address": "Ffz5kwUjkUNw7hV4r6iCJnUoXXsAPFHkCMCmKKDypiwg",
+              "is_self": false,
+              "label": null,
+              "label_trust": "fact",
+              "stand_in": null,
+              "words": null
+            },
+            "text": "Ffz5…piwg"
+          },
+          {
+            "text": " 转账 "
+          },
+          {
+            "text": "0.996423 USDC",
+            "value": {
+              "type": "amount",
+              "value": {
+                "asset": {
+                  "decimals": 6,
+                  "description": null,
+                  "id": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+                  "symbol": "USDC",
+                  "trust": "verified"
+                },
+                "bound": "exact",
+                "note": null,
+                "note_words": null,
+                "units": "996423",
+                "words": {
+                  "id": "amount",
+                  "parts": [
+                    {
+                      "text": "0.996423 "
+                    },
+                    {
+                      "text": "USDC",
+                      "value": {
+                        "type": "text",
+                        "value": "USDC"
+                      }
+                    }
+                  ],
+                  "text": "0.996423 USDC"
+                }
+              }
+            }
+          },
+          {
+            "text": " 到 "
+          },
+          {
+            "short": {
+              "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp",
+              "is_self": false,
+              "label": {
+                "id": "accounts-others-token",
+                "parts": [
+                  {
+                    "short": {
+                      "address": "BNgsxo3eHqQLNTaKy4juhAUJ8DyewcJNEcYdMuSmTT1Z",
+                      "is_self": false,
+                      "label": null,
+                      "label_trust": "fact",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "BNgs…TT1Z"
+                  },
+                  {
+                    "text": " 的 "
+                  },
+                  {
+                    "text": "USDC",
+                    "value": {
+                      "type": "text",
+                      "value": "USDC"
+                    }
+                  },
+                  {
+                    "text": " 账户"
+                  }
+                ],
+                "text": "BNgs…TT1Z 的 USDC 账户"
+              },
+              "label_trust": "verified",
+              "stand_in": null,
+              "words": {
+                "id": "address-labelled",
+                "parts": [
+                  {
+                    "text": "BNgs…TT1Z 的 USDC 账户",
+                    "value": {
+                      "type": "words",
+                      "value": {
+                        "id": "accounts-others-token",
+                        "parts": [
+                          {
+                            "short": {
+                              "address": "BNgsxo3eHqQLNTaKy4juhAUJ8DyewcJNEcYdMuSmTT1Z",
+                              "is_self": false,
+                              "label": null,
+                              "label_trust": "fact",
+                              "stand_in": null,
+                              "words": null
+                            },
+                            "text": "BNgs…TT1Z"
+                          },
+                          {
+                            "text": " 的 "
+                          },
+                          {
+                            "text": "USDC",
+                            "value": {
+                              "type": "text",
+                              "value": "USDC"
+                            }
+                          },
+                          {
+                            "text": " 账户"
+                          }
+                        ],
+                        "text": "BNgs…TT1Z 的 USDC 账户"
+                      }
+                    }
+                  },
+                  {
+                    "text": "（"
+                  },
+                  {
+                    "short": {
+                      "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp",
+                      "is_self": false,
+                      "label": null,
+                      "label_trust": "verified",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "DV3B…L7Qp"
+                  },
+                  {
+                    "text": "）"
+                  }
+                ],
+                "text": "BNgs…TT1Z 的 USDC 账户（DV3B…L7Qp）"
+              }
+            },
+            "text": "DV3B…L7Qp"
+          }
+        ],
+        "text": "从 Ffz5…piwg 转账 0.996423 USDC 到 DV3B…L7Qp"
+      },
+      "text": "从 Ffz5…piwg 转账 0.996423 USDC 到 DV3B…L7Qp\n警告：批准前请查看检查结果\n\n检查结果：\n  [高危] 此签名没有时间限制：任何持有已签名交易的人都可以在之后的任何时间提交它，直到随机数账户被推进\n  [信息] 手续费由 8Kvy…p1fa 支付，而不是您\n\n== 代币转账 | Token program\n  数量：0.996423 USDC\n  发送方：Ffz5kwUjkUNw7hV4r6iCJnUoXXsAPFHkCMCmKKDypiwg\n  接收方：BNgs…TT1Z 的 USDC 账户（DV3B…L7Qp）\n  授权签名者：8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa\n  代币铸造地址：USDC 代币铸造地址（EPjF…Dt1v）\n\n== 其他 [已折叠]\n  推进持久随机数：随机数账户：AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw\n  推进持久随机数：权限：EbsUZEFAU23Z2SgAymFtU2hADLiyNLzaPLKiJfvpKnE7\n  如不存在则创建代币账户：代币账户：BNgs…TT1Z 的 USDC 账户（DV3B…L7Qp）\n  如不存在则创建代币账户：所有者：BNgsxo3eHqQLNTaKy4juhAUJ8DyewcJNEcYdMuSmTT1Z\n  如不存在则创建代币账户：代币铸造地址：USDC 代币铸造地址（EPjF…Dt1v）\n  如不存在则创建代币账户：租金付款方：8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa\n  如不存在则创建代币账户：代币程序：Token program（Toke…Q5DA）\n  计算单元上限：20728\n  计算单元价格：每计算单元 107,000 微 lamports\n\n== 签名者\n  手续费付款方：8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa\n  签名者：EbsUZEFAU23Z2SgAymFtU2hADLiyNLzaPLKiJfvpKnE7\n\n== 手续费\n  总计：0.000012218 SOL\n  基础费：0.00001 SOL\n  优先费：0.000002218 SOL\n  优先费计算依据：每计算单元 107,000 微 lamports × 请求的 20,728 个计算单元\n  租金押金：最多 0.00148844 SOL，前提是本交易在缺失时才创建的账户尚不存在；退还给关闭该账户的一方\n\n== 有效期\n  到期时间：无时间限制（随机数账户被推进时失效）\n  随机数账户：AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw\n\n影响：\n  - 从 Ffz5kwUjkUNw7hV4r6iCJnUoXXsAPFHkCMCmKKDypiwg 转账 0.996423 USDC 到 BNgs…TT1Z 的 USDC 账户（DV3B…L7Qp）\n  - 创建 BNgs…TT1Z 的 USDC 账户（DV3B…L7Qp），由 Token program（Toke…Q5DA）管理，存入 0.00148844 SOL，除非该账户已存在\n  - 8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa 支付手续费 0.000012218 SOL\n  - 在随机数账户 AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw 被推进之前一直有效，无时间限制（持久随机数）\n\n原始数据：solana legacy（511 字节）\n  摘要：05d51e61e33bad79d124089e71be7988c37cccf1f9268ee6e338e439f5ec582f\n",
+      "verdict": "warn"
+    }
+  }
+}
