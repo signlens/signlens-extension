@@ -125,6 +125,26 @@ link the page holds by `data-l10n-name`; it is laid out with DOM calls,
 never parsed as HTML. A number argument is written as the locale writes
 numbers, and a choice by a number takes its plural category.
 
+A translation is reviewed as the engine's are (its `docs/translating.md`),
+from a spreadsheet, in two passes: what the signing window shows first,
+then the rest.
+
+```sh
+node scripts/review.ts sheet zh-Hans --pass critical [--extra back.tsv]   # window.ftl, verdict.ftl, worker.ftl
+node scripts/review.ts sheet zh-Hans --pass rest
+node scripts/review.ts apply zh-Hans zh-Hans-critical.csv                  # the reviewer's corrections, into locales/zh-Hans/
+node scripts/review.ts record zh-Hans --by "a native speaker" --on 2026-11-01
+```
+
+A sheet has a row per distinct English and translation, with the
+identifiers that share them, the English's comment, and, from `--extra`
+(a TSV of id, back-translation, example), a back-translation made without
+the English and where the message shows. The reviewer marks each row in
+`verdict` and writes a corrected translation, as Fluent, in `correction`.
+`record` writes `locales/<locale>.review.json`: who reviewed it, by role,
+never by name, when, and a digest of each translated message's English as
+it was reviewed.
+
 ## Layout
 
 `src/` is split by where the code runs, since each place has its own
