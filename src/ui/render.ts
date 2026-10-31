@@ -4,6 +4,7 @@
 // explained says so, why, and what was read; a message is shown as it is;
 // and a site asking, or a page naming an address, says what it asked.
 
+import { fullWidth } from '../shared/fluent.ts';
 import type { ExplainedRow, Row } from '../shared/model.ts';
 import { short } from '../shared/text.ts';
 import type { Address, Amount, Field, Message, Section, Severity, Trust, Value, WordedEffect, WordedIn } from '../shared/types.ts';
@@ -93,9 +94,11 @@ function mark<T extends HTMLElement>(node: T, trust: Trust, help?: string, host?
     if (trust === 'verified') {
         node.append(badge(help ?? t('row-help-verified'), host));
     } else if (trust === 'claimed') {
-        const warning = term(t('row-claimed'), help ?? t('row-help-claimed'), host);
+        const words = t('row-claimed');
+        const warning = term(words, help ?? t('row-help-claimed'), host);
         warning.classList.add('unverified');
-        node.append(' ', warning);
+        // A space before it, as English sets a bracket; none before a full-width one, which carries its own.
+        node.append(fullWidth(words.charAt(0)) ? '' : ' ', warning);
     }
     return node;
 }
