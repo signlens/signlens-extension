@@ -61,7 +61,7 @@ npm test                # in Node: every module but the pages, the worker's agai
 npm run build           # dist/chrome: the files in static/, and tsc's script for each source, one file each
 npm run test:e2e        # the extension in Chromium, against the API's recorded answers
 npm run test:e2e:record # the same against a running SignLens API, recording its answers anew
-npm run screenshots     # the README's images, of the real window and popup on recorded explanations
+npm run screenshots     # the README's images, of the real window and popup on recorded explanations, and their Chinese copies for the store (a Chinese font needed)
 npm run icons           # the icons and the wallet icon, from docs/design/icon.svg
 npm run messages        # src/shared/catalog.ts: the interface's words, compiled from locales/*/*.ftl
 npm run package         # the Chrome and Firefox packages under dist/, with their SHA-256s

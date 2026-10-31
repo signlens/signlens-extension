@@ -1,12 +1,15 @@
 // The README's screenshots, of the real window and popup on explanations
-// the API gave for mainnet transactions, in the light and the dark theme:
-// `npm run screenshots` writes them to docs/images/. Not part of the suite: playwright.screenshots.config.ts
+// the API gave for mainnet transactions, in the light and the dark theme,
+// and the same in Simplified Chinese for the store's Chinese listing:
+// `npm run screenshots` writes them to docs/images/ (the Chinese ones need
+// a Chinese font where they are made). Not part of the suite: playwright.screenshots.config.ts
 // runs the *.shot.ts files alone, so a test run never writes an image.
 
 import { fileURLToPath } from 'node:url';
 import type { ExplainedRow, HistoryEntry } from '../src/shared/model.ts';
 import type { Explanation } from '../src/shared/types.ts';
 import { verdictOf } from '../src/shared/verdict.ts';
+import { t, useLocale } from '../src/shared/words.ts';
 import { fixture, recorded } from '../test/server.ts';
 import { test } from './support/extension.ts';
 import { request, windowFor } from './support/windows.ts';
@@ -36,44 +39,64 @@ function row(transaction: string, explanation: string, simulation: string | null
     };
 }
 
-const TRANSFER = () =>
-    row('legacy_durable_nonce_token_transfer', 'legacy_durable_nonce_token_transfer.simulated_to_contact', '2 balance changes, unverified');
-const SWAP = () => row('swap__sol_from_wallet', 'swap__sol_from_wallet.tables_read', '4 balance changes, unverified');
-const UNRESOLVED = () => row('swap__both_mints_named', 'swap__both_mints_named', null);
-// The README's first image: what a balance preview shows as USDC leaving, explained as what it is for.
-const DEPOSIT = () => row('deposit__usdc_into_kamino_lend', 'deposit__usdc_into_kamino_lend', null);
+/** The pictures in each language: English, the README's; Simplified Chinese, the store's Chinese listing's. */
+const LANGUAGES = [
+    { tag: 'en', browser: 'en-US', suffix: '' },
+    { tag: 'zh-Hans', browser: 'zh-CN', suffix: '-zh-Hans' },
+] as const;
 
-// Each in both themes: the README shows a reader the one their GitHub uses.
-for (const scheme of ['light', 'dark'] as const) {
-    test(`the window, on a USDC deposit into Kamino Lend (${scheme})`, async ({ context, worker }) => {
-        const gate = await windowFor(context, worker, request({ origin: SITE, upstream: 'Phantom', rows: [DEPOSIT()] }));
-        await gate.setViewportSize({ width: 520, height: 680 });
-        await gate.emulateMedia({ colorScheme: scheme });
-        await gate.screenshot({ path: `${IMAGES}deposit-${scheme}.png` });
-    });
+for (const language of LANGUAGES) {
+    test.describe(`in ${language.tag}`, () => {
+        test.use({ browserLocale: language.browser });
+        // An explanation the API gave in this language, and the worker's words for a simulation as this reader reads them.
+        const named = (name: string): string => (language.tag === 'en' ? name : `${name}.${language.tag}`);
+        const changes = (count: number): string => {
+            if (language.tag === 'en') return `${count} balance changes, unverified`;
+            useLocale(language.tag);
+            const words = t('worker-simulation-changes', { count });
+            useLocale('en');
+            return words;
+        };
+        const TRANSFER = () =>
+            row('legacy_durable_nonce_token_transfer', named('legacy_durable_nonce_token_transfer.simulated_to_contact'), changes(2));
+        const SWAP = () => row('swap__sol_from_wallet', named('swap__sol_from_wallet.tables_read'), changes(4));
+        const UNRESOLVED = () => row('swap__both_mints_named', named('swap__both_mints_named'), null);
+        // The README's first image: what a balance preview shows as USDC leaving, explained as what it is for.
+        const DEPOSIT = () => row('deposit__usdc_into_kamino_lend', named('deposit__usdc_into_kamino_lend'), null);
 
-    test(`the window, on a transfer that is valid until its nonce is used (${scheme})`, async ({ context, worker }) => {
-        const gate = await windowFor(context, worker, request({ origin: SITE, upstream: 'Phantom', rows: [TRANSFER()] }));
-        // The size the gate opens it at (src/worker/gate.ts).
-        await gate.setViewportSize({ width: 520, height: 680 });
-        await gate.emulateMedia({ colorScheme: scheme });
-        await gate.screenshot({ path: `${IMAGES}window-${scheme}.png` });
-    });
+        // Each in both themes: the README shows a reader the one their GitHub uses.
+        for (const scheme of ['light', 'dark'] as const) {
+            test(`the window, on a USDC deposit into Kamino Lend (${scheme})`, async ({ context, worker }) => {
+                const gate = await windowFor(context, worker, request({ origin: SITE, upstream: 'Phantom', rows: [DEPOSIT()] }));
+                await gate.setViewportSize({ width: 520, height: 680 });
+                await gate.emulateMedia({ colorScheme: scheme });
+                await gate.screenshot({ path: `${IMAGES}deposit${language.suffix}-${scheme}.png` });
+            });
 
-    test(`the popup, with the requests of the last minutes (${scheme})`, async ({ configure, popup, worker }) => {
-        // The API the harness replays, so that the status line says what a working one says.
-        await configure({});
-        const at = Date.now();
-        const history: HistoryEntry[] = [
-            request({ time: at, origin: SITE, upstream: 'Phantom', rows: [TRANSFER()], decision: 'continue' }),
-            request({ time: at - 60_000, origin: SITE, upstream: 'Phantom', rows: [SWAP()], decision: 'continue' }),
-            request({ time: at - 180_000, origin: SITE, upstream: 'Phantom', rows: [UNRESOLVED()], decision: 'reject' }),
-        ];
-        await worker.evaluate((kept) => chrome.storage.session.set({ history: kept, unseen: 0 }), history);
-        await popup.setViewportSize({ width: 480, height: 640 });
-        await popup.emulateMedia({ colorScheme: scheme });
-        await popup.reload();
-        await popup.getByRole('tab', { name: /^Requests/ }).click();
-        await popup.locator('body').screenshot({ path: `${IMAGES}popup-${scheme}.png` });
+            test(`the window, on a transfer that is valid until its nonce is used (${scheme})`, async ({ context, worker }) => {
+                const gate = await windowFor(context, worker, request({ origin: SITE, upstream: 'Phantom', rows: [TRANSFER()] }));
+                // The size the gate opens it at (src/worker/gate.ts).
+                await gate.setViewportSize({ width: 520, height: 680 });
+                await gate.emulateMedia({ colorScheme: scheme });
+                await gate.screenshot({ path: `${IMAGES}window${language.suffix}-${scheme}.png` });
+            });
+
+            test(`the popup, with the requests of the last minutes (${scheme})`, async ({ configure, popup, worker }) => {
+                // The API the harness replays, so that the status line says what a working one says.
+                await configure({});
+                const at = Date.now();
+                const history: HistoryEntry[] = [
+                    request({ time: at, origin: SITE, upstream: 'Phantom', rows: [TRANSFER()], decision: 'continue' }),
+                    request({ time: at - 60_000, origin: SITE, upstream: 'Phantom', rows: [SWAP()], decision: 'continue' }),
+                    request({ time: at - 180_000, origin: SITE, upstream: 'Phantom', rows: [UNRESOLVED()], decision: 'reject' }),
+                ];
+                await worker.evaluate((kept) => chrome.storage.session.set({ history: kept, unseen: 0 }), history);
+                await popup.setViewportSize({ width: 480, height: 640 });
+                await popup.emulateMedia({ colorScheme: scheme });
+                await popup.reload();
+                await popup.locator('#tab-requests').click();
+                await popup.locator('body').screenshot({ path: `${IMAGES}popup${language.suffix}-${scheme}.png` });
+            });
+        }
     });
 }

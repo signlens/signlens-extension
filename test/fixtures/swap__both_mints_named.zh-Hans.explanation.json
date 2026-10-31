@@ -1,0 +1,637 @@
+{
+  "actions": [
+    {
+      "instruction": 2,
+      "summary": {
+        "id": "dflow-unresolved-summary",
+        "parts": [
+          {
+            "text": "路由无法解析的 DFlow 兑换"
+          }
+        ],
+        "text": "路由无法解析的 DFlow 兑换"
+      }
+    }
+  ],
+  "chain": "solana",
+  "effects": [
+    {
+      "message": {
+        "id": "effect-fee",
+        "parts": [
+          {
+            "text": "5yLgQQwD42seAkce1heScsh2spYgNA3q43SPhZBn8Ldc",
+            "value": {
+              "type": "address",
+              "value": {
+                "address": "5yLgQQwD42seAkce1heScsh2spYgNA3q43SPhZBn8Ldc",
+                "is_self": false,
+                "label": null,
+                "label_trust": "fact",
+                "stand_in": null,
+                "words": null
+              }
+            }
+          },
+          {
+            "text": " 支付手续费 "
+          },
+          {
+            "text": "0.000005535 SOL",
+            "value": {
+              "type": "amount",
+              "value": {
+                "asset": {
+                  "decimals": 9,
+                  "description": null,
+                  "id": "native",
+                  "symbol": "SOL",
+                  "trust": "fact"
+                },
+                "bound": "exact",
+                "note": null,
+                "note_words": null,
+                "units": "5535",
+                "words": {
+                  "id": "amount",
+                  "parts": [
+                    {
+                      "text": "0.000005535 "
+                    },
+                    {
+                      "text": "SOL",
+                      "value": {
+                        "type": "text",
+                        "value": "SOL"
+                      }
+                    }
+                  ],
+                  "text": "0.000005535 SOL"
+                }
+              }
+            }
+          }
+        ],
+        "text": "5yLgQQwD42seAkce1heScsh2spYgNA3q43SPhZBn8Ldc 支付手续费 0.000005535 SOL"
+      },
+      "type": "fee",
+      "value": {
+        "amount": {
+          "asset": {
+            "decimals": 9,
+            "description": null,
+            "id": "native",
+            "symbol": "SOL",
+            "trust": "fact"
+          },
+          "bound": "exact",
+          "note": null,
+          "note_words": null,
+          "units": "5535",
+          "words": {
+            "id": "amount",
+            "parts": [
+              {
+                "text": "0.000005535 "
+              },
+              {
+                "text": "SOL",
+                "value": {
+                  "type": "text",
+                  "value": "SOL"
+                }
+              }
+            ],
+            "text": "0.000005535 SOL"
+          }
+        },
+        "payer": {
+          "address": "5yLgQQwD42seAkce1heScsh2spYgNA3q43SPhZBn8Ldc",
+          "is_self": false,
+          "label": null,
+          "label_trust": "fact",
+          "stand_in": null,
+          "words": null
+        }
+      }
+    },
+    {
+      "message": {
+        "id": "effect-recent-blockhash",
+        "parts": [
+          {
+            "text": "有效期约一分钟（最近区块哈希）"
+          }
+        ],
+        "text": "有效期约一分钟（最近区块哈希）"
+      },
+      "type": "lifetime",
+      "value": {
+        "type": "recent_blockhash"
+      }
+    }
+  ],
+  "findings": [
+    {
+      "code": "DFLOW_ROUTE_UNRESOLVED",
+      "instruction": 2,
+      "message": {
+        "id": "dflow-prefix-unresolved",
+        "parts": [
+          {
+            "text": "决定路由布局的账户是从 SignLens 未读取的查找表加载的"
+          }
+        ],
+        "text": "决定路由布局的账户是从 SignLens 未读取的查找表加载的"
+      },
+      "severity": "critical"
+    }
+  ],
+  "locale": {
+    "asked": [
+      "zh-CN"
+    ],
+    "direction": "ltr",
+    "fallbacks": 8,
+    "review": {
+      "by": [
+        "a native speaker"
+      ],
+      "kind": "reviewed",
+      "on": "2026-10-31"
+    },
+    "used": "zh-Hans"
+  },
+  "raw": {
+    "digest": "9bdd08c0fa2a6a063bcab6cc1581b881a5fbc0a5eefa3c4ee59dc380cdb66876",
+    "format": "solana v0"
+  },
+  "schema": "signlens-explanation/2",
+  "sections": [
+    {
+      "collapsed": false,
+      "fields": [
+        {
+          "help": null,
+          "label": {
+            "id": "label-accounts",
+            "parts": [
+              {
+                "text": "账户列表"
+              }
+            ],
+            "text": "账户列表"
+          },
+          "trust": "fact",
+          "value": {
+            "type": "integer",
+            "value": "41"
+          }
+        },
+        {
+          "help": null,
+          "label": {
+            "id": "label-data",
+            "parts": [
+              {
+                "text": "数据"
+              }
+            ],
+            "text": "数据"
+          },
+          "trust": "fact",
+          "value": {
+            "type": "bytes",
+            "value": "f8c69e91e17587c803000000259225095578ca432074e549a4fc7c5341fb546063977884832a84c218597c29d51d187223569b43192c511256021bcd8dcc2766cc6c4a56cb3f5149a78bc9690481bbe81a0000ae411e0300001964923300000000000181191ec41c000000000001012b314000000000002c010000"
+          }
+        }
+      ],
+      "kind": {
+        "type": "instruction",
+        "value": {
+          "index": 2
+        }
+      },
+      "subtitle": {
+        "id": "decode-program-verified",
+        "parts": [
+          {
+            "text": "DFlow Aggregator",
+            "value": {
+              "type": "text",
+              "value": "DFlow Aggregator"
+            }
+          }
+        ],
+        "text": "DFlow Aggregator"
+      },
+      "title": {
+        "id": "dflow-unresolved-title",
+        "parts": [
+          {
+            "text": "DFlow 兑换"
+          }
+        ],
+        "text": "DFlow 兑换"
+      }
+    },
+    {
+      "collapsed": true,
+      "fields": [
+        {
+          "help": {
+            "id": "label-compute-unit-limit.help",
+            "parts": [
+              {
+                "text": "How much work the transaction may do. It affects the fee, not what the transaction does."
+              }
+            ],
+            "text": "How much work the transaction may do. It affects the fee, not what the transaction does."
+          },
+          "label": {
+            "id": "label-compute-unit-limit",
+            "parts": [
+              {
+                "text": "计算单元上限"
+              }
+            ],
+            "text": "计算单元上限"
+          },
+          "trust": "fact",
+          "value": {
+            "type": "integer",
+            "value": "197941"
+          }
+        },
+        {
+          "help": {
+            "id": "label-compute-unit-price.help",
+            "parts": [
+              {
+                "text": "The tip per unit of work, in millionths of a lamport. With the limit, it sets the priority fee."
+              }
+            ],
+            "text": "The tip per unit of work, in millionths of a lamport. With the limit, it sets the priority fee."
+          },
+          "label": {
+            "id": "label-compute-unit-price",
+            "parts": [
+              {
+                "text": "计算单元价格"
+              }
+            ],
+            "text": "计算单元价格"
+          },
+          "trust": "fact",
+          "value": {
+            "type": "words",
+            "value": {
+              "id": "compute-budget-price",
+              "parts": [
+                {
+                  "text": "每计算单元 2,701 微 lamports"
+                }
+              ],
+              "text": "每计算单元 2,701 微 lamports"
+            }
+          }
+        }
+      ],
+      "kind": {
+        "type": "housekeeping"
+      },
+      "subtitle": null,
+      "title": {
+        "id": "explain-also",
+        "parts": [
+          {
+            "text": "其他"
+          }
+        ],
+        "text": "其他"
+      }
+    },
+    {
+      "collapsed": false,
+      "fields": [
+        {
+          "help": {
+            "id": "label-fee-payer.help",
+            "parts": [
+              {
+                "text": "The account that pays the fee: the first signer."
+              }
+            ],
+            "text": "The account that pays the fee: the first signer."
+          },
+          "label": {
+            "id": "label-fee-payer",
+            "parts": [
+              {
+                "text": "手续费付款方"
+              }
+            ],
+            "text": "手续费付款方"
+          },
+          "trust": "fact",
+          "value": {
+            "type": "address",
+            "value": {
+              "address": "5yLgQQwD42seAkce1heScsh2spYgNA3q43SPhZBn8Ldc",
+              "is_self": false,
+              "label": null,
+              "label_trust": "fact",
+              "stand_in": null,
+              "words": null
+            }
+          }
+        }
+      ],
+      "kind": {
+        "type": "signers"
+      },
+      "subtitle": null,
+      "title": {
+        "id": "explain-signers",
+        "parts": [
+          {
+            "text": "签名者"
+          }
+        ],
+        "text": "签名者"
+      }
+    },
+    {
+      "collapsed": false,
+      "fields": [
+        {
+          "help": {
+            "id": "label-total.help",
+            "parts": [
+              {
+                "text": "What the network charges for this transaction. The fee payer pays it whether the transaction succeeds or fails."
+              }
+            ],
+            "text": "What the network charges for this transaction. The fee payer pays it whether the transaction succeeds or fails."
+          },
+          "label": {
+            "id": "label-total",
+            "parts": [
+              {
+                "text": "总计"
+              }
+            ],
+            "text": "总计"
+          },
+          "trust": "fact",
+          "value": {
+            "type": "amount",
+            "value": {
+              "asset": {
+                "decimals": 9,
+                "description": null,
+                "id": "native",
+                "symbol": "SOL",
+                "trust": "fact"
+              },
+              "bound": "exact",
+              "note": null,
+              "note_words": null,
+              "units": "5535",
+              "words": {
+                "id": "amount",
+                "parts": [
+                  {
+                    "text": "0.000005535 "
+                  },
+                  {
+                    "text": "SOL",
+                    "value": {
+                      "type": "text",
+                      "value": "SOL"
+                    }
+                  }
+                ],
+                "text": "0.000005535 SOL"
+              }
+            }
+          }
+        },
+        {
+          "help": {
+            "id": "label-base.help",
+            "parts": [
+              {
+                "text": "The flat part of the fee: the network charges it per signature."
+              }
+            ],
+            "text": "The flat part of the fee: the network charges it per signature."
+          },
+          "label": {
+            "id": "label-base",
+            "parts": [
+              {
+                "text": "基础费"
+              }
+            ],
+            "text": "基础费"
+          },
+          "trust": "fact",
+          "value": {
+            "type": "amount",
+            "value": {
+              "asset": {
+                "decimals": 9,
+                "description": null,
+                "id": "native",
+                "symbol": "SOL",
+                "trust": "fact"
+              },
+              "bound": "exact",
+              "note": null,
+              "note_words": null,
+              "units": "5000",
+              "words": {
+                "id": "amount",
+                "parts": [
+                  {
+                    "text": "0.000005 "
+                  },
+                  {
+                    "text": "SOL",
+                    "value": {
+                      "type": "text",
+                      "value": "SOL"
+                    }
+                  }
+                ],
+                "text": "0.000005 SOL"
+              }
+            }
+          }
+        },
+        {
+          "help": {
+            "id": "label-priority.help",
+            "parts": [
+              {
+                "text": "A tip the site added so validators take the transaction sooner. It is optional, and it is yours to pay."
+              }
+            ],
+            "text": "A tip the site added so validators take the transaction sooner. It is optional, and it is yours to pay."
+          },
+          "label": {
+            "id": "label-priority",
+            "parts": [
+              {
+                "text": "优先费"
+              }
+            ],
+            "text": "优先费"
+          },
+          "trust": "fact",
+          "value": {
+            "type": "amount",
+            "value": {
+              "asset": {
+                "decimals": 9,
+                "description": null,
+                "id": "native",
+                "symbol": "SOL",
+                "trust": "fact"
+              },
+              "bound": "exact",
+              "note": null,
+              "note_words": null,
+              "units": "535",
+              "words": {
+                "id": "amount",
+                "parts": [
+                  {
+                    "text": "0.000000535 "
+                  },
+                  {
+                    "text": "SOL",
+                    "value": {
+                      "type": "text",
+                      "value": "SOL"
+                    }
+                  }
+                ],
+                "text": "0.000000535 SOL"
+              }
+            }
+          }
+        },
+        {
+          "help": {
+            "id": "label-priority-basis.help",
+            "parts": [
+              {
+                "text": "How the tip was computed: the price per unit of work, times the work the transaction asked to be allowed."
+              }
+            ],
+            "text": "How the tip was computed: the price per unit of work, times the work the transaction asked to be allowed."
+          },
+          "label": {
+            "id": "label-priority-basis",
+            "parts": [
+              {
+                "text": "优先费计算依据"
+              }
+            ],
+            "text": "优先费计算依据"
+          },
+          "trust": "fact",
+          "value": {
+            "type": "words",
+            "value": {
+              "id": "explain-priority-basis",
+              "parts": [
+                {
+                  "text": "每计算单元 2,701 微 lamports × 请求的 197,941 个计算单元"
+                }
+              ],
+              "text": "每计算单元 2,701 微 lamports × 请求的 197,941 个计算单元"
+            }
+          }
+        }
+      ],
+      "kind": {
+        "type": "fees"
+      },
+      "subtitle": null,
+      "title": {
+        "id": "explain-fee",
+        "parts": [
+          {
+            "text": "手续费"
+          }
+        ],
+        "text": "手续费"
+      }
+    },
+    {
+      "collapsed": false,
+      "fields": [
+        {
+          "help": {
+            "id": "label-expires.help",
+            "parts": [
+              {
+                "text": "How long the signature can be used. About a minute is normal; a durable nonce keeps it usable until the nonce is advanced."
+              }
+            ],
+            "text": "How long the signature can be used. About a minute is normal; a durable nonce keeps it usable until the nonce is advanced."
+          },
+          "label": {
+            "id": "label-expires",
+            "parts": [
+              {
+                "text": "到期时间"
+              }
+            ],
+            "text": "到期时间"
+          },
+          "trust": "fact",
+          "value": {
+            "type": "words",
+            "value": {
+              "id": "explain-expires-soon",
+              "parts": [
+                {
+                  "text": "约一分钟后（最近区块哈希）"
+                }
+              ],
+              "text": "约一分钟后（最近区块哈希）"
+            }
+          }
+        }
+      ],
+      "kind": {
+        "type": "lifetime"
+      },
+      "subtitle": null,
+      "title": {
+        "id": "explain-validity",
+        "parts": [
+          {
+            "text": "有效期"
+          }
+        ],
+        "text": "有效期"
+      }
+    }
+  ],
+  "summary": {
+    "id": "dflow-unresolved-summary",
+    "parts": [
+      {
+        "text": "路由无法解析的 DFlow 兑换"
+      }
+    ],
+    "text": "路由无法解析的 DFlow 兑换"
+  },
+  "text": "路由无法解析的 DFlow 兑换\n默认拦截（1 条严重检查结果）\n\n检查结果：\n  [严重] 决定路由布局的账户是从 SignLens 未读取的查找表加载的（第 3 条指令）\n\n== DFlow 兑换 | DFlow Aggregator\n  账户列表：41\n  数据：0xf8c69e91e17587c803000000259225095578ca432074e549a4fc7c5341fb546063977884832a84c218597c29d51d187223569b43192c511256021bcd8dcc2766cc6c4a56cb3f5149a78bc9690481bbe81a0000ae411e0300001964923300000000000181191ec41c000000000001012b314000000000002c010000\n\n== 其他 [已折叠]\n  计算单元上限：197941\n  计算单元价格：每计算单元 2,701 微 lamports\n\n== 签名者\n  手续费付款方：5yLgQQwD42seAkce1heScsh2spYgNA3q43SPhZBn8Ldc\n\n== 手续费\n  总计：0.000005535 SOL\n  基础费：0.000005 SOL\n  优先费：0.000000535 SOL\n  优先费计算依据：每计算单元 2,701 微 lamports × 请求的 197,941 个计算单元\n\n== 有效期\n  到期时间：约一分钟后（最近区块哈希）\n\n影响：\n  - 5yLgQQwD42seAkce1heScsh2spYgNA3q43SPhZBn8Ldc 支付手续费 0.000005535 SOL\n  - 有效期约一分钟（最近区块哈希）\n\n原始数据：solana v0（574 字节）\n  摘要：9bdd08c0fa2a6a063bcab6cc1581b881a5fbc0a5eefa3c4ee59dc380cdb66876\n",
+  "verdict": "block"
+}

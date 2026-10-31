@@ -1,0 +1,4423 @@
+{
+  "actions": [
+    {
+      "instruction": 3,
+      "summary": {
+        "id": "system-send-summary",
+        "parts": [
+          {
+            "text": "发送 "
+          },
+          {
+            "text": "0.0005 SOL",
+            "value": {
+              "type": "amount",
+              "value": {
+                "asset": {
+                  "decimals": 9,
+                  "description": null,
+                  "id": "native",
+                  "symbol": "SOL",
+                  "trust": "fact"
+                },
+                "bound": "exact",
+                "note": null,
+                "note_words": null,
+                "units": "500000",
+                "words": {
+                  "id": "amount",
+                  "parts": [
+                    {
+                      "text": "0.0005 "
+                    },
+                    {
+                      "text": "SOL",
+                      "value": {
+                        "type": "text",
+                        "value": "SOL"
+                      }
+                    }
+                  ],
+                  "text": "0.0005 SOL"
+                }
+              }
+            }
+          },
+          {
+            "text": " 到 "
+          },
+          {
+            "short": {
+              "address": "879ArayuxbYjBhpUe4QCx8nqaAKjiwCG1hFiJo6zMGsA",
+              "is_self": false,
+              "label": null,
+              "label_trust": "fact",
+              "stand_in": null,
+              "words": null
+            },
+            "text": "879A…MGsA"
+          }
+        ],
+        "text": "发送 0.0005 SOL 到 879A…MGsA"
+      }
+    },
+    {
+      "instruction": 4,
+      "summary": {
+        "id": "DF1ow4tspfHX9JwWJsAb9epbkA8hmpSEAtxXy1V27QBH/wrap_sol-summary-then",
+        "parts": [
+          {
+            "text": "通过 DFlow 将 "
+          },
+          {
+            "text": "0.0495 SOL",
+            "value": {
+              "type": "amount",
+              "value": {
+                "asset": {
+                  "decimals": 9,
+                  "description": null,
+                  "id": "native",
+                  "symbol": "SOL",
+                  "trust": "fact"
+                },
+                "bound": "exact",
+                "note": null,
+                "note_words": null,
+                "units": "49500000",
+                "words": {
+                  "id": "amount",
+                  "parts": [
+                    {
+                      "text": "0.0495 "
+                    },
+                    {
+                      "text": "SOL",
+                      "value": {
+                        "type": "text",
+                        "value": "SOL"
+                      }
+                    }
+                  ],
+                  "text": "0.0495 SOL"
+                }
+              }
+            }
+          },
+          {
+            "text": " 包装到"
+          },
+          {
+            "text": "您的 SOL 账户（4hJn…VH6R）",
+            "value": {
+              "type": "address",
+              "value": {
+                "address": "4hJnan1NC4BuwPSn41WAQ7yG3zMK5JfXzDiq8jw2VH6R",
+                "is_self": true,
+                "label": {
+                  "id": "accounts-your-token",
+                  "parts": [
+                    {
+                      "text": "您的 "
+                    },
+                    {
+                      "text": "SOL",
+                      "value": {
+                        "type": "text",
+                        "value": "SOL"
+                      }
+                    },
+                    {
+                      "text": " 账户"
+                    }
+                  ],
+                  "text": "您的 SOL 账户"
+                },
+                "label_trust": "verified",
+                "stand_in": null,
+                "words": {
+                  "id": "address-labelled",
+                  "parts": [
+                    {
+                      "text": "您的 SOL 账户",
+                      "value": {
+                        "type": "words",
+                        "value": {
+                          "id": "accounts-your-token",
+                          "parts": [
+                            {
+                              "text": "您的 "
+                            },
+                            {
+                              "text": "SOL",
+                              "value": {
+                                "type": "text",
+                                "value": "SOL"
+                              }
+                            },
+                            {
+                              "text": " 账户"
+                            }
+                          ],
+                          "text": "您的 SOL 账户"
+                        }
+                      }
+                    },
+                    {
+                      "text": "（"
+                    },
+                    {
+                      "short": {
+                        "address": "4hJnan1NC4BuwPSn41WAQ7yG3zMK5JfXzDiq8jw2VH6R",
+                        "is_self": true,
+                        "label": null,
+                        "label_trust": "verified",
+                        "stand_in": null,
+                        "words": null
+                      },
+                      "text": "4hJn…VH6R"
+                    },
+                    {
+                      "text": "）"
+                    }
+                  ],
+                  "text": "您的 SOL 账户（4hJn…VH6R）"
+                }
+              }
+            }
+          }
+        ],
+        "text": "通过 DFlow 将 0.0495 SOL 包装到您的 SOL 账户（4hJn…VH6R）"
+      }
+    },
+    {
+      "instruction": 5,
+      "summary": {
+        "id": "swap-summary",
+        "parts": [
+          {
+            "text": "通过 "
+          },
+          {
+            "text": "DFlow",
+            "value": {
+              "type": "text",
+              "value": "DFlow"
+            }
+          },
+          {
+            "text": " 将 "
+          },
+          {
+            "text": "≤ 0.0495 SOL",
+            "value": {
+              "type": "amount",
+              "value": {
+                "asset": {
+                  "decimals": 9,
+                  "description": null,
+                  "id": "native",
+                  "symbol": "SOL",
+                  "trust": "fact"
+                },
+                "bound": "at_most",
+                "note": null,
+                "note_words": null,
+                "units": "49500000",
+                "words": {
+                  "id": "amount",
+                  "parts": [
+                    {
+                      "text": "≤ 0.0495 "
+                    },
+                    {
+                      "text": "SOL",
+                      "value": {
+                        "type": "text",
+                        "value": "SOL"
+                      }
+                    }
+                  ],
+                  "text": "≤ 0.0495 SOL"
+                }
+              }
+            }
+          },
+          {
+            "text": " 兑换为 "
+          },
+          {
+            "text": "≥ 142,243,976,392 原始单位的未验证代币 HMYd…pump",
+            "value": {
+              "type": "amount",
+              "value": {
+                "asset": {
+                  "decimals": null,
+                  "description": null,
+                  "id": "HMYd9tosnUXuNHmq7pXmoePRVBLBBjA3JBfydq6upump",
+                  "symbol": null,
+                  "trust": "fact"
+                },
+                "bound": "at_least",
+                "note": null,
+                "note_words": null,
+                "units": "142243976392",
+                "words": {
+                  "id": "amount-unverified",
+                  "parts": [
+                    {
+                      "text": "≥ 142,243,976,392 原始单位的未验证代币 "
+                    },
+                    {
+                      "short": {
+                        "address": "HMYd9tosnUXuNHmq7pXmoePRVBLBBjA3JBfydq6upump",
+                        "is_self": false,
+                        "label": null,
+                        "label_trust": "fact",
+                        "stand_in": null,
+                        "words": null
+                      },
+                      "text": "HMYd…pump"
+                    }
+                  ],
+                  "text": "≥ 142,243,976,392 原始单位的未验证代币 HMYd…pump"
+                }
+              }
+            }
+          }
+        ],
+        "text": "通过 DFlow 将 ≤ 0.0495 SOL 兑换为 ≥ 142,243,976,392 原始单位的未验证代币 HMYd…pump"
+      }
+    }
+  ],
+  "chain": "solana",
+  "effects": [
+    {
+      "message": {
+        "id": "effect-send",
+        "parts": [
+          {
+            "text": "您从"
+          },
+          {
+            "text": "您的钱包（8Aet…tiTo）",
+            "value": {
+              "type": "address",
+              "value": {
+                "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+                "is_self": true,
+                "label": {
+                  "id": "accounts-your-wallet",
+                  "parts": [
+                    {
+                      "text": "您的钱包"
+                    }
+                  ],
+                  "text": "您的钱包"
+                },
+                "label_trust": "verified",
+                "stand_in": null,
+                "words": {
+                  "id": "address-labelled",
+                  "parts": [
+                    {
+                      "text": "您的钱包",
+                      "value": {
+                        "type": "words",
+                        "value": {
+                          "id": "accounts-your-wallet",
+                          "parts": [
+                            {
+                              "text": "您的钱包"
+                            }
+                          ],
+                          "text": "您的钱包"
+                        }
+                      }
+                    },
+                    {
+                      "text": "（"
+                    },
+                    {
+                      "short": {
+                        "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+                        "is_self": true,
+                        "label": null,
+                        "label_trust": "verified",
+                        "stand_in": null,
+                        "words": null
+                      },
+                      "text": "8Aet…tiTo"
+                    },
+                    {
+                      "text": "）"
+                    }
+                  ],
+                  "text": "您的钱包（8Aet…tiTo）"
+                }
+              }
+            }
+          },
+          {
+            "text": "发送 "
+          },
+          {
+            "text": "0.0005 SOL",
+            "value": {
+              "type": "amount",
+              "value": {
+                "asset": {
+                  "decimals": 9,
+                  "description": null,
+                  "id": "native",
+                  "symbol": "SOL",
+                  "trust": "fact"
+                },
+                "bound": "exact",
+                "note": null,
+                "note_words": null,
+                "units": "500000",
+                "words": {
+                  "id": "amount",
+                  "parts": [
+                    {
+                      "text": "0.0005 "
+                    },
+                    {
+                      "text": "SOL",
+                      "value": {
+                        "type": "text",
+                        "value": "SOL"
+                      }
+                    }
+                  ],
+                  "text": "0.0005 SOL"
+                }
+              }
+            }
+          },
+          {
+            "text": " 到 "
+          },
+          {
+            "text": "879ArayuxbYjBhpUe4QCx8nqaAKjiwCG1hFiJo6zMGsA",
+            "value": {
+              "type": "address",
+              "value": {
+                "address": "879ArayuxbYjBhpUe4QCx8nqaAKjiwCG1hFiJo6zMGsA",
+                "is_self": false,
+                "label": null,
+                "label_trust": "fact",
+                "stand_in": null,
+                "words": null
+              }
+            }
+          }
+        ],
+        "text": "您从您的钱包（8Aet…tiTo）发送 0.0005 SOL 到 879ArayuxbYjBhpUe4QCx8nqaAKjiwCG1hFiJo6zMGsA"
+      },
+      "type": "transfer",
+      "value": {
+        "amount": {
+          "asset": {
+            "decimals": 9,
+            "description": null,
+            "id": "native",
+            "symbol": "SOL",
+            "trust": "fact"
+          },
+          "bound": "exact",
+          "note": null,
+          "note_words": null,
+          "units": "500000",
+          "words": {
+            "id": "amount",
+            "parts": [
+              {
+                "text": "0.0005 "
+              },
+              {
+                "text": "SOL",
+                "value": {
+                  "type": "text",
+                  "value": "SOL"
+                }
+              }
+            ],
+            "text": "0.0005 SOL"
+          }
+        },
+        "from": {
+          "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+          "is_self": true,
+          "label": {
+            "id": "accounts-your-wallet",
+            "parts": [
+              {
+                "text": "您的钱包"
+              }
+            ],
+            "text": "您的钱包"
+          },
+          "label_trust": "verified",
+          "stand_in": null,
+          "words": {
+            "id": "address-labelled",
+            "parts": [
+              {
+                "text": "您的钱包",
+                "value": {
+                  "type": "words",
+                  "value": {
+                    "id": "accounts-your-wallet",
+                    "parts": [
+                      {
+                        "text": "您的钱包"
+                      }
+                    ],
+                    "text": "您的钱包"
+                  }
+                }
+              },
+              {
+                "text": "（"
+              },
+              {
+                "short": {
+                  "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+                  "is_self": true,
+                  "label": null,
+                  "label_trust": "verified",
+                  "stand_in": null,
+                  "words": null
+                },
+                "text": "8Aet…tiTo"
+              },
+              {
+                "text": "）"
+              }
+            ],
+            "text": "您的钱包（8Aet…tiTo）"
+          }
+        },
+        "to": {
+          "address": "879ArayuxbYjBhpUe4QCx8nqaAKjiwCG1hFiJo6zMGsA",
+          "is_self": false,
+          "label": null,
+          "label_trust": "fact",
+          "stand_in": null,
+          "words": null
+        }
+      }
+    },
+    {
+      "message": {
+        "id": "effect-transfer",
+        "parts": [
+          {
+            "text": "从"
+          },
+          {
+            "text": "您的钱包（8Aet…tiTo）",
+            "value": {
+              "type": "address",
+              "value": {
+                "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+                "is_self": true,
+                "label": {
+                  "id": "accounts-your-wallet",
+                  "parts": [
+                    {
+                      "text": "您的钱包"
+                    }
+                  ],
+                  "text": "您的钱包"
+                },
+                "label_trust": "verified",
+                "stand_in": null,
+                "words": {
+                  "id": "address-labelled",
+                  "parts": [
+                    {
+                      "text": "您的钱包",
+                      "value": {
+                        "type": "words",
+                        "value": {
+                          "id": "accounts-your-wallet",
+                          "parts": [
+                            {
+                              "text": "您的钱包"
+                            }
+                          ],
+                          "text": "您的钱包"
+                        }
+                      }
+                    },
+                    {
+                      "text": "（"
+                    },
+                    {
+                      "short": {
+                        "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+                        "is_self": true,
+                        "label": null,
+                        "label_trust": "verified",
+                        "stand_in": null,
+                        "words": null
+                      },
+                      "text": "8Aet…tiTo"
+                    },
+                    {
+                      "text": "）"
+                    }
+                  ],
+                  "text": "您的钱包（8Aet…tiTo）"
+                }
+              }
+            }
+          },
+          {
+            "text": "转账 "
+          },
+          {
+            "text": "0.0495 SOL",
+            "value": {
+              "type": "amount",
+              "value": {
+                "asset": {
+                  "decimals": 9,
+                  "description": null,
+                  "id": "native",
+                  "symbol": "SOL",
+                  "trust": "fact"
+                },
+                "bound": "exact",
+                "note": null,
+                "note_words": null,
+                "units": "49500000",
+                "words": {
+                  "id": "amount",
+                  "parts": [
+                    {
+                      "text": "0.0495 "
+                    },
+                    {
+                      "text": "SOL",
+                      "value": {
+                        "type": "text",
+                        "value": "SOL"
+                      }
+                    }
+                  ],
+                  "text": "0.0495 SOL"
+                }
+              }
+            }
+          },
+          {
+            "text": " 到"
+          },
+          {
+            "text": "您的 SOL 账户（4hJn…VH6R）",
+            "value": {
+              "type": "address",
+              "value": {
+                "address": "4hJnan1NC4BuwPSn41WAQ7yG3zMK5JfXzDiq8jw2VH6R",
+                "is_self": true,
+                "label": {
+                  "id": "accounts-your-token",
+                  "parts": [
+                    {
+                      "text": "您的 "
+                    },
+                    {
+                      "text": "SOL",
+                      "value": {
+                        "type": "text",
+                        "value": "SOL"
+                      }
+                    },
+                    {
+                      "text": " 账户"
+                    }
+                  ],
+                  "text": "您的 SOL 账户"
+                },
+                "label_trust": "verified",
+                "stand_in": null,
+                "words": {
+                  "id": "address-labelled",
+                  "parts": [
+                    {
+                      "text": "您的 SOL 账户",
+                      "value": {
+                        "type": "words",
+                        "value": {
+                          "id": "accounts-your-token",
+                          "parts": [
+                            {
+                              "text": "您的 "
+                            },
+                            {
+                              "text": "SOL",
+                              "value": {
+                                "type": "text",
+                                "value": "SOL"
+                              }
+                            },
+                            {
+                              "text": " 账户"
+                            }
+                          ],
+                          "text": "您的 SOL 账户"
+                        }
+                      }
+                    },
+                    {
+                      "text": "（"
+                    },
+                    {
+                      "short": {
+                        "address": "4hJnan1NC4BuwPSn41WAQ7yG3zMK5JfXzDiq8jw2VH6R",
+                        "is_self": true,
+                        "label": null,
+                        "label_trust": "verified",
+                        "stand_in": null,
+                        "words": null
+                      },
+                      "text": "4hJn…VH6R"
+                    },
+                    {
+                      "text": "）"
+                    }
+                  ],
+                  "text": "您的 SOL 账户（4hJn…VH6R）"
+                }
+              }
+            }
+          }
+        ],
+        "text": "从您的钱包（8Aet…tiTo）转账 0.0495 SOL 到您的 SOL 账户（4hJn…VH6R）"
+      },
+      "type": "transfer",
+      "value": {
+        "amount": {
+          "asset": {
+            "decimals": 9,
+            "description": null,
+            "id": "native",
+            "symbol": "SOL",
+            "trust": "fact"
+          },
+          "bound": "exact",
+          "note": null,
+          "note_words": null,
+          "units": "49500000",
+          "words": {
+            "id": "amount",
+            "parts": [
+              {
+                "text": "0.0495 "
+              },
+              {
+                "text": "SOL",
+                "value": {
+                  "type": "text",
+                  "value": "SOL"
+                }
+              }
+            ],
+            "text": "0.0495 SOL"
+          }
+        },
+        "from": {
+          "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+          "is_self": true,
+          "label": {
+            "id": "accounts-your-wallet",
+            "parts": [
+              {
+                "text": "您的钱包"
+              }
+            ],
+            "text": "您的钱包"
+          },
+          "label_trust": "verified",
+          "stand_in": null,
+          "words": {
+            "id": "address-labelled",
+            "parts": [
+              {
+                "text": "您的钱包",
+                "value": {
+                  "type": "words",
+                  "value": {
+                    "id": "accounts-your-wallet",
+                    "parts": [
+                      {
+                        "text": "您的钱包"
+                      }
+                    ],
+                    "text": "您的钱包"
+                  }
+                }
+              },
+              {
+                "text": "（"
+              },
+              {
+                "short": {
+                  "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+                  "is_self": true,
+                  "label": null,
+                  "label_trust": "verified",
+                  "stand_in": null,
+                  "words": null
+                },
+                "text": "8Aet…tiTo"
+              },
+              {
+                "text": "）"
+              }
+            ],
+            "text": "您的钱包（8Aet…tiTo）"
+          }
+        },
+        "to": {
+          "address": "4hJnan1NC4BuwPSn41WAQ7yG3zMK5JfXzDiq8jw2VH6R",
+          "is_self": true,
+          "label": {
+            "id": "accounts-your-token",
+            "parts": [
+              {
+                "text": "您的 "
+              },
+              {
+                "text": "SOL",
+                "value": {
+                  "type": "text",
+                  "value": "SOL"
+                }
+              },
+              {
+                "text": " 账户"
+              }
+            ],
+            "text": "您的 SOL 账户"
+          },
+          "label_trust": "verified",
+          "stand_in": null,
+          "words": {
+            "id": "address-labelled",
+            "parts": [
+              {
+                "text": "您的 SOL 账户",
+                "value": {
+                  "type": "words",
+                  "value": {
+                    "id": "accounts-your-token",
+                    "parts": [
+                      {
+                        "text": "您的 "
+                      },
+                      {
+                        "text": "SOL",
+                        "value": {
+                          "type": "text",
+                          "value": "SOL"
+                        }
+                      },
+                      {
+                        "text": " 账户"
+                      }
+                    ],
+                    "text": "您的 SOL 账户"
+                  }
+                }
+              },
+              {
+                "text": "（"
+              },
+              {
+                "short": {
+                  "address": "4hJnan1NC4BuwPSn41WAQ7yG3zMK5JfXzDiq8jw2VH6R",
+                  "is_self": true,
+                  "label": null,
+                  "label_trust": "verified",
+                  "stand_in": null,
+                  "words": null
+                },
+                "text": "4hJn…VH6R"
+              },
+              {
+                "text": "）"
+              }
+            ],
+            "text": "您的 SOL 账户（4hJn…VH6R）"
+          }
+        }
+      }
+    },
+    {
+      "message": {
+        "id": "DF1ow4tspfHX9JwWJsAb9epbkA8hmpSEAtxXy1V27QBH/wrap_sol-effects-other",
+        "parts": [
+          {
+            "text": "如包装 SOL 账户不存在，先将其创建为发送方的关联代币账户，费用由发送方承担"
+          }
+        ],
+        "text": "如包装 SOL 账户不存在，先将其创建为发送方的关联代币账户，费用由发送方承担"
+      },
+      "type": "other",
+      "value": {
+        "description": {
+          "id": "DF1ow4tspfHX9JwWJsAb9epbkA8hmpSEAtxXy1V27QBH/wrap_sol-effects-other",
+          "parts": [
+            {
+              "text": "如包装 SOL 账户不存在，先将其创建为发送方的关联代币账户，费用由发送方承担"
+            }
+          ],
+          "text": "如包装 SOL 账户不存在，先将其创建为发送方的关联代币账户，费用由发送方承担"
+        }
+      }
+    },
+    {
+      "message": {
+        "id": "effect-send",
+        "parts": [
+          {
+            "text": "您从"
+          },
+          {
+            "text": "您的钱包（8Aet…tiTo）",
+            "value": {
+              "type": "address",
+              "value": {
+                "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+                "is_self": true,
+                "label": {
+                  "id": "accounts-your-wallet",
+                  "parts": [
+                    {
+                      "text": "您的钱包"
+                    }
+                  ],
+                  "text": "您的钱包"
+                },
+                "label_trust": "verified",
+                "stand_in": null,
+                "words": {
+                  "id": "address-labelled",
+                  "parts": [
+                    {
+                      "text": "您的钱包",
+                      "value": {
+                        "type": "words",
+                        "value": {
+                          "id": "accounts-your-wallet",
+                          "parts": [
+                            {
+                              "text": "您的钱包"
+                            }
+                          ],
+                          "text": "您的钱包"
+                        }
+                      }
+                    },
+                    {
+                      "text": "（"
+                    },
+                    {
+                      "short": {
+                        "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+                        "is_self": true,
+                        "label": null,
+                        "label_trust": "verified",
+                        "stand_in": null,
+                        "words": null
+                      },
+                      "text": "8Aet…tiTo"
+                    },
+                    {
+                      "text": "）"
+                    }
+                  ],
+                  "text": "您的钱包（8Aet…tiTo）"
+                }
+              }
+            }
+          },
+          {
+            "text": "发送 "
+          },
+          {
+            "text": "≤ 0.0495 SOL",
+            "value": {
+              "type": "amount",
+              "value": {
+                "asset": {
+                  "decimals": 9,
+                  "description": null,
+                  "id": "native",
+                  "symbol": "SOL",
+                  "trust": "fact"
+                },
+                "bound": "at_most",
+                "note": null,
+                "note_words": null,
+                "units": "49500000",
+                "words": {
+                  "id": "amount",
+                  "parts": [
+                    {
+                      "text": "≤ 0.0495 "
+                    },
+                    {
+                      "text": "SOL",
+                      "value": {
+                        "type": "text",
+                        "value": "SOL"
+                      }
+                    }
+                  ],
+                  "text": "≤ 0.0495 SOL"
+                }
+              }
+            }
+          },
+          {
+            "text": " 到 "
+          },
+          {
+            "text": "DFlow Aggregator（DF1o…7QBH）",
+            "value": {
+              "type": "address",
+              "value": {
+                "address": "DF1ow4tspfHX9JwWJsAb9epbkA8hmpSEAtxXy1V27QBH",
+                "is_self": false,
+                "label": {
+                  "id": "accounts-name",
+                  "parts": [
+                    {
+                      "text": "DFlow Aggregator",
+                      "value": {
+                        "type": "text",
+                        "value": "DFlow Aggregator"
+                      }
+                    }
+                  ],
+                  "text": "DFlow Aggregator"
+                },
+                "label_trust": "verified",
+                "stand_in": null,
+                "words": {
+                  "id": "address-labelled",
+                  "parts": [
+                    {
+                      "text": "DFlow Aggregator",
+                      "value": {
+                        "type": "words",
+                        "value": {
+                          "id": "accounts-name",
+                          "parts": [
+                            {
+                              "text": "DFlow Aggregator",
+                              "value": {
+                                "type": "text",
+                                "value": "DFlow Aggregator"
+                              }
+                            }
+                          ],
+                          "text": "DFlow Aggregator"
+                        }
+                      }
+                    },
+                    {
+                      "text": "（"
+                    },
+                    {
+                      "short": {
+                        "address": "DF1ow4tspfHX9JwWJsAb9epbkA8hmpSEAtxXy1V27QBH",
+                        "is_self": false,
+                        "label": null,
+                        "label_trust": "verified",
+                        "stand_in": null,
+                        "words": null
+                      },
+                      "text": "DF1o…7QBH"
+                    },
+                    {
+                      "text": "）"
+                    }
+                  ],
+                  "text": "DFlow Aggregator（DF1o…7QBH）"
+                }
+              }
+            }
+          }
+        ],
+        "text": "您从您的钱包（8Aet…tiTo）发送 ≤ 0.0495 SOL 到 DFlow Aggregator（DF1o…7QBH）"
+      },
+      "type": "transfer",
+      "value": {
+        "amount": {
+          "asset": {
+            "decimals": 9,
+            "description": null,
+            "id": "native",
+            "symbol": "SOL",
+            "trust": "fact"
+          },
+          "bound": "at_most",
+          "note": null,
+          "note_words": null,
+          "units": "49500000",
+          "words": {
+            "id": "amount",
+            "parts": [
+              {
+                "text": "≤ 0.0495 "
+              },
+              {
+                "text": "SOL",
+                "value": {
+                  "type": "text",
+                  "value": "SOL"
+                }
+              }
+            ],
+            "text": "≤ 0.0495 SOL"
+          }
+        },
+        "from": {
+          "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+          "is_self": true,
+          "label": {
+            "id": "accounts-your-wallet",
+            "parts": [
+              {
+                "text": "您的钱包"
+              }
+            ],
+            "text": "您的钱包"
+          },
+          "label_trust": "verified",
+          "stand_in": null,
+          "words": {
+            "id": "address-labelled",
+            "parts": [
+              {
+                "text": "您的钱包",
+                "value": {
+                  "type": "words",
+                  "value": {
+                    "id": "accounts-your-wallet",
+                    "parts": [
+                      {
+                        "text": "您的钱包"
+                      }
+                    ],
+                    "text": "您的钱包"
+                  }
+                }
+              },
+              {
+                "text": "（"
+              },
+              {
+                "short": {
+                  "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+                  "is_self": true,
+                  "label": null,
+                  "label_trust": "verified",
+                  "stand_in": null,
+                  "words": null
+                },
+                "text": "8Aet…tiTo"
+              },
+              {
+                "text": "）"
+              }
+            ],
+            "text": "您的钱包（8Aet…tiTo）"
+          }
+        },
+        "to": {
+          "address": "DF1ow4tspfHX9JwWJsAb9epbkA8hmpSEAtxXy1V27QBH",
+          "is_self": false,
+          "label": {
+            "id": "accounts-name",
+            "parts": [
+              {
+                "text": "DFlow Aggregator",
+                "value": {
+                  "type": "text",
+                  "value": "DFlow Aggregator"
+                }
+              }
+            ],
+            "text": "DFlow Aggregator"
+          },
+          "label_trust": "verified",
+          "stand_in": null,
+          "words": {
+            "id": "address-labelled",
+            "parts": [
+              {
+                "text": "DFlow Aggregator",
+                "value": {
+                  "type": "words",
+                  "value": {
+                    "id": "accounts-name",
+                    "parts": [
+                      {
+                        "text": "DFlow Aggregator",
+                        "value": {
+                          "type": "text",
+                          "value": "DFlow Aggregator"
+                        }
+                      }
+                    ],
+                    "text": "DFlow Aggregator"
+                  }
+                }
+              },
+              {
+                "text": "（"
+              },
+              {
+                "short": {
+                  "address": "DF1ow4tspfHX9JwWJsAb9epbkA8hmpSEAtxXy1V27QBH",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "verified",
+                  "stand_in": null,
+                  "words": null
+                },
+                "text": "DF1o…7QBH"
+              },
+              {
+                "text": "）"
+              }
+            ],
+            "text": "DFlow Aggregator（DF1o…7QBH）"
+          }
+        }
+      }
+    },
+    {
+      "message": {
+        "id": "effect-receive",
+        "parts": [
+          {
+            "text": "您从 "
+          },
+          {
+            "text": "DFlow Aggregator（DF1o…7QBH）",
+            "value": {
+              "type": "address",
+              "value": {
+                "address": "DF1ow4tspfHX9JwWJsAb9epbkA8hmpSEAtxXy1V27QBH",
+                "is_self": false,
+                "label": {
+                  "id": "accounts-name",
+                  "parts": [
+                    {
+                      "text": "DFlow Aggregator",
+                      "value": {
+                        "type": "text",
+                        "value": "DFlow Aggregator"
+                      }
+                    }
+                  ],
+                  "text": "DFlow Aggregator"
+                },
+                "label_trust": "verified",
+                "stand_in": null,
+                "words": {
+                  "id": "address-labelled",
+                  "parts": [
+                    {
+                      "text": "DFlow Aggregator",
+                      "value": {
+                        "type": "words",
+                        "value": {
+                          "id": "accounts-name",
+                          "parts": [
+                            {
+                              "text": "DFlow Aggregator",
+                              "value": {
+                                "type": "text",
+                                "value": "DFlow Aggregator"
+                              }
+                            }
+                          ],
+                          "text": "DFlow Aggregator"
+                        }
+                      }
+                    },
+                    {
+                      "text": "（"
+                    },
+                    {
+                      "short": {
+                        "address": "DF1ow4tspfHX9JwWJsAb9epbkA8hmpSEAtxXy1V27QBH",
+                        "is_self": false,
+                        "label": null,
+                        "label_trust": "verified",
+                        "stand_in": null,
+                        "words": null
+                      },
+                      "text": "DF1o…7QBH"
+                    },
+                    {
+                      "text": "）"
+                    }
+                  ],
+                  "text": "DFlow Aggregator（DF1o…7QBH）"
+                }
+              }
+            }
+          },
+          {
+            "text": "收到 "
+          },
+          {
+            "text": "≥ 142,243,976,392 原始单位的未验证代币 HMYd…pump",
+            "value": {
+              "type": "amount",
+              "value": {
+                "asset": {
+                  "decimals": null,
+                  "description": null,
+                  "id": "HMYd9tosnUXuNHmq7pXmoePRVBLBBjA3JBfydq6upump",
+                  "symbol": null,
+                  "trust": "fact"
+                },
+                "bound": "at_least",
+                "note": null,
+                "note_words": null,
+                "units": "142243976392",
+                "words": {
+                  "id": "amount-unverified",
+                  "parts": [
+                    {
+                      "text": "≥ 142,243,976,392 原始单位的未验证代币 "
+                    },
+                    {
+                      "short": {
+                        "address": "HMYd9tosnUXuNHmq7pXmoePRVBLBBjA3JBfydq6upump",
+                        "is_self": false,
+                        "label": null,
+                        "label_trust": "fact",
+                        "stand_in": null,
+                        "words": null
+                      },
+                      "text": "HMYd…pump"
+                    }
+                  ],
+                  "text": "≥ 142,243,976,392 原始单位的未验证代币 HMYd…pump"
+                }
+              }
+            }
+          },
+          {
+            "text": "，转入"
+          },
+          {
+            "text": "您的代币账户（9SQZ…GxVU）",
+            "value": {
+              "type": "address",
+              "value": {
+                "address": "9SQZUTsLbv469tCRm9BFo64vpUiWToZukM4WeNdDGxVU",
+                "is_self": true,
+                "label": {
+                  "id": "swap-your-token-account",
+                  "parts": [
+                    {
+                      "text": "您的代币账户"
+                    }
+                  ],
+                  "text": "您的代币账户"
+                },
+                "label_trust": "verified",
+                "stand_in": null,
+                "words": {
+                  "id": "address-labelled",
+                  "parts": [
+                    {
+                      "text": "您的代币账户",
+                      "value": {
+                        "type": "words",
+                        "value": {
+                          "id": "swap-your-token-account",
+                          "parts": [
+                            {
+                              "text": "您的代币账户"
+                            }
+                          ],
+                          "text": "您的代币账户"
+                        }
+                      }
+                    },
+                    {
+                      "text": "（"
+                    },
+                    {
+                      "short": {
+                        "address": "9SQZUTsLbv469tCRm9BFo64vpUiWToZukM4WeNdDGxVU",
+                        "is_self": true,
+                        "label": null,
+                        "label_trust": "verified",
+                        "stand_in": null,
+                        "words": null
+                      },
+                      "text": "9SQZ…GxVU"
+                    },
+                    {
+                      "text": "）"
+                    }
+                  ],
+                  "text": "您的代币账户（9SQZ…GxVU）"
+                }
+              }
+            }
+          }
+        ],
+        "text": "您从 DFlow Aggregator（DF1o…7QBH）收到 ≥ 142,243,976,392 原始单位的未验证代币 HMYd…pump，转入您的代币账户（9SQZ…GxVU）"
+      },
+      "type": "transfer",
+      "value": {
+        "amount": {
+          "asset": {
+            "decimals": null,
+            "description": null,
+            "id": "HMYd9tosnUXuNHmq7pXmoePRVBLBBjA3JBfydq6upump",
+            "symbol": null,
+            "trust": "fact"
+          },
+          "bound": "at_least",
+          "note": null,
+          "note_words": null,
+          "units": "142243976392",
+          "words": {
+            "id": "amount-unverified",
+            "parts": [
+              {
+                "text": "≥ 142,243,976,392 原始单位的未验证代币 "
+              },
+              {
+                "short": {
+                  "address": "HMYd9tosnUXuNHmq7pXmoePRVBLBBjA3JBfydq6upump",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "fact",
+                  "stand_in": null,
+                  "words": null
+                },
+                "text": "HMYd…pump"
+              }
+            ],
+            "text": "≥ 142,243,976,392 原始单位的未验证代币 HMYd…pump"
+          }
+        },
+        "from": {
+          "address": "DF1ow4tspfHX9JwWJsAb9epbkA8hmpSEAtxXy1V27QBH",
+          "is_self": false,
+          "label": {
+            "id": "accounts-name",
+            "parts": [
+              {
+                "text": "DFlow Aggregator",
+                "value": {
+                  "type": "text",
+                  "value": "DFlow Aggregator"
+                }
+              }
+            ],
+            "text": "DFlow Aggregator"
+          },
+          "label_trust": "verified",
+          "stand_in": null,
+          "words": {
+            "id": "address-labelled",
+            "parts": [
+              {
+                "text": "DFlow Aggregator",
+                "value": {
+                  "type": "words",
+                  "value": {
+                    "id": "accounts-name",
+                    "parts": [
+                      {
+                        "text": "DFlow Aggregator",
+                        "value": {
+                          "type": "text",
+                          "value": "DFlow Aggregator"
+                        }
+                      }
+                    ],
+                    "text": "DFlow Aggregator"
+                  }
+                }
+              },
+              {
+                "text": "（"
+              },
+              {
+                "short": {
+                  "address": "DF1ow4tspfHX9JwWJsAb9epbkA8hmpSEAtxXy1V27QBH",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "verified",
+                  "stand_in": null,
+                  "words": null
+                },
+                "text": "DF1o…7QBH"
+              },
+              {
+                "text": "）"
+              }
+            ],
+            "text": "DFlow Aggregator（DF1o…7QBH）"
+          }
+        },
+        "to": {
+          "address": "9SQZUTsLbv469tCRm9BFo64vpUiWToZukM4WeNdDGxVU",
+          "is_self": true,
+          "label": {
+            "id": "swap-your-token-account",
+            "parts": [
+              {
+                "text": "您的代币账户"
+              }
+            ],
+            "text": "您的代币账户"
+          },
+          "label_trust": "verified",
+          "stand_in": null,
+          "words": {
+            "id": "address-labelled",
+            "parts": [
+              {
+                "text": "您的代币账户",
+                "value": {
+                  "type": "words",
+                  "value": {
+                    "id": "swap-your-token-account",
+                    "parts": [
+                      {
+                        "text": "您的代币账户"
+                      }
+                    ],
+                    "text": "您的代币账户"
+                  }
+                }
+              },
+              {
+                "text": "（"
+              },
+              {
+                "short": {
+                  "address": "9SQZUTsLbv469tCRm9BFo64vpUiWToZukM4WeNdDGxVU",
+                  "is_self": true,
+                  "label": null,
+                  "label_trust": "verified",
+                  "stand_in": null,
+                  "words": null
+                },
+                "text": "9SQZ…GxVU"
+              },
+              {
+                "text": "）"
+              }
+            ],
+            "text": "您的代币账户（9SQZ…GxVU）"
+          }
+        }
+      }
+    },
+    {
+      "message": {
+        "id": "effect-create-deposit-if-missing",
+        "parts": [
+          {
+            "text": "创建"
+          },
+          {
+            "text": "您的代币账户（9SQZ…GxVU）",
+            "value": {
+              "type": "address",
+              "value": {
+                "address": "9SQZUTsLbv469tCRm9BFo64vpUiWToZukM4WeNdDGxVU",
+                "is_self": true,
+                "label": {
+                  "id": "accounts-your-unnamed-token",
+                  "parts": [
+                    {
+                      "text": "您的代币账户"
+                    }
+                  ],
+                  "text": "您的代币账户"
+                },
+                "label_trust": "verified",
+                "stand_in": null,
+                "words": {
+                  "id": "address-labelled",
+                  "parts": [
+                    {
+                      "text": "您的代币账户",
+                      "value": {
+                        "type": "words",
+                        "value": {
+                          "id": "accounts-your-unnamed-token",
+                          "parts": [
+                            {
+                              "text": "您的代币账户"
+                            }
+                          ],
+                          "text": "您的代币账户"
+                        }
+                      }
+                    },
+                    {
+                      "text": "（"
+                    },
+                    {
+                      "short": {
+                        "address": "9SQZUTsLbv469tCRm9BFo64vpUiWToZukM4WeNdDGxVU",
+                        "is_self": true,
+                        "label": null,
+                        "label_trust": "verified",
+                        "stand_in": null,
+                        "words": null
+                      },
+                      "text": "9SQZ…GxVU"
+                    },
+                    {
+                      "text": "）"
+                    }
+                  ],
+                  "text": "您的代币账户（9SQZ…GxVU）"
+                }
+              }
+            }
+          },
+          {
+            "text": "，由 "
+          },
+          {
+            "text": "Token-2022 program（Toke…xuEb）",
+            "value": {
+              "type": "address",
+              "value": {
+                "address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+                "is_self": false,
+                "label": {
+                  "id": "accounts-name",
+                  "parts": [
+                    {
+                      "text": "Token-2022 program",
+                      "value": {
+                        "type": "text",
+                        "value": "Token-2022 program"
+                      }
+                    }
+                  ],
+                  "text": "Token-2022 program"
+                },
+                "label_trust": "verified",
+                "stand_in": null,
+                "words": {
+                  "id": "address-labelled",
+                  "parts": [
+                    {
+                      "text": "Token-2022 program",
+                      "value": {
+                        "type": "words",
+                        "value": {
+                          "id": "accounts-name",
+                          "parts": [
+                            {
+                              "text": "Token-2022 program",
+                              "value": {
+                                "type": "text",
+                                "value": "Token-2022 program"
+                              }
+                            }
+                          ],
+                          "text": "Token-2022 program"
+                        }
+                      }
+                    },
+                    {
+                      "text": "（"
+                    },
+                    {
+                      "short": {
+                        "address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+                        "is_self": false,
+                        "label": null,
+                        "label_trust": "verified",
+                        "stand_in": null,
+                        "words": null
+                      },
+                      "text": "Toke…xuEb"
+                    },
+                    {
+                      "text": "）"
+                    }
+                  ],
+                  "text": "Token-2022 program（Toke…xuEb）"
+                }
+              }
+            }
+          },
+          {
+            "text": "管理，存入 "
+          },
+          {
+            "text": "0.00151384 SOL",
+            "value": {
+              "type": "amount",
+              "value": {
+                "asset": {
+                  "decimals": 9,
+                  "description": null,
+                  "id": "native",
+                  "symbol": "SOL",
+                  "trust": "fact"
+                },
+                "bound": "exact",
+                "note": null,
+                "note_words": null,
+                "units": "1513840",
+                "words": {
+                  "id": "amount",
+                  "parts": [
+                    {
+                      "text": "0.00151384 "
+                    },
+                    {
+                      "text": "SOL",
+                      "value": {
+                        "type": "text",
+                        "value": "SOL"
+                      }
+                    }
+                  ],
+                  "text": "0.00151384 SOL"
+                }
+              }
+            }
+          },
+          {
+            "text": "，除非该账户已存在"
+          }
+        ],
+        "text": "创建您的代币账户（9SQZ…GxVU），由 Token-2022 program（Toke…xuEb）管理，存入 0.00151384 SOL，除非该账户已存在"
+      },
+      "type": "create",
+      "value": {
+        "account": {
+          "address": "9SQZUTsLbv469tCRm9BFo64vpUiWToZukM4WeNdDGxVU",
+          "is_self": true,
+          "label": {
+            "id": "accounts-your-unnamed-token",
+            "parts": [
+              {
+                "text": "您的代币账户"
+              }
+            ],
+            "text": "您的代币账户"
+          },
+          "label_trust": "verified",
+          "stand_in": null,
+          "words": {
+            "id": "address-labelled",
+            "parts": [
+              {
+                "text": "您的代币账户",
+                "value": {
+                  "type": "words",
+                  "value": {
+                    "id": "accounts-your-unnamed-token",
+                    "parts": [
+                      {
+                        "text": "您的代币账户"
+                      }
+                    ],
+                    "text": "您的代币账户"
+                  }
+                }
+              },
+              {
+                "text": "（"
+              },
+              {
+                "short": {
+                  "address": "9SQZUTsLbv469tCRm9BFo64vpUiWToZukM4WeNdDGxVU",
+                  "is_self": true,
+                  "label": null,
+                  "label_trust": "verified",
+                  "stand_in": null,
+                  "words": null
+                },
+                "text": "9SQZ…GxVU"
+              },
+              {
+                "text": "）"
+              }
+            ],
+            "text": "您的代币账户（9SQZ…GxVU）"
+          }
+        },
+        "deposit": {
+          "asset": {
+            "decimals": 9,
+            "description": null,
+            "id": "native",
+            "symbol": "SOL",
+            "trust": "fact"
+          },
+          "bound": "exact",
+          "note": null,
+          "note_words": null,
+          "units": "1513840",
+          "words": {
+            "id": "amount",
+            "parts": [
+              {
+                "text": "0.00151384 "
+              },
+              {
+                "text": "SOL",
+                "value": {
+                  "type": "text",
+                  "value": "SOL"
+                }
+              }
+            ],
+            "text": "0.00151384 SOL"
+          }
+        },
+        "if_missing": true,
+        "owner": {
+          "address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+          "is_self": false,
+          "label": {
+            "id": "accounts-name",
+            "parts": [
+              {
+                "text": "Token-2022 program",
+                "value": {
+                  "type": "text",
+                  "value": "Token-2022 program"
+                }
+              }
+            ],
+            "text": "Token-2022 program"
+          },
+          "label_trust": "verified",
+          "stand_in": null,
+          "words": {
+            "id": "address-labelled",
+            "parts": [
+              {
+                "text": "Token-2022 program",
+                "value": {
+                  "type": "words",
+                  "value": {
+                    "id": "accounts-name",
+                    "parts": [
+                      {
+                        "text": "Token-2022 program",
+                        "value": {
+                          "type": "text",
+                          "value": "Token-2022 program"
+                        }
+                      }
+                    ],
+                    "text": "Token-2022 program"
+                  }
+                }
+              },
+              {
+                "text": "（"
+              },
+              {
+                "short": {
+                  "address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "verified",
+                  "stand_in": null,
+                  "words": null
+                },
+                "text": "Toke…xuEb"
+              },
+              {
+                "text": "）"
+              }
+            ],
+            "text": "Token-2022 program（Toke…xuEb）"
+          }
+        }
+      }
+    },
+    {
+      "message": {
+        "id": "effect-send",
+        "parts": [
+          {
+            "text": "您从"
+          },
+          {
+            "text": "您的钱包（8Aet…tiTo）",
+            "value": {
+              "type": "address",
+              "value": {
+                "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+                "is_self": true,
+                "label": {
+                  "id": "accounts-your-wallet",
+                  "parts": [
+                    {
+                      "text": "您的钱包"
+                    }
+                  ],
+                  "text": "您的钱包"
+                },
+                "label_trust": "verified",
+                "stand_in": null,
+                "words": {
+                  "id": "address-labelled",
+                  "parts": [
+                    {
+                      "text": "您的钱包",
+                      "value": {
+                        "type": "words",
+                        "value": {
+                          "id": "accounts-your-wallet",
+                          "parts": [
+                            {
+                              "text": "您的钱包"
+                            }
+                          ],
+                          "text": "您的钱包"
+                        }
+                      }
+                    },
+                    {
+                      "text": "（"
+                    },
+                    {
+                      "short": {
+                        "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+                        "is_self": true,
+                        "label": null,
+                        "label_trust": "verified",
+                        "stand_in": null,
+                        "words": null
+                      },
+                      "text": "8Aet…tiTo"
+                    },
+                    {
+                      "text": "）"
+                    }
+                  ],
+                  "text": "您的钱包（8Aet…tiTo）"
+                }
+              }
+            }
+          },
+          {
+            "text": "发送 "
+          },
+          {
+            "text": "0.000122053 SOL",
+            "value": {
+              "type": "amount",
+              "value": {
+                "asset": {
+                  "decimals": 9,
+                  "description": null,
+                  "id": "native",
+                  "symbol": "SOL",
+                  "trust": "fact"
+                },
+                "bound": "exact",
+                "note": null,
+                "note_words": null,
+                "units": "122053",
+                "words": {
+                  "id": "amount",
+                  "parts": [
+                    {
+                      "text": "0.000122053 "
+                    },
+                    {
+                      "text": "SOL",
+                      "value": {
+                        "type": "text",
+                        "value": "SOL"
+                      }
+                    }
+                  ],
+                  "text": "0.000122053 SOL"
+                }
+              }
+            }
+          },
+          {
+            "text": " 到 "
+          },
+          {
+            "text": "Jito 小费账户（96gY…rZU5）",
+            "value": {
+              "type": "address",
+              "value": {
+                "address": "96gYZGLnJYVFmbjzopPSU6QiEV5fGqZNyN9nmNhvrZU5",
+                "is_self": false,
+                "label": {
+                  "id": "accounts-jito-tip",
+                  "parts": [
+                    {
+                      "text": "Jito 小费账户"
+                    }
+                  ],
+                  "text": "Jito 小费账户"
+                },
+                "label_trust": "verified",
+                "stand_in": null,
+                "words": {
+                  "id": "address-labelled",
+                  "parts": [
+                    {
+                      "text": "Jito 小费账户",
+                      "value": {
+                        "type": "words",
+                        "value": {
+                          "id": "accounts-jito-tip",
+                          "parts": [
+                            {
+                              "text": "Jito 小费账户"
+                            }
+                          ],
+                          "text": "Jito 小费账户"
+                        }
+                      }
+                    },
+                    {
+                      "text": "（"
+                    },
+                    {
+                      "short": {
+                        "address": "96gYZGLnJYVFmbjzopPSU6QiEV5fGqZNyN9nmNhvrZU5",
+                        "is_self": false,
+                        "label": null,
+                        "label_trust": "verified",
+                        "stand_in": null,
+                        "words": null
+                      },
+                      "text": "96gY…rZU5"
+                    },
+                    {
+                      "text": "）"
+                    }
+                  ],
+                  "text": "Jito 小费账户（96gY…rZU5）"
+                }
+              }
+            }
+          }
+        ],
+        "text": "您从您的钱包（8Aet…tiTo）发送 0.000122053 SOL 到 Jito 小费账户（96gY…rZU5）"
+      },
+      "type": "transfer",
+      "value": {
+        "amount": {
+          "asset": {
+            "decimals": 9,
+            "description": null,
+            "id": "native",
+            "symbol": "SOL",
+            "trust": "fact"
+          },
+          "bound": "exact",
+          "note": null,
+          "note_words": null,
+          "units": "122053",
+          "words": {
+            "id": "amount",
+            "parts": [
+              {
+                "text": "0.000122053 "
+              },
+              {
+                "text": "SOL",
+                "value": {
+                  "type": "text",
+                  "value": "SOL"
+                }
+              }
+            ],
+            "text": "0.000122053 SOL"
+          }
+        },
+        "from": {
+          "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+          "is_self": true,
+          "label": {
+            "id": "accounts-your-wallet",
+            "parts": [
+              {
+                "text": "您的钱包"
+              }
+            ],
+            "text": "您的钱包"
+          },
+          "label_trust": "verified",
+          "stand_in": null,
+          "words": {
+            "id": "address-labelled",
+            "parts": [
+              {
+                "text": "您的钱包",
+                "value": {
+                  "type": "words",
+                  "value": {
+                    "id": "accounts-your-wallet",
+                    "parts": [
+                      {
+                        "text": "您的钱包"
+                      }
+                    ],
+                    "text": "您的钱包"
+                  }
+                }
+              },
+              {
+                "text": "（"
+              },
+              {
+                "short": {
+                  "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+                  "is_self": true,
+                  "label": null,
+                  "label_trust": "verified",
+                  "stand_in": null,
+                  "words": null
+                },
+                "text": "8Aet…tiTo"
+              },
+              {
+                "text": "）"
+              }
+            ],
+            "text": "您的钱包（8Aet…tiTo）"
+          }
+        },
+        "to": {
+          "address": "96gYZGLnJYVFmbjzopPSU6QiEV5fGqZNyN9nmNhvrZU5",
+          "is_self": false,
+          "label": {
+            "id": "accounts-jito-tip",
+            "parts": [
+              {
+                "text": "Jito 小费账户"
+              }
+            ],
+            "text": "Jito 小费账户"
+          },
+          "label_trust": "verified",
+          "stand_in": null,
+          "words": {
+            "id": "address-labelled",
+            "parts": [
+              {
+                "text": "Jito 小费账户",
+                "value": {
+                  "type": "words",
+                  "value": {
+                    "id": "accounts-jito-tip",
+                    "parts": [
+                      {
+                        "text": "Jito 小费账户"
+                      }
+                    ],
+                    "text": "Jito 小费账户"
+                  }
+                }
+              },
+              {
+                "text": "（"
+              },
+              {
+                "short": {
+                  "address": "96gYZGLnJYVFmbjzopPSU6QiEV5fGqZNyN9nmNhvrZU5",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "verified",
+                  "stand_in": null,
+                  "words": null
+                },
+                "text": "96gY…rZU5"
+              },
+              {
+                "text": "）"
+              }
+            ],
+            "text": "Jito 小费账户（96gY…rZU5）"
+          }
+        }
+      }
+    },
+    {
+      "message": {
+        "id": "effect-fee-own",
+        "parts": [
+          {
+            "text": "您支付手续费 "
+          },
+          {
+            "text": "0.000079993 SOL",
+            "value": {
+              "type": "amount",
+              "value": {
+                "asset": {
+                  "decimals": 9,
+                  "description": null,
+                  "id": "native",
+                  "symbol": "SOL",
+                  "trust": "fact"
+                },
+                "bound": "exact",
+                "note": null,
+                "note_words": null,
+                "units": "79993",
+                "words": {
+                  "id": "amount",
+                  "parts": [
+                    {
+                      "text": "0.000079993 "
+                    },
+                    {
+                      "text": "SOL",
+                      "value": {
+                        "type": "text",
+                        "value": "SOL"
+                      }
+                    }
+                  ],
+                  "text": "0.000079993 SOL"
+                }
+              }
+            }
+          }
+        ],
+        "text": "您支付手续费 0.000079993 SOL"
+      },
+      "type": "fee",
+      "value": {
+        "amount": {
+          "asset": {
+            "decimals": 9,
+            "description": null,
+            "id": "native",
+            "symbol": "SOL",
+            "trust": "fact"
+          },
+          "bound": "exact",
+          "note": null,
+          "note_words": null,
+          "units": "79993",
+          "words": {
+            "id": "amount",
+            "parts": [
+              {
+                "text": "0.000079993 "
+              },
+              {
+                "text": "SOL",
+                "value": {
+                  "type": "text",
+                  "value": "SOL"
+                }
+              }
+            ],
+            "text": "0.000079993 SOL"
+          }
+        },
+        "payer": {
+          "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+          "is_self": true,
+          "label": {
+            "id": "accounts-your-wallet",
+            "parts": [
+              {
+                "text": "您的钱包"
+              }
+            ],
+            "text": "您的钱包"
+          },
+          "label_trust": "verified",
+          "stand_in": null,
+          "words": {
+            "id": "address-labelled",
+            "parts": [
+              {
+                "text": "您的钱包",
+                "value": {
+                  "type": "words",
+                  "value": {
+                    "id": "accounts-your-wallet",
+                    "parts": [
+                      {
+                        "text": "您的钱包"
+                      }
+                    ],
+                    "text": "您的钱包"
+                  }
+                }
+              },
+              {
+                "text": "（"
+              },
+              {
+                "short": {
+                  "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+                  "is_self": true,
+                  "label": null,
+                  "label_trust": "verified",
+                  "stand_in": null,
+                  "words": null
+                },
+                "text": "8Aet…tiTo"
+              },
+              {
+                "text": "）"
+              }
+            ],
+            "text": "您的钱包（8Aet…tiTo）"
+          }
+        }
+      }
+    },
+    {
+      "message": {
+        "id": "effect-recent-blockhash",
+        "parts": [
+          {
+            "text": "有效期约一分钟（最近区块哈希）"
+          }
+        ],
+        "text": "有效期约一分钟（最近区块哈希）"
+      },
+      "type": "lifetime",
+      "value": {
+        "type": "recent_blockhash"
+      }
+    }
+  ],
+  "findings": [],
+  "locale": {
+    "asked": [
+      "zh-CN"
+    ],
+    "direction": "ltr",
+    "fallbacks": 16,
+    "review": {
+      "by": [
+        "a native speaker"
+      ],
+      "kind": "reviewed",
+      "on": "2026-10-31"
+    },
+    "used": "zh-Hans"
+  },
+  "raw": {
+    "digest": "b892642d9d9599ea782feb6bffdc9939bf6aa2c699eb2c67b6e5d3463baa7682",
+    "format": "solana v0"
+  },
+  "schema": "signlens-explanation/2",
+  "sections": [
+    {
+      "collapsed": false,
+      "fields": [
+        {
+          "help": null,
+          "label": {
+            "id": "label-amount",
+            "parts": [
+              {
+                "text": "数量"
+              }
+            ],
+            "text": "数量"
+          },
+          "trust": "fact",
+          "value": {
+            "type": "amount",
+            "value": {
+              "asset": {
+                "decimals": 9,
+                "description": null,
+                "id": "native",
+                "symbol": "SOL",
+                "trust": "fact"
+              },
+              "bound": "exact",
+              "note": null,
+              "note_words": null,
+              "units": "500000",
+              "words": {
+                "id": "amount",
+                "parts": [
+                  {
+                    "text": "0.0005 "
+                  },
+                  {
+                    "text": "SOL",
+                    "value": {
+                      "type": "text",
+                      "value": "SOL"
+                    }
+                  }
+                ],
+                "text": "0.0005 SOL"
+              }
+            }
+          }
+        },
+        {
+          "help": null,
+          "label": {
+            "id": "label-from",
+            "parts": [
+              {
+                "text": "发送方"
+              }
+            ],
+            "text": "发送方"
+          },
+          "trust": "fact",
+          "value": {
+            "type": "address",
+            "value": {
+              "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+              "is_self": true,
+              "label": {
+                "id": "accounts-your-wallet",
+                "parts": [
+                  {
+                    "text": "您的钱包"
+                  }
+                ],
+                "text": "您的钱包"
+              },
+              "label_trust": "verified",
+              "stand_in": null,
+              "words": {
+                "id": "address-labelled",
+                "parts": [
+                  {
+                    "text": "您的钱包",
+                    "value": {
+                      "type": "words",
+                      "value": {
+                        "id": "accounts-your-wallet",
+                        "parts": [
+                          {
+                            "text": "您的钱包"
+                          }
+                        ],
+                        "text": "您的钱包"
+                      }
+                    }
+                  },
+                  {
+                    "text": "（"
+                  },
+                  {
+                    "short": {
+                      "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+                      "is_self": true,
+                      "label": null,
+                      "label_trust": "verified",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "8Aet…tiTo"
+                  },
+                  {
+                    "text": "）"
+                  }
+                ],
+                "text": "您的钱包（8Aet…tiTo）"
+              }
+            }
+          }
+        },
+        {
+          "help": null,
+          "label": {
+            "id": "label-to",
+            "parts": [
+              {
+                "text": "接收方"
+              }
+            ],
+            "text": "接收方"
+          },
+          "trust": "fact",
+          "value": {
+            "type": "address",
+            "value": {
+              "address": "879ArayuxbYjBhpUe4QCx8nqaAKjiwCG1hFiJo6zMGsA",
+              "is_self": false,
+              "label": null,
+              "label_trust": "fact",
+              "stand_in": null,
+              "words": null
+            }
+          }
+        }
+      ],
+      "kind": {
+        "type": "instruction",
+        "value": {
+          "index": 3
+        }
+      },
+      "subtitle": {
+        "id": "decode-program-verified",
+        "parts": [
+          {
+            "text": "System program",
+            "value": {
+              "type": "text",
+              "value": "System program"
+            }
+          }
+        ],
+        "text": "System program"
+      },
+      "title": {
+        "id": "system-transfer-title",
+        "parts": [
+          {
+            "text": "转账"
+          }
+        ],
+        "text": "转账"
+      }
+    },
+    {
+      "collapsed": false,
+      "fields": [
+        {
+          "help": {
+            "id": "DF1ow4tspfHX9JwWJsAb9epbkA8hmpSEAtxXy1V27QBH/glossary-amount",
+            "parts": [
+              {
+                "text": "What moves."
+              }
+            ],
+            "text": "What moves."
+          },
+          "label": {
+            "id": "DF1ow4tspfHX9JwWJsAb9epbkA8hmpSEAtxXy1V27QBH/wrap_sol-fields-args_lamports",
+            "parts": [
+              {
+                "text": "数量"
+              }
+            ],
+            "text": "数量"
+          },
+          "trust": "fact",
+          "value": {
+            "type": "amount",
+            "value": {
+              "asset": {
+                "decimals": 9,
+                "description": null,
+                "id": "native",
+                "symbol": "SOL",
+                "trust": "fact"
+              },
+              "bound": "exact",
+              "note": null,
+              "note_words": null,
+              "units": "49500000",
+              "words": {
+                "id": "amount",
+                "parts": [
+                  {
+                    "text": "0.0495 "
+                  },
+                  {
+                    "text": "SOL",
+                    "value": {
+                      "type": "text",
+                      "value": "SOL"
+                    }
+                  }
+                ],
+                "text": "0.0495 SOL"
+              }
+            }
+          }
+        },
+        {
+          "help": {
+            "id": "DF1ow4tspfHX9JwWJsAb9epbkA8hmpSEAtxXy1V27QBH/glossary-from",
+            "parts": [
+              {
+                "text": "The wallet the SOL leaves."
+              }
+            ],
+            "text": "The wallet the SOL leaves."
+          },
+          "label": {
+            "id": "DF1ow4tspfHX9JwWJsAb9epbkA8hmpSEAtxXy1V27QBH/wrap_sol-fields-accounts_from",
+            "parts": [
+              {
+                "text": "发送方"
+              }
+            ],
+            "text": "发送方"
+          },
+          "trust": "fact",
+          "value": {
+            "type": "address",
+            "value": {
+              "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+              "is_self": true,
+              "label": {
+                "id": "accounts-your-wallet",
+                "parts": [
+                  {
+                    "text": "您的钱包"
+                  }
+                ],
+                "text": "您的钱包"
+              },
+              "label_trust": "verified",
+              "stand_in": null,
+              "words": {
+                "id": "address-labelled",
+                "parts": [
+                  {
+                    "text": "您的钱包",
+                    "value": {
+                      "type": "words",
+                      "value": {
+                        "id": "accounts-your-wallet",
+                        "parts": [
+                          {
+                            "text": "您的钱包"
+                          }
+                        ],
+                        "text": "您的钱包"
+                      }
+                    }
+                  },
+                  {
+                    "text": "（"
+                  },
+                  {
+                    "short": {
+                      "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+                      "is_self": true,
+                      "label": null,
+                      "label_trust": "verified",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "8Aet…tiTo"
+                  },
+                  {
+                    "text": "）"
+                  }
+                ],
+                "text": "您的钱包（8Aet…tiTo）"
+              }
+            }
+          }
+        },
+        {
+          "help": {
+            "id": "DF1ow4tspfHX9JwWJsAb9epbkA8hmpSEAtxXy1V27QBH/glossary-wrapped_sol_account",
+            "parts": [
+              {
+                "text": "A token account holding SOL as a token (wSOL), so programs can treat it like any other token."
+              }
+            ],
+            "text": "A token account holding SOL as a token (wSOL), so programs can treat it like any other token."
+          },
+          "label": {
+            "id": "DF1ow4tspfHX9JwWJsAb9epbkA8hmpSEAtxXy1V27QBH/wrap_sol-fields-accounts_wrapped_sol_associated_token_account",
+            "parts": [
+              {
+                "text": "包装 SOL 账户"
+              }
+            ],
+            "text": "包装 SOL 账户"
+          },
+          "trust": "fact",
+          "value": {
+            "type": "address",
+            "value": {
+              "address": "4hJnan1NC4BuwPSn41WAQ7yG3zMK5JfXzDiq8jw2VH6R",
+              "is_self": true,
+              "label": {
+                "id": "accounts-your-token",
+                "parts": [
+                  {
+                    "text": "您的 "
+                  },
+                  {
+                    "text": "SOL",
+                    "value": {
+                      "type": "text",
+                      "value": "SOL"
+                    }
+                  },
+                  {
+                    "text": " 账户"
+                  }
+                ],
+                "text": "您的 SOL 账户"
+              },
+              "label_trust": "verified",
+              "stand_in": null,
+              "words": {
+                "id": "address-labelled",
+                "parts": [
+                  {
+                    "text": "您的 SOL 账户",
+                    "value": {
+                      "type": "words",
+                      "value": {
+                        "id": "accounts-your-token",
+                        "parts": [
+                          {
+                            "text": "您的 "
+                          },
+                          {
+                            "text": "SOL",
+                            "value": {
+                              "type": "text",
+                              "value": "SOL"
+                            }
+                          },
+                          {
+                            "text": " 账户"
+                          }
+                        ],
+                        "text": "您的 SOL 账户"
+                      }
+                    }
+                  },
+                  {
+                    "text": "（"
+                  },
+                  {
+                    "short": {
+                      "address": "4hJnan1NC4BuwPSn41WAQ7yG3zMK5JfXzDiq8jw2VH6R",
+                      "is_self": true,
+                      "label": null,
+                      "label_trust": "verified",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "4hJn…VH6R"
+                  },
+                  {
+                    "text": "）"
+                  }
+                ],
+                "text": "您的 SOL 账户（4hJn…VH6R）"
+              }
+            }
+          }
+        }
+      ],
+      "kind": {
+        "type": "instruction",
+        "value": {
+          "index": 4
+        }
+      },
+      "subtitle": {
+        "id": "descriptor-subtitle",
+        "parts": [
+          {
+            "text": "DFlow Aggregator",
+            "value": {
+              "type": "text",
+              "value": "DFlow Aggregator"
+            }
+          },
+          {
+            "text": "（描述文件审核于 "
+          },
+          {
+            "text": "2026-10-17",
+            "value": {
+              "type": "text",
+              "value": "2026-10-17"
+            }
+          },
+          {
+            "text": "、可由 "
+          },
+          {
+            "short": {
+              "address": "9uo2iJKJkmiYwy5MrkrbGQXbPqwHXqvQaUqxhCkowgsh",
+              "is_self": false,
+              "label": null,
+              "label_trust": "fact",
+              "stand_in": null,
+              "words": null
+            },
+            "text": "9uo2…wgsh"
+          },
+          {
+            "text": " 升级）"
+          }
+        ],
+        "text": "DFlow Aggregator（描述文件审核于 2026-10-17、可由 9uo2…wgsh 升级）"
+      },
+      "title": {
+        "id": "DF1ow4tspfHX9JwWJsAb9epbkA8hmpSEAtxXy1V27QBH/wrap_sol-intent",
+        "parts": [
+          {
+            "text": "包装 SOL"
+          }
+        ],
+        "text": "包装 SOL"
+      }
+    },
+    {
+      "collapsed": false,
+      "fields": [
+        {
+          "help": null,
+          "label": {
+            "id": "label-send",
+            "parts": [
+              {
+                "text": "发送"
+              }
+            ],
+            "text": "发送"
+          },
+          "trust": "fact",
+          "value": {
+            "type": "amount",
+            "value": {
+              "asset": {
+                "decimals": 9,
+                "description": null,
+                "id": "native",
+                "symbol": "SOL",
+                "trust": "fact"
+              },
+              "bound": "at_most",
+              "note": null,
+              "note_words": null,
+              "units": "49500000",
+              "words": {
+                "id": "amount",
+                "parts": [
+                  {
+                    "text": "≤ 0.0495 "
+                  },
+                  {
+                    "text": "SOL",
+                    "value": {
+                      "type": "text",
+                      "value": "SOL"
+                    }
+                  }
+                ],
+                "text": "≤ 0.0495 SOL"
+              }
+            }
+          }
+        },
+        {
+          "help": null,
+          "label": {
+            "id": "label-receive",
+            "parts": [
+              {
+                "text": "收到"
+              }
+            ],
+            "text": "收到"
+          },
+          "trust": "fact",
+          "value": {
+            "type": "amount",
+            "value": {
+              "asset": {
+                "decimals": null,
+                "description": null,
+                "id": "HMYd9tosnUXuNHmq7pXmoePRVBLBBjA3JBfydq6upump",
+                "symbol": null,
+                "trust": "fact"
+              },
+              "bound": "at_least",
+              "note": null,
+              "note_words": null,
+              "units": "142243976392",
+              "words": {
+                "id": "amount-unverified",
+                "parts": [
+                  {
+                    "text": "≥ 142,243,976,392 原始单位的未验证代币 "
+                  },
+                  {
+                    "short": {
+                      "address": "HMYd9tosnUXuNHmq7pXmoePRVBLBBjA3JBfydq6upump",
+                      "is_self": false,
+                      "label": null,
+                      "label_trust": "fact",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "HMYd…pump"
+                  }
+                ],
+                "text": "≥ 142,243,976,392 原始单位的未验证代币 HMYd…pump"
+              }
+            }
+          }
+        },
+        {
+          "help": null,
+          "label": {
+            "id": "label-quoted",
+            "parts": [
+              {
+                "text": "报价"
+              }
+            ],
+            "text": "报价"
+          },
+          "trust": "fact",
+          "value": {
+            "type": "amount",
+            "value": {
+              "asset": {
+                "decimals": null,
+                "description": null,
+                "id": "HMYd9tosnUXuNHmq7pXmoePRVBLBBjA3JBfydq6upump",
+                "symbol": null,
+                "trust": "fact"
+              },
+              "bound": "exact",
+              "note": null,
+              "note_words": null,
+              "units": "158048862658",
+              "words": {
+                "id": "amount-unverified",
+                "parts": [
+                  {
+                    "text": "158,048,862,658 原始单位的未验证代币 "
+                  },
+                  {
+                    "short": {
+                      "address": "HMYd9tosnUXuNHmq7pXmoePRVBLBBjA3JBfydq6upump",
+                      "is_self": false,
+                      "label": null,
+                      "label_trust": "fact",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "HMYd…pump"
+                  }
+                ],
+                "text": "158,048,862,658 原始单位的未验证代币 HMYd…pump"
+              }
+            }
+          }
+        },
+        {
+          "help": null,
+          "label": {
+            "id": "label-max-slippage",
+            "parts": [
+              {
+                "text": "最大滑点"
+              }
+            ],
+            "text": "最大滑点"
+          },
+          "trust": "fact",
+          "value": {
+            "type": "basis_points",
+            "value": 1000
+          }
+        },
+        {
+          "help": null,
+          "label": {
+            "id": "label-route",
+            "parts": [
+              {
+                "text": "路由"
+              }
+            ],
+            "text": "路由"
+          },
+          "trust": "fact",
+          "value": {
+            "type": "list",
+            "value": [
+              {
+                "type": "words",
+                "value": {
+                  "id": "dflow-route-leg",
+                  "parts": [
+                    {
+                      "text": "PumpFunBuy",
+                      "value": {
+                        "type": "text",
+                        "value": "PumpFunBuy"
+                      }
+                    },
+                    {
+                      "text": "（49,500,000 原始单位）"
+                    }
+                  ],
+                  "text": "PumpFunBuy（49,500,000 原始单位）"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "help": null,
+          "label": {
+            "id": "label-to-account",
+            "parts": [
+              {
+                "text": "转入账户"
+              }
+            ],
+            "text": "转入账户"
+          },
+          "trust": "fact",
+          "value": {
+            "type": "address",
+            "value": {
+              "address": "9SQZUTsLbv469tCRm9BFo64vpUiWToZukM4WeNdDGxVU",
+              "is_self": true,
+              "label": {
+                "id": "swap-your-token-account",
+                "parts": [
+                  {
+                    "text": "您的代币账户"
+                  }
+                ],
+                "text": "您的代币账户"
+              },
+              "label_trust": "verified",
+              "stand_in": null,
+              "words": {
+                "id": "address-labelled",
+                "parts": [
+                  {
+                    "text": "您的代币账户",
+                    "value": {
+                      "type": "words",
+                      "value": {
+                        "id": "swap-your-token-account",
+                        "parts": [
+                          {
+                            "text": "您的代币账户"
+                          }
+                        ],
+                        "text": "您的代币账户"
+                      }
+                    }
+                  },
+                  {
+                    "text": "（"
+                  },
+                  {
+                    "short": {
+                      "address": "9SQZUTsLbv469tCRm9BFo64vpUiWToZukM4WeNdDGxVU",
+                      "is_self": true,
+                      "label": null,
+                      "label_trust": "verified",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "9SQZ…GxVU"
+                  },
+                  {
+                    "text": "）"
+                  }
+                ],
+                "text": "您的代币账户（9SQZ…GxVU）"
+              }
+            }
+          }
+        },
+        {
+          "help": null,
+          "label": {
+            "id": "label-instruction",
+            "parts": [
+              {
+                "text": "指令"
+              }
+            ],
+            "text": "指令"
+          },
+          "trust": "fact",
+          "value": {
+            "type": "text",
+            "value": "swap"
+          }
+        }
+      ],
+      "kind": {
+        "type": "instruction",
+        "value": {
+          "index": 5
+        }
+      },
+      "subtitle": {
+        "id": "decode-program-verified",
+        "parts": [
+          {
+            "text": "DFlow Aggregator",
+            "value": {
+              "type": "text",
+              "value": "DFlow Aggregator"
+            }
+          }
+        ],
+        "text": "DFlow Aggregator"
+      },
+      "title": {
+        "id": "swap-title",
+        "parts": [
+          {
+            "text": "兑换"
+          }
+        ],
+        "text": "兑换"
+      }
+    },
+    {
+      "collapsed": true,
+      "fields": [
+        {
+          "help": {
+            "id": "label-compute-unit-limit.help",
+            "parts": [
+              {
+                "text": "How much work the transaction may do. It affects the fee, not what the transaction does."
+              }
+            ],
+            "text": "How much work the transaction may do. It affects the fee, not what the transaction does."
+          },
+          "label": {
+            "id": "label-compute-unit-limit",
+            "parts": [
+              {
+                "text": "计算单元上限"
+              }
+            ],
+            "text": "计算单元上限"
+          },
+          "trust": "fact",
+          "value": {
+            "type": "integer",
+            "value": "500000"
+          }
+        },
+        {
+          "help": {
+            "id": "label-compute-unit-price.help",
+            "parts": [
+              {
+                "text": "The tip per unit of work, in millionths of a lamport. With the limit, it sets the priority fee."
+              }
+            ],
+            "text": "The tip per unit of work, in millionths of a lamport. With the limit, it sets the priority fee."
+          },
+          "label": {
+            "id": "label-compute-unit-price",
+            "parts": [
+              {
+                "text": "计算单元价格"
+              }
+            ],
+            "text": "计算单元价格"
+          },
+          "trust": "fact",
+          "value": {
+            "type": "words",
+            "value": {
+              "id": "compute-budget-price",
+              "parts": [
+                {
+                  "text": "每计算单元 149,986 微 lamports"
+                }
+              ],
+              "text": "每计算单元 149,986 微 lamports"
+            }
+          }
+        },
+        {
+          "help": {
+            "id": "label-token-account.help",
+            "parts": [
+              {
+                "text": "An account that holds one token for one wallet. A wallet has a separate one for each token it holds."
+              }
+            ],
+            "text": "An account that holds one token for one wallet. A wallet has a separate one for each token it holds."
+          },
+          "label": {
+            "id": "explain-housekeeping-label",
+            "parts": [
+              {
+                "text": "如不存在则创建代币账户：代币账户"
+              }
+            ],
+            "text": "如不存在则创建代币账户：代币账户"
+          },
+          "trust": "fact",
+          "value": {
+            "type": "address",
+            "value": {
+              "address": "9SQZUTsLbv469tCRm9BFo64vpUiWToZukM4WeNdDGxVU",
+              "is_self": true,
+              "label": {
+                "id": "accounts-your-unnamed-token",
+                "parts": [
+                  {
+                    "text": "您的代币账户"
+                  }
+                ],
+                "text": "您的代币账户"
+              },
+              "label_trust": "verified",
+              "stand_in": null,
+              "words": {
+                "id": "address-labelled",
+                "parts": [
+                  {
+                    "text": "您的代币账户",
+                    "value": {
+                      "type": "words",
+                      "value": {
+                        "id": "accounts-your-unnamed-token",
+                        "parts": [
+                          {
+                            "text": "您的代币账户"
+                          }
+                        ],
+                        "text": "您的代币账户"
+                      }
+                    }
+                  },
+                  {
+                    "text": "（"
+                  },
+                  {
+                    "short": {
+                      "address": "9SQZUTsLbv469tCRm9BFo64vpUiWToZukM4WeNdDGxVU",
+                      "is_self": true,
+                      "label": null,
+                      "label_trust": "verified",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "9SQZ…GxVU"
+                  },
+                  {
+                    "text": "）"
+                  }
+                ],
+                "text": "您的代币账户（9SQZ…GxVU）"
+              }
+            }
+          }
+        },
+        {
+          "help": null,
+          "label": {
+            "id": "explain-housekeeping-label",
+            "parts": [
+              {
+                "text": "如不存在则创建代币账户：所有者"
+              }
+            ],
+            "text": "如不存在则创建代币账户：所有者"
+          },
+          "trust": "fact",
+          "value": {
+            "type": "address",
+            "value": {
+              "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+              "is_self": true,
+              "label": {
+                "id": "accounts-your-wallet",
+                "parts": [
+                  {
+                    "text": "您的钱包"
+                  }
+                ],
+                "text": "您的钱包"
+              },
+              "label_trust": "verified",
+              "stand_in": null,
+              "words": {
+                "id": "address-labelled",
+                "parts": [
+                  {
+                    "text": "您的钱包",
+                    "value": {
+                      "type": "words",
+                      "value": {
+                        "id": "accounts-your-wallet",
+                        "parts": [
+                          {
+                            "text": "您的钱包"
+                          }
+                        ],
+                        "text": "您的钱包"
+                      }
+                    }
+                  },
+                  {
+                    "text": "（"
+                  },
+                  {
+                    "short": {
+                      "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+                      "is_self": true,
+                      "label": null,
+                      "label_trust": "verified",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "8Aet…tiTo"
+                  },
+                  {
+                    "text": "）"
+                  }
+                ],
+                "text": "您的钱包（8Aet…tiTo）"
+              }
+            }
+          }
+        },
+        {
+          "help": {
+            "id": "label-mint.help",
+            "parts": [
+              {
+                "text": "The address that identifies the token itself, as opposed to an account holding some of it."
+              }
+            ],
+            "text": "The address that identifies the token itself, as opposed to an account holding some of it."
+          },
+          "label": {
+            "id": "explain-housekeeping-label",
+            "parts": [
+              {
+                "text": "如不存在则创建代币账户：代币铸造地址"
+              }
+            ],
+            "text": "如不存在则创建代币账户：代币铸造地址"
+          },
+          "trust": "fact",
+          "value": {
+            "type": "address",
+            "value": {
+              "address": "HMYd9tosnUXuNHmq7pXmoePRVBLBBjA3JBfydq6upump",
+              "is_self": false,
+              "label": null,
+              "label_trust": "fact",
+              "stand_in": null,
+              "words": null
+            }
+          }
+        },
+        {
+          "help": {
+            "id": "label-rent-paid-by.help",
+            "parts": [
+              {
+                "text": "Who pays the deposit that keeps a new account on chain. It comes back when the account is closed."
+              }
+            ],
+            "text": "Who pays the deposit that keeps a new account on chain. It comes back when the account is closed."
+          },
+          "label": {
+            "id": "explain-housekeeping-label",
+            "parts": [
+              {
+                "text": "如不存在则创建代币账户：租金付款方"
+              }
+            ],
+            "text": "如不存在则创建代币账户：租金付款方"
+          },
+          "trust": "fact",
+          "value": {
+            "type": "address",
+            "value": {
+              "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+              "is_self": true,
+              "label": {
+                "id": "accounts-your-wallet",
+                "parts": [
+                  {
+                    "text": "您的钱包"
+                  }
+                ],
+                "text": "您的钱包"
+              },
+              "label_trust": "verified",
+              "stand_in": null,
+              "words": {
+                "id": "address-labelled",
+                "parts": [
+                  {
+                    "text": "您的钱包",
+                    "value": {
+                      "type": "words",
+                      "value": {
+                        "id": "accounts-your-wallet",
+                        "parts": [
+                          {
+                            "text": "您的钱包"
+                          }
+                        ],
+                        "text": "您的钱包"
+                      }
+                    }
+                  },
+                  {
+                    "text": "（"
+                  },
+                  {
+                    "short": {
+                      "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+                      "is_self": true,
+                      "label": null,
+                      "label_trust": "verified",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "8Aet…tiTo"
+                  },
+                  {
+                    "text": "）"
+                  }
+                ],
+                "text": "您的钱包（8Aet…tiTo）"
+              }
+            }
+          }
+        },
+        {
+          "help": {
+            "id": "label-token-program.help",
+            "parts": [
+              {
+                "text": "The program that manages this token: SPL Token or Token-2022."
+              }
+            ],
+            "text": "The program that manages this token: SPL Token or Token-2022."
+          },
+          "label": {
+            "id": "explain-housekeeping-label",
+            "parts": [
+              {
+                "text": "如不存在则创建代币账户：代币程序"
+              }
+            ],
+            "text": "如不存在则创建代币账户：代币程序"
+          },
+          "trust": "fact",
+          "value": {
+            "type": "address",
+            "value": {
+              "address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+              "is_self": false,
+              "label": {
+                "id": "accounts-name",
+                "parts": [
+                  {
+                    "text": "Token-2022 program",
+                    "value": {
+                      "type": "text",
+                      "value": "Token-2022 program"
+                    }
+                  }
+                ],
+                "text": "Token-2022 program"
+              },
+              "label_trust": "verified",
+              "stand_in": null,
+              "words": {
+                "id": "address-labelled",
+                "parts": [
+                  {
+                    "text": "Token-2022 program",
+                    "value": {
+                      "type": "words",
+                      "value": {
+                        "id": "accounts-name",
+                        "parts": [
+                          {
+                            "text": "Token-2022 program",
+                            "value": {
+                              "type": "text",
+                              "value": "Token-2022 program"
+                            }
+                          }
+                        ],
+                        "text": "Token-2022 program"
+                      }
+                    }
+                  },
+                  {
+                    "text": "（"
+                  },
+                  {
+                    "short": {
+                      "address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+                      "is_self": false,
+                      "label": null,
+                      "label_trust": "verified",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "Toke…xuEb"
+                  },
+                  {
+                    "text": "）"
+                  }
+                ],
+                "text": "Token-2022 program（Toke…xuEb）"
+              }
+            }
+          }
+        },
+        {
+          "help": null,
+          "label": {
+            "id": "explain-housekeeping-label",
+            "parts": [
+              {
+                "text": "Jito 小费：数量"
+              }
+            ],
+            "text": "Jito 小费：数量"
+          },
+          "trust": "fact",
+          "value": {
+            "type": "amount",
+            "value": {
+              "asset": {
+                "decimals": 9,
+                "description": null,
+                "id": "native",
+                "symbol": "SOL",
+                "trust": "fact"
+              },
+              "bound": "exact",
+              "note": null,
+              "note_words": null,
+              "units": "122053",
+              "words": {
+                "id": "amount",
+                "parts": [
+                  {
+                    "text": "0.000122053 "
+                  },
+                  {
+                    "text": "SOL",
+                    "value": {
+                      "type": "text",
+                      "value": "SOL"
+                    }
+                  }
+                ],
+                "text": "0.000122053 SOL"
+              }
+            }
+          }
+        },
+        {
+          "help": null,
+          "label": {
+            "id": "explain-housekeeping-label",
+            "parts": [
+              {
+                "text": "Jito 小费：发送方"
+              }
+            ],
+            "text": "Jito 小费：发送方"
+          },
+          "trust": "fact",
+          "value": {
+            "type": "address",
+            "value": {
+              "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+              "is_self": true,
+              "label": {
+                "id": "accounts-your-wallet",
+                "parts": [
+                  {
+                    "text": "您的钱包"
+                  }
+                ],
+                "text": "您的钱包"
+              },
+              "label_trust": "verified",
+              "stand_in": null,
+              "words": {
+                "id": "address-labelled",
+                "parts": [
+                  {
+                    "text": "您的钱包",
+                    "value": {
+                      "type": "words",
+                      "value": {
+                        "id": "accounts-your-wallet",
+                        "parts": [
+                          {
+                            "text": "您的钱包"
+                          }
+                        ],
+                        "text": "您的钱包"
+                      }
+                    }
+                  },
+                  {
+                    "text": "（"
+                  },
+                  {
+                    "short": {
+                      "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+                      "is_self": true,
+                      "label": null,
+                      "label_trust": "verified",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "8Aet…tiTo"
+                  },
+                  {
+                    "text": "）"
+                  }
+                ],
+                "text": "您的钱包（8Aet…tiTo）"
+              }
+            }
+          }
+        },
+        {
+          "help": null,
+          "label": {
+            "id": "explain-housekeeping-label",
+            "parts": [
+              {
+                "text": "Jito 小费：接收方"
+              }
+            ],
+            "text": "Jito 小费：接收方"
+          },
+          "trust": "fact",
+          "value": {
+            "type": "address",
+            "value": {
+              "address": "96gYZGLnJYVFmbjzopPSU6QiEV5fGqZNyN9nmNhvrZU5",
+              "is_self": false,
+              "label": {
+                "id": "accounts-jito-tip",
+                "parts": [
+                  {
+                    "text": "Jito 小费账户"
+                  }
+                ],
+                "text": "Jito 小费账户"
+              },
+              "label_trust": "verified",
+              "stand_in": null,
+              "words": {
+                "id": "address-labelled",
+                "parts": [
+                  {
+                    "text": "Jito 小费账户",
+                    "value": {
+                      "type": "words",
+                      "value": {
+                        "id": "accounts-jito-tip",
+                        "parts": [
+                          {
+                            "text": "Jito 小费账户"
+                          }
+                        ],
+                        "text": "Jito 小费账户"
+                      }
+                    }
+                  },
+                  {
+                    "text": "（"
+                  },
+                  {
+                    "short": {
+                      "address": "96gYZGLnJYVFmbjzopPSU6QiEV5fGqZNyN9nmNhvrZU5",
+                      "is_self": false,
+                      "label": null,
+                      "label_trust": "verified",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "96gY…rZU5"
+                  },
+                  {
+                    "text": "）"
+                  }
+                ],
+                "text": "Jito 小费账户（96gY…rZU5）"
+              }
+            }
+          }
+        }
+      ],
+      "kind": {
+        "type": "housekeeping"
+      },
+      "subtitle": null,
+      "title": {
+        "id": "explain-also",
+        "parts": [
+          {
+            "text": "其他"
+          }
+        ],
+        "text": "其他"
+      }
+    },
+    {
+      "collapsed": false,
+      "fields": [
+        {
+          "help": {
+            "id": "label-fee-payer.help",
+            "parts": [
+              {
+                "text": "The account that pays the fee: the first signer."
+              }
+            ],
+            "text": "The account that pays the fee: the first signer."
+          },
+          "label": {
+            "id": "label-fee-payer",
+            "parts": [
+              {
+                "text": "手续费付款方"
+              }
+            ],
+            "text": "手续费付款方"
+          },
+          "trust": "fact",
+          "value": {
+            "type": "address",
+            "value": {
+              "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+              "is_self": true,
+              "label": {
+                "id": "accounts-your-wallet",
+                "parts": [
+                  {
+                    "text": "您的钱包"
+                  }
+                ],
+                "text": "您的钱包"
+              },
+              "label_trust": "verified",
+              "stand_in": null,
+              "words": {
+                "id": "address-labelled",
+                "parts": [
+                  {
+                    "text": "您的钱包",
+                    "value": {
+                      "type": "words",
+                      "value": {
+                        "id": "accounts-your-wallet",
+                        "parts": [
+                          {
+                            "text": "您的钱包"
+                          }
+                        ],
+                        "text": "您的钱包"
+                      }
+                    }
+                  },
+                  {
+                    "text": "（"
+                  },
+                  {
+                    "short": {
+                      "address": "8AetkDchMd7bP6EnGip9M7p5Towr2kdMTJbKAj8HtiTo",
+                      "is_self": true,
+                      "label": null,
+                      "label_trust": "verified",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "8Aet…tiTo"
+                  },
+                  {
+                    "text": "）"
+                  }
+                ],
+                "text": "您的钱包（8Aet…tiTo）"
+              }
+            }
+          }
+        }
+      ],
+      "kind": {
+        "type": "signers"
+      },
+      "subtitle": null,
+      "title": {
+        "id": "explain-signers",
+        "parts": [
+          {
+            "text": "签名者"
+          }
+        ],
+        "text": "签名者"
+      }
+    },
+    {
+      "collapsed": false,
+      "fields": [
+        {
+          "help": {
+            "id": "label-total.help",
+            "parts": [
+              {
+                "text": "What the network charges for this transaction. The fee payer pays it whether the transaction succeeds or fails."
+              }
+            ],
+            "text": "What the network charges for this transaction. The fee payer pays it whether the transaction succeeds or fails."
+          },
+          "label": {
+            "id": "label-total",
+            "parts": [
+              {
+                "text": "总计"
+              }
+            ],
+            "text": "总计"
+          },
+          "trust": "fact",
+          "value": {
+            "type": "amount",
+            "value": {
+              "asset": {
+                "decimals": 9,
+                "description": null,
+                "id": "native",
+                "symbol": "SOL",
+                "trust": "fact"
+              },
+              "bound": "exact",
+              "note": null,
+              "note_words": null,
+              "units": "79993",
+              "words": {
+                "id": "amount",
+                "parts": [
+                  {
+                    "text": "0.000079993 "
+                  },
+                  {
+                    "text": "SOL",
+                    "value": {
+                      "type": "text",
+                      "value": "SOL"
+                    }
+                  }
+                ],
+                "text": "0.000079993 SOL"
+              }
+            }
+          }
+        },
+        {
+          "help": {
+            "id": "label-base.help",
+            "parts": [
+              {
+                "text": "The flat part of the fee: the network charges it per signature."
+              }
+            ],
+            "text": "The flat part of the fee: the network charges it per signature."
+          },
+          "label": {
+            "id": "label-base",
+            "parts": [
+              {
+                "text": "基础费"
+              }
+            ],
+            "text": "基础费"
+          },
+          "trust": "fact",
+          "value": {
+            "type": "amount",
+            "value": {
+              "asset": {
+                "decimals": 9,
+                "description": null,
+                "id": "native",
+                "symbol": "SOL",
+                "trust": "fact"
+              },
+              "bound": "exact",
+              "note": null,
+              "note_words": null,
+              "units": "5000",
+              "words": {
+                "id": "amount",
+                "parts": [
+                  {
+                    "text": "0.000005 "
+                  },
+                  {
+                    "text": "SOL",
+                    "value": {
+                      "type": "text",
+                      "value": "SOL"
+                    }
+                  }
+                ],
+                "text": "0.000005 SOL"
+              }
+            }
+          }
+        },
+        {
+          "help": {
+            "id": "label-priority.help",
+            "parts": [
+              {
+                "text": "A tip the site added so validators take the transaction sooner. It is optional, and it is yours to pay."
+              }
+            ],
+            "text": "A tip the site added so validators take the transaction sooner. It is optional, and it is yours to pay."
+          },
+          "label": {
+            "id": "label-priority",
+            "parts": [
+              {
+                "text": "优先费"
+              }
+            ],
+            "text": "优先费"
+          },
+          "trust": "fact",
+          "value": {
+            "type": "amount",
+            "value": {
+              "asset": {
+                "decimals": 9,
+                "description": null,
+                "id": "native",
+                "symbol": "SOL",
+                "trust": "fact"
+              },
+              "bound": "exact",
+              "note": null,
+              "note_words": null,
+              "units": "74993",
+              "words": {
+                "id": "amount",
+                "parts": [
+                  {
+                    "text": "0.000074993 "
+                  },
+                  {
+                    "text": "SOL",
+                    "value": {
+                      "type": "text",
+                      "value": "SOL"
+                    }
+                  }
+                ],
+                "text": "0.000074993 SOL"
+              }
+            }
+          }
+        },
+        {
+          "help": {
+            "id": "label-priority-basis.help",
+            "parts": [
+              {
+                "text": "How the tip was computed: the price per unit of work, times the work the transaction asked to be allowed."
+              }
+            ],
+            "text": "How the tip was computed: the price per unit of work, times the work the transaction asked to be allowed."
+          },
+          "label": {
+            "id": "label-priority-basis",
+            "parts": [
+              {
+                "text": "优先费计算依据"
+              }
+            ],
+            "text": "优先费计算依据"
+          },
+          "trust": "fact",
+          "value": {
+            "type": "words",
+            "value": {
+              "id": "explain-priority-basis",
+              "parts": [
+                {
+                  "text": "每计算单元 149,986 微 lamports × 请求的 500,000 个计算单元"
+                }
+              ],
+              "text": "每计算单元 149,986 微 lamports × 请求的 500,000 个计算单元"
+            }
+          }
+        },
+        {
+          "help": {
+            "id": "label-rent-deposits.help",
+            "parts": [
+              {
+                "text": "SOL locked to keep the accounts this transaction creates on chain. It is a deposit, not a fee: closing an account returns it to whoever closes it."
+              }
+            ],
+            "text": "SOL locked to keep the accounts this transaction creates on chain. It is a deposit, not a fee: closing an account returns it to whoever closes it."
+          },
+          "label": {
+            "id": "label-rent-deposits",
+            "parts": [
+              {
+                "text": "租金押金"
+              }
+            ],
+            "text": "租金押金"
+          },
+          "trust": "fact",
+          "value": {
+            "type": "words",
+            "value": {
+              "id": "explain-rent",
+              "parts": [
+                {
+                  "text": "最多 "
+                },
+                {
+                  "text": "0.00151384 SOL",
+                  "value": {
+                    "type": "amount",
+                    "value": {
+                      "asset": {
+                        "decimals": 9,
+                        "description": null,
+                        "id": "native",
+                        "symbol": "SOL",
+                        "trust": "fact"
+                      },
+                      "bound": "exact",
+                      "note": null,
+                      "note_words": null,
+                      "units": "1513840",
+                      "words": {
+                        "id": "amount",
+                        "parts": [
+                          {
+                            "text": "0.00151384 "
+                          },
+                          {
+                            "text": "SOL",
+                            "value": {
+                              "type": "text",
+                              "value": "SOL"
+                            }
+                          }
+                        ],
+                        "text": "0.00151384 SOL"
+                      }
+                    }
+                  }
+                },
+                {
+                  "text": "，前提是本交易在缺失时才创建的账户尚不存在；退还给关闭该账户的一方"
+                }
+              ],
+              "text": "最多 0.00151384 SOL，前提是本交易在缺失时才创建的账户尚不存在；退还给关闭该账户的一方"
+            }
+          }
+        }
+      ],
+      "kind": {
+        "type": "fees"
+      },
+      "subtitle": null,
+      "title": {
+        "id": "explain-fee",
+        "parts": [
+          {
+            "text": "手续费"
+          }
+        ],
+        "text": "手续费"
+      }
+    },
+    {
+      "collapsed": false,
+      "fields": [
+        {
+          "help": {
+            "id": "label-expires.help",
+            "parts": [
+              {
+                "text": "How long the signature can be used. About a minute is normal; a durable nonce keeps it usable until the nonce is advanced."
+              }
+            ],
+            "text": "How long the signature can be used. About a minute is normal; a durable nonce keeps it usable until the nonce is advanced."
+          },
+          "label": {
+            "id": "label-expires",
+            "parts": [
+              {
+                "text": "到期时间"
+              }
+            ],
+            "text": "到期时间"
+          },
+          "trust": "fact",
+          "value": {
+            "type": "words",
+            "value": {
+              "id": "explain-expires-soon",
+              "parts": [
+                {
+                  "text": "约一分钟后（最近区块哈希）"
+                }
+              ],
+              "text": "约一分钟后（最近区块哈希）"
+            }
+          }
+        }
+      ],
+      "kind": {
+        "type": "lifetime"
+      },
+      "subtitle": null,
+      "title": {
+        "id": "explain-validity",
+        "parts": [
+          {
+            "text": "有效期"
+          }
+        ],
+        "text": "有效期"
+      }
+    }
+  ],
+  "summary": {
+    "id": "explain-actions",
+    "parts": [
+      {
+        "text": "3",
+        "value": {
+          "type": "integer",
+          "value": "3"
+        }
+      },
+      {
+        "text": " 项操作：发送 "
+      },
+      {
+        "text": "0.0005 SOL",
+        "value": {
+          "type": "amount",
+          "value": {
+            "asset": {
+              "decimals": 9,
+              "description": null,
+              "id": "native",
+              "symbol": "SOL",
+              "trust": "fact"
+            },
+            "bound": "exact",
+            "note": null,
+            "note_words": null,
+            "units": "500000",
+            "words": {
+              "id": "amount",
+              "parts": [
+                {
+                  "text": "0.0005 "
+                },
+                {
+                  "text": "SOL",
+                  "value": {
+                    "type": "text",
+                    "value": "SOL"
+                  }
+                }
+              ],
+              "text": "0.0005 SOL"
+            }
+          }
+        }
+      },
+      {
+        "text": " 到 "
+      },
+      {
+        "short": {
+          "address": "879ArayuxbYjBhpUe4QCx8nqaAKjiwCG1hFiJo6zMGsA",
+          "is_self": false,
+          "label": null,
+          "label_trust": "fact",
+          "stand_in": null,
+          "words": null
+        },
+        "text": "879A…MGsA"
+      },
+      {
+        "text": "；通过 DFlow 将 "
+      },
+      {
+        "text": "0.0495 SOL",
+        "value": {
+          "type": "amount",
+          "value": {
+            "asset": {
+              "decimals": 9,
+              "description": null,
+              "id": "native",
+              "symbol": "SOL",
+              "trust": "fact"
+            },
+            "bound": "exact",
+            "note": null,
+            "note_words": null,
+            "units": "49500000",
+            "words": {
+              "id": "amount",
+              "parts": [
+                {
+                  "text": "0.0495 "
+                },
+                {
+                  "text": "SOL",
+                  "value": {
+                    "type": "text",
+                    "value": "SOL"
+                  }
+                }
+              ],
+              "text": "0.0495 SOL"
+            }
+          }
+        }
+      },
+      {
+        "text": " 包装到"
+      },
+      {
+        "text": "您的 SOL 账户（4hJn…VH6R）",
+        "value": {
+          "type": "address",
+          "value": {
+            "address": "4hJnan1NC4BuwPSn41WAQ7yG3zMK5JfXzDiq8jw2VH6R",
+            "is_self": true,
+            "label": {
+              "id": "accounts-your-token",
+              "parts": [
+                {
+                  "text": "您的 "
+                },
+                {
+                  "text": "SOL",
+                  "value": {
+                    "type": "text",
+                    "value": "SOL"
+                  }
+                },
+                {
+                  "text": " 账户"
+                }
+              ],
+              "text": "您的 SOL 账户"
+            },
+            "label_trust": "verified",
+            "stand_in": null,
+            "words": {
+              "id": "address-labelled",
+              "parts": [
+                {
+                  "text": "您的 SOL 账户",
+                  "value": {
+                    "type": "words",
+                    "value": {
+                      "id": "accounts-your-token",
+                      "parts": [
+                        {
+                          "text": "您的 "
+                        },
+                        {
+                          "text": "SOL",
+                          "value": {
+                            "type": "text",
+                            "value": "SOL"
+                          }
+                        },
+                        {
+                          "text": " 账户"
+                        }
+                      ],
+                      "text": "您的 SOL 账户"
+                    }
+                  }
+                },
+                {
+                  "text": "（"
+                },
+                {
+                  "short": {
+                    "address": "4hJnan1NC4BuwPSn41WAQ7yG3zMK5JfXzDiq8jw2VH6R",
+                    "is_self": true,
+                    "label": null,
+                    "label_trust": "verified",
+                    "stand_in": null,
+                    "words": null
+                  },
+                  "text": "4hJn…VH6R"
+                },
+                {
+                  "text": "）"
+                }
+              ],
+              "text": "您的 SOL 账户（4hJn…VH6R）"
+            }
+          }
+        }
+      },
+      {
+        "text": "；通过 "
+      },
+      {
+        "text": "DFlow",
+        "value": {
+          "type": "text",
+          "value": "DFlow"
+        }
+      },
+      {
+        "text": " 将 "
+      },
+      {
+        "text": "≤ 0.0495 SOL",
+        "value": {
+          "type": "amount",
+          "value": {
+            "asset": {
+              "decimals": 9,
+              "description": null,
+              "id": "native",
+              "symbol": "SOL",
+              "trust": "fact"
+            },
+            "bound": "at_most",
+            "note": null,
+            "note_words": null,
+            "units": "49500000",
+            "words": {
+              "id": "amount",
+              "parts": [
+                {
+                  "text": "≤ 0.0495 "
+                },
+                {
+                  "text": "SOL",
+                  "value": {
+                    "type": "text",
+                    "value": "SOL"
+                  }
+                }
+              ],
+              "text": "≤ 0.0495 SOL"
+            }
+          }
+        }
+      },
+      {
+        "text": " 兑换为 "
+      },
+      {
+        "text": "≥ 142,243,976,392 原始单位的未验证代币 HMYd…pump",
+        "value": {
+          "type": "amount",
+          "value": {
+            "asset": {
+              "decimals": null,
+              "description": null,
+              "id": "HMYd9tosnUXuNHmq7pXmoePRVBLBBjA3JBfydq6upump",
+              "symbol": null,
+              "trust": "fact"
+            },
+            "bound": "at_least",
+            "note": null,
+            "note_words": null,
+            "units": "142243976392",
+            "words": {
+              "id": "amount-unverified",
+              "parts": [
+                {
+                  "text": "≥ 142,243,976,392 原始单位的未验证代币 "
+                },
+                {
+                  "short": {
+                    "address": "HMYd9tosnUXuNHmq7pXmoePRVBLBBjA3JBfydq6upump",
+                    "is_self": false,
+                    "label": null,
+                    "label_trust": "fact",
+                    "stand_in": null,
+                    "words": null
+                  },
+                  "text": "HMYd…pump"
+                }
+              ],
+              "text": "≥ 142,243,976,392 原始单位的未验证代币 HMYd…pump"
+            }
+          }
+        }
+      }
+    ],
+    "text": "3 项操作：发送 0.0005 SOL 到 879A…MGsA；通过 DFlow 将 0.0495 SOL 包装到您的 SOL 账户（4hJn…VH6R）；通过 DFlow 将 ≤ 0.0495 SOL 兑换为 ≥ 142,243,976,392 原始单位的未验证代币 HMYd…pump"
+  },
+  "text": "3 项操作：发送 0.0005 SOL 到 879A…MGsA；通过 DFlow 将 0.0495 SOL 包装到您的 SOL 账户（4hJn…VH6R）；通过 DFlow 将 ≤ 0.0495 SOL 兑换为 ≥ 142,243,976,392 原始单位的未验证代币 HMYd…pump\n正常\n\n== 转账 | System program\n  数量：0.0005 SOL\n  发送方：您的钱包（8Aet…tiTo）\n  接收方：879ArayuxbYjBhpUe4QCx8nqaAKjiwCG1hFiJo6zMGsA\n\n== 包装 SOL | DFlow Aggregator（描述文件审核于 2026-10-17、可由 9uo2…wgsh 升级）\n  数量：0.0495 SOL\n  发送方：您的钱包（8Aet…tiTo）\n  包装 SOL 账户：您的 SOL 账户（4hJn…VH6R）\n\n== 兑换 | DFlow Aggregator\n  发送：≤ 0.0495 SOL\n  收到：≥ 142,243,976,392 原始单位的未验证代币 HMYd…pump\n  报价：158,048,862,658 原始单位的未验证代币 HMYd…pump\n  最大滑点：10%\n  路由：\n    - PumpFunBuy（49,500,000 原始单位）\n  转入账户：您的代币账户（9SQZ…GxVU）\n  指令：swap\n\n== 其他 [已折叠]\n  计算单元上限：500000\n  计算单元价格：每计算单元 149,986 微 lamports\n  如不存在则创建代币账户：代币账户：您的代币账户（9SQZ…GxVU）\n  如不存在则创建代币账户：所有者：您的钱包（8Aet…tiTo）\n  如不存在则创建代币账户：代币铸造地址：HMYd9tosnUXuNHmq7pXmoePRVBLBBjA3JBfydq6upump\n  如不存在则创建代币账户：租金付款方：您的钱包（8Aet…tiTo）\n  如不存在则创建代币账户：代币程序：Token-2022 program（Toke…xuEb）\n  Jito 小费：数量：0.000122053 SOL\n  Jito 小费：发送方：您的钱包（8Aet…tiTo）\n  Jito 小费：接收方：Jito 小费账户（96gY…rZU5）\n\n== 签名者\n  手续费付款方：您的钱包（8Aet…tiTo）\n\n== 手续费\n  总计：0.000079993 SOL\n  基础费：0.000005 SOL\n  优先费：0.000074993 SOL\n  优先费计算依据：每计算单元 149,986 微 lamports × 请求的 500,000 个计算单元\n  租金押金：最多 0.00151384 SOL，前提是本交易在缺失时才创建的账户尚不存在；退还给关闭该账户的一方\n\n== 有效期\n  到期时间：约一分钟后（最近区块哈希）\n\n影响：\n  - 您从您的钱包（8Aet…tiTo）发送 0.0005 SOL 到 879ArayuxbYjBhpUe4QCx8nqaAKjiwCG1hFiJo6zMGsA\n  - 从您的钱包（8Aet…tiTo）转账 0.0495 SOL 到您的 SOL 账户（4hJn…VH6R）\n  - 如包装 SOL 账户不存在，先将其创建为发送方的关联代币账户，费用由发送方承担\n  - 您从您的钱包（8Aet…tiTo）发送 ≤ 0.0495 SOL 到 DFlow Aggregator（DF1o…7QBH）\n  - 您从 DFlow Aggregator（DF1o…7QBH）收到 ≥ 142,243,976,392 原始单位的未验证代币 HMYd…pump，转入您的代币账户（9SQZ…GxVU）\n  - 创建您的代币账户（9SQZ…GxVU），由 Token-2022 program（Toke…xuEb）管理，存入 0.00151384 SOL，除非该账户已存在\n  - 您从您的钱包（8Aet…tiTo）发送 0.000122053 SOL 到 Jito 小费账户（96gY…rZU5）\n  - 您支付手续费 0.000079993 SOL\n  - 有效期约一分钟（最近区块哈希）\n\n原始数据：solana v0（798 字节）\n  摘要：b892642d9d9599ea782feb6bffdc9939bf6aa2c699eb2c67b6e5d3463baa7682\n",
+  "verdict": "ok"
+}

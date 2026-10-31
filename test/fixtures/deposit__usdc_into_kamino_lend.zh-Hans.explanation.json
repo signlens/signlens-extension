@@ -1,0 +1,2446 @@
+{
+  "actions": [
+    {
+      "instruction": 7,
+      "summary": {
+        "id": "KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD/deposit_reserve_liquidity_and_obligation_collateral_v2-summary",
+        "parts": [
+          {
+            "text": "将 "
+          },
+          {
+            "text": "4,635.28675 USDC",
+            "value": {
+              "type": "amount",
+              "value": {
+                "asset": {
+                  "decimals": 6,
+                  "description": null,
+                  "id": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+                  "symbol": "USDC",
+                  "trust": "verified"
+                },
+                "bound": "exact",
+                "note": null,
+                "note_words": null,
+                "units": "4635286750",
+                "words": {
+                  "id": "amount",
+                  "parts": [
+                    {
+                      "text": "4,635.28675 "
+                    },
+                    {
+                      "text": "USDC",
+                      "value": {
+                        "type": "text",
+                        "value": "USDC"
+                      }
+                    }
+                  ],
+                  "text": "4,635.28675 USDC"
+                }
+              }
+            }
+          },
+          {
+            "text": " 作为抵押品存入 Kamino Lend"
+          }
+        ],
+        "text": "将 4,635.28675 USDC 作为抵押品存入 Kamino Lend"
+      }
+    }
+  ],
+  "chain": "solana",
+  "effects": [
+    {
+      "message": {
+        "id": "effect-send",
+        "parts": [
+          {
+            "text": "您从"
+          },
+          {
+            "text": "您的钱包（2P5t…sPxW）",
+            "value": {
+              "type": "address",
+              "value": {
+                "address": "2P5tkJVpceLPdnejvc5DBGd4RxkmtouYfNkb9KKPsPxW",
+                "is_self": true,
+                "label": {
+                  "id": "accounts-your-wallet",
+                  "parts": [
+                    {
+                      "text": "您的钱包"
+                    }
+                  ],
+                  "text": "您的钱包"
+                },
+                "label_trust": "verified",
+                "stand_in": null,
+                "words": {
+                  "id": "address-labelled",
+                  "parts": [
+                    {
+                      "text": "您的钱包",
+                      "value": {
+                        "type": "words",
+                        "value": {
+                          "id": "accounts-your-wallet",
+                          "parts": [
+                            {
+                              "text": "您的钱包"
+                            }
+                          ],
+                          "text": "您的钱包"
+                        }
+                      }
+                    },
+                    {
+                      "text": "（"
+                    },
+                    {
+                      "short": {
+                        "address": "2P5tkJVpceLPdnejvc5DBGd4RxkmtouYfNkb9KKPsPxW",
+                        "is_self": true,
+                        "label": null,
+                        "label_trust": "verified",
+                        "stand_in": null,
+                        "words": null
+                      },
+                      "text": "2P5t…sPxW"
+                    },
+                    {
+                      "text": "）"
+                    }
+                  ],
+                  "text": "您的钱包（2P5t…sPxW）"
+                }
+              }
+            }
+          },
+          {
+            "text": "发送 "
+          },
+          {
+            "text": "4,635.28675 USDC",
+            "value": {
+              "type": "amount",
+              "value": {
+                "asset": {
+                  "decimals": 6,
+                  "description": null,
+                  "id": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+                  "symbol": "USDC",
+                  "trust": "verified"
+                },
+                "bound": "exact",
+                "note": null,
+                "note_words": null,
+                "units": "4635286750",
+                "words": {
+                  "id": "amount",
+                  "parts": [
+                    {
+                      "text": "4,635.28675 "
+                    },
+                    {
+                      "text": "USDC",
+                      "value": {
+                        "type": "text",
+                        "value": "USDC"
+                      }
+                    }
+                  ],
+                  "text": "4,635.28675 USDC"
+                }
+              }
+            }
+          },
+          {
+            "text": " 到 "
+          },
+          {
+            "text": "Kamino Lend（KLen…gmjD）",
+            "value": {
+              "type": "address",
+              "value": {
+                "address": "KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD",
+                "is_self": false,
+                "label": {
+                  "id": "accounts-name",
+                  "parts": [
+                    {
+                      "text": "Kamino Lend",
+                      "value": {
+                        "type": "text",
+                        "value": "Kamino Lend"
+                      }
+                    }
+                  ],
+                  "text": "Kamino Lend"
+                },
+                "label_trust": "verified",
+                "stand_in": null,
+                "words": {
+                  "id": "address-labelled",
+                  "parts": [
+                    {
+                      "text": "Kamino Lend",
+                      "value": {
+                        "type": "words",
+                        "value": {
+                          "id": "accounts-name",
+                          "parts": [
+                            {
+                              "text": "Kamino Lend",
+                              "value": {
+                                "type": "text",
+                                "value": "Kamino Lend"
+                              }
+                            }
+                          ],
+                          "text": "Kamino Lend"
+                        }
+                      }
+                    },
+                    {
+                      "text": "（"
+                    },
+                    {
+                      "short": {
+                        "address": "KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD",
+                        "is_self": false,
+                        "label": null,
+                        "label_trust": "verified",
+                        "stand_in": null,
+                        "words": null
+                      },
+                      "text": "KLen…gmjD"
+                    },
+                    {
+                      "text": "）"
+                    }
+                  ],
+                  "text": "Kamino Lend（KLen…gmjD）"
+                }
+              }
+            }
+          }
+        ],
+        "text": "您从您的钱包（2P5t…sPxW）发送 4,635.28675 USDC 到 Kamino Lend（KLen…gmjD）"
+      },
+      "type": "transfer",
+      "value": {
+        "amount": {
+          "asset": {
+            "decimals": 6,
+            "description": null,
+            "id": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+            "symbol": "USDC",
+            "trust": "verified"
+          },
+          "bound": "exact",
+          "note": null,
+          "note_words": null,
+          "units": "4635286750",
+          "words": {
+            "id": "amount",
+            "parts": [
+              {
+                "text": "4,635.28675 "
+              },
+              {
+                "text": "USDC",
+                "value": {
+                  "type": "text",
+                  "value": "USDC"
+                }
+              }
+            ],
+            "text": "4,635.28675 USDC"
+          }
+        },
+        "from": {
+          "address": "2P5tkJVpceLPdnejvc5DBGd4RxkmtouYfNkb9KKPsPxW",
+          "is_self": true,
+          "label": {
+            "id": "accounts-your-wallet",
+            "parts": [
+              {
+                "text": "您的钱包"
+              }
+            ],
+            "text": "您的钱包"
+          },
+          "label_trust": "verified",
+          "stand_in": null,
+          "words": {
+            "id": "address-labelled",
+            "parts": [
+              {
+                "text": "您的钱包",
+                "value": {
+                  "type": "words",
+                  "value": {
+                    "id": "accounts-your-wallet",
+                    "parts": [
+                      {
+                        "text": "您的钱包"
+                      }
+                    ],
+                    "text": "您的钱包"
+                  }
+                }
+              },
+              {
+                "text": "（"
+              },
+              {
+                "short": {
+                  "address": "2P5tkJVpceLPdnejvc5DBGd4RxkmtouYfNkb9KKPsPxW",
+                  "is_self": true,
+                  "label": null,
+                  "label_trust": "verified",
+                  "stand_in": null,
+                  "words": null
+                },
+                "text": "2P5t…sPxW"
+              },
+              {
+                "text": "）"
+              }
+            ],
+            "text": "您的钱包（2P5t…sPxW）"
+          }
+        },
+        "to": {
+          "address": "KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD",
+          "is_self": false,
+          "label": {
+            "id": "accounts-name",
+            "parts": [
+              {
+                "text": "Kamino Lend",
+                "value": {
+                  "type": "text",
+                  "value": "Kamino Lend"
+                }
+              }
+            ],
+            "text": "Kamino Lend"
+          },
+          "label_trust": "verified",
+          "stand_in": null,
+          "words": {
+            "id": "address-labelled",
+            "parts": [
+              {
+                "text": "Kamino Lend",
+                "value": {
+                  "type": "words",
+                  "value": {
+                    "id": "accounts-name",
+                    "parts": [
+                      {
+                        "text": "Kamino Lend",
+                        "value": {
+                          "type": "text",
+                          "value": "Kamino Lend"
+                        }
+                      }
+                    ],
+                    "text": "Kamino Lend"
+                  }
+                }
+              },
+              {
+                "text": "（"
+              },
+              {
+                "short": {
+                  "address": "KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "verified",
+                  "stand_in": null,
+                  "words": null
+                },
+                "text": "KLen…gmjD"
+              },
+              {
+                "text": "）"
+              }
+            ],
+            "text": "Kamino Lend（KLen…gmjD）"
+          }
+        }
+      }
+    },
+    {
+      "message": {
+        "id": "KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD/deposit_reserve_liquidity_and_obligation_collateral_v2-effects-other",
+        "parts": [
+          {
+            "text": "将存入的资产作为抵押品记入借贷账户"
+          }
+        ],
+        "text": "将存入的资产作为抵押品记入借贷账户"
+      },
+      "type": "other",
+      "value": {
+        "description": {
+          "id": "KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD/deposit_reserve_liquidity_and_obligation_collateral_v2-effects-other",
+          "parts": [
+            {
+              "text": "将存入的资产作为抵押品记入借贷账户"
+            }
+          ],
+          "text": "将存入的资产作为抵押品记入借贷账户"
+        }
+      }
+    },
+    {
+      "message": {
+        "id": "effect-create-deposit-if-missing",
+        "parts": [
+          {
+            "text": "创建"
+          },
+          {
+            "text": "您的 USDC 账户（4Pus…gpZ8）",
+            "value": {
+              "type": "address",
+              "value": {
+                "address": "4PusLnTYexjqGnHofx85uCymgdGc4QYmNhzKwtJjgpZ8",
+                "is_self": true,
+                "label": {
+                  "id": "accounts-your-token",
+                  "parts": [
+                    {
+                      "text": "您的 "
+                    },
+                    {
+                      "text": "USDC",
+                      "value": {
+                        "type": "text",
+                        "value": "USDC"
+                      }
+                    },
+                    {
+                      "text": " 账户"
+                    }
+                  ],
+                  "text": "您的 USDC 账户"
+                },
+                "label_trust": "verified",
+                "stand_in": null,
+                "words": {
+                  "id": "address-labelled",
+                  "parts": [
+                    {
+                      "text": "您的 USDC 账户",
+                      "value": {
+                        "type": "words",
+                        "value": {
+                          "id": "accounts-your-token",
+                          "parts": [
+                            {
+                              "text": "您的 "
+                            },
+                            {
+                              "text": "USDC",
+                              "value": {
+                                "type": "text",
+                                "value": "USDC"
+                              }
+                            },
+                            {
+                              "text": " 账户"
+                            }
+                          ],
+                          "text": "您的 USDC 账户"
+                        }
+                      }
+                    },
+                    {
+                      "text": "（"
+                    },
+                    {
+                      "short": {
+                        "address": "4PusLnTYexjqGnHofx85uCymgdGc4QYmNhzKwtJjgpZ8",
+                        "is_self": true,
+                        "label": null,
+                        "label_trust": "verified",
+                        "stand_in": null,
+                        "words": null
+                      },
+                      "text": "4Pus…gpZ8"
+                    },
+                    {
+                      "text": "）"
+                    }
+                  ],
+                  "text": "您的 USDC 账户（4Pus…gpZ8）"
+                }
+              }
+            }
+          },
+          {
+            "text": "，由 "
+          },
+          {
+            "text": "Token program（Toke…Q5DA）",
+            "value": {
+              "type": "address",
+              "value": {
+                "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+                "is_self": false,
+                "label": {
+                  "id": "accounts-name",
+                  "parts": [
+                    {
+                      "text": "Token program",
+                      "value": {
+                        "type": "text",
+                        "value": "Token program"
+                      }
+                    }
+                  ],
+                  "text": "Token program"
+                },
+                "label_trust": "verified",
+                "stand_in": null,
+                "words": {
+                  "id": "address-labelled",
+                  "parts": [
+                    {
+                      "text": "Token program",
+                      "value": {
+                        "type": "words",
+                        "value": {
+                          "id": "accounts-name",
+                          "parts": [
+                            {
+                              "text": "Token program",
+                              "value": {
+                                "type": "text",
+                                "value": "Token program"
+                              }
+                            }
+                          ],
+                          "text": "Token program"
+                        }
+                      }
+                    },
+                    {
+                      "text": "（"
+                    },
+                    {
+                      "short": {
+                        "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+                        "is_self": false,
+                        "label": null,
+                        "label_trust": "verified",
+                        "stand_in": null,
+                        "words": null
+                      },
+                      "text": "Toke…Q5DA"
+                    },
+                    {
+                      "text": "）"
+                    }
+                  ],
+                  "text": "Token program（Toke…Q5DA）"
+                }
+              }
+            }
+          },
+          {
+            "text": "管理，存入 "
+          },
+          {
+            "text": "0.00148844 SOL",
+            "value": {
+              "type": "amount",
+              "value": {
+                "asset": {
+                  "decimals": 9,
+                  "description": null,
+                  "id": "native",
+                  "symbol": "SOL",
+                  "trust": "fact"
+                },
+                "bound": "exact",
+                "note": null,
+                "note_words": null,
+                "units": "1488440",
+                "words": {
+                  "id": "amount",
+                  "parts": [
+                    {
+                      "text": "0.00148844 "
+                    },
+                    {
+                      "text": "SOL",
+                      "value": {
+                        "type": "text",
+                        "value": "SOL"
+                      }
+                    }
+                  ],
+                  "text": "0.00148844 SOL"
+                }
+              }
+            }
+          },
+          {
+            "text": "，除非该账户已存在"
+          }
+        ],
+        "text": "创建您的 USDC 账户（4Pus…gpZ8），由 Token program（Toke…Q5DA）管理，存入 0.00148844 SOL，除非该账户已存在"
+      },
+      "type": "create",
+      "value": {
+        "account": {
+          "address": "4PusLnTYexjqGnHofx85uCymgdGc4QYmNhzKwtJjgpZ8",
+          "is_self": true,
+          "label": {
+            "id": "accounts-your-token",
+            "parts": [
+              {
+                "text": "您的 "
+              },
+              {
+                "text": "USDC",
+                "value": {
+                  "type": "text",
+                  "value": "USDC"
+                }
+              },
+              {
+                "text": " 账户"
+              }
+            ],
+            "text": "您的 USDC 账户"
+          },
+          "label_trust": "verified",
+          "stand_in": null,
+          "words": {
+            "id": "address-labelled",
+            "parts": [
+              {
+                "text": "您的 USDC 账户",
+                "value": {
+                  "type": "words",
+                  "value": {
+                    "id": "accounts-your-token",
+                    "parts": [
+                      {
+                        "text": "您的 "
+                      },
+                      {
+                        "text": "USDC",
+                        "value": {
+                          "type": "text",
+                          "value": "USDC"
+                        }
+                      },
+                      {
+                        "text": " 账户"
+                      }
+                    ],
+                    "text": "您的 USDC 账户"
+                  }
+                }
+              },
+              {
+                "text": "（"
+              },
+              {
+                "short": {
+                  "address": "4PusLnTYexjqGnHofx85uCymgdGc4QYmNhzKwtJjgpZ8",
+                  "is_self": true,
+                  "label": null,
+                  "label_trust": "verified",
+                  "stand_in": null,
+                  "words": null
+                },
+                "text": "4Pus…gpZ8"
+              },
+              {
+                "text": "）"
+              }
+            ],
+            "text": "您的 USDC 账户（4Pus…gpZ8）"
+          }
+        },
+        "deposit": {
+          "asset": {
+            "decimals": 9,
+            "description": null,
+            "id": "native",
+            "symbol": "SOL",
+            "trust": "fact"
+          },
+          "bound": "exact",
+          "note": null,
+          "note_words": null,
+          "units": "1488440",
+          "words": {
+            "id": "amount",
+            "parts": [
+              {
+                "text": "0.00148844 "
+              },
+              {
+                "text": "SOL",
+                "value": {
+                  "type": "text",
+                  "value": "SOL"
+                }
+              }
+            ],
+            "text": "0.00148844 SOL"
+          }
+        },
+        "if_missing": true,
+        "owner": {
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+          "is_self": false,
+          "label": {
+            "id": "accounts-name",
+            "parts": [
+              {
+                "text": "Token program",
+                "value": {
+                  "type": "text",
+                  "value": "Token program"
+                }
+              }
+            ],
+            "text": "Token program"
+          },
+          "label_trust": "verified",
+          "stand_in": null,
+          "words": {
+            "id": "address-labelled",
+            "parts": [
+              {
+                "text": "Token program",
+                "value": {
+                  "type": "words",
+                  "value": {
+                    "id": "accounts-name",
+                    "parts": [
+                      {
+                        "text": "Token program",
+                        "value": {
+                          "type": "text",
+                          "value": "Token program"
+                        }
+                      }
+                    ],
+                    "text": "Token program"
+                  }
+                }
+              },
+              {
+                "text": "（"
+              },
+              {
+                "short": {
+                  "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+                  "is_self": false,
+                  "label": null,
+                  "label_trust": "verified",
+                  "stand_in": null,
+                  "words": null
+                },
+                "text": "Toke…Q5DA"
+              },
+              {
+                "text": "）"
+              }
+            ],
+            "text": "Token program（Toke…Q5DA）"
+          }
+        }
+      }
+    },
+    {
+      "message": {
+        "id": "KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD/refresh_reserve-effects-other",
+        "parts": [
+          {
+            "text": "更新储备的预言机价格和应计利息；没有代币转移"
+          }
+        ],
+        "text": "更新储备的预言机价格和应计利息；没有代币转移"
+      },
+      "type": "other",
+      "value": {
+        "description": {
+          "id": "KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD/refresh_reserve-effects-other",
+          "parts": [
+            {
+              "text": "更新储备的预言机价格和应计利息；没有代币转移"
+            }
+          ],
+          "text": "更新储备的预言机价格和应计利息；没有代币转移"
+        }
+      }
+    },
+    {
+      "message": {
+        "id": "KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD/refresh_reserve-effects-other",
+        "parts": [
+          {
+            "text": "更新储备的预言机价格和应计利息；没有代币转移"
+          }
+        ],
+        "text": "更新储备的预言机价格和应计利息；没有代币转移"
+      },
+      "type": "other",
+      "value": {
+        "description": {
+          "id": "KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD/refresh_reserve-effects-other",
+          "parts": [
+            {
+              "text": "更新储备的预言机价格和应计利息；没有代币转移"
+            }
+          ],
+          "text": "更新储备的预言机价格和应计利息；没有代币转移"
+        }
+      }
+    },
+    {
+      "message": {
+        "id": "KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD/refresh_reserve-effects-other",
+        "parts": [
+          {
+            "text": "更新储备的预言机价格和应计利息；没有代币转移"
+          }
+        ],
+        "text": "更新储备的预言机价格和应计利息；没有代币转移"
+      },
+      "type": "other",
+      "value": {
+        "description": {
+          "id": "KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD/refresh_reserve-effects-other",
+          "parts": [
+            {
+              "text": "更新储备的预言机价格和应计利息；没有代币转移"
+            }
+          ],
+          "text": "更新储备的预言机价格和应计利息；没有代币转移"
+        }
+      }
+    },
+    {
+      "message": {
+        "id": "KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD/refresh_obligation-effects-other",
+        "parts": [
+          {
+            "text": "重新计算借贷账户的抵押品和债务价值；没有代币转移"
+          }
+        ],
+        "text": "重新计算借贷账户的抵押品和债务价值；没有代币转移"
+      },
+      "type": "other",
+      "value": {
+        "description": {
+          "id": "KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD/refresh_obligation-effects-other",
+          "parts": [
+            {
+              "text": "重新计算借贷账户的抵押品和债务价值；没有代币转移"
+            }
+          ],
+          "text": "重新计算借贷账户的抵押品和债务价值；没有代币转移"
+        }
+      }
+    },
+    {
+      "message": {
+        "id": "effect-fee-own",
+        "parts": [
+          {
+            "text": "您支付手续费 "
+          },
+          {
+            "text": "0.00002 SOL",
+            "value": {
+              "type": "amount",
+              "value": {
+                "asset": {
+                  "decimals": 9,
+                  "description": null,
+                  "id": "native",
+                  "symbol": "SOL",
+                  "trust": "fact"
+                },
+                "bound": "exact",
+                "note": null,
+                "note_words": null,
+                "units": "20000",
+                "words": {
+                  "id": "amount",
+                  "parts": [
+                    {
+                      "text": "0.00002 "
+                    },
+                    {
+                      "text": "SOL",
+                      "value": {
+                        "type": "text",
+                        "value": "SOL"
+                      }
+                    }
+                  ],
+                  "text": "0.00002 SOL"
+                }
+              }
+            }
+          }
+        ],
+        "text": "您支付手续费 0.00002 SOL"
+      },
+      "type": "fee",
+      "value": {
+        "amount": {
+          "asset": {
+            "decimals": 9,
+            "description": null,
+            "id": "native",
+            "symbol": "SOL",
+            "trust": "fact"
+          },
+          "bound": "exact",
+          "note": null,
+          "note_words": null,
+          "units": "20000",
+          "words": {
+            "id": "amount",
+            "parts": [
+              {
+                "text": "0.00002 "
+              },
+              {
+                "text": "SOL",
+                "value": {
+                  "type": "text",
+                  "value": "SOL"
+                }
+              }
+            ],
+            "text": "0.00002 SOL"
+          }
+        },
+        "payer": {
+          "address": "2P5tkJVpceLPdnejvc5DBGd4RxkmtouYfNkb9KKPsPxW",
+          "is_self": true,
+          "label": {
+            "id": "accounts-your-wallet",
+            "parts": [
+              {
+                "text": "您的钱包"
+              }
+            ],
+            "text": "您的钱包"
+          },
+          "label_trust": "verified",
+          "stand_in": null,
+          "words": {
+            "id": "address-labelled",
+            "parts": [
+              {
+                "text": "您的钱包",
+                "value": {
+                  "type": "words",
+                  "value": {
+                    "id": "accounts-your-wallet",
+                    "parts": [
+                      {
+                        "text": "您的钱包"
+                      }
+                    ],
+                    "text": "您的钱包"
+                  }
+                }
+              },
+              {
+                "text": "（"
+              },
+              {
+                "short": {
+                  "address": "2P5tkJVpceLPdnejvc5DBGd4RxkmtouYfNkb9KKPsPxW",
+                  "is_self": true,
+                  "label": null,
+                  "label_trust": "verified",
+                  "stand_in": null,
+                  "words": null
+                },
+                "text": "2P5t…sPxW"
+              },
+              {
+                "text": "）"
+              }
+            ],
+            "text": "您的钱包（2P5t…sPxW）"
+          }
+        }
+      }
+    },
+    {
+      "message": {
+        "id": "effect-recent-blockhash",
+        "parts": [
+          {
+            "text": "有效期约一分钟（最近区块哈希）"
+          }
+        ],
+        "text": "有效期约一分钟（最近区块哈希）"
+      },
+      "type": "lifetime",
+      "value": {
+        "type": "recent_blockhash"
+      }
+    }
+  ],
+  "findings": [],
+  "locale": {
+    "asked": [
+      "zh-CN"
+    ],
+    "direction": "ltr",
+    "fallbacks": 18,
+    "review": {
+      "by": [
+        "a native speaker"
+      ],
+      "kind": "reviewed",
+      "on": "2026-10-31"
+    },
+    "used": "zh-Hans"
+  },
+  "raw": {
+    "digest": "00aceb9aa518bff00dfe2464dfe370cd22dc63e59126a1521d38557ae97a3612",
+    "format": "solana v0"
+  },
+  "schema": "signlens-explanation/2",
+  "sections": [
+    {
+      "collapsed": false,
+      "fields": [
+        {
+          "help": {
+            "id": "KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD/glossary-deposit",
+            "parts": [
+              {
+                "text": "What you put into the reserve. It earns interest and backs what you borrow."
+              }
+            ],
+            "text": "What you put into the reserve. It earns interest and backs what you borrow."
+          },
+          "label": {
+            "id": "KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD/deposit_reserve_liquidity_and_obligation_collateral_v2-fields-args_liquidity_amount",
+            "parts": [
+              {
+                "text": "存入"
+              }
+            ],
+            "text": "存入"
+          },
+          "trust": "fact",
+          "value": {
+            "type": "amount",
+            "value": {
+              "asset": {
+                "decimals": 6,
+                "description": null,
+                "id": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+                "symbol": "USDC",
+                "trust": "verified"
+              },
+              "bound": "exact",
+              "note": null,
+              "note_words": null,
+              "units": "4635286750",
+              "words": {
+                "id": "amount",
+                "parts": [
+                  {
+                    "text": "4,635.28675 "
+                  },
+                  {
+                    "text": "USDC",
+                    "value": {
+                      "type": "text",
+                      "value": "USDC"
+                    }
+                  }
+                ],
+                "text": "4,635.28675 USDC"
+              }
+            }
+          }
+        },
+        {
+          "help": {
+            "id": "KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD/glossary-obligation",
+            "parts": [
+              {
+                "text": "Your account with Kamino Lend: what you have deposited and what you owe."
+              }
+            ],
+            "text": "Your account with Kamino Lend: what you have deposited and what you owe."
+          },
+          "label": {
+            "id": "KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD/deposit_reserve_liquidity_and_obligation_collateral_v2-fields-accounts_deposit_accounts_obligation",
+            "parts": [
+              {
+                "text": "借贷账户"
+              }
+            ],
+            "text": "借贷账户"
+          },
+          "trust": "fact",
+          "value": {
+            "type": "address",
+            "value": {
+              "address": "5iLEgayZ19eL6vGLEtELtCpYrGxZYGL4xEBsxMaYAfFz",
+              "is_self": false,
+              "label": null,
+              "label_trust": "fact",
+              "stand_in": null,
+              "words": null
+            }
+          }
+        },
+        {
+          "help": {
+            "id": "KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD/glossary-reserve",
+            "parts": [
+              {
+                "text": "The pool for one token in the market. Deposits go in, loans come out."
+              }
+            ],
+            "text": "The pool for one token in the market. Deposits go in, loans come out."
+          },
+          "label": {
+            "id": "KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD/deposit_reserve_liquidity_and_obligation_collateral_v2-fields-accounts_deposit_accounts_reserve",
+            "parts": [
+              {
+                "text": "储备"
+              }
+            ],
+            "text": "储备"
+          },
+          "trust": "fact",
+          "value": {
+            "type": "address",
+            "value": {
+              "address": "D6q6wuQSrifJKZYpR1M8R4YawnLDtDsMmWM1NbBmgJ59",
+              "is_self": false,
+              "label": null,
+              "label_trust": "fact",
+              "stand_in": null,
+              "words": null
+            }
+          }
+        },
+        {
+          "help": {
+            "id": "KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD/glossary-from_account",
+            "parts": [
+              {
+                "text": "The token account the tokens leave. It should be one of yours."
+              }
+            ],
+            "text": "The token account the tokens leave. It should be one of yours."
+          },
+          "label": {
+            "id": "KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD/deposit_reserve_liquidity_and_obligation_collateral_v2-fields-accounts_deposit_accounts_user_source_liquidity",
+            "parts": [
+              {
+                "text": "转出账户"
+              }
+            ],
+            "text": "转出账户"
+          },
+          "trust": "fact",
+          "value": {
+            "type": "address",
+            "value": {
+              "address": "4PusLnTYexjqGnHofx85uCymgdGc4QYmNhzKwtJjgpZ8",
+              "is_self": true,
+              "label": {
+                "id": "accounts-your-token",
+                "parts": [
+                  {
+                    "text": "您的 "
+                  },
+                  {
+                    "text": "USDC",
+                    "value": {
+                      "type": "text",
+                      "value": "USDC"
+                    }
+                  },
+                  {
+                    "text": " 账户"
+                  }
+                ],
+                "text": "您的 USDC 账户"
+              },
+              "label_trust": "verified",
+              "stand_in": null,
+              "words": {
+                "id": "address-labelled",
+                "parts": [
+                  {
+                    "text": "您的 USDC 账户",
+                    "value": {
+                      "type": "words",
+                      "value": {
+                        "id": "accounts-your-token",
+                        "parts": [
+                          {
+                            "text": "您的 "
+                          },
+                          {
+                            "text": "USDC",
+                            "value": {
+                              "type": "text",
+                              "value": "USDC"
+                            }
+                          },
+                          {
+                            "text": " 账户"
+                          }
+                        ],
+                        "text": "您的 USDC 账户"
+                      }
+                    }
+                  },
+                  {
+                    "text": "（"
+                  },
+                  {
+                    "short": {
+                      "address": "4PusLnTYexjqGnHofx85uCymgdGc4QYmNhzKwtJjgpZ8",
+                      "is_self": true,
+                      "label": null,
+                      "label_trust": "verified",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "4Pus…gpZ8"
+                  },
+                  {
+                    "text": "）"
+                  }
+                ],
+                "text": "您的 USDC 账户（4Pus…gpZ8）"
+              }
+            }
+          }
+        }
+      ],
+      "kind": {
+        "type": "instruction",
+        "value": {
+          "index": 7
+        }
+      },
+      "subtitle": {
+        "id": "descriptor-subtitle",
+        "parts": [
+          {
+            "text": "Kamino Lend",
+            "value": {
+              "type": "text",
+              "value": "Kamino Lend"
+            }
+          },
+          {
+            "text": "（描述文件审核于 "
+          },
+          {
+            "text": "2026-09-29",
+            "value": {
+              "type": "text",
+              "value": "2026-09-29"
+            }
+          },
+          {
+            "text": "、可由 "
+          },
+          {
+            "short": {
+              "address": "GzFgdRJXmawPhGeBsyRCDLx4jAKPsvbUqoqitzppkzkW",
+              "is_self": false,
+              "label": null,
+              "label_trust": "fact",
+              "stand_in": null,
+              "words": null
+            },
+            "text": "GzFg…kzkW"
+          },
+          {
+            "text": " 升级）"
+          }
+        ],
+        "text": "Kamino Lend（描述文件审核于 2026-09-29、可由 GzFg…kzkW 升级）"
+      },
+      "title": {
+        "id": "KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD/deposit_reserve_liquidity_and_obligation_collateral_v2-intent",
+        "parts": [
+          {
+            "text": "存入抵押品"
+          }
+        ],
+        "text": "存入抵押品"
+      }
+    },
+    {
+      "collapsed": true,
+      "fields": [
+        {
+          "help": {
+            "id": "label-compute-unit-limit.help",
+            "parts": [
+              {
+                "text": "How much work the transaction may do. It affects the fee, not what the transaction does."
+              }
+            ],
+            "text": "How much work the transaction may do. It affects the fee, not what the transaction does."
+          },
+          "label": {
+            "id": "label-compute-unit-limit",
+            "parts": [
+              {
+                "text": "计算单元上限"
+              }
+            ],
+            "text": "计算单元上限"
+          },
+          "trust": "fact",
+          "value": {
+            "type": "integer",
+            "value": "213727"
+          }
+        },
+        {
+          "help": {
+            "id": "label-compute-unit-price.help",
+            "parts": [
+              {
+                "text": "The tip per unit of work, in millionths of a lamport. With the limit, it sets the priority fee."
+              }
+            ],
+            "text": "The tip per unit of work, in millionths of a lamport. With the limit, it sets the priority fee."
+          },
+          "label": {
+            "id": "label-compute-unit-price",
+            "parts": [
+              {
+                "text": "计算单元价格"
+              }
+            ],
+            "text": "计算单元价格"
+          },
+          "trust": "fact",
+          "value": {
+            "type": "words",
+            "value": {
+              "id": "compute-budget-price",
+              "parts": [
+                {
+                  "text": "每计算单元 70,182 微 lamports"
+                }
+              ],
+              "text": "每计算单元 70,182 微 lamports"
+            }
+          }
+        },
+        {
+          "help": {
+            "id": "label-token-account.help",
+            "parts": [
+              {
+                "text": "An account that holds one token for one wallet. A wallet has a separate one for each token it holds."
+              }
+            ],
+            "text": "An account that holds one token for one wallet. A wallet has a separate one for each token it holds."
+          },
+          "label": {
+            "id": "explain-housekeeping-label",
+            "parts": [
+              {
+                "text": "如不存在则创建代币账户：代币账户"
+              }
+            ],
+            "text": "如不存在则创建代币账户：代币账户"
+          },
+          "trust": "fact",
+          "value": {
+            "type": "address",
+            "value": {
+              "address": "4PusLnTYexjqGnHofx85uCymgdGc4QYmNhzKwtJjgpZ8",
+              "is_self": true,
+              "label": {
+                "id": "accounts-your-token",
+                "parts": [
+                  {
+                    "text": "您的 "
+                  },
+                  {
+                    "text": "USDC",
+                    "value": {
+                      "type": "text",
+                      "value": "USDC"
+                    }
+                  },
+                  {
+                    "text": " 账户"
+                  }
+                ],
+                "text": "您的 USDC 账户"
+              },
+              "label_trust": "verified",
+              "stand_in": null,
+              "words": {
+                "id": "address-labelled",
+                "parts": [
+                  {
+                    "text": "您的 USDC 账户",
+                    "value": {
+                      "type": "words",
+                      "value": {
+                        "id": "accounts-your-token",
+                        "parts": [
+                          {
+                            "text": "您的 "
+                          },
+                          {
+                            "text": "USDC",
+                            "value": {
+                              "type": "text",
+                              "value": "USDC"
+                            }
+                          },
+                          {
+                            "text": " 账户"
+                          }
+                        ],
+                        "text": "您的 USDC 账户"
+                      }
+                    }
+                  },
+                  {
+                    "text": "（"
+                  },
+                  {
+                    "short": {
+                      "address": "4PusLnTYexjqGnHofx85uCymgdGc4QYmNhzKwtJjgpZ8",
+                      "is_self": true,
+                      "label": null,
+                      "label_trust": "verified",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "4Pus…gpZ8"
+                  },
+                  {
+                    "text": "）"
+                  }
+                ],
+                "text": "您的 USDC 账户（4Pus…gpZ8）"
+              }
+            }
+          }
+        },
+        {
+          "help": null,
+          "label": {
+            "id": "explain-housekeeping-label",
+            "parts": [
+              {
+                "text": "如不存在则创建代币账户：所有者"
+              }
+            ],
+            "text": "如不存在则创建代币账户：所有者"
+          },
+          "trust": "fact",
+          "value": {
+            "type": "address",
+            "value": {
+              "address": "2P5tkJVpceLPdnejvc5DBGd4RxkmtouYfNkb9KKPsPxW",
+              "is_self": true,
+              "label": {
+                "id": "accounts-your-wallet",
+                "parts": [
+                  {
+                    "text": "您的钱包"
+                  }
+                ],
+                "text": "您的钱包"
+              },
+              "label_trust": "verified",
+              "stand_in": null,
+              "words": {
+                "id": "address-labelled",
+                "parts": [
+                  {
+                    "text": "您的钱包",
+                    "value": {
+                      "type": "words",
+                      "value": {
+                        "id": "accounts-your-wallet",
+                        "parts": [
+                          {
+                            "text": "您的钱包"
+                          }
+                        ],
+                        "text": "您的钱包"
+                      }
+                    }
+                  },
+                  {
+                    "text": "（"
+                  },
+                  {
+                    "short": {
+                      "address": "2P5tkJVpceLPdnejvc5DBGd4RxkmtouYfNkb9KKPsPxW",
+                      "is_self": true,
+                      "label": null,
+                      "label_trust": "verified",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "2P5t…sPxW"
+                  },
+                  {
+                    "text": "）"
+                  }
+                ],
+                "text": "您的钱包（2P5t…sPxW）"
+              }
+            }
+          }
+        },
+        {
+          "help": {
+            "id": "label-mint.help",
+            "parts": [
+              {
+                "text": "The address that identifies the token itself, as opposed to an account holding some of it."
+              }
+            ],
+            "text": "The address that identifies the token itself, as opposed to an account holding some of it."
+          },
+          "label": {
+            "id": "explain-housekeeping-label",
+            "parts": [
+              {
+                "text": "如不存在则创建代币账户：代币铸造地址"
+              }
+            ],
+            "text": "如不存在则创建代币账户：代币铸造地址"
+          },
+          "trust": "fact",
+          "value": {
+            "type": "address",
+            "value": {
+              "address": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+              "is_self": false,
+              "label": {
+                "id": "accounts-mint",
+                "parts": [
+                  {
+                    "text": "USDC",
+                    "value": {
+                      "type": "text",
+                      "value": "USDC"
+                    }
+                  },
+                  {
+                    "text": " 代币铸造地址"
+                  }
+                ],
+                "text": "USDC 代币铸造地址"
+              },
+              "label_trust": "verified",
+              "stand_in": null,
+              "words": {
+                "id": "address-labelled",
+                "parts": [
+                  {
+                    "text": "USDC 代币铸造地址",
+                    "value": {
+                      "type": "words",
+                      "value": {
+                        "id": "accounts-mint",
+                        "parts": [
+                          {
+                            "text": "USDC",
+                            "value": {
+                              "type": "text",
+                              "value": "USDC"
+                            }
+                          },
+                          {
+                            "text": " 代币铸造地址"
+                          }
+                        ],
+                        "text": "USDC 代币铸造地址"
+                      }
+                    }
+                  },
+                  {
+                    "text": "（"
+                  },
+                  {
+                    "short": {
+                      "address": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+                      "is_self": false,
+                      "label": null,
+                      "label_trust": "verified",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "EPjF…Dt1v"
+                  },
+                  {
+                    "text": "）"
+                  }
+                ],
+                "text": "USDC 代币铸造地址（EPjF…Dt1v）"
+              }
+            }
+          }
+        },
+        {
+          "help": {
+            "id": "label-rent-paid-by.help",
+            "parts": [
+              {
+                "text": "Who pays the deposit that keeps a new account on chain. It comes back when the account is closed."
+              }
+            ],
+            "text": "Who pays the deposit that keeps a new account on chain. It comes back when the account is closed."
+          },
+          "label": {
+            "id": "explain-housekeeping-label",
+            "parts": [
+              {
+                "text": "如不存在则创建代币账户：租金付款方"
+              }
+            ],
+            "text": "如不存在则创建代币账户：租金付款方"
+          },
+          "trust": "fact",
+          "value": {
+            "type": "address",
+            "value": {
+              "address": "2P5tkJVpceLPdnejvc5DBGd4RxkmtouYfNkb9KKPsPxW",
+              "is_self": true,
+              "label": {
+                "id": "accounts-your-wallet",
+                "parts": [
+                  {
+                    "text": "您的钱包"
+                  }
+                ],
+                "text": "您的钱包"
+              },
+              "label_trust": "verified",
+              "stand_in": null,
+              "words": {
+                "id": "address-labelled",
+                "parts": [
+                  {
+                    "text": "您的钱包",
+                    "value": {
+                      "type": "words",
+                      "value": {
+                        "id": "accounts-your-wallet",
+                        "parts": [
+                          {
+                            "text": "您的钱包"
+                          }
+                        ],
+                        "text": "您的钱包"
+                      }
+                    }
+                  },
+                  {
+                    "text": "（"
+                  },
+                  {
+                    "short": {
+                      "address": "2P5tkJVpceLPdnejvc5DBGd4RxkmtouYfNkb9KKPsPxW",
+                      "is_self": true,
+                      "label": null,
+                      "label_trust": "verified",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "2P5t…sPxW"
+                  },
+                  {
+                    "text": "）"
+                  }
+                ],
+                "text": "您的钱包（2P5t…sPxW）"
+              }
+            }
+          }
+        },
+        {
+          "help": {
+            "id": "label-token-program.help",
+            "parts": [
+              {
+                "text": "The program that manages this token: SPL Token or Token-2022."
+              }
+            ],
+            "text": "The program that manages this token: SPL Token or Token-2022."
+          },
+          "label": {
+            "id": "explain-housekeeping-label",
+            "parts": [
+              {
+                "text": "如不存在则创建代币账户：代币程序"
+              }
+            ],
+            "text": "如不存在则创建代币账户：代币程序"
+          },
+          "trust": "fact",
+          "value": {
+            "type": "address",
+            "value": {
+              "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "is_self": false,
+              "label": {
+                "id": "accounts-name",
+                "parts": [
+                  {
+                    "text": "Token program",
+                    "value": {
+                      "type": "text",
+                      "value": "Token program"
+                    }
+                  }
+                ],
+                "text": "Token program"
+              },
+              "label_trust": "verified",
+              "stand_in": null,
+              "words": {
+                "id": "address-labelled",
+                "parts": [
+                  {
+                    "text": "Token program",
+                    "value": {
+                      "type": "words",
+                      "value": {
+                        "id": "accounts-name",
+                        "parts": [
+                          {
+                            "text": "Token program",
+                            "value": {
+                              "type": "text",
+                              "value": "Token program"
+                            }
+                          }
+                        ],
+                        "text": "Token program"
+                      }
+                    }
+                  },
+                  {
+                    "text": "（"
+                  },
+                  {
+                    "short": {
+                      "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+                      "is_self": false,
+                      "label": null,
+                      "label_trust": "verified",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "Toke…Q5DA"
+                  },
+                  {
+                    "text": "）"
+                  }
+                ],
+                "text": "Token program（Toke…Q5DA）"
+              }
+            }
+          }
+        },
+        {
+          "help": {
+            "id": "KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD/glossary-reserve",
+            "parts": [
+              {
+                "text": "The pool for one token in the market. Deposits go in, loans come out."
+              }
+            ],
+            "text": "The pool for one token in the market. Deposits go in, loans come out."
+          },
+          "label": {
+            "id": "explain-housekeeping-label",
+            "parts": [
+              {
+                "text": "刷新储备：储备"
+              }
+            ],
+            "text": "刷新储备：储备"
+          },
+          "trust": "fact",
+          "value": {
+            "type": "address",
+            "value": {
+              "address": "37Jk2zkz23vkAYBT66HM2gaqJuNg2nYLsCreQAVt5MWK",
+              "is_self": false,
+              "label": null,
+              "label_trust": "fact",
+              "stand_in": null,
+              "words": null
+            }
+          }
+        },
+        {
+          "help": {
+            "id": "KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD/glossary-reserve",
+            "parts": [
+              {
+                "text": "The pool for one token in the market. Deposits go in, loans come out."
+              }
+            ],
+            "text": "The pool for one token in the market. Deposits go in, loans come out."
+          },
+          "label": {
+            "id": "explain-housekeeping-label",
+            "parts": [
+              {
+                "text": "刷新储备：储备"
+              }
+            ],
+            "text": "刷新储备：储备"
+          },
+          "trust": "fact",
+          "value": {
+            "type": "address",
+            "value": {
+              "address": "d4A2prbA2whesmvHaL88BH6Ewn5N4bTSU2Ze8P6Bc4Q",
+              "is_self": false,
+              "label": null,
+              "label_trust": "fact",
+              "stand_in": null,
+              "words": null
+            }
+          }
+        },
+        {
+          "help": {
+            "id": "KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD/glossary-reserve",
+            "parts": [
+              {
+                "text": "The pool for one token in the market. Deposits go in, loans come out."
+              }
+            ],
+            "text": "The pool for one token in the market. Deposits go in, loans come out."
+          },
+          "label": {
+            "id": "explain-housekeeping-label",
+            "parts": [
+              {
+                "text": "刷新储备：储备"
+              }
+            ],
+            "text": "刷新储备：储备"
+          },
+          "trust": "fact",
+          "value": {
+            "type": "address",
+            "value": {
+              "address": "D6q6wuQSrifJKZYpR1M8R4YawnLDtDsMmWM1NbBmgJ59",
+              "is_self": false,
+              "label": null,
+              "label_trust": "fact",
+              "stand_in": null,
+              "words": null
+            }
+          }
+        },
+        {
+          "help": {
+            "id": "KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD/glossary-obligation",
+            "parts": [
+              {
+                "text": "Your account with Kamino Lend: what you have deposited and what you owe."
+              }
+            ],
+            "text": "Your account with Kamino Lend: what you have deposited and what you owe."
+          },
+          "label": {
+            "id": "explain-housekeeping-label",
+            "parts": [
+              {
+                "text": "刷新借贷账户：借贷账户"
+              }
+            ],
+            "text": "刷新借贷账户：借贷账户"
+          },
+          "trust": "fact",
+          "value": {
+            "type": "address",
+            "value": {
+              "address": "5iLEgayZ19eL6vGLEtELtCpYrGxZYGL4xEBsxMaYAfFz",
+              "is_self": false,
+              "label": null,
+              "label_trust": "fact",
+              "stand_in": null,
+              "words": null
+            }
+          }
+        },
+        {
+          "help": {
+            "id": "label-additional-accounts.help",
+            "parts": [
+              {
+                "text": "Additional accounts this instruction uses that its reviewed descriptor does not name. It is normal for instructions to need several."
+              }
+            ],
+            "text": "Additional accounts this instruction uses that its reviewed descriptor does not name. It is normal for instructions to need several."
+          },
+          "label": {
+            "id": "explain-housekeeping-label",
+            "parts": [
+              {
+                "text": "刷新借贷账户：额外账户"
+              }
+            ],
+            "text": "刷新借贷账户：额外账户"
+          },
+          "trust": "fact",
+          "value": {
+            "type": "words",
+            "value": {
+              "id": "descriptor-additional-accounts",
+              "parts": [
+                {
+                  "text": "3",
+                  "value": {
+                    "type": "integer",
+                    "value": "3"
+                  }
+                },
+                {
+                  "text": " 个，此描述文件未予命名"
+                }
+              ],
+              "text": "3 个，此描述文件未予命名"
+            }
+          }
+        }
+      ],
+      "kind": {
+        "type": "housekeeping"
+      },
+      "subtitle": null,
+      "title": {
+        "id": "explain-also",
+        "parts": [
+          {
+            "text": "其他"
+          }
+        ],
+        "text": "其他"
+      }
+    },
+    {
+      "collapsed": false,
+      "fields": [
+        {
+          "help": {
+            "id": "label-fee-payer.help",
+            "parts": [
+              {
+                "text": "The account that pays the fee: the first signer."
+              }
+            ],
+            "text": "The account that pays the fee: the first signer."
+          },
+          "label": {
+            "id": "label-fee-payer",
+            "parts": [
+              {
+                "text": "手续费付款方"
+              }
+            ],
+            "text": "手续费付款方"
+          },
+          "trust": "fact",
+          "value": {
+            "type": "address",
+            "value": {
+              "address": "2P5tkJVpceLPdnejvc5DBGd4RxkmtouYfNkb9KKPsPxW",
+              "is_self": true,
+              "label": {
+                "id": "accounts-your-wallet",
+                "parts": [
+                  {
+                    "text": "您的钱包"
+                  }
+                ],
+                "text": "您的钱包"
+              },
+              "label_trust": "verified",
+              "stand_in": null,
+              "words": {
+                "id": "address-labelled",
+                "parts": [
+                  {
+                    "text": "您的钱包",
+                    "value": {
+                      "type": "words",
+                      "value": {
+                        "id": "accounts-your-wallet",
+                        "parts": [
+                          {
+                            "text": "您的钱包"
+                          }
+                        ],
+                        "text": "您的钱包"
+                      }
+                    }
+                  },
+                  {
+                    "text": "（"
+                  },
+                  {
+                    "short": {
+                      "address": "2P5tkJVpceLPdnejvc5DBGd4RxkmtouYfNkb9KKPsPxW",
+                      "is_self": true,
+                      "label": null,
+                      "label_trust": "verified",
+                      "stand_in": null,
+                      "words": null
+                    },
+                    "text": "2P5t…sPxW"
+                  },
+                  {
+                    "text": "）"
+                  }
+                ],
+                "text": "您的钱包（2P5t…sPxW）"
+              }
+            }
+          }
+        }
+      ],
+      "kind": {
+        "type": "signers"
+      },
+      "subtitle": null,
+      "title": {
+        "id": "explain-signers",
+        "parts": [
+          {
+            "text": "签名者"
+          }
+        ],
+        "text": "签名者"
+      }
+    },
+    {
+      "collapsed": false,
+      "fields": [
+        {
+          "help": {
+            "id": "label-total.help",
+            "parts": [
+              {
+                "text": "What the network charges for this transaction. The fee payer pays it whether the transaction succeeds or fails."
+              }
+            ],
+            "text": "What the network charges for this transaction. The fee payer pays it whether the transaction succeeds or fails."
+          },
+          "label": {
+            "id": "label-total",
+            "parts": [
+              {
+                "text": "总计"
+              }
+            ],
+            "text": "总计"
+          },
+          "trust": "fact",
+          "value": {
+            "type": "amount",
+            "value": {
+              "asset": {
+                "decimals": 9,
+                "description": null,
+                "id": "native",
+                "symbol": "SOL",
+                "trust": "fact"
+              },
+              "bound": "exact",
+              "note": null,
+              "note_words": null,
+              "units": "20000",
+              "words": {
+                "id": "amount",
+                "parts": [
+                  {
+                    "text": "0.00002 "
+                  },
+                  {
+                    "text": "SOL",
+                    "value": {
+                      "type": "text",
+                      "value": "SOL"
+                    }
+                  }
+                ],
+                "text": "0.00002 SOL"
+              }
+            }
+          }
+        },
+        {
+          "help": {
+            "id": "label-base.help",
+            "parts": [
+              {
+                "text": "The flat part of the fee: the network charges it per signature."
+              }
+            ],
+            "text": "The flat part of the fee: the network charges it per signature."
+          },
+          "label": {
+            "id": "label-base",
+            "parts": [
+              {
+                "text": "基础费"
+              }
+            ],
+            "text": "基础费"
+          },
+          "trust": "fact",
+          "value": {
+            "type": "amount",
+            "value": {
+              "asset": {
+                "decimals": 9,
+                "description": null,
+                "id": "native",
+                "symbol": "SOL",
+                "trust": "fact"
+              },
+              "bound": "exact",
+              "note": null,
+              "note_words": null,
+              "units": "5000",
+              "words": {
+                "id": "amount",
+                "parts": [
+                  {
+                    "text": "0.000005 "
+                  },
+                  {
+                    "text": "SOL",
+                    "value": {
+                      "type": "text",
+                      "value": "SOL"
+                    }
+                  }
+                ],
+                "text": "0.000005 SOL"
+              }
+            }
+          }
+        },
+        {
+          "help": {
+            "id": "label-priority.help",
+            "parts": [
+              {
+                "text": "A tip the site added so validators take the transaction sooner. It is optional, and it is yours to pay."
+              }
+            ],
+            "text": "A tip the site added so validators take the transaction sooner. It is optional, and it is yours to pay."
+          },
+          "label": {
+            "id": "label-priority",
+            "parts": [
+              {
+                "text": "优先费"
+              }
+            ],
+            "text": "优先费"
+          },
+          "trust": "fact",
+          "value": {
+            "type": "amount",
+            "value": {
+              "asset": {
+                "decimals": 9,
+                "description": null,
+                "id": "native",
+                "symbol": "SOL",
+                "trust": "fact"
+              },
+              "bound": "exact",
+              "note": null,
+              "note_words": null,
+              "units": "15000",
+              "words": {
+                "id": "amount",
+                "parts": [
+                  {
+                    "text": "0.000015 "
+                  },
+                  {
+                    "text": "SOL",
+                    "value": {
+                      "type": "text",
+                      "value": "SOL"
+                    }
+                  }
+                ],
+                "text": "0.000015 SOL"
+              }
+            }
+          }
+        },
+        {
+          "help": {
+            "id": "label-priority-basis.help",
+            "parts": [
+              {
+                "text": "How the tip was computed: the price per unit of work, times the work the transaction asked to be allowed."
+              }
+            ],
+            "text": "How the tip was computed: the price per unit of work, times the work the transaction asked to be allowed."
+          },
+          "label": {
+            "id": "label-priority-basis",
+            "parts": [
+              {
+                "text": "优先费计算依据"
+              }
+            ],
+            "text": "优先费计算依据"
+          },
+          "trust": "fact",
+          "value": {
+            "type": "words",
+            "value": {
+              "id": "explain-priority-basis",
+              "parts": [
+                {
+                  "text": "每计算单元 70,182 微 lamports × 请求的 213,727 个计算单元"
+                }
+              ],
+              "text": "每计算单元 70,182 微 lamports × 请求的 213,727 个计算单元"
+            }
+          }
+        },
+        {
+          "help": {
+            "id": "label-rent-deposits.help",
+            "parts": [
+              {
+                "text": "SOL locked to keep the accounts this transaction creates on chain. It is a deposit, not a fee: closing an account returns it to whoever closes it."
+              }
+            ],
+            "text": "SOL locked to keep the accounts this transaction creates on chain. It is a deposit, not a fee: closing an account returns it to whoever closes it."
+          },
+          "label": {
+            "id": "label-rent-deposits",
+            "parts": [
+              {
+                "text": "租金押金"
+              }
+            ],
+            "text": "租金押金"
+          },
+          "trust": "fact",
+          "value": {
+            "type": "words",
+            "value": {
+              "id": "explain-rent",
+              "parts": [
+                {
+                  "text": "最多 "
+                },
+                {
+                  "text": "0.00148844 SOL",
+                  "value": {
+                    "type": "amount",
+                    "value": {
+                      "asset": {
+                        "decimals": 9,
+                        "description": null,
+                        "id": "native",
+                        "symbol": "SOL",
+                        "trust": "fact"
+                      },
+                      "bound": "exact",
+                      "note": null,
+                      "note_words": null,
+                      "units": "1488440",
+                      "words": {
+                        "id": "amount",
+                        "parts": [
+                          {
+                            "text": "0.00148844 "
+                          },
+                          {
+                            "text": "SOL",
+                            "value": {
+                              "type": "text",
+                              "value": "SOL"
+                            }
+                          }
+                        ],
+                        "text": "0.00148844 SOL"
+                      }
+                    }
+                  }
+                },
+                {
+                  "text": "，前提是本交易在缺失时才创建的账户尚不存在；退还给关闭该账户的一方"
+                }
+              ],
+              "text": "最多 0.00148844 SOL，前提是本交易在缺失时才创建的账户尚不存在；退还给关闭该账户的一方"
+            }
+          }
+        }
+      ],
+      "kind": {
+        "type": "fees"
+      },
+      "subtitle": null,
+      "title": {
+        "id": "explain-fee",
+        "parts": [
+          {
+            "text": "手续费"
+          }
+        ],
+        "text": "手续费"
+      }
+    },
+    {
+      "collapsed": false,
+      "fields": [
+        {
+          "help": {
+            "id": "label-expires.help",
+            "parts": [
+              {
+                "text": "How long the signature can be used. About a minute is normal; a durable nonce keeps it usable until the nonce is advanced."
+              }
+            ],
+            "text": "How long the signature can be used. About a minute is normal; a durable nonce keeps it usable until the nonce is advanced."
+          },
+          "label": {
+            "id": "label-expires",
+            "parts": [
+              {
+                "text": "到期时间"
+              }
+            ],
+            "text": "到期时间"
+          },
+          "trust": "fact",
+          "value": {
+            "type": "words",
+            "value": {
+              "id": "explain-expires-soon",
+              "parts": [
+                {
+                  "text": "约一分钟后（最近区块哈希）"
+                }
+              ],
+              "text": "约一分钟后（最近区块哈希）"
+            }
+          }
+        }
+      ],
+      "kind": {
+        "type": "lifetime"
+      },
+      "subtitle": null,
+      "title": {
+        "id": "explain-validity",
+        "parts": [
+          {
+            "text": "有效期"
+          }
+        ],
+        "text": "有效期"
+      }
+    }
+  ],
+  "summary": {
+    "id": "KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD/deposit_reserve_liquidity_and_obligation_collateral_v2-summary",
+    "parts": [
+      {
+        "text": "将 "
+      },
+      {
+        "text": "4,635.28675 USDC",
+        "value": {
+          "type": "amount",
+          "value": {
+            "asset": {
+              "decimals": 6,
+              "description": null,
+              "id": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+              "symbol": "USDC",
+              "trust": "verified"
+            },
+            "bound": "exact",
+            "note": null,
+            "note_words": null,
+            "units": "4635286750",
+            "words": {
+              "id": "amount",
+              "parts": [
+                {
+                  "text": "4,635.28675 "
+                },
+                {
+                  "text": "USDC",
+                  "value": {
+                    "type": "text",
+                    "value": "USDC"
+                  }
+                }
+              ],
+              "text": "4,635.28675 USDC"
+            }
+          }
+        }
+      },
+      {
+        "text": " 作为抵押品存入 Kamino Lend"
+      }
+    ],
+    "text": "将 4,635.28675 USDC 作为抵押品存入 Kamino Lend"
+  },
+  "text": "将 4,635.28675 USDC 作为抵押品存入 Kamino Lend\n正常\n\n== 存入抵押品 | Kamino Lend（描述文件审核于 2026-09-29、可由 GzFg…kzkW 升级）\n  存入：4,635.28675 USDC\n  借贷账户：5iLEgayZ19eL6vGLEtELtCpYrGxZYGL4xEBsxMaYAfFz\n  储备：D6q6wuQSrifJKZYpR1M8R4YawnLDtDsMmWM1NbBmgJ59\n  转出账户：您的 USDC 账户（4Pus…gpZ8）\n\n== 其他 [已折叠]\n  计算单元上限：213727\n  计算单元价格：每计算单元 70,182 微 lamports\n  如不存在则创建代币账户：代币账户：您的 USDC 账户（4Pus…gpZ8）\n  如不存在则创建代币账户：所有者：您的钱包（2P5t…sPxW）\n  如不存在则创建代币账户：代币铸造地址：USDC 代币铸造地址（EPjF…Dt1v）\n  如不存在则创建代币账户：租金付款方：您的钱包（2P5t…sPxW）\n  如不存在则创建代币账户：代币程序：Token program（Toke…Q5DA）\n  刷新储备：储备：37Jk2zkz23vkAYBT66HM2gaqJuNg2nYLsCreQAVt5MWK\n  刷新储备：储备：d4A2prbA2whesmvHaL88BH6Ewn5N4bTSU2Ze8P6Bc4Q\n  刷新储备：储备：D6q6wuQSrifJKZYpR1M8R4YawnLDtDsMmWM1NbBmgJ59\n  刷新借贷账户：借贷账户：5iLEgayZ19eL6vGLEtELtCpYrGxZYGL4xEBsxMaYAfFz\n  刷新借贷账户：额外账户：3 个，此描述文件未予命名\n\n== 签名者\n  手续费付款方：您的钱包（2P5t…sPxW）\n\n== 手续费\n  总计：0.00002 SOL\n  基础费：0.000005 SOL\n  优先费：0.000015 SOL\n  优先费计算依据：每计算单元 70,182 微 lamports × 请求的 213,727 个计算单元\n  租金押金：最多 0.00148844 SOL，前提是本交易在缺失时才创建的账户尚不存在；退还给关闭该账户的一方\n\n== 有效期\n  到期时间：约一分钟后（最近区块哈希）\n\n影响：\n  - 您从您的钱包（2P5t…sPxW）发送 4,635.28675 USDC 到 Kamino Lend（KLen…gmjD）\n  - 将存入的资产作为抵押品记入借贷账户\n  - 创建您的 USDC 账户（4Pus…gpZ8），由 Token program（Toke…Q5DA）管理，存入 0.00148844 SOL，除非该账户已存在\n  - 更新储备的预言机价格和应计利息；没有代币转移\n  - 更新储备的预言机价格和应计利息；没有代币转移\n  - 更新储备的预言机价格和应计利息；没有代币转移\n  - 重新计算借贷账户的抵押品和债务价值；没有代币转移\n  - 您支付手续费 0.00002 SOL\n  - 有效期约一分钟（最近区块哈希）\n\n原始数据：solana v0（507 字节）\n  摘要：00aceb9aa518bff00dfe2464dfe370cd22dc63e59126a1521d38557ae97a3612\n",
+  "verdict": "ok"
+}
