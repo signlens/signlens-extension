@@ -40,3 +40,21 @@ test('the words alone leave out the markup, never what an argument holds', () =>
         'Choose <b>x</b>, or read',
     );
 });
+
+test('in Chinese, a space where the words meet an argument in Latin letters or digits, none beside Chinese or full-width punctuation', () => {
+    const zh = (pattern: Pattern, args: Record<string, string | number>): string => word(pattern, args, 'zh-Hans');
+    // A site, a number, a wallet: spaced from the Chinese around them, whatever the translation put there.
+    assert.equal(zh([{ arg: 'site' }, '请求您签名'], { site: 'jup.ag' }), 'jup.ag 请求您签名');
+    assert.equal(zh(['发送', { arg: 'count' }, '笔交易'], { count: 3 }), '发送 3 笔交易');
+    assert.equal(zh(['继续前往 ', { arg: 'wallet' }, ' '], { wallet: 'Phantom' }), '继续前往 Phantom ');
+    // Chinese words, full-width brackets: no space.
+    assert.equal(zh(['您的 ', { arg: 'what' }], { what: '钱包' }), '您的钱包');
+    assert.equal(zh(['（', { arg: 'n' }, '）'], { n: 'abc' }), '（abc）');
+    assert.equal(zh(['原因： ', { arg: 'why' }], { why: 'timeout' }), '原因：timeout');
+    // Two arguments side by side, a Chinese one and a Latin one.
+    assert.equal(zh([{ arg: 'a' }, { arg: 'b' }], { a: '已拒绝', b: 'HTTP 503' }), '已拒绝 HTTP 503');
+    // A half-width bracket keeps the Latin it holds tight.
+    assert.equal(zh(['路由(', { arg: 'n' }, ')'], { n: 'x' }), '路由(x)');
+    // English is as it is.
+    assert.equal(word(['to', { arg: 'site' }], { site: 'jup.ag' }), 'tojup.ag');
+});
