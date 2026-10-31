@@ -180,7 +180,9 @@ it was reviewed.
 A translation reaches the catalog only once it is reviewed, its English
 unchanged since: a draft, or one whose English changed (stale), is left
 out, and the English shows in its place. `npm run messages` says how much
-of each language is reviewed; `node scripts/messages.ts --dev` writes a
+of each language is reviewed; `node scripts/messages.ts --check` says the
+same and what is wrong, writing nothing; `node scripts/messages.ts --dev`
+writes a
 catalog with the drafts, to try them, never to commit. A release ships no
 language with any of its interface in English: the release workflow runs
 `node scripts/messages.ts --complete`, which fails unless every English

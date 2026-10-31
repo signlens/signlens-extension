@@ -12,7 +12,8 @@
 // of its English as it is now. One whose English changed since is stale,
 // and one never reviewed a draft; both are left out, and the English shows
 // in their place. `--dev` writes a catalog with the drafts, to try them,
-// never to commit; `--complete` writes nothing and fails unless every
+// never to commit; `--check` writes nothing and says what is wrong and how
+// much is reviewed; `--complete` writes nothing and fails unless every
 // locale has every English message reviewed, as a release requires.
 
 import { spawnSync } from 'node:child_process';
@@ -441,6 +442,11 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
     if (problems.length > 0) {
         console.error(problems.join('\n'));
         process.exit(1);
+    }
+    if (args.includes('--check')) {
+        for (const line of covered(coverage)) console.error(line);
+        console.error('every message compiles and checks');
+        process.exit(0);
     }
     if (args.includes('--complete')) {
         const short = Object.entries(coverage).filter(([, c]) => c.reviewed < c.messages);
