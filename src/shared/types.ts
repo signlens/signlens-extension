@@ -290,6 +290,8 @@ export interface ApiStatus {
     programs: number;
     tokens: number;
     packsAt: number | null;
+    /** The languages the API explains in besides English, each with its review; empty from an API before them. */
+    locales: { locale: string; review: Review }[];
 }
 
 export type Rating = 'clear' | 'unclear' | 'wrong';

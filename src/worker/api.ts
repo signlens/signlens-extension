@@ -10,7 +10,7 @@ import { refusedEndpoint, within } from '../shared/endpoint.ts';
 import { objectFields } from '../shared/json.ts';
 import { describe, printable } from '../shared/text.ts';
 import { type ApiStatus, type EngineAnswer, type EngineRequest, type ErrorDocument, type Feedback, isError } from '../shared/types.ts';
-import { DocumentError, EXPLANATION_SCHEMA, parseExplanation } from './explanation.ts';
+import { DocumentError, EXPLANATION_SCHEMA, parseExplanation, review, tag } from './explanation.ts';
 import { toBase64 } from './solana.ts';
 
 const TIMEOUT_MS = 20_000;
@@ -151,6 +151,19 @@ function count(value: unknown): number | null {
     return typeof value === 'number' && Number.isSafeInteger(value) && value >= 0 ? value : null;
 }
 
+/** The languages a status lists, each read as an explanation's locale is; one it cannot read is left out. */
+function locales(value: unknown): ApiStatus['locales'] {
+    if (!Array.isArray(value)) return [];
+    return value.slice(0, 16).flatMap((item, i) => {
+        const fields = objectFields(item);
+        try {
+            return [{ locale: tag(fields?.locale, `locales[${i}].locale`), review: review(fields?.review, `locales[${i}].review`) }];
+        } catch {
+            return [];
+        }
+    });
+}
+
 /**
  * What the API is: its engine version and packs, from `GET /v1/packs`, or
  * `{error}`. The document is read field by field, as the explanation is:
@@ -176,6 +189,7 @@ export async function apiStatus(apiUrl: string): Promise<ApiStatus | { error: st
             programs,
             tokens: count(objectFields(packs.token_snapshot)?.tokens) ?? 0,
             packsAt: typeof pack?.created_at === 'number' && Number.isFinite(pack.created_at) ? pack.created_at : null,
+            locales: locales(packs.locales),
         };
     } catch (error) {
         return { error: `the API at ${base} did not answer (${describe(error)})` };

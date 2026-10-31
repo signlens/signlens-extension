@@ -188,7 +188,7 @@ test("the API's error document is passed through, and anything else is an error 
 test('the status names the engine and the packs, or why not', async () => {
     const api = await stub();
     try {
-        assert.deepEqual(await apiStatus(api.url), { engine: '0.1.0', programs: 44, tokens: 4003, packsAt: 1 });
+        assert.deepEqual(await apiStatus(api.url), { engine: '0.1.0', programs: 44, tokens: 4003, packsAt: 1, locales: [] });
     } finally {
         await api.close();
     }
@@ -236,9 +236,34 @@ test('a status that is not one is said to be so, and what is shown of it is plai
         packs: { status: 200, body: { engine: '0.1\u202e.0', descriptor_pack: pack, token_snapshot: { tokens: 'many' } } },
     });
     try {
-        assert.deepEqual(await apiStatus(odd.url), { engine: '0.1?.0', programs: 44, tokens: 0, packsAt: 1 });
+        assert.deepEqual(await apiStatus(odd.url), { engine: '0.1?.0', programs: 44, tokens: 0, packsAt: 1, locales: [] });
     } finally {
         await odd.close();
+    }
+});
+
+test('the status lists the languages the API explains in, leaving out one it cannot read', async () => {
+    const pack = { programs: 44, created_at: 1, source: 's' };
+    const reviewed = { kind: 'reviewed', by: ['A Reviewer'], on: '2026-11-02' };
+    const api = await stub({
+        packs: {
+            status: 200,
+            body: {
+                descriptor_pack: pack,
+                locales: [
+                    { locale: 'zh-Hans', serves: [], direction: 'ltr', review: reviewed, messages: 4000 },
+                    { locale: 'zh Hans', review: reviewed },
+                    { locale: 'ru', review: { kind: 'maybe' } },
+                ],
+            },
+        },
+    });
+    try {
+        const status = await apiStatus(api.url);
+        assert.ok(!('error' in status));
+        assert.deepEqual(status.locales, [{ locale: 'zh-Hans', review: reviewed }]);
+    } finally {
+        await api.close();
     }
 });
 

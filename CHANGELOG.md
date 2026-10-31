@@ -8,6 +8,11 @@ uses [Semantic Versioning](https://semver.org/).
 
 ### Added
 
+- **The languages it explains in.** The popup's status line names the
+  languages the API explains in besides English, each with the day it
+  was reviewed, as the API lists them, and no reviewer's name; the
+  explanation is in the first of the browser's languages among them.
+
 - **Laid out in its language.** The window sets the explanation's
   language and direction from what the engine says it is worded in, so a
   right-to-left language runs right to left, and holds each amount and

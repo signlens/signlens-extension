@@ -20,7 +20,7 @@ import type { ApiStatus } from '../shared/types.ts';
 import { rowVerdictWord, summaryOf } from '../shared/verdict.ts';
 import { access } from './access.ts';
 import { byId } from './dom.ts';
-import { noWalletHint, runsOn } from './pages.ts';
+import { languages, noWalletHint, runsOn } from './pages.ts';
 import { element, renderRow } from './render.ts';
 import { yourAddresses } from './yours.ts';
 
@@ -180,7 +180,7 @@ async function checkEngine(): Promise<void> {
         engineStatus.textContent = `SignLens API not reachable: ${status.error}`;
         engineStatus.className = 'status down';
     } else {
-        engineStatus.textContent = `SignLens API ready: engine ${status.engine}, ${status.programs} programs, ${status.tokens.toLocaleString()} verified tokens`;
+        engineStatus.textContent = `SignLens API ready: engine ${status.engine}, ${status.programs} programs, ${status.tokens.toLocaleString()} verified tokens. ${languages(status.locales)}`;
         engineStatus.className = 'status up';
     }
 }

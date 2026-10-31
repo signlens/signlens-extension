@@ -473,13 +473,13 @@ export function parseExplanation(document: unknown): Explanation {
 }
 
 /** A BCP 47 tag: letters, digits and dashes. */
-const tag: Read<string> = (value, path) => {
+export const tag: Read<string> = (value, path) => {
     const found = text(35)(value, path);
     return /^[A-Za-z0-9-]{1,35}$/.test(found) ? found : fail(path, `${quote(found)} is not a BCP 47 tag`);
 };
 
 /** Whether a locale's words were reviewed, and by whom and when. */
-const review: Read<Review> = (value, path) => {
+export const review: Read<Review> = (value, path) => {
     const o = new Fields(value, path);
     const kind = o.read('kind', oneOf(['generated', 'unreviewed', 'reviewed'] as const, 'a review'));
     if (kind === 'reviewed') return { kind, by: o.read('by', list(text(200), 16)), on: o.read('on', text(10)) };
