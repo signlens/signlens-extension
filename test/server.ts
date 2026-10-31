@@ -75,11 +75,14 @@ function recordingOf(method: string, path: string, body: unknown): URL {
 
 /**
  * What of an answer may change with the API's data without the recordings
- * going stale: its version, and when, from what and how much the packs and
- * the token snapshot were built. The tests read none of it as recorded.
+ * going stale: its version and the commit it was built from, when, from
+ * what and how much the packs and the token snapshot were built, and how
+ * many messages a language's pack holds. The tests read none of it as
+ * recorded.
  */
 const VOLATILE = new Set([
     'engine',
+    'build',
     'descriptor_pack.created_at',
     'descriptor_pack.source',
     'descriptor_pack.programs',
@@ -95,7 +98,7 @@ const VOLATILE = new Set([
  * VOLATILE one.
  */
 function departure(kept: unknown, live: unknown, path = ''): string | null {
-    if (VOLATILE.has(path)) return null;
+    if (VOLATILE.has(path) || /^locales\[\d+\]\.messages$/.test(path)) return null;
     const here = path || 'the answer';
     if (Array.isArray(kept)) {
         if (!Array.isArray(live) || live.length !== kept.length) return here;
