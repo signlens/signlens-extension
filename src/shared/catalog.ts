@@ -106,6 +106,52 @@ export interface Args {
     readonly 'popup-views': undefined;
     readonly 'popup-yours-note': undefined;
     readonly 'popup-yours-title': undefined;
+    readonly 'row-accounts': { readonly accounts: Value };
+    readonly 'row-actions': { readonly count: number };
+    readonly 'row-address-claimed': undefined;
+    readonly 'row-address-refused': undefined;
+    readonly 'row-amount-note': { readonly note: Value };
+    readonly 'row-amount-symbol': { readonly bound: Value; readonly quantity: Value; readonly symbol: Value };
+    readonly 'row-amount-token': { readonly bound: Value; readonly quantity: Value; readonly token: Value };
+    readonly 'row-bytes-show-all': { readonly count: number };
+    readonly 'row-bytes-show-less': undefined;
+    readonly 'row-chain': { readonly chain: Value };
+    readonly 'row-claimed': undefined;
+    readonly 'row-consent-where': undefined;
+    readonly 'row-details-toggle': { readonly sections: Value };
+    readonly 'row-duration-days': { readonly days: number; readonly hours: number };
+    readonly 'row-duration-hours': { readonly hours: number; readonly minutes: number };
+    readonly 'row-duration-minutes': { readonly minutes: number; readonly seconds: number };
+    readonly 'row-duration-seconds': { readonly seconds: number };
+    readonly 'row-effects-title': undefined;
+    readonly 'row-findings-title': undefined;
+    readonly 'row-full-text': undefined;
+    readonly 'row-help-claimed': undefined;
+    readonly 'row-help-claims': undefined;
+    readonly 'row-help-verified': undefined;
+    readonly 'row-hints': { readonly tokens: Value };
+    readonly 'row-instructions-toggle': { readonly count: number };
+    readonly 'row-labelled-address': { readonly address: Value; readonly label: Value };
+    readonly 'row-list-separator': undefined;
+    readonly 'row-message-unchecked': undefined;
+    readonly 'row-no': undefined;
+    readonly 'row-not-explained': undefined;
+    readonly 'row-not-explained-ask-again': undefined;
+    readonly 'row-raw-units': { readonly count: number; readonly units: Value };
+    readonly 'row-save': undefined;
+    readonly 'row-save-numbered': { readonly part: Value };
+    readonly 'row-save-title': undefined;
+    readonly 'row-severity-critical': undefined;
+    readonly 'row-severity-high': undefined;
+    readonly 'row-severity-info': undefined;
+    readonly 'row-severity-warning': undefined;
+    readonly 'row-simulation': { readonly simulation: Value };
+    readonly 'row-step': { readonly index: Value; readonly title: Value };
+    readonly 'row-tables': { readonly tables: Value };
+    readonly 'row-unrecognized-value': { readonly type: Value };
+    readonly 'row-unverified-token': { readonly mint: Value };
+    readonly 'row-verified': undefined;
+    readonly 'row-yes': undefined;
     readonly 'verdict-address': { readonly addresses: Value };
     readonly 'verdict-consent': { readonly address: Value };
     readonly 'verdict-list-separator': undefined;
@@ -142,6 +188,53 @@ export interface Args {
     readonly 'welcome-use-title': undefined;
     readonly 'welcome-use-wallets': undefined;
     readonly 'welcome-use-window': undefined;
+    readonly 'window-anyway-back': undefined;
+    readonly 'window-anyway-go': undefined;
+    readonly 'window-anyway-title': undefined;
+    readonly 'window-asking-again': undefined;
+    readonly 'window-asking-english': undefined;
+    readonly 'window-asking-yours': undefined;
+    readonly 'window-band-of-several': { readonly count: Value; readonly index: Value; readonly summary: Value };
+    readonly 'window-close': undefined;
+    readonly 'window-continue': undefined;
+    readonly 'window-continue-anyway-to': { readonly wallet: Value };
+    readonly 'window-continue-anyway-to-yours': undefined;
+    readonly 'window-continue-to': { readonly wallet: Value };
+    readonly 'window-continue-to-yours': undefined;
+    readonly 'window-feedback-add-word': undefined;
+    readonly 'window-feedback-ask': undefined;
+    readonly 'window-feedback-comment': undefined;
+    readonly 'window-feedback-cover': { readonly count: number };
+    readonly 'window-feedback-failed': undefined;
+    readonly 'window-feedback-sent': undefined;
+    readonly 'window-feedback-what': undefined;
+    readonly 'window-feedback-what-firefox': undefined;
+    readonly 'window-gone-heading': undefined;
+    readonly 'window-gone-page-title': undefined;
+    readonly 'window-gone-text': undefined;
+    readonly 'window-heading-message': undefined;
+    readonly 'window-heading-transactions': { readonly count: number };
+    readonly 'window-no-answer': undefined;
+    readonly 'window-not-explained-again': undefined;
+    readonly 'window-not-passed-on': undefined;
+    readonly 'window-note-continue': { readonly to: Value; readonly wallet: Value };
+    readonly 'window-note-no-keys': undefined;
+    readonly 'window-note-refused': { readonly to: Value; readonly wallet: Value };
+    readonly 'window-note-refused-ask-off': { readonly to: Value; readonly wallet: Value };
+    readonly 'window-page-title': { readonly request: Value; readonly site: Value; readonly verdict: Value };
+    readonly 'window-rating-clear': undefined;
+    readonly 'window-rating-unclear': undefined;
+    readonly 'window-rating-wrong': undefined;
+    readonly 'window-refusal-blocked': { readonly why: Value };
+    readonly 'window-refusal-of-several': { readonly count: Value; readonly index: Value; readonly why: Value };
+    readonly 'window-refusal-unexplained': undefined;
+    readonly 'window-reject': undefined;
+    readonly 'window-show-english': undefined;
+    readonly 'window-show-yours': undefined;
+    readonly 'window-transaction-of': { readonly count: Value; readonly index: Value };
+    readonly 'window-try-again': undefined;
+    readonly 'window-unknown-page': undefined;
+    readonly 'window-where': { readonly origin: Value };
     readonly 'worker-api-error-unsaid': undefined;
     readonly 'worker-api-no-answer': { readonly error: Value; readonly url: Value };
     readonly 'worker-api-no-document': { readonly status: Value };
@@ -415,6 +508,171 @@ export const CATALOGS: Readonly<Record<string, Catalog>> = {
             ],
         },
         'popup-yours-title': { value: ['Your addresses'] },
+        'row-accounts': { value: ['Accounts read from the RPC, unverified: ', { arg: 'accounts' }] },
+        'row-actions': {
+            value: [
+                { select: 'count', cases: { one: [{ arg: 'count' }, ' action'], other: [{ arg: 'count' }, ' actions'] }, other: 'other' },
+            ],
+        },
+        'row-address-claimed': { value: ['The page named as yours an address that is not one of yours in SignLens:'] },
+        'row-address-refused': { value: ['The request was refused before anything was explained or sent anywhere.'] },
+        'row-amount-note': { value: [' (', { arg: 'note' }, ')'] },
+        'row-amount-symbol': {
+            value: [
+                {
+                    select: 'bound',
+                    cases: {
+                        at_least: ['≥ ', { arg: 'quantity' }, ' ', { arg: 'symbol' }],
+                        at_most: ['≤ ', { arg: 'quantity' }, ' ', { arg: 'symbol' }],
+                        unlimited: ['UNLIMITED ', { arg: 'symbol' }],
+                        unknown: ['an unknown amount of ', { arg: 'symbol' }],
+                        exact: [{ arg: 'quantity' }, ' ', { arg: 'symbol' }],
+                    },
+                    other: 'exact',
+                },
+            ],
+        },
+        'row-amount-token': {
+            value: [
+                {
+                    select: 'bound',
+                    cases: {
+                        at_least: ['≥ ', { arg: 'quantity' }, ' of ', { arg: 'token' }],
+                        at_most: ['≤ ', { arg: 'quantity' }, ' of ', { arg: 'token' }],
+                        unlimited: ['an UNLIMITED amount of ', { arg: 'token' }],
+                        unknown: ['an unknown amount of ', { arg: 'token' }],
+                        exact: [{ arg: 'quantity' }, ' of ', { arg: 'token' }],
+                    },
+                    other: 'exact',
+                },
+            ],
+        },
+        'row-bytes-show-all': {
+            value: [
+                {
+                    select: 'count',
+                    cases: { one: ['show all ', { arg: 'count' }, ' byte'], other: ['show all ', { arg: 'count' }, ' bytes'] },
+                    other: 'other',
+                },
+            ],
+        },
+        'row-bytes-show-less': { value: ['show less'] },
+        'row-chain': { value: ['Chain: the page says ', { arg: 'chain' }, '; read and simulated on the RPC in the settings all the same'] },
+        'row-claimed': { value: ['(claimed, unverified)'] },
+        'row-consent-where': {
+            value: ['The sites allowed to see the watched address are listed in the settings, where Revoke takes one back.'],
+        },
+        'row-details-toggle': { value: ['Details: ', { arg: 'sections' }] },
+        'row-duration-days': {
+            value: [
+                { select: 'days', cases: { '1': [{ arg: 'days' }, ' day'], other: [{ arg: 'days' }, ' days'] }, other: 'other' },
+                {
+                    select: 'hours',
+                    cases: { '0': [''], '1': [' ', { arg: 'hours' }, ' hour'], other: [' ', { arg: 'hours' }, ' hours'] },
+                    other: 'other',
+                },
+            ],
+        },
+        'row-duration-hours': {
+            value: [
+                { select: 'hours', cases: { '1': [{ arg: 'hours' }, ' hour'], other: [{ arg: 'hours' }, ' hours'] }, other: 'other' },
+                {
+                    select: 'minutes',
+                    cases: { '0': [''], '1': [' ', { arg: 'minutes' }, ' minute'], other: [' ', { arg: 'minutes' }, ' minutes'] },
+                    other: 'other',
+                },
+            ],
+        },
+        'row-duration-minutes': {
+            value: [
+                {
+                    select: 'minutes',
+                    cases: { '1': [{ arg: 'minutes' }, ' minute'], other: [{ arg: 'minutes' }, ' minutes'] },
+                    other: 'other',
+                },
+                {
+                    select: 'seconds',
+                    cases: { '0': [''], '1': [' ', { arg: 'seconds' }, ' second'], other: [' ', { arg: 'seconds' }, ' seconds'] },
+                    other: 'other',
+                },
+            ],
+        },
+        'row-duration-seconds': {
+            value: [
+                {
+                    select: 'seconds',
+                    cases: { '1': [{ arg: 'seconds' }, ' second'], other: [{ arg: 'seconds' }, ' seconds'] },
+                    other: 'other',
+                },
+            ],
+        },
+        'row-effects-title': { value: ['What this does'] },
+        'row-findings-title': { value: ['What SignLens found'] },
+        'row-full-text': { value: ['Full text, as the engine prints it'] },
+        'row-help-claimed': {
+            value: [
+                'This came from the site or from the RPC the extension asked, not from the transaction itself. SignLens could not check it, so do not rely on it.',
+            ],
+        },
+        'row-help-claims': {
+            value: [
+                'Everything in this section came from the RPC the extension asked, not from the transaction itself. SignLens could not check it, so treat it as a hint, not a fact.',
+            ],
+        },
+        'row-help-verified': {
+            value: [
+                'This name comes from SignLens or from you: its reviewed descriptors, its verified token list, your addresses in its settings, or your address book. The site could not have supplied it.',
+            ],
+        },
+        'row-hints': { value: ['Unlisted tokens named from the RPC and the token list, unverified: ', { arg: 'tokens' }] },
+        'row-instructions-toggle': {
+            value: [
+                {
+                    select: 'count',
+                    cases: {
+                        '0': ['Details'],
+                        '1': ['Instruction and details'],
+                        other: ['Instructions (', { arg: 'count' }, ') and details'],
+                    },
+                    other: 'other',
+                },
+            ],
+        },
+        'row-labelled-address': { value: [{ arg: 'label' }, ' (', { arg: 'address' }, ')'] },
+        'row-list-separator': { value: [', '] },
+        'row-message-unchecked': {
+            value: ['SignLens does not check messages: this one is shown as it is. Sign it only if you mean what it says.'],
+        },
+        'row-no': { value: ['no'] },
+        'row-not-explained': { value: ['SignLens could not explain this transaction: nothing is known of what it does.'] },
+        'row-not-explained-ask-again': {
+            value: [
+                'SignLens could not explain this transaction: nothing is known of what it does. To try again, Reject and ask the site again.',
+            ],
+        },
+        'row-raw-units': {
+            value: [
+                {
+                    select: 'count',
+                    cases: { '1': [{ arg: 'units' }, ' raw unit'], other: [{ arg: 'units' }, ' raw units'] },
+                    other: 'other',
+                },
+            ],
+        },
+        'row-save': { value: ['Save the transaction'] },
+        'row-save-numbered': { value: ['Save transaction ', { arg: 'part' }] },
+        'row-save-title': { value: ['The transaction with its lookup tables, as the SignLens engine reads it'] },
+        'row-severity-critical': { value: ['Critical'] },
+        'row-severity-high': { value: ['High'] },
+        'row-severity-info': { value: ['Info'] },
+        'row-severity-warning': { value: ['Warning'] },
+        'row-simulation': { value: ['Simulation: ', { arg: 'simulation' }] },
+        'row-step': { value: ['Step ', { arg: 'index' }, ': ', { arg: 'title' }] },
+        'row-tables': { value: ['Lookup tables: ', { arg: 'tables' }] },
+        'row-unrecognized-value': { value: ['A value this version cannot show (', { arg: 'type' }, '); the full text below has it'] },
+        'row-unverified-token': { value: ['unverified token ', { arg: 'mint' }] },
+        'row-verified': { value: ['verified'] },
+        'row-yes': { value: ['yes'] },
         'verdict-address': { value: ['Named ', { arg: 'addresses' }, ' as your address, which is not one of yours in SignLens'] },
         'verdict-consent': { value: ['Asked to see the watched address ', { arg: 'address' }] },
         'verdict-list-separator': { value: [', '] },
@@ -495,6 +753,166 @@ export const CATALOGS: Readonly<Record<string, Catalog>> = {
                 "Each request then opens SignLens's window first. Read what the transaction does, then continue to your wallet, or reject.",
             ],
         },
+        'window-anyway-back': { value: ['Go back'] },
+        'window-anyway-go': { value: ['Continue anyway'] },
+        'window-anyway-title': { value: ['Pass this request on anyway?'] },
+        'window-asking-again': { value: ['Asking again, with the settings as they are now…'] },
+        'window-asking-english': { value: ['Asking for it in English…'] },
+        'window-asking-yours': { value: ['Asking for it in your language…'] },
+        'window-band-of-several': {
+            value: [{ arg: 'summary' }, ' (transaction ', { arg: 'index' }, ' of ', { arg: 'count' }, '; each is below)'],
+        },
+        'window-close': { value: ['Close'] },
+        'window-continue': { value: ['Continue'] },
+        'window-continue-anyway-to': { value: ['Continue anyway to ', { arg: 'wallet' }] },
+        'window-continue-anyway-to-yours': { value: ['Continue anyway to your wallet'] },
+        'window-continue-to': { value: ['Continue to ', { arg: 'wallet' }] },
+        'window-continue-to-yours': { value: ['Continue to your wallet'] },
+        'window-feedback-add-word': { value: ['Add a word if you like; it is sent when you decide below.'] },
+        'window-feedback-ask': { value: ['Was this explanation clear?'] },
+        'window-feedback-comment': {
+            attributes: { placeholder: ['What was unclear or wrong? (optional)'], 'aria-label': ['What was unclear or wrong? (optional)'] },
+        },
+        'window-feedback-cover': {
+            value: [
+                {
+                    select: 'count',
+                    cases: {
+                        one: ['Send this transaction to SignLens so it can be looked into'],
+                        other: ['Send these transactions to SignLens so they can be looked into'],
+                    },
+                    other: 'other',
+                },
+            ],
+        },
+        'window-feedback-failed': { value: ['The feedback could not be sent.'] },
+        'window-feedback-sent': { value: ['Thank you. Sent to SignLens.'] },
+        'window-feedback-what': {
+            value: [
+                "A rating sends SignLens the site, SignLens's version, what this window shows (the verdict, the findings and the programs called) and your comment. The transaction itself goes only if you tick the box below.",
+            ],
+        },
+        'window-feedback-what-firefox': {
+            value: [
+                "A rating sends SignLens what this window shows (the verdict, the findings and the programs called) and your comment, and the site and SignLens's version once you allow them when Firefox asks. The transaction itself goes only if you tick the box below.",
+            ],
+        },
+        'window-gone-heading': { value: ['No longer pending'] },
+        'window-gone-page-title': { value: ['No longer pending · SignLens'] },
+        'window-gone-text': {
+            value: ['This request is no longer pending: its page closed, reloaded or stopped waiting. Nothing came of it.'],
+        },
+        'window-heading-message': { value: ['Sign a message'] },
+        'window-heading-transactions': {
+            value: [
+                {
+                    select: 'count',
+                    cases: { one: ['Sign a transaction'], other: ['Sign ', { arg: 'count' }, ' transactions'] },
+                    other: 'other',
+                },
+            ],
+        },
+        'window-no-answer': {
+            value: ["SignLens did not answer, so it is not known whether this went through: the popup's requests say what came of it."],
+        },
+        'window-not-explained-again': {
+            value: ['This request is no longer pending, so it was not explained again. Ask the site again if you still mean to sign.'],
+        },
+        'window-not-passed-on': {
+            value: ['Nothing was passed on: this request was no longer pending. Ask the site again if you still mean to sign.'],
+        },
+        'window-note-continue': {
+            value: [
+                {
+                    select: 'to',
+                    cases: {
+                        settings: ['Continue hands the request unchanged to ', { arg: 'wallet' }, ', which asks for its own approval.'],
+                        page: [
+                            'Continue hands the request unchanged to the first wallet the page has, which it calls “',
+                            { arg: 'wallet' },
+                            '”, and which asks for its own approval.',
+                        ],
+                        none: ['Continue hands the request unchanged to your wallet, which asks for its own approval.'],
+                    },
+                    other: 'none',
+                },
+            ],
+        },
+        'window-note-no-keys': { value: ['This wallet holds no keys: the request is refused either way.'] },
+        'window-note-refused': {
+            value: [
+                {
+                    select: 'to',
+                    cases: {
+                        settings: [
+                            'SignLens would refuse this. Continuing hands it unchanged all the same to ',
+                            { arg: 'wallet' },
+                            ', which asks for its own approval.',
+                        ],
+                        page: [
+                            'SignLens would refuse this. Continuing hands it unchanged all the same to the first wallet the page has, which it calls “',
+                            { arg: 'wallet' },
+                            '”, and which asks for its own approval.',
+                        ],
+                        none: [
+                            'SignLens would refuse this. Continuing hands it unchanged all the same to your wallet, which asks for its own approval.',
+                        ],
+                    },
+                    other: 'none',
+                },
+            ],
+        },
+        'window-note-refused-ask-off': {
+            value: [
+                {
+                    select: 'to',
+                    cases: {
+                        settings: [
+                            '“Show the explanation and ask first” is off, but SignLens still asks before passing on what it would refuse. Continuing hands this unchanged to ',
+                            { arg: 'wallet' },
+                            ', which asks for its own approval.',
+                        ],
+                        page: [
+                            '“Show the explanation and ask first” is off, but SignLens still asks before passing on what it would refuse. Continuing hands this unchanged to the first wallet the page has, which it calls “',
+                            { arg: 'wallet' },
+                            '”, and which asks for its own approval.',
+                        ],
+                        none: [
+                            '“Show the explanation and ask first” is off, but SignLens still asks before passing on what it would refuse. Continuing hands this unchanged to your wallet, which asks for its own approval.',
+                        ],
+                    },
+                    other: 'none',
+                },
+            ],
+        },
+        'window-page-title': {
+            value: [
+                {
+                    select: 'verdict',
+                    cases: {
+                        ok: ['OK: ', { arg: 'request' }, ' for ', { arg: 'site' }, ' · SignLens'],
+                        warning: ['Warning: ', { arg: 'request' }, ' for ', { arg: 'site' }, ' · SignLens'],
+                        blocked: ['Blocked: ', { arg: 'request' }, ' for ', { arg: 'site' }, ' · SignLens'],
+                        error: ['Error: ', { arg: 'request' }, ' for ', { arg: 'site' }, ' · SignLens'],
+                        message: [{ arg: 'request' }, ' for ', { arg: 'site' }, ' · SignLens'],
+                    },
+                    other: 'message',
+                },
+            ],
+        },
+        'window-rating-clear': { value: ['Clear'] },
+        'window-rating-unclear': { value: ['Unclear'] },
+        'window-rating-wrong': { value: ['Wrong'] },
+        'window-refusal-blocked': { value: ['SignLens blocks it. ', { arg: 'why' }] },
+        'window-refusal-of-several': { value: [{ arg: 'why' }, ' (transaction ', { arg: 'index' }, ' of ', { arg: 'count' }, ')'] },
+        'window-refusal-unexplained': { value: ['SignLens could not explain this, so nothing is known of what it does.'] },
+        'window-reject': { value: ['Reject'] },
+        'window-show-english': { value: ['Show in English'] },
+        'window-show-yours': { value: ['Show in your language'] },
+        'window-transaction-of': { value: ['Transaction ', { arg: 'index' }, ' of ', { arg: 'count' }] },
+        'window-try-again': { value: ['Try again'] },
+        'window-unknown-page': { value: ['an unknown page'] },
+        'window-where': { value: [{ arg: 'origin' }, ' asks you to sign'] },
         'worker-api-error-unsaid': { value: ['the SignLens API answered an error without a message'] },
         'worker-api-no-answer': { value: ['the SignLens API at ', { arg: 'url' }, ' did not answer (', { arg: 'error' }, ')'] },
         'worker-api-no-document': { value: ['the SignLens API answered HTTP ', { arg: 'status' }, ' without a document'] },

@@ -5,14 +5,16 @@
 
 import { askBeforeRating, asksBeforeRating } from '../shared/consent.ts';
 import { MAX_COMMENT, send } from '../shared/messages.ts';
-import type { Decision, ExplainedRow, Row, VerdictWord } from '../shared/model.ts';
+import type { Decision, ExplainedRow, Row } from '../shared/model.ts';
 import { base64Bytes, instructionPrograms } from '../shared/programs.ts';
 import { settings } from '../shared/settings.ts';
 import { getPending, local } from '../shared/store.ts';
 import { logged, methodName, withoutScheme } from '../shared/text.ts';
 import { type Rating, SEVERITIES, type Seen } from '../shared/types.ts';
 import { rowVerdictWord, summaryOf, worstVerdict } from '../shared/verdict.ts';
+import { t } from '../shared/words.ts';
 import { byId } from './dom.ts';
+import { localize, nodes } from './localize.ts';
 import { languageChoice } from './pages.ts';
 import { element, messageNode, originNode, renderRow } from './render.ts';
 import { goneAtOpen, noLongerPending, requestId, sendDecision } from './windows.ts';
@@ -21,9 +23,6 @@ import { goneAtOpen, noLongerPending, requestId, sendDecision } from './windows.
 function onShowInstructions(shown: boolean): void {
     local.set({ showInstructions: shown }).catch(logged('remember whether the instructions were open'));
 }
-
-/** The verdict as the window's title says it. */
-const TITLE_VERDICT: Record<Exclude<VerdictWord, 'message'>, string> = { ok: 'OK', warning: 'Warning', blocked: 'Blocked', error: 'Error' };
 
 /** Sends the feedback strip's rating, if one was given and not sent yet: on a "clear", and with the decision. */
 let sendFeedback: () => void = () => {};
@@ -37,12 +36,7 @@ let sendFeedback: () => void = () => {};
 function decide(decision: Decision): void {
     // A comment or the cover box goes with the decision, so neither is lost.
     sendFeedback();
-    sendDecision(
-        decision,
-        'Nothing was passed on: this request was no longer pending. Ask the site again if you still mean to sign.',
-        byId('continue'),
-        byId('reject', HTMLButtonElement),
-    );
+    sendDecision(decision, t('window-not-passed-on'), byId('continue'), byId('reject', HTMLButtonElement));
 }
 
 /** The engine's word for the window's verdict. */
@@ -102,14 +96,8 @@ function feedbackStrip(list: Row[], page: { origin?: string; method?: string }):
     comment.maxLength = MAX_COMMENT;
     const note = byId('feedback-note');
     const ratings = [...strip.querySelectorAll<HTMLButtonElement>('button[data-rating]')];
-    if (asksBeforeRating()) {
-        byId('feedback-what').textContent =
-            "A rating sends SignLens what this window shows (the verdict, the findings and the programs called) and your comment, and the site and SignLens's version once you allow them when Firefox asks. The transaction itself goes only if you tick the box below.";
-    }
-    (cover.querySelector('span') as HTMLElement).textContent =
-        explained.length > 1
-            ? 'Send these transactions to SignLens so they can be looked into'
-            : 'Send this transaction to SignLens so it can be looked into';
+    if (asksBeforeRating()) byId('feedback-what').textContent = t('window-feedback-what-firefox');
+    (cover.querySelector('span') as HTMLElement).textContent = t('window-feedback-cover', { count: explained.length });
     let rating: Rating | null = null;
     let sent = false;
     // Firefox asks once whether a rating may carry the site and the
@@ -142,7 +130,7 @@ function feedbackStrip(list: Row[], page: { origin?: string; method?: string }):
         send({ type: 'feedback', payload })
             .catch(() => false)
             .then((taken) => {
-                note.textContent = taken ? 'Thank you. Sent to SignLens.' : 'The feedback could not be sent.';
+                note.textContent = taken ? t('window-feedback-sent') : t('window-feedback-failed');
             });
     };
     for (const button of ratings) {
@@ -159,19 +147,19 @@ function feedbackStrip(list: Row[], page: { origin?: string; method?: string }):
             comment.hidden = rating === 'clear';
             // A "clear" goes at once, after the answer if Firefox is asking.
             if (rating === 'clear') void answered.finally(() => sendFeedback());
-            else note.textContent = 'Add a word if you like; it is sent when you decide below.';
+            else note.textContent = t('window-feedback-add-word');
         });
     }
 }
 
 /** Why SignLens would refuse `row`, in a sentence: its most serious finding, or that nothing is known of it. */
 function refusalOf(row: Row | undefined): string {
-    if (row?.kind !== 'explained') return 'SignLens could not explain this, so nothing is known of what it does.';
+    if (row?.kind !== 'explained') return t('window-refusal-unexplained');
     let worst: ExplainedRow['findings'][number] | undefined;
     for (const finding of row.findings) {
         if (!worst || SEVERITIES.indexOf(finding.severity) > SEVERITIES.indexOf(worst.severity)) worst = finding;
     }
-    return `SignLens blocks it. ${(worst?.message ?? row.summary).text}`;
+    return t('window-refusal-blocked', { why: (worst?.message ?? row.summary).text });
 }
 
 /**
@@ -206,7 +194,7 @@ function question(proceed: HTMLButtonElement, why: string): () => void {
  */
 function tryAgain(proceed: HTMLButtonElement, reject: HTMLButtonElement): HTMLElement {
     const holder = element('div', 'again');
-    const button = element('button', 'primary', 'Try again');
+    const button = element('button', 'primary', t('window-try-again'));
     button.type = 'button';
     const status = element('span', 'note');
     status.setAttribute('role', 'status');
@@ -214,7 +202,7 @@ function tryAgain(proceed: HTMLButtonElement, reject: HTMLButtonElement): HTMLEl
     button.addEventListener('click', () => {
         if (button.getAttribute('aria-disabled') === 'true') return;
         button.setAttribute('aria-disabled', 'true');
-        status.textContent = 'Asking again, with the settings as they are now…';
+        status.textContent = t('window-asking-again');
         send({ type: 'retry', id: requestId })
             .catch(() => false)
             .then((again) => {
@@ -222,11 +210,7 @@ function tryAgain(proceed: HTMLButtonElement, reject: HTMLButtonElement): HTMLEl
                 if (again) window.location.reload();
                 else {
                     status.textContent = '';
-                    noLongerPending(
-                        'This request is no longer pending, so it was not explained again. Ask the site again if you still mean to sign.',
-                        proceed,
-                        reject,
-                    );
+                    noLongerPending(t('window-not-explained-again'), proceed, reject);
                 }
             });
     });
@@ -242,7 +226,7 @@ function tryAgain(proceed: HTMLButtonElement, reject: HTMLButtonElement): HTMLEl
 function languageSwitch(choice: 'english' | 'reader', proceed: HTMLButtonElement, reject: HTMLButtonElement): HTMLElement {
     const english = choice === 'english';
     const holder = element('p', 'language');
-    const button = element('button', 'small', english ? 'Show in English' : 'Show in your language');
+    const button = element('button', 'small', english ? t('window-show-english') : t('window-show-yours'));
     button.type = 'button';
     const status = element('span', 'note');
     status.setAttribute('role', 'status');
@@ -250,18 +234,14 @@ function languageSwitch(choice: 'english' | 'reader', proceed: HTMLButtonElement
     button.addEventListener('click', () => {
         if (button.getAttribute('aria-disabled') === 'true') return;
         button.setAttribute('aria-disabled', 'true');
-        status.textContent = english ? 'Asking for it in English…' : 'Asking for it in your language…';
+        status.textContent = english ? t('window-asking-english') : t('window-asking-yours');
         send({ type: 'retry', id: requestId, ...(english ? { english: true as const } : {}) })
             .catch(() => false)
             .then((again) => {
                 if (again) window.location.reload();
                 else {
                     status.textContent = '';
-                    noLongerPending(
-                        'This request is no longer pending, so it was not explained again. Ask the site again if you still mean to sign.',
-                        proceed,
-                        reject,
-                    );
+                    noLongerPending(t('window-not-explained-again'), proceed, reject);
                 }
             });
     });
@@ -287,6 +267,7 @@ function onEscape(event: KeyboardEvent): void {
 }
 
 async function start(): Promise<void> {
+    localize();
     const entry = await getPending('confirm.html', requestId);
     const proceed = byId('continue', HTMLButtonElement);
     const reject = byId('reject', HTMLButtonElement);
@@ -303,14 +284,18 @@ async function start(): Promise<void> {
     const list = entry.rows;
     const { showInstructions, askFirst } = await settings();
     const transactions = /transaction/i.test(method);
-    const title = transactions ? (list.length > 1 ? `Sign ${list.length} transactions` : 'Sign a transaction') : 'Sign a message';
+    const title = transactions ? t('window-heading-transactions', { count: list.length }) : t('window-heading-message');
     byId('title').textContent = title;
     byId('what').textContent = method;
-    byId('where').replaceChildren(originNode(entry.origin, ' asks you to sign'));
+    byId('where').replaceChildren(nodes('window-where', { origin: originNode(entry.origin) }));
 
     const worst = worstVerdict(list);
     // Where the window is listed (the taskbar, the window switcher, a screen reader as it opens), the verdict comes first.
-    document.title = `${worst === 'message' ? '' : `${TITLE_VERDICT[worst]}: `}${title} for ${withoutScheme(entry.origin) || 'an unknown page'} · SignLens`;
+    document.title = t('window-page-title', {
+        verdict: worst,
+        request: title,
+        site: withoutScheme(entry.origin) || t('window-unknown-page'),
+    });
     const band = byId('band');
     band.classList.add(worst);
     const bandVerdict = byId('band-verdict');
@@ -324,7 +309,7 @@ async function start(): Promise<void> {
     );
     const lead = list[at];
     const summary = lead ? bandLine(lead) : '';
-    byId('band-summary').replaceChildren(summary, many ? ` (transaction ${at + 1} of ${list.length}; each is below)` : '');
+    byId('band-summary').replaceChildren(many ? nodes('window-band-of-several', { summary, index: at + 1, count: list.length }) : summary);
 
     const choice = languageChoice(list, navigator.languages);
     if (choice) band.after(languageSwitch(choice, proceed, reject));
@@ -340,7 +325,7 @@ async function start(): Promise<void> {
         if (many) {
             const head = element('h2', 'row-head');
             head.append(
-                `Transaction ${i + 1} of ${list.length}`,
+                t('window-transaction-of', { index: i + 1, count: list.length }),
                 ' ',
                 element('span', `verdict ${rowVerdictWord(row)}`, rowVerdictWord(row)),
             );
@@ -371,29 +356,26 @@ async function start(): Promise<void> {
         // settings. With none named the page picks the first it has, and what
         // it calls that one is its word, given as such in the note: a page
         // could otherwise put any words on SignLens's own button.
-        const wallet = entry.upstream || 'your wallet';
-        const to = entry.upstream
-            ? `${entry.upstream},`
-            : entry.wallet
-              ? `the first wallet the page has, which it calls “${entry.wallet}”, and`
-              : 'your wallet,';
+        const wallet = entry.upstream;
+        const hands = { to: wallet ? 'settings' : entry.wallet ? 'page' : 'none', wallet: wallet || entry.wallet || '' };
         // The setting is named as the settings name it.
         note.textContent = !stopped
-            ? `Continue hands the request unchanged to ${to} which asks for its own approval.`
+            ? t('window-note-continue', hands)
             : askFirst
-              ? `SignLens would refuse this. Continuing hands it unchanged all the same to ${to} which asks for its own approval.`
-              : `“Show the explanation and ask first” is off, but SignLens still asks before passing on what it would refuse. Continuing hands this unchanged to ${to} which asks for its own approval.`;
-        proceed.textContent = stopped ? `Continue anyway to ${wallet}` : `Continue to ${wallet}`;
+              ? t('window-note-refused', hands)
+              : t('window-note-refused-ask-off', hands);
+        if (stopped) proceed.textContent = wallet ? t('window-continue-anyway-to', { wallet }) : t('window-continue-anyway-to-yours');
+        else proceed.textContent = wallet ? t('window-continue-to', { wallet }) : t('window-continue-to-yours');
         // A refused request gets no inviting button, and one that asks again first.
         proceed.classList.toggle('primary', !stopped);
         if (stopped) {
             const why = refusalOf(lead);
-            ask = question(proceed, many ? `${why} (transaction ${at + 1} of ${list.length})` : why);
+            ask = question(proceed, many ? t('window-refusal-of-several', { why, index: at + 1, count: list.length }) : why);
         }
     } else {
-        note.textContent = 'This wallet holds no keys: the request is refused either way.';
+        note.textContent = t('window-note-no-keys');
         proceed.hidden = true;
-        reject.textContent = 'Close';
+        reject.textContent = t('window-close');
     }
     proceed.addEventListener('click', () => (ask ? ask() : decide('continue')));
     reject.addEventListener('click', () => decide('reject'));
@@ -412,5 +394,5 @@ void start();
 function bandLine(row: Row): string | Node {
     if (row.kind !== 'explained') return summaryOf(row);
     const actions = row.actions ?? [];
-    return actions.length > 1 ? `${actions.length} actions` : messageNode(row.summary);
+    return actions.length > 1 ? t('row-actions', { count: actions.length }) : messageNode(row.summary);
 }

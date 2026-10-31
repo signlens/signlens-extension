@@ -6,6 +6,7 @@
 
 import { send } from '../shared/messages.ts';
 import type { Decision } from '../shared/model.ts';
+import { t } from '../shared/words.ts';
 import { byId } from './dom.ts';
 
 /** The id the worker knows this window's request by. */
@@ -28,22 +29,17 @@ export function sendDecision(decision: Decision, nowhere: string, yes: HTMLEleme
         },
         () => {
             if (decision === 'reject') window.close();
-            else
-                noLongerPending(
-                    "SignLens did not answer, so it is not known whether this went through: the popup's requests say what came of it.",
-                    yes,
-                    no,
-                );
+            else noLongerPending(t('window-no-answer'), yes, no);
         },
     );
 }
 
 /** Makes the window one whose request is gone: `note` says what came of it, `yes` goes, and `no` is Close, with the focus. */
 export function noLongerPending(note: string, yes: HTMLElement, no: HTMLButtonElement): void {
-    document.title = 'No longer pending · SignLens';
+    document.title = t('window-gone-page-title');
     byId('note').textContent = note;
     yes.hidden = true;
-    no.textContent = 'Close';
+    no.textContent = t('window-close');
     // Close closes; the request it would have refused is gone.
     no.removeAttribute('aria-describedby');
     no.focus();
@@ -52,9 +48,9 @@ export function noLongerPending(note: string, yes: HTMLElement, no: HTMLButtonEl
 /** Makes a window opened on a request already gone: its heading and its body say so, nothing of a request shows, and Close has the focus. */
 export function goneAtOpen(yes: HTMLElement, no: HTMLButtonElement): void {
     for (const part of document.querySelectorAll<HTMLElement>('header > :not(h1), main > *')) part.hidden = true;
-    (document.querySelector('h1') as HTMLElement).textContent = 'No longer pending';
+    (document.querySelector('h1') as HTMLElement).textContent = t('window-gone-heading');
     const why = document.createElement('p');
-    why.textContent = 'This request is no longer pending: its page closed, reloaded or stopped waiting. Nothing came of it.';
+    why.textContent = t('window-gone-text');
     (document.querySelector('main') as HTMLElement).append(why);
     noLongerPending('', yes, no);
 }

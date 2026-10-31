@@ -6,7 +6,9 @@
 
 import type { ExplainedRow, Row } from '../shared/model.ts';
 import { short } from '../shared/text.ts';
-import type { Address, Amount, Bound, Field, Message, Section, Severity, Trust, Value, WordedEffect } from '../shared/types.ts';
+import type { Address, Amount, Field, Message, Section, Severity, Trust, Value, WordedEffect } from '../shared/types.ts';
+import { type Id, t } from '../shared/words.ts';
+import { nodes } from './localize.ts';
 
 export function element<K extends keyof HTMLElementTagNameMap>(tag: K, className?: string, text?: string): HTMLElementTagNameMap[K] {
     const node = document.createElement(tag);
@@ -15,36 +17,31 @@ export function element<K extends keyof HTMLElementTagNameMap>(tag: K, className
     return node;
 }
 
-/** A page's origin and what it asks, as a line: the scheme muted, the host in bold, so lookalike hosts read differently. */
-export function originNode(origin: string | undefined, asks: string): DocumentFragment {
+/**
+ * A page's origin, as a node for a line that names it: the scheme muted,
+ * the host in bold, so lookalike hosts read differently. The line is a
+ * message the origin is an argument of (`nodes('window-where', { origin })`);
+ * `asks`, after it, is for a caller with words of its own.
+ */
+export function originNode(origin: string | undefined, asks = ''): DocumentFragment {
     const node = document.createDocumentFragment();
     const match = /^(\w+:\/\/)(.*)$/.exec(origin ?? '');
     if (match) {
         node.append(element('span', 'scheme', match[1]), element('b', 'host', match[2]));
     } else {
-        node.append(origin ?? 'an unknown page');
+        node.append(origin ?? t('window-unknown-page'));
     }
     node.append(asks);
     return node;
 }
 
-/** The words that mark a claim after a label or an amount, as the engine's text does; a verified value gets a badge instead ({@link badge}). */
-const MARKER: Record<Trust, string> = { fact: '', verified: '', claimed: ' (claimed, unverified)' };
-
-/** What a trust marker means, for a reader who opens it. */
-const MARKER_HELP: Partial<Record<Trust, string>> = {
-    verified:
-        'This name comes from SignLens or from you: its reviewed descriptors, its verified token list, your addresses in its settings, or your address book. The site could not have supplied it.',
-    claimed:
-        'This came from the site or from the RPC the extension asked, not from the transaction itself. SignLens could not check it, so do not rely on it.',
-};
-
-/** What the marker on a whole section of claims means. */
-const CLAIMS_HELP =
-    'Everything in this section came from the RPC the extension asked, not from the transaction itself. SignLens could not check it, so treat it as a hint, not a fact.';
-
 /** A finding's severity as the window words it: its own words, not the document's value with a capital made in code. */
-const SEVERITY_WORD: Record<Severity, string> = { info: 'Info', warning: 'Warning', high: 'High', critical: 'Critical' };
+const SEVERITY_WORD = {
+    info: 'row-severity-info',
+    warning: 'row-severity-warning',
+    high: 'row-severity-high',
+    critical: 'row-severity-critical',
+} as const satisfies Record<Severity, Id>;
 
 /** A button, which the keyboard and the screen reader take as one: Enter and Space press it. */
 function button(className: string, text?: string): HTMLButtonElement {
@@ -88,18 +85,15 @@ function term(text: string, help: string, host?: HTMLElement): HTMLButtonElement
 
 /**
  * Appends the trust marker for `trust` to `node`: a verified value's badge,
- * or a claim's warning in words, each a term. `help` replaces the marker's
- * usual text and `host` is where the help opens; otherwise it opens under
- * the nearest value.
+ * or a claim's warning in words, as the engine's text marks a claim, each
+ * a term. `help` replaces the marker's usual text and `host` is where the
+ * help opens; otherwise it opens under the nearest value. A fact has none.
  */
 function mark<T extends HTMLElement>(node: T, trust: Trust, help?: string, host?: HTMLElement): T {
     if (trust === 'verified') {
-        node.append(badge(help ?? MARKER_HELP.verified ?? '', host));
-        return node;
-    }
-    const marker = MARKER[trust];
-    if (marker) {
-        const warning = term(marker.trim(), help ?? MARKER_HELP[trust] ?? '', host);
+        node.append(badge(help ?? t('row-help-verified'), host));
+    } else if (trust === 'claimed') {
+        const warning = term(t('row-claimed'), help ?? t('row-help-claimed'), host);
         warning.classList.add('unverified');
         node.append(' ', warning);
     }
@@ -118,7 +112,7 @@ function badge(help: string, host?: HTMLElement): HTMLButtonElement {
     node.classList.add('verified-badge');
     // Its name, and no title: a title would become its description while
     // the help is closed, where the help describes it while open.
-    node.setAttribute('aria-label', 'verified');
+    node.setAttribute('aria-label', t('row-verified'));
     const svg = document.createElementNS(SVG, 'svg');
     svg.setAttribute('viewBox', '0 0 16 16');
     svg.setAttribute('aria-hidden', 'true');
@@ -145,9 +139,11 @@ export function quantity(amount: Amount): string {
     try {
         units = BigInt(amount.units);
     } catch {
-        return `${amount.units} raw units`;
+        // Not a number: its words as they are, which pick no form.
+        return t('row-raw-units', { units: amount.units, count: Number.NaN });
     }
-    if (decimals === null || decimals === undefined) return units === 1n ? '1 raw unit' : `${group(units.toString())} raw units`;
+    // The digits grouped here, as a 128-bit number may have more than a number can hold; the count picks the form.
+    if (decimals === null || decimals === undefined) return t('row-raw-units', { units: group(units.toString()), count: Number(units) });
     const sign = units < 0n ? '-' : '';
     const magnitude = units < 0n ? -units : units;
     const scale = 10n ** BigInt(decimals);
@@ -163,37 +159,17 @@ export function percentText(bps: number): string {
     return `${group(digits.slice(0, -2))}${fraction ? `.${fraction}` : ''}%`;
 }
 
-/** `n` of a unit, in the singular for one. */
-function count(n: number, unit: string): string {
-    return `${n} ${unit}${n === 1 ? '' : 's'}`;
-}
-
 /** A duration as the engine writes it: its two largest units, the smaller left out when it is zero ("2 days 3 hours"). */
 export function durationText(seconds: number): string {
-    const units: [number, string][] = [
-        [86_400, 'day'],
-        [3_600, 'hour'],
-        [60, 'minute'],
-        [1, 'second'],
-    ];
-    const found = units.findIndex(([size]) => seconds >= size);
-    // Under a second, which only zero is: in seconds.
-    const at = found < 0 ? units.length - 1 : found;
-    const [size, unit] = units[at] ?? [1, 'second'];
-    const text = count(Math.floor(seconds / size), unit);
-    const next = units[at + 1];
-    if (!next) return text;
-    const rest = Math.floor((seconds % size) / next[0]);
-    return rest === 0 ? text : `${text} ${count(rest, next[1])}`;
+    const [day, hour, minute] = [86_400, 3_600, 60];
+    if (seconds >= day) return t('row-duration-days', { days: Math.floor(seconds / day), hours: Math.floor((seconds % day) / hour) });
+    if (seconds >= hour)
+        return t('row-duration-hours', { hours: Math.floor(seconds / hour), minutes: Math.floor((seconds % hour) / minute) });
+    if (seconds >= minute)
+        return t('row-duration-minutes', { minutes: Math.floor(seconds / minute), seconds: Math.floor(seconds % minute) });
+    // Under a minute, and under a second, which only zero is: in seconds.
+    return t('row-duration-seconds', { seconds: Math.floor(seconds) });
 }
-
-const PREFIX: Record<Bound, string> = {
-    exact: '',
-    at_least: '≥ ',
-    at_most: '≤ ',
-    unlimited: 'UNLIMITED ',
-    unknown: 'an unknown amount of ',
-};
 
 /** An amount as the engine's text writes it, as a node: the trust marker in it is a term. */
 function amountNode(amount: Amount): HTMLSpanElement {
@@ -205,21 +181,22 @@ function amountNode(amount: Amount): HTMLSpanElement {
         mark(node, amount.asset.trust);
         // The note in the locale's brackets; an engine before them sends the note alone.
         if (amount.note_words) node.append(messageNode(amount.note_words));
-        else if (amount.note) node.append(' (', messageNode(amount.note), ')');
+        else if (amount.note) node.append(nodes('row-amount-note', { note: messageNode(amount.note) }));
         return node;
     }
-    const prefix = PREFIX[amount.bound];
     const asset = amount.asset;
-    // A token without a symbol is named after "of": by its description when
-    // its mint is not known, or by its mint, shortened.
-    const token = () => (asset.description ? messageNode(asset.description) : `unverified token ${short(asset.id ?? '')}`);
-    if ((amount.bound === 'unlimited' || amount.bound === 'unknown') && asset.symbol) node.append(`${prefix}${asset.symbol}`);
-    else if (amount.bound === 'unlimited') node.append('an UNLIMITED amount of ', token());
-    else if (amount.bound === 'unknown') node.append('an unknown amount of ', token());
-    else if (asset.symbol) node.append(`${prefix}${quantity(amount)} ${asset.symbol}`);
-    else node.append(`${prefix}${quantity(amount)} of `, token());
+    // An amount unlimited or not known has no quantity to write.
+    const counted = amount.bound !== 'unlimited' && amount.bound !== 'unknown';
+    const words = { bound: amount.bound, quantity: counted ? quantity(amount) : '' };
+    // A token without a symbol is named by its description when its mint is
+    // not known, or by its mint, shortened.
+    if (asset.symbol) node.append(nodes('row-amount-symbol', { ...words, symbol: asset.symbol }));
+    else {
+        const token = asset.description ? messageNode(asset.description) : t('row-unverified-token', { mint: short(asset.id ?? '') });
+        node.append(nodes('row-amount-token', { ...words, token }));
+    }
     mark(node, asset.trust);
-    if (amount.note) node.append(' (', messageNode(amount.note), ')');
+    if (amount.note) node.append(nodes('row-amount-note', { note: messageNode(amount.note) }));
     return node;
 }
 
@@ -244,7 +221,7 @@ function addressNode(address: Address): HTMLSpanElement {
     }
     const key = keyNode(address, address.label !== null);
     if (address.label) {
-        node.append(element('b', '', address.label.text), ' (', key, ')');
+        node.append(nodes('row-labelled-address', { label: element('b', '', address.label.text), address: key }));
         mark(node, address.label_trust);
     } else {
         node.append(key);
@@ -306,11 +283,6 @@ function isolated(node: HTMLElement, leftToRight: boolean): HTMLElement {
     return bdi;
 }
 
-/** What the window says of a variant this version does not know. */
-function unrecognized(what: string, type: string): string {
-    return `${what} this version cannot show (${type}); the full text below has it`;
-}
-
 /** A field's value as a node. */
 function valueNode(value: Value): HTMLElement {
     switch (value.type) {
@@ -332,7 +304,7 @@ function valueNode(value: Value): HTMLElement {
         case 'bytes':
             return bytesNode(value.value);
         case 'bool':
-            return element('span', '', value.value ? 'yes' : 'no');
+            return element('span', '', value.value ? t('row-yes') : t('row-no'));
         case 'list': {
             const list = element('ul', 'list');
             for (const item of value.value) {
@@ -343,7 +315,7 @@ function valueNode(value: Value): HTMLElement {
             return list;
         }
         case 'Unrecognized':
-            return element('span', 'unrecognized', unrecognized('A value', value.value.type));
+            return element('span', 'unrecognized', t('row-unrecognized-value', { type: value.value.type }));
     }
 }
 
@@ -356,11 +328,12 @@ function bytesNode(hex: string): HTMLElement {
     if (hex.length <= HEX_FOLD) return code;
     const node = element('span', 'bytes-fold');
     code.classList.add('clamped');
-    const more = button('more-bytes', `show all ${hex.length / 2} bytes`);
+    const all = t('row-bytes-show-all', { count: hex.length / 2 });
+    const more = button('more-bytes', all);
     more.setAttribute('aria-expanded', 'false');
     more.addEventListener('click', () => {
         const clamped = code.classList.toggle('clamped');
-        more.textContent = clamped ? `show all ${hex.length / 2} bytes` : 'show less';
+        more.textContent = clamped ? all : t('row-bytes-show-less');
         more.setAttribute('aria-expanded', String(!clamped));
     });
     node.append(code, more);
@@ -424,7 +397,10 @@ function sectionIndex(section: Section): number | null {
 function sectionNode(section: Section, open: boolean, nested: HTMLElement[]): HTMLDivElement {
     const label = element('span', 'section-head');
     const index = sectionIndex(section);
-    const title = section.kind.type === 'nested' && index !== null ? `Step ${index + 1}: ${section.title.text}` : section.title.text;
+    const title =
+        section.kind.type === 'nested' && index !== null
+            ? t('row-step', { index: index + 1, title: section.title.text })
+            : section.title.text;
     label.append(element('span', 'section-title', title));
     if (section.subtitle) label.append(' ', element('span', 'section-subtitle', section.subtitle.text));
     const claims = section.kind.type === 'claims';
@@ -434,7 +410,7 @@ function sectionNode(section: Section, open: boolean, nested: HTMLElement[]): HT
     body.append(fields);
     for (const child of nested) body.append(child);
     // A section of claims says so once, beside its toggle; its rows are not marked again.
-    const marker = claims ? (head: HTMLElement) => mark(element('span', 'section-mark'), 'claimed', CLAIMS_HELP, head) : undefined;
+    const marker = claims ? (head: HTMLElement) => mark(element('span', 'section-mark'), 'claimed', t('row-help-claims'), head) : undefined;
     return disclosure('section', label, body, open, undefined, marker);
 }
 
@@ -483,7 +459,8 @@ function sectionsNode(row: ExplainedRow): DocumentFragment {
         const body = element('div');
         for (const section of rest) body.append(sectionNode(section, !section.collapsed, []));
         // The titles as the engine words them: changing their case in code would be wrong in a language with other rules (ADR-0015).
-        fragment.append(disclosure('more', `Details: ${rest.map((s) => s.title.text).join(', ')}`, body, false));
+        const titles = rest.map((s) => s.title.text).join(t('row-list-separator'));
+        fragment.append(disclosure('more', t('row-details-toggle', { sections: titles }), body, false));
     }
     return fragment;
 }
@@ -495,7 +472,7 @@ function sectionsNode(row: ExplainedRow): DocumentFragment {
  */
 function instructionsNode(row: ExplainedRow, options: RenderOptions): HTMLDivElement {
     const count = row.sections.filter((s) => s.kind.type === 'instruction').length;
-    const title = count === 0 ? 'Details' : count === 1 ? 'Instruction and details' : `Instructions (${count}) and details`;
+    const title = t('row-instructions-toggle', { count });
     const body = element('div');
     body.append(sectionsNode(row));
     return disclosure('instructions', title, body, Boolean(options.showInstructions), options.onShowInstructions);
@@ -533,10 +510,8 @@ export function renderRow(row: Row, options: RenderOptions = {}): HTMLDivElement
     switch (row.kind) {
         case 'failed':
             if (row.scope === 'transaction') {
-                const how = options.again ? '' : ' To try again, Reject and ask the site again.';
-                body.append(
-                    element('p', 'not-checked', `SignLens could not explain this transaction: nothing is known of what it does.${how}`),
-                );
+                // The window asks again itself; elsewhere the site is asked again.
+                body.append(element('p', 'not-checked', options.again ? t('row-not-explained') : t('row-not-explained-ask-again')));
             }
             // What went wrong, then what can be done about it.
             body.append(element('pre', '', row.error));
@@ -545,29 +520,20 @@ export function renderRow(row: Row, options: RenderOptions = {}): HTMLDivElement
             if (row.capture) body.append(saveLink(row.capture, options));
             return body;
         case 'message':
-            body.append(
-                element(
-                    'p',
-                    'tables',
-                    'SignLens does not check messages: this one is shown as it is. Sign it only if you mean what it says.',
-                ),
-                element('pre', '', row.text),
-            );
+            body.append(element('p', 'tables', t('row-message-unchecked')), element('pre', '', row.text));
             return body;
         case 'consent':
             // The row's line already says who asked to see which address.
-            body.append(
-                element('p', '', 'The sites allowed to see the watched address are listed in the settings, where Revoke takes one back.'),
-            );
+            body.append(element('p', '', t('row-consent-where')));
             return body;
         case 'address': {
-            body.append(element('p', '', 'The page named as yours an address that is not one of yours in SignLens:'));
+            body.append(element('p', '', t('row-address-claimed')));
             for (const address of row.claimed) {
                 const line = element('p');
                 line.append(element('code', 'watched', address));
                 body.append(line);
             }
-            body.append(element('p', '', 'The request was refused before anything was explained or sent anywhere.'));
+            body.append(element('p', '', t('row-address-refused')));
             return body;
         }
         case 'explained':
@@ -578,19 +544,17 @@ export function renderRow(row: Row, options: RenderOptions = {}): HTMLDivElement
 /** What was read for a transaction besides its bytes: the chain the page named, when not mainnet, and the lookup tables. */
 function readNotes(row: { chain?: string | undefined; tables?: string | null | undefined }): HTMLParagraphElement[] {
     const notes: HTMLParagraphElement[] = [];
-    if (row.chain) {
-        notes.push(element('p', 'tables', `Chain: the page says ${row.chain}; read and simulated on the RPC in the settings all the same`));
-    }
-    if (row.tables) notes.push(element('p', 'tables', `Lookup tables: ${row.tables}`));
+    if (row.chain) notes.push(element('p', 'tables', t('row-chain', { chain: row.chain })));
+    if (row.tables) notes.push(element('p', 'tables', t('row-tables', { tables: row.tables })));
     return notes;
 }
 
 /** A link that saves `capture`, the transaction as the engine reads it; one of several is numbered, so none is saved over another. */
 function saveLink(capture: string, options: RenderOptions): HTMLAnchorElement {
-    const save = element('a', 'save', options.part ? `Save transaction ${options.part}` : 'Save the transaction');
+    const save = element('a', 'save', options.part ? t('row-save-numbered', { part: options.part }) : t('row-save'));
     save.download = captureName(options.site, options.capturedAt ?? Date.now(), options.part);
     save.href = `data:text/plain;charset=utf-8,${encodeURIComponent(capture)}`;
-    save.title = 'The transaction with its lookup tables, as the SignLens engine reads it';
+    save.title = t('row-save-title');
     return save;
 }
 
@@ -610,7 +574,7 @@ function explainedNode(body: HTMLDivElement, row: ExplainedRow, options: RenderO
     const actions = row.actions ?? [];
     if (actions.length > 1) {
         // Several actions are one line each, under their count, where the summary runs them together.
-        body.append(element('p', 'summary-line', `${actions.length} actions`));
+        body.append(element('p', 'summary-line', t('row-actions', { count: actions.length })));
         const list = element('ol', 'actions');
         for (const action of actions) {
             const item = element('li');
@@ -624,13 +588,13 @@ function explainedNode(body: HTMLDivElement, row: ExplainedRow, options: RenderO
         body.append(line);
     }
     if (row.findings.length) {
-        body.append(element(options.heading ?? 'h3', 'effects-title', 'What SignLens found'));
+        body.append(element(options.heading ?? 'h3', 'effects-title', t('row-findings-title')));
         const list = element('ul', 'findings');
         for (const finding of row.findings) {
             // An informational finding is a note, not a warning, and reads as one.
             const item = element('li', finding.severity);
             item.append(
-                element('span', `severity ${finding.severity}`, SEVERITY_WORD[finding.severity]),
+                element('span', `severity ${finding.severity}`, t(SEVERITY_WORD[finding.severity])),
                 ' ',
                 messageNode(finding.message),
             );
@@ -639,7 +603,7 @@ function explainedNode(body: HTMLDivElement, row: ExplainedRow, options: RenderO
         body.append(list);
     }
     if (row.effects.length) {
-        body.append(element(options.heading ?? 'h3', 'effects-title', 'What this does'));
+        body.append(element(options.heading ?? 'h3', 'effects-title', t('row-effects-title')));
         const list = element('ul', 'effects');
         for (const effect of row.effects) list.append(effectNode(effect));
         body.append(list);
@@ -647,12 +611,12 @@ function explainedNode(body: HTMLDivElement, row: ExplainedRow, options: RenderO
     // A row slimmed to fit the history has no instructions left: no toggle with nothing behind it.
     if (row.sections.length > 0) body.append(instructionsNode(row, options));
     body.append(...readNotes(row));
-    if (row.simulation !== null) body.append(element('p', 'tables', `Simulation: ${row.simulation}`));
+    if (row.simulation !== null) body.append(element('p', 'tables', t('row-simulation', { simulation: row.simulation })));
     if (row.accounts?.length) {
-        body.append(element('p', 'tables', `Accounts read from the RPC, unverified: ${row.accounts.join(', ')}`));
+        body.append(element('p', 'tables', t('row-accounts', { accounts: row.accounts.join(t('row-list-separator')) })));
     }
     if (row.hints.length) {
-        body.append(element('p', 'tables', `Unlisted tokens named from the RPC and the token list, unverified: ${row.hints.join(', ')}`));
+        body.append(element('p', 'tables', t('row-hints', { tokens: row.hints.join(t('row-list-separator')) })));
     }
     // What the simulation found, under the line that says it ran.
     for (const section of row.sections.filter((s) => s.kind.type === 'claims')) {
@@ -660,7 +624,7 @@ function explainedNode(body: HTMLDivElement, row: ExplainedRow, options: RenderO
     }
     const holder = element('div');
     holder.append(element('pre', '', row.text));
-    body.append(disclosure('full-text', 'Full text, as the engine prints it', holder, false));
+    body.append(disclosure('full-text', t('row-full-text'), holder, false));
     // A row slimmed to fit the history has no bytes left to save.
     if (row.capture) body.append(saveLink(row.capture, options));
     return body;
