@@ -27,6 +27,11 @@ export function worse(a: VerdictWord, b: VerdictWord): VerdictWord {
     return ORDER.indexOf(b) > ORDER.indexOf(a) ? b : a;
 }
 
+/** A verdict as the tag the window and the popup show, in the interface's language. */
+export function verdictText(word: VerdictWord): string {
+    return t('verdict-word', { verdict: word });
+}
+
 /** The verdict word a row shows. */
 export function rowVerdictWord(row: Row): VerdictWord {
     switch (row.kind) {

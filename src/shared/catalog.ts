@@ -157,6 +157,7 @@ export interface Args {
     readonly 'verdict-list-separator': undefined;
     readonly 'verdict-message': undefined;
     readonly 'verdict-not-explained': { readonly error: Value };
+    readonly 'verdict-word': { readonly verdict: Value };
     readonly 'wallet-aside': undefined;
     readonly 'wallet-cancel': undefined;
     readonly 'wallet-heading': undefined;
@@ -678,6 +679,15 @@ export const CATALOGS: Readonly<Record<string, Catalog>> = {
         'verdict-list-separator': { value: [', '] },
         'verdict-message': { value: ['A message, shown as it is'] },
         'verdict-not-explained': { value: ['Not explained: ', { arg: 'error' }] },
+        'verdict-word': {
+            value: [
+                {
+                    select: 'verdict',
+                    cases: { ok: ['ok'], warning: ['warning'], blocked: ['blocked'], error: ['error'], message: ['message'] },
+                    other: 'message',
+                },
+            ],
+        },
         'wallet-aside': {
             value: [
                 'Each name and icon is the one the wallet gives itself in this page. The wallet you choose asks to connect, as it always does.',

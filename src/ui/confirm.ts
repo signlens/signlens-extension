@@ -11,7 +11,7 @@ import { settings } from '../shared/settings.ts';
 import { getPending, local } from '../shared/store.ts';
 import { logged, methodName, withoutScheme } from '../shared/text.ts';
 import { type Rating, SEVERITIES, type Seen } from '../shared/types.ts';
-import { rowVerdictWord, summaryOf, worstVerdict } from '../shared/verdict.ts';
+import { rowVerdictWord, summaryOf, verdictText, worstVerdict } from '../shared/verdict.ts';
 import { t } from '../shared/words.ts';
 import { byId } from './dom.ts';
 import { localize, nodes } from './localize.ts';
@@ -299,7 +299,7 @@ async function start(): Promise<void> {
     const band = byId('band');
     band.classList.add(worst);
     const bandVerdict = byId('band-verdict');
-    bandVerdict.textContent = worst;
+    bandVerdict.textContent = verdictText(worst);
     bandVerdict.classList.add(worst);
     const many = list.length > 1;
     // The band carries one summary: the transaction's, or, of several, the most serious one's.
@@ -327,7 +327,7 @@ async function start(): Promise<void> {
             head.append(
                 t('window-transaction-of', { index: i + 1, count: list.length }),
                 ' ',
-                element('span', `verdict ${rowVerdictWord(row)}`, rowVerdictWord(row)),
+                element('span', `verdict ${rowVerdictWord(row)}`, verdictText(rowVerdictWord(row))),
             );
             item.append(head);
         }

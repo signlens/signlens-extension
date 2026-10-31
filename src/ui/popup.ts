@@ -17,7 +17,7 @@ import {
 import { local, onChange, session } from '../shared/store.ts';
 import { describe, methodName, short, withoutScheme } from '../shared/text.ts';
 import type { ApiStatus } from '../shared/types.ts';
-import { rowVerdictWord, summaryOf } from '../shared/verdict.ts';
+import { rowVerdictWord, summaryOf, verdictText } from '../shared/verdict.ts';
 import { t } from '../shared/words.ts';
 import { access } from './access.ts';
 import { byId } from './dom.ts';
@@ -408,7 +408,7 @@ function historyRow(entry: HistoryEntry, row: Row, part?: number): HTMLElement {
     const summary = element('summary');
     const head = element('div', 'row-line');
     // The parts are spaced by the layout for the eye, and by spaces for the screen reader, which reads the row as one line.
-    head.append(element('span', `verdict ${verdict}`, consent ? t('popup-verdict-connect') : verdict), ' ');
+    head.append(element('span', `verdict ${verdict}`, consent ? t('popup-verdict-connect') : verdictText(rowVerdictWord(row))), ' ');
     // What became of it sits by the verdict, where it cannot be cut off.
     const outcome = became(entry, consent);
     if (outcome) head.append(element('span', 'decision', outcome), ' ');

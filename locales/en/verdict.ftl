@@ -12,3 +12,14 @@ verdict-consent = Asked to see the watched address { $address }
 verdict-address = Named { $addresses } as your address, which is not one of yours in SignLens
 # Between the addresses in verdict-address.
 verdict-list-separator = { ", " }
+
+## The verdict as a tag
+
+# The short tag a row is shown with: in the window's band, after each transaction's heading, and on each row of the popup's history, styled by its kind. $verdict: the kind, one of the cases.
+verdict-word = { $verdict ->
+    [ok] ok
+    [warning] warning
+    [blocked] blocked
+    [error] error
+   *[message] message
+}
