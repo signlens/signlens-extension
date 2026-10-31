@@ -63,6 +63,7 @@ npm run test:e2e        # the extension in Chromium, against the API's recorded 
 npm run test:e2e:record # the same against a running SignLens API, recording its answers anew
 npm run screenshots     # the README's images, of the real window and popup on recorded explanations
 npm run icons           # the icons and the wallet icon, from docs/design/icon.svg
+npm run messages        # src/shared/catalog.ts: the interface's words, compiled from locales/*/*.ftl
 npm run package         # the Chrome and Firefox packages under dist/, with their SHA-256s
 ```
 
@@ -102,6 +103,28 @@ which must come out the same bytes. When the repository variable
 `SIGNLENS_API_URL` names an API, the suite also runs against it; a
 release requires that.
 
+## The interface's words
+
+The extension's own words are Fluent messages, as the engine's are
+(ADR-0015, phase 5): English in `locales/en/*.ftl`, the source, and a
+translation under the same identifiers in `locales/<locale>/`. `npm run
+messages` compiles them into `src/shared/catalog.ts`, which is committed:
+each message's pattern, and the types of its arguments, so that a script
+asking for a message that is not there, or with the wrong arguments, does
+not compile. A translation may use no argument, attribute or named link
+its English lacks. `npm test` fails when the catalog is out of date, when
+a page names a message English does not have, and when an English message
+is asked for nowhere.
+
+A page marks an element with `data-l10n-id`, and the message words its
+content and the attributes it has (`.title`, `.aria-label`,
+`.placeholder`, `.alt`); a script asks with `t(id, args)` for text and
+`nodes(id, args)` for words with markup. The markup a message may carry
+is a few inline elements (`<strong>`, `<em>`, `<code>`, `<kbd>`) and a
+link the page holds by `data-l10n-name`; it is laid out with DOM calls,
+never parsed as HTML. A number argument is written as the locale writes
+numbers, and a choice by a number takes its plural category.
+
 ## Layout
 
 `src/` is split by where the code runs, since each place has its own
@@ -127,6 +150,7 @@ browser APIs and rules. Each module's Node test sits beside it.
 | | `popup.ts`, `pages.ts`: the popup; the pages SignLens runs on, and what the popup says over one it does not |
 | | `confirm.ts`, `connect.ts`, `address.ts`, `wallet.ts`, `windows.ts`, `dom.ts`: the window, the window that asks to show a site the watched address, the one that asks whether an address is yours, the one that asks which wallet signs, and what they share |
 | | `render.ts`: one row of a request as the window and the popup show it |
+| | `localize.ts`: a page's elements worded by `data-l10n-id`, and a message's markup laid out as elements |
 | | `welcome.ts`, `access.ts`, `yours.ts`: the setup page a new install opens; the access to sites the settings need, which the popup and the setup page ask for; your addresses as a list, in both |
 | `src/shared/` | what the worker and the pages both use, and nothing of either |
 | | `types.ts`: the contract: the explanation document, the request, the feedback record, the API's status |
@@ -137,12 +161,14 @@ browser APIs and rules. Each module's Node test sits beside it.
 | | `settings.ts`, `endpoint.ts`: the settings and their defaults; the endpoints accepted, checked again at each use |
 | | `consent.ts`: in Firefox, the user's say on whether a rating carries the site |
 | | `verdict.ts`: the verdict words and which is worst, for the badge and the window |
+| | `fluent.ts`, `words.ts`, `catalog.ts`: a message worded for a locale; the interface's words in its locale, else in English; the messages, compiled from `locales/` (generated) |
 | | `text.ts`, `json.ts`, `base58.ts`: text from elsewhere made safe to show; objects read from elsewhere; addresses |
 | `src/manifest.test.ts`, `src/layout.test.ts`, `src/icons.test.ts`, `src/release-notes.test.ts` | the manifest, the Firefox manifest, and the host permissions against the endpoint rule; the folders, and what each may import; the icons against their one drawing; a release's notes against the changelog |
+| `locales/` | the interface's words, a folder of Fluent files per locale, English the source |
 | `static/` | the manifest, the pages, the stylesheet and the icons, copied as they are into the build |
 | `docs/design/` | the icon's one drawing, from which `npm run icons` makes the four PNGs (the 128 px one padded as the Chrome Web Store asks) and the wallet icon a dapp shows |
 | `docs/images/` | the README's screenshots, in the light and the dark theme, made by `npm run screenshots` (`e2e/screenshots.shot.ts`) |
 | `dist/` | what the build makes, never committed: `chrome/` (the unpacked extension, the scripts in the folders they have under `src/`), `firefox/`, and the packages |
-| `scripts/` | the Firefox copy, the reproducible packages, a release's notes from the changelog, and recording the API's answers for the end-to-end tests |
+| `scripts/` | the interface's words compiled into the catalog, the Firefox copy, the reproducible packages, a release's notes from the changelog, and recording the API's answers for the end-to-end tests |
 | `e2e/` | the end-to-end tests, in Chromium, and the harness that loads the extension and opens its windows; at the end of a run against a live API, which recordings it no longer matches |
 | `test/` | what the Node tests and the end-to-end tests share: the mainnet transactions and the API's recorded answers (`fixtures/`), the stub RPC and API relay, the test dapp it serves, and the stand-in for the `chrome` APIs the modules run against in Node |

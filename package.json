@@ -29,10 +29,12 @@
     "test:e2e:record": "node scripts/record-api.ts",
     "prescreenshots": "npm run build",
     "screenshots": "playwright test -c playwright.screenshots.config.ts",
-    "icons": "node scripts/icons.ts"
+    "icons": "node scripts/icons.ts",
+    "messages": "node scripts/messages.ts"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.6.2",
+    "@fluent/syntax": "^0.19.0",
     "@playwright/test": "^1.64.1",
     "@types/chrome": "^0.3.6",
     "@types/node": "^26.6.5",
