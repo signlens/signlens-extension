@@ -33,6 +33,7 @@ export function transferRow(): ExplainedRow {
         simulation: null,
         hints: [],
         capture: `# Captured for the tests.\n${transfer.base64}\n`,
+        ...(document.locale ? { locale: document.locale } : {}),
     };
 }
 

@@ -167,6 +167,81 @@ function checkAgainst(tag: string, locale: Map<string, Compiled>, english: Map<s
     }
 }
 
+/** The pseudo-locale, made from the English as each message is worded, as the engine's is (ADR-0015, decision 11). */
+const PSEUDO = 'en-XA';
+const ACCENTED: Readonly<Record<string, string>> = {
+    a: 'á',
+    e: 'é',
+    i: 'í',
+    o: 'ó',
+    u: 'ú',
+    y: 'ý',
+    n: 'ñ',
+    c: 'ç',
+    A: 'Á',
+    E: 'É',
+    I: 'Í',
+    O: 'Ó',
+    U: 'Ú',
+    Y: 'Ý',
+    N: 'Ñ',
+    C: 'Ç',
+};
+
+/** `text` with each letter that has an accented form accented, its markup as it is. */
+function accent(text: string): string {
+    let out = '';
+    let at = 0;
+    const plain = (piece: string): string => piece.replace(/[aeiouyncAEIOUYNC]/g, (c) => ACCENTED[c] ?? c);
+    for (const match of text.matchAll(MARKUP)) {
+        out += plain(text.slice(at, match.index)) + match[0];
+        at = match.index + match[0].length;
+    }
+    return out + plain(text.slice(at));
+}
+
+/** How many letters a pattern's English has, along its default cases, its markup left out. */
+function length(pattern: Pattern): number {
+    let count = 0;
+    for (const part of pattern) {
+        if (typeof part === 'string') count += part.replace(MARKUP, '').length;
+        else if ('select' in part) count += length(part.cases[part.other] ?? []);
+    }
+    return count;
+}
+
+/** A pattern's parts with their text accented, an argument as it is. */
+function accented(pattern: Pattern): Part[] {
+    return pattern.map((part) => {
+        if (typeof part === 'string') return accent(part);
+        if ('arg' in part) return part;
+        return { ...part, cases: Object.fromEntries(Object.entries(part.cases).map(([key, value]) => [key, accented(value)])) };
+    });
+}
+
+/** A pattern in the pseudo-locale: accented, bracketed and about 40% longer, so that a word left in code, or a layout with no room for a longer language, shows. */
+function pseudo(pattern: Pattern): Pattern {
+    const out: Part[] = [];
+    for (const part of ['[', ...accented(pattern), `${'·'.repeat(Math.round(length(pattern) * 0.4))}]`]) {
+        const last = out.at(-1);
+        if (typeof part === 'string' && typeof last === 'string') out[out.length - 1] = last + part;
+        else out.push(part);
+    }
+    return out;
+}
+
+/** The English, every message and attribute in the pseudo-locale. */
+function pseudoLocale(english: Map<string, Compiled>): Map<string, Compiled> {
+    const out = new Map<string, Compiled>();
+    for (const [id, message] of english) {
+        const compiled: Compiled = { ...message, attributes: {} };
+        if (message.value) compiled.value = pseudo(message.value);
+        for (const [name, pattern] of Object.entries(message.attributes)) compiled.attributes[name] = pseudo(pattern);
+        out.set(id, compiled);
+    }
+    return out;
+}
+
 function entries(locale: Map<string, Compiled>): Record<string, { value?: Pattern; attributes?: Record<string, Pattern> }> {
     const out: Record<string, { value?: Pattern; attributes?: Record<string, Pattern> }> = {};
     for (const [id, message] of locale) {
@@ -186,8 +261,8 @@ export function generate(): { text: string; problems: string[]; messages: number
         .map((d) => d.name)
         .sort();
     const english = compileLocale(SOURCE, problems);
-    const catalogs: Record<string, ReturnType<typeof entries>> = { [SOURCE]: entries(english) };
-    for (const tag of tags.filter((t) => t !== SOURCE)) {
+    const catalogs: Record<string, ReturnType<typeof entries>> = { [SOURCE]: entries(english), [PSEUDO]: entries(pseudoLocale(english)) };
+    for (const tag of tags.filter((t) => t !== SOURCE && t !== PSEUDO)) {
         const locale = compileLocale(tag, problems);
         checkAgainst(tag, locale, english, problems);
         catalogs[tag] = entries(locale);
@@ -210,7 +285,7 @@ export function generate(): { text: string; problems: string[]; messages: number
         "/** Each message's arguments, by its identifier. */",
         ...(args ? ['export interface Args {', args, '}'] : ['export type Args = Record<never, never>;']),
         '',
-        '/** The messages of each locale, English the source. */',
+        '/** The messages of each locale, English the source, and the pseudo-locale made from it. */',
         `export const CATALOGS: Readonly<Record<string, Catalog>> = ${JSON.stringify(catalogs)};`,
         '',
     ].join('\n');

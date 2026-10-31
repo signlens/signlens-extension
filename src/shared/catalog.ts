@@ -320,7 +320,7 @@ export interface Args {
     readonly 'yours-removed': { readonly address: Value };
 }
 
-/** The messages of each locale, English the source. */
+/** The messages of each locale, English the source, and the pseudo-locale made from it. */
 export const CATALOGS: Readonly<Record<string, Catalog>> = {
     en: {
         'access-allow': { value: ['Allow https access'] },
@@ -1079,5 +1079,945 @@ export const CATALOGS: Readonly<Record<string, Catalog>> = {
         'yours-remove': { value: ['Remove'] },
         'yours-remove-label': { value: ['Remove ', { arg: 'address' }] },
         'yours-removed': { value: ['Removed ', { arg: 'address' }, '.'] },
+    },
+    'en-XA': {
+        'access-allow': { value: ['[Állów https áççéss·······]'] },
+        'access-allow-local': { value: ['[Állów https áñd lóçál áççéss···········]'] },
+        'address-add': { value: ["[Ít's míñé, ádd ít·······]"] },
+        'address-claimed-intro': {
+            value: ['[Thé págé sáýs thé wállét thát sígñs thís réqúést hás thé áddréss:··························]'],
+        },
+        'address-heading': { value: ['[Ís thís áddréss ýóúrs?·········]'] },
+        'address-mine-empty': { value: ['[Ñóñé ýét.····]'] },
+        'address-mine-title': { value: ['[Ýóúr áddréssés íñ SígñLéñs:···········]'] },
+        'address-not-added': {
+            value: [
+                '[Thé áddréss wás ñót áddéd: thís réqúést wás ñó lóñgér péñdíñg. Ásk thé síté ágáíñ íf ýóú stíll méáñ tó sígñ.···········································]',
+            ],
+        },
+        'address-note': { value: ['[Ñóthíñg hás bééñ éxpláíñéd ór séñt áñýwhéré ýét.···················]'] },
+        'address-reject': { value: ['[Réjéçt··]'] },
+        'address-warning': {
+            value: [
+                '[Ádd ít óñlý íf ýóúr wállét shóws éxáçtlý thís áddréss. Á síté thát wáñts ýóú tó séñd tó íts ówñ áddréss çáñ téll SígñLéñs thát áddréss ís ýóúrs, áñd thé tráñsfér wóúld théñ réád ás óñé bétwééñ ýóúr ówñ áççóúñts.····················································································]',
+            ],
+        },
+        'address-where': {
+            value: ['[', { arg: 'origin' }, ' ásks ýóú tó sígñ wíth áñ áddréss SígñLéñs dóés ñót kñów ás ýóúrs··························]'],
+        },
+        'address-window-title': { value: ['[Ís thís áddréss ýóúrs? ', { arg: 'site' }, ' · SígñLéñs··············]'] },
+        beta: { value: ['[bétá··]'] },
+        'connect-address-intro': { value: ['[Thé áddréss SígñLéñs çóññéçts ás:·············]'] },
+        'connect-allow': { value: ['[Állów··]'] },
+        'connect-aside': {
+            value: [
+                "[Állów léts thís síté séé ít whéñévér ít çóññéçts; ýóú çáñ táké thís báçk íñ SígñLéñs's séttíñgs. Déñý réfúsés thís tímé óñlý: thé síté ásks ágáíñ thé ñéxt tímé ít çóññéçts. Ñóthíñg çáñ bé sígñéd wíth thé áddréss éíthér wáý: SígñLéñs hólds ñó kéýs.···································································································]",
+            ],
+        },
+        'connect-deny': { value: ['[Déñý··]'] },
+        'connect-heading': { value: ['[Çóññéçt wátçh-óñlý·······]'] },
+        'connect-not-allowed': {
+            value: [
+                '[Thé síté wás ñót állówéd: thís réqúést wás ñó lóñgér péñdíñg. Çóññéçt ágáíñ fróm thé síté íf ýóú stíll méáñ tó.············································]',
+            ],
+        },
+        'connect-question': { value: ['[Lét thís síté séé thé áddréss?············]'] },
+        'connect-where': { value: ['[', { arg: 'origin' }, ' wáñts tó séé thé áddréss SígñLéñs wátçhés·················]'] },
+        'connect-window-title': { value: ['[', { arg: 'site' }, ' ásks tó séé thé wátçhéd áddréss · SígñLéñs·················]'] },
+        'popup-accounts': { value: ['[', { arg: 'name' }, ' ', { arg: 'more' }, ']'] },
+        'popup-accounts-more': {
+            value: [
+                "[súçh ás á múltísíg própósál's stóréd tráñsáçtíóñ ór á DÁÓ própósál's óptíóñs, fróm thé RPÇ, ás úñvérífíéd çláíms; séñds théír áddréssés tó thé RPÇ··························································]",
+            ],
+        },
+        'popup-accounts-name': { value: ['[Réád thé áççóúñts áñ éxpláñátíóñ ñééds···············]'] },
+        'popup-address-bad': { value: ['[Ñót á Sóláñá áddréss (básé58 óf 32 býtés).·················]'] },
+        'popup-address-field': { attributes: { placeholder: ['[Áñý Sóláñá áddréss·······]'] } },
+        'popup-address-label': { value: ['[Áddréss tó çóññéçt ás········]'] },
+        'popup-api-label': { value: ['[SígñLéñs ÁPÍ·····]'] },
+        'popup-api-note': {
+            value: [
+                '[Bétá: évérý tráñsáçtíóñ ýóú áré áskéd tó sígñ ís séñt héré tó bé éxpláíñéd, wíth ýóúr áddréssés áñd thósé íñ ýóúr áddréss bóók, só thé éxpláñátíóñ çáñ sáý “ýóú” áñd téll ýóúr çóñtáçts fróm lóókálíkés; théír ñámés stáý íñ ýóúr brówsér. Thé sérvér kééps vérdíçts áñd fíñdíñg çódés, ñót thé býtés; thé tráñsáçtíóñ ís képt óñlý whéñ ýóú tíçk “Séñd thís tráñsáçtíóñ tó SígñLéñs só ít çáñ bé lóókéd íñtó” úñdér íts éxpláñátíóñ.········································································································································································]',
+            ],
+        },
+        'popup-ask-first': { value: ['[', { arg: 'name' }, ', ', { arg: 'more' }, '·]'] },
+        'popup-ask-first-more': {
+            value: [
+                '[béfóré réfúsíñg ór pássíñg á réqúést óñ; whéñ óff, íñ páss-thróúgh módé á réqúést SígñLéñs wóúld réfúsé (blóçkéd, ór áñ érrór) stíll wáíts fór ýóú béfóré ít góés óñ tó ýóúr wállét········································································]',
+            ],
+        },
+        'popup-ask-first-name': { value: ['[Shów thé éxpláñátíóñ áñd ásk fírst··············]'] },
+        'popup-checking': { value: ['[Çhéçkíñg thé SígñLéñs ÁPÍ…··········]'] },
+        'popup-clear': { value: ['[Çléár··]'], attributes: { 'aria-label': ['[Çléár réqúésts······]'] } },
+        'popup-clear-failed': { value: ['[Thé réqúésts çóúld ñót bé çléáréd; trý ágáíñ.··················]'] },
+        'popup-contacts-bad': {
+            value: [
+                '[',
+                {
+                    select: 'count',
+                    cases: {
+                        one: ['Líñé ', { arg: 'lines' }, ' ñót réád: éxpéçtéd Ñámé = áddréss.'],
+                        other: ['Líñés ', { arg: 'lines' }, ' ñót réád: éxpéçtéd Ñámé = áddréss.'],
+                    },
+                    other: 'other',
+                },
+                '················]',
+            ],
+        },
+        'popup-contacts-both': { value: ['[', { arg: 'bad' }, ' ', { arg: 'over' }, ']'] },
+        'popup-contacts-field': { attributes: { placeholder: ['[Bób = 7s3s…····]'] } },
+        'popup-contacts-label': { value: ['[Áddréss bóók, óñé <code>Ñámé = áddréss</code> pér líñé················]'] },
+        'popup-contacts-over': {
+            value: [
+                '[',
+                {
+                    select: 'count',
+                    cases: {
+                        one: ['Óñlý thé fírst ', { arg: 'max' }, ' çóñtáçts áré úséd; líñé ', { arg: 'lines' }, ' ñót.'],
+                        other: ['Óñlý thé fírst ', { arg: 'max' }, ' çóñtáçts áré úséd; líñés ', { arg: 'lines' }, ' ñót.'],
+                    },
+                    other: 'other',
+                },
+                '··················]',
+            ],
+        },
+        'popup-decision-allowed': { value: ['[állówéd···]'] },
+        'popup-decision-denied': { value: ['[déñíéd··]'] },
+        'popup-decision-passed-on': { value: ['[pásséd óñ····]'] },
+        'popup-decision-passed-on-unasked': { value: ['[pásséd óñ, ñót áskéd········]'] },
+        'popup-decision-refused': { value: ['[réfúséd···]'] },
+        'popup-decision-rejected': { value: ['[réjéçtéd···]'] },
+        'popup-decision-watch-only': { value: ['[wátçh-óñlý····]'] },
+        'popup-empty': { value: ['[Ñóñé ýét. Çóññéçt “SígñLéñs” íñ á dápp áñd stárt á tráñsáçtíóñ.·························]'] },
+        'popup-endpoint-kept': {
+            value: ['[Ñót úséd: ', { arg: 'problem' }, '. SígñLéñs kééps úsíñg ', { arg: 'kept' }, '.··············]'],
+        },
+        'popup-endpoint-none': {
+            value: [
+                '[',
+                {
+                    select: 'endpoint',
+                    cases: {
+                        apiUrl: ['Ñót úséd: ', { arg: 'problem' }, '. SígñLéñs ásks ñó ÁPÍ úñtíl ít ís fíxéd.'],
+                        rpcUrl: ['Ñót úséd: ', { arg: 'problem' }, '. SígñLéñs ásks ñó RPÇ úñtíl ít ís fíxéd.'],
+                        tokenApiUrl: ['Ñót úséd: ', { arg: 'problem' }, '. SígñLéñs ásks ñó tókéñ líst úñtíl ít ís fíxéd.'],
+                    },
+                    other: 'tokenApiUrl',
+                },
+                '·······················]',
+            ],
+        },
+        'popup-engine-down': { value: ['[SígñLéñs ÁPÍ ñót réáçháblé: ', { arg: 'error' }, '···········]'] },
+        'popup-engine-ready': {
+            value: [
+                '[SígñLéñs ÁPÍ réádý: éñgíñé ',
+                { arg: 'engine' },
+                ', ',
+                { arg: 'programs' },
+                ' prógráms, ',
+                { arg: 'tokens' },
+                ' vérífíéd tókéñs. ',
+                { arg: 'languages' },
+                '·······················]',
+            ],
+        },
+        'popup-engine-unsafe': {
+            value: ['[SígñLéñs ÁPÍ ñót úséd: íts áddréss íñ thé séttíñgs ís ñót óñé SígñLéñs máý çáll.································]'],
+        },
+        'popup-language': {
+            value: [
+                '[',
+                {
+                    select: 'review',
+                    cases: {
+                        reviewed: [{ arg: 'language' }, ', révíéwéd óñ ', { arg: 'on' }],
+                        other: [{ arg: 'language' }, ', ñót révíéwéd'],
+                    },
+                    other: 'other',
+                },
+                '······]',
+            ],
+        },
+        'popup-language-named': { value: ['[', { arg: 'name' }, ' (', { arg: 'tag' }, ')·]'] },
+        'popup-languages': {
+            value: [
+                '[',
+                {
+                    select: 'count',
+                    cases: {
+                        '0': ['Éxpláíñs íñ Éñglísh.'],
+                        other: ['Éxpláíñs íñ Éñglísh, áñd íñ ', { arg: 'languages' }, ', whéñ ýóúr brówsér ásks fór ít.'],
+                    },
+                    other: 'other',
+                },
+                '························]',
+            ],
+        },
+        'popup-languages-separator': { value: ['[; ·]'] },
+        'popup-list-separator': { value: ['[, ·]'] },
+        'popup-mode-legend': { value: ['[Áftér éxpláíñíñg á réqúést··········]'] },
+        'popup-mode-pass': { value: ['[<strong>Páss ít tó ýóúr wállét</strong> tó sígñ, úñçháñgéd················]'] },
+        'popup-mode-watch': { value: ['[<strong>Réfúsé ít</strong> (wátçh-óñlý, ñó kéýs íñvólvéd)················]'] },
+        'popup-newest-first': { value: ['[Ñéwést fírst·····]'] },
+        'popup-no-wallet-elsewhere': {
+            value: [
+                '[SígñLéñs dóés ñót rúñ óñ thís págé. Ópéñ á dápp (áñ https págé), théñ ópéñ thís pópúp ágáíñ.·····································]',
+            ],
+        },
+        'popup-no-wallet-page': {
+            value: ['[Ñó óthér wállét fóúñd íñ thís táb. Ópéñ á dápp, théñ çómé báçk héré.···························]'],
+        },
+        'popup-no-wallet-reload': {
+            value: [
+                '[SígñLéñs ís ñót rúññíñg íñ thís táb ýét. Rélóád thé táb (ñéédéd óñçé áftér íñstállíñg ór úpdátíñg SígñLéñs), théñ ópéñ thís pópúp ágáíñ.······················································]',
+            ],
+        },
+        'popup-not-saved': { value: ['[Ñót sávéd: ', { arg: 'error' }, '····]'] },
+        'popup-other-address': { value: ['[áñóthér áddréss······]'] },
+        'popup-permissions': {
+            value: [
+                '[Thís brówsér hás ñót lét thé éxtéñsíóñ réáçh thé ÁPÍ, thé RPÇ áñd thé tókéñ líst ýét.··································]',
+            ],
+        },
+        'popup-refused': { value: ['[Réfúséd bý SígñLéñs: ', { arg: 'reason' }, '········]'] },
+        'popup-revoke': { value: ['[Révóké··]'] },
+        'popup-revoke-failed': { value: ['[', { arg: 'site' }, ' çóúld ñót bé révókéd; trý ágáíñ.·············]'] },
+        'popup-revoke-label': { value: ['[Révóké ', { arg: 'site' }, ' fór ', { arg: 'address' }, '·····]'] },
+        'popup-rpc-label': { value: ['[RPÇ fór lóókúp táblés, áççóúñts, míñts áñd símúlátíóñ·····················]'] },
+        'popup-setup-added': {
+            value: ['[Áddéd. SígñLéñs çálls ít “ýóú” fróm ñów óñ; ýóúr áddréssés áré íñ thé séttíñgs.································]'],
+        },
+        'popup-setup-again': { value: ['[Ópéñ thé sétúp págé········]'] },
+        'popup-setup-ask': {
+            value: ['[Ádd thé áddréss ýóúr wállét shóws, só SígñLéñs ñééd ñót ásk whíçh ís ýóúrs.······························]'],
+        },
+        'popup-simulate': { value: ['[', { arg: 'name' }, ' ', { arg: 'more' }, ']'] },
+        'popup-simulate-more': {
+            value: [
+                '[áñd hóld thé báláñçé çháñgés ágáíñst thé éxpláñátíóñ, ás áñ úñvérífíéd çláím; séñds thé whólé tráñsáçtíóñ tó thé RPÇ··············································]',
+            ],
+        },
+        'popup-simulate-name': { value: ['[Símúláté óvér thé RPÇ········]'] },
+        'popup-sites-empty': { value: ['[Ñóñé ýét: á síté ásks thé fírst tímé ít çóññéçts.····················]'] },
+        'popup-sites-title': { value: ['[Sítés thát máý séé ít········]'] },
+        'popup-tab-requests': { value: ['[Réqúésts···]'] },
+        'popup-tab-settings': { value: ['[Séttíñgs···]'] },
+        'popup-token-list-label': { value: ['[Tókéñ líst (sýmbóls)········]'] },
+        'popup-token-list-note': {
+            value: ['[Thé míñts óf úñlístéd tókéñs áré séñt tó thé RPÇ áñd tó thís líst.··························]'],
+        },
+        'popup-tokens': { value: ['[', { arg: 'name' }, ' ', { arg: 'more' }, ']'] },
+        'popup-tokens-more': {
+            value: ["[fróm thé RPÇ's míñt áççóúñts áñd thé tókéñ líst bélów, ás úñvérífíéd çláíms······························]"],
+        },
+        'popup-tokens-name': { value: ['[Ñámé úñlístéd tókéñs········]'] },
+        'popup-unseen': { value: ['[', { arg: 'count' }, ' ñéw··]'] },
+        'popup-upstream-elsewhere': { value: ['[', { arg: 'wallet' }, ' (ñót óñ thís págé)········]'] },
+        'popup-upstream-first': { value: ['[Fírst óñé fóúñd······]'] },
+        'popup-upstream-found': { value: ['[Fóúñd óñ ', { arg: 'site' }, ': ', { arg: 'wallets' }, '.·····]'] },
+        'popup-upstream-found-here': { value: ['[Fóúñd óñ thís págé: ', { arg: 'wallets' }, '.········]'] },
+        'popup-upstream-label': { value: ['[Wállét tó páss réqúésts tó··········]'] },
+        'popup-upstream-none': { value: ['[Ñó óthér wállét fóúñd. Ópéñ á dápp, théñ çómé báçk héré.······················]'] },
+        'popup-verdict-connect': { value: ['[çóññéçt···]'] },
+        'popup-views': { attributes: { 'aria-label': ['[Víéws··]'] } },
+        'popup-yours-note': {
+            value: [
+                '[Thé óñlý áddréssés SígñLéñs çálls “ýóú”. Whéñ á síté ñámés áñóthér ás ýóúrs, SígñLéñs ásks béfóré éxpláíñíñg áñýthíñg, ór, wíth “Shów thé éxpláñátíóñ áñd ásk fírst” óff, réfúsés ít; çópý thém fróm ýóúr wállét.····················································································]',
+            ],
+        },
+        'popup-yours-title': { value: ['[Ýóúr áddréssés······]'] },
+        'row-accounts': { value: ['[Áççóúñts réád fróm thé RPÇ, úñvérífíéd: ', { arg: 'accounts' }, '················]'] },
+        'row-actions': {
+            value: [
+                '[',
+                { select: 'count', cases: { one: [{ arg: 'count' }, ' áçtíóñ'], other: [{ arg: 'count' }, ' áçtíóñs'] }, other: 'other' },
+                '···]',
+            ],
+        },
+        'row-address-claimed': {
+            value: ['[Thé págé ñáméd ás ýóúrs áñ áddréss thát ís ñót óñé óf ýóúrs íñ SígñLéñs:·····························]'],
+        },
+        'row-address-refused': {
+            value: ['[Thé réqúést wás réfúséd béfóré áñýthíñg wás éxpláíñéd ór séñt áñýwhéré.····························]'],
+        },
+        'row-amount-note': { value: ['[ (', { arg: 'note' }, ')·]'] },
+        'row-amount-symbol': {
+            value: [
+                '[',
+                {
+                    select: 'bound',
+                    cases: {
+                        at_least: ['≥ ', { arg: 'quantity' }, ' ', { arg: 'symbol' }],
+                        at_most: ['≤ ', { arg: 'quantity' }, ' ', { arg: 'symbol' }],
+                        unlimited: ['ÚÑLÍMÍTÉD ', { arg: 'symbol' }],
+                        unknown: ['áñ úñkñówñ ámóúñt óf ', { arg: 'symbol' }],
+                        exact: [{ arg: 'quantity' }, ' ', { arg: 'symbol' }],
+                    },
+                    other: 'exact',
+                },
+                ']',
+            ],
+        },
+        'row-amount-token': {
+            value: [
+                '[',
+                {
+                    select: 'bound',
+                    cases: {
+                        at_least: ['≥ ', { arg: 'quantity' }, ' óf ', { arg: 'token' }],
+                        at_most: ['≤ ', { arg: 'quantity' }, ' óf ', { arg: 'token' }],
+                        unlimited: ['áñ ÚÑLÍMÍTÉD ámóúñt óf ', { arg: 'token' }],
+                        unknown: ['áñ úñkñówñ ámóúñt óf ', { arg: 'token' }],
+                        exact: [{ arg: 'quantity' }, ' óf ', { arg: 'token' }],
+                    },
+                    other: 'exact',
+                },
+                '··]',
+            ],
+        },
+        'row-bytes-show-all': {
+            value: [
+                '[',
+                {
+                    select: 'count',
+                    cases: { one: ['shów áll ', { arg: 'count' }, ' býté'], other: ['shów áll ', { arg: 'count' }, ' býtés'] },
+                    other: 'other',
+                },
+                '······]',
+            ],
+        },
+        'row-bytes-show-less': { value: ['[shów léss····]'] },
+        'row-chain': {
+            value: [
+                '[Çháíñ: thé págé sáýs ',
+                { arg: 'chain' },
+                '; réád áñd símúlátéd óñ thé RPÇ íñ thé séttíñgs áll thé sámé································]',
+            ],
+        },
+        'row-claimed': { value: ['[(çláíméd, úñvérífíéd)········]'] },
+        'row-consent-where': {
+            value: [
+                '[Thé sítés állówéd tó séé thé wátçhéd áddréss áré lístéd íñ thé séttíñgs, whéré Révóké tákés óñé báçk.········································]',
+            ],
+        },
+        'row-details-toggle': { value: ['[Détáíls: ', { arg: 'sections' }, '····]'] },
+        'row-duration-days': {
+            value: [
+                '[',
+                { select: 'days', cases: { '1': [{ arg: 'days' }, ' dáý'], other: [{ arg: 'days' }, ' dáýs'] }, other: 'other' },
+                {
+                    select: 'hours',
+                    cases: { '0': [''], '1': [' ', { arg: 'hours' }, ' hóúr'], other: [' ', { arg: 'hours' }, ' hóúrs'] },
+                    other: 'other',
+                },
+                '·····]',
+            ],
+        },
+        'row-duration-hours': {
+            value: [
+                '[',
+                { select: 'hours', cases: { '1': [{ arg: 'hours' }, ' hóúr'], other: [{ arg: 'hours' }, ' hóúrs'] }, other: 'other' },
+                {
+                    select: 'minutes',
+                    cases: { '0': [''], '1': [' ', { arg: 'minutes' }, ' míñúté'], other: [' ', { arg: 'minutes' }, ' míñútés'] },
+                    other: 'other',
+                },
+                '······]',
+            ],
+        },
+        'row-duration-minutes': {
+            value: [
+                '[',
+                {
+                    select: 'minutes',
+                    cases: { '1': [{ arg: 'minutes' }, ' míñúté'], other: [{ arg: 'minutes' }, ' míñútés'] },
+                    other: 'other',
+                },
+                {
+                    select: 'seconds',
+                    cases: { '0': [''], '1': [' ', { arg: 'seconds' }, ' séçóñd'], other: [' ', { arg: 'seconds' }, ' séçóñds'] },
+                    other: 'other',
+                },
+                '·······]',
+            ],
+        },
+        'row-duration-seconds': {
+            value: [
+                '[',
+                {
+                    select: 'seconds',
+                    cases: { '1': [{ arg: 'seconds' }, ' séçóñd'], other: [{ arg: 'seconds' }, ' séçóñds'] },
+                    other: 'other',
+                },
+                '···]',
+            ],
+        },
+        'row-effects-title': { value: ['[Whát thís dóés······]'] },
+        'row-findings-title': { value: ['[Whát SígñLéñs fóúñd········]'] },
+        'row-full-text': { value: ['[Fúll téxt, ás thé éñgíñé príñts ít··············]'] },
+        'row-help-claimed': {
+            value: [
+                '[Thís çámé fróm thé síté ór fróm thé RPÇ thé éxtéñsíóñ áskéd, ñót fróm thé tráñsáçtíóñ ítsélf. SígñLéñs çóúld ñót çhéçk ít, só dó ñót rélý óñ ít.··························································]',
+            ],
+        },
+        'row-help-claims': {
+            value: [
+                '[Évérýthíñg íñ thís séçtíóñ çámé fróm thé RPÇ thé éxtéñsíóñ áskéd, ñót fróm thé tráñsáçtíóñ ítsélf. SígñLéñs çóúld ñót çhéçk ít, só tréát ít ás á híñt, ñót á fáçt.·································································]',
+            ],
+        },
+        'row-help-verified': {
+            value: [
+                '[Thís ñámé çómés fróm SígñLéñs ór fróm ýóú: íts révíéwéd désçríptórs, íts vérífíéd tókéñ líst, ýóúr áddréssés íñ íts séttíñgs, ór ýóúr áddréss bóók. Thé síté çóúld ñót hávé súpplíéd ít.··········································································]',
+            ],
+        },
+        'row-hints': {
+            value: [
+                '[Úñlístéd tókéñs ñáméd fróm thé RPÇ áñd thé tókéñ líst, úñvérífíéd: ',
+                { arg: 'tokens' },
+                '···························]',
+            ],
+        },
+        'row-instructions-toggle': {
+            value: [
+                '[',
+                {
+                    select: 'count',
+                    cases: {
+                        '0': ['Détáíls'],
+                        '1': ['Íñstrúçtíóñ áñd détáíls'],
+                        other: ['Íñstrúçtíóñs (', { arg: 'count' }, ') áñd détáíls'],
+                    },
+                    other: 'other',
+                },
+                '···········]',
+            ],
+        },
+        'row-labelled-address': { value: ['[', { arg: 'label' }, ' (', { arg: 'address' }, ')·]'] },
+        'row-list-separator': { value: ['[, ·]'] },
+        'row-message-unchecked': {
+            value: [
+                '[SígñLéñs dóés ñót çhéçk mésságés: thís óñé ís shówñ ás ít ís. Sígñ ít óñlý íf ýóú méáñ whát ít sáýs.········································]',
+            ],
+        },
+        'row-no': { value: ['[ñó·]'] },
+        'row-not-explained': {
+            value: ['[SígñLéñs çóúld ñót éxpláíñ thís tráñsáçtíóñ: ñóthíñg ís kñówñ óf whát ít dóés.·······························]'],
+        },
+        'row-not-explained-ask-again': {
+            value: [
+                '[SígñLéñs çóúld ñót éxpláíñ thís tráñsáçtíóñ: ñóthíñg ís kñówñ óf whát ít dóés. Tó trý ágáíñ, Réjéçt áñd ásk thé síté ágáíñ.·················································]',
+            ],
+        },
+        'row-raw-units': {
+            value: [
+                '[',
+                {
+                    select: 'count',
+                    cases: { '1': [{ arg: 'units' }, ' ráw úñít'], other: [{ arg: 'units' }, ' ráw úñíts'] },
+                    other: 'other',
+                },
+                '····]',
+            ],
+        },
+        'row-save': { value: ['[Sávé thé tráñsáçtíóñ········]'] },
+        'row-save-numbered': { value: ['[Sávé tráñsáçtíóñ ', { arg: 'part' }, '·······]'] },
+        'row-save-title': {
+            value: ['[Thé tráñsáçtíóñ wíth íts lóókúp táblés, ás thé SígñLéñs éñgíñé réáds ít····························]'],
+        },
+        'row-severity-critical': { value: ['[Çrítíçál···]'] },
+        'row-severity-high': { value: ['[Hígh··]'] },
+        'row-severity-info': { value: ['[Íñfó··]'] },
+        'row-severity-warning': { value: ['[Wárñíñg···]'] },
+        'row-simulation': { value: ['[Símúlátíóñ: ', { arg: 'simulation' }, '·····]'] },
+        'row-step': { value: ['[Stép ', { arg: 'index' }, ': ', { arg: 'title' }, '···]'] },
+        'row-tables': { value: ['[Lóókúp táblés: ', { arg: 'tables' }, '······]'] },
+        'row-unrecognized-value': {
+            value: ['[Á válúé thís vérsíóñ çáññót shów (', { arg: 'type' }, '); thé fúll téxt bélów hás ít·························]'],
+        },
+        'row-unverified-token': { value: ['[úñvérífíéd tókéñ ', { arg: 'mint' }, '·······]'] },
+        'row-verified': { value: ['[vérífíéd···]'] },
+        'row-yes': { value: ['[ýés·]'] },
+        'verdict-address': {
+            value: ['[Ñáméd ', { arg: 'addresses' }, ' ás ýóúr áddréss, whíçh ís ñót óñé óf ýóúrs íñ SígñLéñs························]'],
+        },
+        'verdict-consent': { value: ['[Áskéd tó séé thé wátçhéd áddréss ', { arg: 'address' }, '·············]'] },
+        'verdict-list-separator': { value: ['[, ·]'] },
+        'verdict-message': { value: ['[Á mésságé, shówñ ás ít ís··········]'] },
+        'verdict-not-explained': { value: ['[Ñót éxpláíñéd: ', { arg: 'error' }, '······]'] },
+        'verdict-word': {
+            value: [
+                '[',
+                {
+                    select: 'verdict',
+                    cases: { ok: ['ók'], warning: ['wárñíñg'], blocked: ['blóçkéd'], error: ['érrór'], message: ['mésságé'] },
+                    other: 'message',
+                },
+                '···]',
+            ],
+        },
+        'wallet-aside': {
+            value: [
+                '[Éáçh ñámé áñd íçóñ ís thé óñé thé wállét gívés ítsélf íñ thís págé. Thé wállét ýóú çhóósé ásks tó çóññéçt, ás ít álwáýs dóés.··················································]',
+            ],
+        },
+        'wallet-cancel': { value: ['[Çáñçél··]'] },
+        'wallet-heading': { value: ['[Whíçh wállét sígñs?········]'] },
+        'wallet-intro': {
+            value: [
+                "[Thís págé hás móré tháñ óñé wállét. SígñLéñs pássés ýóúr réqúésts óñ tó thé óñé ýóú çhóósé héré, áñd kééps ýóúr çhóíçé; íts pópúp's séttíñgs çháñgé ít.····························································]",
+            ],
+        },
+        'wallet-list': { attributes: { 'aria-label': ['[Wálléts óñ thís págé········]'] } },
+        'wallet-not-connected': {
+            value: [
+                '[Ñó wállét wás çóññéçtéd: thís réqúést wás ñó lóñgér péñdíñg. Çóññéçt ágáíñ fróm thé síté.····································]',
+            ],
+        },
+        'wallet-not-kept': { value: ['[Ñót képt: ', { arg: 'error' }, '····]'] },
+        'wallet-note': { value: ['[Ñóthíñg ís çóññéçtéd úñtíl ýóú çhóósé.···············]'] },
+        'wallet-page-title': { value: ['[Whíçh wállét sígñs? · SígñLéñs············]'] },
+        'wallet-where': { value: ['[', { arg: 'origin' }, ' ásks tó çóññéçt······]'] },
+        'wallet-window-title': { value: ['[Whíçh wállét sígñs? ', { arg: 'site' }, ' · SígñLéñs············]'] },
+        'welcome-access-text': {
+            value: [
+                '[Thís brówsér hás ñót lét SígñLéñs réáçh thém ýét, áñd wíthóút thém ñóthíñg çáñ bé éxpláíñéd.·····································]',
+            ],
+        },
+        'welcome-access-title': { value: ['[Fírst, lét SígñLéñs réáçh thé ÁPÍ áñd ýóúr RPÇ··················]'] },
+        'welcome-addresses-note': {
+            value: [
+                "[Áñ áddréss ýóú léávé óút ís áskéd ábóút thé fírst tímé á síté sígñs wíth ít. Ýóú çáñ çháñgé thém áñý tímé íñ SígñLéñs's séttíñgs.····················································]",
+            ],
+        },
+        'welcome-addresses-text': {
+            value: [
+                '[SígñLéñs çálls óñlý thésé áddréssés “ýóú” íñ íts éxpláñátíóñs, só á síté çáññót páss óff íts ówñ áddréss ás ýóúrs. Çópý thém fróm ýóúr wállét (Pháñtóm, Sólfláré, Báçkpáçk, …).······································································]',
+            ],
+        },
+        'welcome-addresses-title': { value: ['[1. Ýóúr wállét áddréssés··········]'] },
+        'welcome-done': { value: ['[Dóñé··]'] },
+        'welcome-heading': { value: ['[Sét úp SígñLéñs······]'] },
+        'welcome-intro': {
+            value: [
+                '[SígñLéñs shóws whát á Sóláñá tráñsáçtíóñ dóés béfóré ýóúr wállét ásks ýóú tó sígñ ít. Ít hólds ñó kéýs: ýóúr wállét stíll sígñs, áñd ásks ýóú ás ít álwáýs hás.································································]',
+            ],
+        },
+        'welcome-more': { value: ["[Áll óf thís, áñd móré, ís íñ thé séttíñgs íñ SígñLéñs's pópúp.·························]"] },
+        'welcome-page-title': { value: ['[Sét úp SígñLéñs······]'] },
+        'welcome-pin-steps': {
+            value: [
+                '[Ópéñ thé éxtéñsíóñs méñú (thé púzzlé-píéçé íçóñ íñ thé tóólbár) áñd píñ SígñLéñs: íts bádgé théñ shóws thé vérdíçt óf éáçh réqúést, áñd íts pópúp lísts thém.·······························································]',
+            ],
+        },
+        'welcome-pin-title': { value: ['[3. Píñ SígñLéñs tó thé tóólbár············]'] },
+        'welcome-pinned': { value: ['[Píññéd: SígñLéñs ís óñ thé tóólbár.··············]'] },
+        'welcome-privacy-text': {
+            value: [
+                "[Íñ thís bétá, éáçh tráñsáçtíóñ ýóú áré áskéd tó sígñ ís séñt tó SígñLéñs's ÁPÍ tó bé éxpláíñéd, wíth ýóúr áddréssés áñd thósé íñ ýóúr áddréss bóók, só thé éxpláñátíóñ çáñ sáý “ýóú” áñd téll ýóúr çóñtáçts fróm lóókálíkés; théír ñámés stáý íñ ýóúr brówsér. Thé sérvér kééps vérdíçts áñd fíñdíñg çódés, ñót thé tráñsáçtíóñ, úñléss ýóú çhóósé tó séñd ít wíth á rátíñg. Lóókúp táblés, áççóúñts áñd á símúlátíóñ áré réád fróm thé RPÇ íñ thé séttíñgs.··················································································································································································]",
+            ],
+        },
+        'welcome-privacy-title': { value: ['[Whát léávés ýóúr brówsér··········]'] },
+        'welcome-use-choose': {
+            value: [
+                "[Íñ thé dápp's líst óf wálléts, çhóósé <strong>SígñLéñs</strong> ráthér tháñ ýóúr wállét. SígñLéñs çóññéçts thróúgh ýóúr wállét, whíçh ásks ýóú ás úsúál.······················································]",
+            ],
+        },
+        'welcome-use-reconnect': {
+            value: [
+                '[Dápps réçóññéçt thé wállét ýóú úséd lást. Whéré óñé çóññéçts ýóúr wállét díréçtlý, SígñLéñs ís skíppéd: dísçóññéçt ít théré, áñd çhóósé SígñLéñs.··························································]',
+            ],
+        },
+        'welcome-use-title': { value: ['[2. Úsé ít íñ á dápp········]'] },
+        'welcome-use-wallets': {
+            value: [
+                "[Úsíñg móré tháñ óñé wállét? Thé fírst tímé ýóú çóññéçt, SígñLéñs ásks whíçh óñé ít pássés ýóúr réqúésts tó, áñd kééps ýóúr çhóíçé; íts pópúp's séttíñgs çháñgé ít.·································································]",
+            ],
+        },
+        'welcome-use-window': {
+            value: [
+                "[Éáçh réqúést théñ ópéñs SígñLéñs's wíñdów fírst. Réád whát thé tráñsáçtíóñ dóés, théñ çóñtíñúé tó ýóúr wállét, ór réjéçt.················································]",
+            ],
+        },
+        'window-anyway-back': { value: ['[Gó báçk···]'] },
+        'window-anyway-go': { value: ['[Çóñtíñúé áñýwáý······]'] },
+        'window-anyway-title': { value: ['[Páss thís réqúést óñ áñýwáý?···········]'] },
+        'window-asking-again': { value: ['[Áskíñg ágáíñ, wíth thé séttíñgs ás théý áré ñów…···················]'] },
+        'window-asking-english': { value: ['[Áskíñg fór ít íñ Éñglísh…··········]'] },
+        'window-asking-yours': { value: ['[Áskíñg fór ít íñ ýóúr láñgúágé…············]'] },
+        'window-band-of-several': {
+            value: [
+                '[',
+                { arg: 'summary' },
+                ' (tráñsáçtíóñ ',
+                { arg: 'index' },
+                ' óf ',
+                { arg: 'count' },
+                '; éáçh ís bélów)··············]',
+            ],
+        },
+        'window-close': { value: ['[Çlósé··]'] },
+        'window-continue': { value: ['[Çóñtíñúé···]'] },
+        'window-continue-anyway-to': { value: ['[Çóñtíñúé áñýwáý tó ', { arg: 'wallet' }, '········]'] },
+        'window-continue-anyway-to-yours': { value: ['[Çóñtíñúé áñýwáý tó ýóúr wállét············]'] },
+        'window-continue-to': { value: ['[Çóñtíñúé tó ', { arg: 'wallet' }, '·····]'] },
+        'window-continue-to-yours': { value: ['[Çóñtíñúé tó ýóúr wállét·········]'] },
+        'window-feedback-add-word': { value: ['[Ádd á wórd íf ýóú líké; ít ís séñt whéñ ýóú déçídé bélów.·······················]'] },
+        'window-feedback-ask': { value: ['[Wás thís éxpláñátíóñ çléár?···········]'] },
+        'window-feedback-comment': {
+            attributes: {
+                placeholder: ['[Whát wás úñçléár ór wróñg? (óptíóñál)···············]'],
+                'aria-label': ['[Whát wás úñçléár ór wróñg? (óptíóñál)···············]'],
+            },
+        },
+        'window-feedback-cover': {
+            value: [
+                '[',
+                {
+                    select: 'count',
+                    cases: {
+                        one: ['Séñd thís tráñsáçtíóñ tó SígñLéñs só ít çáñ bé lóókéd íñtó'],
+                        other: ['Séñd thésé tráñsáçtíóñs tó SígñLéñs só théý çáñ bé lóókéd íñtó'],
+                    },
+                    other: 'other',
+                },
+                '·························]',
+            ],
+        },
+        'window-feedback-failed': { value: ['[Thé féédbáçk çóúld ñót bé séñt.············]'] },
+        'window-feedback-sent': { value: ['[Tháñk ýóú. Séñt tó SígñLéñs.···········]'] },
+        'window-feedback-what': {
+            value: [
+                "[Á rátíñg séñds SígñLéñs thé síté, SígñLéñs's vérsíóñ, whát thís wíñdów shóws (thé vérdíçt, thé fíñdíñgs áñd thé prógráms çálléd) áñd ýóúr çómméñt. Thé tráñsáçtíóñ ítsélf góés óñlý íf ýóú tíçk thé bóx bélów.··················································································]",
+            ],
+        },
+        'window-feedback-what-firefox': {
+            value: [
+                "[Á rátíñg séñds SígñLéñs whát thís wíñdów shóws (thé vérdíçt, thé fíñdíñgs áñd thé prógráms çálléd) áñd ýóúr çómméñt, áñd thé síté áñd SígñLéñs's vérsíóñ óñçé ýóú állów thém whéñ Fíréfóx ásks. Thé tráñsáçtíóñ ítsélf góés óñlý íf ýóú tíçk thé bóx bélów.····································································································]",
+            ],
+        },
+        'window-gone-heading': { value: ['[Ñó lóñgér péñdíñg·······]'] },
+        'window-gone-page-title': { value: ['[Ñó lóñgér péñdíñg · SígñLéñs···········]'] },
+        'window-gone-text': {
+            value: [
+                '[Thís réqúést ís ñó lóñgér péñdíñg: íts págé çlóséd, rélóádéd ór stóppéd wáítíñg. Ñóthíñg çámé óf ít.········································]',
+            ],
+        },
+        'window-heading-message': { value: ['[Sígñ á mésságé······]'] },
+        'window-heading-transactions': {
+            value: [
+                '[',
+                {
+                    select: 'count',
+                    cases: { one: ['Sígñ á tráñsáçtíóñ'], other: ['Sígñ ', { arg: 'count' }, ' tráñsáçtíóñs'] },
+                    other: 'other',
+                },
+                '·······]',
+            ],
+        },
+        'window-no-answer': {
+            value: [
+                "[SígñLéñs díd ñót áñswér, só ít ís ñót kñówñ whéthér thís wéñt thróúgh: thé pópúp's réqúésts sáý whát çámé óf ít.·············································]",
+            ],
+        },
+        'window-not-explained-again': {
+            value: [
+                '[Thís réqúést ís ñó lóñgér péñdíñg, só ít wás ñót éxpláíñéd ágáíñ. Ásk thé síté ágáíñ íf ýóú stíll méáñ tó sígñ.············································]',
+            ],
+        },
+        'window-not-passed-on': {
+            value: [
+                '[Ñóthíñg wás pásséd óñ: thís réqúést wás ñó lóñgér péñdíñg. Ásk thé síté ágáíñ íf ýóú stíll méáñ tó sígñ.··········································]',
+            ],
+        },
+        'window-note-continue': {
+            value: [
+                '[',
+                {
+                    select: 'to',
+                    cases: {
+                        settings: ['Çóñtíñúé háñds thé réqúést úñçháñgéd tó ', { arg: 'wallet' }, ', whíçh ásks fór íts ówñ áppróvál.'],
+                        page: [
+                            'Çóñtíñúé háñds thé réqúést úñçháñgéd tó thé fírst wállét thé págé hás, whíçh ít çálls “',
+                            { arg: 'wallet' },
+                            '”, áñd whíçh ásks fór íts ówñ áppróvál.',
+                        ],
+                        none: ['Çóñtíñúé háñds thé réqúést úñçháñgéd tó ýóúr wállét, whíçh ásks fór íts ówñ áppróvál.'],
+                    },
+                    other: 'none',
+                },
+                '··································]',
+            ],
+        },
+        'window-note-no-keys': { value: ['[Thís wállét hólds ñó kéýs: thé réqúést ís réfúséd éíthér wáý.························]'] },
+        'window-note-refused': {
+            value: [
+                '[',
+                {
+                    select: 'to',
+                    cases: {
+                        settings: [
+                            'SígñLéñs wóúld réfúsé thís. Çóñtíñúíñg háñds ít úñçháñgéd áll thé sámé tó ',
+                            { arg: 'wallet' },
+                            ', whíçh ásks fór íts ówñ áppróvál.',
+                        ],
+                        page: [
+                            'SígñLéñs wóúld réfúsé thís. Çóñtíñúíñg háñds ít úñçháñgéd áll thé sámé tó thé fírst wállét thé págé hás, whíçh ít çálls “',
+                            { arg: 'wallet' },
+                            '”, áñd whíçh ásks fór íts ówñ áppróvál.',
+                        ],
+                        none: [
+                            'SígñLéñs wóúld réfúsé thís. Çóñtíñúíñg háñds ít úñçháñgéd áll thé sámé tó ýóúr wállét, whíçh ásks fór íts ówñ áppróvál.',
+                        ],
+                    },
+                    other: 'none',
+                },
+                '················································]',
+            ],
+        },
+        'window-note-refused-ask-off': {
+            value: [
+                '[',
+                {
+                    select: 'to',
+                    cases: {
+                        settings: [
+                            '“Shów thé éxpláñátíóñ áñd ásk fírst” ís óff, bút SígñLéñs stíll ásks béfóré pássíñg óñ whát ít wóúld réfúsé. Çóñtíñúíñg háñds thís úñçháñgéd tó ',
+                            { arg: 'wallet' },
+                            ', whíçh ásks fór íts ówñ áppróvál.',
+                        ],
+                        page: [
+                            '“Shów thé éxpláñátíóñ áñd ásk fírst” ís óff, bút SígñLéñs stíll ásks béfóré pássíñg óñ whát ít wóúld réfúsé. Çóñtíñúíñg háñds thís úñçháñgéd tó thé fírst wállét thé págé hás, whíçh ít çálls “',
+                            { arg: 'wallet' },
+                            '”, áñd whíçh ásks fór íts ówñ áppróvál.',
+                        ],
+                        none: [
+                            '“Shów thé éxpláñátíóñ áñd ásk fírst” ís óff, bút SígñLéñs stíll ásks béfóré pássíñg óñ whát ít wóúld réfúsé. Çóñtíñúíñg háñds thís úñçháñgéd tó ýóúr wállét, whíçh ásks fór íts ówñ áppróvál.',
+                        ],
+                    },
+                    other: 'none',
+                },
+                '············································································]',
+            ],
+        },
+        'window-page-title': {
+            value: [
+                '[',
+                {
+                    select: 'verdict',
+                    cases: {
+                        ok: ['ÓK: ', { arg: 'request' }, ' fór ', { arg: 'site' }, ' · SígñLéñs'],
+                        warning: ['Wárñíñg: ', { arg: 'request' }, ' fór ', { arg: 'site' }, ' · SígñLéñs'],
+                        blocked: ['Blóçkéd: ', { arg: 'request' }, ' fór ', { arg: 'site' }, ' · SígñLéñs'],
+                        error: ['Érrór: ', { arg: 'request' }, ' fór ', { arg: 'site' }, ' · SígñLéñs'],
+                        message: [{ arg: 'request' }, ' fór ', { arg: 'site' }, ' · SígñLéñs'],
+                    },
+                    other: 'message',
+                },
+                '······]',
+            ],
+        },
+        'window-rating-clear': { value: ['[Çléár··]'] },
+        'window-rating-unclear': { value: ['[Úñçléár···]'] },
+        'window-rating-wrong': { value: ['[Wróñg··]'] },
+        'window-refusal-blocked': { value: ['[SígñLéñs blóçks ít. ', { arg: 'why' }, '········]'] },
+        'window-refusal-of-several': {
+            value: ['[', { arg: 'why' }, ' (tráñsáçtíóñ ', { arg: 'index' }, ' óf ', { arg: 'count' }, ')········]'],
+        },
+        'window-refusal-unexplained': {
+            value: ['[SígñLéñs çóúld ñót éxpláíñ thís, só ñóthíñg ís kñówñ óf whát ít dóés.····························]'],
+        },
+        'window-reject': { value: ['[Réjéçt··]'] },
+        'window-show-english': { value: ['[Shów íñ Éñglísh······]'] },
+        'window-show-yours': { value: ['[Shów íñ ýóúr láñgúágé········]'] },
+        'window-transaction-of': { value: ['[Tráñsáçtíóñ ', { arg: 'index' }, ' óf ', { arg: 'count' }, '······]'] },
+        'window-try-again': { value: ['[Trý ágáíñ····]'] },
+        'window-unknown-page': { value: ['[áñ úñkñówñ págé······]'] },
+        'window-where': { value: ['[', { arg: 'origin' }, ' ásks ýóú tó sígñ·······]'] },
+        'worker-api-error-unsaid': { value: ['[thé SígñLéñs ÁPÍ áñswéréd áñ érrór wíthóút á mésságé·····················]'] },
+        'worker-api-no-answer': {
+            value: ['[thé SígñLéñs ÁPÍ át ', { arg: 'url' }, ' díd ñót áñswér (', { arg: 'error' }, ')···············]'],
+        },
+        'worker-api-no-document': {
+            value: ['[thé SígñLéñs ÁPÍ áñswéréd HTTP ', { arg: 'status' }, ' wíthóút á dóçúméñt····················]'],
+        },
+        'worker-api-no-v2': {
+            value: [
+                '[thé SígñLéñs ÁPÍ át ',
+                { arg: 'url' },
+                ' dóés ñót sérvé /v2/éxpláíñ, whíçh thís vérsíóñ ñééds: úpdáté ít, ór úsé thé défáúlt ÁPÍ íñ thé séttíñgs··················································]',
+            ],
+        },
+        'worker-api-not-explanation': {
+            value: [
+                '[thé SígñLéñs ÁPÍ áñswéréd HTTP ',
+                { arg: 'status' },
+                ' wíth sóméthíñg thát ís ñót áñ éxpláñátíóñ·····························]',
+            ],
+        },
+        'worker-api-unreadable': {
+            value: [
+                '[thé SígñLéñs ÁPÍ áñswéréd áñ éxpláñátíóñ thís vérsíóñ çáññót réád: ',
+                { arg: 'problem' },
+                '···························]',
+            ],
+        },
+        'worker-badge-blocked': { value: ['[BLÓÇK··]'] },
+        'worker-badge-error': { value: ['[?]'] },
+        'worker-badge-message': { value: ['[MSG·]'] },
+        'worker-badge-ok': { value: ['[ÓK·]'] },
+        'worker-badge-warning': { value: ['[WÁRÑ··]'] },
+        'worker-connect-failed': {
+            value: [
+                '[SígñLéñs çóúld ñót çóññéçt: ñó wállét tó páss réqúésts tó (fóúñd: ',
+                { select: 'count', cases: { '0': ['ñóñé'], other: [{ arg: 'found' }] }, other: 'other' },
+                "). Çhóósé á wállét íñ thé éxtéñsíóñ's séttíñgs.·············································]",
+            ],
+        },
+        'worker-connect-failed-named': {
+            value: [
+                '[SígñLéñs çóúld ñót çóññéçt: ñó wállét ñáméd ',
+                { arg: 'wanted' },
+                ' tó páss réqúésts tó (fóúñd: ',
+                { select: 'count', cases: { '0': ['ñóñé'], other: [{ arg: 'found' }] }, other: 'other' },
+                "). Çhóósé á wállét íñ thé éxtéñsíóñ's séttíñgs.················································]",
+            ],
+        },
+        'worker-endpoint-not-http': { value: ['[ñót áñ http(s) ÚRL·······]'] },
+        'worker-endpoint-not-url': { value: ['[ñót á ÚRL····]'] },
+        'worker-endpoint-plain-http': {
+            value: ['[pláíñ http ís fór thís máçhíñé óñlý (', { arg: 'hosts' }, '); úsé https····················]'],
+        },
+        'worker-endpoint-refused-api': {
+            value: ['[thé ÁPÍ áddréss íñ thé séttíñgs ís ñót úsáblé: ', { arg: 'problem' }, '···················]'],
+        },
+        'worker-endpoint-refused-rpc': {
+            value: ['[thé RPÇ áddréss íñ thé séttíñgs ís ñót úsáblé: ', { arg: 'problem' }, '···················]'],
+        },
+        'worker-endpoint-refused-tokens': {
+            value: ['[thé tókéñ líst áddréss íñ thé séttíñgs ís ñót úsáblé: ', { arg: 'problem' }, '······················]'],
+        },
+        'worker-failed-message-not-base64': { value: ['[thé mésságé ís ñót básé64··········]'] },
+        'worker-failed-message-too-long': { value: ['[thé mésságé ís lóñgér tháñ ', { arg: 'max' }, ' býtés·············]'] },
+        'worker-failed-no-message': { value: ['[mésságé ís réqúíréd········]'] },
+        'worker-failed-not-list': { value: ['[tráñsáçtíóñs múst bé á líst óf básé64 stríñgs··················]'] },
+        'worker-failed-page-gone': { value: ['[ñót éxpláíñéd: thé págé çlóséd ór rélóádéd·················]'] },
+        'worker-failed-stopped-waiting': { value: ['[ñót éxpláíñéd: thé págé stóppéd wáítíñg················]'] },
+        'worker-failed-too-long': { value: ['[á tráñsáçtíóñ ís lóñgér tháñ ', { arg: 'max' }, ' býtés··············]'] },
+        'worker-failed-too-many': {
+            value: [
+                '[',
+                { arg: 'count' },
+                ' tráñsáçtíóñs íñ óñé réqúést; SígñLéñs éxpláíñs át móst ',
+                { arg: 'max' },
+                '······················]',
+            ],
+        },
+        'worker-history-slimmed': { value: ['[Thé fúll téxt wás tóó lóñg tó kéép íñ thé hístórý.····················]'] },
+        'worker-limited': {
+            value: [
+                '[thé SígñLéñs ÁPÍ tóók ñó móré éxpláñátíóñs fór ñów, fróm tráñsáçtíóñ ',
+                { arg: 'at' },
+                ' óf ',
+                { arg: 'count' },
+                ' óñ; trý ágáíñ íñ á míñúté········································]',
+            ],
+        },
+        'worker-list-separator': { value: ['[, ·]'] },
+        'worker-message-not-text': { value: ['[(', { arg: 'count' }, ' býtés, ñót téxt) ', { arg: 'hex' }, '········]'] },
+        'worker-refused-address-not-kept': { value: ['[çóúld ñót kéép ýóúr áddréss: ', { arg: 'error' }, '············]'] },
+        'worker-refused-no-decision': { value: ['[ñó déçísíóñ íñ tímé········]'] },
+        'worker-refused-not-watched': {
+            value: ['[thé págé ñáméd áñ áddréss óthér tháñ thé óñé SígñLéñs wátçhés························]'],
+        },
+        'worker-refused-not-yours-ask-off': {
+            value: [
+                '[thé págé ñáméd áñ áddréss thát ís ñót ýóúrs íñ SígñLéñs, áñd wíth “Shów thé éxpláñátíóñ áñd ásk fírst” óff SígñLéñs dóés ñót ásk; ádd ít íñ thé séttíñgs íf ít ís ýóúrs···································································]',
+            ],
+        },
+        'worker-refused-page-gone': { value: ['[thé págé çlóséd ór rélóádéd···········]'] },
+        'worker-refused-several-not-yours': {
+            value: [
+                '[thé págé ñáméd móré tháñ óñé áddréss thát ís ñót ýóúrs íñ SígñLéñs; ádd ýóúrs íñ thé séttíñgs, théñ ásk ágáíñ············································]',
+            ],
+        },
+        'worker-refused-site-not-kept': { value: ['[çóúld ñót kéép thé síté állówéd: ', { arg: 'error' }, '·············]'] },
+        'worker-refused-stopped-waiting': { value: ['[thé págé stóppéd wáítíñg··········]'] },
+        'worker-refused-window-failed': { value: ['[thé SígñLéñs wíñdów fáíléd: ', { arg: 'error' }, '···········]'] },
+        'worker-refused-window-not-open': { value: ['[thé SígñLéñs wíñdów çóúld ñót ópéñ: ', { arg: 'error' }, '··············]'] },
+        'worker-rpc-error': { value: ['[RPÇ érrór: ', { arg: 'said' }, '····]'] },
+        'worker-rpc-error-unsaid': { value: ['[RPÇ érrór: ñó mésságé········]'] },
+        'worker-rpc-http': { value: ['[', { arg: 'host' }, ' áñswéréd HTTP ', { arg: 'status' }, '······]'] },
+        'worker-rpc-http-said': { value: ['[', { arg: 'host' }, ' áñswéréd HTTP ', { arg: 'status' }, ': ', { arg: 'said' }, '·······]'] },
+        'worker-rpc-not-json-rpc': {
+            value: ['[thé RPÇ át ', { arg: 'host' }, ' áñswéréd sóméthíñg thát ís ñót JSÓÑ-RPÇ····················]'],
+        },
+        'worker-rpc-other': {
+            value: ['[thé RPÇ át ', { arg: 'host' }, ' áñswéréd ', { arg: 'method' }, ' wíth sóméthíñg élsé················]'],
+        },
+        'worker-rpc-unnamed-http': { value: ['[thé RPÇ áñswéréd HTTP ', { arg: 'status' }, '·········]'] },
+        'worker-rpc-unnamed-http-said': { value: ['[thé RPÇ áñswéréd HTTP ', { arg: 'status' }, ': ', { arg: 'said' }, '··········]'] },
+        'worker-simulation-changes': { value: ['[', { arg: 'count' }, ' báláñçé çháñgé(s), úñvérífíéd············]'] },
+        'worker-simulation-failed': { value: ['[fáíléd··]'] },
+        'worker-simulation-not-parsed': { value: ['[ñót rúñ (tráñsáçtíóñ ñót párséd)·············]'] },
+        'worker-simulation-unavailable': { value: ['[ñót rúñ (', { arg: 'error' }, ')····]'] },
+        'worker-status-http': { value: ['[thé ÁPÍ át ', { arg: 'url' }, ' áñswéréd HTTP ', { arg: 'status' }, '··········]'] },
+        'worker-status-no-answer': { value: ['[thé ÁPÍ át ', { arg: 'url' }, ' díd ñót áñswér (', { arg: 'error' }, ')············]'] },
+        'worker-status-unreadable': {
+            value: ['[thé ÁPÍ át ', { arg: 'url' }, ' áñswéréd á státús thís vérsíóñ çáññót réád······················]'],
+        },
+        'worker-table-missing': { value: ['[lóókúp táblé ', { arg: 'table' }, ' wás ñót fóúñd···········]'] },
+        'worker-table-no-index': { value: ['[lóókúp táblé ', { arg: 'table' }, ' hás ñó íñdéx ', { arg: 'index' }, '···········]'] },
+        'worker-tables-not-parsed': { value: ['[ñót párséd (', { arg: 'error' }, ')·····]'] },
+        'worker-tables-not-resolved': {
+            value: [
+                '[',
+                {
+                    select: 'count',
+                    cases: { one: [{ arg: 'count' }, ' lóókúp táblé'], other: [{ arg: 'count' }, ' lóókúp táblés'] },
+                    other: 'other',
+                },
+                ' ñót résólvéd (',
+                { arg: 'error' },
+                ')············]',
+            ],
+        },
+        'worker-tables-read': {
+            value: [
+                '[',
+                {
+                    select: 'count',
+                    cases: { one: [{ arg: 'count' }, ' lóókúp táblé'], other: [{ arg: 'count' }, ' lóókúp táblés'] },
+                    other: 'other',
+                },
+                ' réád óvér RPÇ, úñvérífíéd················]',
+            ],
+        },
+        'worker-tx-compact-u16': { value: ['[çómpáçt-ú16 ís tóó lóñg·········]'] },
+        'worker-tx-empty': { value: ['[tráñsáçtíóñ ís émptý········]'] },
+        'worker-tx-trailing': { value: ['[tráñsáçtíóñ hás tráílíñg býtés············]'] },
+        'worker-tx-truncated': { value: ['[tráñsáçtíóñ ís trúñçátéd··········]'] },
+        'worker-tx-version': { value: ['[úñsúppórtéd mésságé vérsíóñ ', { arg: 'version' }, '···········]'] },
+        'yours-add': { value: ['[Ádd·]'] },
+        'yours-added': { value: ['[Áddéd ', { arg: 'addresses' }, '.···]'] },
+        'yours-already': { value: ['[Álréádý íñ ýóúr líst.········]'] },
+        'yours-empty': { value: ['[Pásté áñ áddréss fírst.·········]'] },
+        'yours-input-label': { value: ['[Ádd áñ áddréss······]'] },
+        'yours-input-placeholder': { value: ['[Pásté áñ áddréss fróm ýóúr wállét·············]'] },
+        'yours-limit': {
+            value: [
+                '[Á réqúést çárríés ',
+                { arg: 'max' },
+                ' óf thésé: thósé thé síté ñámés, théñ thé fírst íñ thé líst.·······························]',
+            ],
+        },
+        'yours-list-label': { value: ['[Ýóúr áddréssés······]'] },
+        'yours-list-separator': { value: ['[, ·]'] },
+        'yours-none': { value: ['[Ñóñé ýét.····]'] },
+        'yours-not-added': { value: ['[Ñót áddéd: ', { arg: 'error' }, '····]'] },
+        'yours-not-address': { value: ['[Ñót á Sóláñá áddréss: ', { arg: 'words' }, '.·········]'] },
+        'yours-not-removed': { value: ['[Ñót rémóvéd: ', { arg: 'error' }, '·····]'] },
+        'yours-remove': { value: ['[Rémóvé··]'] },
+        'yours-remove-label': { value: ['[Rémóvé ', { arg: 'address' }, '···]'] },
+        'yours-removed': { value: ['[Rémóvéd ', { arg: 'address' }, '.····]'] },
     },
 };

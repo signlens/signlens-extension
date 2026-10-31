@@ -134,6 +134,15 @@ English. A locale with no message yet is not offered. A page carries
 the interface's `lang`; the engine's words in an explanation carry the
 explanation's.
 
+The catalog also holds `en-XA`, a pseudo-locale made from the English as
+the engine's is (ADR-0015, decision 11): every message accented,
+bracketed and about 40% longer, its arguments and markup as they are.
+`e2e/pseudo.spec.ts` opens every page in it, in the states `axe.spec.ts`
+checks, and fails on any visible text or worded attribute that is plain
+English: the interface's words left in code. Data (addresses, sites,
+names, numbers, times) and the engine's words, which carry the
+explanation's language, are not the interface's.
+
 A translation is reviewed as the engine's are (its `docs/translating.md`),
 from a spreadsheet, in two passes: what the signing window shows first,
 then the rest.
