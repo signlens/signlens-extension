@@ -159,3 +159,65 @@ Desktop only: the validator's warning about Firefox for Android 140 concerns a p
 
 Questions: support@signlens.dev
 ```
+
+## The Simplified Chinese listing (zh-CN)
+
+The store's listing in Simplified Chinese, for a reader whose Firefox asks
+for it: the name and summary are the extension's reviewed manifest words
+(`locales/zh-Hans/manifest.ftl`); the description and the captions are
+drafted, and are reviewed by a native speaker before they are submitted, as
+the interface's Chinese was. The privacy policy stays the English one above,
+the authoritative text.
+
+| Field | Value |
+|---|---|
+| Name | SignLens（测试版） |
+| Summary | the manifest's description, below |
+
+### Summary
+
+在签名之前，看清一笔 Solana 交易会做什么。解释每个签名请求，然后将其原样转交给您自己的钱包。测试版：解释由 SignLens 的服务器计算生成。
+
+### Description
+
+```markdown
+**SignLens 会在您的钱包签名之前，用平实的语言解释 DApp 请您签名的每一笔 Solana 交易；无法解释时，它也会如实说明。**
+
+钱包的预览只显示有什么离开您的钱包。SignLens 则说明它去向何处、用途是什么：存入借贷市场、建立流动性仓位、质押、杠杆订单，还是在盗取您的资产。
+
+**工作方式**
+- 在 DApp 中，选择 **SignLens** 作为您的钱包进行连接。SignLens 再连接到您已在使用的钱包：Phantom、Backpack、Solflare 或其他 Solana 钱包。
+- 每个请求都会先打开 SignLens 的窗口：结论（正常、警告或已拦截）、此交易会做什么，以及 SignLens 的检查结果。
+- 选择继续后，SignLens 所解释的这笔交易会原样转交给您的钱包，钱包会照常请求您的批准。SignLens 不持有私钥，也不签署任何内容。
+
+**它会警示什么**
+- 将某个账户乃至整个钱包移交给他人，而签名时看不到任何资产转移
+- 代币支出授权，无限额度的授权会明确写出
+- 永不过期的签名（持久随机数）
+- 只是看起来像您的地址或某个联系人地址的地址
+- 没有经过审核的程序描述的程序：直接拦截，而不是猜测
+- 多签批准，并从您的 RPC 读取提案的各个步骤
+- 兑换所得付给了他人的兑换
+
+**它会发送什么**
+
+在此测试版中，解释由 SignLens 的服务器 api.signlens.dev 计算。每一笔请您签名的交易都会发送到那里，同时发送它加载的地址、模拟的结果、您的 RPC 返回的它所指明的账户、您的地址以及您地址簿中的地址，以便解释能用“您”来称呼您，并分辨您的联系人与相似地址；地址簿中的名称会留在您的浏览器中。服务器保存结论和检查结果代码，而不保存交易本身。您的 RPC（默认为 solana-rpc.publicnode.com）会被询问交易所引用的内容，并对交易进行模拟。在您给出评价之前，评价功能不会发送任何内容；只有在您允许后，才会发送网站和 SignLens 的版本。下方的隐私政策以及 https://signlens.dev/privacy 对此有完整说明。
+
+支持电脑上的 Solana 主网。基于 Apache 2.0 许可证开源，并可重现构建：https://github.com/signlens/signlens-extension
+
+SignLens 与其所解释程序背后的钱包和项目没有关联。
+```
+
+### Screenshots
+
+1. `firefox-screenshot-1.zh-Hans.png`: 在您的钱包签名之前的 SignLens 窗口：存入 Kamino Lend（正常），以及一笔签名永不过期的 USDC 转账（警告）。
+2. `firefox-screenshot-2.zh-Hans.png`: 同样的两笔交易，深色主题。
+3. `firefox-screenshot-3.zh-Hans.png`: 弹出窗口列出最近的请求、SignLens 对每个请求的结论，以及您的决定。
+
+They are rendered from `screenshot-1.zh-Hans.html` to
+`screenshot-3.zh-Hans.html`, the Chinese images `npm run screenshots` writes
+(it needs a Chinese font where it runs):
+
+```sh
+for n in 1 2 3; do npx playwright screenshot --viewport-size=1280,800 file://$PWD/docs/store/screenshot-$n.zh-Hans.html docs/store/firefox-screenshot-$n.zh-Hans.png; done
+```
