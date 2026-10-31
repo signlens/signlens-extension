@@ -1,15 +1,18 @@
 // A reader whose browser asks for Chinese (ADR-0015, phases 4 and 5): the
 // engine explains in Simplified Chinese, the extension's own words are
-// Chinese, the window offers the English beside it, and the popup names
-// the language and when it was reviewed.
+// Chinese on every page, the window offers the English beside it, and the
+// popup names the language and when it was reviewed.
 
 import type { BrowserContext, Page } from '@playwright/test';
 import { fixture } from '../test/server.ts';
 import { clickToClose, expect, liveGate, test } from './support/extension.ts';
+import { eachPage, englishLeft } from './support/words.ts';
 
 test.use({ browserLocale: 'zh-CN' });
 
 const WALLET = 'SignLens';
+/** Chinese, or the full-width punctuation it is set with. */
+const CHINESE = /[㐀-鿿，。：；（）！？、“”…—]/u;
 
 /** Starts a signing request and returns it with the window the gate opened. */
 async function askToSign(context: BrowserContext, dapp: Page, base64: string) {
@@ -26,6 +29,13 @@ async function carriesChinese(api: string): Promise<boolean> {
     const status = (await (await fetch(`${api}/v1/packs`)).json()) as { locales?: { locale: string }[] };
     return (status.locales ?? []).some(({ locale }) => locale === 'zh-Hans');
 }
+
+test('every page is worded in Chinese, none of its words left in English', async ({ context, extensionId, popup, worker }) => {
+    await eachPage({ context, extensionId, popup, worker }, async (page, state) => {
+        await expect(page.locator('html'), state).toHaveAttribute('lang', 'zh-Hans');
+        expect(await englishLeft(page, 'zh-Hans', CHINESE), state).toEqual([]);
+    });
+});
 
 test('a reader asking for Chinese is answered in Chinese, and can read it in English', async ({ configure, context, dapp, server }) => {
     test.skip(!(await carriesChinese(server.api)), 'the API carries no Simplified Chinese pack');
