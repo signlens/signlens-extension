@@ -212,16 +212,16 @@ function addressNode(address: Address): HTMLSpanElement {
         // The engine's words for it: the label in bold and the address, in
         // the locale's brackets and order.
         for (const part of address.words.parts) {
-            if (part.value?.type === 'words') node.append(element('b', '', part.value.value.text));
+            if (part.value?.type === 'words') node.append(engineText('b', part.value.value));
             else if (part.short) node.append(keyNode(address, true));
-            else node.append(part.text);
+            else node.append(worded(element('span', '', part.text)));
         }
         mark(node, address.label_trust);
         return node;
     }
     const key = keyNode(address, address.label !== null);
     if (address.label) {
-        node.append(nodes('row-labelled-address', { label: element('b', '', address.label.text), address: key }));
+        node.append(nodes('row-labelled-address', { label: engineText('b', address.label), address: key }));
         mark(node, address.label_trust);
     } else {
         node.append(key);
@@ -269,17 +269,27 @@ export function asWorded<T>(row: ExplainedRow, make: () => T): T {
     }
 }
 
+/** `node` marked as the engine's words, in the language of the explanation being laid out. */
+function worded<T extends HTMLElement>(node: T): T {
+    if (wordedIn) {
+        node.lang = wordedIn.used;
+        node.dir = wordedIn.direction;
+    }
+    return node;
+}
+
+/** The engine's words of `message` as plain text in a `tag`, marked as the explanation's. */
+export function engineText<K extends keyof HTMLElementTagNameMap>(tag: K, message: Message, className = ''): HTMLElementTagNameMap[K] {
+    return worded(element(tag, className, message.text));
+}
+
 /**
  * A message as a node: its words as text, and each value it names with the
  * node the window has for that value, so an amount or an address reads the
  * same in a sentence as in a field. The words are the engine's.
  */
 export function messageNode(message: Message | null, className = ''): HTMLSpanElement {
-    const node = element('span', className);
-    if (wordedIn) {
-        node.lang = wordedIn.used;
-        node.dir = wordedIn.direction;
-    }
+    const node = worded(element('span', className));
     for (const part of message?.parts ?? []) {
         if (part.value) node.append(isolated(valueNode(part.value), part.value.type === 'amount' || part.value.type === 'address'));
         else if (part.short) node.append(isolated(keyNode(part.short, true), true));
@@ -415,12 +425,14 @@ function sectionIndex(section: Section): number | null {
 function sectionNode(section: Section, open: boolean, nested: HTMLElement[]): HTMLDivElement {
     const label = element('span', 'section-head');
     const index = sectionIndex(section);
-    const title =
+    const title = element('span', 'section-title');
+    title.append(
         section.kind.type === 'nested' && index !== null
-            ? t('row-step', { index: index + 1, title: section.title.text })
-            : section.title.text;
-    label.append(element('span', 'section-title', title));
-    if (section.subtitle) label.append(' ', element('span', 'section-subtitle', section.subtitle.text));
+            ? nodes('row-step', { index: index + 1, title: engineText('span', section.title) })
+            : engineText('span', section.title),
+    );
+    label.append(title);
+    if (section.subtitle) label.append(' ', engineText('span', section.subtitle, 'section-subtitle'));
     const claims = section.kind.type === 'claims';
     const body = element('div');
     const fields = element('dl', 'fields');
@@ -437,7 +449,7 @@ function fieldNodes(field: Field, inClaims: boolean): [HTMLElement, HTMLElement]
     const dd = element('dd');
     // The engine's help: a descriptor's for its labels, the engine's own for its fixed ones.
     const help = field.help?.text;
-    dt.append(help ? term(field.label.text, help, dd) : field.label.text);
+    dt.append(help ? worded(term(field.label.text, help, dd)) : engineText('span', field.label));
     dd.append(valueNode(field.value));
     if (field.trust === 'claimed' && !inClaims) dd.append(mark(element('span', 'claimed'), 'claimed'));
     return [dt, dd];
@@ -477,8 +489,12 @@ function sectionsNode(row: ExplainedRow): DocumentFragment {
         const body = element('div');
         for (const section of rest) body.append(sectionNode(section, !section.collapsed, []));
         // The titles as the engine words them: changing their case in code would be wrong in a language with other rules (ADR-0015).
-        const titles = rest.map((s) => s.title.text).join(t('row-list-separator'));
-        fragment.append(disclosure('more', t('row-details-toggle', { sections: titles }), body, false));
+        const titles = document.createDocumentFragment();
+        for (const [i, section] of rest.entries()) {
+            if (i > 0) titles.append(t('row-list-separator'));
+            titles.append(engineText('span', section.title));
+        }
+        fragment.append(disclosure('more', nodes('row-details-toggle', { sections: titles }), body, false));
     }
     return fragment;
 }

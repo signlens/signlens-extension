@@ -16,7 +16,7 @@ import { t } from '../shared/words.ts';
 import { byId } from './dom.ts';
 import { localize, nodes } from './localize.ts';
 import { languageChoice } from './pages.ts';
-import { asWorded, element, messageNode, originNode, renderRow } from './render.ts';
+import { asWorded, element, engineText, messageNode, originNode, renderRow } from './render.ts';
 import { goneAtOpen, noLongerPending, requestId, sendDecision } from './windows.ts';
 
 /** Remembers whether the reader keeps the instructions open, for the next window and the popup. */
@@ -153,13 +153,14 @@ function feedbackStrip(list: Row[], page: { origin?: string; method?: string }):
 }
 
 /** Why SignLens would refuse `row`, in a sentence: its most serious finding, or that nothing is known of it. */
-function refusalOf(row: Row | undefined): string {
+function refusalOf(row: Row | undefined): string | Node {
     if (row?.kind !== 'explained') return t('window-refusal-unexplained');
     let worst: ExplainedRow['findings'][number] | undefined;
     for (const finding of row.findings) {
         if (!worst || SEVERITIES.indexOf(finding.severity) > SEVERITIES.indexOf(worst.severity)) worst = finding;
     }
-    return t('window-refusal-blocked', { why: (worst?.message ?? row.summary).text });
+    const message = worst?.message ?? row.summary;
+    return nodes('window-refusal-blocked', { why: asWorded(row, () => engineText('span', message)) });
 }
 
 /**
@@ -171,9 +172,9 @@ function refusalOf(row: Row | undefined): string {
  * blocked colour; the yes sits mid-window, away from where Continue was
  * pressed, so a double click does not reach it. Returns what opens it.
  */
-function question(proceed: HTMLButtonElement, why: string): () => void {
+function question(proceed: HTMLButtonElement, why: string | Node): () => void {
     const dialog = byId('anyway', HTMLDialogElement);
-    byId('anyway-why').textContent = why;
+    byId('anyway-why').replaceChildren(why);
     const go = byId('anyway-go', HTMLButtonElement);
     byId('anyway-back').addEventListener('click', () => dialog.close());
     go.addEventListener('click', () => {
@@ -370,7 +371,7 @@ async function start(): Promise<void> {
         proceed.classList.toggle('primary', !stopped);
         if (stopped) {
             const why = refusalOf(lead);
-            ask = question(proceed, many ? t('window-refusal-of-several', { why, index: at + 1, count: list.length }) : why);
+            ask = question(proceed, many ? nodes('window-refusal-of-several', { why, index: at + 1, count: list.length }) : why);
         }
     } else {
         note.textContent = t('window-note-no-keys');

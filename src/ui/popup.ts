@@ -420,7 +420,13 @@ function historyRow(entry: HistoryEntry, row: Row, part?: number): HTMLElement {
     head.append(where, ' ', when(entry.time));
     summary.append(head);
     // The one line that says what it is, under the where and when.
-    summary.append(' ', element('div', 'lead', summaryOf(row)));
+    // An explained row leads with the engine's summary, in the explanation's language.
+    const lead = element('div', 'lead', summaryOf(row));
+    if (row.kind === 'explained' && row.locale) {
+        lead.lang = row.locale.used;
+        lead.dir = row.locale.direction;
+    }
+    summary.append(' ', lead);
     if (entry.refused) {
         // In the interface's words where SignLens has them; else as the page was told.
         const reason = entry.said ? spoken(entry.said) : entry.refused;
