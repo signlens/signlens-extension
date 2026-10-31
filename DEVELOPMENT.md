@@ -116,6 +116,11 @@ its English lacks. `npm test` fails when the catalog is out of date, when
 a page names a message English does not have, and when an English message
 is asked for nowhere.
 
+The extension's name and description are messages too (`manifest.ftl`):
+`static/manifest.json` names them (`__MSG_name__`), and `npm run
+messages` writes them to `static/_locales/<locale>/messages.json`, where
+the browser takes them in its own language (zh_CN for zh-Hans).
+
 A page marks an element with `data-l10n-id`, and the message words its
 content and the attributes it has (`.title`, `.aria-label`,
 `.placeholder`, `.alt`); a script asks with `t(id, args)` for text and

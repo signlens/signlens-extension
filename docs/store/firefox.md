@@ -33,7 +33,7 @@ release's zip, whose SHA-256 the release states.
 
 | Field | Value |
 |---|---|
-| Name | SignLens (beta), from the manifest |
+| Name | SignLens (beta), the manifest's (`locales/en/manifest.ftl`) |
 | Add-on URL | `signlens` |
 | Summary | the manifest's description, below |
 | Categories | Privacy & Security |

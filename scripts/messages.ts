@@ -8,7 +8,7 @@
 // and a test fails when it is out of date (src/shared/catalog.test.ts).
 
 import { spawnSync } from 'node:child_process';
-import { readdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
@@ -31,6 +31,8 @@ import { MARKUP, type Part, type Pattern } from '../src/shared/fluent.ts';
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const LOCALES = join(ROOT, 'locales');
 export const CATALOG = join(ROOT, 'src/shared/catalog.ts');
+/** Where a browser looks for the manifest's words in each language. */
+export const BROWSER_LOCALES = join(ROOT, 'static/_locales');
 const SOURCE = 'en';
 const PLURAL = new Set(['zero', 'one', 'two', 'few', 'many', 'other']);
 /** What looks like a tag, allowed or not. */
@@ -242,6 +244,29 @@ function pseudoLocale(english: Map<string, Compiled>): Map<string, Compiled> {
     return out;
 }
 
+/** The messages a manifest names (`manifest-…`), by their key in a browser's messages.json: text alone, no argument or markup. */
+const MANIFEST = 'manifest-';
+
+/** A locale's folder under _locales/, as browsers name it: zh_CN for Simplified Chinese, zh_TW for Traditional, else the tag with underscores. */
+export function browserFolder(tag: string): string {
+    if (tag === 'zh-Hans') return 'zh_CN';
+    if (tag === 'zh-Hant') return 'zh_TW';
+    return tag.replace(/-/g, '_');
+}
+
+/** `locale`'s manifest messages as a browser's messages.json, or nothing when it has none. */
+function manifestMessages(locale: Map<string, Compiled>, tag: string, problems: string[]): string | null {
+    const out: Record<string, { message: string }> = {};
+    for (const [id, message] of locale) {
+        if (!id.startsWith(MANIFEST)) continue;
+        const parts = message.value ?? [];
+        if (parts.some((part) => typeof part !== 'string') || parts.join('').match(MARKUP))
+            problems.push(`locales/${tag}: ${id}: a manifest's message is text alone`);
+        out[id.slice(MANIFEST.length)] = { message: parts.filter((part) => typeof part === 'string').join('') };
+    }
+    return Object.keys(out).length > 0 ? `${JSON.stringify(out, null, 2)}\n` : null;
+}
+
 function entries(locale: Map<string, Compiled>): Record<string, { value?: Pattern; attributes?: Record<string, Pattern> }> {
     const out: Record<string, { value?: Pattern; attributes?: Record<string, Pattern> }> = {};
     for (const [id, message] of locale) {
@@ -254,7 +279,7 @@ function entries(locale: Map<string, Compiled>): Record<string, { value?: Patter
 }
 
 /** The catalog's source, formatted as Biome formats it, and what was wrong with the messages. */
-export function generate(): { text: string; problems: string[]; messages: number } {
+export function generate(): { text: string; problems: string[]; messages: number; manifests: Record<string, string> } {
     const problems: string[] = [];
     const tags = readdirSync(LOCALES, { withFileTypes: true })
         .filter((d) => d.isDirectory())
@@ -262,10 +287,15 @@ export function generate(): { text: string; problems: string[]; messages: number
         .sort();
     const english = compileLocale(SOURCE, problems);
     const catalogs: Record<string, ReturnType<typeof entries>> = { [SOURCE]: entries(english), [PSEUDO]: entries(pseudoLocale(english)) };
+    const manifests: Record<string, string> = {};
+    const englishManifest = manifestMessages(english, SOURCE, problems);
+    if (englishManifest) manifests[browserFolder(SOURCE)] = englishManifest;
     for (const tag of tags.filter((t) => t !== SOURCE && t !== PSEUDO)) {
         const locale = compileLocale(tag, problems);
         checkAgainst(tag, locale, english, problems);
         catalogs[tag] = entries(locale);
+        const manifest = manifestMessages(locale, tag, problems);
+        if (manifest) manifests[browserFolder(tag)] = manifest;
     }
     const args = [...english]
         .map(([id, message]) => {
@@ -294,15 +324,19 @@ export function generate(): { text: string; problems: string[]; messages: number
         encoding: 'utf8',
     });
     if (biome.status !== 0) problems.push(`biome could not format the catalog: ${biome.stderr}`);
-    return { text: biome.status === 0 ? biome.stdout : source, problems, messages: english.size };
+    return { text: biome.status === 0 ? biome.stdout : source, problems, messages: english.size, manifests };
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
-    const { text, problems, messages } = generate();
+    const { text, problems, messages, manifests } = generate();
     if (problems.length > 0) {
         console.error(problems.join('\n'));
         process.exit(1);
     }
     writeFileSync(CATALOG, text);
+    for (const [folder, json] of Object.entries(manifests)) {
+        mkdirSync(join(BROWSER_LOCALES, folder), { recursive: true });
+        writeFileSync(join(BROWSER_LOCALES, folder, 'messages.json'), json);
+    }
     console.error(`src/shared/catalog.ts: ${messages} English message(s)`);
 }

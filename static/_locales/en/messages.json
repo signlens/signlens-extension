@@ -1,0 +1,8 @@
+{
+  "description": {
+    "message": "See what a Solana transaction does before you sign it. Explains every signing request, then hands it unchanged to your own wallet. Beta: the explanation is computed by SignLens's server."
+  },
+  "name": {
+    "message": "SignLens (beta)"
+  }
+}

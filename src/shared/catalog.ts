@@ -28,6 +28,8 @@ export interface Args {
     readonly 'connect-question': undefined;
     readonly 'connect-where': { readonly origin: Value };
     readonly 'connect-window-title': { readonly site: Value };
+    readonly 'manifest-description': undefined;
+    readonly 'manifest-name': undefined;
     readonly 'popup-accounts': { readonly more: Value; readonly name: Value };
     readonly 'popup-accounts-more': undefined;
     readonly 'popup-accounts-name': undefined;
@@ -358,6 +360,12 @@ export const CATALOGS: Readonly<Record<string, Catalog>> = {
         'connect-question': { value: ['Let this site see the address?'] },
         'connect-where': { value: [{ arg: 'origin' }, ' wants to see the address SignLens watches'] },
         'connect-window-title': { value: [{ arg: 'site' }, ' asks to see the watched address · SignLens'] },
+        'manifest-description': {
+            value: [
+                "See what a Solana transaction does before you sign it. Explains every signing request, then hands it unchanged to your own wallet. Beta: the explanation is computed by SignLens's server.",
+            ],
+        },
+        'manifest-name': { value: ['SignLens (beta)'] },
         'popup-accounts': { value: [{ arg: 'name' }, ' ', { arg: 'more' }] },
         'popup-accounts-more': {
             value: [
@@ -1124,6 +1132,12 @@ export const CATALOGS: Readonly<Record<string, Catalog>> = {
         'connect-question': { value: ['[Lét thís síté séé thé áddréss?············]'] },
         'connect-where': { value: ['[', { arg: 'origin' }, ' wáñts tó séé thé áddréss SígñLéñs wátçhés·················]'] },
         'connect-window-title': { value: ['[', { arg: 'site' }, ' ásks tó séé thé wátçhéd áddréss · SígñLéñs·················]'] },
+        'manifest-description': {
+            value: [
+                "[Séé whát á Sóláñá tráñsáçtíóñ dóés béfóré ýóú sígñ ít. Éxpláíñs évérý sígñíñg réqúést, théñ háñds ít úñçháñgéd tó ýóúr ówñ wállét. Bétá: thé éxpláñátíóñ ís çómpútéd bý SígñLéñs's sérvér.··········································································]",
+            ],
+        },
+        'manifest-name': { value: ['[SígñLéñs (bétá)······]'] },
         'popup-accounts': { value: ['[', { arg: 'name' }, ' ', { arg: 'more' }, ']'] },
         'popup-accounts-more': {
             value: [
