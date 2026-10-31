@@ -1,6 +1,6 @@
 {
   "name": "signlens-extension",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "description": "SignLens for the browser: a Wallet Standard wallet without keys that explains every signing request and hands it unchanged to your own wallet",
   "license": "Apache-2.0",
