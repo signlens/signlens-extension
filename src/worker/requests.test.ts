@@ -7,9 +7,11 @@ import assert from 'node:assert/strict';
 import { afterEach, beforeEach, test } from 'node:test';
 import { type FakeChrome, installFakeChrome, until } from '../../test/chrome.fake.ts';
 import { explanation, startTestServer, type TestServer } from '../../test/server.ts';
+import type { Reply } from '../shared/messages.ts';
 import type { HistoryEntry } from '../shared/model.ts';
 import type { Settings } from '../shared/settings.ts';
 import { pendingKey } from '../shared/store.ts';
+import { english } from '../shared/words.ts';
 import * as gate from './gate.ts';
 import { answerRequest, connectFailed } from './requests.ts';
 
@@ -447,3 +449,27 @@ test("a connect that found no wallet takes the place of the site's last such fai
         ['failed', 'consent'],
     );
 });
+
+test(
+    'a refusal and a failure of the request as a whole are kept as the interface words them; the page is told the English alone',
+    BOUNDED,
+    async () => {
+        // Refused: the page names two addresses that are not yours.
+        await configure({ askFirst: false });
+        const refused = (await sign({ accounts: [MINE, OTHER] })) as Reply;
+        assert.equal('said' in refused, false);
+        assert.equal(refused.refused, english('worker-refused-several-not-yours'));
+        assert.equal(history()[0]?.refused, refused.refused);
+        assert.deepEqual(history()[0]?.said, { id: 'worker-refused-several-not-yours' });
+
+        // Not explained as a whole: what the page sent is no list, and the user lets it go on all the same.
+        await configure({ askFirst: true });
+        const asking = answerRequest({ type: 'explain', payload: { origin: 'https://dapp.example', transactions: 'not a list' } }, tab);
+        gate.decide(await windowId(), 'continue');
+        const failed = (await asking) as Reply;
+        assert.equal('said' in failed, false);
+        assert.equal(failed.error, english('worker-failed-not-list'));
+        const [row] = history()[0]?.rows ?? [];
+        assert.deepEqual(row, { kind: 'failed', scope: 'request', error: failed.error, said: { id: 'worker-failed-not-list' } });
+    },
+);

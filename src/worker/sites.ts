@@ -7,7 +7,7 @@
 // and its requests keep each answer, Deny included.
 
 import type { ConnectPayload, ConnectReply } from '../shared/messages.ts';
-import type { Approval, ConnectRequest } from '../shared/model.ts';
+import { type Approval, type ConnectRequest, refusal } from '../shared/model.ts';
 import { type Settings, watched } from '../shared/settings.ts';
 import { inTurn, local } from '../shared/store.ts';
 import { describe, logged } from '../shared/text.ts';
@@ -65,16 +65,18 @@ export async function connectWatch(payload: ConnectPayload, tabId: number, confi
     try {
         const request: ConnectRequest = { origin, address: key.address };
         let outcome = await gate.ask('connect.html', request, flight);
-        let refusal = 'the connection was refused in SignLens';
+        // What the page is told when it is not allowed: in English, for its developers.
+        let told = 'the connection was refused in SignLens';
         // A page that went before its window opened withdrew its request: nothing to keep.
-        if (gate.withdrawn(flight)) return { approved: false, error: refusal };
+        if (gate.withdrawn(flight)) return { approved: false, error: told };
         // The site is allowed before the requests say so: an Allow that cannot be kept is a refusal.
         if (outcome.decision === 'continue') {
             try {
                 await approve(origin, key.address);
             } catch (error) {
-                refusal = `could not keep the site allowed: ${describe(error)}`;
-                outcome = { decision: 'reject', refused: refusal };
+                const kept = refusal('worker-refused-site-not-kept', { error: describe(error) });
+                told = kept.refused;
+                outcome = kept;
             }
         }
         // Kept for the popup; a failure to keep it changes nothing of the answer.
@@ -87,7 +89,7 @@ export async function connectWatch(payload: ConnectPayload, tabId: number, confi
             rows: [{ kind: 'consent', address: key.address }],
             ...outcome,
         }).catch(logged('keep the request'));
-        return outcome.decision === 'continue' ? { approved: true, ...key } : { approved: false, error: refusal };
+        return outcome.decision === 'continue' ? { approved: true, ...key } : { approved: false, error: told };
     } finally {
         gate.end(tabId, flight);
     }

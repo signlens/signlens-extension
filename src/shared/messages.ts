@@ -102,7 +102,9 @@ export interface FeedbackPayload {
  * the window off, that nothing stopped it; anything but 'continue' is a
  * refusal. Never the explanation nor even its verdict: both depend on the
  * user's address book (a transfer to a lookalike of a contact is a
- * warning), and the page is not to learn who the user knows.
+ * warning), and the page is not to learn who the user knows. The reasons
+ * are in English, for the page's developers: never as the interface words
+ * them (`said`), which the worker drops before it answers (requests.ts).
  */
 export interface Reply extends Outcome {
     error?: string;

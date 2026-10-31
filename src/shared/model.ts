@@ -5,6 +5,17 @@
 // by the worker, the window and the popup: no DOM, no `chrome`.
 
 import type { Action, Finding, Message, Section, WordedEffect, WordedIn } from './types.ts';
+import { type Id, inEnglish, type KeptArgsOf, said } from './words.ts';
+
+/**
+ * A reason as a message of the interface's (words.ts), kept to be worded
+ * in the reader's language when it is shown: beside the English its page
+ * is told, which entries kept before there was this have alone.
+ */
+export interface Said {
+    readonly id: Id;
+    readonly args?: Readonly<Record<string, string | number>>;
+}
 
 /** What became of a request: passed on (for a site's asking, allowed), or not. */
 export type Decision = 'continue' | 'reject';
@@ -61,7 +72,10 @@ export interface ExplainedRow {
 export interface FailedRow {
     kind: 'failed';
     scope: 'transaction' | 'request';
+    /** Why, in English for a request as a whole: what its page is told. */
     error: string;
+    /** The same as the interface words it, where SignLens has a message for it. */
+    said?: Said;
     tables?: string;
     chain?: string;
     capture?: string;
@@ -91,7 +105,10 @@ export type Row = ExplainedRow | FailedRow | MessageRow | ConsentRow | AddressRo
 /** How a request ended: the decision, and why SignLens refused it when the user did not decide. */
 export interface Outcome {
     decision: Decision;
+    /** Why SignLens refused it, in English: what the page is told. */
     refused?: string;
+    /** The same as the interface words it, for the popup's history; never sent to the page. */
+    said?: Said;
 }
 
 /** An answer: one row or more. */
@@ -146,9 +163,21 @@ export interface WalletRequest {
     wallets: WalletChoice[];
 }
 
-/** An answer that is a failure of the request as a whole. */
-export function failure(error: string): Entry {
-    return { rows: [{ kind: 'failed', scope: 'request', error }] };
+/** An answer that is a failure of the request as a whole: `error` the English its page is told, `said` the same for the interface. */
+export function failure(error: string, said?: Said): Entry {
+    return { rows: [{ kind: 'failed', scope: 'request', error, ...(said ? { said } : {}) }] };
+}
+
+/** A failure of the request as a whole for message `id`: in English for its page, and as the interface words it. */
+export function failed<K extends Id>(id: K, ...args: KeptArgsOf<K>): Entry {
+    const reason = said(id, ...args);
+    return failure(inEnglish(reason), reason);
+}
+
+/** SignLens's refusal of a request for message `id`: in English for its page, and as the interface words it. */
+export function refusal<K extends Id>(id: K, ...args: KeptArgsOf<K>): Required<Outcome> {
+    const reason = said(id, ...args);
+    return { decision: 'reject', refused: inEnglish(reason), said: reason };
 }
 
 /** Why the request as a whole failed, if it did: what the page is told besides the decision. */

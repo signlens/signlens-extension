@@ -1,8 +1,10 @@
 ### The words the background worker and the shared modules give the
 ### extension's own pages: the toolbar badge, the notes and failures a
 ### request's row keeps for the window and the popup, and why an address in
-### the settings or the API's status is no good. What goes back to a dapp
-### stays in English, in the code: it is for the dapp's developers.
+### the settings or the API's status is no good, and why SignLens refused a
+### request. What goes back to a dapp is always in English, for its
+### developers: where the reader sees the same reason, it is a message here,
+### and the dapp is told the message's English.
 
 ## The toolbar badge: the worst verdict among the requests the popup has not shown yet (worker/history.ts). The badge has room for about 4 characters: keep each to at most 4.
 
@@ -129,6 +131,48 @@ worker-connect-failed-named =
         [0] none
        *[other] { $found }
     }). Choose a wallet in the extension's settings.
+
+## Why SignLens refused a request, after “Refused by SignLens:” in the popup's history (worker/gate.ts, worker/requests.ts, worker/sites.ts). The page that asked is told the English, which its developers read; the reader reads this.
+
+# The page's tab closed, reloaded or went elsewhere while SignLens was explaining or asking: no one was left to pass the request to.
+worker-refused-page-gone = the page closed or reloaded
+# The page gave up waiting for an answer (after about ten minutes).
+worker-refused-stopped-waiting = the page stopped waiting
+# The window was left open without Continue or Reject until the page would wait no longer.
+worker-refused-no-decision = no decision in time
+# $error: the browser's words for why SignLens's window did not open.
+worker-refused-window-not-open = the SignLens window could not open: { $error }
+# $error: the browser's words for what went wrong with SignLens's window.
+worker-refused-window-failed = the SignLens window failed: { $error }
+# In watch mode, the page named a signer other than the address SignLens watches.
+worker-refused-not-watched = the page named an address other than the one SignLens watches
+# “yours”: among the reader's addresses in SignLens's settings.
+worker-refused-several-not-yours = the page named more than one address that is not yours in SignLens; add yours in the settings, then ask again
+# The quoted words are the name of the choice popup-ask-first-name, and must read as it does.
+worker-refused-not-yours-ask-off = the page named an address that is not yours in SignLens, and with “Show the explanation and ask first” off SignLens does not ask; add it in the settings if it is yours
+# The reader said the address was theirs, but it could not be added to the settings. $error: the browser's words for why.
+worker-refused-address-not-kept = could not keep your address: { $error }
+# In watch mode, the reader allowed the site, but the browser could not keep that. $error: its words for why.
+worker-refused-site-not-kept = could not keep the site allowed: { $error }
+
+## Why a request as a whole was not explained: its row in the window and the popup, which starts with a capital there (worker/explain.ts). The page that asked is told the English, which its developers read; the reader reads this.
+
+# The page's tab closed, reloaded or went elsewhere while SignLens was explaining it.
+worker-failed-page-gone = not explained: the page closed or reloaded
+# The page gave up waiting for an answer (after about ten minutes) while SignLens was explaining it.
+worker-failed-stopped-waiting = not explained: the page stopped waiting
+# $count: how many transactions the page sent, always more than $max, the most SignLens explains in one request. Both are written as plain digits.
+worker-failed-too-many = { $count } transactions in one request; SignLens explains at most { $max }
+# base64: the encoding the page must send each transaction in, by its name.
+worker-failed-not-list = transactions must be a list of base64 strings
+# $max: the longest transaction SignLens takes, in bytes (4096), written as plain digits.
+worker-failed-too-long = a transaction is longer than { $max } bytes
+# A page asked to sign a message without sending one.
+worker-failed-no-message = message is required
+# $max: the longest message SignLens takes, in bytes (65536), written as plain digits.
+worker-failed-message-too-long = the message is longer than { $max } bytes
+# base64: the encoding the page must send the message in, by its name.
+worker-failed-message-not-base64 = the message is not base64
 
 ## Shared by the messages above
 

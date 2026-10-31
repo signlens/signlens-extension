@@ -255,10 +255,28 @@ export interface Args {
     readonly 'worker-endpoint-refused-api': { readonly problem: Value };
     readonly 'worker-endpoint-refused-rpc': { readonly problem: Value };
     readonly 'worker-endpoint-refused-tokens': { readonly problem: Value };
+    readonly 'worker-failed-message-not-base64': undefined;
+    readonly 'worker-failed-message-too-long': { readonly max: Value };
+    readonly 'worker-failed-no-message': undefined;
+    readonly 'worker-failed-not-list': undefined;
+    readonly 'worker-failed-page-gone': undefined;
+    readonly 'worker-failed-stopped-waiting': undefined;
+    readonly 'worker-failed-too-long': { readonly max: Value };
+    readonly 'worker-failed-too-many': { readonly count: Value; readonly max: Value };
     readonly 'worker-history-slimmed': undefined;
     readonly 'worker-limited': { readonly at: Value; readonly count: Value };
     readonly 'worker-list-separator': undefined;
     readonly 'worker-message-not-text': { readonly count: Value; readonly hex: Value };
+    readonly 'worker-refused-address-not-kept': { readonly error: Value };
+    readonly 'worker-refused-no-decision': undefined;
+    readonly 'worker-refused-not-watched': undefined;
+    readonly 'worker-refused-not-yours-ask-off': undefined;
+    readonly 'worker-refused-page-gone': undefined;
+    readonly 'worker-refused-several-not-yours': undefined;
+    readonly 'worker-refused-site-not-kept': { readonly error: Value };
+    readonly 'worker-refused-stopped-waiting': undefined;
+    readonly 'worker-refused-window-failed': { readonly error: Value };
+    readonly 'worker-refused-window-not-open': { readonly error: Value };
     readonly 'worker-rpc-error': { readonly said: Value };
     readonly 'worker-rpc-error-unsaid': undefined;
     readonly 'worker-rpc-http': { readonly host: Value; readonly status: Value };
@@ -964,6 +982,14 @@ export const CATALOGS: Readonly<Record<string, Catalog>> = {
         'worker-endpoint-refused-api': { value: ['the API address in the settings is not usable: ', { arg: 'problem' }] },
         'worker-endpoint-refused-rpc': { value: ['the RPC address in the settings is not usable: ', { arg: 'problem' }] },
         'worker-endpoint-refused-tokens': { value: ['the token list address in the settings is not usable: ', { arg: 'problem' }] },
+        'worker-failed-message-not-base64': { value: ['the message is not base64'] },
+        'worker-failed-message-too-long': { value: ['the message is longer than ', { arg: 'max' }, ' bytes'] },
+        'worker-failed-no-message': { value: ['message is required'] },
+        'worker-failed-not-list': { value: ['transactions must be a list of base64 strings'] },
+        'worker-failed-page-gone': { value: ['not explained: the page closed or reloaded'] },
+        'worker-failed-stopped-waiting': { value: ['not explained: the page stopped waiting'] },
+        'worker-failed-too-long': { value: ['a transaction is longer than ', { arg: 'max' }, ' bytes'] },
+        'worker-failed-too-many': { value: [{ arg: 'count' }, ' transactions in one request; SignLens explains at most ', { arg: 'max' }] },
         'worker-history-slimmed': { value: ['The full text was too long to keep in the history.'] },
         'worker-limited': {
             value: [
@@ -976,6 +1002,22 @@ export const CATALOGS: Readonly<Record<string, Catalog>> = {
         },
         'worker-list-separator': { value: [', '] },
         'worker-message-not-text': { value: ['(', { arg: 'count' }, ' bytes, not text) ', { arg: 'hex' }] },
+        'worker-refused-address-not-kept': { value: ['could not keep your address: ', { arg: 'error' }] },
+        'worker-refused-no-decision': { value: ['no decision in time'] },
+        'worker-refused-not-watched': { value: ['the page named an address other than the one SignLens watches'] },
+        'worker-refused-not-yours-ask-off': {
+            value: [
+                'the page named an address that is not yours in SignLens, and with “Show the explanation and ask first” off SignLens does not ask; add it in the settings if it is yours',
+            ],
+        },
+        'worker-refused-page-gone': { value: ['the page closed or reloaded'] },
+        'worker-refused-several-not-yours': {
+            value: ['the page named more than one address that is not yours in SignLens; add yours in the settings, then ask again'],
+        },
+        'worker-refused-site-not-kept': { value: ['could not keep the site allowed: ', { arg: 'error' }] },
+        'worker-refused-stopped-waiting': { value: ['the page stopped waiting'] },
+        'worker-refused-window-failed': { value: ['the SignLens window failed: ', { arg: 'error' }] },
+        'worker-refused-window-not-open': { value: ['the SignLens window could not open: ', { arg: 'error' }] },
         'worker-rpc-error': { value: ['RPC error: ', { arg: 'said' }] },
         'worker-rpc-error-unsaid': { value: ['RPC error: no message'] },
         'worker-rpc-http': { value: [{ arg: 'host' }, ' answered HTTP ', { arg: 'status' }] },

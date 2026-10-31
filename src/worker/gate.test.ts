@@ -8,6 +8,7 @@ import { beforeEach, test } from 'node:test';
 import { type FakeChrome, installFakeChrome, until } from '../../test/chrome.fake.ts';
 import type { HistoryEntry } from '../shared/model.ts';
 import { pendingKey } from '../shared/store.ts';
+import { english } from '../shared/words.ts';
 import { abandon, askUser, begin, DECISION_TIMEOUT_MS, decide, end, type InFlight, mustAsk } from './gate.ts';
 
 /** A refusal that never comes fails the test rather than hang the run. */
@@ -124,14 +125,22 @@ test("the page's tab closing is a refusal, with the window open or before it ope
     const asking = askUser(ENTRY, open);
     await openWindow();
     abandon(7);
-    assert.deepEqual(await asking, { decision: 'reject', refused: 'the page closed or reloaded' });
+    assert.deepEqual(await asking, {
+        decision: 'reject',
+        refused: 'the page closed or reloaded',
+        said: { id: 'worker-refused-page-gone' },
+    });
     nothingLeft();
     end(7, open);
 
     const gone = begin(8);
     assert.ok(gone);
     abandon(8);
-    assert.deepEqual(await askUser(ENTRY, gone), { decision: 'reject', refused: 'the page closed or reloaded' });
+    assert.deepEqual(await askUser(ENTRY, gone), {
+        decision: 'reject',
+        refused: 'the page closed or reloaded',
+        said: { id: 'worker-refused-page-gone' },
+    });
     nothingLeft();
     end(8, gone);
 });
@@ -142,7 +151,11 @@ test('a tab closed while its request is being stored gets no window', BOUNDED, a
     // The ask runs up to its first write; the tab closes while it waits on it.
     const asking = askUser(ENTRY, racing);
     abandon(11);
-    assert.deepEqual(await asking, { decision: 'reject', refused: 'the page closed or reloaded' });
+    assert.deepEqual(await asking, {
+        decision: 'reject',
+        refused: 'the page closed or reloaded',
+        said: { id: 'worker-refused-page-gone' },
+    });
     assert.equal(fake.opened, 0);
     nothingLeft();
     end(11, racing);
@@ -151,9 +164,13 @@ test('a tab closed while its request is being stored gets no window', BOUNDED, a
 test('when the page stops waiting, so does the window; a page already gone gets none', BOUNDED, async () => {
     const asking = askUser(ENTRY, flight(Date.now() + 30));
     await openWindow();
-    assert.deepEqual(await asking, { decision: 'reject', refused: 'no decision in time' });
+    assert.deepEqual(await asking, { decision: 'reject', refused: 'no decision in time', said: { id: 'worker-refused-no-decision' } });
     nothingLeft();
-    assert.deepEqual(await askUser(ENTRY, flight(Date.now() - 1)), { decision: 'reject', refused: 'the page stopped waiting' });
+    assert.deepEqual(await askUser(ENTRY, flight(Date.now() - 1)), {
+        decision: 'reject',
+        refused: 'the page stopped waiting',
+        said: { id: 'worker-refused-stopped-waiting' },
+    });
     nothingLeft();
 });
 
@@ -162,6 +179,14 @@ test('a window that cannot open is a refusal', BOUNDED, async () => {
     const { decision, refused } = await askUser(ENTRY, flight());
     assert.equal(decision, 'reject');
     assert.equal(refused, 'the SignLens window could not open: no display');
+    nothingLeft();
+});
+
+test('a refusal says its reason both ways: in English for the page, and as a message for the interface', BOUNDED, async () => {
+    fake.failNextWindow();
+    const { refused, said } = await askUser(ENTRY, flight());
+    assert.deepEqual(said, { id: 'worker-refused-window-not-open', args: { error: 'no display' } });
+    assert.equal(refused, english('worker-refused-window-not-open', { error: 'no display' }));
     nothingLeft();
 });
 

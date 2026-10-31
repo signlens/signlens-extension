@@ -18,7 +18,7 @@ import { local, onChange, session } from '../shared/store.ts';
 import { describe, methodName, short, withoutScheme } from '../shared/text.ts';
 import type { ApiStatus } from '../shared/types.ts';
 import { rowVerdictWord, summaryOf, verdictText } from '../shared/verdict.ts';
-import { t } from '../shared/words.ts';
+import { spoken, t } from '../shared/words.ts';
 import { access } from './access.ts';
 import { byId } from './dom.ts';
 import { localize, nodes } from './localize.ts';
@@ -419,7 +419,11 @@ function historyRow(entry: HistoryEntry, row: Row, part?: number): HTMLElement {
     summary.append(head);
     // The one line that says what it is, under the where and when.
     summary.append(' ', element('div', 'lead', summaryOf(row)));
-    if (entry.refused) summary.append(' ', element('div', 'refused', t('popup-refused', { reason: entry.refused })));
+    if (entry.refused) {
+        // In the interface's words where SignLens has them; else as the page was told.
+        const reason = entry.said ? spoken(entry.said) : entry.refused;
+        summary.append(' ', element('div', 'refused', t('popup-refused', { reason })));
+    }
     const details = element('details');
     details.append(
         summary,

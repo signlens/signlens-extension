@@ -10,6 +10,7 @@ import { explanation, feePayer, fixture, recorded, STAND_IN_TAG, startTestServer
 import { MAX_TRANSACTION_BASE64, MAX_TRANSACTIONS } from '../shared/messages.ts';
 import { type Entry, failure, type Row, requestError } from '../shared/model.ts';
 import { DEFAULTS, type Settings } from '../shared/settings.ts';
+import { english } from '../shared/words.ts';
 import { explainTransactions, showMessage } from './explain.ts';
 import { readerLocales } from './locale.ts';
 import { base58Encode } from './solana.ts';
@@ -70,6 +71,14 @@ test('a request that is not a list of base64 transactions within bounds is refus
     assert.equal(requestError(many), `33 transactions in one request; SignLens explains at most ${MAX_TRANSACTIONS}`);
     assert.deepEqual(server.calls, []);
     assert.deepEqual(server.apiCalls, []);
+});
+
+test('a request refused as a whole says why both ways: in English for its page, its numbers as plain digits, and as a message for the interface', async () => {
+    const many = await explainTransactions({ ...PAGE, transactions: Array(1234).fill('AQID') }, config(), [], []);
+    const args = { count: '1234', max: String(MAX_TRANSACTIONS) };
+    assert.deepEqual(rowOf(many, 'failed').said, { id: 'worker-failed-too-many', args });
+    assert.equal(requestError(many), `1234 transactions in one request; SignLens explains at most ${MAX_TRANSACTIONS}`);
+    assert.equal(requestError(many), english('worker-failed-too-many', args));
 });
 
 test('past the API limit, the transactions after the one refused are not asked for, and each says why', async () => {
@@ -305,7 +314,7 @@ test('a request whose page went is explained no further, and the call under way 
     // The page reloads while the first transaction is with the API.
     await until(() => server.apiCalls.length > 0);
     page.abort('the page closed or reloaded');
-    assert.deepEqual(await explaining, failure('not explained: the page closed or reloaded'));
+    assert.deepEqual(await explaining, failure('not explained: the page closed or reloaded', { id: 'worker-failed-page-gone' }));
     assert.equal(server.apiCalls.length, 1);
     assert.ok(Date.now() - started < 1_500, 'waited for the API all the same');
 });
@@ -441,6 +450,7 @@ test("the API's error, or an explanation that does not hold together, is an erro
 });
 
 test('the size limits are on the bytes: 4096 bytes of transaction pass, 4097 do not, and messages are bounded too', async () => {
+    const TOO_LONG = { id: 'worker-failed-message-too-long', args: { max: '65536' } } as const;
     server.refuseApi(500);
     const of = (bytes: number) => Buffer.alloc(bytes, 1).toString('base64');
     // 4097 and 4098 bytes fit in as many base64 characters as 4096.
@@ -448,7 +458,7 @@ test('the size limits are on the bytes: 4096 bytes of transaction pass, 4097 do 
     for (const bytes of [4097, 4098]) {
         assert.deepEqual(
             await explainTransactions({ ...PAGE, transactions: [of(bytes)] }, config(), [], []),
-            failure('a transaction is longer than 4096 bytes'),
+            failure('a transaction is longer than 4096 bytes', { id: 'worker-failed-too-long', args: { max: '4096' } }),
         );
     }
     assert.equal(server.apiCalls.length, 0);
@@ -456,9 +466,12 @@ test('the size limits are on the bytes: 4096 bytes of transaction pass, 4097 do 
     // Explained, or not: but no longer refused as a whole.
     assert.equal(requestError(fits), undefined);
     assert.equal(server.apiCalls.length, 1);
-    assert.deepEqual(showMessage({ ...PAGE, message: of(65_537) }), failure('the message is longer than 65536 bytes'));
-    assert.deepEqual(showMessage({ ...PAGE, message: of(65_538) }), failure('the message is longer than 65536 bytes'));
-    assert.deepEqual(showMessage({ ...PAGE, message: 'A'.repeat(10_000_000) }), failure('the message is longer than 65536 bytes'));
+    assert.deepEqual(showMessage({ ...PAGE, message: of(65_537) }), failure('the message is longer than 65536 bytes', TOO_LONG));
+    assert.deepEqual(showMessage({ ...PAGE, message: of(65_538) }), failure('the message is longer than 65536 bytes', TOO_LONG));
+    assert.deepEqual(
+        showMessage({ ...PAGE, message: 'A'.repeat(10_000_000) }),
+        failure('the message is longer than 65536 bytes', TOO_LONG),
+    );
     assert.equal(rowOf(showMessage({ ...PAGE, message: of(65_536) }), 'message').text.length > 0, true);
 });
 
@@ -470,6 +483,9 @@ test('a message is shown as it is: text as text, anything else as hex, and never
     assert.deepEqual(showMessage({ ...PAGE, message: encode(new Uint8Array([0xff, 0x00])) }), {
         rows: [{ kind: 'message', text: '(2 bytes, not text) ff00' }],
     });
-    assert.deepEqual(showMessage({ ...PAGE, message: '%%%' }), failure('the message is not base64'));
-    assert.deepEqual(showMessage({ ...PAGE }), failure('message is required'));
+    assert.deepEqual(
+        showMessage({ ...PAGE, message: '%%%' }),
+        failure('the message is not base64', { id: 'worker-failed-message-not-base64' }),
+    );
+    assert.deepEqual(showMessage({ ...PAGE }), failure('message is required', { id: 'worker-failed-no-message' }));
 });

@@ -5,7 +5,7 @@
 // the page's tab closing, the page no longer waiting, or a window that
 // cannot open is SignLens's, with the reason.
 
-import type { Decision, HistoryEntry, Mode, Outcome, VerdictWord } from '../shared/model.ts';
+import { type Decision, type HistoryEntry, type Mode, type Outcome, refusal, type VerdictWord } from '../shared/model.ts';
 import { dropPending, type Pending, putPending } from '../shared/store.ts';
 import { describe } from '../shared/text.ts';
 
@@ -35,14 +35,14 @@ export interface InFlight {
     decide?: (outcome: Outcome) => void;
 }
 
-/** Why a tab's second request is refused while its first is in flight. */
+/** Why a tab's second request is refused while its first is in flight: told to the page only, never kept, so never in the interface's words. */
 export const BUSY = 'still busy with an earlier request from this page';
 
 /** A request whose page closed, reloaded or went elsewhere: no one is left to pass it to. */
-export const GONE: Outcome = Object.freeze({ decision: 'reject', refused: 'the page closed or reloaded' });
+export const GONE: Outcome = Object.freeze(refusal('worker-refused-page-gone'));
 
-/** Why what was under way for a request stopped at its deadline. */
-const STOPPED_WAITING = 'the page stopped waiting';
+/** A request whose page stopped waiting for it: what was under way for it stops at its deadline, with this as the reason. */
+export const STOPPED_WAITING: Outcome = Object.freeze(refusal('worker-refused-stopped-waiting'));
 
 /** The requests in flight, by tab. */
 const inFlight = new Map<number, InFlight>();
@@ -71,7 +71,7 @@ export function begin(tabId: number, now = Date.now()): InFlight | null {
     const deadline = now + DECISION_TIMEOUT_MS;
     const stop = new AbortController();
     const late = AbortSignal.timeout(Math.max(0, deadline - Date.now()));
-    late.addEventListener('abort', () => stop.abort(STOPPED_WAITING), { once: true });
+    late.addEventListener('abort', () => stop.abort(STOPPED_WAITING.refused), { once: true });
     const flight: InFlight = { deadline, abandoned: false, signal: stop.signal };
     stops.set(flight, stop);
     inFlight.set(tabId, flight);
@@ -149,7 +149,7 @@ export async function ask<P extends keyof Pending>(
 ): Promise<Outcome> {
     if (flight.abandoned) return GONE;
     const left = flight.deadline - Date.now();
-    if (left <= 0) return { decision: 'reject', refused: 'the page stopped waiting' };
+    if (left <= 0) return STOPPED_WAITING;
     nextRequest += 1;
     const id = `${Date.now()}-${nextRequest}`;
     await putPending(page, id, pending);
@@ -172,7 +172,7 @@ export async function ask<P extends keyof Pending>(
         await dropPending(page, id);
         return GONE;
     }
-    const timer = setTimeout(() => decisions.get(id)?.({ decision: 'reject', refused: 'no decision in time' }), left);
+    const timer = setTimeout(() => decisions.get(id)?.(refusal('worker-refused-no-decision')), left);
     let windowId: number | undefined;
     try {
         const created = await chrome.windows.create({
@@ -188,7 +188,7 @@ export async function ask<P extends keyof Pending>(
         decisions.delete(id);
         retries.delete(id);
         await dropPending(page, id);
-        return { decision: 'reject', refused: `the SignLens window could not open: ${describe(error)}` };
+        return refusal('worker-refused-window-not-open', { error: describe(error) });
     }
     const closed = (removed: number) => {
         if (removed === windowId) decisions.get(id)?.({ decision: 'reject' });

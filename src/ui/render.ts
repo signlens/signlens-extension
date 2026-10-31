@@ -7,7 +7,7 @@
 import type { ExplainedRow, Row } from '../shared/model.ts';
 import { short } from '../shared/text.ts';
 import type { Address, Amount, Field, Message, Section, Severity, Trust, Value, WordedEffect } from '../shared/types.ts';
-import { type Id, t } from '../shared/words.ts';
+import { type Id, spoken, t } from '../shared/words.ts';
 import { nodes } from './localize.ts';
 
 export function element<K extends keyof HTMLElementTagNameMap>(tag: K, className?: string, text?: string): HTMLElementTagNameMap[K] {
@@ -514,7 +514,7 @@ export function renderRow(row: Row, options: RenderOptions = {}): HTMLDivElement
                 body.append(element('p', 'not-checked', options.again ? t('row-not-explained') : t('row-not-explained-ask-again')));
             }
             // What went wrong, then what can be done about it.
-            body.append(element('pre', '', row.error));
+            body.append(element('pre', '', row.said ? spoken(row.said) : row.error));
             if (row.scope === 'transaction' && options.again instanceof HTMLElement) body.append(options.again);
             body.append(...readNotes(row));
             if (row.capture) body.append(saveLink(row.capture, options));

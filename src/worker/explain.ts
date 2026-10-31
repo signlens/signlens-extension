@@ -15,7 +15,7 @@ import {
     MAX_TRANSACTIONS,
     type MessagePayload,
 } from '../shared/messages.ts';
-import { type Entry, failure, type Row } from '../shared/model.ts';
+import { type Entry, failed, failure, type Row } from '../shared/model.ts';
 import type { Settings } from '../shared/settings.ts';
 import { printable, withoutControls } from '../shared/text.ts';
 import { type AccountData, type Contact, type EngineAnswer, type EngineRequest, isError, type TokenHint } from '../shared/types.ts';
@@ -24,6 +24,7 @@ import { t } from '../shared/words.ts';
 import { withAccounts } from './accounts.ts';
 import { explainRemotely, LIMITED } from './api.ts';
 import { eachString, standIns } from './contacts.ts';
+import { GONE, STOPPED_WAITING } from './gate.ts';
 import { tokenHints, unknownMints } from './hints.ts';
 import { readerLocales } from './locale.ts';
 import { type SimulationResult, simulate } from './simulation.ts';
@@ -57,11 +58,11 @@ function decodedLength(base64: string): number {
     return Math.floor((base64.replace(/=+$/, '').length * 3) / 4);
 }
 
-/** The transactions of a request, or why it is refused before anything is asked of anyone. */
-function transactionsOf(payload: ExplainPayload): string[] | string {
+/** The transactions of a request, or why it is refused before anything is asked of anyone. Its page is told the numbers as plain digits. */
+function transactionsOf(payload: ExplainPayload): string[] | Entry {
     const transactions = payload.transactions;
     if (Array.isArray(transactions) && transactions.length > MAX_TRANSACTIONS) {
-        return `${transactions.length} transactions in one request; SignLens explains at most ${MAX_TRANSACTIONS}`;
+        return failed('worker-failed-too-many', { count: String(transactions.length), max: String(MAX_TRANSACTIONS) });
     }
     if (
         !Array.isArray(transactions) ||
@@ -69,12 +70,20 @@ function transactionsOf(payload: ExplainPayload): string[] | string {
         transactions.length > MAX_TRANSACTIONS ||
         !transactions.every((t): t is string => typeof t === 'string' && /^[A-Za-z0-9+/]+={0,2}$/.test(t))
     ) {
-        return 'transactions must be a list of base64 strings';
+        return failed('worker-failed-not-list');
     }
     if (transactions.some((t) => t.length > MAX_TRANSACTION_BASE64 || decodedLength(t) > MAX_TRANSACTION_BYTES)) {
-        return `a transaction is longer than ${MAX_TRANSACTION_BYTES} bytes`;
+        return failed('worker-failed-too-long', { max: String(MAX_TRANSACTION_BYTES) });
     }
     return transactions;
+}
+
+/** A request explained no further because `reason` stopped it (gate.ts: its page went, or stopped waiting). */
+function stopped(reason: unknown): Entry {
+    if (reason === GONE.refused) return failed('worker-failed-page-gone');
+    if (reason === STOPPED_WAITING.refused) return failed('worker-failed-stopped-waiting');
+    // Not one of SignLens's: said as it was given.
+    return failure(`not explained: ${String(reason)}`);
 }
 
 /**
@@ -95,7 +104,7 @@ export async function explainTransactions(
     locale: string[] = readerLocales(),
 ): Promise<Entry> {
     const transactions = transactionsOf(payload);
-    if (typeof transactions === 'string') return failure(transactions);
+    if (!Array.isArray(transactions)) return transactions;
     const accounts = ownKeys.filter(isAddress).slice(0, 16);
     const meta: Meta = {
         origin: payload.origin || 'unknown',
@@ -109,7 +118,7 @@ export async function explainTransactions(
     // The transaction the API first refused for its limit: it would refuse the ones after it too, so they are not asked for.
     let limitedAt: number | null = null;
     for (const [i, transaction] of transactions.entries()) {
-        if (stop?.aborted) return failure(`not explained: ${String(stop.reason)}`);
+        if (stop?.aborted) return stopped(stop.reason);
         if (limitedAt !== null) {
             results.push({
                 kind: 'failed',
@@ -168,7 +177,7 @@ export async function explainTransactions(
             }
         }
         // A call given up because the page went is not the API's failure.
-        if (stop?.aborted) return failure(`not explained: ${String(stop.reason)}`);
+        if (stop?.aborted) return stopped(stop.reason);
         const capture = captureOf(transaction, meta, loaded, read);
         if (isError(document)) {
             results.push({
@@ -210,15 +219,15 @@ export async function explainTransactions(
 
 /** A signed message, shown as it is: SignLens does not explain off-chain messages yet. */
 export function showMessage(payload: MessagePayload): Entry {
-    if (typeof payload.message !== 'string') return failure('message is required');
-    const tooLong = failure(`the message is longer than ${MAX_MESSAGE_BYTES} bytes`);
+    if (typeof payload.message !== 'string') return failed('worker-failed-no-message');
+    const tooLong = failed('worker-failed-message-too-long', { max: String(MAX_MESSAGE_BYTES) });
     // Bounded before it is decoded, then exactly.
     if (payload.message.length > MAX_MESSAGE_BASE64) return tooLong;
     let bytes: Uint8Array;
     try {
         bytes = fromBase64(payload.message);
     } catch {
-        return failure('the message is not base64');
+        return failed('worker-failed-message-not-base64');
     }
     if (bytes.length > MAX_MESSAGE_BYTES) return tooLong;
     let text: string;

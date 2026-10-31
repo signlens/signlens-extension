@@ -14,7 +14,7 @@ import type {
     WaitingMessage,
     WalletsPayload,
 } from '../shared/messages.ts';
-import { type Entry, failure, type HistoryEntry, type Outcome, requestError, type WalletChoice } from '../shared/model.ts';
+import { type Entry, failure, type HistoryEntry, type Outcome, refusal, requestError, type WalletChoice } from '../shared/model.ts';
 import { addAddresses, ownKeysFor, parseAddresses, parseContacts, type Settings, settings, watched } from '../shared/settings.ts';
 import { session } from '../shared/store.ts';
 import { describe, logged, printable } from '../shared/text.ts';
@@ -70,7 +70,9 @@ async function yours(
     flight: gate.InFlight,
 ): Promise<{ ownKeys: string[] } | { reply: Reply }> {
     const claimed = named(payload);
-    const refuse = async (reply: Reply, others: string[], decision: Outcome) => {
+    // Kept with what became of it, the reason as the interface words it too; the page is told the decision and the English.
+    const refuse = async (decision: Outcome, others: string[]) => {
+        const reply: Reply = decision.refused ? { decision: 'reject', refused: decision.refused } : { decision: 'reject' };
         if (gate.withdrawn(flight)) return { reply };
         await showBadge('warning').catch(logged('show the badge'));
         await remember({ ...about(payload, config), rows: [{ kind: 'address', claimed: others }], ...decision }).catch(
@@ -83,8 +85,7 @@ async function yours(
         const others = claimed.filter((account) => account !== address);
         if (others.length === 0) return { ownKeys: address ? [address] : [] };
         // Watch mode connects as one address only: another can only be the page's doing.
-        const refused = 'the page named an address other than the one SignLens watches';
-        return refuse({ decision: 'reject', refused }, others, { decision: 'reject', refused });
+        return refuse(refusal('worker-refused-not-watched'), others);
     }
     const mine = parseAddresses(config.myAddresses).addresses;
     const others = claimed.filter((account) => !mine.includes(account));
@@ -92,32 +93,22 @@ async function yours(
     if (other === undefined) return { ownKeys: ownKeysFor(claimed, mine) };
     // One yes is one address: a page that puts your own address beside its
     // own would otherwise have both made yours by the same click.
-    if (others.length > 1) {
-        const refused = 'the page named more than one address that is not yours in SignLens; add yours in the settings, then ask again';
-        return refuse({ decision: 'reject', refused }, others, { decision: 'reject', refused });
-    }
+    if (others.length > 1) return refuse(refusal('worker-refused-several-not-yours'), others);
     // With asking first off, no window opens unless SignLens would refuse: a
     // page is not to summon one by naming a fresh address, where a careless
     // click costs the most. Yours go in the settings first.
-    if (!config.askFirst) {
-        const refused =
-            'the page named an address that is not yours in SignLens, and with “Show the explanation and ask first” off SignLens does not ask; add it in the settings if it is yours';
-        return refuse({ decision: 'reject', refused }, others, { decision: 'reject', refused });
-    }
+    if (!config.askFirst) return refuse(refusal('worker-refused-not-yours-ask-off'), others);
     let outcome: Outcome;
     try {
         outcome = await gate.ask('address.html', { origin: payload.origin, address: other, mine }, flight);
     } catch (error) {
-        outcome = { decision: 'reject', refused: `the SignLens window failed: ${describe(error)}` };
+        outcome = refusal('worker-refused-window-failed', { error: describe(error) });
     }
-    if (outcome.decision !== 'continue') {
-        return refuse(outcome.refused ? { decision: 'reject', refused: outcome.refused } : { decision: 'reject' }, others, outcome);
-    }
+    if (outcome.decision !== 'continue') return refuse(outcome, others);
     try {
         await addAddresses([other]);
     } catch (error) {
-        const refused = `could not keep your address: ${describe(error)}`;
-        return refuse({ decision: 'reject', refused }, others, { decision: 'reject', refused });
+        return refuse(refusal('worker-refused-address-not-kept', { error: describe(error) }), others);
     }
     return { ownKeys: ownKeysFor(claimed, [...mine, other]) };
 }
@@ -182,7 +173,7 @@ async function answer(type: 'explain' | 'message', payload: ExplainPayload & Mes
         try {
             outcome = await gate.askUser(entry, flight, again);
         } catch (error) {
-            outcome = { decision: 'reject', refused: `the SignLens window failed: ${describe(error)}` };
+            outcome = refusal('worker-refused-window-failed', { error: describe(error) });
         }
     }
     if (gate.withdrawn(flight)) return { ...gate.GONE };
@@ -246,6 +237,11 @@ async function chooseWallet(payload: WalletsPayload, tabId: number): Promise<Cho
     }
 }
 
+/** What the page is told of `reply`: the decision and the reasons in English, never a reason as the interface words it (`said`). */
+function toPage({ said: _said, ...told }: Reply): Reply {
+    return told;
+}
+
 /** Answers a page's request that may wait on the user: a connect in watch mode, the wallet to pass requests to, or something to explain and decide on, from the tab `tabId`. */
 export async function answerRequest(message: WaitingMessage, tabId: number): Promise<Reply | ConnectReply | ChooseReply> {
     if (message.type === 'choose') return chooseWallet(message.payload, tabId);
@@ -261,7 +257,7 @@ export async function answerRequest(message: WaitingMessage, tabId: number): Pro
     const flight = gate.begin(tabId);
     if (!flight) return { decision: 'reject', refused: gate.BUSY };
     try {
-        return await answer(message.type, message.payload, flight);
+        return toPage(await answer(message.type, message.payload, flight));
     } catch (error) {
         return { decision: 'reject', refused: `failed: ${describe(error)}` };
     } finally {
