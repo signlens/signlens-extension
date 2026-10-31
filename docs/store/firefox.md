@@ -164,10 +164,9 @@ Questions: support@signlens.dev
 
 The store's listing in Simplified Chinese, for a reader whose Firefox asks
 for it: the name and summary are the extension's reviewed manifest words
-(`locales/zh-Hans/manifest.ftl`); the description and the captions are
-drafted, and are reviewed by a native speaker before they are submitted, as
-the interface's Chinese was. The privacy policy stays the English one above,
-the authoritative text.
+(`locales/zh-Hans/manifest.ftl`); the description and the captions were
+reviewed by a native speaker on 2026-10-31, as the interface's Chinese was.
+The privacy policy stays the English one above, the authoritative text.
 
 | Field | Value |
 |---|---|
@@ -191,13 +190,13 @@ the authoritative text.
 - 选择继续后，SignLens 所解释的这笔交易会原样转交给您的钱包，钱包会照常请求您的批准。SignLens 不持有私钥，也不签署任何内容。
 
 **它会警示什么**
-- 将某个账户乃至整个钱包移交给他人，而签名时看不到任何资产转移
+- 将某个账户乃至整个钱包的控制权移交给他人（签名时并不会立即转移资产）
 - 代币支出授权，无限额度的授权会明确写出
 - 永不过期的签名（持久随机数）
-- 只是看起来像您的地址或某个联系人地址的地址
-- 没有经过审核的程序描述的程序：直接拦截，而不是猜测
+- 外观与您的地址或联系人地址相似的仿冒地址
+- 尚无经审核描述文件的程序：直接拦截，而不是猜测
 - 多签批准，并从您的 RPC 读取提案的各个步骤
-- 兑换所得付给了他人的兑换
+- 将兑换所得付给他人的交易
 
 **它会发送什么**
 
