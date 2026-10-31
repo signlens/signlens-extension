@@ -7,24 +7,21 @@
     </head>
     <body class="confirm consent">
         <header>
-            <h1>Connect watch-only</h1>
+            <h1 data-l10n-id="connect-heading"></h1>
             <p id="where" class="status"></p>
         </header>
 
         <main>
-            <p>The address SignLens connects as:</p>
+            <p data-l10n-id="connect-address-intro"></p>
             <p><code id="address" class="watched"></code></p>
-            <p class="aside">
-                Allow lets this site see it whenever it connects; you can take this back in SignLens's settings. Deny refuses this time only: the
-                site asks again the next time it connects. Nothing can be signed with the address either way: SignLens holds no keys.
-            </p>
+            <p class="aside" data-l10n-id="connect-aside"></p>
         </main>
 
         <footer>
-            <p id="note" role="status">Let this site see the address?</p>
+            <p id="note" role="status" data-l10n-id="connect-question"></p>
             <div id="buttons">
-                <button id="deny" type="button">Deny</button>
-                <button id="allow" type="button" class="primary">Allow</button>
+                <button id="deny" type="button" data-l10n-id="connect-deny"></button>
+                <button id="allow" type="button" class="primary" data-l10n-id="connect-allow"></button>
             </div>
         </footer>
 

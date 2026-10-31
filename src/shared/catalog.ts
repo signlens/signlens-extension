@@ -5,12 +5,43 @@ import type { Catalog, Value } from './fluent.ts';
 
 /** Each message's arguments, by its identifier. */
 export interface Args {
+    readonly 'address-add': undefined;
+    readonly 'address-claimed-intro': undefined;
+    readonly 'address-heading': undefined;
+    readonly 'address-mine-empty': undefined;
+    readonly 'address-mine-title': undefined;
+    readonly 'address-not-added': undefined;
+    readonly 'address-note': undefined;
+    readonly 'address-reject': undefined;
+    readonly 'address-warning': undefined;
+    readonly 'address-where': { readonly origin: Value };
+    readonly 'address-window-title': { readonly site: Value };
     readonly beta: undefined;
+    readonly 'connect-address-intro': undefined;
+    readonly 'connect-allow': undefined;
+    readonly 'connect-aside': undefined;
+    readonly 'connect-deny': undefined;
+    readonly 'connect-heading': undefined;
+    readonly 'connect-not-allowed': undefined;
+    readonly 'connect-question': undefined;
+    readonly 'connect-where': { readonly origin: Value };
+    readonly 'connect-window-title': { readonly site: Value };
     readonly 'verdict-address': { readonly addresses: Value };
     readonly 'verdict-consent': { readonly address: Value };
     readonly 'verdict-list-separator': undefined;
     readonly 'verdict-message': undefined;
     readonly 'verdict-not-explained': { readonly error: Value };
+    readonly 'wallet-aside': undefined;
+    readonly 'wallet-cancel': undefined;
+    readonly 'wallet-heading': undefined;
+    readonly 'wallet-intro': undefined;
+    readonly 'wallet-list': undefined;
+    readonly 'wallet-not-connected': undefined;
+    readonly 'wallet-not-kept': { readonly error: Value };
+    readonly 'wallet-note': undefined;
+    readonly 'wallet-page-title': undefined;
+    readonly 'wallet-where': { readonly origin: Value };
+    readonly 'wallet-window-title': { readonly site: Value };
     readonly 'welcome-access-text': undefined;
     readonly 'welcome-access-title': undefined;
     readonly 'welcome-addresses-note': undefined;
@@ -84,12 +115,63 @@ export interface Args {
 /** The messages of each locale, English the source. */
 export const CATALOGS: Readonly<Record<string, Catalog>> = {
     en: {
+        'address-add': { value: ["It's mine, add it"] },
+        'address-claimed-intro': { value: ['The page says the wallet that signs this request has the address:'] },
+        'address-heading': { value: ['Is this address yours?'] },
+        'address-mine-empty': { value: ['None yet.'] },
+        'address-mine-title': { value: ['Your addresses in SignLens:'] },
+        'address-not-added': {
+            value: ['The address was not added: this request was no longer pending. Ask the site again if you still mean to sign.'],
+        },
+        'address-note': { value: ['Nothing has been explained or sent anywhere yet.'] },
+        'address-reject': { value: ['Reject'] },
+        'address-warning': {
+            value: [
+                'Add it only if your wallet shows exactly this address. A site that wants you to send to its own address can tell SignLens that address is yours, and the transfer would then read as one between your own accounts.',
+            ],
+        },
+        'address-where': { value: [{ arg: 'origin' }, ' asks you to sign with an address SignLens does not know as yours'] },
+        'address-window-title': { value: ['Is this address yours? ', { arg: 'site' }, ' · SignLens'] },
         beta: { value: ['beta'] },
+        'connect-address-intro': { value: ['The address SignLens connects as:'] },
+        'connect-allow': { value: ['Allow'] },
+        'connect-aside': {
+            value: [
+                "Allow lets this site see it whenever it connects; you can take this back in SignLens's settings. Deny refuses this time only: the site asks again the next time it connects. Nothing can be signed with the address either way: SignLens holds no keys.",
+            ],
+        },
+        'connect-deny': { value: ['Deny'] },
+        'connect-heading': { value: ['Connect watch-only'] },
+        'connect-not-allowed': {
+            value: ['The site was not allowed: this request was no longer pending. Connect again from the site if you still mean to.'],
+        },
+        'connect-question': { value: ['Let this site see the address?'] },
+        'connect-where': { value: [{ arg: 'origin' }, ' wants to see the address SignLens watches'] },
+        'connect-window-title': { value: [{ arg: 'site' }, ' asks to see the watched address · SignLens'] },
         'verdict-address': { value: ['Named ', { arg: 'addresses' }, ' as your address, which is not one of yours in SignLens'] },
         'verdict-consent': { value: ['Asked to see the watched address ', { arg: 'address' }] },
         'verdict-list-separator': { value: [', '] },
         'verdict-message': { value: ['A message, shown as it is'] },
         'verdict-not-explained': { value: ['Not explained: ', { arg: 'error' }] },
+        'wallet-aside': {
+            value: [
+                'Each name and icon is the one the wallet gives itself in this page. The wallet you choose asks to connect, as it always does.',
+            ],
+        },
+        'wallet-cancel': { value: ['Cancel'] },
+        'wallet-heading': { value: ['Which wallet signs?'] },
+        'wallet-intro': {
+            value: [
+                "This page has more than one wallet. SignLens passes your requests on to the one you choose here, and keeps your choice; its popup's settings change it.",
+            ],
+        },
+        'wallet-list': { attributes: { 'aria-label': ['Wallets on this page'] } },
+        'wallet-not-connected': { value: ['No wallet was connected: this request was no longer pending. Connect again from the site.'] },
+        'wallet-not-kept': { value: ['Not kept: ', { arg: 'error' }] },
+        'wallet-note': { value: ['Nothing is connected until you choose.'] },
+        'wallet-page-title': { value: ['Which wallet signs? · SignLens'] },
+        'wallet-where': { value: [{ arg: 'origin' }, ' asks to connect'] },
+        'wallet-window-title': { value: ['Which wallet signs? ', { arg: 'site' }, ' · SignLens'] },
         'welcome-access-text': { value: ['This browser has not let SignLens reach them yet, and without them nothing can be explained.'] },
         'welcome-access-title': { value: ['First, let SignLens reach the API and your RPC'] },
         'welcome-addresses-note': {

@@ -7,27 +7,24 @@
     </head>
     <body class="confirm consent">
         <header>
-            <h1>Is this address yours?</h1>
+            <h1 data-l10n-id="address-heading"></h1>
             <p id="where" class="status"></p>
         </header>
 
         <main>
-            <p>The page says the wallet that signs this request has the address:</p>
+            <p data-l10n-id="address-claimed-intro"></p>
             <p id="claimed" class="address-item"></p>
-            <p id="mine-title">Your addresses in SignLens:</p>
+            <p id="mine-title" data-l10n-id="address-mine-title"></p>
             <ul id="mine" class="addresses" aria-labelledby="mine-title"></ul>
-            <p id="mine-empty" class="aside" hidden>None yet.</p>
-            <p class="aside">
-                Add it only if your wallet shows exactly this address. A site that wants you to send to its own address can tell SignLens that
-                address is yours, and the transfer would then read as one between your own accounts.
-            </p>
+            <p id="mine-empty" class="aside" hidden data-l10n-id="address-mine-empty"></p>
+            <p class="aside" data-l10n-id="address-warning"></p>
         </main>
 
         <footer>
-            <p id="note" role="status">Nothing has been explained or sent anywhere yet.</p>
+            <p id="note" role="status" data-l10n-id="address-note"></p>
             <div id="buttons">
-                <button id="reject" type="button">Reject</button>
-                <button id="add" type="button">It's mine, add it</button>
+                <button id="reject" type="button" data-l10n-id="address-reject"></button>
+                <button id="add" type="button" data-l10n-id="address-add"></button>
             </div>
         </footer>
 

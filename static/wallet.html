@@ -2,29 +2,23 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <title>Which wallet signs? · SignLens</title>
+        <title data-l10n-id="wallet-page-title"></title>
         <link rel="stylesheet" href="style.css" />
     </head>
     <body class="confirm consent">
         <header>
-            <h1>Which wallet signs?</h1>
+            <h1 data-l10n-id="wallet-heading"></h1>
             <p id="where" class="status"></p>
         </header>
         <main>
-            <p>
-                This page has more than one wallet. SignLens passes your requests on to the one you choose here, and keeps your choice;
-                its popup's settings change it.
-            </p>
-            <ul id="wallets" class="wallet-choices" aria-label="Wallets on this page"></ul>
-            <p class="aside">
-                Each name and icon is the one the wallet gives itself in this page. The wallet you choose asks to connect, as it always
-                does.
-            </p>
+            <p data-l10n-id="wallet-intro"></p>
+            <ul id="wallets" class="wallet-choices" data-l10n-id="wallet-list"></ul>
+            <p class="aside" data-l10n-id="wallet-aside"></p>
         </main>
         <footer>
-            <p id="note" role="status">Nothing is connected until you choose.</p>
+            <p id="note" role="status" data-l10n-id="wallet-note"></p>
             <div id="buttons">
-                <button id="reject" type="button">Cancel</button>
+                <button id="reject" type="button" data-l10n-id="wallet-cancel"></button>
             </div>
         </footer>
         <script type="module" src="ui/wallet.js"></script>

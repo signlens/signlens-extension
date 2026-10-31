@@ -7,7 +7,9 @@
 import type { Decision } from '../shared/model.ts';
 import { getPending } from '../shared/store.ts';
 import { withoutScheme } from '../shared/text.ts';
+import { t } from '../shared/words.ts';
 import { byId } from './dom.ts';
+import { localize, nodes } from './localize.ts';
 import { element, originNode } from './render.ts';
 import { goneAtOpen, requestId, sendDecision } from './windows.ts';
 
@@ -26,15 +28,11 @@ function addressItem(address: string): HTMLLIElement {
 
 /** Sends the answer to the worker; a yes no request waits for any more says so rather than close as if it counted. */
 function decide(decision: Decision): void {
-    sendDecision(
-        decision,
-        'The address was not added: this request was no longer pending. Ask the site again if you still mean to sign.',
-        byId('add'),
-        byId('reject', HTMLButtonElement),
-    );
+    sendDecision(decision, t('address-not-added'), byId('add'), byId('reject', HTMLButtonElement));
 }
 
 async function start(): Promise<void> {
+    localize();
     const request = await getPending('address.html', requestId);
     byId('reject').addEventListener('click', () => decide('reject'));
     document.addEventListener('keydown', (event) => {
@@ -44,8 +42,8 @@ async function start(): Promise<void> {
         goneAtOpen(byId('add'), byId('reject', HTMLButtonElement));
         return;
     }
-    document.title = `Is this address yours? ${withoutScheme(request.origin)} · SignLens`;
-    byId('where').replaceChildren(originNode(request.origin, ' asks you to sign with an address SignLens does not know as yours'));
+    document.title = t('address-window-title', { site: withoutScheme(request.origin) });
+    byId('where').replaceChildren(nodes('address-where', { origin: originNode(request.origin, '') }));
     byId('claimed').replaceChildren(addressCode(request.address));
     byId('mine').replaceChildren(...request.mine.map(addressItem));
     byId('mine-empty').hidden = request.mine.length > 0;

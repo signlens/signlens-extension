@@ -9,18 +9,15 @@
 import type { Decision, WalletChoice } from '../shared/model.ts';
 import { getPending, local } from '../shared/store.ts';
 import { describe, withoutScheme } from '../shared/text.ts';
+import { t } from '../shared/words.ts';
 import { byId } from './dom.ts';
+import { localize, nodes } from './localize.ts';
 import { element, originNode } from './render.ts';
 import { goneAtOpen, requestId, sendDecision } from './windows.ts';
 
 /** Sends the answer to the worker; a choice no connect waits for any more says so rather than close as if it counted. */
 function decide(decision: Decision): void {
-    sendDecision(
-        decision,
-        'No wallet was connected: this request was no longer pending. Connect again from the site.',
-        byId('wallets'),
-        byId('reject', HTMLButtonElement),
-    );
+    sendDecision(decision, t('wallet-not-connected'), byId('wallets'), byId('reject', HTMLButtonElement));
 }
 
 /** The wallet's icon, beside its name, which says it all: the icon says nothing more to a screen reader. */
@@ -48,13 +45,14 @@ async function choose(name: string): Promise<void> {
         await local.set({ upstream: name });
     } catch (error) {
         chosen = false;
-        byId('note').textContent = `Not kept: ${describe(error)}`;
+        byId('note').textContent = t('wallet-not-kept', { error: describe(error) });
         return;
     }
     decide('continue');
 }
 
 async function start(): Promise<void> {
+    localize();
     const request = await getPending('wallet.html', requestId);
     byId('reject').addEventListener('click', () => decide('reject'));
     document.addEventListener('keydown', (event) => {
@@ -64,8 +62,8 @@ async function start(): Promise<void> {
         goneAtOpen(byId('wallets'), byId('reject', HTMLButtonElement));
         return;
     }
-    document.title = `Which wallet signs? ${withoutScheme(request.origin)} · SignLens`;
-    byId('where').replaceChildren(originNode(request.origin, ' asks to connect'));
+    document.title = t('wallet-window-title', { site: withoutScheme(request.origin) });
+    byId('where').replaceChildren(nodes('wallet-where', { origin: originNode(request.origin, '') }));
     byId('wallets').replaceChildren(
         ...request.wallets.map((wallet) => {
             const item = element('li');
