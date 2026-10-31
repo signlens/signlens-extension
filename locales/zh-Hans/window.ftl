@@ -44,9 +44,9 @@ window-note-continue = { $to ->
    *[none] “继续”会将请求原样转交给您的钱包，该钱包会另行请求您的批准。
 }
 window-note-refused = { $to ->
-    [settings] SignLens 会拒绝此请求。若仍要继续，它将被原样转交给 { $wallet }，该钱包会另行请求您的批准。
-    [page] SignLens 会拒绝此请求。若仍要继续，它将被原样转交给页面上的第一个钱包（页面称其为“{ $wallet }”），该钱包会另行请求您的批准。
-   *[none] SignLens 会拒绝此请求。若仍要继续，它将被原样转交给您的钱包，该钱包会另行请求您的批准。
+    [settings] SignLens 默认会拒绝此请求。若仍要继续，它将被原样转交给 { $wallet }，该钱包会另行请求您的批准。
+    [page] SignLens 默认会拒绝此请求。若仍要继续，它将被原样转交给页面上的第一个钱包（页面称其为“{ $wallet }”），该钱包会另行请求您的批准。
+   *[none] SignLens 默认会拒绝此请求。若仍要继续，它将被原样转交给您的钱包，该钱包会另行请求您的批准。
 }
 window-note-refused-ask-off = { $to ->
     [settings] “显示解释并先询问”已关闭，但对于 SignLens 会拒绝的请求，它仍会在转交前先询问您。若继续，此请求将被原样转交给 { $wallet }，该钱包会另行请求您的批准。
@@ -116,7 +116,7 @@ row-list-separator = 、
 row-claimed = （声称，未验证）
 row-verified = 已验证
 row-help-verified = 此名称来自 SignLens 或您本人：SignLens 经审核的程序描述文件、已验证的代币列表、您在其设置中填写的地址，或您的地址簿。它不可能来自网站。
-row-help-claimed = 此信息来自网站或扩展程序所查询的 RPC，而不是交易本身。SignLens 无法验证它，因此请勿依赖它。
+row-help-claimed = 此信息来自网站，或来自扩展程序所查询的 RPC，而不是交易本身。SignLens 无法验证它，因此请勿依赖它。
 row-help-claims = 此部分的所有内容均来自扩展程序所查询的 RPC，而不是交易本身。SignLens 无法验证这些内容，因此请仅将其视为参考，而非事实。
 
 ## Values: where the engine sends no words for them, the extension's

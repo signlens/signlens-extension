@@ -1,6 +1,6 @@
 address-window-title = 这是您的地址吗？{ $site } · SignLens
 address-heading = 这是您的地址吗？
-address-where = { $origin } 请您用一个地址签名，而 SignLens 不知道这是您的地址
+address-where = { $origin } 请您用一个地址签名，但 SignLens 不知道该地址是否属于您
 
 ## The address the page names, and the reader's own
 

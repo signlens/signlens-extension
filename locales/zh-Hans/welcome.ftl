@@ -19,7 +19,7 @@ welcome-use-title = 2. 在 DApp 中使用
 welcome-use-choose = 在 DApp 的钱包列表中，选择 <strong>SignLens</strong>，而不是您的钱包。SignLens 会通过您的钱包连接，您的钱包会照常询问您。
 welcome-use-window = 之后，每个请求都会先打开 SignLens 的窗口。请阅读交易会做什么，然后继续前往您的钱包，或拒绝。
 welcome-use-reconnect = DApp 会重新连接您上次使用的钱包。如果某个 DApp 直接连接了您的钱包，SignLens 就会被绕过：请在该 DApp 中断开您的钱包，然后选择 SignLens。
-welcome-use-wallets = 使用多个钱包？首次连接时，SignLens 会询问将您的请求转交给哪个钱包，并记住您的选择；可在其弹出窗口的设置中更改。
+welcome-use-wallets = 使用多个钱包？首次连接时，SignLens 会询问将您的请求转交给哪个钱包，并记住您的选择；可在 SignLens 弹出窗口的设置中更改。
 
 ## 3. Pinning it
 

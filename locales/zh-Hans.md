@@ -104,7 +104,7 @@ The interface's own terms, proposed for the review's first pass:
 | endpoint (the API's or the RPC's address) | 地址 |
 | beta | 测试版 |
 | Allow; Deny (a site's connect) | 允许; 拒绝 |
-| allowed; denied (a connect, in the history) | 已允许; 已拒绝 |
+| allowed; denied (a connect, in the history) | 已允许; 您已拒绝 |
 | you rejected it; SignLens refused it (in the history) | 您已拒绝; 已拒绝 (the line under it says SignLens 已拒绝：…) |
 | watch-only | 仅观察 |
 | pass on (a request, to the wallet); unchanged | 转交; 原样 |
