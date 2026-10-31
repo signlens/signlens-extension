@@ -10,13 +10,13 @@ worker-badge-message = 消息
 
 worker-tables-not-parsed = 交易未能解析（{ $error }）
 worker-tables-read = 已通过 RPC 读取 { $count } 个查找表，未验证
-worker-tables-not-resolved = { $count } 个查找表未能解析（{ $error }）
+worker-tables-not-resolved = { $count } 个查找表未能解析地址（{ $error }）
 
 ## The simulation of a transaction over the RPC, shown after “Simulation:” under its row (worker/explain.ts)
 
 worker-simulation-not-parsed = 未运行（交易未能解析）
 worker-simulation-unavailable = 未运行（{ $error }）
-worker-simulation-failed = 交易执行失败
+worker-simulation-failed = 模拟执行失败
 worker-simulation-changes = { $count } 项余额变动，未验证
 
 ## Why a transaction of a request was not explained: its row in the window and the popup, after “Not explained:” (worker/explain.ts, worker/api.ts)

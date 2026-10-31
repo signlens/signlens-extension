@@ -79,7 +79,7 @@ popup-other-address = 另一个地址
 
 popup-ask-first = { $name }，{ $more }
 popup-ask-first-name = 显示解释并先询问
-popup-ask-first-more = 再拒绝或转交请求；关闭此项时，在直通模式下，SignLens 本会拒绝的请求（已拦截或出错）仍会先等待您的决定，再转交给您的钱包
+popup-ask-first-more = 再拒绝或转交请求；关闭此项时，在直通模式下，SignLens 默认会拒绝的请求（已拦截或错误）仍会先等待您的决定，再转交给您的钱包
 popup-simulate = { $name }，{ $more }
 popup-simulate-name = 通过 RPC 模拟交易
 popup-simulate-more = 并将余额变动作为未验证的声称，与解释对照；会将整笔交易发送给 RPC

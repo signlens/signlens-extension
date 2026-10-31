@@ -7,7 +7,7 @@ yours-input-label = 添加地址
 yours-add = 添加
 yours-remove = 移除
 yours-remove-label = 移除 { $address }
-yours-limit = 一个请求携带其中 { $max } 个地址：先是网站指明的地址，然后是列表中靠前的地址。
+yours-limit = 一个请求最多携带其中 { $max } 个地址：先是网站指明的地址，然后是列表中靠前的地址。
 
 ## What became of an add or a remove, under the field
 
