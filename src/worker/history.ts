@@ -8,6 +8,7 @@
 import type { HistoryEntry, Row, VerdictWord } from '../shared/model.ts';
 import { inTurn, isQuotaError, session } from '../shared/store.ts';
 import { worse } from '../shared/verdict.ts';
+import { type Id, t } from '../shared/words.ts';
 
 /** How many answers are kept. */
 export const HISTORY_LENGTH = 20;
@@ -24,12 +25,13 @@ export const HISTORY_BYTES = 2 * 1024 * 1024;
 /** How much one answer may take before it is slimmed: a quarter of the history, so that one answer cannot push the rest out. */
 export const ENTRY_BYTES = HISTORY_BYTES / 4;
 
-const BADGE: Record<VerdictWord, { text: string; color: string }> = {
-    ok: { text: 'OK', color: '#1a7f4b' },
-    warning: { text: 'WARN', color: '#a15c00' },
-    blocked: { text: 'BLOCK', color: '#b3261e' },
-    error: { text: '?', color: '#5b6475' },
-    message: { text: 'MSG', color: '#5b6475' },
+/** The badge for each verdict: the message that words it, and its colour. */
+const BADGE: Record<VerdictWord, { text: Extract<Id, `worker-badge-${string}`>; color: string }> = {
+    ok: { text: 'worker-badge-ok', color: '#1a7f4b' },
+    warning: { text: 'worker-badge-warning', color: '#a15c00' },
+    blocked: { text: 'worker-badge-blocked', color: '#b3261e' },
+    error: { text: 'worker-badge-error', color: '#5b6475' },
+    message: { text: 'worker-badge-message', color: '#5b6475' },
 };
 
 function size(value: unknown): number {
@@ -39,7 +41,7 @@ function size(value: unknown): number {
 /** `row` without what takes the room: the full text, then the sections and the bytes to save. */
 function slimmer(row: Row, step: 1 | 2): Row {
     if (row.kind !== 'explained') return row;
-    const text = 'The full text was too long to keep in the history.';
+    const text = t('worker-history-slimmed');
     return step === 1 ? { ...row, text } : { ...row, text, sections: [], capture: '' };
 }
 
@@ -103,7 +105,7 @@ export function showBadge(verdict: VerdictWord): Promise<void> {
         try {
             await chrome.action.setBadgeBackgroundColor({ color: badge.color });
             await chrome.action.setBadgeTextColor?.({ color: '#ffffff' });
-            await chrome.action.setBadgeText({ text: badge.text });
+            await chrome.action.setBadgeText({ text: t(badge.text) });
         } catch {
             // A badge is a nicety.
         }

@@ -20,6 +20,7 @@ import type { Settings } from '../shared/settings.ts';
 import { printable, withoutControls } from '../shared/text.ts';
 import { type AccountData, type Contact, type EngineAnswer, type EngineRequest, isError, type TokenHint } from '../shared/types.ts';
 import { verdictOf } from '../shared/verdict.ts';
+import { t } from '../shared/words.ts';
 import { withAccounts } from './accounts.ts';
 import { explainRemotely, LIMITED } from './api.ts';
 import { eachString, standIns } from './contacts.ts';
@@ -113,7 +114,7 @@ export async function explainTransactions(
             results.push({
                 kind: 'failed',
                 scope: 'transaction',
-                error: `not explained: the SignLens API took no more explanations for now, from transaction ${limitedAt} of ${transactions.length} on; try again in a minute`,
+                error: t('worker-limited', { at: limitedAt, count: transactions.length }),
                 capture: captureOf(transaction, meta),
             });
             continue;
@@ -131,11 +132,14 @@ export async function explainTransactions(
         let simulationNote: string | null = null;
         if (config.simulate) {
             simulation = await simulate(transaction, bytes, loaded, config.rpcUrl, stop);
-            if (!simulation) simulationNote = 'not run (transaction not parsed)';
+            if (!simulation) simulationNote = t('worker-simulation-not-parsed');
             else if (simulation.unavailable) {
-                simulationNote = `not run (${simulation.unavailable})`;
+                simulationNote = t('worker-simulation-unavailable', { error: simulation.unavailable });
                 simulation = null;
-            } else simulationNote = simulation.failure ? 'failed' : `${simulation.changes.length} balance change(s), unverified`;
+            } else
+                simulationNote = simulation.failure
+                    ? t('worker-simulation-failed')
+                    : t('worker-simulation-changes', { count: simulation.changes.length });
         }
         const request: EngineRequest = {
             own_keys: accounts,
@@ -170,7 +174,7 @@ export async function explainTransactions(
             results.push({
                 kind: 'failed',
                 scope: 'transaction',
-                error: withoutControls(document.error.message) || 'the SignLens API answered an error without a message',
+                error: withoutControls(document.error.message) || t('worker-api-error-unsaid'),
                 ...(note ? { tables: note } : {}),
                 ...(claimed ? { chain: claimed } : {}),
                 capture,
@@ -221,7 +225,10 @@ export function showMessage(payload: MessagePayload): Entry {
     try {
         text = withoutControls(new TextDecoder('utf-8', { fatal: true }).decode(bytes));
     } catch {
-        text = `(${bytes.length} bytes, not text) ${[...bytes].map((b) => b.toString(16).padStart(2, '0')).join('')}`;
+        text = t('worker-message-not-text', {
+            count: bytes.length,
+            hex: [...bytes].map((b) => b.toString(16).padStart(2, '0')).join(''),
+        });
     }
     return { rows: [{ kind: 'message', text }] };
 }

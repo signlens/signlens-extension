@@ -10,6 +10,7 @@ import { refusedEndpoint, within } from '../shared/endpoint.ts';
 import { objectFields } from '../shared/json.ts';
 import { describe, printable } from '../shared/text.ts';
 import { type ApiStatus, type EngineAnswer, type EngineRequest, type ErrorDocument, type Feedback, isError } from '../shared/types.ts';
+import { t } from '../shared/words.ts';
 import { DocumentError, EXPLANATION_SCHEMA, parseExplanation, review, tag } from './explanation.ts';
 import { toBase64 } from './solana.ts';
 
@@ -111,21 +112,17 @@ export async function explainRemotely(
             signal,
         );
     } catch (error) {
-        return errorDocument('api', `the SignLens API at ${base} did not answer (${describe(error)})`);
+        return errorDocument('api', t('worker-api-no-answer', { url: base, error: describe(error) }));
     }
     // An API from before /v2 has no such path, and would say the API lives under /v1.
     if (response.status === 404) {
-        return errorDocument(
-            'api',
-            `the SignLens API at ${base} does not serve /v2/explain, which this version needs: update it, or use the default API in the settings`,
-        );
+        return errorDocument('api', t('worker-api-no-v2', { url: base }));
     }
     // Refused for its limit, in the API's words or not: the calls after it would be refused too.
     const code = response.status === 429 ? LIMITED : 'api';
-    const notAnExplanation = errorDocument(
-        code,
-        `the SignLens API answered HTTP ${response.status} with something that is not an explanation`,
-    );
+    // The status is a code, not a count: written as it is, never as a number in the reader's digits.
+    const status = String(response.status);
+    const notAnExplanation = errorDocument(code, t('worker-api-not-explanation', { status }));
     if (Number(response.headers.get('content-length')) > MAX_DOCUMENT) return notAnExplanation;
     let document: unknown;
     try {
@@ -133,7 +130,7 @@ export async function explainRemotely(
         if (body.length > MAX_DOCUMENT) return notAnExplanation;
         document = JSON.parse(body);
     } catch {
-        return errorDocument(code, `the SignLens API answered HTTP ${response.status} without a document`);
+        return errorDocument(code, t('worker-api-no-document', { status }));
     }
     if (typeof document !== 'object' || document === null) return notAnExplanation;
     if (isError(document)) return code === LIMITED ? errorDocument(LIMITED, passedOn(document).error.message) : passedOn(document);
@@ -142,7 +139,7 @@ export async function explainRemotely(
         return parseExplanation(document);
     } catch (error) {
         if (!(error instanceof DocumentError)) throw error;
-        return errorDocument('api', `the SignLens API answered an explanation this version cannot read: ${error.message}`);
+        return errorDocument('api', t('worker-api-unreadable', { problem: error.message }));
     }
 }
 
@@ -179,11 +176,11 @@ export async function apiStatus(apiUrl: string): Promise<ApiStatus | { error: st
     try {
         const signal = AbortSignal.timeout(5_000);
         const response = await withOneRetry(() => fetch(`${base}/v1/packs`, { cache: 'no-store', signal }), signal);
-        if (!response.ok) return { error: `the API at ${base} answered HTTP ${response.status}` };
+        if (!response.ok) return { error: t('worker-status-http', { url: base, status: String(response.status) }) };
         const packs = objectFields(await response.json().catch(() => null));
         const pack = objectFields(packs?.descriptor_pack);
         const programs = count(pack?.programs);
-        if (!packs || programs === null) return { error: `the API at ${base} answered a status this version cannot read` };
+        if (!packs || programs === null) return { error: t('worker-status-unreadable', { url: base }) };
         return {
             engine: typeof packs.engine === 'string' ? printable(packs.engine, 40) : '?',
             programs,
@@ -192,7 +189,7 @@ export async function apiStatus(apiUrl: string): Promise<ApiStatus | { error: st
             locales: locales(packs.locales),
         };
     } catch (error) {
-        return { error: `the API at ${base} did not answer (${describe(error)})` };
+        return { error: t('worker-status-no-answer', { url: base, error: describe(error) }) };
     }
 }
 

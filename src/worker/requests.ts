@@ -19,6 +19,7 @@ import { addAddresses, ownKeysFor, parseAddresses, parseContacts, type Settings,
 import { session } from '../shared/store.ts';
 import { describe, logged, printable } from '../shared/text.ts';
 import { worstVerdict } from '../shared/verdict.ts';
+import { t } from '../shared/words.ts';
 import { explainTransactions, showMessage } from './explain.ts';
 import * as gate from './gate.ts';
 import { remember, showBadge } from './history.ts';
@@ -280,10 +281,9 @@ export async function connectFailed(origin: string, wallets: string[]): Promise<
     const config = await settings();
     const quoted = (name: string) => JSON.stringify(printable(name, 60));
     const wanted = config.upstream.trim();
-    const found = wallets.slice(0, 32).map(quoted).join(', ') || 'none';
-    const error =
-        `SignLens could not connect: no wallet${wanted ? ` named ${quoted(wanted)}` : ''} to pass requests to (found: ${found}). ` +
-        "Choose a wallet in the extension's settings.";
+    const names = wallets.slice(0, 32).map(quoted);
+    const found = { count: names.length, found: names.join(t('worker-list-separator')) };
+    const error = wanted ? t('worker-connect-failed-named', { wanted: quoted(wanted), ...found }) : t('worker-connect-failed', found);
     // This site's connects that found no wallet: not its consents, which are connects too.
     const here = (entry: HistoryEntry) =>
         entry.method === 'standard:connect' && (entry.origin ?? '') === origin && entry.rows[0]?.kind === 'failed';

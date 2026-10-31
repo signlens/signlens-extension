@@ -4,6 +4,7 @@
 // read again when a transaction uses an index it lacks.
 
 import { describe } from '../shared/text.ts';
+import { t } from '../shared/words.ts';
 import { fetchLookupTables, type LoadedAddresses, loadedAddresses, tableLookups } from './solana.ts';
 
 /** Lookup tables read in this worker's life, by RPC and address, with when; a table can change, so not for long. */
@@ -46,10 +47,10 @@ export async function resolveTables(
     try {
         lookups = tableLookups(bytes);
     } catch (error) {
-        return { note: `not parsed (${describe(error)})` };
+        return { note: t('worker-tables-not-parsed', { error: describe(error) }) };
     }
     if (lookups.length === 0) return { note: null };
-    const count = `${lookups.length} lookup table${lookups.length === 1 ? '' : 's'}`;
+    const count = lookups.length;
     const addresses = lookups.map((l) => l.table);
     try {
         const read = await lookupTables(rpc, addresses, stop);
@@ -61,8 +62,8 @@ export async function resolveTables(
             if (!read.kept) throw error;
             loaded = loadedAddresses(lookups, (await lookupTables(rpc, addresses, stop, true)).tables);
         }
-        return { loaded, note: `${count} read over RPC, unverified` };
+        return { loaded, note: t('worker-tables-read', { count }) };
     } catch (error) {
-        return { note: `${count} not resolved (${describe(error)})` };
+        return { note: t('worker-tables-not-resolved', { count, error: describe(error) }) };
     }
 }

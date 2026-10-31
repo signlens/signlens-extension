@@ -5,6 +5,7 @@
 
 import type { Row, TransactionVerdict, VerdictWord } from './model.ts';
 import type { Explanation, Verdict } from './types.ts';
+import { t } from './words.ts';
 
 /**
  * From least to most serious. Blocked ranks above error: both stop the
@@ -53,12 +54,14 @@ export function summaryOf(row: Row): string {
             return row.summary.text;
         case 'failed':
             // A line leads with a capital, whatever the failure's own words (which the page is told as they are).
-            return row.scope === 'transaction' ? `Not explained: ${row.error}` : row.error.charAt(0).toUpperCase() + row.error.slice(1);
+            return row.scope === 'transaction'
+                ? t('verdict-not-explained', { error: row.error })
+                : row.error.charAt(0).toUpperCase() + row.error.slice(1);
         case 'message':
-            return 'A message, shown as it is';
+            return t('verdict-message');
         case 'consent':
-            return `Asked to see the watched address ${row.address}`;
+            return t('verdict-consent', { address: row.address });
         case 'address':
-            return `Named ${row.claimed.join(', ')} as your address, which is not one of yours in SignLens`;
+            return t('verdict-address', { addresses: row.claimed.join(t('verdict-list-separator')) });
     }
 }

@@ -11,6 +11,7 @@ import { base58Encode } from '../shared/base58.ts';
 import { refusedEndpoint, within } from '../shared/endpoint.ts';
 import { objectFields } from '../shared/json.ts';
 import { withoutControls } from '../shared/text.ts';
+import { t } from '../shared/words.ts';
 
 /** Owner of every address lookup table account. */
 export const LOOKUP_TABLE_PROGRAM = 'AddressLookupTab1e1111111111111111111111111';
@@ -63,7 +64,7 @@ class Reader {
 
     take(count: number): Uint8Array {
         const end = this.offset + count;
-        if (end > this.bytes.length) throw new Error('transaction is truncated');
+        if (end > this.bytes.length) throw new Error(t('worker-tx-truncated'));
         const slice = this.bytes.subarray(this.offset, end);
         this.offset = end;
         return slice;
@@ -80,7 +81,7 @@ class Reader {
             value |= (byte & 0x7f) << shift;
             if ((byte & 0x80) === 0) return value;
         }
-        throw new Error('compact-u16 is too long');
+        throw new Error(t('worker-tx-compact-u16'));
     }
 }
 
@@ -91,13 +92,13 @@ class Reader {
 export function tableLookups(transaction: Uint8Array): TableLookup[] {
     // v1 puts the message first and has no lookup tables; a legacy or v0
     // transaction starts with its signature count, which is never 0x81.
-    if (transaction.length === 0) throw new Error('transaction is empty');
+    if (transaction.length === 0) throw new Error(t('worker-tx-empty'));
     if (transaction[0] === 0x81) return [];
     const reader = new Reader(transaction);
     reader.take(reader.compactU16() * 64);
     const first = reader.u8();
     if ((first & 0x80) === 0) return [];
-    if (first !== 0x80) throw new Error(`unsupported message version ${first & 0x7f}`);
+    if (first !== 0x80) throw new Error(t('worker-tx-version', { version: first & 0x7f }));
     reader.take(3);
     reader.take(reader.compactU16() * 32);
     reader.take(32);
@@ -113,7 +114,7 @@ export function tableLookups(transaction: Uint8Array): TableLookup[] {
         const readonly = [...reader.take(reader.compactU16())];
         lookups.push({ table, writable, readonly });
     }
-    if (reader.offset !== transaction.length) throw new Error('transaction has trailing bytes');
+    if (reader.offset !== transaction.length) throw new Error(t('worker-tx-trailing'));
     return lookups;
 }
 
@@ -123,7 +124,7 @@ export function tableLookups(transaction: Uint8Array): TableLookup[] {
  * the bytes; see `tableLookups` and `loadedAddresses` for those.
  */
 export function messageAccounts(transaction: Uint8Array): MessageAccount[] {
-    if (transaction.length === 0) throw new Error('transaction is empty');
+    if (transaction.length === 0) throw new Error(t('worker-tx-empty'));
     const reader = new Reader(transaction);
     let header: [number, number, number];
     let count: number;
@@ -140,7 +141,7 @@ export function messageAccounts(transaction: Uint8Array): MessageAccount[] {
         reader.take(reader.compactU16() * 64);
         const first = reader.u8();
         if ((first & 0x80) !== 0) {
-            if (first !== 0x80) throw new Error(`unsupported message version ${first & 0x7f}`);
+            if (first !== 0x80) throw new Error(t('worker-tx-version', { version: first & 0x7f }));
             header = [reader.u8(), reader.u8(), reader.u8()];
         } else {
             header = [first, reader.u8(), reader.u8()];
@@ -166,9 +167,9 @@ export function messageAccounts(transaction: Uint8Array): MessageAccount[] {
 export function loadedAddresses(lookups: TableLookup[], tables: Map<string, Uint8Array>): LoadedAddresses {
     const pick = (table: string, index: number): string => {
         const data = tables.get(table);
-        if (!data) throw new Error(`lookup table ${table} was not found`);
+        if (!data) throw new Error(t('worker-table-missing', { table }));
         const start = LOOKUP_TABLE_META_SIZE + index * 32;
-        if (start + 32 > data.length) throw new Error(`lookup table ${table} has no index ${index}`);
+        if (start + 32 > data.length) throw new Error(t('worker-table-no-index', { table, index }));
         return base58Encode(data.subarray(start, start + 32));
     };
     return {
@@ -270,13 +271,17 @@ export async function rpcCall<T>(
     if (!response.ok) throw await refusal(url, response);
     const host = new URL(url).host;
     const body = objectFields(await response.json().catch(() => null));
-    if (!body) throw new Error(`the RPC at ${host} answered something that is not JSON-RPC`);
+    if (!body) throw new Error(t('worker-rpc-not-json-rpc', { host }));
     if (body.error !== undefined && body.error !== null) {
         const said = objectFields(body.error)?.message;
-        throw new Error(`RPC error: ${typeof said === 'string' && said.trim() ? withoutControls(said).slice(0, 200) : 'no message'}`);
+        throw new Error(
+            typeof said === 'string' && said.trim()
+                ? t('worker-rpc-error', { said: withoutControls(said).slice(0, 200) })
+                : t('worker-rpc-error-unsaid'),
+        );
     }
     const result = read(body.result);
-    if (result === null) throw new Error(`the RPC at ${host} answered ${method} with something else`);
+    if (result === null) throw new Error(t('worker-rpc-other', { host, method }));
     return result;
 }
 
@@ -286,13 +291,17 @@ export async function refusal(url: string, response: Response): Promise<Error> {
         .replace(/\s+/g, ' ')
         .trim()
         .slice(0, 120);
-    let host = 'the RPC';
+    let host: string | null = null;
     try {
         host = new URL(url).hostname;
     } catch {
-        // Not a URL: named as what it is.
+        // Not a URL: named as what it is, the RPC.
     }
-    return new Error(`${host} answered HTTP ${response.status}${said ? `: ${said}` : ''}`);
+    // The status is a code, not a count: written as it is, never as a number in the reader's digits.
+    const status = String(response.status);
+    if (host === null)
+        return new Error(said ? t('worker-rpc-unnamed-http-said', { status, said }) : t('worker-rpc-unnamed-http', { status }));
+    return new Error(said ? t('worker-rpc-http-said', { host, status, said }) : t('worker-rpc-http', { host, status }));
 }
 
 /** The SPL Token and Token-2022 programs, which own token accounts and mints alike. */

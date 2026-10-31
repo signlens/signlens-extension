@@ -5,6 +5,8 @@
 // typed; the worker checks again at each use, since storage can hold one
 // saved before the rule, or written some other way.
 
+import { t } from './words.ts';
+
 /** The names plain http may go to, each with a host permission in the manifest (manifest.test.ts). */
 export const LOOPBACK: readonly string[] = ['localhost', '127.0.0.1'];
 
@@ -14,11 +16,13 @@ export function endpointProblem(url: string): string | null {
     try {
         parsed = new URL(url);
     } catch {
-        return 'not a URL';
+        return t('worker-endpoint-not-url');
     }
     if (parsed.protocol === 'https:') return null;
-    if (parsed.protocol !== 'http:') return 'not an http(s) URL';
-    return LOOPBACK.includes(parsed.hostname) ? null : `plain http is for this machine only (${LOOPBACK.join(', ')}); use https`;
+    if (parsed.protocol !== 'http:') return t('worker-endpoint-not-http');
+    return LOOPBACK.includes(parsed.hostname)
+        ? null
+        : t('worker-endpoint-plain-http', { hosts: LOOPBACK.join(t('worker-list-separator')) });
 }
 
 /** Every https site: where dapps run and where the endpoints are, unless one is on this machine. */
@@ -46,10 +50,17 @@ export function hostsNeeded(endpoints: readonly string[]): string[] {
     return hosts;
 }
 
+/** The message that says an endpoint's address in the settings is not usable, by what the endpoint is. */
+const REFUSED = {
+    API: 'worker-endpoint-refused-api',
+    RPC: 'worker-endpoint-refused-rpc',
+    'token list': 'worker-endpoint-refused-tokens',
+} as const;
+
 /** Why `url`, the `what` address in the settings, is not to be used, as a line to show; `null` when it may be. */
-export function refusedEndpoint(url: string, what: string): string | null {
+export function refusedEndpoint(url: string, what: keyof typeof REFUSED): string | null {
     const problem = endpointProblem(url);
-    return problem && `the ${what} address in the settings is not usable: ${problem}`;
+    return problem && t(REFUSED[what], { problem });
 }
 
 /**
