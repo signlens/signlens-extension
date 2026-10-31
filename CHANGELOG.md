@@ -8,6 +8,14 @@ uses [Semantic Versioning](https://semver.org/).
 
 ### Added
 
+- **The interface in Simplified Chinese.** For a reader whose browser
+  asks for zh, zh-CN, zh-SG or zh-MY, the window, the popup and its
+  settings, the setup page, the small windows, and the extension's name
+  and description in the browser's list of extensions are in Simplified
+  Chinese, reviewed in full by a native speaker; Traditional Chinese goes
+  on to the reader's next language. What a dapp is told stays in
+  English, for its developers.
+
 - **Show in English.** An explanation in another language has a "Show
   in English" button under its verdict, which asks for it again in
   English while the request waits, so that a translation in doubt can be

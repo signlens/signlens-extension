@@ -16,7 +16,7 @@ worker-tables-not-resolved = { $count } 个查找表未能解析地址（{ $erro
 
 worker-simulation-not-parsed = 未运行（交易未能解析）
 worker-simulation-unavailable = 未运行（{ $error }）
-worker-simulation-failed = 模拟执行失败
+worker-simulation-failed = 失败
 worker-simulation-changes = { $count } 项余额变动，未验证
 
 ## Why a transaction of a request was not explained: its row in the window and the popup, after “Not explained:” (worker/explain.ts, worker/api.ts)
