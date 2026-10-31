@@ -287,6 +287,59 @@ function manifestMessages(locale: Map<string, Compiled>, tag: string, problems: 
     return Object.keys(out).length > 0 ? `${JSON.stringify(out, null, 2)}\n` : null;
 }
 
+/** The words a locale's style note (locales/<locale>.md) keeps in English, under its "Kept in English". */
+function keptWords(locales: string, tag: string): Set<string> {
+    const note = join(locales, `${tag}.md`);
+    const out = new Set<string>();
+    if (!existsSync(note)) return out;
+    let inside = false;
+    for (const line of readFileSync(note, 'utf8').split('\n')) {
+        if (line.startsWith('#')) inside = line.replace(/^#+/, '').trim() === 'Kept in English';
+        else if (inside) for (const [, word] of line.matchAll(/`([^`]+)`/g)) if (word) out.add(word);
+    }
+    return out;
+}
+
+const HAN = '\\u3400-\\u4dbf\\u4e00-\\u9fff\\uf900-\\ufaff';
+const FULL = '，。：；！？、（）“”‘’《》【】…—';
+const CHINESE_RULES: readonly [RegExp, string][] = [
+    [new RegExp(`[${HAN}][A-Za-z0-9]|[A-Za-z0-9][${HAN}]`, 'u'), 'a half-width space between Chinese and Latin letters or digits'],
+    [new RegExp(`\\s[${FULL}]|[${FULL}]\\s`, 'u'), 'no space beside full-width punctuation'],
+    [new RegExp(`[${HAN}][,.:;!?()]|[,.:;!?()][${HAN}]`, 'u'), 'full-width punctuation in Chinese'],
+    [/（[^）]*（/u, 'no full-width brackets inside full-width brackets'],
+];
+
+/** Every text of a pattern, in each of its cases, its markup left out. */
+function texts(pattern: Pattern): string[] {
+    return pattern.flatMap((part) => {
+        if (typeof part === 'string') return [part.replace(MARKUP, '')];
+        if ('arg' in part) return [];
+        return Object.values(part.cases).flatMap(texts);
+    });
+}
+
+/** A Chinese translation held to its style note: spacing, full-width punctuation, and only the English it keeps (a translation that is its English, a name, aside). */
+function checkChinese(
+    tag: string,
+    locale: Map<string, Compiled>,
+    english: Map<string, Compiled>,
+    kept: Set<string>,
+    problems: string[],
+): void {
+    for (const [id, message] of locale) {
+        const patterns = [message.value, ...Object.values(message.attributes)].filter((p): p is Pattern => p !== undefined);
+        const same = message.text === english.get(id)?.text;
+        for (const text of patterns.flatMap(texts)) {
+            for (const [rule, why] of CHINESE_RULES) if (rule.test(text)) problems.push(`locales/${tag}: ${id}: ${why}: "${text}"`);
+            if (same) continue;
+            for (const [word] of text.matchAll(/[A-Za-z][A-Za-z0-9._-]*/g)) {
+                const trimmed = word.replace(/[._-]+$/, '');
+                if (!kept.has(trimmed)) problems.push(`locales/${tag}: ${id}: "${trimmed}" is English the style note does not keep`);
+            }
+        }
+    }
+}
+
 function entries(locale: Map<string, Compiled>): Record<string, { value?: Pattern; attributes?: Record<string, Pattern> }> {
     const out: Record<string, { value?: Pattern; attributes?: Record<string, Pattern> }> = {};
     for (const [id, message] of locale) {
@@ -322,6 +375,7 @@ export function generate(options: { dev?: boolean; locales?: string } = {}): {
     for (const tag of tags.filter((t) => t !== SOURCE && t !== PSEUDO)) {
         const locale = compileLocale(tag, problems, locales);
         checkAgainst(tag, locale, english, problems);
+        if (/^zh(-|$)/i.test(tag)) checkChinese(tag, locale, english, keptWords(locales, tag), problems);
         const reviewFile = join(locales, `${tag}.review.json`);
         const digests: Record<string, string> = existsSync(reviewFile)
             ? ((JSON.parse(readFileSync(reviewFile, 'utf8')) as { digests?: Record<string, string> }).digests ?? {})

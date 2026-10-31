@@ -148,6 +148,15 @@ English: the interface's words left in code. Data (addresses, sites,
 names, numbers, times) and the engine's words, which carry the
 explanation's language, are not the interface's.
 
+Each language has a style note and term list, `locales/<locale>.md`
+(`zh-Hans.md`), which its draft and its review follow. A Chinese
+translation is held to it: a space between Chinese and Latin letters or
+digits, none beside full-width punctuation, full-width punctuation against
+Chinese, no full-width brackets inside them, and no English but the words
+its "Kept in English" lists (a translation that is its English, a name,
+aside). Where a message's words meet an argument, the formatter sets the
+space itself, as the engine does.
+
 A translation is reviewed as the engine's are (its `docs/translating.md`),
 from a spreadsheet, in two passes: what the signing window shows first,
 then the rest.
