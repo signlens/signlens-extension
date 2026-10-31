@@ -60,7 +60,7 @@ h1 {
     font-size: 16px;
 }
 
-h1 span {
+h1 .beta {
     color: var(--muted);
     font-weight: 400;
 }

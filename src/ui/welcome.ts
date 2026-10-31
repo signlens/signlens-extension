@@ -3,12 +3,11 @@
 // SignLens is used; whether it is pinned; and, where the browser has not
 // granted it, the access SignLens needs (access.ts).
 
+import { t } from '../shared/words.ts';
 import { access } from './access.ts';
 import { byId } from './dom.ts';
+import { localize } from './localize.ts';
 import { yourAddresses } from './yours.ts';
-
-const PIN_STEPS =
-    'Open the extensions menu (the puzzle-piece icon in the toolbar) and pin SignLens: its badge then shows the verdict of each request, and its popup lists them.';
 
 /** Whether SignLens is pinned, where the browser can say: done, or the steps. */
 async function showPin(): Promise<void> {
@@ -19,7 +18,7 @@ async function showPin(): Promise<void> {
         // A browser that cannot say gets the steps.
     }
     const status = byId('pin-status');
-    status.textContent = pinned ? 'Pinned: SignLens is on the toolbar.' : PIN_STEPS;
+    status.textContent = pinned ? t('welcome-pinned') : t('welcome-pin-steps');
     status.classList.toggle('done', pinned);
 }
 
@@ -35,6 +34,7 @@ async function showAccess(): Promise<void> {
 }
 
 async function start(): Promise<void> {
+    localize();
     yourAddresses(byId('my-addresses'));
 
     void showPin();

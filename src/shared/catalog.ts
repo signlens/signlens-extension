@@ -4,7 +4,89 @@
 import type { Catalog } from './fluent.ts';
 
 /** Each message's arguments, by its identifier. */
-export type Args = Record<never, never>;
+export interface Args {
+    readonly beta: undefined;
+    readonly 'welcome-access-text': undefined;
+    readonly 'welcome-access-title': undefined;
+    readonly 'welcome-addresses-note': undefined;
+    readonly 'welcome-addresses-text': undefined;
+    readonly 'welcome-addresses-title': undefined;
+    readonly 'welcome-done': undefined;
+    readonly 'welcome-heading': undefined;
+    readonly 'welcome-intro': undefined;
+    readonly 'welcome-more': undefined;
+    readonly 'welcome-page-title': undefined;
+    readonly 'welcome-pin-steps': undefined;
+    readonly 'welcome-pin-title': undefined;
+    readonly 'welcome-pinned': undefined;
+    readonly 'welcome-privacy-text': undefined;
+    readonly 'welcome-privacy-title': undefined;
+    readonly 'welcome-use-choose': undefined;
+    readonly 'welcome-use-reconnect': undefined;
+    readonly 'welcome-use-title': undefined;
+    readonly 'welcome-use-wallets': undefined;
+    readonly 'welcome-use-window': undefined;
+}
 
 /** The messages of each locale, English the source. */
-export const CATALOGS: Readonly<Record<string, Catalog>> = { en: {} };
+export const CATALOGS: Readonly<Record<string, Catalog>> = {
+    en: {
+        beta: { value: ['beta'] },
+        'welcome-access-text': { value: ['This browser has not let SignLens reach them yet, and without them nothing can be explained.'] },
+        'welcome-access-title': { value: ['First, let SignLens reach the API and your RPC'] },
+        'welcome-addresses-note': {
+            value: [
+                "An address you leave out is asked about the first time a site signs with it. You can change them any time in SignLens's settings.",
+            ],
+        },
+        'welcome-addresses-text': {
+            value: [
+                'SignLens calls only these addresses “you” in its explanations, so a site cannot pass off its own address as yours. Copy them from your wallet (Phantom, Solflare, Backpack, …).',
+            ],
+        },
+        'welcome-addresses-title': { value: ['1. Your wallet addresses'] },
+        'welcome-done': { value: ['Done'] },
+        'welcome-heading': { value: ['Set up SignLens'] },
+        'welcome-intro': {
+            value: [
+                'SignLens shows what a Solana transaction does before your wallet asks you to sign it. It holds no keys: your wallet still signs, and asks you as it always has.',
+            ],
+        },
+        'welcome-more': { value: ["All of this, and more, is in the settings in SignLens's popup."] },
+        'welcome-page-title': { value: ['Set up SignLens'] },
+        'welcome-pin-steps': {
+            value: [
+                'Open the extensions menu (the puzzle-piece icon in the toolbar) and pin SignLens: its badge then shows the verdict of each request, and its popup lists them.',
+            ],
+        },
+        'welcome-pin-title': { value: ['3. Pin SignLens to the toolbar'] },
+        'welcome-pinned': { value: ['Pinned: SignLens is on the toolbar.'] },
+        'welcome-privacy-text': {
+            value: [
+                "In this beta, each transaction you are asked to sign is sent to SignLens's API to be explained, with your addresses and those in your address book, so the explanation can say “you” and tell your contacts from lookalikes; their names stay in your browser. The server keeps verdicts and finding codes, not the transaction, unless you choose to send it with a rating. Lookup tables, accounts and a simulation are read from the RPC in the settings.",
+            ],
+        },
+        'welcome-privacy-title': { value: ['What leaves your browser'] },
+        'welcome-use-choose': {
+            value: [
+                "In the dapp's list of wallets, choose <strong>SignLens</strong> rather than your wallet. SignLens connects through your wallet, which asks you as usual.",
+            ],
+        },
+        'welcome-use-reconnect': {
+            value: [
+                'Dapps reconnect the wallet you used last. Where one connects your wallet directly, SignLens is skipped: disconnect it there, and choose SignLens.',
+            ],
+        },
+        'welcome-use-title': { value: ['2. Use it in a dapp'] },
+        'welcome-use-wallets': {
+            value: [
+                "Using more than one wallet? The first time you connect, SignLens asks which one it passes your requests to, and keeps your choice; its popup's settings change it.",
+            ],
+        },
+        'welcome-use-window': {
+            value: [
+                "Each request then opens SignLens's window first. Read what the transaction does, then continue to your wallet, or reject.",
+            ],
+        },
+    },
+};

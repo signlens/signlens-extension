@@ -2,76 +2,56 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <title>Set up SignLens</title>
+        <title data-l10n-id="welcome-page-title"></title>
         <link rel="stylesheet" href="style.css" />
     </head>
     <body class="welcome">
         <header>
-            <h1><img src="icons/icon-128.png" width="40" height="40" alt="" /> Set up SignLens <span>beta</span></h1>
-            <p id="intro">
-                SignLens shows what a Solana transaction does before your wallet asks you to sign it. It holds no keys: your wallet
-                still signs, and asks you as it always has.
-            </p>
+            <h1>
+                <img src="icons/icon-128.png" width="40" height="40" alt="" /> <span data-l10n-id="welcome-heading"></span>
+                <span class="beta" data-l10n-id="beta"></span>
+            </h1>
+            <p id="intro" data-l10n-id="welcome-intro"></p>
         </header>
 
         <main>
             <section id="access" aria-labelledby="access-title" hidden>
-                <h2 id="access-title">First, let SignLens reach the API and your RPC</h2>
-                <p>This browser has not let SignLens reach them yet, and without them nothing can be explained.</p>
-                <button id="allow" type="button" class="primary">Allow https access</button>
+                <h2 id="access-title" data-l10n-id="welcome-access-title"></h2>
+                <p data-l10n-id="welcome-access-text"></p>
+                <button id="allow" type="button" class="primary"></button>
             </section>
 
             <section aria-labelledby="addresses-title">
-                <h2 id="addresses-title">1. Your wallet addresses</h2>
-                <p>
-                    SignLens calls only these addresses “you” in its explanations, so a site cannot pass off its own address as
-                    yours. Copy them from your wallet (Phantom, Solflare, Backpack, …).
-                </p>
+                <h2 id="addresses-title" data-l10n-id="welcome-addresses-title"></h2>
+                <p data-l10n-id="welcome-addresses-text"></p>
                 <div id="my-addresses"></div>
-                <p id="myAddresses-note" class="note">
-                    An address you leave out is asked about the first time a site signs with it. You can change them any time in
-                    SignLens's settings.
-                </p>
+                <p id="myAddresses-note" class="note" data-l10n-id="welcome-addresses-note"></p>
             </section>
 
             <section aria-labelledby="use-title">
-                <h2 id="use-title">2. Use it in a dapp</h2>
+                <h2 id="use-title" data-l10n-id="welcome-use-title"></h2>
                 <ol id="steps">
-                    <li>
-                        In the dapp's list of wallets, choose <strong>SignLens</strong> rather than your wallet. SignLens connects
-                        through your wallet, which asks you as usual.
-                    </li>
-                    <li>Each request then opens SignLens's window first. Read what the transaction does, then continue to your wallet, or reject.</li>
+                    <li data-l10n-id="welcome-use-choose"></li>
+                    <li data-l10n-id="welcome-use-window"></li>
                 </ol>
-                <p class="note">
-                    Dapps reconnect the wallet you used last. Where one connects your wallet directly, SignLens is skipped: disconnect it
-                    there, and choose SignLens.
-                </p>
-                <p class="note">
-                    Using more than one wallet? The first time you connect, SignLens asks which one it passes your requests to, and
-                    keeps your choice; its popup's settings change it.
-                </p>
+                <p class="note" data-l10n-id="welcome-use-reconnect"></p>
+                <p class="note" data-l10n-id="welcome-use-wallets"></p>
             </section>
 
             <section aria-labelledby="pin-title">
-                <h2 id="pin-title">3. Pin SignLens to the toolbar</h2>
+                <h2 id="pin-title" data-l10n-id="welcome-pin-title"></h2>
                 <p id="pin-status" role="status"></p>
             </section>
 
             <section aria-labelledby="privacy-title">
-                <h2 id="privacy-title">What leaves your browser</h2>
-                <p>
-                    In this beta, each transaction you are asked to sign is sent to SignLens's API to be explained, with your addresses
-                    and those in your address book, so the explanation can say “you” and tell your contacts from lookalikes; their
-                    names stay in your browser. The server keeps verdicts and finding codes, not the transaction, unless you choose to
-                    send it with a rating. Lookup tables, accounts and a simulation are read from the RPC in the settings.
-                </p>
+                <h2 id="privacy-title" data-l10n-id="welcome-privacy-title"></h2>
+                <p data-l10n-id="welcome-privacy-text"></p>
             </section>
         </main>
 
         <footer>
-            <p class="note">All of this, and more, is in the settings in SignLens's popup.</p>
-            <button id="done" type="button" class="primary">Done</button>
+            <p class="note" data-l10n-id="welcome-more"></p>
+            <button id="done" type="button" class="primary" data-l10n-id="welcome-done"></button>
         </footer>
 
         <script type="module" src="ui/welcome.js"></script>
