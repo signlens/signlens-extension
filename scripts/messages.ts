@@ -6,9 +6,17 @@
 // locale's message needs an English one, and may use no argument,
 // attribute or named link the English does not. The catalog is committed,
 // and a test fails when it is out of date (src/shared/catalog.test.ts).
+//
+// A translation goes into the catalog only once it is reviewed: when
+// locales/<locale>.review.json (scripts/review.ts record) holds the digest
+// of its English as it is now. One whose English changed since is stale,
+// and one never reviewed a draft; both are left out, and the English shows
+// in their place. `--dev` writes a catalog with the drafts, to try them,
+// never to commit; `--complete` writes nothing and fails unless every
+// locale has every English message reviewed, as a release requires.
 
 import { spawnSync } from 'node:child_process';
-import { mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
@@ -27,6 +35,7 @@ import {
     VariableReference,
 } from '@fluent/syntax';
 import { MARKUP, type Part, type Pattern } from '../src/shared/fluent.ts';
+import { body, digest } from './review.ts';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const LOCALES = join(ROOT, 'locales');
@@ -46,11 +55,22 @@ interface Compiled {
     attributes: Record<string, Pattern>;
     args: Map<string, Kind>;
     names: Set<string>;
+    /** The message as Fluent text, which a review's digest is of. */
+    text: string;
+}
+
+/** How much of a locale is reviewed: of the English's messages, those reviewed and current, those whose English changed since, those never reviewed, and those not translated. */
+export interface Coverage {
+    messages: number;
+    reviewed: number;
+    stale: string[];
+    unreviewed: string[];
+    missing: string[];
 }
 
 /** Every message of `tag`, compiled, and what was wrong with its files. */
-function compileLocale(tag: string, problems: string[]): Map<string, Compiled> {
-    const dir = join(LOCALES, tag);
+function compileLocale(tag: string, problems: string[], locales = LOCALES): Map<string, Compiled> {
+    const dir = join(locales, tag);
     const messages = new Map<string, [Message, string]>();
     const terms = new Map<string, Term>();
     for (const file of readdirSync(dir)
@@ -68,7 +88,7 @@ function compileLocale(tag: string, problems: string[]): Map<string, Compiled> {
     }
     const out = new Map<string, Compiled>();
     for (const [id, [message, where]] of [...messages].sort(([a], [b]) => (a < b ? -1 : 1))) {
-        const compiled: Compiled = { attributes: {}, args: new Map(), names: new Set() };
+        const compiled: Compiled = { attributes: {}, args: new Map(), names: new Set(), text: body(message) };
         const at = `${where}: ${id}`;
         if (message.value) compiled.value = compilePattern(message.value, terms, compiled, at, problems);
         for (const attribute of message.attributes)
@@ -279,22 +299,47 @@ function entries(locale: Map<string, Compiled>): Record<string, { value?: Patter
 }
 
 /** The catalog's source, formatted as Biome formats it, and what was wrong with the messages. */
-export function generate(): { text: string; problems: string[]; messages: number; manifests: Record<string, string> } {
+export function generate(options: { dev?: boolean; locales?: string } = {}): {
+    text: string;
+    problems: string[];
+    messages: number;
+    manifests: Record<string, string>;
+    coverage: Record<string, Coverage>;
+    catalogs: Record<string, ReturnType<typeof entries>>;
+} {
+    const locales = options.locales ?? LOCALES;
     const problems: string[] = [];
-    const tags = readdirSync(LOCALES, { withFileTypes: true })
+    const tags = readdirSync(locales, { withFileTypes: true })
         .filter((d) => d.isDirectory())
         .map((d) => d.name)
         .sort();
-    const english = compileLocale(SOURCE, problems);
+    const english = compileLocale(SOURCE, problems, locales);
     const catalogs: Record<string, ReturnType<typeof entries>> = { [SOURCE]: entries(english), [PSEUDO]: entries(pseudoLocale(english)) };
     const manifests: Record<string, string> = {};
+    const coverage: Record<string, Coverage> = {};
     const englishManifest = manifestMessages(english, SOURCE, problems);
     if (englishManifest) manifests[browserFolder(SOURCE)] = englishManifest;
     for (const tag of tags.filter((t) => t !== SOURCE && t !== PSEUDO)) {
-        const locale = compileLocale(tag, problems);
+        const locale = compileLocale(tag, problems, locales);
         checkAgainst(tag, locale, english, problems);
-        catalogs[tag] = entries(locale);
-        const manifest = manifestMessages(locale, tag, problems);
+        const reviewFile = join(locales, `${tag}.review.json`);
+        const digests: Record<string, string> = existsSync(reviewFile)
+            ? ((JSON.parse(readFileSync(reviewFile, 'utf8')) as { digests?: Record<string, string> }).digests ?? {})
+            : {};
+        const shipped = new Map<string, Compiled>();
+        const covered: Coverage = { messages: english.size, reviewed: 0, stale: [], unreviewed: [], missing: [] };
+        for (const [id, source] of english) {
+            const message = locale.get(id);
+            if (!message) covered.missing.push(id);
+            else if (digests[id] === digest(source.text)) {
+                covered.reviewed++;
+                shipped.set(id, message);
+            } else (id in digests ? covered.stale : covered.unreviewed).push(id);
+            if (message && options.dev && !shipped.has(id)) shipped.set(id, message);
+        }
+        coverage[tag] = covered;
+        catalogs[tag] = entries(shipped);
+        const manifest = manifestMessages(shipped, tag, problems);
         if (manifest) manifests[browserFolder(tag)] = manifest;
     }
     const args = [...english]
@@ -324,19 +369,41 @@ export function generate(): { text: string; problems: string[]; messages: number
         encoding: 'utf8',
     });
     if (biome.status !== 0) problems.push(`biome could not format the catalog: ${biome.stderr}`);
-    return { text: biome.status === 0 ? biome.stdout : source, problems, messages: english.size, manifests };
+    return { text: biome.status === 0 ? biome.stdout : source, problems, messages: english.size, manifests, coverage, catalogs };
+}
+
+/** One line on how much of each locale is reviewed. */
+function covered(coverage: Record<string, Coverage>): string[] {
+    return Object.entries(coverage).map(
+        ([tag, c]) =>
+            `${tag}: ${c.reviewed} of ${c.messages} reviewed; ${c.unreviewed.length} drafted, not reviewed; ${c.stale.length} stale; ${c.missing.length} not translated`,
+    );
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
-    const { text, problems, messages, manifests } = generate();
+    const args = process.argv.slice(2);
+    const dev = args.includes('--dev');
+    const { text, problems, messages, manifests, coverage } = generate({ dev });
     if (problems.length > 0) {
         console.error(problems.join('\n'));
         process.exit(1);
+    }
+    if (args.includes('--complete')) {
+        const short = Object.entries(coverage).filter(([, c]) => c.reviewed < c.messages);
+        for (const line of covered(coverage)) console.error(line);
+        for (const [tag, c] of short)
+            console.error(
+                `${tag} is not reviewed in full: ${[...c.stale, ...c.unreviewed, ...c.missing].slice(0, 12).join(', ')}${c.messages - c.reviewed > 12 ? ', …' : ''}`,
+            );
+        process.exit(short.length > 0 ? 1 : 0);
     }
     writeFileSync(CATALOG, text);
     for (const [folder, json] of Object.entries(manifests)) {
         mkdirSync(join(BROWSER_LOCALES, folder), { recursive: true });
         writeFileSync(join(BROWSER_LOCALES, folder, 'messages.json'), json);
     }
-    console.error(`src/shared/catalog.ts: ${messages} English message(s)`);
+    console.error(
+        `src/shared/catalog.ts: ${messages} English message(s)${dev ? ', with every draft: a development catalog, not to commit' : ''}`,
+    );
+    for (const line of covered(coverage)) console.error(line);
 }

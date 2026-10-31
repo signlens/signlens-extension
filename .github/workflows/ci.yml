@@ -36,6 +36,9 @@ jobs:
       - run: npm ci
       - run: npm run check
       - run: npm test
+      # Said, never failed on: a release requires every language reviewed in full.
+      - name: How much of each language is reviewed
+        run: node scripts/messages.ts --complete || true
       - run: npm run build:firefox
 
   e2e:

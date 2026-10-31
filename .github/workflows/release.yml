@@ -50,6 +50,9 @@ jobs:
       - run: npm ci
       - run: npm run check
       - run: npm test
+      # No language ships with any of its interface in English: each is reviewed in full first.
+      - name: Every language of the interface is reviewed in full
+        run: node scripts/messages.ts --complete
       - run: npm run package
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:

@@ -168,6 +168,16 @@ the English and where the message shows. The reviewer marks each row in
 never by name, when, and a digest of each translated message's English as
 it was reviewed.
 
+A translation reaches the catalog only once it is reviewed, its English
+unchanged since: a draft, or one whose English changed (stale), is left
+out, and the English shows in its place. `npm run messages` says how much
+of each language is reviewed; `node scripts/messages.ts --dev` writes a
+catalog with the drafts, to try them, never to commit. A release ships no
+language with any of its interface in English: the release workflow runs
+`node scripts/messages.ts --complete`, which fails unless every English
+message is reviewed and current in every language. CI lists it, and does
+not fail on it.
+
 ## Layout
 
 `src/` is split by where the code runs, since each place has its own
