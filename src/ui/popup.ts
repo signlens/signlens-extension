@@ -18,8 +18,10 @@ import { local, onChange, session } from '../shared/store.ts';
 import { describe, methodName, short, withoutScheme } from '../shared/text.ts';
 import type { ApiStatus } from '../shared/types.ts';
 import { rowVerdictWord, summaryOf } from '../shared/verdict.ts';
+import { t } from '../shared/words.ts';
 import { access } from './access.ts';
 import { byId } from './dom.ts';
+import { localize, nodes } from './localize.ts';
 import { languages, noWalletHint, runsOn } from './pages.ts';
 import { element, renderRow } from './render.ts';
 import { yourAddresses } from './yours.ts';
@@ -35,6 +37,11 @@ function field(name: string): HTMLInputElement {
     return form.elements.namedItem(name) as HTMLInputElement;
 }
 
+/** `items` as a list in a sentence. */
+function listed(items: readonly (string | number)[]): string {
+    return items.join(t('popup-list-separator'));
+}
+
 /**
  * The wallets the dapp in the current tab has announced, as the choices
  * of the pass-through wallet. The saved choice stays listed even when the
@@ -45,7 +52,7 @@ async function showWallets(saved: string): Promise<void> {
     const hint = byId('upstream-hint');
     // The saved choice is in place before anything is awaited, so a save
     // meanwhile (any input in the form) keeps it rather than clearing it.
-    select.replaceChildren(new Option('First one found', ''), ...(saved ? [new Option(saved, saved)] : []));
+    select.replaceChildren(new Option(t('popup-upstream-first'), ''), ...(saved ? [new Option(saved, saved)] : []));
     select.value = saved;
     let tabId: number | undefined;
     let url: string | undefined;
@@ -78,16 +85,18 @@ async function showWallets(saved: string): Promise<void> {
     }
     const names = [...new Set([...found, ...(saved && !found.includes(saved) ? [saved] : [])])];
     select.replaceChildren(
-        new Option('First one found', ''),
-        ...names.map((name) => new Option(found.includes(name) ? name : `${name} (not on this page)`, name)),
+        new Option(t('popup-upstream-first'), ''),
+        ...names.map((name) => new Option(found.includes(name) ? name : t('popup-upstream-elsewhere', { wallet: name }), name)),
     );
     select.value = saved;
     if (select.value !== saved) select.value = '';
     if (found.length) {
-        hint.textContent = `Found on ${list ? withoutScheme(list.origin) : 'this page'}: ${found.join(', ')}.`;
+        hint.textContent = list
+            ? t('popup-upstream-found', { site: withoutScheme(list.origin), wallets: listed(found) })
+            : t('popup-upstream-found-here', { wallets: listed(found) });
     } else if (tabId === undefined) {
         // No tab to ask about: the latest page's list stood in, and there is no page to say anything of.
-        hint.textContent = 'No other wallet found. Open a dapp, then come back here.';
+        hint.textContent = t('popup-upstream-none');
     } else {
         hint.textContent = noWalletHint(url, running);
     }
@@ -128,7 +137,7 @@ function onTabKey(event: KeyboardEvent): void {
 function showUnseen(unseen: number): void {
     const count = byId('unseen');
     count.hidden = !unseen;
-    count.textContent = unseen ? `${unseen} new` : '';
+    count.textContent = unseen ? t('popup-unseen', { count: unseen }) : '';
 }
 
 function showModeFields(): void {
@@ -144,15 +153,12 @@ function showModeFields(): void {
 function checkAddress(): void {
     const address = field('address').value.trim();
     const badAddress = address !== '' && !addressBytes(address);
-    addressHint.textContent = badAddress ? 'Not a Solana address (base58 of 32 bytes).' : '';
+    addressHint.textContent = badAddress ? t('popup-address-bad') : '';
     field('address').setAttribute('aria-invalid', String(badAddress));
     const { bad, over } = parseContacts(field('contacts').value);
-    contactsHint.textContent = [
-        bad.length ? `Line${bad.length === 1 ? '' : 's'} ${bad.join(', ')} not read: expected Name = address.` : '',
-        over.length ? `Only the first ${MAX_CONTACTS} contacts are used; line${over.length === 1 ? '' : 's'} ${over.join(', ')} not.` : '',
-    ]
-        .filter(Boolean)
-        .join(' ');
+    const badLines = bad.length ? t('popup-contacts-bad', { count: bad.length, lines: listed(bad) }) : '';
+    const overLines = over.length ? t('popup-contacts-over', { count: over.length, lines: listed(over), max: MAX_CONTACTS }) : '';
+    contactsHint.textContent = badLines && overLines ? t('popup-contacts-both', { bad: badLines, over: overLines }) : badLines || overLines;
     field('contacts').setAttribute('aria-invalid', String(bad.length > 0));
 }
 
@@ -165,7 +171,7 @@ async function checkEngine(): Promise<void> {
     const { apiUrl } = await settings();
     if (check !== statusCheck) return;
     if (endpointProblem(apiUrl)) {
-        engineStatus.textContent = 'SignLens API not used: its address in the settings is not one SignLens may call.';
+        engineStatus.textContent = t('popup-engine-unsafe');
         engineStatus.className = 'status down';
         return;
     }
@@ -177,10 +183,15 @@ async function checkEngine(): Promise<void> {
     }
     if (check !== statusCheck) return;
     if ('error' in status) {
-        engineStatus.textContent = `SignLens API not reachable: ${status.error}`;
+        engineStatus.textContent = t('popup-engine-down', { error: status.error });
         engineStatus.className = 'status down';
     } else {
-        engineStatus.textContent = `SignLens API ready: engine ${status.engine}, ${status.programs} programs, ${status.tokens.toLocaleString()} verified tokens. ${languages(status.locales)}`;
+        engineStatus.textContent = t('popup-engine-ready', {
+            engine: status.engine,
+            programs: status.programs,
+            tokens: status.tokens,
+            languages: languages(status.locales),
+        });
         engineStatus.className = 'status up';
     }
 }
@@ -216,12 +227,9 @@ async function saved(write: Promise<void>): Promise<void> {
         await write;
         status.textContent = '';
     } catch (error) {
-        status.textContent = `Not saved: ${describe(error)}`;
+        status.textContent = t('popup-not-saved', { error: describe(error) });
     }
 }
-
-/** What each endpoint is, in the hint that says SignLens asks none. */
-const ENDPOINT_NAMES: Readonly<Record<(typeof ENDPOINTS)[number], string>> = { apiUrl: 'API', rpcUrl: 'RPC', tokenApiUrl: 'token list' };
 
 /**
  * Says what is wrong with endpoint `name`, and what SignLens uses instead:
@@ -230,11 +238,10 @@ const ENDPOINT_NAMES: Readonly<Record<(typeof ENDPOINTS)[number], string>> = { a
  * clears the field's hint.
  */
 function flagEndpoint(name: (typeof ENDPOINTS)[number], problem: string | null, kept?: string): void {
-    const instead =
-        kept !== undefined && !endpointProblem(kept)
-            ? `SignLens keeps using ${kept}.`
-            : `SignLens asks no ${ENDPOINT_NAMES[name]} until it is fixed.`;
-    byId(`${name}-hint`).textContent = problem ? `Not used: ${problem}. ${instead}` : '';
+    const hint = byId(`${name}-hint`);
+    if (!problem) hint.textContent = '';
+    else if (kept !== undefined && !endpointProblem(kept)) hint.textContent = t('popup-endpoint-kept', { problem, kept });
+    else hint.textContent = t('popup-endpoint-none', { problem, endpoint: name });
     field(name).setAttribute('aria-invalid', String(problem !== null));
 }
 
@@ -337,10 +344,10 @@ async function showSites(): Promise<void> {
                 const item = element('li');
                 const key = element('code', 'key', short(address));
                 key.title = address;
-                const take = element('button', 'small', 'Revoke');
+                const take = element('button', 'small', t('popup-revoke'));
                 take.type = 'button';
                 // One site may be allowed for several addresses: each button says which.
-                take.setAttribute('aria-label', `Revoke ${withoutScheme(origin)} for ${short(address)}`);
+                take.setAttribute('aria-label', t('popup-revoke-label', { site: withoutScheme(origin), address: short(address) }));
                 // The worker writes the approvals, in turn with a site being allowed meanwhile.
                 take.addEventListener(
                     'click',
@@ -348,11 +355,11 @@ async function showSites(): Promise<void> {
                         void done(
                             send({ type: 'revoke', origin, address }),
                             'save-status',
-                            `${withoutScheme(origin)} could not be revoked; try again.`,
+                            t('popup-revoke-failed', { site: withoutScheme(origin) }),
                         ),
                 );
                 item.append(element('span', 'site', withoutScheme(origin)), ' ', key, ' ');
-                if (address !== current) item.append(element('span', 'other-address', 'another address'), ' ');
+                if (address !== current) item.append(element('span', 'other-address', t('popup-other-address')), ' ');
                 item.append(take);
                 return item;
             },
@@ -385,12 +392,12 @@ function when(time: number): HTMLTimeElement {
 /** What became of a request, in a word or two: none for one that never got so far. */
 function became(entry: HistoryEntry, consent: boolean): string | null {
     if (!entry.decision) return null;
-    if (entry.refused) return 'refused';
-    if (consent) return entry.decision === 'continue' ? 'allowed' : 'denied';
+    if (entry.refused) return t('popup-decision-refused');
+    if (consent) return entry.decision === 'continue' ? t('popup-decision-allowed') : t('popup-decision-denied');
     // Watch-only mode passes nothing on, whatever the window said.
-    if (entry.mode === 'watch') return 'watch-only';
-    if (entry.decision === 'continue') return entry.unasked ? 'passed on, not asked' : 'passed on';
-    return 'rejected';
+    if (entry.mode === 'watch') return t('popup-decision-watch-only');
+    if (entry.decision === 'continue') return entry.unasked ? t('popup-decision-passed-on-unasked') : t('popup-decision-passed-on');
+    return t('popup-decision-rejected');
 }
 
 /** One row of the history: what came of it, where and when on one line, what it is under it, and the explanation when opened. */
@@ -401,7 +408,7 @@ function historyRow(entry: HistoryEntry, row: Row, part?: number): HTMLElement {
     const summary = element('summary');
     const head = element('div', 'row-line');
     // The parts are spaced by the layout for the eye, and by spaces for the screen reader, which reads the row as one line.
-    head.append(element('span', `verdict ${verdict}`, verdict), ' ');
+    head.append(element('span', `verdict ${verdict}`, consent ? t('popup-verdict-connect') : verdict), ' ');
     // What became of it sits by the verdict, where it cannot be cut off.
     const outcome = became(entry, consent);
     if (outcome) head.append(element('span', 'decision', outcome), ' ');
@@ -412,7 +419,7 @@ function historyRow(entry: HistoryEntry, row: Row, part?: number): HTMLElement {
     summary.append(head);
     // The one line that says what it is, under the where and when.
     summary.append(' ', element('div', 'lead', summaryOf(row)));
-    if (entry.refused) summary.append(' ', element('div', 'refused', `Refused by SignLens: ${entry.refused}`));
+    if (entry.refused) summary.append(' ', element('div', 'refused', t('popup-refused', { reason: entry.refused })));
     const details = element('details');
     details.append(
         summary,
@@ -470,6 +477,23 @@ function openSetup(): void {
     chrome.tabs.create({ url: chrome.runtime.getURL('welcome.html') }).catch(() => {});
 }
 
+/**
+ * Each choice's line as its message lays it out: the bold name, then the
+ * words that describe it, which keep their elements, since by their ids
+ * they name and describe the box.
+ */
+function layChoices(): void {
+    const lay = (name: string, more: string, line: (parts: { name: Node; more: Node }) => DocumentFragment): void => {
+        const named = byId(name);
+        const holder = named.parentElement;
+        holder?.replaceChildren(line({ name: named, more: byId(more) }));
+    };
+    lay('askFirst-name', 'askFirst-more', (parts) => nodes('popup-ask-first', parts));
+    lay('simulate-name', 'simulate-more', (parts) => nodes('popup-simulate', parts));
+    lay('accounts-name', 'accounts-more', (parts) => nodes('popup-accounts', parts));
+    lay('lookup-name', 'lookup-more', (parts) => nodes('popup-tokens', parts));
+}
+
 /** Whether an address was just added from the requests' own field: it says so there, until the popup closes. */
 let addedHere = false;
 
@@ -486,13 +510,15 @@ async function showSetup(): Promise<void> {
 }
 
 async function start(): Promise<void> {
+    localize();
+    layChoices();
     const config = await settings();
     yourAddresses(byId('my-addresses'));
     yourAddresses(byId('setup-add'), {
         list: false,
         onAdded: () => {
             addedHere = true;
-            byId('setup-ask').textContent = 'Added. SignLens calls it “you” from now on; your addresses are in the settings.';
+            byId('setup-ask').textContent = t('popup-setup-added');
             byId('setup-add').hidden = true;
             void showSetup();
         },
@@ -539,10 +565,7 @@ async function start(): Promise<void> {
         void checkPermissions();
         void checkEngine();
     });
-    byId('clear').addEventListener(
-        'click',
-        () => void done(send({ type: 'clear' }), 'clear-status', 'The requests could not be cleared; try again.'),
-    );
+    byId('clear').addEventListener('click', () => void done(send({ type: 'clear' }), 'clear-status', t('popup-clear-failed')));
     for (const tab of document.querySelectorAll<HTMLElement>('.tab')) {
         tab.addEventListener('click', () => showView(tab.dataset.view ?? 'requests', true));
         tab.addEventListener('keydown', onTabKey);

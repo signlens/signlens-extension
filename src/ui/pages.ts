@@ -5,6 +5,7 @@
 
 import type { Row } from '../shared/model.ts';
 import type { ApiStatus } from '../shared/types.ts';
+import { t } from '../shared/words.ts';
 
 /** Whether SignLens's scripts run on a page at `url`: https, or plain http on this machine. */
 export function runsOn(url: string | undefined): boolean {
@@ -19,11 +20,9 @@ export function runsOn(url: string | undefined): boolean {
  * has no other wallet.
  */
 export function noWalletHint(url: string | undefined, running: boolean): string {
-    if (!runsOn(url)) return 'SignLens does not run on this page. Open a dapp (an https page), then open this popup again.';
-    if (!running) {
-        return 'SignLens is not running in this tab yet. Reload the tab (needed once after installing or updating SignLens), then open this popup again.';
-    }
-    return 'No other wallet found in this tab. Open a dapp, then come back here.';
+    if (!runsOn(url)) return t('popup-no-wallet-elsewhere');
+    if (!running) return t('popup-no-wallet-reload');
+    return t('popup-no-wallet-page');
 }
 
 /**
@@ -33,13 +32,15 @@ export function noWalletHint(url: string | undefined, running: boolean): string 
  * decision 10).
  */
 export function languages(locales: ApiStatus['locales'], names = languageNames()): string {
-    if (locales.length === 0) return 'Explains in English.';
     const each = locales.map(({ locale, review }) => {
         const name = names(locale);
-        const state = review.kind === 'reviewed' ? `reviewed on ${review.on}` : 'not reviewed';
-        return `${name === locale ? locale : `${name} (${locale})`}, ${state}`;
+        return t('popup-language', {
+            language: name === locale ? locale : t('popup-language-named', { name, tag: locale }),
+            review: review.kind,
+            on: review.kind === 'reviewed' ? review.on : '',
+        });
     });
-    return `Explains in English, and in ${each.join('; ')}, when your browser asks for it.`;
+    return t('popup-languages', { count: locales.length, languages: each.join(t('popup-languages-separator')) });
 }
 
 /** A locale's name in the browser's language, or the tag where the browser has none. */

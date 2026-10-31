@@ -8,11 +8,17 @@
 import { addAddresses, MAX_OWN_KEYS, parseAddresses, removeAddress, settings } from '../shared/settings.ts';
 import { onChange } from '../shared/store.ts';
 import { describe, short } from '../shared/text.ts';
+import { t } from '../shared/words.ts';
 import { element } from './render.ts';
 
 /** A word that is not an address, as the status quotes it: cut short, since a paste can be anything. */
 function quoted(word: string): string {
     return word.length > 24 ? `${word.slice(0, 24)}…` : word;
+}
+
+/** `items` as a list in a sentence. */
+function listed(items: readonly string[]): string {
+    return items.join(t('yours-list-separator'));
 }
 
 /**
@@ -24,17 +30,17 @@ export function yourAddresses(
     { list = true, onAdded }: { list?: boolean; onAdded?: (added: string[]) => void } = {},
 ): void {
     const rows = element('ul', 'yours-list');
-    rows.setAttribute('aria-label', 'Your addresses');
+    rows.setAttribute('aria-label', t('yours-list-label'));
     rows.hidden = true;
-    const none = element('p', 'yours-none', 'None yet.');
+    const none = element('p', 'yours-none', t('yours-none'));
     const input = element('input', 'yours-input');
     input.type = 'text';
     input.spellcheck = false;
     input.autocomplete = 'off';
-    input.placeholder = 'Paste an address from your wallet';
-    input.setAttribute('aria-label', 'Add an address');
+    input.placeholder = t('yours-input-placeholder');
+    input.setAttribute('aria-label', t('yours-input-label'));
     // The filled button adds; Remove, which loses something, is in the blocked colour.
-    const add = element('button', 'primary yours-add', 'Add');
+    const add = element('button', 'primary yours-add', t('yours-add'));
     add.type = 'button';
     const adding = element('div', 'yours-field');
     adding.append(input, add);
@@ -58,9 +64,9 @@ export function yourAddresses(
         rows.replaceChildren(
             ...addresses.map((address) => {
                 const row = element('li', 'yours-row');
-                const remove = element('button', 'small danger', 'Remove');
+                const remove = element('button', 'small danger', t('yours-remove'));
                 remove.type = 'button';
-                remove.setAttribute('aria-label', `Remove ${address}`);
+                remove.setAttribute('aria-label', t('yours-remove-label', { address }));
                 remove.addEventListener('click', () => void take(address));
                 row.append(element('code', 'yours-address', address), remove);
                 return row;
@@ -68,10 +74,7 @@ export function yourAddresses(
         );
         none.hidden = addresses.length > 0;
         rows.hidden = addresses.length === 0;
-        limit.textContent =
-            addresses.length > MAX_OWN_KEYS
-                ? `A request carries ${MAX_OWN_KEYS} of these: those the site names, then the first in the list.`
-                : '';
+        limit.textContent = addresses.length > MAX_OWN_KEYS ? t('yours-limit', { max: MAX_OWN_KEYS }) : '';
     };
 
     /** Takes `address` out, and gives the focus to the row after it, or to the field. */
@@ -80,11 +83,11 @@ export function yourAddresses(
         try {
             await removeAddress(address);
         } catch (error) {
-            say(`Not removed: ${describe(error)}`, true);
+            say(t('yours-not-removed', { error: describe(error) }), true);
             return;
         }
         show(parseAddresses((await settings()).myAddresses).addresses);
-        say(`Removed ${short(address)}.`);
+        say(t('yours-removed', { address: short(address) }));
         (rows.querySelectorAll('button')[Math.min(at, shown.length - 1)] ?? input).focus();
     };
 
@@ -92,7 +95,7 @@ export function yourAddresses(
     const put = async () => {
         const words = input.value.split(/[\s,;]+/).filter(Boolean);
         if (words.length === 0) {
-            say('Paste an address first.', true);
+            say(t('yours-empty'), true);
             input.focus();
             return;
         }
@@ -103,14 +106,14 @@ export function yourAddresses(
         try {
             if (fresh.length > 0) await addAddresses(fresh);
         } catch (error) {
-            say(`Not added: ${describe(error)}`, true);
+            say(t('yours-not-added', { error: describe(error) }), true);
             return;
         }
         input.value = notAddresses.join(' ');
         input.setAttribute('aria-invalid', String(notAddresses.length > 0));
-        if (notAddresses.length > 0) say(`Not a Solana address: ${notAddresses.map(quoted).join(', ')}.`, true);
-        else if (fresh.length > 0) say(`Added ${fresh.map(short).join(', ')}.`);
-        else say('Already in your list.');
+        if (notAddresses.length > 0) say(t('yours-not-address', { words: listed(notAddresses.map(quoted)) }), true);
+        else if (fresh.length > 0) say(t('yours-added', { addresses: listed(fresh.map(short)) }));
+        else say(t('yours-already'));
         show(parseAddresses((await settings()).myAddresses).addresses);
         input.focus();
         if (fresh.length > 0) onAdded?.(fresh);

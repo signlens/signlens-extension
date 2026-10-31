@@ -7,31 +7,31 @@
     </head>
     <body>
         <header>
-            <h1>SignLens <span class="beta">beta</span></h1>
-            <p id="engine-status" class="status">Checking the SignLens API…</p>
+            <h1>SignLens <span class="beta" data-l10n-id="beta"></span></h1>
+            <p id="engine-status" class="status" data-l10n-id="popup-checking"></p>
             <p id="permissions" hidden>
-                This browser has not let the extension reach the API, the RPC and the token list yet.
-                <button id="allow" type="button" class="small">Allow https access</button>
+                <span data-l10n-id="popup-permissions"></span>
+                <button id="allow" type="button" class="small"></button>
             </p>
             <div id="setup" hidden>
-                <p id="setup-ask">Add the address your wallet shows, so SignLens need not ask which is yours.</p>
+                <p id="setup-ask" data-l10n-id="popup-setup-ask"></p>
                 <div id="setup-add"></div>
             </div>
         </header>
 
         <main>
-            <div class="tabs" role="tablist" aria-label="Views">
-                <button id="tab-requests" type="button" class="tab" role="tab" aria-controls="view-requests" data-view="requests"><span id="tab-requests-name">Requests</span> <span id="unseen" class="count" hidden></span></button>
-                <button id="tab-settings" type="button" class="tab" role="tab" aria-controls="view-settings" data-view="settings">Settings</button>
+            <div class="tabs" role="tablist" data-l10n-id="popup-views">
+                <button id="tab-requests" type="button" class="tab" role="tab" aria-controls="view-requests" data-view="requests"><span id="tab-requests-name" data-l10n-id="popup-tab-requests"></span> <span id="unseen" class="count" hidden></span></button>
+                <button id="tab-settings" type="button" class="tab" role="tab" aria-controls="view-settings" data-view="settings" data-l10n-id="popup-tab-settings"></button>
             </div>
 
             <section id="view-requests" class="view" role="tabpanel" aria-labelledby="tab-requests-name" hidden>
                 <div class="list-head">
-                    <h2 class="muted">Newest first</h2>
-                    <button id="clear" type="button" class="small" aria-label="Clear requests" hidden>Clear</button>
+                    <h2 class="muted" data-l10n-id="popup-newest-first"></h2>
+                    <button id="clear" type="button" class="small" data-l10n-id="popup-clear" hidden></button>
                 </div>
                 <p id="clear-status" class="save-status" role="status"></p>
-                <p id="empty" tabindex="-1">None yet. Connect “SignLens” in a dapp and start a transaction.</p>
+                <p id="empty" tabindex="-1" data-l10n-id="popup-empty"></p>
                 <ol id="history"></ol>
             </section>
 
@@ -39,91 +39,91 @@
                 <p id="save-status" class="save-status" role="status"></p>
                 <form id="settings" autocomplete="off">
                     <fieldset>
-                        <legend>After explaining a request</legend>
+                        <legend data-l10n-id="popup-mode-legend"></legend>
                         <label class="choice">
                             <input type="radio" name="mode" value="passthrough" />
-                            <span><strong>Pass it to your wallet</strong> to sign, unchanged</span>
+                            <span data-l10n-id="popup-mode-pass"></span>
                         </label>
                         <label class="choice">
                             <input type="radio" name="mode" value="watch" />
-                            <span><strong>Refuse it</strong> (watch-only, no keys involved)</span>
+                            <span data-l10n-id="popup-mode-watch"></span>
                         </label>
                     </fieldset>
 
                     <div id="upstream-field" class="field">
-                        <label for="upstream">Wallet to pass requests to</label>
+                        <label for="upstream" data-l10n-id="popup-upstream-label"></label>
                         <select id="upstream" name="upstream" aria-describedby="upstream-hint">
-                            <option value="">First one found</option>
+                            <option value="" data-l10n-id="popup-upstream-first"></option>
                         </select>
                         <small id="upstream-hint" class="note"></small>
                     </div>
 
                     <div id="my-addresses-field" class="field">
-                        <p class="field-title">Your addresses</p>
+                        <p class="field-title" data-l10n-id="popup-yours-title"></p>
                         <div id="my-addresses"></div>
-                        <small id="myAddresses-note" class="note">The only addresses SignLens calls “you”. When a site names another as yours, SignLens asks before explaining anything, or, with “Show the explanation and ask first” off, refuses it; copy them from your wallet.</small>
+                        <small id="myAddresses-note" class="note" data-l10n-id="popup-yours-note"></small>
                     </div>
 
                     <div id="address-field" class="field">
-                        <label for="address">Address to connect as</label>
-                        <input id="address" type="text" name="address" aria-describedby="address-hint" spellcheck="false" placeholder="Any Solana address" />
+                        <label for="address" data-l10n-id="popup-address-label"></label>
+                        <input id="address" type="text" name="address" aria-describedby="address-hint" spellcheck="false" data-l10n-id="popup-address-field" />
                         <small id="address-hint"></small>
                     </div>
 
                     <div id="sites-field">
-                        <p id="sites-title" class="field-title">Sites that may see it</p>
+                        <p id="sites-title" class="field-title" data-l10n-id="popup-sites-title"></p>
                         <ul id="sites" aria-labelledby="sites-title"></ul>
-                        <small id="sites-empty" class="note" tabindex="-1">None yet: a site asks the first time it connects.</small>
+                        <small id="sites-empty" class="note" tabindex="-1" data-l10n-id="popup-sites-empty"></small>
                     </div>
 
-                    <!-- A choice is named by its bold words; the rest of its line describes it. -->
+                    <!-- A choice is named by its bold words; the rest of its line describes it. popup.ts lays the two out as the line's message orders them. -->
                     <label class="choice">
                         <input type="checkbox" name="askFirst" aria-labelledby="askFirst-name" aria-describedby="askFirst-more" />
-                        <span><strong id="askFirst-name">Show the explanation and ask first</strong>, <span id="askFirst-more">before refusing or passing a request on; when off, in pass-through mode a request SignLens would refuse (blocked, or an error) still waits for you before it goes on to your wallet</span></span>
+                        <span><strong id="askFirst-name" data-l10n-id="popup-ask-first-name"></strong><span id="askFirst-more" data-l10n-id="popup-ask-first-more"></span></span>
                     </label>
 
                     <div class="field">
-                        <label for="contacts">Address book, one <code>Name = address</code> per line</label>
-                        <textarea id="contacts" name="contacts" aria-describedby="contacts-hint" rows="3" spellcheck="false" placeholder="Bob = 7s3s…"></textarea>
+                        <label for="contacts" data-l10n-id="popup-contacts-label"></label>
+                        <textarea id="contacts" name="contacts" aria-describedby="contacts-hint" rows="3" spellcheck="false" data-l10n-id="popup-contacts-field"></textarea>
                         <small id="contacts-hint"></small>
                     </div>
 
                     <div class="field">
-                        <label for="apiUrl">SignLens API</label>
+                        <label for="apiUrl" data-l10n-id="popup-api-label"></label>
                         <input id="apiUrl" type="text" name="apiUrl" aria-describedby="apiUrl-hint apiUrl-note" spellcheck="false" />
                         <small id="apiUrl-hint"></small>
-                        <small id="apiUrl-note" class="note">Beta: every transaction you are asked to sign is sent here to be explained, with your addresses and those in your address book, so the explanation can say “you” and tell your contacts from lookalikes; their names stay in your browser. The server keeps verdicts and finding codes, not the bytes; the transaction is kept only when you tick “Send this transaction to SignLens so it can be looked into” under its explanation.</small>
+                        <small id="apiUrl-note" class="note" data-l10n-id="popup-api-note"></small>
                     </div>
 
                     <div class="field">
-                        <label for="rpcUrl">RPC for lookup tables, accounts, mints and simulation</label>
+                        <label for="rpcUrl" data-l10n-id="popup-rpc-label"></label>
                         <input id="rpcUrl" type="text" name="rpcUrl" aria-describedby="rpcUrl-hint" spellcheck="false" />
                         <small id="rpcUrl-hint"></small>
                     </div>
 
                     <label class="choice">
                         <input type="checkbox" name="simulate" aria-labelledby="simulate-name" aria-describedby="simulate-more" />
-                        <span><strong id="simulate-name">Simulate over the RPC</strong> <span id="simulate-more">and hold the balance changes against the explanation, as an unverified claim; sends the whole transaction to the RPC</span></span>
+                        <span><strong id="simulate-name" data-l10n-id="popup-simulate-name"></strong><span id="simulate-more" data-l10n-id="popup-simulate-more"></span></span>
                     </label>
 
                     <label class="choice">
                         <input type="checkbox" name="lookupAccounts" aria-labelledby="accounts-name" aria-describedby="accounts-more" />
-                        <span><strong id="accounts-name">Read the accounts an explanation needs</strong> <span id="accounts-more">such as a multisig proposal's stored transaction or a DAO proposal's options, from the RPC, as unverified claims; sends their addresses to the RPC</span></span>
+                        <span><strong id="accounts-name" data-l10n-id="popup-accounts-name"></strong><span id="accounts-more" data-l10n-id="popup-accounts-more"></span></span>
                     </label>
 
                     <label class="choice">
                         <input type="checkbox" name="lookupTokens" aria-labelledby="lookup-name" aria-describedby="lookup-more" />
-                        <span><strong id="lookup-name">Name unlisted tokens</strong> <span id="lookup-more">from the RPC's mint accounts and the token list below, as unverified claims</span></span>
+                        <span><strong id="lookup-name" data-l10n-id="popup-tokens-name"></strong><span id="lookup-more" data-l10n-id="popup-tokens-more"></span></span>
                     </label>
 
                     <div id="token-api-field" class="field">
-                        <label for="tokenApiUrl">Token list (symbols)</label>
+                        <label for="tokenApiUrl" data-l10n-id="popup-token-list-label"></label>
                         <input id="tokenApiUrl" type="text" name="tokenApiUrl" aria-describedby="tokenApiUrl-hint tokenApiUrl-note" spellcheck="false" />
                         <small id="tokenApiUrl-hint"></small>
-                        <small id="tokenApiUrl-note" class="note">The mints of unlisted tokens are sent to the RPC and to this list.</small>
+                        <small id="tokenApiUrl-note" class="note" data-l10n-id="popup-token-list-note"></small>
                     </div>
                 </form>
-                <p class="setup-again"><button id="setup-again" type="button" class="small">Open the setup page</button></p>
+                <p class="setup-again"><button id="setup-again" type="button" class="small" data-l10n-id="popup-setup-again"></button></p>
             </section>
         </main>
 

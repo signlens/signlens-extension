@@ -5,6 +5,8 @@ import type { Catalog, Value } from './fluent.ts';
 
 /** Each message's arguments, by its identifier. */
 export interface Args {
+    readonly 'access-allow': undefined;
+    readonly 'access-allow-local': undefined;
     readonly 'address-add': undefined;
     readonly 'address-claimed-intro': undefined;
     readonly 'address-heading': undefined;
@@ -26,6 +28,84 @@ export interface Args {
     readonly 'connect-question': undefined;
     readonly 'connect-where': { readonly origin: Value };
     readonly 'connect-window-title': { readonly site: Value };
+    readonly 'popup-accounts': { readonly more: Value; readonly name: Value };
+    readonly 'popup-accounts-more': undefined;
+    readonly 'popup-accounts-name': undefined;
+    readonly 'popup-address-bad': undefined;
+    readonly 'popup-address-field': undefined;
+    readonly 'popup-address-label': undefined;
+    readonly 'popup-api-label': undefined;
+    readonly 'popup-api-note': undefined;
+    readonly 'popup-ask-first': { readonly more: Value; readonly name: Value };
+    readonly 'popup-ask-first-more': undefined;
+    readonly 'popup-ask-first-name': undefined;
+    readonly 'popup-checking': undefined;
+    readonly 'popup-clear': undefined;
+    readonly 'popup-clear-failed': undefined;
+    readonly 'popup-contacts-bad': { readonly count: number; readonly lines: Value };
+    readonly 'popup-contacts-both': { readonly bad: Value; readonly over: Value };
+    readonly 'popup-contacts-field': undefined;
+    readonly 'popup-contacts-label': undefined;
+    readonly 'popup-contacts-over': { readonly count: number; readonly lines: Value; readonly max: Value };
+    readonly 'popup-decision-allowed': undefined;
+    readonly 'popup-decision-denied': undefined;
+    readonly 'popup-decision-passed-on': undefined;
+    readonly 'popup-decision-passed-on-unasked': undefined;
+    readonly 'popup-decision-refused': undefined;
+    readonly 'popup-decision-rejected': undefined;
+    readonly 'popup-decision-watch-only': undefined;
+    readonly 'popup-empty': undefined;
+    readonly 'popup-endpoint-kept': { readonly kept: Value; readonly problem: Value };
+    readonly 'popup-endpoint-none': { readonly endpoint: Value; readonly problem: Value };
+    readonly 'popup-engine-down': { readonly error: Value };
+    readonly 'popup-engine-ready': { readonly engine: Value; readonly languages: Value; readonly programs: Value; readonly tokens: Value };
+    readonly 'popup-engine-unsafe': undefined;
+    readonly 'popup-language': { readonly language: Value; readonly on: Value; readonly review: Value };
+    readonly 'popup-language-named': { readonly name: Value; readonly tag: Value };
+    readonly 'popup-languages': { readonly count: number; readonly languages: Value };
+    readonly 'popup-languages-separator': undefined;
+    readonly 'popup-list-separator': undefined;
+    readonly 'popup-mode-legend': undefined;
+    readonly 'popup-mode-pass': undefined;
+    readonly 'popup-mode-watch': undefined;
+    readonly 'popup-newest-first': undefined;
+    readonly 'popup-no-wallet-elsewhere': undefined;
+    readonly 'popup-no-wallet-page': undefined;
+    readonly 'popup-no-wallet-reload': undefined;
+    readonly 'popup-not-saved': { readonly error: Value };
+    readonly 'popup-other-address': undefined;
+    readonly 'popup-permissions': undefined;
+    readonly 'popup-refused': { readonly reason: Value };
+    readonly 'popup-revoke': undefined;
+    readonly 'popup-revoke-failed': { readonly site: Value };
+    readonly 'popup-revoke-label': { readonly address: Value; readonly site: Value };
+    readonly 'popup-rpc-label': undefined;
+    readonly 'popup-setup-added': undefined;
+    readonly 'popup-setup-again': undefined;
+    readonly 'popup-setup-ask': undefined;
+    readonly 'popup-simulate': { readonly more: Value; readonly name: Value };
+    readonly 'popup-simulate-more': undefined;
+    readonly 'popup-simulate-name': undefined;
+    readonly 'popup-sites-empty': undefined;
+    readonly 'popup-sites-title': undefined;
+    readonly 'popup-tab-requests': undefined;
+    readonly 'popup-tab-settings': undefined;
+    readonly 'popup-token-list-label': undefined;
+    readonly 'popup-token-list-note': undefined;
+    readonly 'popup-tokens': { readonly more: Value; readonly name: Value };
+    readonly 'popup-tokens-more': undefined;
+    readonly 'popup-tokens-name': undefined;
+    readonly 'popup-unseen': { readonly count: Value };
+    readonly 'popup-upstream-elsewhere': { readonly wallet: Value };
+    readonly 'popup-upstream-first': undefined;
+    readonly 'popup-upstream-found': { readonly site: Value; readonly wallets: Value };
+    readonly 'popup-upstream-found-here': { readonly wallets: Value };
+    readonly 'popup-upstream-label': undefined;
+    readonly 'popup-upstream-none': undefined;
+    readonly 'popup-verdict-connect': undefined;
+    readonly 'popup-views': undefined;
+    readonly 'popup-yours-note': undefined;
+    readonly 'popup-yours-title': undefined;
     readonly 'verdict-address': { readonly addresses: Value };
     readonly 'verdict-consent': { readonly address: Value };
     readonly 'verdict-list-separator': undefined;
@@ -110,11 +190,29 @@ export interface Args {
     readonly 'worker-tx-trailing': undefined;
     readonly 'worker-tx-truncated': undefined;
     readonly 'worker-tx-version': { readonly version: Value };
+    readonly 'yours-add': undefined;
+    readonly 'yours-added': { readonly addresses: Value };
+    readonly 'yours-already': undefined;
+    readonly 'yours-empty': undefined;
+    readonly 'yours-input-label': undefined;
+    readonly 'yours-input-placeholder': undefined;
+    readonly 'yours-limit': { readonly max: Value };
+    readonly 'yours-list-label': undefined;
+    readonly 'yours-list-separator': undefined;
+    readonly 'yours-none': undefined;
+    readonly 'yours-not-added': { readonly error: Value };
+    readonly 'yours-not-address': { readonly words: Value };
+    readonly 'yours-not-removed': { readonly error: Value };
+    readonly 'yours-remove': undefined;
+    readonly 'yours-remove-label': { readonly address: Value };
+    readonly 'yours-removed': { readonly address: Value };
 }
 
 /** The messages of each locale, English the source. */
 export const CATALOGS: Readonly<Record<string, Catalog>> = {
     en: {
+        'access-allow': { value: ['Allow https access'] },
+        'access-allow-local': { value: ['Allow https and local access'] },
         'address-add': { value: ["It's mine, add it"] },
         'address-claimed-intro': { value: ['The page says the wallet that signs this request has the address:'] },
         'address-heading': { value: ['Is this address yours?'] },
@@ -148,6 +246,175 @@ export const CATALOGS: Readonly<Record<string, Catalog>> = {
         'connect-question': { value: ['Let this site see the address?'] },
         'connect-where': { value: [{ arg: 'origin' }, ' wants to see the address SignLens watches'] },
         'connect-window-title': { value: [{ arg: 'site' }, ' asks to see the watched address · SignLens'] },
+        'popup-accounts': { value: [{ arg: 'name' }, ' ', { arg: 'more' }] },
+        'popup-accounts-more': {
+            value: [
+                "such as a multisig proposal's stored transaction or a DAO proposal's options, from the RPC, as unverified claims; sends their addresses to the RPC",
+            ],
+        },
+        'popup-accounts-name': { value: ['Read the accounts an explanation needs'] },
+        'popup-address-bad': { value: ['Not a Solana address (base58 of 32 bytes).'] },
+        'popup-address-field': { attributes: { placeholder: ['Any Solana address'] } },
+        'popup-address-label': { value: ['Address to connect as'] },
+        'popup-api-label': { value: ['SignLens API'] },
+        'popup-api-note': {
+            value: [
+                'Beta: every transaction you are asked to sign is sent here to be explained, with your addresses and those in your address book, so the explanation can say “you” and tell your contacts from lookalikes; their names stay in your browser. The server keeps verdicts and finding codes, not the bytes; the transaction is kept only when you tick “Send this transaction to SignLens so it can be looked into” under its explanation.',
+            ],
+        },
+        'popup-ask-first': { value: [{ arg: 'name' }, ', ', { arg: 'more' }] },
+        'popup-ask-first-more': {
+            value: [
+                'before refusing or passing a request on; when off, in pass-through mode a request SignLens would refuse (blocked, or an error) still waits for you before it goes on to your wallet',
+            ],
+        },
+        'popup-ask-first-name': { value: ['Show the explanation and ask first'] },
+        'popup-checking': { value: ['Checking the SignLens API…'] },
+        'popup-clear': { value: ['Clear'], attributes: { 'aria-label': ['Clear requests'] } },
+        'popup-clear-failed': { value: ['The requests could not be cleared; try again.'] },
+        'popup-contacts-bad': {
+            value: [
+                {
+                    select: 'count',
+                    cases: {
+                        one: ['Line ', { arg: 'lines' }, ' not read: expected Name = address.'],
+                        other: ['Lines ', { arg: 'lines' }, ' not read: expected Name = address.'],
+                    },
+                    other: 'other',
+                },
+            ],
+        },
+        'popup-contacts-both': { value: [{ arg: 'bad' }, ' ', { arg: 'over' }] },
+        'popup-contacts-field': { attributes: { placeholder: ['Bob = 7s3s…'] } },
+        'popup-contacts-label': { value: ['Address book, one <code>Name = address</code> per line'] },
+        'popup-contacts-over': {
+            value: [
+                {
+                    select: 'count',
+                    cases: {
+                        one: ['Only the first ', { arg: 'max' }, ' contacts are used; line ', { arg: 'lines' }, ' not.'],
+                        other: ['Only the first ', { arg: 'max' }, ' contacts are used; lines ', { arg: 'lines' }, ' not.'],
+                    },
+                    other: 'other',
+                },
+            ],
+        },
+        'popup-decision-allowed': { value: ['allowed'] },
+        'popup-decision-denied': { value: ['denied'] },
+        'popup-decision-passed-on': { value: ['passed on'] },
+        'popup-decision-passed-on-unasked': { value: ['passed on, not asked'] },
+        'popup-decision-refused': { value: ['refused'] },
+        'popup-decision-rejected': { value: ['rejected'] },
+        'popup-decision-watch-only': { value: ['watch-only'] },
+        'popup-empty': { value: ['None yet. Connect “SignLens” in a dapp and start a transaction.'] },
+        'popup-endpoint-kept': { value: ['Not used: ', { arg: 'problem' }, '. SignLens keeps using ', { arg: 'kept' }, '.'] },
+        'popup-endpoint-none': {
+            value: [
+                {
+                    select: 'endpoint',
+                    cases: {
+                        apiUrl: ['Not used: ', { arg: 'problem' }, '. SignLens asks no API until it is fixed.'],
+                        rpcUrl: ['Not used: ', { arg: 'problem' }, '. SignLens asks no RPC until it is fixed.'],
+                        tokenApiUrl: ['Not used: ', { arg: 'problem' }, '. SignLens asks no token list until it is fixed.'],
+                    },
+                    other: 'tokenApiUrl',
+                },
+            ],
+        },
+        'popup-engine-down': { value: ['SignLens API not reachable: ', { arg: 'error' }] },
+        'popup-engine-ready': {
+            value: [
+                'SignLens API ready: engine ',
+                { arg: 'engine' },
+                ', ',
+                { arg: 'programs' },
+                ' programs, ',
+                { arg: 'tokens' },
+                ' verified tokens. ',
+                { arg: 'languages' },
+            ],
+        },
+        'popup-engine-unsafe': { value: ['SignLens API not used: its address in the settings is not one SignLens may call.'] },
+        'popup-language': {
+            value: [
+                {
+                    select: 'review',
+                    cases: {
+                        reviewed: [{ arg: 'language' }, ', reviewed on ', { arg: 'on' }],
+                        other: [{ arg: 'language' }, ', not reviewed'],
+                    },
+                    other: 'other',
+                },
+            ],
+        },
+        'popup-language-named': { value: [{ arg: 'name' }, ' (', { arg: 'tag' }, ')'] },
+        'popup-languages': {
+            value: [
+                {
+                    select: 'count',
+                    cases: {
+                        '0': ['Explains in English.'],
+                        other: ['Explains in English, and in ', { arg: 'languages' }, ', when your browser asks for it.'],
+                    },
+                    other: 'other',
+                },
+            ],
+        },
+        'popup-languages-separator': { value: ['; '] },
+        'popup-list-separator': { value: [', '] },
+        'popup-mode-legend': { value: ['After explaining a request'] },
+        'popup-mode-pass': { value: ['<strong>Pass it to your wallet</strong> to sign, unchanged'] },
+        'popup-mode-watch': { value: ['<strong>Refuse it</strong> (watch-only, no keys involved)'] },
+        'popup-newest-first': { value: ['Newest first'] },
+        'popup-no-wallet-elsewhere': {
+            value: ['SignLens does not run on this page. Open a dapp (an https page), then open this popup again.'],
+        },
+        'popup-no-wallet-page': { value: ['No other wallet found in this tab. Open a dapp, then come back here.'] },
+        'popup-no-wallet-reload': {
+            value: [
+                'SignLens is not running in this tab yet. Reload the tab (needed once after installing or updating SignLens), then open this popup again.',
+            ],
+        },
+        'popup-not-saved': { value: ['Not saved: ', { arg: 'error' }] },
+        'popup-other-address': { value: ['another address'] },
+        'popup-permissions': { value: ['This browser has not let the extension reach the API, the RPC and the token list yet.'] },
+        'popup-refused': { value: ['Refused by SignLens: ', { arg: 'reason' }] },
+        'popup-revoke': { value: ['Revoke'] },
+        'popup-revoke-failed': { value: [{ arg: 'site' }, ' could not be revoked; try again.'] },
+        'popup-revoke-label': { value: ['Revoke ', { arg: 'site' }, ' for ', { arg: 'address' }] },
+        'popup-rpc-label': { value: ['RPC for lookup tables, accounts, mints and simulation'] },
+        'popup-setup-added': { value: ['Added. SignLens calls it “you” from now on; your addresses are in the settings.'] },
+        'popup-setup-again': { value: ['Open the setup page'] },
+        'popup-setup-ask': { value: ['Add the address your wallet shows, so SignLens need not ask which is yours.'] },
+        'popup-simulate': { value: [{ arg: 'name' }, ' ', { arg: 'more' }] },
+        'popup-simulate-more': {
+            value: ['and hold the balance changes against the explanation, as an unverified claim; sends the whole transaction to the RPC'],
+        },
+        'popup-simulate-name': { value: ['Simulate over the RPC'] },
+        'popup-sites-empty': { value: ['None yet: a site asks the first time it connects.'] },
+        'popup-sites-title': { value: ['Sites that may see it'] },
+        'popup-tab-requests': { value: ['Requests'] },
+        'popup-tab-settings': { value: ['Settings'] },
+        'popup-token-list-label': { value: ['Token list (symbols)'] },
+        'popup-token-list-note': { value: ['The mints of unlisted tokens are sent to the RPC and to this list.'] },
+        'popup-tokens': { value: [{ arg: 'name' }, ' ', { arg: 'more' }] },
+        'popup-tokens-more': { value: ["from the RPC's mint accounts and the token list below, as unverified claims"] },
+        'popup-tokens-name': { value: ['Name unlisted tokens'] },
+        'popup-unseen': { value: [{ arg: 'count' }, ' new'] },
+        'popup-upstream-elsewhere': { value: [{ arg: 'wallet' }, ' (not on this page)'] },
+        'popup-upstream-first': { value: ['First one found'] },
+        'popup-upstream-found': { value: ['Found on ', { arg: 'site' }, ': ', { arg: 'wallets' }, '.'] },
+        'popup-upstream-found-here': { value: ['Found on this page: ', { arg: 'wallets' }, '.'] },
+        'popup-upstream-label': { value: ['Wallet to pass requests to'] },
+        'popup-upstream-none': { value: ['No other wallet found. Open a dapp, then come back here.'] },
+        'popup-verdict-connect': { value: ['connect'] },
+        'popup-views': { attributes: { 'aria-label': ['Views'] } },
+        'popup-yours-note': {
+            value: [
+                'The only addresses SignLens calls “you”. When a site names another as yours, SignLens asks before explaining anything, or, with “Show the explanation and ask first” off, refuses it; copy them from your wallet.',
+            ],
+        },
+        'popup-yours-title': { value: ['Your addresses'] },
         'verdict-address': { value: ['Named ', { arg: 'addresses' }, ' as your address, which is not one of yours in SignLens'] },
         'verdict-consent': { value: ['Asked to see the watched address ', { arg: 'address' }] },
         'verdict-list-separator': { value: [', '] },
@@ -326,5 +593,21 @@ export const CATALOGS: Readonly<Record<string, Catalog>> = {
         'worker-tx-trailing': { value: ['transaction has trailing bytes'] },
         'worker-tx-truncated': { value: ['transaction is truncated'] },
         'worker-tx-version': { value: ['unsupported message version ', { arg: 'version' }] },
+        'yours-add': { value: ['Add'] },
+        'yours-added': { value: ['Added ', { arg: 'addresses' }, '.'] },
+        'yours-already': { value: ['Already in your list.'] },
+        'yours-empty': { value: ['Paste an address first.'] },
+        'yours-input-label': { value: ['Add an address'] },
+        'yours-input-placeholder': { value: ['Paste an address from your wallet'] },
+        'yours-limit': { value: ['A request carries ', { arg: 'max' }, ' of these: those the site names, then the first in the list.'] },
+        'yours-list-label': { value: ['Your addresses'] },
+        'yours-list-separator': { value: [', '] },
+        'yours-none': { value: ['None yet.'] },
+        'yours-not-added': { value: ['Not added: ', { arg: 'error' }] },
+        'yours-not-address': { value: ['Not a Solana address: ', { arg: 'words' }, '.'] },
+        'yours-not-removed': { value: ['Not removed: ', { arg: 'error' }] },
+        'yours-remove': { value: ['Remove'] },
+        'yours-remove-label': { value: ['Remove ', { arg: 'address' }] },
+        'yours-removed': { value: ['Removed ', { arg: 'address' }, '.'] },
     },
 };

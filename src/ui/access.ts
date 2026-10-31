@@ -6,6 +6,7 @@
 
 import { hostsNeeded } from '../shared/endpoint.ts';
 import { ENDPOINTS, settings } from '../shared/settings.ts';
+import { t } from '../shared/words.ts';
 
 /** The origins the settings need, what the button that asks for them says, and whether the browser grants them. */
 export async function access(): Promise<{ hosts: { origins: string[] }; label: string; granted: boolean }> {
@@ -17,5 +18,5 @@ export async function access(): Promise<{ hosts: { origins: string[] }; label: s
     } catch {
         // No permissions API: nothing to ask for.
     }
-    return { hosts, label: hosts.origins.length > 1 ? 'Allow https and local access' : 'Allow https access', granted };
+    return { hosts, label: hosts.origins.length > 1 ? t('access-allow-local') : t('access-allow'), granted };
 }
