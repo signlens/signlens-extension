@@ -17,7 +17,7 @@
 // locale has every English message reviewed, as a release requires.
 
 import { spawnSync } from 'node:child_process';
-import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
@@ -462,6 +462,9 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
         mkdirSync(join(BROWSER_LOCALES, folder), { recursive: true });
         writeFileSync(join(BROWSER_LOCALES, folder, 'messages.json'), json);
     }
+    // A language no longer written (a draft written under --dev, say) leaves the folder.
+    for (const folder of existsSync(BROWSER_LOCALES) ? readdirSync(BROWSER_LOCALES) : [])
+        if (!(folder in manifests)) rmSync(join(BROWSER_LOCALES, folder), { recursive: true });
     console.error(
         `src/shared/catalog.ts: ${messages} English message(s)${dev ? ', with every draft: a development catalog, not to commit' : ''}`,
     );
