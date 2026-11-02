@@ -40,10 +40,10 @@ release's zip, whose SHA-256 the release states.
 | Field | Value |
 |---|---|
 | Name | SignLens (beta), the manifest's (`locales/en/manifest.ftl`) |
-| Add-on URL | `signlens` |
+| Add-on URL | `signlens-beta`: <https://addons.mozilla.org/firefox/addon/signlens-beta/> |
 | Summary | the manifest's description, below |
 | Categories | Privacy & Security |
-| Tags | solana, wallet, crypto, security, phishing, web3 |
+| Tags | security; anti malware too, if wanted, for the drainers it blocks. AMO offers a fixed list, without solana, wallet, crypto or web3, and privacy is left off: SignLens sends each transaction to its server, where a privacy add-on is expected to send less |
 | Homepage | <https://signlens.dev> |
 | Support email | support@signlens.dev |
 | Support site | <https://github.com/signlens/signlens-extension/issues> |
