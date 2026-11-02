@@ -7,6 +7,7 @@
 // none, and the connect is refused.
 
 import type { Decision, WalletChoice } from '../shared/model.ts';
+import { followChosenLanguage } from '../shared/settings.ts';
 import { getPending, local } from '../shared/store.ts';
 import { describe, withoutScheme } from '../shared/text.ts';
 import { t } from '../shared/words.ts';
@@ -52,6 +53,7 @@ async function choose(name: string): Promise<void> {
 }
 
 async function start(): Promise<void> {
+    await followChosenLanguage();
     localize();
     const request = await getPending('wallet.html', requestId);
     byId('reject').addEventListener('click', () => decide('reject'));

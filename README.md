@@ -184,6 +184,12 @@ settings: one row each, in full, with Remove, and a field that adds only
 a Solana address. While pass-through mode has none, the popup's requests
 ask for one inline; its settings open the setup page again.
 
+SignLens is in English and Simplified Chinese, its own words and its
+explanations alike: in the first of your browser's languages it has, or
+in the one chosen under Language, at the top of the setup page and of
+the popup's settings. A browser that asks for Traditional Chinese gets
+English unless Simplified Chinese is chosen there.
+
 In a dapp, connect "SignLens". It connects through your wallet and
 passes every request on to it after explaining it. Until you have chosen
 one, a page with a single wallet gets that one; a page with several asks,

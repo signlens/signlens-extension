@@ -5,6 +5,7 @@
 // request goes on to be explained.
 
 import type { Decision } from '../shared/model.ts';
+import { followChosenLanguage } from '../shared/settings.ts';
 import { getPending } from '../shared/store.ts';
 import { withoutScheme } from '../shared/text.ts';
 import { t } from '../shared/words.ts';
@@ -32,6 +33,7 @@ function decide(decision: Decision): void {
 }
 
 async function start(): Promise<void> {
+    await followChosenLanguage();
     localize();
     const request = await getPending('address.html', requestId);
     byId('reject').addEventListener('click', () => decide('reject'));

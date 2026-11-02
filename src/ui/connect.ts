@@ -4,6 +4,7 @@
 // denies too.
 
 import type { Decision } from '../shared/model.ts';
+import { followChosenLanguage } from '../shared/settings.ts';
 import { getPending } from '../shared/store.ts';
 import { withoutScheme } from '../shared/text.ts';
 import { t } from '../shared/words.ts';
@@ -18,6 +19,7 @@ function decide(decision: Decision): void {
 }
 
 async function start(): Promise<void> {
+    await followChosenLanguage();
     localize();
     const request = await getPending('connect.html', requestId);
     byId('deny').addEventListener('click', () => decide('reject'));

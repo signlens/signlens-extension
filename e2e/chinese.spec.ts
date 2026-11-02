@@ -6,13 +6,11 @@
 import type { BrowserContext, Page } from '@playwright/test';
 import { fixture } from '../test/server.ts';
 import { clickToClose, expect, liveGate, test } from './support/extension.ts';
-import { eachPage, englishLeft } from './support/words.ts';
+import { CHINESE, carriesChinese, eachPage, englishLeft } from './support/words.ts';
 
 test.use({ browserLocale: 'zh-CN' });
 
 const WALLET = 'SignLens';
-/** Chinese, or the full-width punctuation it is set with. */
-const CHINESE = /[㐀-鿿，。：；（）！？、“”…—]/u;
 
 /** Starts a signing request and returns it with the window the gate opened. */
 async function askToSign(context: BrowserContext, dapp: Page, base64: string) {
@@ -22,12 +20,6 @@ async function askToSign(context: BrowserContext, dapp: Page, base64: string) {
     });
     const gate = await liveGate(context);
     return { signing, gate };
-}
-
-/** Whether the API the suite talks to carries Simplified Chinese: recorded, it does; live, one deployed before phase 4 does not. */
-async function carriesChinese(api: string): Promise<boolean> {
-    const status = (await (await fetch(`${api}/v1/packs`)).json()) as { locales?: { locale: string }[] };
-    return (status.locales ?? []).some(({ locale }) => locale === 'zh-Hans');
 }
 
 test('every page is worded in Chinese, none of its words left in English', async ({ context, extensionId, popup, worker }) => {
@@ -65,6 +57,6 @@ test('the popup names the languages the API explains in, and when they were revi
     await configure({ apiUrl: server.api });
     await popup.reload();
     await expect(popup.locator('#engine-status')).toContainText(
-        '以英文解释；当您的浏览器要求时，也以下列语言解释：简体中文（zh-Hans），审核于 2026-10-31。',
+        '以英文解释；当您的浏览器要求或您在设置中选择时，也以下列语言解释：简体中文（zh-Hans），审核于 2026-10-31。',
     );
 });

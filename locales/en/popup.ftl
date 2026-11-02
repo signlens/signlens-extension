@@ -14,7 +14,7 @@ popup-engine-ready = SignLens API ready: engine { $engine }, { $programs } progr
 # Ends the status line: the languages the API explains in. $count: how many besides English; $languages: each of them (popup-language), separated by popup-languages-separator.
 popup-languages = { $count ->
     [0] Explains in English.
-   *[other] Explains in English, and in { $languages }, when your browser asks for it.
+   *[other] Explains in English, and in { $languages }, when your browser asks for it or you choose it in the settings.
 }
 # One language the API explains in. $language: its name (popup-language-named), or its code where the browser has no name for it; $review: reviewed or not; $on: the day it was reviewed (2026-11-02).
 popup-language = { $review ->

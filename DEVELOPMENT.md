@@ -130,13 +130,20 @@ link the page holds by `data-l10n-name`; it is laid out with DOM calls,
 never parsed as HTML. A number argument is written as the locale writes
 numbers, and a choice by a number takes its plural category.
 
-The interface's locale is the reader's first language it has
-(`navigator.languages`), as the engine chooses an explanation's: by the
-tag, else by the language in the same script (zh-CN takes zh-Hans; zh-TW
-goes on to the next language); a pseudo-locale only by its own tag;
-English when none matches, and always in Node, so that the tests read
-English. A locale with no message yet is not offered. A page carries
-the interface's `lang`; the engine's words in an explanation carry the
+The interface's locale is the reader's first language it has, as the
+engine chooses an explanation's: by the tag, else by the language in the
+same script (zh-CN takes zh-Hans; zh-TW goes on to the next language); a
+pseudo-locale only by its own tag; English when none matches, and always
+in Node, so that the tests read English. A locale with no message yet is
+not offered. The reader's languages are the one chosen in the settings
+(`language`, under Language on the setup page and at the top of the
+popup's settings; `ui/language.ts`), then the browser's
+(`navigator.languages`), and the explanation is asked for in the same
+list (`readerLanguages` in `shared/words.ts`). Each page reads the choice
+before it words itself, and the worker as it starts and whenever it
+changes; one the interface is not worded in, a pseudo-locale or a
+language a later version dropped, counts as none. A page carries the
+interface's `lang`; the engine's words in an explanation carry the
 explanation's.
 
 The catalog also holds `en-XA`, a pseudo-locale made from the English as

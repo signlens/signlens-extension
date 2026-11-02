@@ -6,6 +6,23 @@ uses [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Added
+
+- **Choose the language.** The setup page and the top of the popup's
+  settings have a Language select: your browser's languages, the
+  default, which names the language they give, or English or 简体中文,
+  each named in itself. SignLens's own words are in the language chosen,
+  and the explanations are asked for in it, whatever the browser's
+  languages: a reader whose browser asks for Traditional Chinese, which
+  SignLens does not have, can read Simplified Chinese, and one whose
+  browser is in Chinese can read English. The page rewords itself in the
+  choice at once; a window already open keeps its words, and so do the
+  requests the popup lists. The popup's status line says that the API
+  explains in another language when the browser asks for it or the
+  settings choose it. The name and description in the browser's list of
+  extensions still follow the browser's language, which no extension
+  can change.
+
 ## [0.3.0] - 2026-10-31
 
 ### Added

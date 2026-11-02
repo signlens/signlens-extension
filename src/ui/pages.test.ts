@@ -43,7 +43,7 @@ test('the popup names each language the API explains in and when it was reviewed
     assert.equal(languages([], names), 'Explains in English.');
     assert.equal(
         languages([{ locale: 'zh-Hans', review: { kind: 'reviewed', by: ['a native speaker'], on: '2026-11-02' } }], names),
-        'Explains in English, and in Simplified Chinese (zh-Hans), reviewed on 2026-11-02, when your browser asks for it.',
+        'Explains in English, and in Simplified Chinese (zh-Hans), reviewed on 2026-11-02, when your browser asks for it or you choose it in the settings.',
     );
     assert.match(languages([{ locale: 'xx', review: { kind: 'unreviewed' } }], names), /xx, not reviewed/);
 });
@@ -57,4 +57,8 @@ test("the window offers English for a translated explanation, and the reader's l
     // A browser whose language the engine lacks gets English, and nothing to switch to.
     assert.equal(languageChoice([row(['de-DE'], 'en')], ['de-DE']), null);
     assert.equal(languageChoice([{ kind: 'failed' } as unknown as Row], ['zh-CN']), null);
+    // A language chosen in the settings is the reader's first (readerLanguages): Chinese chosen in an
+    // English browser is offered back after "Show in English"; English chosen in a Chinese one, nothing.
+    assert.equal(languageChoice([row(['en'], 'en')], ['zh-Hans', 'en-US']), 'reader');
+    assert.equal(languageChoice([row(['en', 'zh-CN'], 'en')], ['en', 'zh-CN']), null);
 });

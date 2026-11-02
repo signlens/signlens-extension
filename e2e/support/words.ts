@@ -13,6 +13,15 @@ import { request, transferRow, windowFor } from './windows.ts';
 
 const WATCHED = 'Ffz5kwUjkUNw7hV4r6iCJnUoXXsAPFHkCMCmKKDypiwg';
 
+/** Chinese, or the full-width punctuation it is set with. */
+export const CHINESE = /[㐀-鿿，。：；（）！？、“”…—]/u;
+
+/** Whether the API the suite talks to carries Simplified Chinese: recorded, it does; live, one deployed before phase 4 does not. */
+export async function carriesChinese(api: string): Promise<boolean> {
+    const status = (await (await fetch(`${api}/v1/packs`)).json()) as { locales?: { locale: string }[] };
+    return (status.locales ?? []).some(({ locale }) => locale === 'zh-Hans');
+}
+
 /** The words `page` shows, or puts in an attribute, in plain English, the interface's being worded in `locale` and marked by `mark`. */
 export async function englishLeft(page: Page, locale: string, mark: RegExp): Promise<string[]> {
     return page.evaluate(
