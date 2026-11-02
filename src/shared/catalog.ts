@@ -2090,6 +2090,7 @@ export const CATALOGS: Readonly<Record<string, Catalog>> = {
         'language-label': { value: ['语言'] },
         'language-not-saved': { value: ['未保存：', { arg: 'error' }] },
         'language-note': { value: ['用于 SignLens 自身的文字和它给出的解释。'] },
+        'manifest-description': { value: ['在签名之前，看清一笔 Solana 交易会做什么。解释每个签名请求，然后将其原样转交给您自己的钱包。'] },
         'manifest-name': { value: ['SignLens（测试版）'] },
         'popup-accounts': { value: [{ arg: 'name' }, '，', { arg: 'more' }] },
         'popup-accounts-more': {
