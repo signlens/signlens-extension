@@ -2086,6 +2086,10 @@ export const CATALOGS: Readonly<Record<string, Catalog>> = {
         'connect-question': { value: ['允许此网站查看该地址？'] },
         'connect-where': { value: [{ arg: 'origin' }, ' 想要查看 SignLens 观察的地址'] },
         'connect-window-title': { value: [{ arg: 'site' }, ' 请求查看观察的地址 · SignLens'] },
+        'language-browser': { value: ['您的浏览器语言（', { arg: 'language' }, '）'] },
+        'language-label': { value: ['语言'] },
+        'language-not-saved': { value: ['未保存：', { arg: 'error' }] },
+        'language-note': { value: ['用于 SignLens 自身的文字和它给出的解释。'] },
         'manifest-description': {
             value: [
                 '在签名之前，看清一笔 Solana 交易会做什么。解释每个签名请求，然后将其原样转交给您自己的钱包。测试版：解释由 SignLens 的服务器计算生成。',
@@ -2179,6 +2183,18 @@ export const CATALOGS: Readonly<Record<string, Catalog>> = {
             ],
         },
         'popup-language-named': { value: [{ arg: 'name' }, '（', { arg: 'tag' }, '）'] },
+        'popup-languages': {
+            value: [
+                {
+                    select: 'count',
+                    cases: {
+                        '0': ['以英文解释。'],
+                        other: ['以英文解释；当您的浏览器要求或您在设置中选择时，也以下列语言解释：', { arg: 'languages' }, '。'],
+                    },
+                    other: 'other',
+                },
+            ],
+        },
         'popup-languages-separator': { value: ['；'] },
         'popup-list-separator': { value: ['、'] },
         'popup-mode-legend': { value: ['解释请求之后'] },

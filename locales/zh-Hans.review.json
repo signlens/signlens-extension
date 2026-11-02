@@ -2,7 +2,7 @@
   "by": [
     "a native speaker"
   ],
-  "on": "2026-10-31",
+  "on": "2026-11-02",
   "digests": {
     "access-allow": "b2da1a098733b62b",
     "access-allow-local": "c69ebe8f4bc9fdb7",
@@ -27,6 +27,10 @@
     "connect-question": "be2def87a0e3e85e",
     "connect-where": "a54aa33d774b348f",
     "connect-window-title": "7d1b35fd67e14204",
+    "language-browser": "2eaa5d1652a065c2",
+    "language-label": "a4fe65264ef7dbb3",
+    "language-not-saved": "675332aa33b64887",
+    "language-note": "60bd37d2dfd26076",
     "manifest-description": "de5f63173c711a56",
     "manifest-name": "1ee3feb3c9efee80",
     "popup-accounts": "1a80e464d30666a0",
@@ -63,7 +67,7 @@
     "popup-engine-unsafe": "3471d8edfb2294df",
     "popup-language": "002f88aefe530e3b",
     "popup-language-named": "087316e49ed60d16",
-    "popup-languages": "e4135f2ee76dfad6",
+    "popup-languages": "82e811494ef4c10e",
     "popup-languages-separator": "fa26535b732e8acd",
     "popup-list-separator": "12d7d02910d393c7",
     "popup-mode-legend": "f8d3f5ca8a268d91",
