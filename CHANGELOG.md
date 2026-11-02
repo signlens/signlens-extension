@@ -8,9 +8,9 @@ uses [Semantic Versioning](https://semver.org/).
 
 ### Added
 
-- **Choose the language.** The top of the popup's settings has a
-  Language select: your browser's languages, the default, which names
-  the language they give, or English or 简体中文,
+- **Choose the language.** The setup page and the top of the popup's
+  settings have a Language select: your browser's languages, the
+  default, which names the language they give, or English or 简体中文,
   each named in itself. SignLens's own words are in the language chosen,
   and the explanations are asked for in it, whatever the browser's
   languages: a reader whose browser asks for Traditional Chinese, which

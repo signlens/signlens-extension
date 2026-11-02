@@ -1,8 +1,8 @@
 // The language chosen in the settings (language.ts): the popup's settings
-// offer the browser's languages, the default, and each language the
-// interface is worded in, named in itself; a choice rewords the popup at
-// once, and every page and every explanation after it, in place of the
-// browser's languages.
+// and the setup page offer the browser's languages, the default, and each
+// language the interface is worded in, named in itself; a choice rewords
+// the page at once, and every page and every explanation after it, in
+// place of the browser's languages.
 
 import type { BrowserContext, Page } from '@playwright/test';
 import { fixture } from '../test/server.ts';
@@ -31,6 +31,8 @@ async function choices(page: Page): Promise<{ text: string; value: string }[]> {
 }
 
 test("the popup offers the browser's languages, then each language in itself, and words itself at once in the one chosen", async ({
+    context,
+    extensionId,
     popup,
     worker,
 }) => {
@@ -47,10 +49,14 @@ test("the popup offers the browser's languages, then each language in itself, an
     await expect(popup.locator('#language')).toHaveValue('zh-Hans');
     expect(await worker.evaluate(() => chrome.storage.local.get('language'))).toEqual({ language: 'zh-Hans' });
 
-    // And the browser's languages back.
-    await popup.locator('#language').selectOption('');
-    await expect(popup.locator('html')).toHaveAttribute('lang', 'en');
-    await expect(popup.locator('#language')).toHaveValue('');
+    // The setup page has the same choice, and the browser's languages back.
+    const setup = await context.newPage();
+    await setup.goto(`chrome-extension://${extensionId}/welcome.html`);
+    await expect(setup.locator('html')).toHaveAttribute('lang', 'zh-Hans');
+    await expect(setup.locator('#language')).toHaveValue('zh-Hans');
+    await setup.locator('#language').selectOption('');
+    await expect(setup.locator('html')).toHaveAttribute('lang', 'en');
+    await expect(setup.locator('#language')).toHaveValue('');
     expect(await worker.evaluate(() => chrome.storage.local.get('language'))).toEqual({ language: '' });
 });
 

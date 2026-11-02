@@ -12,6 +12,13 @@
                 <span class="beta" data-l10n-id="beta"></span>
             </h1>
             <p id="intro" data-l10n-id="welcome-intro"></p>
+            <!-- The page a new install opens in the browser's languages: a reader of another finds the choice before anything to read (language.ts). -->
+            <div id="language-field" class="field">
+                <label for="language" data-l10n-id="language-label"></label>
+                <select id="language" aria-describedby="language-note language-status"></select>
+                <small id="language-note" class="note" data-l10n-id="language-note"></small>
+                <small id="language-status" role="status"></small>
+            </div>
         </header>
 
         <main>

@@ -1,12 +1,14 @@
-// The setup page, which a new install opens (worker/welcome.ts): your
-// addresses (yours.ts), so the address window has nothing to ask; how
-// SignLens is used; whether it is pinned; and, where the browser has not
-// granted it, the access SignLens needs (access.ts).
+// The setup page, which a new install opens (worker/welcome.ts): the
+// language (language.ts); your addresses (yours.ts), so the address
+// window has nothing to ask; how SignLens is used; whether it is pinned;
+// and, where the browser has not granted it, the access SignLens needs
+// (access.ts).
 
-import { followChosenLanguage } from '../shared/settings.ts';
+import { followChosenLanguage, settings } from '../shared/settings.ts';
 import { t } from '../shared/words.ts';
 import { access } from './access.ts';
 import { byId } from './dom.ts';
+import { languageField } from './language.ts';
 import { localize } from './localize.ts';
 import { yourAddresses } from './yours.ts';
 
@@ -38,6 +40,7 @@ async function start(): Promise<void> {
     await followChosenLanguage();
     localize();
     yourAddresses(byId('my-addresses'));
+    void settings().then(({ language }) => languageField(byId('language', HTMLSelectElement), byId('language-status'), language));
 
     void showPin();
     // Chrome 130 says when the toolbar changes; before, and elsewhere, the page asks again when it is looked at.

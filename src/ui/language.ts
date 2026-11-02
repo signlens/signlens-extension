@@ -1,8 +1,8 @@
-// The language select at the top of the popup's settings: the browser's
-// languages, the default, or one the interface is worded in, each named
-// in itself, for SignLens's own words and its explanations alike
-// (words.ts). A choice saved reloads the page, which words itself in it;
-// the worker follows it as it is saved.
+// The language select the popup's settings and the setup page share: the
+// browser's languages, the default, or one the interface is worded in,
+// each named in itself, for SignLens's own words and its explanations
+// alike (words.ts). A choice saved reloads the page, which words itself in
+// it; the worker follows it as it is saved.
 
 import { local } from '../shared/store.ts';
 import { describe } from '../shared/text.ts';

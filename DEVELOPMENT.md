@@ -136,8 +136,8 @@ same script (zh-CN takes zh-Hans; zh-TW goes on to the next language); a
 pseudo-locale only by its own tag; English when none matches, and always
 in Node, so that the tests read English. A locale with no message yet is
 not offered. The reader's languages are the one chosen in the settings
-(`language`, under Language at the top of the popup's settings;
-`ui/language.ts`), then the browser's
+(`language`, under Language on the setup page and at the top of the
+popup's settings; `ui/language.ts`), then the browser's
 (`navigator.languages`), and the explanation is asked for in the same
 list (`readerLanguages` in `shared/words.ts`). Each page reads the choice
 before it words itself, and the worker as it starts and whenever it
