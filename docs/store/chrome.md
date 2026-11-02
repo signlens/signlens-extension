@@ -17,7 +17,8 @@ icon are files in this repository. The listing follows the Firefox one
    refuses a package whose manifest's description is over 132 characters
    in any language, or its name over 75; `src/manifest.test.ts` holds
    every language to both.
-4. The store listing and the privacy practices below, the first time; a
+4. The store listing, the privacy practices and the test instructions
+   below, the first time; a
    version afterwards changes them only when what they say has changed.
 5. **Submit for review**. Access to every https site, with content
    scripts on every https page, makes for a closer review than most.
@@ -140,6 +141,23 @@ Privacy policy: <https://signlens.dev/privacy>, which also covers the site.
 ## Distribution
 
 Public, free, in every region.
+
+## Test instructions
+
+The dashboard's **Test instructions**: no username or password, and this
+as the instructions, which the store takes only up to 500 characters
+(440 here). The Firefox reviewer notes' TRYING IT has the same
+steps in full.
+
+```text
+No wallet needed. In the popup's Settings, under "After explaining a request" choose "Refuse it (watch-only, no keys involved)", and in "Address to connect as" paste 2P5tkJVpceLPdnejvc5DBGd4RxkmtouYfNkb9KKPsPxW, a public wallet with Kamino and Jupiter Lend positions. On app.kamino.finance or jup.ag, connect "SignLens", choose Allow, then withdraw or swap: the SignLens window explains the transaction and refuses it, so nothing is signed.
+```
+
+The address is the wallet of the Kamino deposit in `test/fixtures/`. On
+2026-11-02 it held 0.098 SOL, deposits in five Kamino Lend markets and
+about 16,729 jlUSDC (Jupiter Lend USDC). A stranger may close their
+positions at any time: before a submission, check it still has them, or
+give an address that does. A swap needs only some SOL.
 
 ## The Simplified Chinese listing (zh_CN)
 

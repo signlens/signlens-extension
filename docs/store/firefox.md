@@ -166,7 +166,16 @@ SOURCE
 The JavaScript is the TypeScript compiler's output, one file per source file, neither bundled nor minified. To rebuild: Node 26.1 or later (not 24: npm ci refuses an older Node), then "npm ci && npm run package"; dist/signlens-extension-firefox-X.Y.Z.zip comes out the same bytes as the package uploaded. DEVELOPMENT.md, "Building for review", has the details.
 
 TRYING IT
-No account is needed. In SignLens's popup, Settings: under "After explaining a request" choose "Refuse it (watch-only, no keys involved)", and in "Address to connect as" give any mainnet address that holds some SOL. On a dapp such as https://jup.ag, connect "SignLens" and start a swap: the SignLens window explains the transaction, and in watch-only mode every request is refused, so nothing is signed. With a Solana wallet extension installed, the default mode passes each request on to it after the window.
+No account or wallet is needed: SignLens can run watch-only, explaining what a dapp asks a real mainnet wallet to sign and then refusing it, so nothing is ever signed.
+1. Click the SignLens button in the toolbar (or in the extensions menu) and open Settings. If the popup says Firefox has not let it reach the API, press "Allow https access".
+2. Under "After explaining a request", choose "Refuse it (watch-only, no keys involved)".
+3. In "Address to connect as", paste: 2P5tkJVpceLPdnejvc5DBGd4RxkmtouYfNkb9KKPsPxW
+   It is a public mainnet wallet with deposits on Kamino Lend and a Jupiter Lend USDC position. Settings save as you change them.
+4. Kamino: open https://app.kamino.finance, choose Connect wallet and pick "SignLens" from the list. SignLens asks whether the site may see the watched address: choose Allow. Kamino shows the wallet's deposits; choose Withdraw on one, enter a small amount and confirm.
+5. The SignLens window opens and explains the transaction in plain words: the verdict (OK, Warning or Blocked), what it does, and what SignLens found. In watch-only mode its only button is Close, and the site is told the request was refused.
+6. Jupiter: open https://jup.ag and connect "SignLens" the same way. Start a swap (0.01 SOL to USDC, say), or open Lend and withdraw some of the USDC position. The window explains each request the same way.
+7. The popup's Requests tab lists each request, what SignLens made of it, and what was decided.
+The explanations come from the SignLens API (api.signlens.dev); if it is busy, the window offers "Try again". With a Solana wallet extension installed (Phantom, Backpack, Solflare), choose "Pass it to your wallet" in step 2 instead: Continue then hands the request unchanged to that wallet, which asks as usual.
 
 Desktop only: the validator's warnings about Firefox for Android 140 concern a platform this add-on is not submitted for.
 
@@ -174,6 +183,13 @@ The validator's warning that action.onUserSettingsChanged is not in Firefox 140:
 
 Questions: support@signlens.dev
 ```
+
+The address is the wallet of the Kamino deposit in `test/fixtures/`. On
+2026-11-02 it held 0.098 SOL, deposits in five Kamino Lend markets and
+about 16,729 jlUSDC (Jupiter Lend USDC). A stranger may close their
+positions at any time: before a submission, check it still has them, or
+give an address that does. The swap in step 6 of TRYING IT needs only
+some SOL.
 
 ## The Simplified Chinese listing (zh-CN)
 
