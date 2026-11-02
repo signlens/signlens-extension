@@ -6,6 +6,7 @@ import { base58Decode as decodeAddress } from './base58.ts';
 import type { Mode } from './model.ts';
 import { inTurn, local } from './store.ts';
 import type { Contact } from './types.ts';
+import { followLanguage } from './words.ts';
 
 export interface Settings {
     /** 'passthrough': explain every request, then hand it to the wallet you sign with. 'watch': connect as `address`, explain, and refuse. */
@@ -35,6 +36,8 @@ export interface Settings {
     lookupAccounts: boolean;
     /** Show the instructions and the details under the effects rather than behind one toggle: the reader's last choice, not a setting. */
     showInstructions: boolean;
+    /** The language of the interface and of the explanations, one the interface is worded in; empty for the browser's languages (words.ts). */
+    language: string;
 }
 
 export const DEFAULTS: Readonly<Settings> = Object.freeze({
@@ -51,6 +54,7 @@ export const DEFAULTS: Readonly<Settings> = Object.freeze({
     simulate: true,
     lookupAccounts: true,
     showInstructions: false,
+    language: '',
 });
 
 /** The endpoints a user can point the extension at. */
@@ -59,6 +63,16 @@ export const ENDPOINTS = ['apiUrl', 'rpcUrl', 'tokenApiUrl'] as const;
 /** The settings as stored, with the defaults where nothing is stored. */
 export async function settings(): Promise<Settings> {
     return { ...DEFAULTS, ...(await local.get(...(Object.keys(DEFAULTS) as (keyof Settings)[]))) };
+}
+
+/**
+ * Follows the language chosen in the settings (words.ts): a page, before it
+ * words itself, and the worker, as it starts. Settings that cannot be read
+ * leave the browser's languages to choose.
+ */
+export async function followChosenLanguage(): Promise<void> {
+    const { language } = await local.get('language').catch(() => ({ language: '' }));
+    followLanguage(typeof language === 'string' ? language : '');
 }
 
 /** The 32 bytes `text` is the base58 of, as a plain array (it travels to the page as JSON), or `null`. */

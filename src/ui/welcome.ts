@@ -3,6 +3,7 @@
 // SignLens is used; whether it is pinned; and, where the browser has not
 // granted it, the access SignLens needs (access.ts).
 
+import { followChosenLanguage } from '../shared/settings.ts';
 import { t } from '../shared/words.ts';
 import { access } from './access.ts';
 import { byId } from './dom.ts';
@@ -34,6 +35,7 @@ async function showAccess(): Promise<void> {
 }
 
 async function start(): Promise<void> {
+    await followChosenLanguage();
     localize();
     yourAddresses(byId('my-addresses'));
 

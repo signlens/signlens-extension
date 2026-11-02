@@ -7,12 +7,12 @@ import { askBeforeRating, asksBeforeRating } from '../shared/consent.ts';
 import { MAX_COMMENT, send } from '../shared/messages.ts';
 import type { Decision, ExplainedRow, Row } from '../shared/model.ts';
 import { base64Bytes, instructionPrograms } from '../shared/programs.ts';
-import { settings } from '../shared/settings.ts';
+import { followChosenLanguage, settings } from '../shared/settings.ts';
 import { getPending, local } from '../shared/store.ts';
 import { logged, methodName, withoutScheme } from '../shared/text.ts';
 import { type Rating, SEVERITIES, type Seen } from '../shared/types.ts';
 import { rowVerdictWord, summaryOf, verdictText, worstVerdict } from '../shared/verdict.ts';
-import { t } from '../shared/words.ts';
+import { readerLanguages, t } from '../shared/words.ts';
 import { byId } from './dom.ts';
 import { localize, nodes } from './localize.ts';
 import { languageChoice } from './pages.ts';
@@ -268,6 +268,7 @@ function onEscape(event: KeyboardEvent): void {
 }
 
 async function start(): Promise<void> {
+    await followChosenLanguage();
     localize();
     const entry = await getPending('confirm.html', requestId);
     const proceed = byId('continue', HTMLButtonElement);
@@ -312,7 +313,7 @@ async function start(): Promise<void> {
     const summary = lead ? bandLine(lead) : '';
     byId('band-summary').replaceChildren(many ? nodes('window-band-of-several', { summary, index: at + 1, count: list.length }) : summary);
 
-    const choice = languageChoice(list, navigator.languages);
+    const choice = languageChoice(list, readerLanguages());
     if (choice) band.after(languageSwitch(choice, proceed, reject));
 
     // What the API or the RPC could not explain may be explained on a second try; a request refused as a whole would be refused again.

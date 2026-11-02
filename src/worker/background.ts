@@ -16,9 +16,10 @@ import {
     type WalletList,
     type WalletsPayload,
 } from '../shared/messages.ts';
-import { pageConfig, settings } from '../shared/settings.ts';
-import { dropStalePending, type SessionItems, session, walletsKey } from '../shared/store.ts';
+import { followChosenLanguage, pageConfig, settings } from '../shared/settings.ts';
+import { dropStalePending, onChange, type SessionItems, session, walletsKey } from '../shared/store.ts';
 import { describe, logged, withoutControls } from '../shared/text.ts';
+import { followLanguage } from '../shared/words.ts';
 import { keepingAlive } from './alive.ts';
 import { apiStatus } from './api.ts';
 import { sendRating } from './feedback.ts';
@@ -48,6 +49,14 @@ async function rememberWallets(tabId: number | undefined, payload: WalletsPayloa
 }
 
 // ---- Messages ----
+
+// What the worker words itself (a refusal's reason, why the API did not
+// answer) and the language it asks the API for follow the language chosen
+// in the settings; every request and message waits until it is read.
+const languageRead = followChosenLanguage();
+onChange('local', (changes) => {
+    if ('language' in changes) followLanguage(typeof changes.language === 'string' ? changes.language : '');
+});
 
 // A worker that stopped took the requests it had waiting with it: what they
 // left in storage would only take room. In turn before any new request is kept.
@@ -89,7 +98,10 @@ chrome.runtime.onConnect.addListener((port) => {
             port.disconnect();
             return;
         }
-        void keepingAlive(() => answerRequest(message, sender.tab?.id ?? -1)).then((reply) => {
+        void keepingAlive(async () => {
+            await languageRead;
+            return answerRequest(message, sender.tab?.id ?? -1);
+        }).then((reply) => {
             answered = true;
             try {
                 port.postMessage(reply);
@@ -174,6 +186,7 @@ async function answer<T extends Answered>(
     // A message narrows its answer by its type, which TypeScript cannot follow through the table: the one cast.
     const { reply, failed } = ANSWERS[(message as Message).type as T] as Answer<T>;
     try {
+        await languageRead;
         return await reply(message, sender);
     } catch (error) {
         return failed(error);

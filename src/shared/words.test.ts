@@ -6,7 +6,18 @@ import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { type Row, refusal, type Said } from './model.ts';
 import { summaryOf } from './verdict.ts';
-import { chooseLocale, english, type Id, inEnglish, said, spoken } from './words.ts';
+import {
+    chooseLocale,
+    english,
+    followLanguage,
+    type Id,
+    inEnglish,
+    interfaceLanguages,
+    interfaceLocale,
+    readerLanguages,
+    said,
+    spoken,
+} from './words.ts';
 
 test('a reason kept as a message is worded when shown, and is in English what its page is told', () => {
     const reason = said('worker-refused-window-not-open', { error: 'no display' });
@@ -50,4 +61,33 @@ test("the interface's locale is the reader's first language it has, by tag, else
     assert.equal(chooseLocale(['en-US'], have), 'en');
     assert.equal(chooseLocale(['fr-FR', 'de'], have), 'en');
     assert.equal(chooseLocale([], have), 'en');
+});
+
+test('a reader may choose English or a language shipped, never a pseudo-locale', () => {
+    assert.deepEqual(interfaceLanguages(), ['en', 'zh-Hans']);
+});
+
+test("a language chosen in the settings comes before the browser's, whatever they are", () => {
+    try {
+        followLanguage('zh-Hans', ['en-US']);
+        assert.equal(interfaceLocale(), 'zh-Hans');
+        assert.deepEqual(readerLanguages(['en-US']), ['zh-Hans', 'en-US']);
+        // Traditional Chinese goes on to the next language, unless the reader chooses Simplified.
+        followLanguage('', ['zh-TW', 'en-GB']);
+        assert.equal(interfaceLocale(), 'en');
+        assert.deepEqual(readerLanguages(['zh-TW', 'en-GB']), ['zh-TW', 'en-GB']);
+        followLanguage('zh-Hans', ['zh-TW', 'en-GB']);
+        assert.equal(interfaceLocale(), 'zh-Hans');
+        followLanguage('en', ['zh-CN']);
+        assert.equal(interfaceLocale(), 'en');
+        assert.deepEqual(readerLanguages(['zh-CN']), ['en', 'zh-CN']);
+        // One the interface is not worded in, a pseudo-locale or a language a later version dropped, is no choice.
+        for (const language of ['en-XA', 'fr']) {
+            followLanguage(language, ['zh-CN']);
+            assert.equal(interfaceLocale(), 'zh-Hans', language);
+            assert.deepEqual(readerLanguages(['zh-CN']), ['zh-CN'], language);
+        }
+    } finally {
+        followLanguage('', ['en']);
+    }
 });

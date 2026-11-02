@@ -45,10 +45,33 @@ export function chooseLocale(languages: readonly string[], have: readonly string
 
 // In the extension, a page or the worker, the reader's languages choose; in Node, under test, the interface is English.
 let current = typeof document !== 'undefined' || 'ServiceWorkerGlobalScope' in globalThis ? chooseLocale(navigator.languages) : SOURCE;
+/** The language chosen in the settings, one the interface is worded in; empty while the browser's choose. */
+let chosen = '';
 
 /** The locale the interface is worded in. */
 export function interfaceLocale(): string {
     return current;
+}
+
+/** The languages the interface is worded in that a reader may choose: English and each shipped, never a pseudo-locale. */
+export function interfaceLanguages(): string[] {
+    return offered().filter((tag) => !PSEUDO.has(tag));
+}
+
+/** The reader's languages in their order: the one chosen in the settings first, if any, then the browser's. */
+export function readerLanguages(browser: readonly string[] = navigator.languages): string[] {
+    return chosen ? [chosen, ...browser] : [...browser];
+}
+
+/**
+ * Follows the language chosen in the settings, `language`, empty to follow
+ * the browser's: the interface is worded in it, and the explanation asked
+ * for in it (readerLanguages). One the interface is not worded in, from a
+ * version that had it, counts as no choice.
+ */
+export function followLanguage(language: string, browser: readonly string[] = navigator.languages): void {
+    chosen = interfaceLanguages().includes(language) ? language : '';
+    current = chooseLocale(readerLanguages(browser));
 }
 
 /** Words the interface in `tag`, or English if it has no such locale: for tests. */

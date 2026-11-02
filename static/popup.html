@@ -37,6 +37,12 @@
 
             <section id="view-settings" class="view" role="tabpanel" aria-labelledby="tab-settings" hidden>
                 <p id="save-status" class="save-status" role="status"></p>
+                <!-- First, and outside the form: a reader who cannot read the settings' language finds it at the top, and a choice reloads the popup (language.ts). -->
+                <div class="field">
+                    <label for="language" data-l10n-id="language-label"></label>
+                    <select id="language" aria-describedby="language-note"></select>
+                    <small id="language-note" class="note" data-l10n-id="language-note"></small>
+                </div>
                 <form id="settings" autocomplete="off">
                     <fieldset>
                         <legend data-l10n-id="popup-mode-legend"></legend>

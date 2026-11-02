@@ -9,6 +9,7 @@ import {
     addressBytes,
     DEFAULTS,
     ENDPOINTS,
+    followChosenLanguage,
     MAX_CONTACTS,
     MAX_OWN_KEYS,
     ownKeysFor,
@@ -17,6 +18,7 @@ import {
     removeAddress,
     watched,
 } from './settings.ts';
+import { followLanguage, interfaceLocale, readerLanguages } from './words.ts';
 
 test('the address book keeps valid lines and names the others by number', () => {
     const { contacts, bad } = parseContacts(
@@ -94,4 +96,20 @@ test('an endpoint is https, or plain http to this machine only', () => {
     assert.match(endpointProblem('ftp://x') ?? '', /not an http\(s\) URL/);
     assert.match(endpointProblem('api.signlens.dev') ?? '', /not a URL/);
     for (const name of ENDPOINTS) assert.equal(endpointProblem(DEFAULTS[name]), null, name);
+});
+
+test("the language saved is followed; none, or one not a string, leaves the browser's to choose", async () => {
+    installFakeChrome();
+    try {
+        assert.equal(DEFAULTS.language, '');
+        await chrome.storage.local.set({ language: 'zh-Hans' });
+        await followChosenLanguage();
+        assert.equal(interfaceLocale(), 'zh-Hans');
+        assert.equal(readerLanguages(['en-US'])[0], 'zh-Hans');
+        await chrome.storage.local.set({ language: 7 });
+        await followChosenLanguage();
+        assert.deepEqual(readerLanguages(['en-US']), ['en-US']);
+    } finally {
+        followLanguage('', ['en']);
+    }
 });

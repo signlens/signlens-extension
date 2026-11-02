@@ -8,6 +8,7 @@ import {
     addressBytes,
     DEFAULTS,
     ENDPOINTS,
+    followChosenLanguage,
     MAX_CONTACTS,
     parseAddresses,
     parseContacts,
@@ -21,6 +22,7 @@ import { rowVerdictWord, summaryOf, verdictText } from '../shared/verdict.ts';
 import { interfaceLocale, spoken, t } from '../shared/words.ts';
 import { access } from './access.ts';
 import { byId } from './dom.ts';
+import { languageField } from './language.ts';
 import { localize, nodes } from './localize.ts';
 import { languages, noWalletHint, runsOn } from './pages.ts';
 import { element, renderRow } from './render.ts';
@@ -522,9 +524,11 @@ async function showSetup(): Promise<void> {
 }
 
 async function start(): Promise<void> {
+    await followChosenLanguage();
     localize();
     layChoices();
     const config = await settings();
+    languageField(byId('language', HTMLSelectElement), byId('save-status'), config.language);
     yourAddresses(byId('my-addresses'));
     yourAddresses(byId('setup-add'), {
         list: false,

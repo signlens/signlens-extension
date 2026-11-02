@@ -28,6 +28,10 @@ export interface Args {
     readonly 'connect-question': undefined;
     readonly 'connect-where': { readonly origin: Value };
     readonly 'connect-window-title': { readonly site: Value };
+    readonly 'language-browser': { readonly language: Value };
+    readonly 'language-label': undefined;
+    readonly 'language-not-saved': { readonly error: Value };
+    readonly 'language-note': undefined;
     readonly 'manifest-description': undefined;
     readonly 'manifest-name': undefined;
     readonly 'popup-accounts': { readonly more: Value; readonly name: Value };
@@ -360,6 +364,10 @@ export const CATALOGS: Readonly<Record<string, Catalog>> = {
         'connect-question': { value: ['Let this site see the address?'] },
         'connect-where': { value: [{ arg: 'origin' }, ' wants to see the address SignLens watches'] },
         'connect-window-title': { value: [{ arg: 'site' }, ' asks to see the watched address · SignLens'] },
+        'language-browser': { value: ["Your browser's languages (", { arg: 'language' }, ')'] },
+        'language-label': { value: ['Language'] },
+        'language-not-saved': { value: ['Not saved: ', { arg: 'error' }] },
+        'language-note': { value: ["For SignLens's own words and for its explanations."] },
         'manifest-description': {
             value: [
                 "See what a Solana transaction does before you sign it. Explains every signing request, then hands it unchanged to your own wallet. Beta: the explanation is computed by SignLens's server.",
@@ -474,7 +482,11 @@ export const CATALOGS: Readonly<Record<string, Catalog>> = {
                     select: 'count',
                     cases: {
                         '0': ['Explains in English.'],
-                        other: ['Explains in English, and in ', { arg: 'languages' }, ', when your browser asks for it.'],
+                        other: [
+                            'Explains in English, and in ',
+                            { arg: 'languages' },
+                            ', when your browser asks for it or you choose it in the settings.',
+                        ],
                     },
                     other: 'other',
                 },
@@ -1132,6 +1144,10 @@ export const CATALOGS: Readonly<Record<string, Catalog>> = {
         'connect-question': { value: ['[Lét thís síté séé thé áddréss?············]'] },
         'connect-where': { value: ['[', { arg: 'origin' }, ' wáñts tó séé thé áddréss SígñLéñs wátçhés·················]'] },
         'connect-window-title': { value: ['[', { arg: 'site' }, ' ásks tó séé thé wátçhéd áddréss · SígñLéñs·················]'] },
+        'language-browser': { value: ["[Ýóúr brówsér's láñgúágés (", { arg: 'language' }, ')···········]'] },
+        'language-label': { value: ['[Láñgúágé···]'] },
+        'language-not-saved': { value: ['[Ñót sávéd: ', { arg: 'error' }, '····]'] },
+        'language-note': { value: ["[Fór SígñLéñs's ówñ wórds áñd fór íts éxpláñátíóñs.····················]"] },
         'manifest-description': {
             value: [
                 "[Séé whát á Sóláñá tráñsáçtíóñ dóés béfóré ýóú sígñ ít. Éxpláíñs évérý sígñíñg réqúést, théñ háñds ít úñçháñgéd tó ýóúr ówñ wállét. Bétá: thé éxpláñátíóñ ís çómpútéd bý SígñLéñs's sérvér.··········································································]",
@@ -1260,11 +1276,15 @@ export const CATALOGS: Readonly<Record<string, Catalog>> = {
                     select: 'count',
                     cases: {
                         '0': ['Éxpláíñs íñ Éñglísh.'],
-                        other: ['Éxpláíñs íñ Éñglísh, áñd íñ ', { arg: 'languages' }, ', whéñ ýóúr brówsér ásks fór ít.'],
+                        other: [
+                            'Éxpláíñs íñ Éñglísh, áñd íñ ',
+                            { arg: 'languages' },
+                            ', whéñ ýóúr brówsér ásks fór ít ór ýóú çhóósé ít íñ thé séttíñgs.',
+                        ],
                     },
                     other: 'other',
                 },
-                '························]',
+                '·····································]',
             ],
         },
         'popup-languages-separator': { value: ['[; ·]'] },
@@ -2159,18 +2179,6 @@ export const CATALOGS: Readonly<Record<string, Catalog>> = {
             ],
         },
         'popup-language-named': { value: [{ arg: 'name' }, '（', { arg: 'tag' }, '）'] },
-        'popup-languages': {
-            value: [
-                {
-                    select: 'count',
-                    cases: {
-                        '0': ['以英文解释。'],
-                        other: ['以英文解释；当您的浏览器要求时，也以下列语言解释：', { arg: 'languages' }, '。'],
-                    },
-                    other: 'other',
-                },
-            ],
-        },
         'popup-languages-separator': { value: ['；'] },
         'popup-list-separator': { value: ['、'] },
         'popup-mode-legend': { value: ['解释请求之后'] },
