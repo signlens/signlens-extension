@@ -41,7 +41,7 @@ release's zip, whose SHA-256 the release states.
 |---|---|
 | Name | SignLens (beta), the manifest's (`locales/en/manifest.ftl`) |
 | Add-on URL | `signlens-beta`: <https://addons.mozilla.org/firefox/addon/signlens-beta/> |
-| Summary | the manifest's description, below |
+| Summary | the manifest's description without its last sentence, below |
 | Categories | Privacy & Security |
 | Tags | security; anti malware too, if wanted, for the drainers it blocks. AMO offers a fixed list, without solana, wallet, crypto or web3, and privacy is left off: SignLens sends each transaction to its server, where a privacy add-on is expected to send less |
 | Homepage | <https://signlens.dev> |
@@ -54,8 +54,12 @@ release's zip, whose SHA-256 the release states.
 ### Summary
 
 See what a Solana transaction does before you sign it. Explains every
-signing request, then hands it unchanged to your own wallet. Beta: the
-explanation is computed by SignLens's server.
+signing request, then hands it unchanged to your own wallet.
+
+The manifest's description goes on "Beta: the explanation is computed by
+SignLens's server."; the store's summary leaves that out, where the name
+says "(beta)" and the description says the server computes the
+explanation. The Chinese summary keeps it.
 
 ### Description
 
@@ -127,8 +131,13 @@ Upload in this order, each with its caption.
 1. `firefox-screenshot-1.png`: The SignLens window before your wallet signs: a deposit into Kamino Lend (OK), and a USDC transfer whose signature never expires (Warning).
 2. `firefox-screenshot-2.png`: The same two, in the dark theme.
 3. `firefox-screenshot-3.png`: The popup lists recent requests, what SignLens made of each and what you decided.
+4. `firefox-screenshot-1.zh-Hans.png`: The SignLens window in Simplified Chinese.
 
-They are rendered from `screenshot-1.html` to `screenshot-3.html`, the
+AMO has one set of screenshots for every language, so the fourth, the
+first in Chinese, is in every language's listing: it shows a Chinese
+reader the window in theirs.
+
+The first three are rendered from `screenshot-1.html` to `screenshot-3.html`, the
 README's images side by side at 1280×800, the size the store shows:
 
 ```sh
@@ -193,11 +202,13 @@ The privacy policy stays the English one above, the authoritative text.
 钱包的预览只显示有什么离开您的钱包。SignLens 则说明它去向何处、用途是什么：存入借贷市场、建立流动性仓位、质押、杠杆订单，还是在盗取您的资产。
 
 **工作方式**
+
 - 在 DApp 中，选择 **SignLens** 作为您的钱包进行连接。SignLens 再连接到您已在使用的钱包：Phantom、Backpack、Solflare 或其他 Solana 钱包。
 - 每个请求都会先打开 SignLens 的窗口：结论（正常、警告或已拦截）、此交易会做什么，以及 SignLens 的检查结果。
 - 选择继续后，SignLens 所解释的这笔交易会原样转交给您的钱包，钱包会照常请求您的批准。SignLens 不持有私钥，也不签署任何内容。
 
 **它会警示什么**
+
 - 将某个账户乃至整个钱包的控制权移交给他人（签名时并不会立即转移资产）
 - 代币支出授权，无限额度的授权会明确写出
 - 永不过期的签名（持久随机数）
@@ -218,16 +229,17 @@ SignLens 与其所解释程序背后的钱包和项目没有关联。
 ### Captions
 
 AMO has one set of screenshots for every language and translates only
-their captions, so the Chinese listing shows the English screenshots
-above, in their order, with these captions:
+their captions, so the Chinese listing shows the four screenshots above,
+in their order, with these captions:
 
 1. 在您的钱包签名之前的 SignLens 窗口：存入 Kamino Lend（正常），以及一笔签名永不过期的 USDC 转账（警告）。
 2. 同样的两笔交易，深色主题。
 3. 弹出窗口列出最近的请求、SignLens 对每个请求的结论，以及您的决定。
+4. 在您的钱包签名之前的 SignLens 窗口：存入 Kamino Lend（正常），以及一笔签名永不过期的 USDC 转账（警告）。
 
-The Chinese screenshots, `firefox-screenshot-1.zh-Hans.png` to
-`firefox-screenshot-3.zh-Hans.png`, have no place on AMO and are not
-uploaded. They are rendered from `screenshot-1.zh-Hans.html` to
+Of the Chinese screenshots, only `firefox-screenshot-1.zh-Hans.png` is
+uploaded, as the fourth; `firefox-screenshot-2.zh-Hans.png` and
+`firefox-screenshot-3.zh-Hans.png` are not. They are rendered from `screenshot-1.zh-Hans.html` to
 `screenshot-3.zh-Hans.html`, the Chinese images `npm run screenshots`
 writes (it needs a Chinese font where it runs):
 
