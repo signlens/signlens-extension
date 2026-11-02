@@ -6,5 +6,6 @@
 
 # The extension's name; "beta" says it is not finished.
 manifest-name = SignLens (beta)
-# Under the name in the browser's list of extensions.
-manifest-description = See what a Solana transaction does before you sign it. Explains every signing request, then hands it unchanged to your own wallet. Beta: the explanation is computed by SignLens's server.
+# Under the name in the browser's list of extensions, and the stores' summary:
+# at most 132 characters, the most the Chrome Web Store takes.
+manifest-description = See what a Solana transaction does before you sign it. Explains every signing request, then hands it unchanged to your own wallet.

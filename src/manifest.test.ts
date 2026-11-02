@@ -3,7 +3,7 @@
 // it under dist/firefox/, since each warns about the other's background key.
 
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { readdirSync, readFileSync } from 'node:fs';
 import { test } from 'node:test';
 import { firefoxManifest, type Manifest } from '../scripts/firefox-manifest.ts';
 import { HTTPS_HOSTS, hostsNeeded, LOOPBACK } from './shared/endpoint.ts';
@@ -63,4 +63,25 @@ test('the Firefox manifest runs the same worker as a background script, with the
     const { background: _b, browser_specific_settings: _s, ...rest } = firefox;
     const { background: _c, minimum_chrome_version: _m, ...chrome } = manifest;
     assert.deepEqual(rest, chrome, 'everything else is the same file');
+});
+
+test('the name and description fit what the Chrome Web Store takes, in every language', () => {
+    // The manifest's description is at most 132 characters and its name at
+    // most 75; the store refuses a package whose words in any language are longer.
+    const folder = new URL('../static/_locales/', import.meta.url);
+    const languages = readdirSync(folder);
+    assert.ok(languages.includes('en'));
+    for (const language of languages) {
+        // A language without a reviewed description has none, and the browser shows the English.
+        const words = JSON.parse(readFileSync(new URL(`${language}/messages.json`, folder), 'utf8')) as {
+            name: { message: string };
+            description?: { message: string };
+        };
+        const name = [...words.name.message].length;
+        assert.ok(name <= 75, `${language}: the name is ${name} characters`);
+        if (words.description) {
+            const description = [...words.description.message].length;
+            assert.ok(description <= 132, `${language}: the description is ${description} characters`);
+        }
+    }
 });

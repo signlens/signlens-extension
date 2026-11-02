@@ -370,7 +370,7 @@ export const CATALOGS: Readonly<Record<string, Catalog>> = {
         'language-note': { value: ["For SignLens's own words and for its explanations."] },
         'manifest-description': {
             value: [
-                "See what a Solana transaction does before you sign it. Explains every signing request, then hands it unchanged to your own wallet. Beta: the explanation is computed by SignLens's server.",
+                'See what a Solana transaction does before you sign it. Explains every signing request, then hands it unchanged to your own wallet.',
             ],
         },
         'manifest-name': { value: ['SignLens (beta)'] },
@@ -1150,7 +1150,7 @@ export const CATALOGS: Readonly<Record<string, Catalog>> = {
         'language-note': { value: ["[Fór SígñLéñs's ówñ wórds áñd fór íts éxpláñátíóñs.····················]"] },
         'manifest-description': {
             value: [
-                "[Séé whát á Sóláñá tráñsáçtíóñ dóés béfóré ýóú sígñ ít. Éxpláíñs évérý sígñíñg réqúést, théñ háñds ít úñçháñgéd tó ýóúr ówñ wállét. Bétá: thé éxpláñátíóñ ís çómpútéd bý SígñLéñs's sérvér.··········································································]",
+                '[Séé whát á Sóláñá tráñsáçtíóñ dóés béfóré ýóú sígñ ít. Éxpláíñs évérý sígñíñg réqúést, théñ háñds ít úñçháñgéd tó ýóúr ówñ wállét.····················································]',
             ],
         },
         'manifest-name': { value: ['[SígñLéñs (bétá)······]'] },
@@ -2090,11 +2090,6 @@ export const CATALOGS: Readonly<Record<string, Catalog>> = {
         'language-label': { value: ['语言'] },
         'language-not-saved': { value: ['未保存：', { arg: 'error' }] },
         'language-note': { value: ['用于 SignLens 自身的文字和它给出的解释。'] },
-        'manifest-description': {
-            value: [
-                '在签名之前，看清一笔 Solana 交易会做什么。解释每个签名请求，然后将其原样转交给您自己的钱包。测试版：解释由 SignLens 的服务器计算生成。',
-            ],
-        },
         'manifest-name': { value: ['SignLens（测试版）'] },
         'popup-accounts': { value: [{ arg: 'name' }, '，', { arg: 'more' }] },
         'popup-accounts-more': {

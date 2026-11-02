@@ -6,6 +6,17 @@ uses [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Changed
+
+- **A description the Chrome Web Store takes.** The description under
+  SignLens's name in the browser's list of extensions, which the stores
+  show as its summary, was 186 characters, and the Chrome Web Store
+  takes a package only when it is at most 132. It now reads "See what a
+  Solana transaction does before you sign it. Explains every signing
+  request, then hands it unchanged to your own wallet.", without the
+  sentence on the beta, which the name's "(beta)" and the stores'
+  listings still say; in Simplified Chinese likewise.
+
 ## [0.3.1] - 2026-11-02
 
 ### Added
