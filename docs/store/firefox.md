@@ -41,7 +41,7 @@ release's zip, whose SHA-256 the release states.
 |---|---|
 | Name | SignLens (beta), the manifest's (`locales/en/manifest.ftl`) |
 | Add-on URL | `signlens-beta`: <https://addons.mozilla.org/firefox/addon/signlens-beta/> |
-| Summary | the manifest's description without its last sentence, below |
+| Summary | the manifest's description (`locales/en/manifest.ftl`), below |
 | Categories | Privacy & Security |
 | Tags | security; anti malware too, if wanted, for the drainers it blocks. AMO offers a fixed list, without solana, wallet, crypto or web3, and privacy is left off: SignLens sends each transaction to its server, where a privacy add-on is expected to send less |
 | Homepage | <https://signlens.dev> |
@@ -55,11 +55,6 @@ release's zip, whose SHA-256 the release states.
 
 See what a Solana transaction does before you sign it. Explains every
 signing request, then hands it unchanged to your own wallet.
-
-The manifest's description goes on "Beta: the explanation is computed by
-SignLens's server."; the store's summary leaves that out, where the name
-says "(beta)" and the description says the server computes the
-explanation. The Chinese summary keeps it.
 
 ### Description
 
@@ -96,23 +91,26 @@ SignLens is not affiliated with the wallets and projects whose programs it expla
 ### Privacy policy
 
 ```text
-SignLens privacy policy. Last changed 28 October 2026.
+SignLens privacy policy. Last changed 1 November 2026.
 
 What the SignLens extension sends, to whom, and what is kept.
 
 WHAT GOES TO THE SIGNLENS API
-In this beta, SignLens's server (api.signlens.dev) computes the explanation. For each transaction a dapp asks you to sign, the extension sends the SignLens API: the transaction, the addresses its lookup tables load, the outcome of the simulation if it ran, your addresses from the settings (in watch-only mode the watched one), so that the explanation can say "you", and the addresses in your address book, so that a contact can be told from an address that only looks like one. The names in your address book never leave your browser: each goes as a random stand-in, new for each request, which says nothing of the name and which the extension replaces with the name in the explanation it shows you. When account lookup is on and the explanation names accounts it would read, such as a multisig proposal and the transaction it stores or a DAO proposal and its options, it asks again with those accounts as your RPC returned them, at most twice. When token lookup is on and the explanation leaves tokens unnamed, it asks again with their symbols. This happens when the dapp asks, before the window opens, and also when "Show the explanation and ask first" is off and no window opens.
+In this beta, SignLens's server (api.signlens.dev) computes the explanation. For each transaction a dapp asks you to sign, the extension sends the SignLens API: the transaction, the addresses its lookup tables load, the outcome of the simulation if it ran, at most eight of your addresses from the settings (in watch-only mode the watched one), so that the explanation can say "you"; the languages your browser asks for, so that it is worded in the first of them SignLens has; and at most 64 addresses from your address book, each with a stand-in for its name: its place in the list and a random tag drawn for each request, which says nothing of the name. The extension puts the names back before the window shows the explanation, so they never leave your browser. When account lookup is on and the explanation names accounts it would read, such as a multisig proposal and the transaction it stores or a DAO proposal and its options, it asks again with those accounts as your RPC returned them, at most twice. When token lookup is on and the explanation leaves tokens unnamed, it asks again with their symbols. It also asks again when you press "Try again" or "Show in English" in the window. This happens when the dapp asks, before the window opens, and also when "Show the explanation and ask first" is off and no window opens.
 
 For each request the API logs the time, how long it took, the verdict, the finding codes, the program names, the size and a SHA-256 hash of the transaction's message, and keeps nothing else. The hash cannot be turned back into the transaction, but once the transaction is on chain anyone can compute the same hash from it, so a log line can be matched to that transaction and its signer. Messages to sign never leave the extension.
 
 YOUR IP ADDRESS
 Every request reaches the API through Cloudflare, which sees your IP address, as it does for any site it serves. The API uses the address only to count your requests against its limit, in memory and as a keyed hash, and logs it nowhere.
 
+WHERE THE API RUNS
+The SignLens API runs on two servers, one SignLens runs itself and one it rents from Google Cloud in the United States. Cloudflare sends each request to the one nearer to you, and to the other when one is down; Google processes the requests that reach its server for SignLens. Each keeps its own log and the feedback it receives, as below, and SignLens copies the feedback to its own computer to read it.
+
 YOUR RPC AND THE TOKEN LIST
 The RPC in the settings, by default the public solana-rpc.publicnode.com, is asked for the lookup tables of every transaction that uses any, sees the whole transaction when simulation is on, is asked for the accounts an explanation names when account lookup is on, and for the mints of unlisted tokens when token lookup is on. Those mints also go to the token list, by default Jupiter's lite-api.jup.ag. Simulation, account lookup and token lookup are on by default; the settings turn them off, and the RPC and the token list can be your own.
 
 FEEDBACK
-The feedback strip under an explanation sends nothing until you rate it, and says what a rating sends before you give one. A rating sends, for each transaction explained: the rating, your comment, a hash of the transaction, the wallet method the site called, and what the window showed you: the verdict, the summary, with each of your contacts in it as "a contact", the findings by code and severity, and the program each instruction calls. It sends the site's host and SignLens's version only once you allow them: Firefox asks the first time you rate, and "Permissions and data" in its add-ons manager changes the answer. The transaction itself goes only if you tick "Send this transaction to SignLens so it can be looked into", which is offered unticked. Feedback is kept to improve the explanations; to have yours deleted, write to support@signlens.dev with the time you sent it.
+The feedback strip under an explanation sends nothing until you rate it, and says what a rating sends before you give one. A rating sends, for each transaction explained: the rating, your comment, a hash of the transaction, the wallet method the site called, the language the explanation was in, and what the window showed you: the verdict, the summary, with any contact in it as "a contact", the findings by code and severity, and the program each instruction calls. It sends the site's host and SignLens's version only once you allow them: Firefox asks the first time you rate, and "Permissions and data" in its add-ons manager changes the answer. The transaction itself goes only if you tick "Send this transaction to SignLens so it can be looked into", which is offered unticked. Feedback is kept to improve the explanations; to have yours deleted, write to support@signlens.dev with the time you sent it.
 
 WHAT THE DAPP LEARNS
 The dapp is told whether the request was passed on, rejected by you, or refused by SignLens and why, never the verdict or the explanation. In watch-only mode it learns the watched address only once you allow it.
@@ -192,7 +190,7 @@ The privacy policy stays the English one above, the authoritative text.
 
 ### Summary
 
-在签名之前，看清一笔 Solana 交易会做什么。解释每个签名请求，然后将其原样转交给您自己的钱包。测试版：解释由 SignLens 的服务器计算生成。
+在签名之前，看清一笔 Solana 交易会做什么。解释每个签名请求，然后将其原样转交给您自己的钱包。
 
 ### Description
 
