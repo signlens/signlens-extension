@@ -22,7 +22,13 @@ icon are the files beside this one.
    [`DEVELOPMENT.md`](../../DEVELOPMENT.md#building-for-review) says.
 5. The listing fields below, the first time, and the notes to the reviewer.
    Release notes for a version: its section of `CHANGELOG.md`
-   (`node scripts/release-notes.ts X.Y.Z`).
+   (`node scripts/release-notes.ts X.Y.Z`), without the "Checking the
+   packages" it ends on, which is about the GitHub release's zip, not the
+   copy the store signs. A version that follows some never submitted here
+   (0.3.1 after 0.2.0) has notes for all of them, since a store user meets
+   them at once; its notes to the reviewer then open with what changed
+   since the last version here: the permissions, the data collected, and
+   what the validator newly warns about.
 6. **Experimental**: no. **Requires payment**: no.
 
 The store signs the package it publishes: the `.xpi` Firefox installs has
@@ -155,7 +161,9 @@ The JavaScript is the TypeScript compiler's output, one file per source file, ne
 TRYING IT
 No account is needed. In SignLens's popup, Settings: under "After explaining a request" choose "Refuse it (watch-only, no keys involved)", and in "Address to connect as" give any mainnet address that holds some SOL. On a dapp such as https://jup.ag, connect "SignLens" and start a swap: the SignLens window explains the transaction, and in watch-only mode every request is refused, so nothing is signed. With a Solana wallet extension installed, the default mode passes each request on to it after the window.
 
-Desktop only: the validator's warning about Firefox for Android 140 concerns a platform this add-on is not submitted for.
+Desktop only: the validator's warnings about Firefox for Android 140 concern a platform this add-on is not submitted for.
+
+The validator's warning that action.onUserSettingsChanged is not in Firefox 140: src/ui/welcome.ts adds its listener only where the event exists (chrome.action.onUserSettingsChanged?.addListener); elsewhere the setup page checks again whether SignLens is pinned when it gets the focus or is shown again.
 
 Questions: support@signlens.dev
 ```
@@ -207,15 +215,21 @@ The privacy policy stays the English one above, the authoritative text.
 SignLens 与其所解释程序背后的钱包和项目没有关联。
 ```
 
-### Screenshots
+### Captions
 
-1. `firefox-screenshot-1.zh-Hans.png`: 在您的钱包签名之前的 SignLens 窗口：存入 Kamino Lend（正常），以及一笔签名永不过期的 USDC 转账（警告）。
-2. `firefox-screenshot-2.zh-Hans.png`: 同样的两笔交易，深色主题。
-3. `firefox-screenshot-3.zh-Hans.png`: 弹出窗口列出最近的请求、SignLens 对每个请求的结论，以及您的决定。
+AMO has one set of screenshots for every language and translates only
+their captions, so the Chinese listing shows the English screenshots
+above, in their order, with these captions:
 
-They are rendered from `screenshot-1.zh-Hans.html` to
-`screenshot-3.zh-Hans.html`, the Chinese images `npm run screenshots` writes
-(it needs a Chinese font where it runs):
+1. 在您的钱包签名之前的 SignLens 窗口：存入 Kamino Lend（正常），以及一笔签名永不过期的 USDC 转账（警告）。
+2. 同样的两笔交易，深色主题。
+3. 弹出窗口列出最近的请求、SignLens 对每个请求的结论，以及您的决定。
+
+The Chinese screenshots, `firefox-screenshot-1.zh-Hans.png` to
+`firefox-screenshot-3.zh-Hans.png`, have no place on AMO and are not
+uploaded. They are rendered from `screenshot-1.zh-Hans.html` to
+`screenshot-3.zh-Hans.html`, the Chinese images `npm run screenshots`
+writes (it needs a Chinese font where it runs):
 
 ```sh
 for n in 1 2 3; do npx playwright screenshot --viewport-size=1280,800 file://$PWD/docs/store/screenshot-$n.zh-Hans.html docs/store/firefox-screenshot-$n.zh-Hans.png; done
