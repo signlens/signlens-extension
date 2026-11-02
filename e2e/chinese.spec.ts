@@ -57,6 +57,6 @@ test('the popup names the languages the API explains in, and when they were revi
     await configure({ apiUrl: server.api });
     await popup.reload();
     await expect(popup.locator('#engine-status')).toContainText(
-        '以英文解释；当您的浏览器要求时，也以下列语言解释：简体中文（zh-Hans），审核于 2026-10-31。',
+        '以英文解释；当您的浏览器要求或您在设置中选择时，也以下列语言解释：简体中文（zh-Hans），审核于 2026-10-31。',
     );
 });

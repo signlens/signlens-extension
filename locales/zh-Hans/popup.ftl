@@ -6,7 +6,7 @@ popup-engine-down = 无法连接 SignLens API：{ $error }
 popup-engine-ready = SignLens API 已就绪：引擎 { $engine }，{ $programs } 个程序，{ $tokens } 种已验证代币。{ $languages }
 popup-languages = { $count ->
     [0] 以英文解释。
-   *[other] 以英文解释；当您的浏览器要求时，也以下列语言解释：{ $languages }。
+   *[other] 以英文解释；当您的浏览器要求或您在设置中选择时，也以下列语言解释：{ $languages }。
 }
 popup-language = { $review ->
     [reviewed] { $language }，审核于 { $on }
