@@ -14,7 +14,12 @@
                 register(...found) {
                     for (const wallet of found) {
                         wallets.set(wallet.name, wallet);
-                        if (wallet.name === 'SignLens') wallet.features['standard:events'].on('change', () => noteEvent('change'));
+                        if (wallet.name === 'SignLens') {
+                            wallet.features['standard:events'].on('change', (properties) => {
+                                noteEvent('change');
+                                window.changes.push(Object.keys(properties).sort());
+                            });
+                        }
                     }
                     return () => {};
                 },
@@ -25,6 +30,8 @@
             // target would be the port to the extension, which a page must
             // never get hold of.
             window.eventsSeen = [];
+            /** What each change SignLens told this page of held: its keys, sorted. */
+            window.changes = [];
             function noteEvent(where) {
                 const event = window.event;
                 window.eventsSeen.push(`${where}: ${event ? Object.prototype.toString.call(event.target) : 'none'}`);
@@ -56,7 +63,8 @@
                     'standard:events': { version: '1.0.0', on: () => () => {} },
                     'solana:signTransaction': {
                         version: '1.0.0',
-                        supportedTransactionVersions: ['legacy', 0],
+                        // As Backpack and Jupiter Wallet do since v1 went live.
+                        supportedTransactionVersions: ['legacy', 0, 1],
                         signTransaction: async (...inputs) => {
                             // As real wallets may, it calls a method on what it is handed.
                             for (const input of inputs) {
@@ -126,6 +134,17 @@
 
             /** The addresses the wallet has connected this page with, as a dapp reads them. */
             window.accountsOf = (name) => wallets.get(name).accounts.map((account) => account.address);
+
+            window.disconnect = (name) => wallets.get(name).features['standard:disconnect'].disconnect();
+
+            /** The transaction versions the wallet lists, to sign and to sign and send, as a dapp reads them when it builds one. */
+            window.versionsOf = (name) => {
+                const features = wallets.get(name).features;
+                return {
+                    sign: features['solana:signTransaction']?.supportedTransactionVersions ?? null,
+                    send: features['solana:signAndSendTransaction']?.supportedTransactionVersions ?? null,
+                };
+            };
 
             /** Connects to the wallet and asks it to sign; returns what it answered. */
             window.sign = async (name, base64, method = 'solana:signTransaction', chain = 'solana:mainnet') => {

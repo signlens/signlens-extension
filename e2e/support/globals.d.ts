@@ -5,6 +5,11 @@ interface Window {
     connect(wallet: string): Promise<string>;
     connectSilently(wallet: string): Promise<string[]>;
     accountsOf(wallet: string): string[];
+    disconnect(wallet: string): Promise<void>;
+    /** The transaction versions the wallet lists, to sign and to sign and send; `null` for a way it does not have. */
+    versionsOf(wallet: string): { sign: (string | number)[] | null; send: (string | number)[] | null };
+    /** The keys of each change SignLens told the page of, sorted. */
+    changes: string[][];
     sign(wallet: string, base64: string, method?: string, chain?: string): Promise<{ account?: string; signed?: number; error?: string }>;
     signTricky(wallet: string, base64: string, trick: 'mutate' | 'getter'): Promise<{ signed?: boolean; error?: string }>;
     signUnconnected(wallet: string, base64: string): Promise<{ signed?: boolean; error?: string }>;

@@ -9,6 +9,7 @@ import { after, before, beforeEach, test } from 'node:test';
 import { until } from '../../test/chrome.fake.ts';
 
 const SIGN = 'solana:signTransaction';
+const SEND = 'solana:signAndSendTransaction';
 
 /** A request the wallet sent the extension, and how to answer it. */
 interface Asked {
@@ -55,8 +56,18 @@ const account = Object.freeze({
     chains: ['solana:mainnet'],
     features: [SIGN],
 });
+// The transaction versions it says it signs, and signs and sends, read
+// each time they are asked for: as of Backpack's or Jupiter Wallet's v1
+// release, v1 to sign but not yet to send, so each way is told apart.
+const SIGN_VERSIONS = () => ['legacy', 0, 1];
+const SEND_VERSIONS = () => ['legacy', 0];
+let signVersions: () => unknown = SIGN_VERSIONS;
+let sendVersions: () => unknown = SEND_VERSIONS;
 const signFeature = {
     version: '1.0.0',
+    get supportedTransactionVersions() {
+        return signVersions();
+    },
     async signTransaction(this: unknown, ...inputs: { transaction: Uint8Array; account?: unknown }[]) {
         for (const input of inputs) {
             signed.push({
@@ -81,7 +92,7 @@ interface UpstreamAccount {
 // Its connection to the page, which a site may make it drop (jup.ag does
 // Backpack's) and a connect takes up again, as a new account object.
 let upstreamAccounts: readonly UpstreamAccount[] = [account];
-const upstreamListeners = new Set<(properties: { accounts: readonly UpstreamAccount[] }) => void>();
+const upstreamListeners = new Set<(properties: { accounts?: readonly UpstreamAccount[]; features?: unknown }) => void>();
 /** Whether the real wallet still lets this site connect without asking. */
 let trusted = true;
 /** What each connect asked the real wallet, `null` for nothing. */
@@ -90,6 +101,10 @@ const connects: unknown[] = [];
 function upstreamChange(next: readonly UpstreamAccount[]): void {
     upstreamAccounts = next;
     for (const listener of upstreamListeners) listener({ accounts: next });
+}
+/** The real wallet's features change (what it signs, say), and it says so. */
+function upstreamFeaturesChange(): void {
+    for (const listener of upstreamListeners) listener({ features: upstream.features });
 }
 const upstream = {
     version: '1.0.0',
@@ -113,13 +128,22 @@ const upstream = {
         },
         'standard:events': {
             version: '1.0.0',
-            on(event: string, listener: (properties: { accounts: readonly UpstreamAccount[] }) => void) {
+            on(event: string, listener: (properties: { accounts?: readonly UpstreamAccount[]; features?: unknown }) => void) {
                 if (event !== 'change') return () => {};
                 upstreamListeners.add(listener);
                 return () => upstreamListeners.delete(listener);
             },
         },
         [SIGN]: signFeature,
+        [SEND]: {
+            version: '1.0.0',
+            get supportedTransactionVersions() {
+                return sendVersions();
+            },
+            async signAndSendTransaction(...inputs: { transaction: Uint8Array }[]) {
+                return inputs.map(() => ({ signature: new Uint8Array(64) }));
+            },
+        },
         'solana:signMessage': {
             version: '1.0.0',
             async signMessage(...inputs: { message: Uint8Array }[]) {
@@ -211,6 +235,8 @@ beforeEach(async () => {
     signedMessages.length = 0;
     upstreamAccounts = [account];
     trusted = true;
+    signVersions = SIGN_VERSIONS;
+    sendVersions = SEND_VERSIONS;
     if (pageConfig.mode !== 'passthrough') {
         settingsChange('passthrough');
         await until(() => accountsNow().length === 0);
@@ -738,9 +764,11 @@ function watchChanges(): { changes: string[][]; stop: () => void } {
     const changes: string[][] = [];
     const on = signlens.features['standard:events']?.on as unknown as (
         event: string,
-        listener: (properties: { accounts: readonly { address: string }[] }) => void,
+        listener: (properties: { accounts?: readonly { address: string }[] }) => void,
     ) => () => void;
-    const stop = on('change', (properties) => changes.push(properties.accounts.map((a) => a.address)));
+    const stop = on('change', (properties) => {
+        if (properties.accounts) changes.push(properties.accounts.map((a) => a.address));
+    });
     return { changes, stop };
 }
 
@@ -855,4 +883,128 @@ test('a watch session follows a new address the site may see, and ends when the 
     await until(() => accountsNow()[0] === other.address);
     settingsChange('passthrough');
     await until(() => accountsNow().length === 0);
+});
+
+// ---- The transaction versions a dapp is told SignLens signs ----
+//
+// A dapp builds the transaction for the versions a wallet lists (jup.ag
+// builds v1 only for a wallet that lists it), and the bytes go on
+// unchanged: SignLens may list only what both it reads and the wallet
+// behind it takes, or a request the user agreed to would fail there.
+
+/** The versions each way to sign says, as a dapp reads them off the wallet. */
+function versionsNow(): { sign: unknown; send: unknown } {
+    const features = signlens.features as Record<string, { supportedTransactionVersions?: unknown } | undefined>;
+    return { sign: features[SIGN]?.supportedTransactionVersions, send: features[SEND]?.supportedTransactionVersions };
+}
+
+const BEFORE_V1 = { sign: ['legacy', 0], send: ['legacy', 0] };
+
+/** What each change SignLens tells a dapp holds, and the versions the wallet says as the dapp hears it, until `stop`. */
+function watchEvents(): { events: { keys: string[]; versions: unknown; same: boolean }[]; stop: () => void } {
+    const events: { keys: string[]; versions: unknown; same: boolean }[] = [];
+    const on = signlens.features['standard:events']?.on as unknown as (
+        event: string,
+        listener: (properties: Record<string, unknown>) => void,
+    ) => () => void;
+    const stop = on('change', (properties) => {
+        const keys = Object.keys(properties).sort();
+        // The features it is told of are the wallet's own by then, which is where a dapp reads them again.
+        const same = !('features' in properties) || properties.features === signlens.features;
+        events.push({ keys, versions: versionsNow(), same });
+    });
+    return { events, stop };
+}
+
+test('in pass-through, each way to sign lists the versions the wallet behind takes for it, from the connect to the end of the session', async () => {
+    const { events, stop } = watchEvents();
+    try {
+        await disconnect();
+        assert.deepEqual(versionsNow(), BEFORE_V1);
+        events.length = 0;
+        await connect();
+        // The wallet behind signs v1, and signs and sends legacy and v0 only.
+        const after = { sign: ['legacy', 0, 1], send: ['legacy', 0] };
+        assert.deepEqual(versionsNow(), after);
+        // Told with the accounts, in the one event.
+        assert.deepEqual(events, [{ keys: ['accounts', 'features'], versions: after, same: true }]);
+        // A dapp cannot change what another reads.
+        assert.ok(Object.isFrozen(signlens.features));
+        assert.ok(Object.isFrozen(signlens.features[SIGN]));
+        assert.ok(Object.isFrozen(versionsNow().sign));
+        events.length = 0;
+        await disconnect();
+        assert.deepEqual(versionsNow(), BEFORE_V1);
+        assert.deepEqual(events, [{ keys: ['accounts', 'features'], versions: BEFORE_V1, same: true }]);
+    } finally {
+        stop();
+    }
+});
+
+test('the versions listed are those of the wallet behind that SignLens reads, in one order; a list it cannot read leaves legacy and v0', async () => {
+    const cases: [string, () => unknown, unknown][] = [
+        ['v1 and a version SignLens does not read, out of order', () => [1, 0, 'legacy', 2], ['legacy', 0, 1]],
+        ['legacy only', () => ['legacy'], ['legacy']],
+        ['v0 only', () => [0], [0]],
+        ['versions as text', () => ['1', 'v1', 0], [0]],
+        ['no list', () => undefined, ['legacy', 0]],
+        ['not a list', () => 'legacy,0,1', ['legacy', 0]],
+        [
+            'a list that throws',
+            () => {
+                throw new Error('broken');
+            },
+            ['legacy', 0],
+        ],
+    ];
+    try {
+        for (const [name, given, listed] of cases) {
+            signVersions = given;
+            await disconnect();
+            await connect();
+            assert.deepEqual(accountsNow(), [account.address], name);
+            assert.deepEqual(versionsNow().sign, listed, name);
+            assert.ok(Object.isFrozen(versionsNow().sign), name);
+        }
+    } finally {
+        signVersions = SIGN_VERSIONS;
+        await disconnect();
+        await connect();
+    }
+});
+
+test('the wallet behind changing what it takes is followed, and the dapp is told of the features alone', async () => {
+    assert.deepEqual(versionsNow().sign, ['legacy', 0, 1]);
+    const { events, stop } = watchEvents();
+    try {
+        signVersions = () => ['legacy', 0];
+        upstreamFeaturesChange();
+        assert.deepEqual(versionsNow().sign, ['legacy', 0]);
+        // Nothing new: nothing for the dapp.
+        upstreamFeaturesChange();
+        // Its accounts changing, as they do, leaves the versions be.
+        upstreamChange([Object.freeze({ ...account })]);
+        signVersions = SIGN_VERSIONS;
+        upstreamFeaturesChange();
+        assert.deepEqual(versionsNow().sign, ['legacy', 0, 1]);
+        assert.deepEqual(events, [
+            { keys: ['features'], versions: BEFORE_V1, same: true },
+            { keys: ['features'], versions: { sign: ['legacy', 0, 1], send: ['legacy', 0] }, same: true },
+        ]);
+    } finally {
+        stop();
+    }
+});
+
+test('in watch mode each way to sign lists legacy, v0 and v1: SignLens reads all three, and nothing is signed', async () => {
+    settingsChange('watch');
+    await until(() => accountsNow().length === 0);
+    assert.deepEqual(versionsNow(), BEFORE_V1);
+    const allowed = connect();
+    (await nextRequest()).reply({ approved: true, ...WATCHED });
+    await allowed;
+    assert.deepEqual(versionsNow(), { sign: ['legacy', 0, 1], send: ['legacy', 0, 1] });
+    settingsChange('passthrough');
+    await until(() => accountsNow().length === 0);
+    assert.deepEqual(versionsNow(), BEFORE_V1);
 });
