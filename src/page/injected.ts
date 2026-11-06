@@ -94,6 +94,18 @@
         on(event: string, listener: (properties: { accounts?: readonly WalletAccount[] }) => void): () => void;
     }
 
+    /** What a change event tells a dapp: what changed of the accounts and the features. */
+    type ChangeListener = (properties: { accounts?: readonly WalletAccount[]; features?: Wallet['features'] }) => void;
+
+    /** A transaction version a dapp may build for: legacy, or a versioned message's number. */
+    type TransactionVersion = 'legacy' | 0 | 1;
+
+    /** The versions each way to sign lists. */
+    interface Versions {
+        readonly sign: readonly TransactionVersion[];
+        readonly send: readonly TransactionVersion[];
+    }
+
     interface SignInput {
         account?: WalletAccount;
         transaction?: Uint8Array;
@@ -251,19 +263,71 @@
     let accounts: readonly WalletAccount[] = Object.freeze([]);
     // null until connected; then the mode, and for pass-through the wallet behind it.
     let session: { mode: 'watch' } | { mode: 'passthrough'; upstream: Wallet; stopWatching: (() => void) | undefined } | null = null;
-    const changeListeners = new Set<(properties: { accounts: readonly WalletAccount[] }) => void>();
+    const changeListeners = new Set<ChangeListener>();
     // Every other Wallet Standard wallet in the page.
     const otherWallets = new Set<Wallet>();
 
-    function setAccounts(next: readonly WalletAccount[]): void {
-        accounts = Object.freeze([...next]);
+    // The transaction versions a dapp is told each way to sign takes. It
+    // builds for them (jup.ag builds v1 only for a wallet that lists it),
+    // and the bytes go on unchanged, so SignLens lists only what the
+    // extension reads and the wallet behind it takes (`listedBy`).
+    // Before a session: legacy and v0, which every wallet took before v1
+    // (SIMD-0385) went live.
+    const BEFORE_V1: readonly TransactionVersion[] = freeze<TransactionVersion[]>(['legacy', 0]);
+    // What the extension reads (worker/solana.ts, shared/programs.ts): the most it lists.
+    const READ: readonly TransactionVersion[] = freeze<TransactionVersion[]>(['legacy', 0, 1]);
+    const NO_SESSION: Versions = freeze({ sign: BEFORE_V1, send: BEFORE_V1 });
+    // Watching, nothing is signed: all the extension reads.
+    const WATCHING: Versions = freeze({ sign: READ, send: READ });
+    let versions = NO_SESSION;
+
+    /**
+     * Takes up the session's accounts, the versions each way to sign
+     * lists, or both, and tells the dapp in one change event: the accounts
+     * whenever given, the features only when the versions differ.
+     */
+    function update(next: { accounts?: readonly WalletAccount[]; versions?: Versions }): void {
+        const given = next.accounts;
+        if (given !== undefined) accounts = Object.freeze([...given]);
+        const listed = next.versions !== undefined && !sameVersions(next.versions, versions) ? next.versions : undefined;
+        if (listed !== undefined) {
+            versions = listed;
+            features = walletFeatures(listed);
+        }
+        if (given === undefined && listed === undefined) return;
         for (const listener of changeListeners) {
             try {
-                listener({ accounts });
+                listener(given === undefined ? { features } : listed === undefined ? { accounts } : { accounts, features });
             } catch (error) {
                 console.error(error);
             }
         }
+    }
+
+    function sameVersions(a: Versions, b: Versions): boolean {
+        const same = (x: readonly TransactionVersion[], y: readonly TransactionVersion[]) =>
+            x.length === y.length && x.every((version, i) => version === y[i]);
+        return same(a.sign, b.sign) && same(a.send, b.send);
+    }
+
+    /**
+     * The versions each way to sign lists in pass-through: of those the
+     * extension reads, the ones `upstream` lists for the same way, in one
+     * order. A way it does not have, or a list that is not one, leaves
+     * legacy and v0, as SignLens listed before it asked.
+     */
+    function listedBy(upstream: Wallet): Versions {
+        const takes = (method: string): readonly TransactionVersion[] => {
+            let listed: unknown;
+            try {
+                listed = upstream.features?.[method]?.supportedTransactionVersions;
+            } catch {
+                return BEFORE_V1;
+            }
+            if (!Array.isArray(listed)) return BEFORE_V1;
+            return freeze(READ.filter((version) => listed.includes(version)));
+        };
+        return freeze({ sign: takes(SIGN_TRANSACTION), send: takes(SIGN_AND_SEND_TRANSACTION) });
     }
 
     function watchAccount(address: string, publicKey: readonly number[]): WalletAccount {
@@ -279,7 +343,7 @@
     function endSession(): void {
         if (session?.mode === 'passthrough') session.stopWatching?.();
         session = null;
-        setAccounts([]);
+        update({ accounts: [], versions: NO_SESSION });
     }
 
     /** The settings the extension answered with, or `null` for anything else (it answers `null` when it cannot read them). */
@@ -326,7 +390,7 @@
         const account = await askToWatch(true).catch(() => null);
         if (session?.mode !== 'watch') return;
         if (!account) endSession();
-        else if (account.address !== accounts[0]?.address) setAccounts([account]);
+        else if (account.address !== accounts[0]?.address) update({ accounts: [account] });
     }
 
     /**
@@ -613,20 +677,24 @@
             const granted = await (upstream.features[CONNECT] as ConnectFeature).connect(input);
             if (session?.mode === 'passthrough') session.stopWatching?.();
             const stopWatching = (upstream.features[EVENTS] as EventsFeature | undefined)?.on('change', (properties) => {
-                if (session?.mode !== 'passthrough' || session.upstream !== upstream || !properties.accounts) return;
+                if (session?.mode !== 'passthrough' || session.upstream !== upstream) return;
+                // What it takes may change too (an update that brings v1):
+                // read again whatever the event names, told only if it differs.
+                const listed = listedBy(upstream);
                 // The wallet behind dropping its connection to the page is
                 // not the user leaving SignLens: a site may disconnect a
                 // wallet it does not see in use (jup.ag does Backpack's
                 // whenever another wallet is connected), and a wallet may
                 // drop and take it up again by itself. The session stays,
                 // and the wallet is asked again when a request needs it
-                // (`reconnected`).
-                if (properties.accounts.length === 0) return;
-                // The same addresses, perhaps as new objects: nothing for the dapp.
-                if (!sameAddresses(properties.accounts, accounts)) setAccounts(properties.accounts);
+                // (`reconnected`). The same addresses, perhaps as new
+                // objects, are nothing for the dapp either.
+                const given = properties.accounts;
+                const moved = given !== undefined && given.length > 0 && !sameAddresses(given, accounts);
+                update(moved ? { accounts: given, versions: listed } : { versions: listed });
             });
             session = { mode: 'passthrough', upstream, stopWatching };
-            setAccounts(granted.accounts);
+            update({ accounts: granted.accounts, versions: listedBy(upstream) });
         } else {
             // No wallet behind SignLens asks the user here, so SignLens does: a
             // silent connect (a dapp reconnecting as it loads) gets the address
@@ -639,7 +707,7 @@
             }
             if (session?.mode === 'passthrough') session.stopWatching?.();
             session = { mode: 'watch' };
-            setAccounts([account]);
+            update({ accounts: [account], versions: WATCHING });
         }
         return { accounts };
     }
@@ -650,35 +718,49 @@
         await (upstream?.features[DISCONNECT] as DisconnectFeature | undefined)?.disconnect();
     }
 
-    const supportedTransactionVersions = Object.freeze(['legacy', 0]);
+    const connectFeature = Object.freeze({ version: '1.0.0', connect });
+    const disconnectFeature = Object.freeze({ version: '1.0.0', disconnect });
+    const eventsFeature = Object.freeze({
+        version: '1.0.0',
+        on(event: string, listener: ChangeListener) {
+            if (event !== 'change') return () => {};
+            changeListeners.add(listener);
+            return () => changeListeners.delete(listener);
+        },
+    });
+    const signTransaction = transactionFeature(SIGN_TRANSACTION, 'signTransaction');
+    const signAndSendTransaction = transactionFeature(SIGN_AND_SEND_TRANSACTION, 'signAndSendTransaction');
+    const signMessageFeature = Object.freeze({ version: '1.0.0', signMessage });
+
+    /**
+     * The wallet's features, each way to sign listing `listed`: made anew
+     * when the versions change, and told in the change event, where
+     * a dapp reads them again. The functions are the same throughout.
+     */
+    function walletFeatures(listed: Versions): Wallet['features'] {
+        return Object.freeze({
+            [CONNECT]: connectFeature,
+            [DISCONNECT]: disconnectFeature,
+            [EVENTS]: eventsFeature,
+            [SIGN_TRANSACTION]: Object.freeze({ version: '1.0.0', supportedTransactionVersions: listed.sign, signTransaction }),
+            [SIGN_AND_SEND_TRANSACTION]: Object.freeze({
+                version: '1.0.0',
+                supportedTransactionVersions: listed.send,
+                signAndSendTransaction,
+            }),
+            [SIGN_MESSAGE]: signMessageFeature,
+        });
+    }
+
+    let features = walletFeatures(versions);
     const wallet: Wallet = Object.freeze({
         version: '1.0.0',
         name: NAME,
         icon: ICON,
         chains: CHAINS,
-        features: Object.freeze({
-            [CONNECT]: Object.freeze({ version: '1.0.0', connect }),
-            [DISCONNECT]: Object.freeze({ version: '1.0.0', disconnect }),
-            [EVENTS]: Object.freeze({
-                version: '1.0.0',
-                on(event: string, listener: (properties: { accounts: readonly WalletAccount[] }) => void) {
-                    if (event !== 'change') return () => {};
-                    changeListeners.add(listener);
-                    return () => changeListeners.delete(listener);
-                },
-            }),
-            [SIGN_TRANSACTION]: Object.freeze({
-                version: '1.0.0',
-                supportedTransactionVersions,
-                signTransaction: transactionFeature(SIGN_TRANSACTION, 'signTransaction'),
-            }),
-            [SIGN_AND_SEND_TRANSACTION]: Object.freeze({
-                version: '1.0.0',
-                supportedTransactionVersions,
-                signAndSendTransaction: transactionFeature(SIGN_AND_SEND_TRANSACTION, 'signAndSendTransaction'),
-            }),
-            [SIGN_MESSAGE]: Object.freeze({ version: '1.0.0', signMessage }),
-        }),
+        get features() {
+            return features;
+        },
         get accounts() {
             return accounts;
         },

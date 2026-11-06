@@ -79,105 +79,108 @@
                 "text": " 到 "
               },
               {
-                "short": {
-                  "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp",
-                  "is_self": false,
-                  "label": {
-                    "id": "accounts-others-token",
-                    "parts": [
-                      {
-                        "short": {
-                          "address": "BNgsxo3eHqQLNTaKy4juhAUJ8DyewcJNEcYdMuSmTT1Z",
-                          "is_self": false,
-                          "label": null,
-                          "label_trust": "fact",
-                          "stand_in": null,
-                          "words": null
+                "text": "BNgs…TT1Z 的 USDC 账户（DV3B…L7Qp）",
+                "value": {
+                  "type": "address",
+                  "value": {
+                    "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp",
+                    "is_self": false,
+                    "label": {
+                      "id": "accounts-others-token",
+                      "parts": [
+                        {
+                          "short": {
+                            "address": "BNgsxo3eHqQLNTaKy4juhAUJ8DyewcJNEcYdMuSmTT1Z",
+                            "is_self": false,
+                            "label": null,
+                            "label_trust": "fact",
+                            "stand_in": null,
+                            "words": null
+                          },
+                          "text": "BNgs…TT1Z"
                         },
-                        "text": "BNgs…TT1Z"
-                      },
-                      {
-                        "text": " 的 "
-                      },
-                      {
-                        "text": "USDC",
-                        "value": {
-                          "type": "text",
-                          "value": "USDC"
-                        }
-                      },
-                      {
-                        "text": " 账户"
-                      }
-                    ],
-                    "text": "BNgs…TT1Z 的 USDC 账户"
-                  },
-                  "label_trust": "verified",
-                  "stand_in": null,
-                  "words": {
-                    "id": "address-labelled",
-                    "parts": [
-                      {
-                        "text": "BNgs…TT1Z 的 USDC 账户",
-                        "value": {
-                          "type": "words",
+                        {
+                          "text": " 的 "
+                        },
+                        {
+                          "text": "USDC",
                           "value": {
-                            "id": "accounts-others-token",
-                            "parts": [
-                              {
-                                "short": {
-                                  "address": "BNgsxo3eHqQLNTaKy4juhAUJ8DyewcJNEcYdMuSmTT1Z",
-                                  "is_self": false,
-                                  "label": null,
-                                  "label_trust": "fact",
-                                  "stand_in": null,
-                                  "words": null
-                                },
-                                "text": "BNgs…TT1Z"
-                              },
-                              {
-                                "text": " 的 "
-                              },
-                              {
-                                "text": "USDC",
-                                "value": {
-                                  "type": "text",
-                                  "value": "USDC"
-                                }
-                              },
-                              {
-                                "text": " 账户"
-                              }
-                            ],
-                            "text": "BNgs…TT1Z 的 USDC 账户"
+                            "type": "text",
+                            "value": "USDC"
                           }
-                        }
-                      },
-                      {
-                        "text": "（"
-                      },
-                      {
-                        "short": {
-                          "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp",
-                          "is_self": false,
-                          "label": null,
-                          "label_trust": "verified",
-                          "stand_in": null,
-                          "words": null
                         },
-                        "text": "DV3B…L7Qp"
-                      },
-                      {
-                        "text": "）"
-                      }
-                    ],
-                    "text": "BNgs…TT1Z 的 USDC 账户（DV3B…L7Qp）"
+                        {
+                          "text": " 账户"
+                        }
+                      ],
+                      "text": "BNgs…TT1Z 的 USDC 账户"
+                    },
+                    "label_trust": "verified",
+                    "stand_in": null,
+                    "words": {
+                      "id": "address-labelled",
+                      "parts": [
+                        {
+                          "text": "BNgs…TT1Z 的 USDC 账户",
+                          "value": {
+                            "type": "words",
+                            "value": {
+                              "id": "accounts-others-token",
+                              "parts": [
+                                {
+                                  "short": {
+                                    "address": "BNgsxo3eHqQLNTaKy4juhAUJ8DyewcJNEcYdMuSmTT1Z",
+                                    "is_self": false,
+                                    "label": null,
+                                    "label_trust": "fact",
+                                    "stand_in": null,
+                                    "words": null
+                                  },
+                                  "text": "BNgs…TT1Z"
+                                },
+                                {
+                                  "text": " 的 "
+                                },
+                                {
+                                  "text": "USDC",
+                                  "value": {
+                                    "type": "text",
+                                    "value": "USDC"
+                                  }
+                                },
+                                {
+                                  "text": " 账户"
+                                }
+                              ],
+                              "text": "BNgs…TT1Z 的 USDC 账户"
+                            }
+                          }
+                        },
+                        {
+                          "text": "（"
+                        },
+                        {
+                          "short": {
+                            "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp",
+                            "is_self": false,
+                            "label": null,
+                            "label_trust": "verified",
+                            "stand_in": null,
+                            "words": null
+                          },
+                          "text": "DV3B…L7Qp"
+                        },
+                        {
+                          "text": "）"
+                        }
+                      ],
+                      "text": "BNgs…TT1Z 的 USDC 账户（DV3B…L7Qp）"
+                    }
                   }
-                },
-                "text": "DV3B…L7Qp"
+                }
               }
             ],
-            "text": "从 Ffz5…piwg 转账 0.996423 USDC 到 DV3B…L7Qp"
+            "text": "从 Ffz5…piwg 转账 0.996423 USDC 到 BNgs…TT1Z 的 USDC 账户（DV3B…L7Qp）"
           }
         }
       ],
@@ -1102,7 +1105,7 @@
             "a native speaker"
           ],
           "kind": "reviewed",
-          "on": "2026-10-31"
+          "on": "2026-11-06"
         },
         "used": "zh-Hans"
       },
@@ -2429,107 +2432,110 @@
             "text": " 到 "
           },
           {
-            "short": {
-              "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp",
-              "is_self": false,
-              "label": {
-                "id": "accounts-others-token",
-                "parts": [
-                  {
-                    "short": {
-                      "address": "BNgsxo3eHqQLNTaKy4juhAUJ8DyewcJNEcYdMuSmTT1Z",
-                      "is_self": false,
-                      "label": null,
-                      "label_trust": "fact",
-                      "stand_in": null,
-                      "words": null
+            "text": "BNgs…TT1Z 的 USDC 账户（DV3B…L7Qp）",
+            "value": {
+              "type": "address",
+              "value": {
+                "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp",
+                "is_self": false,
+                "label": {
+                  "id": "accounts-others-token",
+                  "parts": [
+                    {
+                      "short": {
+                        "address": "BNgsxo3eHqQLNTaKy4juhAUJ8DyewcJNEcYdMuSmTT1Z",
+                        "is_self": false,
+                        "label": null,
+                        "label_trust": "fact",
+                        "stand_in": null,
+                        "words": null
+                      },
+                      "text": "BNgs…TT1Z"
                     },
-                    "text": "BNgs…TT1Z"
-                  },
-                  {
-                    "text": " 的 "
-                  },
-                  {
-                    "text": "USDC",
-                    "value": {
-                      "type": "text",
-                      "value": "USDC"
-                    }
-                  },
-                  {
-                    "text": " 账户"
-                  }
-                ],
-                "text": "BNgs…TT1Z 的 USDC 账户"
-              },
-              "label_trust": "verified",
-              "stand_in": null,
-              "words": {
-                "id": "address-labelled",
-                "parts": [
-                  {
-                    "text": "BNgs…TT1Z 的 USDC 账户",
-                    "value": {
-                      "type": "words",
+                    {
+                      "text": " 的 "
+                    },
+                    {
+                      "text": "USDC",
                       "value": {
-                        "id": "accounts-others-token",
-                        "parts": [
-                          {
-                            "short": {
-                              "address": "BNgsxo3eHqQLNTaKy4juhAUJ8DyewcJNEcYdMuSmTT1Z",
-                              "is_self": false,
-                              "label": null,
-                              "label_trust": "fact",
-                              "stand_in": null,
-                              "words": null
-                            },
-                            "text": "BNgs…TT1Z"
-                          },
-                          {
-                            "text": " 的 "
-                          },
-                          {
-                            "text": "USDC",
-                            "value": {
-                              "type": "text",
-                              "value": "USDC"
-                            }
-                          },
-                          {
-                            "text": " 账户"
-                          }
-                        ],
-                        "text": "BNgs…TT1Z 的 USDC 账户"
+                        "type": "text",
+                        "value": "USDC"
                       }
-                    }
-                  },
-                  {
-                    "text": "（"
-                  },
-                  {
-                    "short": {
-                      "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp",
-                      "is_self": false,
-                      "label": null,
-                      "label_trust": "verified",
-                      "stand_in": null,
-                      "words": null
                     },
-                    "text": "DV3B…L7Qp"
-                  },
-                  {
-                    "text": "）"
-                  }
-                ],
-                "text": "BNgs…TT1Z 的 USDC 账户（DV3B…L7Qp）"
+                    {
+                      "text": " 账户"
+                    }
+                  ],
+                  "text": "BNgs…TT1Z 的 USDC 账户"
+                },
+                "label_trust": "verified",
+                "stand_in": null,
+                "words": {
+                  "id": "address-labelled",
+                  "parts": [
+                    {
+                      "text": "BNgs…TT1Z 的 USDC 账户",
+                      "value": {
+                        "type": "words",
+                        "value": {
+                          "id": "accounts-others-token",
+                          "parts": [
+                            {
+                              "short": {
+                                "address": "BNgsxo3eHqQLNTaKy4juhAUJ8DyewcJNEcYdMuSmTT1Z",
+                                "is_self": false,
+                                "label": null,
+                                "label_trust": "fact",
+                                "stand_in": null,
+                                "words": null
+                              },
+                              "text": "BNgs…TT1Z"
+                            },
+                            {
+                              "text": " 的 "
+                            },
+                            {
+                              "text": "USDC",
+                              "value": {
+                                "type": "text",
+                                "value": "USDC"
+                              }
+                            },
+                            {
+                              "text": " 账户"
+                            }
+                          ],
+                          "text": "BNgs…TT1Z 的 USDC 账户"
+                        }
+                      }
+                    },
+                    {
+                      "text": "（"
+                    },
+                    {
+                      "short": {
+                        "address": "DV3BDugD4uSbnFBwEzy6Lg4RksvPEtVCazWNwjzcL7Qp",
+                        "is_self": false,
+                        "label": null,
+                        "label_trust": "verified",
+                        "stand_in": null,
+                        "words": null
+                      },
+                      "text": "DV3B…L7Qp"
+                    },
+                    {
+                      "text": "）"
+                    }
+                  ],
+                  "text": "BNgs…TT1Z 的 USDC 账户（DV3B…L7Qp）"
+                }
               }
-            },
-            "text": "DV3B…L7Qp"
+            }
           }
         ],
-        "text": "从 Ffz5…piwg 转账 0.996423 USDC 到 DV3B…L7Qp"
+        "text": "从 Ffz5…piwg 转账 0.996423 USDC 到 BNgs…TT1Z 的 USDC 账户（DV3B…L7Qp）"
       },
-      "text": "从 Ffz5…piwg 转账 0.996423 USDC 到 DV3B…L7Qp\n警告：批准前请查看检查结果\n\n检查结果：\n  [高危] 此签名没有时间限制：任何持有已签名交易的人都可以在之后的任何时间提交它，直到随机数账户被推进\n  [信息] 手续费由 8Kvy…p1fa 支付，而不是您\n\n== 代币转账 | Token program\n  数量：0.996423 USDC\n  发送方：Ffz5kwUjkUNw7hV4r6iCJnUoXXsAPFHkCMCmKKDypiwg\n  接收方：BNgs…TT1Z 的 USDC 账户（DV3B…L7Qp）\n  授权签名者：8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa\n  代币铸造地址：USDC 代币铸造地址（EPjF…Dt1v）\n\n== 其他 [已折叠]\n  推进持久随机数：随机数账户：AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw\n  推进持久随机数：权限：EbsUZEFAU23Z2SgAymFtU2hADLiyNLzaPLKiJfvpKnE7\n  如不存在则创建代币账户：代币账户：BNgs…TT1Z 的 USDC 账户（DV3B…L7Qp）\n  如不存在则创建代币账户：所有者：BNgsxo3eHqQLNTaKy4juhAUJ8DyewcJNEcYdMuSmTT1Z\n  如不存在则创建代币账户：代币铸造地址：USDC 代币铸造地址（EPjF…Dt1v）\n  如不存在则创建代币账户：租金付款方：8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa\n  如不存在则创建代币账户：代币程序：Token program（Toke…Q5DA）\n  计算单元上限：20728\n  计算单元价格：每计算单元 107,000 微 lamports\n\n== 签名者\n  手续费付款方：8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa\n  签名者：EbsUZEFAU23Z2SgAymFtU2hADLiyNLzaPLKiJfvpKnE7\n\n== 手续费\n  总计：0.000012218 SOL\n  基础费：0.00001 SOL\n  优先费：0.000002218 SOL\n  优先费计算依据：每计算单元 107,000 微 lamports × 请求的 20,728 个计算单元\n  租金押金：最多 0.00148844 SOL，前提是本交易在缺失时才创建的账户尚不存在；退还给关闭该账户的一方\n\n== 有效期\n  到期时间：无时间限制（随机数账户被推进时失效）\n  随机数账户：AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw\n\n影响：\n  - 从 Ffz5kwUjkUNw7hV4r6iCJnUoXXsAPFHkCMCmKKDypiwg 转账 0.996423 USDC 到 BNgs…TT1Z 的 USDC 账户（DV3B…L7Qp）\n  - 创建 BNgs…TT1Z 的 USDC 账户（DV3B…L7Qp），由 Token program（Toke…Q5DA）管理，存入 0.00148844 SOL，除非该账户已存在\n  - 8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa 支付手续费 0.000012218 SOL\n  - 在随机数账户 AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw 被推进之前一直有效，无时间限制（持久随机数）\n\n原始数据：solana legacy（511 字节）\n  摘要：05d51e61e33bad79d124089e71be7988c37cccf1f9268ee6e338e439f5ec582f\n",
+      "text": "从 Ffz5…piwg 转账 0.996423 USDC 到 BNgs…TT1Z 的 USDC 账户（DV3B…L7Qp）\n警告：批准前请查看检查结果\n\n检查结果：\n  [高危] 此签名没有时间限制：任何持有已签名交易的人都可以在之后的任何时间提交它，直到随机数账户被推进\n  [信息] 手续费由 8Kvy…p1fa 支付，而不是您\n\n== 代币转账 | Token program\n  数量：0.996423 USDC\n  发送方：Ffz5kwUjkUNw7hV4r6iCJnUoXXsAPFHkCMCmKKDypiwg\n  接收方：BNgs…TT1Z 的 USDC 账户（DV3B…L7Qp）\n  授权签名者：8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa\n  代币铸造地址：USDC 代币铸造地址（EPjF…Dt1v）\n\n== 其他 [已折叠]\n  推进持久随机数：随机数账户：AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw\n  推进持久随机数：权限：EbsUZEFAU23Z2SgAymFtU2hADLiyNLzaPLKiJfvpKnE7\n  如不存在则创建代币账户：代币账户：BNgs…TT1Z 的 USDC 账户（DV3B…L7Qp）\n  如不存在则创建代币账户：所有者：BNgsxo3eHqQLNTaKy4juhAUJ8DyewcJNEcYdMuSmTT1Z\n  如不存在则创建代币账户：代币铸造地址：USDC 代币铸造地址（EPjF…Dt1v）\n  如不存在则创建代币账户：租金付款方：8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa\n  如不存在则创建代币账户：代币程序：Token program（Toke…Q5DA）\n  计算单元上限：20728\n  计算单元价格：每计算单元 107,000 微 lamports\n\n== 签名者\n  手续费付款方：8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa\n  签名者：EbsUZEFAU23Z2SgAymFtU2hADLiyNLzaPLKiJfvpKnE7\n\n== 手续费\n  总计：0.000012218 SOL\n  基础费：0.00001 SOL\n  优先费：0.000002218 SOL\n  优先费计算依据：每计算单元 107,000 微 lamports × 请求的 20,728 个计算单元\n  租金押金：最多 0.00148844 SOL，前提是本交易在缺失时才创建的账户尚不存在；退还给关闭该账户的一方\n\n== 有效期\n  到期时间：无时间限制（随机数账户被推进时失效）\n  随机数账户：AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw\n\n影响：\n  - 从 Ffz5kwUjkUNw7hV4r6iCJnUoXXsAPFHkCMCmKKDypiwg 转账 0.996423 USDC 到 BNgs…TT1Z 的 USDC 账户（DV3B…L7Qp）\n  - 创建 BNgs…TT1Z 的 USDC 账户（DV3B…L7Qp），由 Token program（Toke…Q5DA）管理，存入 0.00148844 SOL，除非该账户已存在\n  - 8KvyzLR8fMXggYaxrdMX5921wwfoANcuSuV55a6Ap1fa 支付手续费 0.000012218 SOL\n  - 在随机数账户 AMcUzQhmG9YsWLWFp4we4oyAQU3hqgjUkSadkPrjeuyw 被推进之前一直有效，无时间限制（持久随机数）\n\n原始数据：solana legacy（511 字节）\n  摘要：05d51e61e33bad79d124089e71be7988c37cccf1f9268ee6e338e439f5ec582f\n",
       "verdict": "warn"
     }
   }

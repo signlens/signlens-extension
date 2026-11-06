@@ -6,6 +6,22 @@ uses [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Added
+
+- **v1 transactions, where the wallet behind SignLens signs them.** A
+  dapp builds a transaction in the versions a wallet lists (jup.ag
+  builds v1 only for a wallet that lists it, and turned its "Use V1
+  transactions" switch off for SignLens), and SignLens listed legacy and
+  v0 whatever wallet it passed requests to. It reads v1 transactions
+  already. From the connect on, each way to sign now lists the versions
+  the wallet behind lists for it, of those SignLens reads: v1 with
+  Backpack or Jupiter Wallet, legacy and v0 with a wallet that does not
+  sign v1, so a request you agreed to is never one your wallet refuses.
+  It follows that wallet if it starts or stops listing a version while
+  connected. In watch-only mode, where nothing is signed, it lists
+  legacy, v0 and v1. Before a connect and after the session ends,
+  legacy and v0, as before; the dapp is told each change.
+
 ## [0.3.2] - 2026-11-02
 
 ### Changed
