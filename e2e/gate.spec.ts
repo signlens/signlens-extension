@@ -177,7 +177,7 @@ test('the window puts the verdict and what the transaction does first, with the 
     // The effects as sentences, the signer's own accounts marked.
     const effects = gate.locator('.effects li');
     await expect(effects.first()).toContainText(
-        "You send 0.996423 USDC from Your token account (Ffz5…piwg) to BNgs…TT1Z's USDC account (DV3B…L7Qp)",
+        "You send 0.996423 USDC from Your USDC account (Ffz5…piwg) to BNgs…TT1Z's USDC account (DV3B…L7Qp)",
     );
     // The verified token and both verified account names each carry a badge, not the word.
     await expect(effects.first().locator('.verified-badge')).toHaveCount(3);
