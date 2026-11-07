@@ -359,6 +359,11 @@
         return !wanted || (typeof wallet.name === 'string' && wallet.name.toLowerCase() === wanted);
     }
 
+    /** Whether the settings still have requests go to `upstream`, or, for `null`, nowhere (watch-only): they may change while a connect waits. */
+    function stillSet(upstream: Wallet | null): boolean {
+        return upstream === null ? config.mode === 'watch' : config.mode === 'passthrough' && chosen(upstream);
+    }
+
     function applyConfig(next: SignLensPage.Config): void {
         config = next;
         // The dapp connected to a different kind of wallet, or to another
@@ -598,8 +603,12 @@
         return error;
     }
 
-    /** Hands the copies to the real wallet, or refuses them, saying once who refused and why. */
-    async function finish(method: string, name: string, copies: SignInput[], shown: Shown): Promise<unknown> {
+    /**
+     * Hands the copies to the real wallet, or refuses them, saying once who
+     * refused and why. `behind` is the wallet the window named, the
+     * session's when the request was made: it goes to that one or none.
+     */
+    async function finish(method: string, name: string, copies: SignInput[], shown: Shown, behind: Wallet | null): Promise<unknown> {
         if (session?.mode === 'watch') {
             const why = shown.passOn ? '' : shown.by === 'signlens' ? ` Refused by SignLens (${shown.why}).` : ` ${shown.why}`;
             throw new Error(`${NAME} holds no keys: nothing was signed.${why}`);
@@ -607,6 +616,14 @@
         if (!shown.passOn) throw shown.by === 'signlens' ? new Error(`${NAME}: refused (${shown.why}).`) : rejection(shown.why);
         // The dapp disconnected, or the settings changed, while the window was open.
         if (!session) throw new Error(`${NAME}: disconnected while the request waited; nothing was signed. Connect again.`);
+        // A session taken up since with another wallet (the settings naming
+        // it, the dapp connecting again) is not the one the user agreed to.
+        if (session.upstream !== behind) {
+            const was = behind === null ? 'the request was made watch-only' : `the request was for ${behind.name}`;
+            throw new Error(
+                `${NAME}: ${was}, and ${session.upstream.name} is the wallet behind SignLens now; nothing was signed. Ask again.`,
+            );
+        }
         const upstream = session.upstream;
         const current = await reconnected(upstream);
         const feature = upstream.features[method];
@@ -616,9 +633,14 @@
         return apply(sign, feature, withAccounts(copies, current, field)) as Promise<unknown>;
     }
 
-    /** The wallet a request goes to on Continue, by the name it registered with, for the window to say so. */
-    function handedTo(): { wallet?: string } {
-        return session?.mode === 'passthrough' && typeof session.upstream.name === 'string' ? { wallet: session.upstream.name } : {};
+    /** The wallet a request made now goes to on Continue: the session's, `null` watching. */
+    function walletBehind(): Wallet | null {
+        return session?.mode === 'passthrough' ? session.upstream : null;
+    }
+
+    /** `behind`, the wallet a request goes to on Continue, by the name it registered with, for the window to say so. */
+    function handedTo(behind: Wallet | null): { wallet?: string } {
+        return behind !== null && typeof behind.name === 'string' ? { wallet: behind.name } : {};
     }
 
     /**
@@ -638,6 +660,7 @@
     function transactionFeature(method: string, name: string): SignFunction {
         return async (...inputs) => {
             if (!session) throw new Error(`${NAME}: not connected; connect first`);
+            const behind = walletBehind();
             const copies = snapshot(inputs, 'transaction');
             const transactions: string[] = [];
             const chains: (string | null)[] = [];
@@ -646,24 +669,30 @@
                 append(transactions, toBase64(copy.transaction as Uint8Array));
                 append(chains, typeof copy.chain === 'string' ? copy.chain : null);
             }
-            const shown = await askExtension('explain', method, { accounts: signedWith(copies), transactions, chains, ...handedTo() });
-            return finish(method, name, copies, shown);
+            const shown = await askExtension('explain', method, {
+                accounts: signedWith(copies),
+                transactions,
+                chains,
+                ...handedTo(behind),
+            });
+            return finish(method, name, copies, shown, behind);
         };
     }
 
     const signMessage: SignFunction = async (...inputs) => {
         if (!session) throw new Error(`${NAME}: not connected; connect first`);
+        const behind = walletBehind();
         const copies = snapshot(inputs, 'message');
         let shown: Shown = { passOn: false, by: 'signlens', why: 'nothing to sign' };
         for (let i = 0; i < copies.length; i += 1) {
             const copy = copies[i] as SignInput;
             shown = await askExtension('message', SIGN_MESSAGE, {
                 message: toBase64(copy.message as Uint8Array),
-                ...handedTo(),
+                ...handedTo(behind),
             });
             if (!shown.passOn) break;
         }
-        return finish(SIGN_MESSAGE, 'signMessage', copies, shown);
+        return finish(SIGN_MESSAGE, 'signMessage', copies, shown, behind);
     };
 
     // ---- The wallet ----
@@ -675,6 +704,10 @@
         if (config.mode === 'passthrough') {
             const upstream = await upstreamWallet(own(input, 'silent') === true);
             const granted = await (upstream.features[CONNECT] as ConnectFeature).connect(input);
+            // The settings may have changed while it connected (a wallet may
+            // wait on the user, or on being unlocked): one they no longer
+            // name does not take the session from the one they do.
+            if (!stillSet(upstream)) throw new Error(`${NAME}: the settings changed while ${upstream.name} was connecting; connect again`);
             if (session?.mode === 'passthrough') session.stopWatching?.();
             const stopWatching = (upstream.features[EVENTS] as EventsFeature | undefined)?.on('change', (properties) => {
                 if (session?.mode !== 'passthrough' || session.upstream !== upstream) return;
@@ -705,6 +738,8 @@
                 if (session?.mode === 'watch') endSession();
                 return { accounts: [] };
             }
+            // Likewise, the settings may have left watch-only mode while the user was asked.
+            if (!stillSet(null)) throw new Error(`${NAME}: the settings changed while connecting; connect again`);
             if (session?.mode === 'passthrough') session.stopWatching?.();
             session = { mode: 'watch' };
             update({ accounts: [account], versions: WATCHING });

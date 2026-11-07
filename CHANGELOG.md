@@ -22,6 +22,21 @@ uses [Semantic Versioning](https://semver.org/).
   legacy, v0 and v1. Before a connect and after the session ends,
   legacy and v0, as before; the dapp is told each change.
 
+### Fixed
+
+- **The wallet the window names is the one that signs, again.** On
+  gmgn.ai, with Phantom chosen in the settings in place of Backpack, a
+  message to sign showed "Continue to Phantom", and Continue opened
+  Backpack. A connect begun while the settings still named Backpack
+  (Backpack may wait on you, or on being unlocked) took the session
+  when it ended, after the one to Phantom; and Continue handed a request
+  to whichever wallet the session had by then, not the one its window
+  named. A connect that ends after the settings name another wallet, or
+  leave watch-only mode, now takes no session and tells the site to
+  connect again; and a request goes to the wallet its window named or
+  to none, saying which wallet it was for and which is behind SignLens
+  now.
+
 ## [0.3.2] - 2026-11-02
 
 ### Changed

@@ -1008,3 +1008,161 @@ test('in watch mode each way to sign lists legacy, v0 and v1: SignLens reads all
     await until(() => accountsNow().length === 0);
     assert.deepEqual(versionsNow(), BEFORE_V1);
 });
+
+// ---- The wallet a request goes to is the one its window named ----
+//
+// The window says which wallet Continue hands the request to, as the
+// page named it when it asked. Whatever happens while the window is open
+// (the settings naming another wallet, the dapp connecting again, a
+// connect begun under the old settings ending late), Continue never hands
+// it to another.
+
+/** Has the settings name `upstream` as the wallet requests go to, as the worker tells a connected page. */
+function nameUpstream(upstream: string): void {
+    pageConfig = { mode: 'passthrough', upstream };
+    realPost.call(port, { type: 'config-changed', config: pageConfig });
+}
+
+/**
+ * Another wallet in the page under `name`, as a second extension registers
+ * one: what it is handed is kept apart, and its connect waits on `waitFor`
+ * when given (a wallet asking the user, or unlocking).
+ */
+function anotherWallet(
+    name: string,
+    waitFor?: () => Promise<void>,
+): { handed: string[]; connecting: () => boolean; unregister: () => void } {
+    const handed: string[] = [];
+    let connecting = false;
+    const wallet = {
+        ...upstream,
+        name,
+        features: {
+            ...upstream.features,
+            'standard:connect': {
+                version: '1.0.0',
+                async connect() {
+                    connecting = true;
+                    await waitFor?.();
+                    return { accounts: upstreamAccounts };
+                },
+            },
+            [SIGN]: {
+                version: '1.0.0',
+                async signTransaction(...inputs: { transaction: Uint8Array }[]) {
+                    for (const input of inputs) handed.push(Buffer.from(input.transaction).toString('hex'));
+                    return inputs.map((input) => ({ signedTransaction: input.transaction }));
+                },
+            },
+            'solana:signMessage': {
+                version: '1.0.0',
+                async signMessage(...inputs: { message: Uint8Array }[]) {
+                    for (const input of inputs) handed.push(Buffer.from(input.message).toString('hex'));
+                    return inputs.map((input) => ({ signedMessage: input.message, signature: new Uint8Array(64) }));
+                },
+            },
+        },
+    };
+    let unregister = () => {};
+    page.dispatchEvent(
+        detailEvent('wallet-standard:register-wallet', (api: { register(w: unknown): () => void }) => {
+            unregister = api.register(wallet);
+        }),
+    );
+    return { handed, connecting: () => connecting, unregister: () => unregister() };
+}
+
+/** Back to where each test starts: the settings naming no wallet, connected to the real one. */
+async function backToRealWallet(): Promise<void> {
+    await disconnect();
+    settingsChange('passthrough');
+    await connect();
+}
+
+test('a request goes only to the wallet its window named: when another took the session while the window was open, nothing is signed', async () => {
+    const other = anotherWallet('Other Wallet');
+    const requests: [string, () => Promise<{ ok?: unknown; error?: string }>][] = [
+        ['a transaction', () => sign({ account, transaction: BENIGN() })],
+        ['a message', () => signMessage({ account, message: BENIGN() })],
+    ];
+    try {
+        for (const [what, start] of requests) {
+            const pending = start();
+            const asked = await askedBy(pending);
+            assert.equal(asked.payload.wallet, 'Real Wallet', what);
+            // While the window is open, the settings name another wallet, and the dapp connects again.
+            nameUpstream('Other Wallet');
+            await until(() => accountsNow().length === 0);
+            await connect();
+            asked.reply(CONTINUE);
+            const outcome = await pending;
+            assert.deepEqual([signed.length, signedMessages.length, other.handed.length], [0, 0, 0], what);
+            assert.match(
+                outcome.error ?? '',
+                /SignLens: the request was for Real Wallet, and Other Wallet is the wallet behind SignLens now; nothing was signed/,
+                what,
+            );
+            // Back by name: with two wallets and none named, a connect would ask which.
+            nameUpstream('Real Wallet');
+            await until(() => accountsNow().length === 0);
+            await connect();
+        }
+    } finally {
+        other.unregister();
+        await backToRealWallet();
+    }
+});
+
+test('a connect begun before the settings named another wallet does not take the session from it when it ends, a window open or not', async () => {
+    // As on gmgn.ai: a connect to Backpack still waiting when the settings
+    // name Phantom; connected to Phantom, a message to sign, "Continue to
+    // Phantom", and the connect to Backpack ends while that window is open.
+    let release = () => {};
+    const slow = anotherWallet('Slow Wallet', () => new Promise<void>((resolve) => (release = resolve)));
+    try {
+        nameUpstream('Slow Wallet');
+        await until(() => accountsNow().length === 0);
+        const first = connect().then(
+            () => 'connected',
+            (error: Error) => error.message,
+        );
+        await until(slow.connecting);
+        nameUpstream('Real Wallet');
+        await connect();
+        const pending = signMessage({ account, message: BENIGN() });
+        const asked = await askedBy(pending);
+        assert.equal(asked.payload.wallet, 'Real Wallet');
+        release();
+        const late = await first;
+        asked.reply(CONTINUE);
+        assert.equal((await pending).error, undefined);
+        assert.deepEqual([signedMessages.length, slow.handed.length], [1, 0]);
+        // The next request too: the window names the wallet the settings name, and it is the one handed it.
+        const next = sign({ account, transaction: BENIGN() });
+        const window = await askedBy(next);
+        assert.equal(window.payload.wallet, 'Real Wallet');
+        window.reply(CONTINUE);
+        assert.equal((await next).error, undefined);
+        assert.deepEqual([signed.length, slow.handed.length], [1, 0]);
+        assert.equal(late, 'SignLens: the settings changed while Slow Wallet was connecting; connect again');
+    } finally {
+        release();
+        slow.unregister();
+        await backToRealWallet();
+    }
+});
+
+test('a watch-only connect the settings left while it was asked about starts no session', async () => {
+    settingsChange('watch');
+    await until(() => accountsNow().length === 0);
+    const connecting = connect().then(
+        () => 'connected',
+        (error: Error) => error.message,
+    );
+    const consent = await nextRequest();
+    assert.equal(consent.type, 'connect');
+    settingsChange('passthrough');
+    consent.reply({ approved: true, ...WATCHED });
+    assert.equal(await connecting, 'SignLens: the settings changed while connecting; connect again');
+    assert.deepEqual(accountsNow(), []);
+});
