@@ -9,8 +9,8 @@
     "body": {
       "build": null,
       "descriptor_pack": {
-        "created_at": 1793923200,
-        "programs": 53,
+        "created_at": 1794009600,
+        "programs": 54,
         "source": "packs/descriptors"
       },
       "engine": "0.3.0",
@@ -18,13 +18,13 @@
         {
           "direction": "ltr",
           "locale": "zh-Hans",
-          "messages": 4685,
+          "messages": 4739,
           "review": {
             "by": [
               "a native speaker"
             ],
             "kind": "reviewed",
-            "on": "2026-11-06"
+            "on": "2026-11-07"
           },
           "serves": []
         }
