@@ -1300,7 +1300,7 @@
                     "address": "9SQZUTsLbv469tCRm9BFo64vpUiWToZukM4WeNdDGxVU",
                     "is_self": true,
                     "label": {
-                      "id": "swap-your-token-account",
+                      "id": "accounts-your-unnamed-token",
                       "parts": [
                         {
                           "text": "Your token account"
@@ -1318,7 +1318,7 @@
                           "value": {
                             "type": "words",
                             "value": {
-                              "id": "swap-your-token-account",
+                              "id": "accounts-your-unnamed-token",
                               "parts": [
                                 {
                                   "text": "Your token account"
@@ -1524,7 +1524,7 @@
               "address": "9SQZUTsLbv469tCRm9BFo64vpUiWToZukM4WeNdDGxVU",
               "is_self": true,
               "label": {
-                "id": "swap-your-token-account",
+                "id": "accounts-your-unnamed-token",
                 "parts": [
                   {
                     "text": "Your token account"
@@ -1542,7 +1542,7 @@
                     "value": {
                       "type": "words",
                       "value": {
-                        "id": "swap-your-token-account",
+                        "id": "accounts-your-unnamed-token",
                         "parts": [
                           {
                             "text": "Your token account"
@@ -3050,7 +3050,7 @@
                   "address": "9SQZUTsLbv469tCRm9BFo64vpUiWToZukM4WeNdDGxVU",
                   "is_self": true,
                   "label": {
-                    "id": "swap-your-token-account",
+                    "id": "accounts-your-unnamed-token",
                     "parts": [
                       {
                         "text": "Your token account"
@@ -3068,7 +3068,7 @@
                         "value": {
                           "type": "words",
                           "value": {
-                            "id": "swap-your-token-account",
+                            "id": "accounts-your-unnamed-token",
                             "parts": [
                               {
                                 "text": "Your token account"

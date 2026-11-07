@@ -512,20 +512,30 @@
                 "text": " into "
               },
               {
-                "text": "Your token account (2n1w…SJBw)",
+                "text": "Your tKalshi account (2n1w…SJBw)",
                 "value": {
                   "type": "address",
                   "value": {
                     "address": "2n1wSskTShm6o1nLy86vCJ5vbUXsx1J4zHzAzudRSJBw",
                     "is_self": true,
                     "label": {
-                      "id": "swap-your-token-account",
+                      "id": "accounts-your-token",
                       "parts": [
                         {
-                          "text": "Your token account"
+                          "text": "Your "
+                        },
+                        {
+                          "text": "tKalshi",
+                          "value": {
+                            "type": "text",
+                            "value": "tKalshi"
+                          }
+                        },
+                        {
+                          "text": " account"
                         }
                       ],
-                      "text": "Your token account"
+                      "text": "Your tKalshi account"
                     },
                     "label_trust": "verified",
                     "stand_in": null,
@@ -533,17 +543,27 @@
                       "id": "address-labelled",
                       "parts": [
                         {
-                          "text": "Your token account",
+                          "text": "Your tKalshi account",
                           "value": {
                             "type": "words",
                             "value": {
-                              "id": "swap-your-token-account",
+                              "id": "accounts-your-token",
                               "parts": [
                                 {
-                                  "text": "Your token account"
+                                  "text": "Your "
+                                },
+                                {
+                                  "text": "tKalshi",
+                                  "value": {
+                                    "type": "text",
+                                    "value": "tKalshi"
+                                  }
+                                },
+                                {
+                                  "text": " account"
                                 }
                               ],
-                              "text": "Your token account"
+                              "text": "Your tKalshi account"
                             }
                           }
                         },
@@ -565,7 +585,7 @@
                           "text": ")"
                         }
                       ],
-                      "text": "Your token account (2n1w…SJBw)"
+                      "text": "Your tKalshi account (2n1w…SJBw)"
                     }
                   }
                 }
@@ -641,7 +661,7 @@
                 }
               }
             ],
-            "text": "You receive ≥ 0.004080684 tKalshi into Your token account (2n1w…SJBw) from DFlow Aggregator (DF1o…7QBH)"
+            "text": "You receive ≥ 0.004080684 tKalshi into Your tKalshi account (2n1w…SJBw) from DFlow Aggregator (DF1o…7QBH)"
           },
           "type": "transfer",
           "value": {
@@ -739,13 +759,23 @@
               "address": "2n1wSskTShm6o1nLy86vCJ5vbUXsx1J4zHzAzudRSJBw",
               "is_self": true,
               "label": {
-                "id": "swap-your-token-account",
+                "id": "accounts-your-token",
                 "parts": [
                   {
-                    "text": "Your token account"
+                    "text": "Your "
+                  },
+                  {
+                    "text": "tKalshi",
+                    "value": {
+                      "type": "text",
+                      "value": "tKalshi"
+                    }
+                  },
+                  {
+                    "text": " account"
                   }
                 ],
-                "text": "Your token account"
+                "text": "Your tKalshi account"
               },
               "label_trust": "verified",
               "stand_in": null,
@@ -753,17 +783,27 @@
                 "id": "address-labelled",
                 "parts": [
                   {
-                    "text": "Your token account",
+                    "text": "Your tKalshi account",
                     "value": {
                       "type": "words",
                       "value": {
-                        "id": "swap-your-token-account",
+                        "id": "accounts-your-token",
                         "parts": [
                           {
-                            "text": "Your token account"
+                            "text": "Your "
+                          },
+                          {
+                            "text": "tKalshi",
+                            "value": {
+                              "type": "text",
+                              "value": "tKalshi"
+                            }
+                          },
+                          {
+                            "text": " account"
                           }
                         ],
-                        "text": "Your token account"
+                        "text": "Your tKalshi account"
                       }
                     }
                   },
@@ -785,7 +825,7 @@
                     "text": ")"
                   }
                 ],
-                "text": "Your token account (2n1w…SJBw)"
+                "text": "Your tKalshi account (2n1w…SJBw)"
               }
             }
           }
@@ -1182,13 +1222,23 @@
                   "address": "FfxPBxmkrboB5cpihWxv4y5TKXthv93ZzfkuxDBAC7ft",
                   "is_self": true,
                   "label": {
-                    "id": "swap-your-token-account",
+                    "id": "accounts-your-token",
                     "parts": [
                       {
-                        "text": "Your token account"
+                        "text": "Your "
+                      },
+                      {
+                        "text": "tSpaceX",
+                        "value": {
+                          "type": "text",
+                          "value": "tSpaceX"
+                        }
+                      },
+                      {
+                        "text": " account"
                       }
                     ],
-                    "text": "Your token account"
+                    "text": "Your tSpaceX account"
                   },
                   "label_trust": "verified",
                   "stand_in": null,
@@ -1196,17 +1246,27 @@
                     "id": "address-labelled",
                     "parts": [
                       {
-                        "text": "Your token account",
+                        "text": "Your tSpaceX account",
                         "value": {
                           "type": "words",
                           "value": {
-                            "id": "swap-your-token-account",
+                            "id": "accounts-your-token",
                             "parts": [
                               {
-                                "text": "Your token account"
+                                "text": "Your "
+                              },
+                              {
+                                "text": "tSpaceX",
+                                "value": {
+                                  "type": "text",
+                                  "value": "tSpaceX"
+                                }
+                              },
+                              {
+                                "text": " account"
                               }
                             ],
-                            "text": "Your token account"
+                            "text": "Your tSpaceX account"
                           }
                         }
                       },
@@ -1228,7 +1288,7 @@
                         "text": ")"
                       }
                     ],
-                    "text": "Your token account (FfxP…C7ft)"
+                    "text": "Your tSpaceX account (FfxP…C7ft)"
                   }
                 }
               }
@@ -1251,13 +1311,23 @@
                   "address": "2n1wSskTShm6o1nLy86vCJ5vbUXsx1J4zHzAzudRSJBw",
                   "is_self": true,
                   "label": {
-                    "id": "swap-your-token-account",
+                    "id": "accounts-your-token",
                     "parts": [
                       {
-                        "text": "Your token account"
+                        "text": "Your "
+                      },
+                      {
+                        "text": "tKalshi",
+                        "value": {
+                          "type": "text",
+                          "value": "tKalshi"
+                        }
+                      },
+                      {
+                        "text": " account"
                       }
                     ],
-                    "text": "Your token account"
+                    "text": "Your tKalshi account"
                   },
                   "label_trust": "verified",
                   "stand_in": null,
@@ -1265,17 +1335,27 @@
                     "id": "address-labelled",
                     "parts": [
                       {
-                        "text": "Your token account",
+                        "text": "Your tKalshi account",
                         "value": {
                           "type": "words",
                           "value": {
-                            "id": "swap-your-token-account",
+                            "id": "accounts-your-token",
                             "parts": [
                               {
-                                "text": "Your token account"
+                                "text": "Your "
+                              },
+                              {
+                                "text": "tKalshi",
+                                "value": {
+                                  "type": "text",
+                                  "value": "tKalshi"
+                                }
+                              },
+                              {
+                                "text": " account"
                               }
                             ],
-                            "text": "Your token account"
+                            "text": "Your tKalshi account"
                           }
                         }
                       },
@@ -1297,7 +1377,7 @@
                         "text": ")"
                       }
                     ],
-                    "text": "Your token account (2n1w…SJBw)"
+                    "text": "Your tKalshi account (2n1w…SJBw)"
                   }
                 }
               }
@@ -1874,7 +1954,7 @@
         ],
         "text": "Swap ≤ 0.005265026 tSpaceX for ≥ 0.004080684 tKalshi via DFlow"
       },
-      "text": "Swap ≤ 0.005265026 tSpaceX for ≥ 0.004080684 tKalshi via DFlow\nOK\n\n== Swap | DFlow Aggregator\n  Send: ≤ 0.005265026 tSpaceX\n  Receive: ≥ 0.004080684 tKalshi\n  Quoted: 0.004206891 tKalshi\n  Max slippage: 3%\n  Route:\n    - MeteoraDlmmSwapV2 (3,379,812 raw units)\n    - MeteoraDlmmSwapV2 (1,885,214 raw units)\n  From account: Your token account (FfxP…C7ft)\n  To account: Your token account (2n1w…SJBw)\n  Instruction: swap\n\n== Also [collapsed]\n  Compute unit limit: 197941\n  Compute unit price: 2,701 micro-lamports per compute unit\n\n== Signers\n  Fee payer: Your wallet (5yLg…8Ldc)\n\n== Fee\n  Total: 0.000005535 SOL\n  Base: 0.000005 SOL\n  Priority: 0.000000535 SOL\n  Priority basis: 2,701 micro-lamports per compute unit × 197,941 compute units requested\n\n== Validity\n  Expires: in about a minute (recent blockhash)\n\nEffects:\n  - You send ≤ 0.005265026 tSpaceX from Your wallet (5yLg…8Ldc) to DFlow Aggregator (DF1o…7QBH)\n  - You receive ≥ 0.004080684 tKalshi into Your token account (2n1w…SJBw) from DFlow Aggregator (DF1o…7QBH)\n  - You pay a fee of 0.000005535 SOL\n  - Valid for about a minute (recent blockhash)\n\nRaw: solana v0 (574 bytes)\n  digest: 9bdd08c0fa2a6a063bcab6cc1581b881a5fbc0a5eefa3c4ee59dc380cdb66876\n",
+      "text": "Swap ≤ 0.005265026 tSpaceX for ≥ 0.004080684 tKalshi via DFlow\nOK\n\n== Swap | DFlow Aggregator\n  Send: ≤ 0.005265026 tSpaceX\n  Receive: ≥ 0.004080684 tKalshi\n  Quoted: 0.004206891 tKalshi\n  Max slippage: 3%\n  Route:\n    - MeteoraDlmmSwapV2 (3,379,812 raw units)\n    - MeteoraDlmmSwapV2 (1,885,214 raw units)\n  From account: Your tSpaceX account (FfxP…C7ft)\n  To account: Your tKalshi account (2n1w…SJBw)\n  Instruction: swap\n\n== Also [collapsed]\n  Compute unit limit: 197941\n  Compute unit price: 2,701 micro-lamports per compute unit\n\n== Signers\n  Fee payer: Your wallet (5yLg…8Ldc)\n\n== Fee\n  Total: 0.000005535 SOL\n  Base: 0.000005 SOL\n  Priority: 0.000000535 SOL\n  Priority basis: 2,701 micro-lamports per compute unit × 197,941 compute units requested\n\n== Validity\n  Expires: in about a minute (recent blockhash)\n\nEffects:\n  - You send ≤ 0.005265026 tSpaceX from Your wallet (5yLg…8Ldc) to DFlow Aggregator (DF1o…7QBH)\n  - You receive ≥ 0.004080684 tKalshi into Your tKalshi account (2n1w…SJBw) from DFlow Aggregator (DF1o…7QBH)\n  - You pay a fee of 0.000005535 SOL\n  - Valid for about a minute (recent blockhash)\n\nRaw: solana v0 (574 bytes)\n  digest: 9bdd08c0fa2a6a063bcab6cc1581b881a5fbc0a5eefa3c4ee59dc380cdb66876\n",
       "verdict": "ok"
     }
   }
