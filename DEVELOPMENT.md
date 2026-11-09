@@ -238,6 +238,7 @@ browser APIs and rules. Each module's Node test sits beside it.
 | `locales/` | the interface's words, a folder of Fluent files per locale, English the source |
 | `static/` | the manifest, the pages, the stylesheet and the icons, copied as they are into the build |
 | `docs/design/` | the icon's one drawing, from which `npm run icons` makes the four PNGs (the 128 px one padded as the Chrome Web Store asks) and the wallet icon a dapp shows |
+| `docs/guide.md` | using SignLens in full, which the README sums up: setting it up and connecting, what the window shows, and everything that leaves the browser |
 | `docs/images/` | the README's screenshots, in the light and the dark theme, made by `npm run screenshots` (`e2e/screenshots.shot.ts`) |
 | `dist/` | what the build makes, never committed: `chrome/` (the unpacked extension, the scripts in the folders they have under `src/`), `firefox/`, and the packages |
 | `scripts/` | the interface's words compiled into the catalog, the Firefox copy, the reproducible packages, a release's notes from the changelog, and recording the API's answers for the end-to-end tests |
