@@ -1,95 +1,142 @@
 # Using SignLens
 
-How SignLens behaves once it is installed, in full: setting it up and
-connecting, what each window shows, and everything that leaves your
-browser. The [README](../README.md) has the overview and how to install
-it.
+This guide covers how SignLens behaves after installation: setting up and
+connecting your wallet, understanding the explanation window, and seeing
+everything that leaves your browser. For a high-level overview and installation
+instructions, see the [README](../README.md).
 
 ## Using it
 
-A new install opens a setup page in a tab of its own: your wallet
-addresses go there, so no site has to be asked about first, with how to
-use SignLens, how to pin it, and what leaves your browser. An update does
-not open it. Your addresses are a list, there and in the popup's
-settings: one row each, in full, with Remove, and a field that adds only
-a Solana address. While pass-through mode has none, the popup's requests
-ask for one inline; its settings open the setup page again.
+### Setup and addresses
 
-SignLens is in English and Simplified Chinese, its own words and its
-explanations alike: in the first of your browser's languages it has, or
-in the one chosen under Language, at the top of the setup page and of
-the popup's settings. A browser that asks for Traditional Chinese gets
-English unless Simplified Chinese is chosen there.
+A fresh installation opens a setup page in a new tab where you can enter your
+wallet addresses (so SignLens doesn't have to ask a connected site first),
+learn how to pin the extension, and review what leaves your browser. Updating
+the extension does not reopen the setup page.
 
-In a dapp, connect "SignLens". It connects through your wallet and
-passes every request on to it after explaining it. Until you have chosen
-one, a page with a single wallet gets that one; a page with several asks,
-the first time you connect, which one in a window of its own that lists
-them with their icons, and keeps your choice (a dapp reconnecting as it
-loads asks nothing, and gets the first found). Another SignLens, such as
-a store build beside one built from the sources, is never the wallet
-behind it. The popup's settings change the wallet, from the ones found
-in the current tab, switch to watch-only mode (connect as any address,
-explain, refuse), turn off "Show the explanation and ask first" (in
-pass-through mode the window still opens for what SignLens would
-refuse), list your own addresses, keep an address book, and point the
-extension at another RPC or API (https, or plain http to this machine
-only). A connect that finds
-no wallet to pass to is refused and shown in the popup's requests, with
-the wallets that were there. A dapp has to connect before it can ask for
-anything, and asks one thing at a time: a second request while the first is
-open is refused.
+Your addresses are managed as a list both on the setup page and in the popup
+settings—one full address per row with a **Remove** button and an input field
+that validates Solana addresses. If you are in pass-through mode and haven't
+added an address yet, the popup prompts you to add one inline, and the popup
+settings link back to the setup page.
 
-In watch-only mode no wallet stands behind SignLens to ask you before a
-site learns the address, so SignLens asks: the first time a site connects,
-a window shows which site wants to see which address, Deny first. An Allow
-is kept for that site and that address; a Deny is not, and the site asks
-again the next time it connects. Either way the popup's requests keep the
-answer. A dapp reconnecting silently as it loads gets the address only
-where you allowed it. The settings list the sites, those allowed for an
-address you watched before marked so, and Revoke disconnects a site's open
-pages. No page is told the watched address otherwise, whatever the mode.
+### Language
 
-The explanation calls "you" only addresses you gave SignLens: in
-pass-through mode the ones under "Your addresses" in the settings, in
-watch-only mode the watched one. A request carries at most 8 of yours,
-past that those the page names first, and the first 64 contacts of the
-address book: each costs the API work, and it refuses more. The page says which address signs a
-transaction, and a page can name its own, so that sending to it would
-read as a move between your accounts. Before a transaction is explained,
-SignLens checks the address the page names: in pass-through mode, one
-that is not among yours opens a window with it beside yours, Reject
-first. Reject refuses the request; "It's mine, add it" adds the address
-to your settings and the request goes on to be explained. One yes is one
-address: a request that names more than one not among yours is refused,
-since a page could put yours beside its own. With "Show the explanation
-and ask first" off, no window opens for it: the request is refused, and
-your addresses go in the settings first. In watch-only mode a request
-that names another address is refused. A message is not checked, since
-nothing in it is explained as yours.
+SignLens is available in English and Simplified Chinese for both the UI and
+transaction explanations. By default, it uses the first matching language from
+your browser settings, or you can override it using the **Language** selector
+at the top of the setup page and popup settings. (Browsers configured for
+Traditional Chinese default to English unless Simplified Chinese is explicitly
+selected.)
 
-What goes to your wallet is SignLens's own copy of the bytes it explained,
-taken when the dapp asked: a page that changes its transaction afterwards
-changes nothing. The dapp is told whether the request was passed on,
-rejected by you, or refused by SignLens and why (still busy with the
-page's last request, its window could not open, no decision in time),
-never the verdict or the explanation, since they depend on your address
-book.
+### Connecting in a dapp (pass-through mode)
+
+In a dapp, select **SignLens** from the wallet list. SignLens connects through
+your real wallet and forwards every signing request to it after explaining the
+transaction:
+
+- If the page detects only one other wallet, SignLens selects it automatically.
+- If multiple wallets are installed, SignLens opens a selection window on your
+  first connection (listing each wallet with its icon) and remembers your
+  choice. If a dapp reconnects silently on page load before you have chosen a
+  wallet, SignLens selects the first available wallet without prompting.
+- Another SignLens instance (such as a store build running alongside a
+  development build) is never selected as the backing wallet.
+- If no backing wallet is found, the connection is refused and logged in the
+  popup along with the list of detected wallets.
+- A dapp must connect before requesting a signature, and may only have one
+  active request at a time—any concurrent request while a window is already
+  open is refused.
+
+From the popup settings, you can:
+- Change the backing wallet (from those detected in the active tab)
+- Switch to **watch-only mode** (connect as any address, explain transactions,
+  and refuse signing)
+- Uncheck **"Show the explanation and ask first"** (in pass-through mode, the
+  window will then open only for transactions that are blocked or fail with an
+  error)
+- Manage **Your addresses** and your **Address book**
+- Configure a custom RPC or API URL (`https://`, or `http://` for `localhost` /
+  loopback only)
+
+### Watch-only mode
+
+In watch-only mode, there is no backing wallet behind SignLens to prompt you
+before revealing your address to a website, so SignLens asks you directly:
+
+- The first time a site connects, SignLens opens a prompt showing which site
+  wants to view which watched address, with **Deny** focused first.
+- Clicking **Allow** remembers the permission for that site and address;
+  clicking **Deny** does not, so the site will ask again if you reconnect.
+  Both decisions are recorded in the popup's request log.
+- Silent reconnections on page load succeed only for previously allowed sites.
+- The popup settings list all allowed sites (marking any that were authorized
+  for a previously watched address), and clicking **Revoke** immediately
+  disconnects any open tabs for that site.
+- Outside of an approved connection, no page can read your watched address.
+
+### How SignLens identifies "you"
+
+Explanations only label an address as *"you"* if you configured it:
+- In **pass-through mode**, the addresses listed under **Your addresses** in
+  settings.
+- In **watch-only mode**, the currently watched address.
+
+Each API request includes at most 8 of your own addresses (prioritizing those
+referenced by the page) and up to 64 contacts from your address book.
+
+Because a malicious dapp could claim that its own address is the signer—which
+would make a transfer to the attacker look like a transfer between your own
+accounts—SignLens verifies the signer address specified by the page before
+requesting an explanation:
+- In **pass-through mode**, if the page names a signer address that is not in
+  **Your addresses**, SignLens opens a prompt displaying the unknown address
+  next to yours, with **Reject** focused first. Clicking **Reject** refuses the
+  request; clicking **"It's mine, add it"** saves the address to your settings
+  and proceeds to explain the transaction.
+- You can only approve one unknown signer address at a time. If a request
+  includes multiple unknown signer addresses, SignLens refuses it automatically
+  (preventing a page from bundling its own address alongside yours).
+- If **"Show the explanation and ask first"** is unchecked, SignLens does not
+  prompt for unknown signer addresses—it refuses the request immediately until
+  you add the address in settings.
+- In **watch-only mode**, any request naming an address other than the watched
+  address is refused.
+- Off-chain messages (`signMessage`) skip this check because message contents
+  are not decoded as account transfers.
+
+### Byte integrity and dapp responses
+
+When you click continue, SignLens forwards its own snapshot of the transaction
+bytes captured when the dapp first made the request—if the page mutates its
+transaction object afterward, those changes have no effect.
+
+The dapp receives only the standard wallet outcome (whether the request was
+forwarded, rejected by you, or refused because SignLens was busy, couldn't open
+a window, or timed out)—never the verdict or explanation, which depend on your
+private address book.
 
 ## What you see
 
-Every request opens a window before it reaches your wallet, once SignLens
-has read what it needs and asked the API. With "Show the explanation and
-ask first" off, it opens, in pass-through mode, only for a request SignLens
-would refuse (blocked, or an error); the rest go on as explained, and the
-popup keeps them, marked "passed on, not asked". The verdict and the
-one-line summary stay at the top and the buttons at the bottom; in
-between, the findings, what the transaction does to you as a list ("You
-send 0.5 SOL to …", "You pay a fee of …", "Valid FOREVER until …"), each
-instruction with its fields, and the full text under toggles. A request
-of several transactions shows each under its own heading, and the summary
-at the top is the most serious one's. The window's title carries the
-verdict and the site, so the window is known by them in the taskbar.
+Every signing request opens the SignLens window before reaching your wallet,
+once SignLens has gathered the necessary on-chain context and queried the API.
+If **"Show the explanation and ask first"** is unchecked in pass-through mode,
+the window opens only when SignLens blocks the transaction or encounters an
+error; **OK** and **Warning** transactions are forwarded automatically and
+logged in the popup as *"passed on, not asked"*.
+
+Inside the window:
+- The **verdict** and **one-line summary** stay pinned at the top, and the
+  action buttons stay pinned at the bottom.
+- In between, SignLens displays any **findings**, a step-by-step list of **what
+  the transaction does to you** (e.g., *"You send 0.5 SOL to …"*, *"You pay a
+  fee of …"*, *"Valid FOREVER until …"*), each decoded instruction with its
+  parameters, and collapsible raw details.
+- For batch requests containing multiple transactions, each transaction appears
+  under its own heading, and the top banner reflects the most severe verdict
+  across the batch.
+- The window title includes the verdict and the requesting site's domain so you
+  can easily identify it in your OS taskbar.
 
 <p align="center">
   <picture>
@@ -98,105 +145,144 @@ verdict and the site, so the window is known by them in the taskbar.
   </picture>
 </p>
 
-The verdict is one of four:
+### The four verdicts
 
-- **OK**: nothing beyond notes.
-- **Warning**: findings to read before you approve, shown first.
-- **Blocked**: the engine found something critical, or a part of the
-  transaction it cannot explain (an unknown program, say), and will not
-  call it safe. SignLens refuses it unless you choose "Continue anyway",
-  then answer yes when it asks again, saying why.
-- **Error**: SignLens has no explanation to show. The API was away or
-  refused, or answered with something that does not hold together, or with
-  a verdict this version does not know. No answer at all, or a 502, 503 or
-  530 (what a deploy, a restart or a busy server looks like), is tried
-  once more after a pause of half a second, or of what the API's
-  `Retry-After` asks for up to two, before it counts. The API explains
-  ten transactions a minute for each address it is asked from (a request
-  of several counts each), and refuses more, which shows as an error
-  until a few seconds have passed; in a request of several, the ones
-  after the first refused are not asked for, and say so. Nothing is
-  known about the transaction, so it is treated as blocked, never as a
-  pass. "Try again" in the window asks once more while the request waits,
-  with the settings as they are then, and shows what comes back. A
-  request holds 32 transactions at most.
+- **OK**: Every instruction was decoded and nothing beyond informational notes
+  was found.
+- **Warning**: Findings you should read carefully before approving, shown at
+  the top of the window.
+- **Blocked**: The engine found a critical risk or a part of the transaction it
+  cannot explain (such as an unknown program) and refuses to call it safe.
+  SignLens blocks the request unless you click **"Continue anyway"** and then
+  explicitly confirm on a second prompt explaining the risk.
+- **Error**: SignLens could not produce an explanation—for example, the API was
+  unreachable, returned an invalid response, or returned a verdict unknown to
+  this extension version.
+  - Network failures or HTTP `502`, `503`, or `530` responses (typical during a
+    server deploy, restart, or spike) are automatically retried once after
+    500 ms (or the server's `Retry-After` header, up to 2 seconds).
+  - The API rate-limits requests to 10 transactions per minute per IP (each
+    transaction in a batch counts individually). Exceeding this limit shows an
+    error for a few seconds; in a batch request, remaining transactions after
+    the first rate-limited one are skipped and noted accordingly.
+  - Because nothing is known about a transaction when an error occurs, SignLens
+    treats it as **Blocked** (fail-closed), never as a pass. You can click
+    **"Try again"** while the request is open to retry using your current
+    settings.
+  - A single batch request may contain at most 32 transactions.
 
-An effect or a value of a kind this version does not know is shown as one,
-not left out. Closing the window, or the dapp's page, refuses the request.
-Under the explanation, a strip asks whether it was clear.
+If the API returns an effect or value type introduced after your extension
+version was released, SignLens displays it explicitly as an unrecognized item
+rather than hiding it. Closing the window or closing the requesting dapp tab
+refuses the request. Below each explanation, a feedback bar lets you rate
+whether the explanation was clear.
 
-Simulation runs on your RPC and is shown as what it is, an unverified
-claim held against the decoded instructions: more leaving than they state
-is a finding, agreement is a quiet line. Tokens outside SignLens's verified
-list are named from the RPC and a token list as claims, marked unverified.
-Some instructions depend on an account they name: approving a multisig
-proposal made in an earlier transaction signs a reference to it, and the
-transaction it runs is stored on chain; a Jupiter DAO vote signs a side's
-number, and the proposal says which option that is. The explanation then
-names the accounts it would read; SignLens reads them from your RPC and
-asks again, and shows what they hold as the RPC's claim, which never
-lowers a finding.
+### RPC simulations and on-chain lookups
+
+- **Simulations** run on your configured RPC and are presented as unverified
+  RPC claims cross-checked against the decoded instructions: if the simulation
+  reports more funds leaving your accounts than the decoded instructions state,
+  SignLens raises a finding; if they agree, it shows a quiet confirmation line.
+- **Unlisted tokens** outside SignLens's built-in verified list are resolved
+  via your RPC and token list and explicitly marked as unverified claims.
+- **Account-dependent instructions**: Some instructions only reference an
+  on-chain account whose contents determine what actually happens—for example,
+  approving a Squads multisig proposal signs a reference to an on-chain
+  proposal account that holds the inner transaction, and a Jupiter DAO vote
+  signs an option index defined in the proposal account. When the API reports
+  which accounts it needs to read, SignLens fetches those accounts from your
+  RPC, re-queries the API with their data, and displays the result as an
+  unverified RPC claim (which can never downgrade a warning or block finding).
 
 ## Privacy
 
-Each request to explain a transaction sends the SignLens API the
-transaction, the addresses its lookup tables load, the outcome of the
-simulation if it ran, your addresses from the settings (in watch-only
-mode the watched one, so the explanation can say "you"), and the
-addresses in your address book, so it can tell a contact from an address
-that only looks like one. The names in your address book stay in your
-browser: each goes as a random stand-in, new for each request, which
-says nothing of the name and which the extension replaces with the name
-in what it shows you. When the explanation names accounts it would read
-and account lookup is on, it asks again with those accounts as the RPC
-returned them, up to twice; when it leaves tokens unnamed and token
-lookup is on, it asks again with their symbols. This happens when the
-dapp asks, before the window opens, and also when "Show the explanation
-and ask first" is off.
+### What is sent to the SignLens API
 
-Every request reaches the API through Cloudflare, which sees your IP
-address, as it does for any site it serves. The API takes the address
-only to count your requests against its limit, in memory and as a keyed
-hash, and logs it nowhere.
+When explaining a transaction, the extension sends the SignLens API:
+- The raw transaction bytes
+- The addresses resolved from any Address Lookup Tables (ALTs)
+- The RPC simulation outcome (if simulation is enabled)
+- Your configured wallet addresses (or the watched address in watch-only mode)
+  so the explanation can label them as *"you"*
+- The addresses in your address book, so SignLens can distinguish saved
+  contacts from lookalike (address-poisoning) addresses
 
-The RPC in the settings, by default the public
-`solana-rpc.publicnode.com`, is asked for the lookup tables of every
-transaction that uses any, sees the whole transaction when simulation is
-on, the addresses of the accounts an explanation names (a multisig
-proposal and the transaction it stores, a DAO proposal and its options)
-when account lookup is on, and the mints of unlisted tokens when token
-lookup is on. Those mints also go to the token list, by default
-Jupiter's `lite-api.jup.ag`. Simulation, account lookup and token lookup
-are on by default; the settings turn them off. A transaction the dapp
-names as for another chain than mainnet goes to the same RPC all the
-same, since the name is only the dapp's word; the window shows the chain
-it named.
+**Your contact names never leave your browser.** Each contact is sent with a
+fresh random placeholder per request that reveals nothing about the label, and
+the extension substitutes your real contact name locally when rendering the
+window.
 
-Of an explanation, the API logs the verdict, the finding codes, the
-program names, the size, the latency and a hash of the message, and keeps
-nothing else. What a rating sends is kept, as below, and the bytes only
-when you send them through the feedback strip.
+If an explanation requires on-chain account data (and account lookup is
+enabled), the extension fetches those accounts from your RPC and re-queries the
+API up to twice. Similarly, if the transaction involves unlisted tokens (and
+token lookup is enabled), the extension re-queries the API with their resolved
+symbols. These requests happen automatically when a dapp requests a signature,
+even when **"Show the explanation and ask first"** is turned off.
 
-The feedback strip sends nothing until you rate an explanation, and says
-what a rating sends before you give one. A rating sends, for each
-transaction explained: the rating, your comment (up to 2,000 characters,
-the same for each), the explanation's digest (a hash of the transaction's
-message), the site's host and the extension's version (in Firefox only
-once you allow them: Firefox asks the first time you rate, and
-"Permissions and data" in its add-on manager changes the answer), the
-wallet method it called, and what the window showed you: the verdict,
-the one-line summary, with each of your contacts in it as "a contact",
-the findings by code and severity, and the program each
-instruction calls, read from the transaction in the extension. The
-transaction itself, with the addresses its lookup tables loaded, goes only
-if you ticked "Send this transaction to SignLens so it can be looked
-into", which is offered under every explanation, unticked, so a rendering
-SignLens called OK but you rated wrong can be explained again as you saw
-it. It goes to the API in the settings when you rate "Clear", or when
-you decide, closing the window included. Messages to sign
-never leave the extension, and the dapp learns neither the explanation nor
-its verdict, nor, in watch-only mode, the watched address until you allow
-it.
-The settings show each address. The RPC and the token list can be your
-own; the API's address is there for development, since the API's source
-is not public.
+### IP addresses and Cloudflare
+
+All requests to the SignLens API pass through Cloudflare, which sees your IP
+address just like any other Cloudflare-hosted website. The SignLens API uses
+your IP address only in memory as a keyed cryptographic hash for rate limiting
+and never writes it to disk or logs.
+
+### What is sent to your RPC and token list
+
+Your configured RPC (by default `solana-rpc.publicnode.com`) is queried for:
+- Address Lookup Tables used by a transaction
+- The full transaction when **Simulation** is enabled
+- Specific on-chain accounts named by an explanation (such as a multisig
+  proposal or DAO governance proposal) when **Account lookup** is enabled
+- Mint accounts of unlisted tokens when **Token lookup** is enabled (these mint
+  addresses are also queried against your configured token list, by default
+  Jupiter's `lite-api.jup.ag`)
+
+Simulation, account lookup, and token lookup are enabled by default and can
+each be turned off in settings. Even if a dapp labels a request as targeting a
+non-mainnet cluster, SignLens queries the same configured RPC (since the
+cluster label is self-reported by the dapp) and displays the cluster name the
+dapp claimed.
+
+### What the SignLens API logs
+
+For each explanation, the API logs only:
+- The verdict
+- The finding codes
+- The invoked program names
+- The transaction byte size and processing latency
+- A hash of the transaction message
+
+The API retains **nothing else** from an explanation request. Full transaction
+bytes are stored **only** if you explicitly check *"Send this transaction to
+SignLens so it can be looked into"* in the feedback bar.
+
+### Feedback ratings
+
+The feedback bar sends nothing unless you submit a rating, and explains what
+data will be sent before you click. When you submit a rating, the extension
+sends (for each transaction in the request):
+- Your rating and optional comment (up to 2,000 characters)
+- The explanation digest (a hash of the transaction message)
+- The requesting site's hostname and the extension version *(in Firefox, only
+  after you grant permission when prompted on your first rating; you can change
+  this anytime under "Permissions and data" in Firefox's add-on manager)*
+- The wallet method called by the dapp
+- What the window displayed to you: the verdict, the one-line summary (with any
+  contact names redacted to `"a contact"`), the finding codes and severities,
+  and the program IDs read from the transaction
+
+The raw transaction bytes (and its resolved lookup table addresses) are
+included **only** if you check **"Send this transaction to SignLens so it can
+be looked into"** (unchecked by default), allowing our team to reproduce an
+explanation that was marked **OK** but looked wrong to you. Ratings are sent
+when you click **"Clear"** or when you finish deciding on the transaction
+(including closing the window).
+
+### Local-only data
+
+- **Off-chain messages (`signMessage`)** never leave the extension.
+- **Connected dapps** never learn the explanation or verdict, nor do they learn
+  your watched address in watch-only mode unless you click **Allow**.
+- **Custom endpoints:** Every endpoint URL is visible in settings. You can point
+  the extension at your own RPC and token list; the API URL setting is provided
+  for local development, as the backend engine source is not public.

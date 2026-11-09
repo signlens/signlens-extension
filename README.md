@@ -6,7 +6,7 @@
 
 <p align="center">
   <strong>See what a Solana transaction does before you sign it.</strong><br>
-  Not only what leaves your wallet, but where it goes and what for.
+  Not just what leaves your wallet, but where it goes and what it does.
 </p>
 
 <p align="center">
@@ -23,43 +23,45 @@
   </picture>
 </p>
 
-SignLens works beside the Solana wallet you already use: Phantom,
-Backpack, Solflare or another. In a dapp, connect SignLens in its place.
-Each request then opens SignLens's window first, in plain words, and goes
-on to your wallet only once you say so. Your wallet asks you to approve
-or reject, as it always has. SignLens holds no keys and signs nothing.
+SignLens works alongside the Solana wallet you already use (Phantom, Backpack,
+Solflare, or any other Wallet Standard wallet). When you connect SignLens in a
+dapp, every signing request opens in SignLens first with a plain-English
+explanation of the transaction, and is only forwarded to your wallet if you
+choose to continue. Your wallet still prompts you to approve or reject as
+usual. SignLens holds no keys and never signs anything.
 
-- **Every instruction, in words.** Deposits, swaps, liquidity positions,
-  stakes, perps orders, multisig proposals: who sends what to whom, the
-  fee, and how long the signature stays valid.
-- **Warns about what a balance preview can't show.** Spending rights,
-  accounts handed to a new owner, signatures that never expire,
-  lookalike addresses.
-- **Blocks what it can't read.** A program it doesn't know is shown as
-  unknown and blocked, never called safe.
-- **Leaves your wallet in charge.** Your wallet gets the exact bytes
-  SignLens explained; a page that changes its transaction afterwards
-  changes nothing.
-- **Open source, built reproducibly.** Everything that runs in your
-  browser is in this repository, and a release rebuilds to the same bytes.
+- **Explains every instruction in plain English.** Deposits, swaps, liquidity
+  positions, stakes, perps orders, and multisig proposals—showing who sends
+  what to whom, the network fee, and how long the signature stays valid.
+- **Catches what balance previews miss.** Token spending approvals, account
+  ownership transfers, non-expiring durable-nonce signatures, and address-poisoning
+  lookalikes.
+- **Blocks what it cannot decode.** Any unrecognized program is flagged as
+  unknown and blocked by default—never assumed safe.
+- **Keeps your wallet in control.** Your wallet receives the exact transaction
+  bytes SignLens explained; even if a page mutates the transaction afterward,
+  nothing changes.
+- **Open source and reproducibly built.** All browser extension code lives in
+  this repository, and every release builds to identical bytes from source.
 
-In English and Simplified Chinese, for Chrome, Brave, Edge and Firefox.
+Available in English and Simplified Chinese for Chrome, Brave, Edge, and Firefox.
 
-> **Beta.** The explanation is computed on SignLens's server, which sees
-> each transaction and keeps the verdict and the finding codes, not the
-> bytes. [Privacy](#privacy) says what leaves your browser.
+> **Beta.** Transaction explanations are computed by the SignLens API, which
+> receives each transaction to decode it and logs only the verdict and finding
+> codes, not the transaction bytes. See [Privacy](#privacy) for details on what
+> leaves your browser.
 
-## One preview, five different transactions
+## One balance preview, five different transactions
 
-Before you sign, your wallet shows what a transaction will take from you:
-4,635.29 USDC, say. It does not say where that goes or what it buys. A
-deposit into a lending market, a liquidity position, a stake, a
-leveraged order and a drain can all look the same there. SignLens reads
-the transaction itself, every instruction of it, and says in words what
-it does.
+Before you sign, a wallet typically shows your estimated balance change, for
+example, `-100.29 USDC`. It does not tell you where those tokens are going or
+what the transaction actually does. A lending deposit, a liquidity position, a
+stake, a leveraged perps order, and a wallet drain can all look identical in a
+balance preview. SignLens decodes every instruction in the transaction and
+explains what it actually does.
 
-Some mainnet transactions, by what leaves the wallet and by SignLens's
-summary of them:
+Here is how five real mainnet transactions compare between a standard wallet
+preview and SignLens:
 
 | On | Leaves your wallet | SignLens says |
 |---|---|---|
@@ -69,35 +71,39 @@ summary of them:
 | Jito | 0.0511 SOL | Stake 0.0511 SOL in a stake pool for its pool token, at the pool's ratio at execution |
 | Jupiter | 1.922511449 SOL | Place a long Jupiter Perps limit order of 10457.567852 USD with 1.922511449 SOL collateral, triggered below 117.5 USD |
 
-Under the summary the window lists each step: who sends what to whom
-("You send 4,635.28675 USDC from Your wallet to Kamino Lend"), the fee,
-how long the signature stays valid, and the details, such as the pool the
-stake goes to, named by its token ("JitoSOL stake pool"), and the account
-the JitoSOL lands in, yours. "(verified)" marks a token or an account
-SignLens knows by its address, not by the name it gives itself; "≤" an
-amount the program may take less of.
+Below the summary, the window breaks down each step: who sends what to whom
+(e.g., *"You send 4,635.28675 USDC from Your wallet to Kamino Lend"*), the
+transaction fee, how long the signature remains valid, and protocol-specific
+details such as which stake pool receives your SOL (*"JitoSOL stake pool"*) and
+which account receives the resulting token.
+
+- `(verified)` indicates a token or protocol account that SignLens verified by
+  its on-chain address rather than trusting its self-reported name or symbol.
+- `≤` indicates a maximum amount where the program may consume less at execution.
 
 ## What a balance preview can't show
 
-Some of the worst transactions take nothing when you sign them, so a
-balance preview shows nothing at all: they hand over the right to take it
-later. SignLens names them in the window, right under the verdict:
+Some of the most dangerous transactions transfer nothing at the moment you sign
+them—so a balance preview shows no change at all—because they grant permission
+to take your funds later. SignLens highlights these risks directly below the
+verdict:
 
-- **Spending rights.** "Lets … spend an UNLIMITED amount from this token
-  account at any time", or up to an amount, without asking again.
-- **Accounts given away.** Your token account, or your wallet account
-  itself, handed to a new owner or to a program, which then controls
-  everything in it. SignLens blocks these.
-- **Signatures that never expire.** A transaction built on a durable nonce
-  stays valid until the nonce is used, so whoever holds it can send it
-  next month; the window says "Valid FOREVER".
-- **Lookalike addresses.** An address that shares only its first and last
-  four characters with one of your own or a contact's in your address
-  book: the address-poisoning trick.
-- **A swap paying out elsewhere.** "The swap's output goes to an account
-  that is not yours."
-- **Programs it does not know.** Shown as unknown and blocked, never
-  called safe.
+- **Spending approvals (delegations).** *"Lets … spend an UNLIMITED amount from
+  this token account at any time"* (or up to a specified cap) without asking for
+  another signature.
+- **Account ownership transfers.** Handing your token account or wallet account
+  over to a new owner or program, giving it full control over everything inside.
+  SignLens blocks these automatically.
+- **Signatures that never expire.** Transactions built with a durable nonce
+  remain valid until that nonce is consumed, allowing whoever holds the
+  signature to broadcast it weeks or months later; the window warns `"Valid FOREVER"`.
+- **Lookalike addresses (address poisoning).** An address that matches the
+  first and last four characters of one of your own wallets or saved contacts
+  to trick you into sending funds to an attacker.
+- **Swaps paying out to another address.** *"The swap's output goes to an
+  account that is not yours."*
+- **Unrecognized programs.** Flagged as unknown and blocked by default, never
+  treated as safe.
 
 <p align="center">
   <picture>
@@ -110,15 +116,16 @@ later. SignLens names them in the window, right under the verdict:
 
 | Verdict | What it means |
 |---|---|
-| **OK** | SignLens read every instruction and found nothing beyond notes. |
-| **Warning** | Findings to read before you approve, shown first. |
-| **Blocked** | Something critical, or a part of the transaction it cannot explain. SignLens refuses it unless you choose "Continue anyway", then answer yes when it asks again, saying why. |
-| **Error** | No explanation to show: the API was away, say. Nothing is known about the transaction, so it is treated as blocked, never as a pass; "Try again" asks once more. |
+| **OK** | SignLens decoded every instruction and found no warnings or critical issues. |
+| **Warning** | Important findings you should review before approving, displayed at the top of the window. |
+| **Blocked** | A critical risk, or part of the transaction could not be decoded. SignLens blocks the transaction unless you explicitly click "Continue anyway" and confirm why on a second prompt. |
+| **Error** | No explanation could be produced (for example, the API was unreachable). Because nothing is known about the transaction, it is treated as blocked rather than allowed through; click "Try again" to retry. |
 
-A simulation on your RPC is shown as what the RPC claims, not as fact,
-and held against the decoded instructions: more leaving than they state
-is a finding. The popup keeps your recent requests and what became of
-them.
+RPC simulation results are shown as unverified claims from your RPC rather than
+guaranteed outcomes, and are cross-checked against the decoded instructions—if
+the simulation takes more from your accounts than the decoded instructions
+state, SignLens flags it as a finding. The extension popup also keeps a history
+of your recent requests and whether they were approved, rejected, or blocked.
 
 <p align="center">
   <picture>
@@ -129,63 +136,67 @@ them.
 
 ## Install
 
-| Browser | From the store |
+| Browser | Store link |
 |---|---|
-| Chrome, Brave, Edge (111 or later) | [Chrome Web Store](https://chromewebstore.google.com/detail/signlens-beta/anihjjfeahahigbnjonlacmboeeolnmk) |
-| Firefox (140 or later) | [Firefox Add-ons](https://addons.mozilla.org/firefox/addon/signlens-beta/) |
+| Chrome, Brave, Edge (111+) | [Chrome Web Store](https://chromewebstore.google.com/detail/signlens-beta/anihjjfeahahigbnjonlacmboeeolnmk) |
+| Firefox (140+) | [Firefox Add-ons](https://addons.mozilla.org/firefox/addon/signlens-beta/) |
 
-Edge installs from the Chrome Web Store once "Allow extensions from other
-stores" is on.
+*(In Edge, enable "Allow extensions from other stores" to install from the Chrome Web Store.)*
 
-Or from a release, to run the very bytes you can check: download
+### Installing from GitHub Releases (reproducible zip)
+
+If you want to verify the exact bytes you run, download
 `signlens-extension-X.Y.Z.zip` (Chrome) or
-`signlens-extension-firefox-X.Y.Z.zip` (Firefox) from the
-[releases](https://github.com/signlens/signlens-extension/releases), and
-check it as [Verifying a package](#verifying-a-package) says.
+`signlens-extension-firefox-X.Y.Z.zip` (Firefox) from
+[GitHub Releases](https://github.com/signlens/signlens-extension/releases) and
+verify the package as described in [Verifying a package](#verifying-a-package).
 
-- Chromium browsers: unzip it, open `chrome://extensions`, turn on
-  "Developer mode", choose "Load unpacked" and pick the unzipped folder.
-- Firefox: open `about:debugging#/runtime/this-firefox`, choose "Load
-  Temporary Add-on…" and pick the zip. Firefox keeps an add-on loaded
-  this way only until it restarts; one that stays installed comes from
-  Firefox Add-ons.
+- **Chromium browsers:** Unzip the archive, open `chrome://extensions`, enable
+  **Developer mode**, click **Load unpacked**, and select the unzipped folder.
+- **Firefox:** Open `about:debugging#/runtime/this-firefox`, click **Load
+  Temporary Add-on…**, and select the zip file. *(Firefox only keeps temporary
+  add-ons until the browser restarts; for a persistent installation, install
+  from Firefox Add-ons.)*
 
-From the sources: [`DEVELOPMENT.md`](DEVELOPMENT.md) says how to build
-both and load them.
+To build and load the extension from source, see [`DEVELOPMENT.md`](DEVELOPMENT.md).
 
-Firefox lets you withhold an add-on's access to sites: if the popup or the
-setup page says the browser has not let the extension reach the API, the
-RPC and the token list, press "Allow https access" there, or nothing can
-be explained.
+> **Note for Firefox users:** Firefox allows you to restrict an extension's
+> access to websites. If the popup or setup page reports that the extension
+> cannot reach the API, RPC, or token list, click **Allow https access** so
+> SignLens can fetch explanations.
 
 ## Get started
 
-1. **Add your addresses.** A new install opens a setup page: your wallet
-   addresses go there, so the explanation can call them "you". It also
-   shows how to pin SignLens, and what leaves your browser.
-2. **Connect "SignLens" in a dapp**, where you would pick your wallet. It
-   connects through your wallet; on a page with several, it asks once
-   which one signs.
-3. **Read, then decide.** Each request opens SignLens's window: the
-   verdict, a one-line summary, and what the transaction does to you,
-   step by step. Reject, or continue to your wallet, which asks you as
-   usual.
+1. **Add your wallet addresses.** On first install, SignLens opens a setup page
+   where you can add your wallet addresses (so explanations refer to your
+   accounts as *"you"*), see how to pin the extension, and review what data
+   leaves your browser.
+2. **Connect "SignLens" in a dapp.** Select **SignLens** wherever you normally
+   pick your wallet. It connects through your existing wallet; if you have
+   multiple wallets installed, SignLens asks once which wallet you want to sign
+   with.
+3. **Review, then decide.** Every signing request opens the SignLens window
+   with a verdict, a one-line summary, and a step-by-step breakdown. Reject it
+   directly, or continue to your wallet to sign as usual.
 
-The popup's settings change the wallet behind SignLens, switch to
-watch-only mode (connect as any address, explain, refuse), turn off "Show
-the explanation and ask first" so the window opens only for what SignLens
-would refuse, keep an address book, and point SignLens at your own RPC.
-[Using SignLens](docs/guide.md) has every detail: connecting, what the
-window shows, and what each setting does.
+From the popup settings, you can:
+- Change which wallet SignLens forwards requests to
+- Switch to **watch-only mode** (connect as any address to inspect and explain
+  transactions without signing)
+- Uncheck **"Show the explanation and ask first"** so the window only interrupts
+  you when a transaction is blocked or fails to decode
+- Manage your address book of trusted contacts
+- Configure a custom Solana RPC endpoint
+
+See [Using SignLens](docs/guide.md) for the complete user guide.
 
 ## How it works
 
 SignLens registers itself as a
 [Wallet Standard](https://github.com/anza-xyz/wallet-standard) wallet that
-holds no keys: a dapp sends it what it wants signed, SignLens explains it
-in its own window, and once you say so the request goes unchanged to the
-wallet you actually sign with. You approve or reject there as usual.
-SignLens only watches.
+holds no private keys. When a dapp requests a signature, SignLens receives the
+transaction bytes, explains them in its own popup window, and—only after you
+click continue—forwards the exact same bytes to your real wallet to sign.
 
 ```
 dapp ──signTransaction──▶ SignLens wallet ──bytes──▶ SignLens API ──▶ explanation window
@@ -193,31 +204,33 @@ dapp ──signTransaction──▶ SignLens wallet ──bytes──▶ SignLen
                               └─ "Continue" ──▶ your wallet (Phantom, Backpack, …) ──▶ signs
 ```
 
-Everything that runs in your browser is in this repository, in TypeScript,
-compiled file for file with no bundler, so the shipped scripts line up with
-the sources. A release package is built reproducibly and published with
-its SHA-256; see [Verifying a package](#verifying-a-package).
+All browser code lives in this repository, written in TypeScript and compiled
+file-for-file without a bundler so the shipped JavaScript maps directly to the
+source files. Release packages are built reproducibly and published with
+SHA-256 checksums and GitHub build provenance attestations; see
+[Verifying a package](#verifying-a-package).
 
 ### What it isn't
 
-- **Not a wallet.** It holds no keys and signs nothing. Your wallet still
-  asks you for every signature, as it did before.
-- **Not a guarantee.** OK means SignLens read every instruction and found
-  nothing to warn about, not that a trade is a good one or a token worth
-  holding. It can be wrong, and the strip under each explanation is where
-  to say so.
-- **Not a guess.** What it cannot read, it says it cannot read, and
-  blocks rather than fill in. A simulation is shown as what the RPC
-  claims, not as fact.
-- **Not offline, in this beta.** The explanation is computed on
-  SignLens's server, which sees the transaction; [Privacy](#privacy) says
-  what it keeps.
+- **Not a wallet.** SignLens holds no keys and cannot sign transactions. Your
+  wallet still prompts you for every signature.
+- **Not financial advice or a guarantee.** An **OK** verdict means SignLens
+  decoded every instruction and found no structural warnings—not that a trade
+  is profitable or a token is legitimate. If an explanation looks wrong or
+  unclear, you can report it using the feedback bar at the bottom of the window.
+- **Not a guess.** Anything SignLens cannot decode is explicitly flagged as
+  unknown and blocked rather than glossed over. RPC simulations are shown as
+  unverified RPC claims, not ground truth.
+- **Not offline (in this beta).** Explanations are computed by the SignLens API
+  server, which receives the transaction to decode it; see [Privacy](#privacy)
+  for what is logged.
 - **Solana mainnet only.**
 
 ## Works with
 
-SignLens explains the programs below, whichever site calls them: a
-Jupiter swap reads the same on jup.ag as in another site's swap widget.
+SignLens decodes instructions at the program level, regardless of which website
+or frontend builds the transaction. A Jupiter swap reads the same on `jup.ag` as
+it does inside an embedded swap widget on another site.
 
 - **Jupiter**: Aggregator v6, Order Engine, Limit Order v2, Perpetuals,
   Lend (Earn, Borrow, Flashloan), Lock, DAO staking and governance, Genie
@@ -229,68 +242,71 @@ Jupiter swap reads the same on jup.ag as in another site's swap widget.
 - **Orca**: Whirlpool
 - **marginfi** (Project 0)
 - **Pump**: Pump.fun, PumpSwap, Pump Fees, Pump stables router
-- **Stake pools**: SPL Stake Pool, which Jito's JitoSOL and many others
-  run on
+- **Stake pools**: SPL Stake Pool (used by JitoSOL and many liquid staking tokens)
 - **MetaDAO**: Futarchy, Conditional Vault
-- **Squads**: v4 multisig, the transaction inside a proposal included
+- **Squads**: v4 multisig (including the inner transaction inside a proposal)
 - **Aggregators and routers**: DFlow, Titan, OKX DEX Router, 0x Settler,
   LI.FI, Rango, Binance router and fee router, Kobayashi router, Liquid
   Mesh router
-- **Lighthouse**, the checks some wallets add to a transaction
-- **Solana's own programs**: SOL transfers, tokens and Token-2022,
-  associated token accounts, native staking, compute budget and fees,
-  memos, lookup tables, program deploys and upgrades
+- **Lighthouse**: assertion checks added by wallets to protect transactions
+- **Solana native & SPL programs**: SOL transfers, SPL Token and Token-2022,
+  Associated Token Accounts, native staking, compute budget and priority fees,
+  memos, Address Lookup Tables (ALTs), program deployments and upgrades
 
-A program not on the list is shown as unknown, and its transaction
-blocked. SignLens is not affiliated with any of these projects; their
-names are their owners' trademarks.
+Any program not on this list is flagged as unknown and its transaction is
+blocked by default. SignLens is not affiliated with any of these projects;
+all product and protocol names are trademarks of their respective owners.
 
 ## Privacy
 
 In short:
 
-- **To the SignLens API**, for each transaction to explain: the
-  transaction, the addresses its lookup tables load, the simulation's
-  outcome, your addresses, and the addresses in your address book, so it
-  can tell a contact from a lookalike. The names in your address book
-  stay in your browser: each goes as a random stand-in.
-- **Kept by the API**: of an explanation, the verdict, the finding codes,
-  the program names, the size, the latency and a hash of the message;
-  what a rating sends; and the transaction only if you tick "Send this
-  transaction to SignLens so it can be looked into" under its
-  explanation.
-- **Your IP address** is seen by Cloudflare, as for any site it serves.
-  The API takes it only to count your requests against its limit, in
-  memory and as a keyed hash, and logs it nowhere.
-- **Your RPC**, by default the public `solana-rpc.publicnode.com`, is
-  asked for lookup tables, simulates the transaction, and reads the
-  accounts an explanation names; unlisted tokens are looked up there and
-  in a token list, by default Jupiter's. Simulation, account lookup and
-  token lookup can each be turned off, and the RPC and the token list
-  can be your own.
-- **Ratings** send nothing until you give one, and the strip says what a
-  rating sends first.
-- **Messages to sign** never leave the extension. The dapp learns neither
-  the explanation nor its verdict.
+- **Sent to the SignLens API** (when explaining a transaction): the transaction
+  bytes, addresses loaded from its Address Lookup Tables, the RPC simulation
+  outcome, your configured wallet addresses, and your address book addresses
+  (so SignLens can distinguish saved contacts from lookalike addresses).
+  Contact names never leave your browser, each name is replaced with a random
+  per-request placeholder before leaving the extension.
+- **Retained by the API**: for each explanation, the API logs only the verdict,
+  finding codes, program names, transaction size, latency, and a hash of the
+  transaction message. Full transaction bytes are **not** stored unless you
+  explicitly check *"Send this transaction to SignLens so it can be looked
+  into"* when submitting feedback.
+- **Your IP address** is visible to Cloudflare, as with any Cloudflare-hosted
+  service. The SignLens API uses it only in memory as a keyed hash for rate
+  limiting and never writes it to disk or logs.
+- **Your RPC** (by default `solana-rpc.publicnode.com`) is queried to resolve
+  Address Lookup Tables, simulate transactions, and read on-chain accounts
+  referenced by an explanation. Unlisted token mints are queried against your
+  RPC and a token list (by default Jupiter's). Simulation, account lookup, and
+  token lookup can each be disabled in settings, and you can configure your own
+  RPC and token list URLs.
+- **Feedback ratings** send nothing unless you click a rating button, and the
+  feedback bar explains what data is included before you submit.
+- **Off-chain messages (`signMessage`)** never leave the extension. Furthermore,
+  the connected dapp never learns the explanation or verdict.
 
-Every request and what it carries: [Privacy](docs/guide.md#privacy) in
-Using SignLens, and the policy at <https://signlens.dev/privacy>.
+For a full breakdown of every network request and payload, see
+[Privacy in Using SignLens](docs/guide.md#privacy) and the privacy policy at
+<https://signlens.dev/privacy>.
 
 ## Verifying a package
 
-A release is a tag `vX.Y.Z` on the default branch that names the version in
-`package.json`, and whose version has a section in `CHANGELOG.md`: that
-section is the release's notes (`node scripts/release-notes.ts X.Y.Z`
-shows them). CI runs every test, the end-to-end suite against the API
-included, runs `npm ci && npm run package`, and attaches
-`signlens-extension-X.Y.Z.zip` (Chrome) and
-`signlens-extension-firefox-X.Y.Z.zip`, each with its `.sha256`, to the
-release, with a build provenance attestation. A package is a store-only
-zip with sorted entries and fixed timestamps, so the same source gives the
-same bytes anywhere; CI builds it on Linux, macOS and Windows and compares.
+Each release corresponds to a `vX.Y.Z` tag on the default branch matching the
+version in `package.json` and its corresponding section in `CHANGELOG.md`
+(`node scripts/release-notes.ts X.Y.Z` prints the release notes).
 
-In the directory you downloaded the release's files to, check each
-package against its `.sha256` and its attestation:
+During a release, CI runs the full test suite (including end-to-end tests
+against the API), runs `npm ci && npm run package`, and attaches
+`signlens-extension-X.Y.Z.zip` (Chrome) and
+`signlens-extension-firefox-X.Y.Z.zip` (Firefox), along with their `.sha256`
+checksum files and GitHub build provenance attestations. Packages are built as
+uncompressed (`store`-only) zip archives with sorted file entries and fixed
+timestamps, ensuring byte-for-byte reproducibility across Linux, macOS, and
+Windows.
+
+From the directory containing your downloaded release files, verify the
+checksums and build provenance attestations:
 
 ```sh
 sha256sum -c signlens-extension-X.Y.Z.zip.sha256 signlens-extension-firefox-X.Y.Z.zip.sha256
@@ -299,29 +315,32 @@ gh attestation verify signlens-extension-X.Y.Z.zip --owner signlens
 gh attestation verify signlens-extension-firefox-X.Y.Z.zip --owner signlens
 ```
 
-Rebuilt from the tag, both come out the same bytes; check them against the
-release's `.sha256` files from the `dist/` the build writes to:
+You can also rebuild the packages from source at the release tag and verify
+that your local build produces the exact same bytes:
 
 ```sh
 git checkout vX.Y.Z && npm ci && npm run package
 cd dist && sha256sum -c ~/Downloads/signlens-extension-X.Y.Z.zip.sha256 ~/Downloads/signlens-extension-firefox-X.Y.Z.zip.sha256
 ```
 
-The stores publish the release's files with a signature of their own
-added, so what they install is not the zip byte for byte.
+*(Note: Chrome Web Store and Firefox Add-ons re-sign uploaded packages with
+their own store signatures, so store-installed archives will differ from the
+raw release zips.)*
 
 ## Reporting a problem
 
-An explanation that read wrong or unclear: the feedback strip under it,
-which is what it is for. A bug in the extension: an issue in this
-repository. A way to make SignLens show a transaction as something it is
-not, pass a request on without your decision, or send what it says it
-does not: not an issue, but an email to security@signlens.dev, as
-[`SECURITY.md`](SECURITY.md) says.
+- **Wrong or unclear explanation:** Use the feedback bar directly below the
+  explanation in the SignLens window.
+- **Extension bug:** Open an issue in this repository.
+- **Security vulnerability** (e.g., spoofing an explanation, bypassing user
+  confirmation, or leaking data contrary to our privacy guarantees): Please do
+  **not** open a public issue; email `security@signlens.dev` as outlined in
+  [`SECURITY.md`](SECURITY.md).
 
-To build, test or change it: [`DEVELOPMENT.md`](DEVELOPMENT.md) and
-[`CONTRIBUTING.md`](CONTRIBUTING.md).
+For build instructions, architecture details, and contribution guidelines, see
+[`DEVELOPMENT.md`](DEVELOPMENT.md) and [`CONTRIBUTING.md`](CONTRIBUTING.md).
 
 ## License
 
-Copyright 2026 Boris Onchev. Apache-2.0, see [`LICENSE`](LICENSE).
+Copyright 2026 Boris Onchev. Licensed under the Apache-2.0 License; see
+[`LICENSE`](LICENSE).
