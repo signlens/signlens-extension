@@ -8,6 +8,7 @@
 
 import type { BrowserContext, Page, Worker } from '@playwright/test';
 import type { ExplainedRow } from '../../src/shared/model.ts';
+import type { ApiStatus } from '../../src/shared/types.ts';
 import { expect } from './extension.ts';
 import { request, transferRow, windowFor } from './windows.ts';
 
@@ -16,10 +17,20 @@ const WATCHED = 'Ffz5kwUjkUNw7hV4r6iCJnUoXXsAPFHkCMCmKKDypiwg';
 /** Chinese, or the full-width punctuation it is set with. */
 export const CHINESE = /[㐀-鿿，。：；（）！？、“”…—]/u;
 
-/** Whether the API the suite talks to carries Simplified Chinese: recorded, it does; live, one deployed before phase 4 does not. */
+/**
+ * The Simplified Chinese pack of the API the suite talks to, as its
+ * `/v1/packs` lists it, or `undefined`: recorded, it carries one; live,
+ * one deployed before phase 4 does not. Its review is the API's to change,
+ * live, without the extension changing.
+ */
+export async function chinesePack(api: string): Promise<ApiStatus['locales'][number] | undefined> {
+    const status = (await (await fetch(`${api}/v1/packs`)).json()) as { locales?: ApiStatus['locales'] };
+    return status.locales?.find(({ locale }) => locale === 'zh-Hans');
+}
+
+/** Whether the API the suite talks to carries Simplified Chinese (`chinesePack`). */
 export async function carriesChinese(api: string): Promise<boolean> {
-    const status = (await (await fetch(`${api}/v1/packs`)).json()) as { locales?: { locale: string }[] };
-    return (status.locales ?? []).some(({ locale }) => locale === 'zh-Hans');
+    return (await chinesePack(api)) !== undefined;
 }
 
 /** The words `page` shows, or puts in an attribute, in plain English, the interface's being worded in `locale` and marked by `mark`. */

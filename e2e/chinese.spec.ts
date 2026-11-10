@@ -6,7 +6,7 @@
 import type { BrowserContext, Page } from '@playwright/test';
 import { fixture } from '../test/server.ts';
 import { clickToClose, expect, liveGate, test } from './support/extension.ts';
-import { CHINESE, carriesChinese, eachPage, englishLeft } from './support/words.ts';
+import { CHINESE, carriesChinese, chinesePack, eachPage, englishLeft } from './support/words.ts';
 
 test.use({ browserLocale: 'zh-CN' });
 
@@ -53,10 +53,14 @@ test('a reader asking for Chinese is answered in Chinese, and can read it in Eng
 });
 
 test('the popup names the languages the API explains in, and when they were reviewed', async ({ configure, popup, server }) => {
-    test.skip(!(await carriesChinese(server.api)), 'the API carries no Simplified Chinese pack');
+    const pack = await chinesePack(server.api);
+    test.skip(!pack, 'the API carries no Simplified Chinese pack');
+    // The day is the API's: recorded, the recording's; live, whenever its translators last reviewed the pack.
+    expect(pack?.review.kind).toBe('reviewed');
+    const on = pack?.review.kind === 'reviewed' ? pack.review.on : '';
     await configure({ apiUrl: server.api });
     await popup.reload();
     await expect(popup.locator('#engine-status')).toContainText(
-        '以英文解释；当您的浏览器要求或您在设置中选择时，也以下列语言解释：简体中文（zh-Hans），审核于 2026-11-07。',
+        `以英文解释；当您的浏览器要求或您在设置中选择时，也以下列语言解释：简体中文（zh-Hans），审核于 ${on}。`,
     );
 });
