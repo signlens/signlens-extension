@@ -769,10 +769,10 @@
         },
         {
           "message": {
-            "id": "effect-receive",
+            "id": "effect-transfer",
             "parts": [
               {
-                "text": "You receive "
+                "text": "Transfer "
               },
               {
                 "text": "≥ 0.080334153 SOL",
@@ -805,68 +805,6 @@
                         }
                       ],
                       "text": "≥ 0.080334153 SOL"
-                    }
-                  }
-                }
-              },
-              {
-                "text": " into "
-              },
-              {
-                "text": "Your wallet (CVJ6…Q3bR)",
-                "value": {
-                  "type": "address",
-                  "value": {
-                    "address": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR",
-                    "is_self": true,
-                    "label": {
-                      "id": "accounts-your-wallet",
-                      "parts": [
-                        {
-                          "text": "Your wallet"
-                        }
-                      ],
-                      "text": "Your wallet"
-                    },
-                    "label_trust": "verified",
-                    "stand_in": null,
-                    "words": {
-                      "id": "address-labelled",
-                      "parts": [
-                        {
-                          "text": "Your wallet",
-                          "value": {
-                            "type": "words",
-                            "value": {
-                              "id": "accounts-your-wallet",
-                              "parts": [
-                                {
-                                  "text": "Your wallet"
-                                }
-                              ],
-                              "text": "Your wallet"
-                            }
-                          }
-                        },
-                        {
-                          "text": " ("
-                        },
-                        {
-                          "short": {
-                            "address": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR",
-                            "is_self": true,
-                            "label": null,
-                            "label_trust": "verified",
-                            "stand_in": null,
-                            "words": null
-                          },
-                          "text": "CVJ6…Q3bR"
-                        },
-                        {
-                          "text": ")"
-                        }
-                      ],
-                      "text": "Your wallet (CVJ6…Q3bR)"
                     }
                   }
                 }
@@ -940,9 +878,26 @@
                     }
                   }
                 }
+              },
+              {
+                "text": " to "
+              },
+              {
+                "text": "91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD",
+                "value": {
+                  "type": "address",
+                  "value": {
+                    "address": "91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD",
+                    "is_self": false,
+                    "label": null,
+                    "label_trust": "fact",
+                    "stand_in": null,
+                    "words": null
+                  }
+                }
               }
             ],
-            "text": "You receive ≥ 0.080334153 SOL into Your wallet (CVJ6…Q3bR) from OKX DEX Router (proV…CX3u)"
+            "text": "Transfer ≥ 0.080334153 SOL from OKX DEX Router (proV…CX3u) to 91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD"
           },
           "type": "transfer",
           "value": {
@@ -1037,57 +992,12 @@
               }
             },
             "to": {
-              "address": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR",
-              "is_self": true,
-              "label": {
-                "id": "accounts-your-wallet",
-                "parts": [
-                  {
-                    "text": "Your wallet"
-                  }
-                ],
-                "text": "Your wallet"
-              },
-              "label_trust": "verified",
+              "address": "91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD",
+              "is_self": false,
+              "label": null,
+              "label_trust": "fact",
               "stand_in": null,
-              "words": {
-                "id": "address-labelled",
-                "parts": [
-                  {
-                    "text": "Your wallet",
-                    "value": {
-                      "type": "words",
-                      "value": {
-                        "id": "accounts-your-wallet",
-                        "parts": [
-                          {
-                            "text": "Your wallet"
-                          }
-                        ],
-                        "text": "Your wallet"
-                      }
-                    }
-                  },
-                  {
-                    "text": " ("
-                  },
-                  {
-                    "short": {
-                      "address": "CVJ67uKyQkuBmFEHKSEQ51kKowwBGjQ9Qa8RgH53Q3bR",
-                      "is_self": true,
-                      "label": null,
-                      "label_trust": "verified",
-                      "stand_in": null,
-                      "words": null
-                    },
-                    "text": "CVJ6…Q3bR"
-                  },
-                  {
-                    "text": ")"
-                  }
-                ],
-                "text": "Your wallet (CVJ6…Q3bR)"
-              }
+              "words": null
             }
           }
         },
@@ -1475,106 +1385,6 @@
       ],
       "findings": [
         {
-          "code": "SIMULATION_DISAGREES",
-          "instruction": null,
-          "message": {
-            "id": "simulation-less-in",
-            "parts": [
-              {
-                "text": "The simulation credits your accounts with "
-              },
-              {
-                "text": "0 SOL",
-                "value": {
-                  "type": "amount",
-                  "value": {
-                    "asset": {
-                      "decimals": 9,
-                      "description": null,
-                      "id": "native",
-                      "symbol": "SOL",
-                      "trust": "fact"
-                    },
-                    "bound": "exact",
-                    "note": null,
-                    "note_words": null,
-                    "units": "0",
-                    "words": {
-                      "id": "amount",
-                      "parts": [
-                        {
-                          "text": "0 "
-                        },
-                        {
-                          "text": "SOL",
-                          "value": {
-                            "type": "text",
-                            "value": "SOL"
-                          }
-                        }
-                      ],
-                      "text": "0 SOL"
-                    }
-                  }
-                }
-              },
-              {
-                "text": " of "
-              },
-              {
-                "text": "SOL",
-                "value": {
-                  "type": "text",
-                  "value": "SOL"
-                }
-              },
-              {
-                "text": ", less than the "
-              },
-              {
-                "text": "0.080334153 SOL",
-                "value": {
-                  "type": "amount",
-                  "value": {
-                    "asset": {
-                      "decimals": 9,
-                      "description": null,
-                      "id": "native",
-                      "symbol": "SOL",
-                      "trust": "fact"
-                    },
-                    "bound": "exact",
-                    "note": null,
-                    "note_words": null,
-                    "units": "80334153",
-                    "words": {
-                      "id": "amount",
-                      "parts": [
-                        {
-                          "text": "0.080334153 "
-                        },
-                        {
-                          "text": "SOL",
-                          "value": {
-                            "type": "text",
-                            "value": "SOL"
-                          }
-                        }
-                      ],
-                      "text": "0.080334153 SOL"
-                    }
-                  }
-                }
-              },
-              {
-                "text": " the instructions guarantee"
-              }
-            ],
-            "text": "The simulation credits your accounts with 0 SOL of SOL, less than the 0.080334153 SOL the instructions guarantee"
-          },
-          "severity": "high"
-        },
-        {
           "code": "DESTINATION_NOT_VERIFIED",
           "instruction": 5,
           "message": {
@@ -1606,6 +1416,20 @@
               }
             ],
             "text": "4 bytes after this compute budget value are ignored; the runtime reads only the value, as shown"
+          },
+          "severity": "info"
+        },
+        {
+          "code": "SIMULATION_AGREES",
+          "instruction": null,
+          "message": {
+            "id": "simulation-agrees",
+            "parts": [
+              {
+                "text": "The host's simulation agrees with the instructions' effects on your balances"
+              }
+            ],
+            "text": "The host's simulation agrees with the instructions' effects on your balances"
           },
           "severity": "info"
         }
@@ -2519,10 +2343,10 @@
                 "text": " (descriptor reviewed "
               },
               {
-                "text": "2026-11-06",
+                "text": "2026-11-16",
                 "value": {
                   "type": "text",
-                  "value": "2026-11-06"
+                  "value": "2026-11-16"
                 }
               },
               {
@@ -2543,7 +2367,7 @@
                 "text": ")"
               }
             ],
-            "text": "OKX DEX Router (descriptor reviewed 2026-11-06, upgradeable by CjoV…N1Mj)"
+            "text": "OKX DEX Router (descriptor reviewed 2026-11-16, upgradeable by CjoV…N1Mj)"
           },
           "title": {
             "id": "proVF4pMXVaYqmy4NjniPh4pqKNfMmsihgd4wdkCX3u/swap_tob_enhanced-intent",
@@ -3711,8 +3535,8 @@
         ],
         "text": "2 actions: Send 0.001855569 SOL to 91rj…BXHD; Swap 151.360479993 ZCAT for ≥ 0.080334153 SOL via OKX"
       },
-      "text": "2 actions: Send 0.001855569 SOL to 91rj…BXHD; Swap 151.360479993 ZCAT for ≥ 0.080334153 SOL via OKX\nWARNING: review the findings before approving\n\nFindings:\n  [HIGH] The simulation credits your accounts with 0 SOL of SOL, less than the 0.080334153 SOL the instructions guarantee\n  [INFO] The destination token account is not one of your accounts for a verified token; SignLens cannot confirm who owns it (instruction 6)\n  [INFO] 4 bytes after this compute budget value are ignored; the runtime reads only the value, as shown (instruction 2)\n\n== Transfer | System program\n  Amount: 0.001855569 SOL\n  From: Your wallet (CVJ6…Q3bR)\n  To: 91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD\n\n== Swap | OKX DEX Router (descriptor reviewed 2026-11-06, upgradeable by CjoV…N1Mj)\n  Send: 151.360479993 ZCAT\n  Receive: ≥ 0.080334153 SOL\n  Quoted: 0.080737843 SOL\n  Max slippage: 0.5%\n  Commission: 0.81%\n  Commission account: BEochrdGhm5pcKVF73DURYrGo1DLzxq6bBcUBphQR64d\n  Trim rate (program units): 100\n  Charge rate (program units): 500\n  Closes the temporary token account afterwards (flag): 1\n  Route:\n    - RaydiumClmmSwapV2 (weight 2790, leg 1)\n    - MeteoraDlmmSwap2 (weight 310, leg 1)\n    - RaydiumClmmSwapV2 (weight 6900, leg 2)\n    - ByrealClmm3 (weight 10000, leg 18)\n  From account: Your ZCAT account (H51r…iHfo)\n  To account: 91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD\n  Additional accounts: 80, not named by this descriptor\n\n== Also [collapsed]\n  Compute unit limit: 1251656\n  Heap size: 65536 bytes\n  Compute unit price: 1,676 micro-lamports per compute unit\n  Create token account: Token account: 91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD\n  Create token account: Owner: Your wallet (CVJ6…Q3bR)\n  Create token account: Mint: SOL mint (So11…1112)\n  Create token account: Rent paid by: Your wallet (CVJ6…Q3bR)\n  Create token account: Token program: Token program (Toke…Q5DA)\n\n== Signers\n  Fee payer: Your wallet (CVJ6…Q3bR)\n\n== Fee\n  Total: 0.000007098 SOL\n  Base: 0.000005 SOL\n  Priority: 0.000002098 SOL\n  Priority basis: 1,676 micro-lamports per compute unit × 1,251,656 compute units requested\n  Rent deposits: 0.00148844 SOL; refunded to whoever closes the account\n\n== Validity\n  Expires: in about a minute (recent blockhash)\n\n== Simulated outcome | the host's simulation (claimed, unverified)\n  Result: would succeed\n  Compute units: 4200\n  Your balances: unchanged\n\nEffects:\n  - You send 0.001855569 SOL from Your wallet (CVJ6…Q3bR) to 91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD\n  - You send 151.360479993 ZCAT from Your wallet (CVJ6…Q3bR) to OKX DEX Router (proV…CX3u)\n  - You receive ≥ 0.080334153 SOL into Your wallet (CVJ6…Q3bR) from OKX DEX Router (proV…CX3u)\n  - Create 91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD, managed by Token program (Toke…Q5DA), depositing 0.00148844 SOL\n  - You pay a fee of 0.000007098 SOL\n  - Valid for about a minute (recent blockhash)\n\nRaw: solana v0 (804 bytes)\n  digest: 9f46f53cb1549cfb1d859dc7109c80f65b636658c9999b7f227a133aad7823a2\n",
-      "verdict": "warn"
+      "text": "2 actions: Send 0.001855569 SOL to 91rj…BXHD; Swap 151.360479993 ZCAT for ≥ 0.080334153 SOL via OKX\nOK\n\nFindings:\n  [INFO] The destination token account is not one of your accounts for a verified token; SignLens cannot confirm who owns it (instruction 6)\n  [INFO] 4 bytes after this compute budget value are ignored; the runtime reads only the value, as shown (instruction 2)\n  [INFO] The host's simulation agrees with the instructions' effects on your balances\n\n== Transfer | System program\n  Amount: 0.001855569 SOL\n  From: Your wallet (CVJ6…Q3bR)\n  To: 91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD\n\n== Swap | OKX DEX Router (descriptor reviewed 2026-11-16, upgradeable by CjoV…N1Mj)\n  Send: 151.360479993 ZCAT\n  Receive: ≥ 0.080334153 SOL\n  Quoted: 0.080737843 SOL\n  Max slippage: 0.5%\n  Commission: 0.81%\n  Commission account: BEochrdGhm5pcKVF73DURYrGo1DLzxq6bBcUBphQR64d\n  Trim rate (program units): 100\n  Charge rate (program units): 500\n  Closes the temporary token account afterwards (flag): 1\n  Route:\n    - RaydiumClmmSwapV2 (weight 2790, leg 1)\n    - MeteoraDlmmSwap2 (weight 310, leg 1)\n    - RaydiumClmmSwapV2 (weight 6900, leg 2)\n    - ByrealClmm3 (weight 10000, leg 18)\n  From account: Your ZCAT account (H51r…iHfo)\n  To account: 91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD\n  Additional accounts: 80, not named by this descriptor\n\n== Also [collapsed]\n  Compute unit limit: 1251656\n  Heap size: 65536 bytes\n  Compute unit price: 1,676 micro-lamports per compute unit\n  Create token account: Token account: 91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD\n  Create token account: Owner: Your wallet (CVJ6…Q3bR)\n  Create token account: Mint: SOL mint (So11…1112)\n  Create token account: Rent paid by: Your wallet (CVJ6…Q3bR)\n  Create token account: Token program: Token program (Toke…Q5DA)\n\n== Signers\n  Fee payer: Your wallet (CVJ6…Q3bR)\n\n== Fee\n  Total: 0.000007098 SOL\n  Base: 0.000005 SOL\n  Priority: 0.000002098 SOL\n  Priority basis: 1,676 micro-lamports per compute unit × 1,251,656 compute units requested\n  Rent deposits: 0.00148844 SOL; refunded to whoever closes the account\n\n== Validity\n  Expires: in about a minute (recent blockhash)\n\n== Simulated outcome | the host's simulation (claimed, unverified)\n  Result: would succeed\n  Compute units: 4200\n  Your balances: unchanged\n\nEffects:\n  - You send 0.001855569 SOL from Your wallet (CVJ6…Q3bR) to 91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD\n  - You send 151.360479993 ZCAT from Your wallet (CVJ6…Q3bR) to OKX DEX Router (proV…CX3u)\n  - Transfer ≥ 0.080334153 SOL from OKX DEX Router (proV…CX3u) to 91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD\n  - Create 91rj79xcEKXwzd6KqMjcNEVZdV5fvn4DhjTfvXaABXHD, managed by Token program (Toke…Q5DA), depositing 0.00148844 SOL\n  - You pay a fee of 0.000007098 SOL\n  - Valid for about a minute (recent blockhash)\n\nRaw: solana v0 (804 bytes)\n  digest: 9f46f53cb1549cfb1d859dc7109c80f65b636658c9999b7f227a133aad7823a2\n",
+      "verdict": "ok"
     }
   }
 }
