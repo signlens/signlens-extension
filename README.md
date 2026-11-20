@@ -232,10 +232,10 @@ SignLens decodes instructions at the program level, regardless of which website
 or frontend builds the transaction. A Jupiter swap reads the same on `jup.ag` as
 it does inside an embedded swap widget on another site.
 
-- **Jupiter**: Aggregator v6, Order Engine, Limit Order v2, Perpetuals,
+- **Jupiter**: Aggregator v6, Order Engine, Limit Order v2, Perpetuals, YOLO,
   Lend (Earn, Borrow, Flashloan), Lock, DAO staking and governance, Genie
   and merkle distributors, prediction market, Doves oracle
-- **Kamino**: Lend, Lending Vault, Farms, Limit Orders, Scope
+- **Kamino**: Lend, Lending Vault, Liquidity, Farms, Limit Orders, Scope
 - **Meteora**: DLMM, DAMM v2, Dynamic Bonding Curve, Alpha Vault, Zap,
   liquidity distributor
 - **Raydium**: AMM v4, CPMM, CLMM, LaunchLab, router
@@ -243,11 +243,16 @@ it does inside an embedded swap widget on another site.
 - **marginfi** (Project 0)
 - **Pump**: Pump.fun, PumpSwap, Pump Fees, Pump stables router
 - **Stake pools**: SPL Stake Pool (used by JitoSOL and many liquid staking tokens)
+- **Marinade**: liquid staking for mSOL
+- **Jito**: restaking vaults
 - **MetaDAO**: Futarchy, Conditional Vault
 - **Squads**: v4 multisig (including the inner transaction inside a proposal)
+- **Drift**: only the handover of the protocol's admin, as in the April 2026
+  attack
 - **Aggregators and routers**: DFlow, Titan, OKX DEX Router, 0x Settler,
-  LI.FI, Rango, Binance router and fee router, Kobayashi router, Liquid
-  Mesh router
+  1inch Fusion, LI.FI, Rango, Binance router and fee router, Kobayashi
+  router, Liquid Mesh router, FLASHX router, GMGN routers
+- **Relay**: bridge deposits and its forwarder
 - **Lighthouse**: assertion checks added by wallets to protect transactions
 - **Solana native & SPL programs**: SOL transfers, SPL Token and Token-2022,
   Associated Token Accounts, native staking, compute budget and priority fees,
