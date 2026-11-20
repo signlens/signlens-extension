@@ -259,7 +259,10 @@ it does inside an embedded swap widget on another site.
   memos, Address Lookup Tables (ALTs), program deployments and upgrades
 
 Any program not on this list is flagged as unknown and its transaction is
-blocked by default. SignLens is not affiliated with any of these projects;
+blocked by default. The one exception is a call that names no accounts at
+all: the runtime gives such a program nothing to read or change, so the most
+it can do is make the transaction fail, and SignLens warns instead of
+blocking. SignLens is not affiliated with any of these projects;
 all product and protocol names are trademarks of their respective owners.
 
 ## Privacy
